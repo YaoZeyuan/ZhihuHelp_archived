@@ -1,0 +1,138 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AppendDictIntoDataBase	ZhihuHelp.py	/^def AppendDictIntoDataBase(cursor=None,Dict={}) :   #假定已有数据库#PassTag$/;"	f	access:public
+AppendDictIntoDataBase	软件说明.py	/^def AppendDictIntoDataBase(cursor=None,Dict={}) $/;"	f	access:public
+CatchFrontInfo	ZhihuHelp.py	/^def CatchFrontInfo(ContentText='',Flag=0,Target=''):$/;"	f	access:public
+CatchFrontInfo	软件说明.py	/^def CatchFrontInfo(ContentText='',Flag=0,Target=''):$/;"	f	access:public
+CheckImgFileExist	ZhiHuEpub.py	/^def CheckImgFileExist(CheckList=[],ErrorList=[]):#PassTag$/;"	f	access:public
+CheckImgFileExist	软件说明.py	/^def CheckImgFileExist(CheckList=[],ErrorList=[]):$/;"	f	access:public
+CheckUpdate	ZhihuHelp.py	/^def CheckUpdate():#检查更新，强制更新#newCommitTag$/;"	f	access:public
+CheckUpdate	软件说明.py	/^def CheckUpdate():$/;"	f	access:public
+ChooseTarget	ZhiHuEpub.py	/^def ChooseTarget(url=''):#选择#Pass$/;"	f	access:public
+ChooseTarget	ZhiHuEpub_Zhuanlan.py	/^def ChooseTarget(url=''):#选择$/;"	f	access:public
+ChooseTarget	软件说明.py	/^def ChooseTarget(url=''):#选择$/;"	f	access:public
+CopyFile	ZhiHuEpub.py	/^def CopyFile(root='',TargetFile='',flag=True):$/;"	f	access:public
+CreateContainer_XML	ZhiHuEpub.py	/^def CreateContainer_XML():#PassTag$/;"	f	access:public
+CreateContainer_XML	软件说明.py	/^def CreateContainer_XML():$/;"	f	access:public
+CreateMimeType	ZhiHuEpub.py	/^def CreateMimeType():#PassTag$/;"	f	access:public
+CreateMimeType	软件说明.py	/^def CreateMimeType():$/;"	f	access:public
+CreateNCX	ZhiHuEpub.py	/^def CreateNCX(NCXInfoDict={},Ncx=''):#PassTag$/;"	f	access:public
+CreateNCX	软件说明.py	/^def CreateNCX(NCXInfoDict={},Ncx=''):$/;"	f	access:public
+CreateOPF	ZhiHuEpub.py	/^def CreateOPF(OPFInfoDict={},Mainfest='',Spine=''):#生成文件函数均假定当前目录为电子书根目录#PassTag$/;"	f	access:public
+CreateOPF	软件说明.py	/^def CreateOPF(OPFInfoDict={},Mainfest='',Spine='')$/;"	f	access:public
+CreateWorkListDict	ZhihuHelp.py	/^def CreateWorkListDict(PostHeader,TargetFlag,Target):#输入http头、目标代码，目标名，返回首页信息字典与待抓取Request字典#Pass$/;"	f	access:public
+CreateWorkListDict	软件说明.py	/^def CreateWorkListDict(PostHeader,TargetFlag,Target):$/;"	f	access:public
+DealAnswerDict	ZhiHuEpub.py	/^def DealAnswerDict(cursor=None,AnswerDict={},ImgList=[]):#必须是符合规定的Dict，规定附后$/;"	f	access:public
+DealAnswerDict	ZhiHuEpub_Zhuanlan.py	/^def DealAnswerDict(JsonDict=[],ImgList=[],JsonDictList=[]):#必须是符合规定的Dict，规定附后$/;"	f	access:public
+DealAnswerDict	软件说明.py	/^def DealAnswerDict(cursor=None,AnswerDict={},ImgList=[]):#必须是符合规定的Dict，规定附后$/;"	f	access:public
+DownloadImg	ZhiHuEpub.py	/^def DownloadImg(imghref='',ErrorList=[]):#下载失败时应报错或重试#文件已成功下载时也添加到ErrorList中#newCommitTag$/;"	f	access:public
+DownloadImg	软件说明.py	/^def DownloadImg(imghref='',ErrorList=[]):$/;"	f	access:public
+DownloadPicWithThread	ZhiHuEpub.py	/^def DownloadPicWithThread(ImgList=[],MaxThread=20):#添加图片池功能#当图片下载完成时在ImgList中删除之#newCommitTag$/;"	f	access:public
+DownloadPicWithThread	软件说明.py	/^def DownloadPicWithThread(ImgList=[],MaxThread=20):#添加图片池功能#当图片下载完成时在ImgList中删除之$/;"	f	access:public
+ErrorReportText	ZhiHuEpub.py	/^def ErrorReportText(Info='',flag=True):$/;"	f	access:public
+ErrorReturn	ZhiHuEpub.py	/^def ErrorReturn(ErrorInfo=""):#返回错误信息并退出，错误信息要用unicode编码$/;"	f	access:public
+ErrorReturn	ZhiHuEpub_Zhuanlan.py	/^def ErrorReturn(ErrorInfo=""):#返回错误信息并退出，错误信息要用unicode编码$/;"	f	access:public
+ErrorReturn	软件说明.py	/^def ErrorReturn(ErrorInfo=""):#返回错误信息并退出，错误信息要用unicode编码$/;"	f	access:public
+FetchMaxAnswerPageNum	ZhihuHelp.py	/^def FetchMaxAnswerPageNum(Content=""):#简单搜索比正则更快#OKTag$/;"	f	access:public
+FetchMaxAnswerPageNum	软件说明.py	/^def FetchMaxAnswerPageNum(Content=""):$/;"	f	access:public
+File	wahaha.py	/^        File    =   open(title+'.htm','w')$/;"	v
+Help_ReadAnswer	ZhihuHelp.py	/^    def Help_ReadAnswer(t="",flag=True):$/;"	f	function:ReadAnswer	access:public
+Help_ZipToEpub	ZhiHuEpub.py	/^    def Help_ZipToEpub(Dir='.'):$/;"	f	function:ZipToEpub	access:public
+InputUserNameandPassword	ZhihuHelp.py	/^def InputUserNameandPassword():#UnitTest$/;"	f	access:public
+InputUserNameandPassword	软件说明.py	/^def InputUserNameandPassword():$/;"	f	access:public
+List	ZhihuHelp.py	/^        List    =   ('2014-05-26', '_xsrf=9747077ec0374d469c91d06f4bf78c4d; q_c1=a5702f2ffc0344ae91e9efc0874012a8|1401117498000|1394290295000; q_c0="NTc1Mjk3OTkxMmM1NzU1N2MzZGQ5ZTMzMzRmNWVlMDR8MW9xU3hPdDF4U29BQlc4Qg==|1401117516|4bccb71dbbdd69c36ee800ef20586a6060ab8559";')#黄中华的cookie$/;"	v
+List	ZhihuHelp.py	/^        List    =   pickle.loads(cursor.execute("select Pickle   from VarPickle  where Var='PostHeader'").fetchone()[0])#这种错误。。。真难发现啊$/;"	v
+Login	ZhihuHelp.py	/^def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxue'):#newCommitTag$/;"	f	access:public
+Login	软件说明.py	/^def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxue'):$/;"	f	access:public
+LoginData	ZhihuHelp.py	/^            LoginData   =   urllib.quote('{0}&email={1}&password={2}&rememberme=y'.format(xsrf,UserID,UserPassword),safe='=&')$/;"	v
+MakeInfoDict	ZhiHuEpub.py	/^def MakeInfoDict(InfoDict={},TargetFlag=0):$/;"	f	access:public
+MakeInfoDict	ZhiHuEpub_Zhuanlan.py	/^def MakeInfoDict(ColumnInfoDict={}):$/;"	f	access:public
+MakeInfoDict	软件说明.py	/^def MakeInfoDict(InfoDict={},TargetFlag=0):$/;"	f	access:public
+MaxThread	ZhiHuEpub_Zhuanlan.py	/^MaxThread   =   setMaxThread()$/;"	v
+MaxTryTime	ZhihuHelp.py	/^    MaxTryTime  =   0#最多重复三次，三次后自动切换为使用旧有cookie进行登录$/;"	v
+MkUrlRequestForOpenUrl	test_ZhihuHelp.py	/^def MkUrlRequestForOpenUrl(url=''):$/;"	f	access:public
+Mkdir	ZhiHuEpub.py	/^def Mkdir(DirName=u''):#PassTag$/;"	f	access:public
+Mkdir	软件说明.py	/^def  Mkdir(DirName=u''):$/;"	f	access:public
+NewHeader	ZhihuHelp.py	/^        NewHeader   =   (str(datetime.date.fromtimestamp(time.time()).strftime('%Y-%m-%d')),header['Cookie'])#Time和datetime模块需要导入        $/;"	v
+OldPostHeader	ZhihuHelp.py	/^def OldPostHeader(cursor=None):#可以加一个网络更新cookie的功能#Pass$/;"	f	access:public
+OldPostHeader	软件说明.py	/^def OldPostHeader(cursor=None)$/;"	f	access:public
+OpenHttpPage	软件说明.py	/^def OpenHttpPage(url=''):#打开网页,负责下载图片或者打开json列表,只尝试一次，失败时返回空字符串，错误信息中包含未打开网址。#$/;"	f	access:public
+OpenUrl	ZhiHuEpub.py	/^def OpenUrl(Request):#打开网页,只尝试一次，失败时返回空字符串，错误信息中包含未打开网址。话说字符串分割对空列表还有效否？#OKTag$/;"	f	access:public
+OpenUrl	ZhiHuEpub_Zhuanlan.py	/^def OpenUrl(url=""):$/;"	f	access:public
+OpenUrl	软件说明.py	/^def OpenUrl(Request):#打开网页,只尝试一次，失败时返回空字符串，错误信息中包含未打开网址。话说字符串分割对空列表还有效否？$/;"	f	access:public
+PixName	ZhiHuEpub.py	/^def PixName(t):#PassTag$/;"	f	access:public
+PixName	软件说明.py	/^def PixName(t):$/;"	f	access:public
+PostHeader	wahaha.py	/^PostHeader  =   OldPostHeader()$/;"	v
+PostInfo	ZhihuHelp.py	/^            PostInfo    =   json.loads(buf_read)$/;"	v
+PrintDict	ZhiHuEpub.py	/^def PrintDict(Dict={},Front=''):$/;"	f	access:public
+PrintDict	软件说明.py	/^def PrintDict(Dict={}):$/;"	f	access:public
+PrintInOneLine	ZhiHuEpub.py	/^def PrintInOneLine(text=''):$/;"	f	access:public
+PrintInOneLine	软件说明.py	/^def PrintInOneLine(text=''):$/;"	f	access:public
+ReadAnswer	ZhihuHelp.py	/^def ReadAnswer(ReDict,html_parser,LastDict,text="",Flag=1):#UnitTest#newCommitTag$/;"	f	access:public
+ReadAnswer	软件说明.py	/^def ReadAnswer(ReDict,html_parser,LastDict,text="",Flag=1):$/;"	f	access:public
+SaveCollectionIndexIntoDB	ZhihuHelp.py	/^def SaveCollectionIndexIntoDB(RequestDict={},CollectionID=0,cursor=None):#PassTag$/;"	f	access:public
+SaveCollectionIndexIntoDB	软件说明.py	/^def SaveCollectionIndexIntoDB(RequestDict={},CollectionID=0,cursor=None):$/;"	f	access:public
+SaveDict	ZhihuHelp.py	/^        SaveDict    =   {}$/;"	v
+SaveToDB	ZhihuHelp.py	/^def SaveToDB(cursor=None,NeedToSaveDict={},primarykey='',TableName=''):#Pass$/;"	f	access:public
+SaveToDB	软件说明.py	/^def SaveToDB(cursor=None,NeedToSaveDict={},primarykey='',TableName=''):$/;"	f	access:public
+TestCase	test_ZhihuHelp.py	/^class   TestCase(unittest.TestCase):$/;"	c	inherits:unittest.TestCase
+ThreadLiveDetect	ZhiHuEpub.py	/^def ThreadLiveDetect(ThreadList=[]):$/;"	f	access:public
+ThreadLiveDetect	软件说明.py	/^def ThreadLiveDetect(ThreadList=[]):$/;"	f	access:public
+ThreadWorker	ZhihuHelp.py	/^def ThreadWorker(cursor=None,MaxThread=200,RequestDict={},Flag=1):#newCommitTag$/;"	f	access:public
+ThreadWorker	软件说明.py	/^def ThreadWorker(cursor=None,ErrorTextDict={},MaxThread=200,RequestDict={},Flag=1)$/;"	f	access:public
+WorkForFetchUrl	ZhihuHelp.py	/^def WorkForFetchUrl(ReDict={},html_parser=None,RequestDict={},Page=0,AnswerDictList=[],Flag=1):#抓取回答链接#注意，Page是字符串#Pass$/;"	f	access:public
+WorkForFetchUrl	软件说明.py	/^def WorkForFetchUrl(ErrorTextDict={},ReDict={},html_parser=None,RequestDict={},Page=0,AnswerDictList=[],Flag=1):#抓取回答链接#注意，Page是字符串$/;"	f	access:public
+WriteHtmlFile	软件说明.py	/^def WriteHtmlFile(cursor=None,IndexList=[],InfoDict={},TargetFlag=0):$/;"	f	access:public
+ZhihuEpub	ZhiHuEpub.py	/^def ZhihuEpub(MaxThread=20):$/;"	f	access:public
+ZhihuFrontPage	ZhihuHelp.py	/^        ZhihuFrontPage=urllib2.urlopen(u"http:\/\/www.zhihu.com")#这里也可能出错#初次打开zhihu.com,获取xsrf信息$/;"	v
+ZhihuHelp	ZhihuHelp.py	/^def ZhihuHelp():$/;"	f	access:public
+ZhihuHelp_Epub	ZhiHuEpub_Zhuanlan.py	/^def ZhihuHelp_Epub(MaxThread=20):$/;"	f	access:public
+ZipToEpub	ZhiHuEpub.py	/^def ZipToEpub(EpubName='a.epub'):#newCommitTag$/;"	f	access:public
+ZipToEpub	软件说明.py	/^def  ZipToEpub(EpubName='a.epub'):$/;"	f	access:public
+buf	ZhihuHelp.py	/^                buf         =   urllib2.urlopen(request)$/;"	v
+buf_read	ZhihuHelp.py	/^            buf_read    = buf.read()#为什么只能读取一次？？？#info可以读取多次$/;"	v
+closeimg	ZhiHuEpub.py	/^def closeimg(text='',ImgList=[]):#PassTag$/;"	f	access:public
+closeimg	软件说明.py	/^def closeimg(text='',ImgList=[]):$/;"	f	access:public
+content	wahaha.py	/^        content =   OpenUrl(urllib2.Request(headers=PostHeader,url=t.replace('\\r','').replace('\\n','')))$/;"	v
+diff	ZhihuHelp.py	/^    diff        =   30- (today - recordtime).days$/;"	v
+f	wahaha.py	/^f   =   open('ReadList.txt','r')$/;"	v
+fixPic	ZhiHuEpub.py	/^def fixPic(t='',ImgList=[]):#PassTag$/;"	f	access:public
+fixPic	软件说明.py	/^def fixPic(t='',ImgList=[]):$/;"	f	access:public
+qc_0	ZhihuHelp.py	/^                qc_0    =   ''$/;"	v
+qc_0	ZhihuHelp.py	/^                qc_0    =   re.search(r'(q_c0=[^;]*)',buf.info()['set-cookie']).group(0)$/;"	v
+qc_1	ZhihuHelp.py	/^                    qc_1    =   ''$/;"	v
+qc_1	ZhihuHelp.py	/^                    qc_1    =   re.search(r'(q_c1=[^;]*)',buf.info()['set-cookie']).group(0)$/;"	v
+recordtime	ZhihuHelp.py	/^    recordtime  =   datetime.datetime.strptime(List[0],'%Y-%m-%d').date()$/;"	v
+removeAttibute	ZhiHuEpub.py	/^def removeAttibute(text='',AttList=[]):#PassTag$/;"	f	access:public
+removeAttibute	软件说明.py	/^def removeAttibute(text='',AttList=[]):$/;"	f	access:public
+removeTag	ZhiHuEpub.py	/^def removeTag(text='',tagname=[]):#NonUseTag$/;"	f	access:public
+removeTag	软件说明.py	/^def removeTag(text='',tagname=[]):$/;"	f	access:public
+request	ZhihuHelp.py	/^            request =   urllib2.Request(url='http:\/\/www.zhihu.com\/login',data=LoginData,headers=header)$/;"	v
+returnConnCursor	ZhihuHelp.py	/^def returnConnCursor():#Pass$/;"	f	access:public
+returnConnCursor	软件说明.py	/^def  returnConnCursor():$/;"	f	access:public
+returnCursor	ZhiHuEpub.py	/^def returnCursor():#PassTag$/;"	f	access:public
+returnCursor	软件说明.py	/^def returnCursor():$/;"	f	access:public
+returnHtml_FrontPage	软件说明.py	/^def returnHtml_FrontPage(cursor=None,Flag=0,InfoDict={}):#兼职把Info存到数据库里$/;"	f	access:public
+returnIndexList	ZhihuHelp.py	/^def returnIndexList(cursor=None,Target='',Flag=0,RequestDict={}):#Pass$/;"	f	access:public
+returnIndexList	软件说明.py	/^def returnIndexList(cursor=None,Target='',Flag=0,RequestDict={}):$/;"	f	access:public
+returnMarkDownCssStyle	MarkDownCssStyle.py	/^def returnMarkDownCssStyle():$/;"	f	access:public
+returnReDict	ZhihuHelp.py	/^def returnReDict():#返回编译好的正则字典#Pass$/;"	f	access:public
+returnReDict	软件说明.py	/^def returnReDict():#返回编译好的正则字典$/;"	f	access:public
+returnTagContent	ZhiHuEpub.py	/^def returnTagContent(text='',tagname=''):#NonUseTag$/;"	f	access:public
+returnTagContent	软件说明.py	/^def returnTagContent(text='',tagname=''):$/;"	f	access:public
+rowcount	ZhihuHelp.py	/^    rowcount    =   cursor.execute('select count(Pickle)  from VarPickle where Var="PostHeader"').fetchone()[0]    $/;"	v
+runner	test_ZhihuHelp.py	/^runner = unittest.TextTestRunner()$/;"	v
+setMaxThread	ZhiHuEpub.py	/^def setMaxThread():$/;"	f	access:public
+setMaxThread	ZhiHuEpub_Zhuanlan.py	/^def setMaxThread():$/;"	f	access:public
+setMaxThread	软件说明.py	/^def setMaxThread():$/;"	f	access:public
+setUp	test_ZhihuHelp.py	/^    def setUp(self):$/;"	m	class:TestCase	access:public
+suite	test_ZhihuHelp.py	/^def suite():$/;"	f	access:public
+tearDown	test_ZhihuHelp.py	/^    def tearDown(self):$/;"	m	class:TestCase	access:public
+testChooseTarget	test_ZhihuHelp.py	/^    def testChooseTarget(self):$/;"	m	class:TestCase	access:public
+testFetchMaxAnswerPageNum	test_ZhihuHelp.py	/^    def testFetchMaxAnswerPageNum(self):$/;"	m	class:TestCase	access:public
+title	wahaha.py	/^        title   =   re.search(r'<title>*?<\/title>',content.replace('\\r','').replace('\\n','').replace(' ','')).group(0)$/;"	v
+today	ZhihuHelp.py	/^    today       =   datetime.date.today()$/;"	v
