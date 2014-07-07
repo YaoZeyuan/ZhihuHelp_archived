@@ -23,7 +23,7 @@ import  sqlite3#数据库！
 #数据库部分
 import  pickle
 import  socket#捕获Timeout错误
-
+import  shutil#删除文件夹
 ###########################################################
 
 
@@ -345,8 +345,10 @@ try:
     pass
     ZhihuHelp_Epub(MaxThread)
 except :
+    print   u'程序异常退出，快上知乎上@姚泽源反馈下bug\n或者把bug和ReadList.txt一块发给yaozeyuan93@gmail.com也行，谢谢啦~\n错误信息如下:\n'
     info=sys.exc_info()  
     print info[0],":",info[1]
+    print   u'错误信息显示完毕\n点按回车退出'
     raw_input()
 
 

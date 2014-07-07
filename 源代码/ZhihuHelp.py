@@ -122,7 +122,7 @@ def CheckUpdate():#检查更新，强制更新#newCommitTag
     Time        =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     url         =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     UpdateComment=  UpdateTime.read()#可行？
-    if  Time=="2014-06-27":
+    if  Time=="2014-07-07":
         return
     else:
         print   u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(UpdateComment,Time)
