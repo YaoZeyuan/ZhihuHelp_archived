@@ -122,7 +122,7 @@ def CheckUpdate():#检查更新，强制更新#newCommitTag
     Time        =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     url         =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     UpdateComment=  UpdateTime.read()#可行？
-    if  Time=="2014-06-28":
+    if  Time=="2014-06-27":
         return
     else:
         print   u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(UpdateComment,Time)
@@ -713,10 +713,18 @@ def ZhihuHelp():
         SaveToDB(cursor=cursor,NeedToSaveDict=SaveToDBDict,primarykey='Var',TableName='VarPickle')
         conn.commit()
         
-    print   u'所有链接抓取完毕，久等了~'
-    print   u'开始生成电子书'
-    EpubBuilder(MaxThread)
+        print   u'开始生成电子书'
+        EpubBuilder(MaxThread,[TargetUrl,])#一本一本的做，便于发现问题
     print   u'恭喜，所有电子书制作完毕'
     print   u'点按回车退出'
     raw_input()
-ZhihuHelp()
+try:
+    pass
+    ZhihuHelp()
+except :
+    info=sys.exc_info()  
+    print   u'程序异常退出，快上知乎上@姚泽源反馈下bug\n或者把bug和ReadList.txt一块发给yaozeyuan93@gmail.com也行，谢谢啦~\n错误信息如下:\n'
+    print info[0],":",info[1]
+    print   u'错误信息显示完毕\n点按回车退出'
+    raw_input()
+

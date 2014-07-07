@@ -32,7 +32,7 @@ import  sqlite3#数据库！
 #数据库部分
 import  pickle
 import  socket#捕获Timeout错误
-
+import  shutil#删除目录
 #from    ZhihuHelp  import   PrintInOneLine,OpenUrl,ThreadLiveDetect ,ErrorReportText ,ChooseTarget,ErrorReturn,CopyFile#工具类函数都放在ZhihuEpub中
 ######Tool######
 from    MarkDownCssStyle    import  returnMarkDownCssStyle
@@ -385,7 +385,7 @@ def CreateOPF(OPFInfoDict={},Mainfest='',Spine=''):#生成文件函数均假定�
                <item id="ncx"   href="toc.ncx"      media-type="application/x-dtbncx+xml"/>
                <item id="cover" href="html/cover.html"   media-type="application/xhtml+xml"/>
                <item id="title" href="html/title.html"   media-type="application/xhtml+xml"/>'''%OPFInfoDict +   Mainfest+                '''
-               <item id="cover-image" href="images/cover.png" media-type="image/png"/>
+               <item id="cover-image" href="images/BookCover.png" media-type="image/png"/>
                <!-- Need to Choose Image Type -->
                </manifest>
                <spine toc="ncx" >
@@ -559,11 +559,13 @@ def MakeInfoDict(InfoDict={},TargetFlag=0):
         Dict['AuthorAddress']   =   InfoDict['TopicID']
         Dict['AuthorName']      =   u'知乎'
         Dict['Description']     =   InfoDict['Description']
+    for r   in  '< > / \ | : " * ?'.split(' '):#去除非法字符
+        Dict['BookTitle']   =   Dict['BookTitle'].replace(r,'')
     return Dict   
 
-def EpubBuilder(MaxThread=20):
+def EpubBuilder(MaxThread=20,FReadList=[]):
     cursor  =   returnCursor()
-    FReadList   =   open('ReadList.txt','r')
+    #FReadList   =   open('ReadList.txt','r')
     Mkdir(u"电子书制作临时资源库")
     Mkdir(u'电子书制作临时资源库/知乎图片池')
     Mkdir(u"知乎答案集锦")
@@ -586,6 +588,7 @@ def EpubBuilder(MaxThread=20):
         InfoDict            =   MakeInfoDict(InfoDict=InfoDict,TargetFlag=TargetFlag)
         os.chdir(u'电子书制作临时资源库')
         BufDir              =   u'%(BookTitle)s(%(AuthorAddress)s)_电子书制作临时文件夹'%InfoDict
+        shutil.rmtree(BufDir,True)#移除之前的缓存目录
         Mkdir(BufDir)
         os.chdir(BufDir)
         f   =   open('mimetype','w')
@@ -687,7 +690,7 @@ def EpubBuilder(MaxThread=20):
          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
          <meta name="provider" content="www.zhihu.com"/>
          <meta name="builder" content="ZhihuHelpv1.4"/>
-         <meta name="right" content="该文档由ZhihuHelp_v1.4生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
+         <meta name="right" content="该文档由ZhihuHelp_v1.6.2生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
          <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
                      <title>%(BookTitle)s</title>
                      </head>
@@ -714,9 +717,10 @@ def EpubBuilder(MaxThread=20):
         #复制CSS与cover两个文件到临时文件夹中
         
         for root,target,flag in  [
-                    (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/cover.png')     ,u'OEBPS/images/cover.png'  ,False)
-                ,   (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/88x31.png')     ,u'OEBPS/images/88x31.png'  ,False)
-                ,   (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/stylesheet.css'),u'OEBPS/stylesheet.css'    ,True)]:
+                    (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/BookCover.png') ,u'OEBPS/images/BookCover.png'  ,False)
+                ,   (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/cover.png')     ,u'OEBPS/images/cover.png'      ,False)
+                ,   (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/88x31.png')     ,u'OEBPS/images/88x31.png'      ,False)
+                ,   (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/stylesheet.css'),u'OEBPS/stylesheet.css'        ,True)]:
             CopyFile(root=root,TargetFile=target,flag=flag)
         
         DownloadPicWithThread(ImgList,MaxThread=MaxThread)

@@ -100,6 +100,8 @@ def MakeInfoDict(ColumnInfoDict={}):
     Dict['AuthorAddress']   =   ColumnInfoDict['Href']
     Dict['AuthorName']      =   ColumnInfoDict['Name']
     Dict['Description']     =   ColumnInfoDict['Description']
+    for r   in  '< > / \ | : " * ?'.split(' '):#去除非法字符
+        Dict['BookTitle']   =   Dict['BookTitle'].replace(r,'')
     return Dict   
 
 def OpenUrl_Zhuanlan(url=""):
@@ -207,6 +209,7 @@ def ZhihuHelp_Epub(MaxThread=20):
        
         os.chdir(u'电子书制作临时资源库')
         BufDir              =   u'%(BookTitle)s(%(AuthorAddress)s)_电子书制作临时文件夹'%InfoDict
+        shutil.rmtree(BufDir,True)#移除之前的缓存目录
         Mkdir(BufDir)
         os.chdir(BufDir)
         f   =   open('mimetype','w')
@@ -319,7 +322,9 @@ def ZhihuHelp_Epub(MaxThread=20):
         #复制CSS与cover两个文件到临时文件夹中
         #print os.path.abspath('../../'+os.curdir+'/电子书制作资源文件夹/cover.jpg')
         for root,target,flag in  [
-                    (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/cover.png')     ,u'OEBPS/images/cover.png'  ,False)
+
+                    (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/BookCover.png') ,u'OEBPS/images/BookCover.png'  ,False)
+                ,   (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/cover.png')     ,u'OEBPS/images/cover.png'  ,False)
                 ,   (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/88x31.png')     ,u'OEBPS/images/88x31.png'  ,False)
                 ,   (os.path.abspath('../../'+os.curdir+u'/电子书制作资源文件夹/stylesheet.css'),u'OEBPS/stylesheet.css'    ,True)]:
             CopyFile(root=root,TargetFile=target,flag=flag)
@@ -334,4 +339,15 @@ def ZhihuHelp_Epub(MaxThread=20):
     exit()
 print   u'请设置下载图片时的最大线程数\n线程越多速度越快，但线程过多会导致知乎服务器故障导致图片下载失败，默认最大线程数为20\n请输入一个数字（1~50），回车确认'
 MaxThread   =   setMaxThread()
-ZhihuHelp_Epub(MaxThread)
+
+
+try:
+    pass
+    ZhihuHelp_Epub(MaxThread)
+except :
+    info=sys.exc_info()  
+    print info[0],":",info[1]
+    raw_input()
+
+
+
