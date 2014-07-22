@@ -36,7 +36,24 @@ import  shutil#删除目录
 #from    ZhihuHelp  import   PrintInOneLine,OpenUrl,ThreadLiveDetect ,ErrorReportText ,ChooseTarget,ErrorReturn,CopyFile#工具类函数都放在ZhihuEpub中
 ######Tool######
 from    MarkDownCssStyle    import  returnMarkDownCssStyle
-def Setting(ReadFlag=True,ID='',Password='',MaxThread=''):#newCommitTag
+def Setting(ReadFlag=True,ID='',Password='',MaxThread='',PicDownload=''):#newCommitTag
+    u"""
+        *   功能
+            *   在无参的情况下，读取设置文件，返回设置内容
+            *   有参时，将参数写入设置文件中
+        *   输入
+            *   ReadFlag
+                *   标志是否读取设置文件,否则重新进行设置
+            *   ID
+                *   用户名
+            *   Password
+                *   密码
+            *   MaxThread
+                *   最大线程数
+        *   返回
+             *   ID,Password,MaxThread
+
+     """
     config  =   ConfigParser.SafeConfigParser()
     if  not os.path.isfile('setting.ini'):
         f   =   open('setting.ini','w')
@@ -48,16 +65,33 @@ def Setting(ReadFlag=True,ID='',Password='',MaxThread=''):#newCommitTag
         ID          =   config.get('ZhihuHelp','UserName'   ,raw=True)
         Password    =   config.get('ZhihuHelp','Password'   ,raw=True)
         MaxThread   =   config.get('ZhihuHelp','MaxThread'  ,raw=True)
+        PicDownload =   config.get('ZhihuHelp','PicDownload',raw=True)
+                    #是否下载图片,0不下载，1下载普通图片，2下载高清大图
+                    #若无以上任一设置，会抛出异常
     else    :
         if  ID!='':
-            config.set('ZhihuHelp','UserName'   ,ID             )
-            config.set('ZhihuHelp','Password'   ,Password       )
+            config.set('ZhihuHelp','UserName'   ,ID              )
+            config.set('ZhihuHelp','Password'   ,Password        )
         if  MaxThread!='':
-            config.set('ZhihuHelp','MaxThread'  ,str(MaxThread) )
+            config.set('ZhihuHelp','MaxThread'  ,str(MaxThread)  )
+        if  PicDownload!='':
+            config.set('ZhihuHelp','PicDownload',str(PicDownload))
         config.write(open('setting.ini','w'))
-    return  ID,Password,MaxThread
+    return  ID,Password,MaxThread,PicDownload
 
 def PrintDict(Dict={},Front=''):
+    u"""
+        *   功能
+            *   辅助类函数
+            *   用于将字典内容以规则化的树状形式进行输出
+        *   输入
+            *   Dict
+                *   待输出字典
+            *   Front
+                *   前导空格
+        *   返回
+            *   无
+     """
     for r   in  Dict:
         if  type(Dict[r]) ==   type(Dict):
             print   '||'+'\t'+Front+'\t'+str(r)+':'
@@ -67,8 +101,18 @@ def PrintDict(Dict={},Front=''):
                 Front_  =   (Front[:-1]+'∟'+Front[-1:])
             else:
                 Front_=''
-            print   '||'+u'\t'+Front_+str(r).decode(encoding="utf-8",errors='ignore') ,':\t',str(Dict[r]).decode(encoding="utf-8",errors='ignore')
+            print   '||'+u'\t'+Front_+str(r) ,':\t',str(Dict[r])
 def PrintInOneLine(text=''):#Pass
+    u"""
+        *   功能
+            *   反复在一行内输出内容
+            *   输出前会先将光标移至行首，输出完毕后不换行
+        *   输入
+            *   待输出字符
+        *   返回
+            *  无
+            *  若输出失败则将失败的文本输出至『未成功打开的页面.txt』内
+     """
     try:
         sys.stdout.write("\r"+" "*60+'\r')
         sys.stdout.flush()
@@ -77,6 +121,20 @@ def PrintInOneLine(text=''):#Pass
     except:
         ErrorReportText(text)
 def OpenUrl(Request,Timeout=5):#打开网页,只尝试一次，失败时返回空字符串，错误信息中包含未打开网址。话说字符串分割对空列表还有效否？#OKTag
+    u"""
+        *   功能
+            *   打开Request中指定的网页，成功则返回原始网页内容\
+                （只针对gzip进行解压缩，对其他格式例如jpg直接返回二进制内容，不进行额外处理）
+            *   仅尝试一次，若打开失败则返回空字符串
+        *   输入
+            *   Request
+                *   待打开的Http请求
+            *   Timeout
+                *   超时时间
+        *   返回
+            *   所打开网页的原始内容
+            *   失败返回空字符串
+     """
     try :
         Content =   urllib2.urlopen(Request,timeout=Timeout)
     except  urllib2.HTTPError   as  inst:
@@ -114,12 +172,30 @@ def OpenUrl(Request,Timeout=5):#打开网页,只尝试一次，失败时返回�
     return  ''#失败则返回空字符串
 
 def ErrorReturn(ErrorInfo=""):#返回错误信息并退出，错误信息要用unicode编码
+    u"""
+        *   功能
+            *   打印错误信息，等待用户敲回车之后再退出
+        *   输入
+            *   ErrorInfo
+                *   待打印错误信息
+        *   返回
+            *   无
+     """
     print   ErrorInfo
     print   u"点按回车退出"
     input()                                                                       
     os._exit(0)                                                                     
 
 def setMaxThread():
+    u"""
+        *   功能
+            *   引导用户设定最大线程数
+            *   默认20，其间出现任何意外都会定为20
+        *   输入
+            *   无
+        *   返回
+            *   所设定的最大线程数
+     """
     try:
         MaxThread=int(raw_input())
     except  ValueError as e  :
@@ -139,6 +215,15 @@ def setMaxThread():
     return  MaxThread     
 
 def ThreadLiveDetect(ThreadList=[]):
+    u"""
+        *   功能
+            *   等待给定list中的线程执行完毕
+        *   输入
+            *   线程列表
+        *   返回
+            *   待列表中的所有线程执行完毕后返回
+            *   不会检测死锁
+     """
     LiveFlag =   True
     while   LiveFlag:#等待线程执行完毕
         LiveFlag =   False
@@ -150,13 +235,41 @@ def ThreadLiveDetect(ThreadList=[]):
         PrintInOneLine(   u"目前还有{}条线程正在运行,等待所有线程执行完毕".format(Running))
         time.sleep(1)
 def ErrorReportText(Info='',flag=True):
+    u"""
+        *   功能
+            *   将错误信息写入到『未能成功打开的页面.txt』中
+        *   输入
+            *   Info
+                *   错误信息
+            *   flag
+                *   标示符
+                *   True    ->  新建文件
+                *   False   ->  在原有文件上添加
+        *   返回
+            *   无
+     """
     if  flag    :
-        f   =open(u'未能成功打开的页面.txt','a')
+        f   =open(u'未能成功打开的页面.txt','ab')
     else    :
-        f   =open(u'未能成功打开的页面.txt','w')
+        f   =open(u'未能成功打开的页面.txt','wb')
     f.write(Info)
     f.close()
 def ChooseTarget(url=''):#选择#Pass
+    u"""
+    *   功能
+        *   识别不同的网址类别
+    *   输入
+        *   网址
+    *   返回
+        *   用户主页
+            *   1，用户ID
+        *   收藏夹主页
+            *   2，收藏夹ID
+        *   知乎圆桌
+            *   3，圆桌ID
+        *   知乎话题
+            *   4，话题ID
+    """
     try :
         ID      =   re.search(r'(?<=zhihu\.com/people/)[^/]*',url).group(0)#匹配ID
     except  AttributeError:
@@ -188,6 +301,21 @@ def ChooseTarget(url=''):#选择#Pass
     return  0,""
 
 def CopyFile(root='',TargetFile='',flag=True):#Pass
+    u"""
+        *   功能
+            *   将root所指向的文件复制到TargetFile中
+            *   复制错误会将文件地址输出至错误文件中
+        *   输入
+            *   root
+                *   原文件地址
+            *   TargetFile
+                *   目标文件地址
+            *   flag
+                *   二进制标示符
+                *   Fasle表示其为二进制文件
+        *   返回
+            *   无
+     """
     try :
         if  flag    :
             f   =   open(root,'r')
@@ -203,12 +331,34 @@ def CopyFile(root='',TargetFile='',flag=True):#Pass
 ####ToolEnd####
 
 def CheckImgFileExist(CheckList=[],ErrorList=[]):#PassTag
+    u"""
+        *   功能
+            *   检测CheckList中的文件是否存在，将不存在的文件添加到ErrorList中
+        *   输入
+            *   CheckList
+            *   ErrorList
+        *   返回
+            *   无
+     """
     for url in  CheckList:
         MetaName    =   u'../知乎图片池/'   +   PixName(url)
         if  not os.path.isfile(MetaName):
             ErrorList.append(url)
 
 def DownloadPicWithThread(ImgList=[],MaxThread=20):#添加图片池功能#当图片下载完成时在ImgList中删除之#newCommitTag
+    u"""
+        *   功能
+            *   下载ImgList中的所有图片
+            *   若图片下载失败，将图片地址打印并输出至『未成功打开的网页.txt』中
+        *   输入
+            *   ImgList
+                *   待下载图片列表
+            *   MaxThread
+                *   最大线程数
+                    *   即最大并发下载数
+        *   返回
+            *   无
+     """
     Time=0
     MaxPage     =   len(ImgList)
     ErrorList   =   []
@@ -251,6 +401,16 @@ def DownloadPicWithThread(ImgList=[],MaxThread=20):#添加图片池功能#当图
             print   t
         f.close()
 def returnCursor():#PassTag
+    u"""
+        *   功能
+            *   返回数据库游标
+            *   因为不准备在Epub模块中对数据库进行写操作，所以不提供conn
+        *   输入
+            *   无
+        *   返回
+            *   数据库游标
+            *   若数据库不存在，打印错误信息并返回None
+     """
     if  os.path.isfile('./ZhihuDateBase.db'):
         conn    =   sqlite3.connect("./ZhihuDateBase.db")
         conn.text_factory = str
@@ -260,6 +420,16 @@ def returnCursor():#PassTag
         ErrorReturn(u'抱歉，没有找到数据库，请先运行知乎助手')
         return  None
 def Mkdir(DirName=u''):#PassTag
+    u"""
+        *   功能
+            *   创建指定文件夹
+            *   若文件夹已存在，则跳过
+        *   输入
+            *   文件夹名
+                *   不需要指定路径
+        *   返回
+            *   无
+     """
     if  DirName=='':
         return
     else:
@@ -269,10 +439,26 @@ def Mkdir(DirName=u''):#PassTag
             pass#已存在
     return
 def CreateMimeType():#PassTag
+    u"""
+        *   功能
+            *   创建mimetype文件
+        *   输入
+            *   无
+        *   返回
+            *   无
+     """
     f   =   open('mimetype','w')
     f.write('application/epub+zip')
     f.close()
 def CreateContainer_XML():#PassTag
+    u"""
+        *   功能
+            *   创建container.xml文件
+        *   输入
+            *   无
+        *   返回
+            *   无
+     """
     f   =   open('META-INF/container.xml','w')      
     f.write('''<?xml version="1.0"?>
 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
@@ -314,14 +500,35 @@ def removeAttibute(text='',AttList=[]):#PassTag
         for t   in  re.findall(r'\s'+Att+'[^\s^>]*',text):
             text    =   text.replace(t,'')
     return text
-def closeimg(text='',ImgList=[]):#PassTag#若有大图直接下载之#为图片添加点击框
-    for t   in  re.findall(r'<img.*?>',text):
-        try :
-            t.index('data-original')
-        except  :
-            text    =   text.replace(t,fixPic(removeAttibute(t,['data-rawwidth','data-original']).replace("data-rawheight",'height')[:-1]+u'  alt="知乎图片"/>',ImgList))
-        else:
-            text    =   text.replace(t,fixPic(removeAttibute(t,['data-rawwidth','data-original']).replace("data-rawheight",'height')[:-1]+u'  alt="知乎图片"/>',ImgList))#使用小图，用原图可以将data-original替换为src
+def closeimg(text='',ImgList=[],PicDownload=1):#PassTag#若有大图直接下载之#为图片添加点击框
+    u"""
+        *   功能
+            *   图片处理主函数
+            *   负责提取出答案内容中的所有图片，并将下载地址传入ImgList中
+            *   同时，将图片链接替换为内部链接
+        *   输入
+            *   text
+                *   待处理答案内容
+            *   ImgList
+                *   图片链接存放列表
+        *   输出
+            *   无
+     """
+    if  not PicDownload:
+        text    =   removeTag(text=text,tagname=["img"])
+    elif    PicDownload==1:
+        for t   in  re.findall(r'<img.*?>',text):
+            text    =   text.replace(t,fixPic(removeAttibute(t,['data-rawwidth','data-original']).replace("data-rawheight",'height')[:-1]+u'  alt="知乎图片"/>',ImgList))#使用小图
+    else:
+        for t   in  re.findall(r'<img.*?>',text):#有可能没有data-original属性
+            try :
+                text.index('data-original')
+            except  ValueError:
+                text    =   text.replace(t,fixPic(removeAttibute(t,['data-rawwidth','data-original']).replace("data-rawheight",'height')[:-1]+u'  alt="知乎图片"/>',ImgList))
+            else:
+                text    =   text.replace(t,fixPic(removeAttibute(t,['data-rawwidth','src'])\
+                                .replace('data-original','src').replace("data-rawheight",'height')[:-1]\
+                                +u'  alt="知乎图片"/>',ImgList))#将data-original替换为src即为原图
     return text
 def PixName(t):#PassTag
     return  re.search(r'[^/"]*?\.jpg',t).group(0)
@@ -436,12 +643,12 @@ def ZipToEpub(EpubName='a.epub'):#newCommitTag
                     continue
                 Help_ZipToEpub(Dir=filepath)
             else:
-                PrintInOneLine(   u'将{}添加至电子书内'.format(filepath).decode(encoding="utf-8",errors='ignore'))
+                PrintInOneLine(   u'将{}添加至电子书内'.format(filepath))
                 epub.write(filepath, compress_type=zipfile.ZIP_STORED)
     Help_ZipToEpub()
     epub.close()
 ##########################################################新开始
-def DealAnswerDict(cursor=None,AnswerDict={},ImgList=[]):#必须是符合规定的Dict，规定附后
+def DealAnswerDict(cursor=None,AnswerDict={},ImgList=[],PicDownload=1):#必须是符合规定的Dict，规定附后
     for t in AnswerDict['AnswerList']:
         Dict                    =   {}
         SelectAnswerList        =   cursor.execute("select * from AnswerInfoTable where Questionhref=?",(t,)).fetchone()#SQLTag
@@ -458,7 +665,7 @@ def DealAnswerDict(cursor=None,AnswerDict={},ImgList=[]):#必须是符合规定�
         Dict['ID']              =   SelectAnswerList[0]
         Dict['Sign']            =   SelectAnswerList[1]
         Dict['AgreeCount']      =   SelectAnswerList[2]
-        Dict['AnswerContent']   =   closeimg(AnswerContent.replace('<hr>','<hr />').replace('<br>','<br />'),ImgList)
+        Dict['AnswerContent']   =   closeimg(AnswerContent.replace('<hr>','<hr />').replace('<br>','<br />'),ImgList,PicDownload)
         Dict['QuestionID']      =   SelectAnswerList[3]
         Dict['AnswerID']        =   SelectAnswerList[4]
         Dict['UpdateTime']      =   SelectAnswerList[5]
@@ -563,7 +770,7 @@ def MakeInfoDict(InfoDict={},TargetFlag=0):
         Dict['BookTitle']   =   Dict['BookTitle'].replace(r,'')
     return Dict   
 
-def EpubBuilder(MaxThread=20,FReadList=[]):
+def EpubBuilder(MaxThread=20,FReadList=[],PicDownload=1):
     cursor  =   returnCursor()
     #FReadList   =   open('ReadList.txt','r')
     Mkdir(u"电子书制作临时资源库")
@@ -620,7 +827,7 @@ def EpubBuilder(MaxThread=20,FReadList=[]):
         for t   in  AnswerDict:
             DictNo+=1
             PrintInOneLine(u'正在处理第{}个回答共{}个'.format(DictNo,DictCountNo))
-            DealAnswerDict(cursor=cursor,ImgList=ImgList,AnswerDict=AnswerDict[t])
+            DealAnswerDict(cursor=cursor,ImgList=ImgList,AnswerDict=AnswerDict[t],PicDownload=PicDownload)
             SortList.append((t,AnswerDict[t]['AgreeCount']))
         #开始输出目录与文件
         print   u'答案处理完成，开始输出文件'
@@ -657,7 +864,7 @@ def EpubBuilder(MaxThread=20,FReadList=[]):
             Mainfest+=u'<item id="chapter{No}" href="html/chapter{No}.html" media-type="application/xhtml+xml"   />\n'.format(No=No)
             Spine   +=u'<itemref idref="chapter{No}" linear="yes"/>\n'.format(No=No)
             TitleHtml.write(u"""<li><a style="text-decoration:none" href="chapter{No}.html">{Title}</a></li>\n""".format(No=No,Title=TitleStr))#添加了一条隐藏下划线的设定
-            f   =   open(u'./OEBPS/html/chapter{}.html'.format(No),'w')
+            f   =   open(u'./OEBPS/html/chapter{}.html'.format(No),'wb')#直接作为数据流写入试试，直接写入数据刘应该不会再出现编码错误了，实在不行就换codec模块
             f.write(AnswerDict[t[0]]['HtmlStr'])
             f.close()
         Ncx +="</navMap>"

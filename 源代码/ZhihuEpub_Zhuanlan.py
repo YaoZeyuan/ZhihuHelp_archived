@@ -261,7 +261,7 @@ def ZhihuHelp_Epub(MaxThread=20):
             Spine   +=u'<itemref idref="chapter{No}" linear="yes"/>\n'.format(No=No)
         
             TitleHtml.write(u"""<li><a style="text-decoration:none" href="chapter{No}.html">{Title}</a></li>\n""".format(No=No,Title=TitleStr))
-            f   =   open(u'./OEBPS/html/chapter{}.html'.format(No),'w')
+            f   =   open(u'./OEBPS/html/chapter{}.html'.format(No),'wb')
             f.write(t['HtmlStr'])
             f.close()
         Ncx +="</navMap>"

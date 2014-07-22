@@ -18,6 +18,10 @@ sys.setdefaultencoding('utf-8')
 
 
 
+
+
+
+
 import  sqlite3#数据库！
 
 ###########################################################
@@ -32,7 +36,43 @@ from    ZhihuEpub   import  *
 #个人答案页面、收藏夹页面答案连接提取
 #由returnAnswerList返回提取的答案链接列表，格式：['/question/21354/answer/15488',]
 #网页答案抓取
+def SetPicDownload():
+    u"""
+        *   功能
+            *   引导用户进行图片下载设置，返回图片设置代码
+                *   0   不下载图片
+                *   1   下载普通图片
+                *   2   下载高清图
+                *   默认为1
+        *   输入
+            *   无
+        *   返回
+            *   PicDownload
+     """
+    try:
+        print   u"请选择图片模式，根据提示输入相应数字，回车确认：\n0   ：  不下载任何图片#所生成的电子书最小\n1   ：  只下载标清图片#所生成电子书体积中等,为系统默认值，但对于1000条以上的答案集锦来说体积可能会大到无法接受\n2   ：  下载高清大图#所生成电子书的体积是标清图的4倍，答案量在100条以下时可以考虑使用\n"
+        PicDownload =   int(raw_input())
+    except  ValueError as e  :
+        print   e
+        print   u'貌似输入的不是数...自动使用默认值标清模式，点击回车继续运行'
+        PicDownload =   1
+        raw_input()
+    return  PicDownload
+
+
+
 def FetchMaxAnswerPageNum(Content=""):#简单搜索比正则更快#OKTag
+    u"""
+    *   功能
+        *   返回答案列表中的最大页码
+        *   辅助函数
+        *   不抛错
+    *   输入
+        *   答案列表首页内容
+            *   已替换掉所有换行符
+    *   返回
+        *   答案页码
+    """
     try:
         Pos         =   Content.index(u'">下一页</a></span>')
         RightPos    =   Content.rfind(u"</a>",0,Pos)
@@ -45,7 +85,22 @@ def FetchMaxAnswerPageNum(Content=""):#简单搜索比正则更快#OKTag
         return 1
 #答案信息读取
 def ThreadWorker(cursor=None,MaxThread=200,RequestDict={},Flag=1):#newCommitTag
-
+    u"""
+    *   功能
+        *   将待打开的网页分配给每一个线程池迸发执行
+        *   将解析所得的答案内容储存于数据库中
+        *   主要函数
+    *   输入
+        *   数据库游标，用于储存答案内容
+        *   最大线程数
+        *   待打开网页Request字典
+        *   标志符
+            *   用于对不同类型的内容进行处理
+            *   标志符来自CheckUpdate返回值
+            *   话题的标志符为4
+    *   返回
+        *   无
+    """
     MaxPage =   len(RequestDict)
     ReDict  =   returnReDict()
     AnswerDictList=[]#储存Dict，一并执行SQL
@@ -88,6 +143,18 @@ def ThreadWorker(cursor=None,MaxThread=200,RequestDict={},Flag=1):#newCommitTag
         AppendDictIntoDataBase(cursor,Dict)
     return
 def SaveCollectionIndexIntoDB(RequestDict={},CollectionID=0,cursor=None):#PassTag
+    u"""
+    *   功能：
+        *   将收藏夹/话题内容索引储存于数据库中，但_不进行提交_
+        *   对于传入的数据，无则新建，有便更新
+        *   键为收藏夹/话题ID，值为答案链接
+    *   输入
+        *   网页请求字典（可以从中提取出答案链接）
+        *   目标CollectionID，注：用户名、话题ID、收藏夹ID均可视为不同的CollectionID
+        *   数据库游标
+    *   返回
+        *   无
+    """
     AnswerList  =   []
     for t   in  RequestDict:
         try:
@@ -99,21 +166,38 @@ def SaveCollectionIndexIntoDB(RequestDict={},CollectionID=0,cursor=None):#PassTa
         rowcount    =   cursor.execute('select  count(CollectionID) from    CollectionIndex where CollectionID=?    and Questionhref=?',(CollectionID,i)).fetchone()[0]
         if  rowcount    ==  0:
             cursor.execute('insert  into CollectionIndex   (CollectionID,Questionhref)  values  (?,?) ',(CollectionID,i))
-        else    :
-            pass
     return
 def AppendDictIntoDataBase(cursor=None,Dict={}) :   #假定已有数据库#PassTag
-    bufDict     =   Dict
-    bufAnswerContent    =   bufDict['AnswerContent']  
-    del bufDict['AnswerContent']
-    SaveToDB(cursor=cursor,NeedToSaveDict=bufDict,primarykey='Questionhref',TableName='AnswerInfoTable')
+    u"""
+        *   功能
+            *   将答案内容及其信息储存于数据库的_AnswerContentTable_与_AnswerInfoTable_表中，但_不进行提交_
+            *   对于传入的数据，无则新建，有便更新
+            *   键为答案链接，值为答案内容
+        *   输入
+            *   Dict，待储存字典
+            *   数据库游标
+        *   返回
+            *   无
+    """
+    #bufDict             =   Dict#python中一切皆引用，如想按值传递必须使用copy.deepcopy
     bufDict                     =   {}
-    bufDict['AnswerContent']    =   bufAnswerContent
+    bufDict['AnswerContent']    =   Dict['AnswerContent']
     bufDict['Questionhref']     =   Dict['Questionhref']
-    SaveToDB(cursor=cursor,NeedToSaveDict=bufDict,primarykey='Questionhref',TableName='AnswerContentTable')
+    SaveToDB(cursor=cursor,NeedToSaveDict=bufDict,primarykey='Questionhref',TableName='AnswerContentTable'  )
+    del Dict['AnswerContent']
+    SaveToDB(cursor=cursor,NeedToSaveDict=Dict   ,primarykey='Questionhref',TableName='AnswerInfoTable'     )
     return 
 def CheckUpdate():#检查更新，强制更新#newCommitTag
-
+    u"""
+        *   功能
+            *   检测更新。
+            *   若在服务器端检测到新版本，自动打开浏览器进入新版下载页面
+            *   网页请求超时或者版本号正确都将自动跳过
+        *   输入
+            *   无
+        *   返回
+            *   无
+    """
     print   u"检查更新。。。"
     try:
         UpdateTime  =   urllib2.urlopen(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt",timeout=10)
@@ -126,22 +210,32 @@ def CheckUpdate():#检查更新，强制更新#newCommitTag
         return
     else:
         print   u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(UpdateComment,Time)
-        print   u'新版本下载地址:'+url
-        raw_input()
+        raw_input(u'新版本下载地址:'+url)
         import  webbrowser
         webbrowser.open_new_tab(url)
     return
 
 def returnReDict():#返回编译好的正则字典#Pass
+    u"""
+        *   功能
+            *   返回编译完成的正则表达式字典
+        *   输入
+            *   无
+        *   返回
+             *   无
+     """
     Dict    =   {}
     Dict['_Collection_QusetionTitle']   =   re.compile(r'(?<=href="/question/\d{8}">).*?(?=</a></h2>)')
     Dict['_QusetionTitle']              =   re.compile(r'(?<=href="/question/\d{8}/answer/\d{8}">).*?(?=</a></h2>)')
-    Dict['_AnswerContent']              =   re.compile(r'(?<=<textarea class="content hidden">).*(?=<span class="answer-date-link-wrap"><a class="answer-date-link meta-item" target="_blank" href="/question/\d{8}/answer/\d{8}">[^<]*</a></span></textarea>)')
+    Dict['_AnswerContent']              =   re.compile(r'(?<=<textarea class="content hidden">).*?(?=<span class="answer-date-link-wrap"><a class="answer-date-link .*?meta-item".*?target="_blank" href="/question/\d{8}/answer/\d{8}">[^<]*</a></span></textarea>)')
     Dict['_AgreeCount']                 =   re.compile(r'(?<=data-votecount=")\d*(?=">)')
-    Dict['_QuestionID']                 =   re.compile(r'(?<=<a class="answer-date-link meta-item" target="_blank" href="/question/)\d{8}(?=/answer/\d{8})')#数字位数可能有误#不过对11年的数据也有效，貌似多虑了——除非知乎问题能突破5千万条，否则没必要更新
-    Dict['_AnswerID']                   =   re.compile(r'(?<=<a class="answer-date-link meta-item" target="_blank" href="/question/\d{8}/answer/)\d{8}(?=">)')
-    Dict['_Questionhref']               =   re.compile(r'(?<=<a class="answer-date-link meta-item" target="_blank" href=")[/question\danswer]{34}(?=">)')
-    Dict['_UpdateTime']                 =   re.compile(r'(?<=<a class="answer-date-link meta-item" target="_blank" href="/question/\d{8}/answer/\d{8}">).*(?=</a></span></textarea>)')#分为13：25、昨天 00:26、2013-05-07三种情况，需进一步处理
+    Dict['_QuestionID']                 =   re.compile(r'(?<=target="_blank" href="/question/)\d{8}(?=/answer/\d{8})')#数字位数可能有误#不过对11年的数据也有效，貌似多虑了——除非知乎问题能突破5千万条，否则没必要更新
+    Dict['_AnswerID']                   =   re.compile(r'(?<=target="_blank" href="/question/\d{8}/answer/)\d{8}(?=">)')
+    Dict['_Questionhref']               =   re.compile(r'(?<=target="_blank" href=")[/question\danswer]{34}(?=">)')
+    Dict['_AnswerInfo']                 =   re.compile(r'(<a class="answer-date-link.*?target="_blank" href="/question/\d{8}/answer/\d{8}">.{4}.*?</a></span>)')
+    Dict['_UpdateTime']        =   re.compile(r'(?<=target="_blank" href="/question/\d{8}/answer/\d{8}">).{4}.*?(?=</a></span>)')#新版编辑日期提取方式,需要进行二次匹配
+    #Dict['_UpdateTime']                =   re.compile(r'(?<=<a class="answer-date-link meta-item" target="_blank" href="/question/\d{8}/answer/\d{8}">).*(?=</a></span>)')#旧版编辑日期提取方式
+    #分为13：25、昨天 00:26、2013-05-07三种情况或{『编辑于 00:20  』『编辑于 2014-05-11』『发布于 昨天 19:52』、『发布于 2014-05-24』}，muqianzhengzaijinxing A/B测试，待定,需进一步处理
     Dict['_CommitCount']                =   re.compile(r'(?<=<i class="z-icon-comment"></i>).*?(?= )')#若转化为int失败则是添加评论#即为0条
     Dict['_ID']                         =   re.compile(r'(?<=<a data-tip="p\$t\$)[^"]*(?=" href="/people/)')
     Dict['_UnSuccessName']              =   re.compile(r'(?<=<h3 class="zm-item-answer-author-wrap">).*(?=</h3></div>)')
@@ -151,6 +245,26 @@ def returnReDict():#返回编译好的正则字典#Pass
     return  Dict
         
 def ReadAnswer(ReDict,html_parser,LastDict,text="",Flag=1):#UnitTest#newCommitTag
+    u"""
+        *   功能
+            *   根据待处理目标Flag的不同，分析处理答案，返回处理完之后的答案字典
+            *   通过编写正则表达式，对传入的文本不断匹配，以获得所欲求得的信息
+        *   输入
+            *   ReDict
+                *   正则模版
+            *   html_parser
+                *   网页分析类，用于将实体字符转换为正常字符
+            *   LastDict
+                *   上一个答案字典
+                *   当问题链接缺失时，使用之前的问题链接
+            *   text
+                *   待处理文本
+            *   Flag
+                *   模式标志符
+        *   返回
+             *   处理完成后的标准答案字典
+     """
+
     Dict={}    
     Dict["ID"]              =   ""   ##    
     Dict["Sign"]            =   ""#
@@ -223,33 +337,63 @@ def ReadAnswer(ReDict,html_parser,LastDict,text="",Flag=1):#UnitTest#newCommitTa
     
     #常规匹配   
     #时间放到最后，因为要靠时间验证是否匹配成功
-    for t   in  ["AgreeCount","QuestionID","AnswerID","UpdateTime","Questionhref"]:
+    #知乎页面结构正在改变，待稳定下来以后再进行修改
+    #完成注释添加工作后回来添加对单个问题与答案的处理
+    for t   in  ["AgreeCount","AnswerInfo"]:
         if  Help_ReadAnswer(t):
             pass
         else:
             return Dict
-    
+    for t   in  ["Questionhref","QuestionID","AnswerID","UpdateTime"]:
+        try:
+            Dict[t]      =   ReDict['_'+t].search(Dict['AnswerInfo']).group(0)  
+        except  AttributeError:
+            print   t+u"没有收集到"   
+            ErrorReturn(u"知乎页面结构已变动，程序无法正常运行，快上知乎@姚泽源喊他更新脚本" )
     for t   in  ['UserIDLogoAdress','Sign','CommitCount']:    
         if  Help_ReadAnswer(t,False):
             pass
         else:
             return Dict
-
-    Dict["Questionhref"]    =   'http://www.zhihu.com'+Dict["Questionhref"]
+    try:
+        Dict["CommitCount"]     =   int(Dict["CommitCount"])
+    except  :#类型转换失败即为没有评论
+        Dict["CommitCount"]     =   0
+    Dict["Questionhref"]        =   'http://www.zhihu.com'+Dict["Questionhref"]
     
     if  len(Dict["UpdateTime"])!=10 :        
         if  len(Dict["UpdateTime"])!=5  :
             Dict["UpdateTime"]  =   time.strftime(u'%Y-%m-%d',time.localtime(time.time()-86400))#昨天
         else    :
             Dict["UpdateTime"]  =   time.strftime(u'%Y-%m-%d',time.localtime(time.time()))#今天
-    
+    del Dict['AnswerInfo']
     return Dict
 
 def WorkForFetchUrl(ReDict={},html_parser=None,RequestDict={},Page=0,AnswerDictList=[],Flag=1):#抓取回答链接#注意，Page是字符串#Pass
+    u"""
+        *   功能
+            *   抓取指定答案列表页面进行读取，分析处理得到答案Dict后添加至AnswerDictList中
+            *   主要函数
+        *   输入
+            *   ReDict
+                *   正则Map，直接传递给ReadAnswer
+            *   html_parser
+                *   html解析器，也是直接传递给ReadAnswer
+            *   RequestDict
+                *   待打开网页Map
+            *   Page
+                *   待打开页面，使用RequestDict[Page]获取页面Request头
+            *   AnswerDictList
+                *   答案列表，用于储存提取出的答案字典
+            *   Flag
+                *   标志符，针对不同的网页类型分别进行处理
+        *   返回
+             *   无
+    """
     print   u"正在抓取第{}页上的答案".format(Page+1)
     AnswerList  =   []
     try :
-        k   =   OpenUrl(RequestDict[Page][0]).decode(encoding='utf-8',errors='ignore')#文本内容必须要经过编码，否则会导致搜索时出现故障
+        k   =   OpenUrl(RequestDict[Page][0]).decode(encoding='utf-8',errors='ignore')#文本内容必须要经过统一编码，否则字符串操作会出现各种未定义行为
     except  ValueError as  e:#对于40X错误不再继续读取
         print   e
         ErrorReportText(Info=u'读取答案内容出错\t:\t'+str(e))  
@@ -258,10 +402,10 @@ def WorkForFetchUrl(ReDict={},html_parser=None,RequestDict={},Page=0,AnswerDictL
     except  IOError as e    :#解压缩错误
         print   e
         return
-    if  k=='':
+    if  k=='':#网页未成功打开
         return
     if  Flag==4:
-        k       =   k.split('<div class="content"')#话题应使用新的ReadAnswer
+        k       =   k.split('<div class="content"')#话题与普通的页面结构不一样
     else:
         k       =   k.split('<div class="zm-item"')
     Dict    =   {}
@@ -273,25 +417,39 @@ def WorkForFetchUrl(ReDict={},html_parser=None,RequestDict={},Page=0,AnswerDictL
             AnswerDictList.append(Dict)
             AnswerList.append(Dict['Questionhref'])
     print   u'第{}页答案抓取成功'.format(Page+1)
-    if  RequestDict[Page][1]==False:#答案列表储存于RequesDict中
+    if  RequestDict[Page][1]==False:#将答案链接列表储存于RequesDict中
         RequestDict[Page][0]=AnswerList
         RequestDict[Page][1]=True
     return  
 
 def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxue'):#newCommitTag
+    u"""
+        *   功能
+            *   模拟知乎网页登陆流程，返回登陆header，并将header储存于数据库中
+        *   输入
+            *   cursor
+                *   数据库游标
+            *   UserID
+                *   登陆名
+            *   UserPassword
+                *   登陆密码
+        *   返回
+             *   携带可用cookie的header头
+     """
     qc_1    =   ''#初始化
     print   u'开始验证网页能否打开，验证完毕后将开始登陆流程，请稍等。。。'
     header  =   {
-'Accept'    :   '*/*'                                                                                 
-,'Accept-Encoding'   :'gzip,deflate,sdch'
-,'Accept-Language'    :'zh,zh-CN;q=0.8,en-GB;q=0.6,en;q=0.4'
-,'Connection'    :'keep-alive'
-,'Host'    :'www.zhihu.com'
-,'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
-,'DNT':'1'
-,'User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36'
-,'X-Requested-With':'XMLHttpRequest'
-}
+                    'Accept'    :   '*/*'                                                                                 
+                    ,'Accept-Encoding'   :'gzip,deflate,sdch'
+                    ,'Accept-Language'    :'zh,zh-CN;q=0.8,en-GB;q=0.6,en;q=0.4'
+                    ,'Connection'    :'keep-alive'
+                    ,'Host'    :'www.zhihu.com'
+                    ,'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+                    ,'DNT':'1'
+                    ,'User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36\
+                     (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36'
+                    ,'X-Requested-With':'XMLHttpRequest'
+                }
     try :
         ZhihuFrontPage=urllib2.urlopen(u"http://www.zhihu.com")#这里也可能出错#初次打开zhihu.com,获取xsrf信息
     except  urllib2.HTTPError   as e    :
@@ -326,10 +484,11 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
         print   u'可以通过使用记事本打开setting.ini文件修改用户名与密码来更换登录帐号'
     MaxTryTime  =   0#最多重复三次，三次后自动切换为使用旧有cookie进行登录
     try:
-        while   MaxTryTime<10:
-            LoginData   =   urllib.quote('{0}&email={1}&password={2}&rememberme=y'.format(xsrf,UserID,UserPassword),safe='=&')
-            
-            request =   urllib2.Request(url='http://www.zhihu.com/login',data=LoginData,headers=header)
+        while   MaxTryTime<3:
+            LoginData   =   urllib.quote('{0}&email={1}&password={2}&rememberme=y'\
+                                        .format(xsrf,UserID,UserPassword),safe='=&')#编码Post请求
+            request     =   urllib2.Request(url='http://www.zhihu.com/login'\
+                                            ,data=LoginData,headers=header)
             try :
                 buf         =   urllib2.urlopen(request)
             except  urllib2.HTTPError   as e    :#还可能会有403/500错误
@@ -380,7 +539,7 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
                     if  MaxTryTime>=3:
                         print   '三次尝试失败，转为使用已有cookie进行登录'
                         return  OldPostHeader(cursor=cursor)
-                    print   u'未知错误，尝试重新登陆，请重新输入用户名与密码\nPS:知乎返回的错误信息:'
+                    print   u'未知错误，尝试重新登陆，请重新输入用户名与密码\n\PS:知乎返回的错误信息:'
                     PrintDict(PostInfo)
                     UserID,UserPassword =   InputUserNameandPassword()
                     AskRemberFlag       =   True
@@ -405,15 +564,30 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
         return  header
         #提取qc_0,储存之
 def OldPostHeader(cursor=None):#可以加一个网络更新cookie的功能#Pass
+    u"""
+        *   功能
+            *   返回一个可用的header头
+            *   若数据库中存在，则直接返回数据库中的header
+            *   否则返回内嵌在代码里的header头
+            *   可以考虑直接把cookie放到服务器上，
+                    由服务器自动更新cookie
+        *   输入
+            *   数据库游标
+        *   返回
+             *  可用header
+             *  若header已过期则直接报错退出
+     """
     header  =   {
-'Accept'    :   '*/*'                                                                                 
-,'Accept-Encoding'   :'gzip,deflate,sdch'
-,'Accept-Language'    :'zh,zh-CN;q=0.8,en-GB;q=0.6,en;q=0.4'
-,'Connection'    :'keep-alive'
-,'Host'    :'www.zhihu.com'
-,'User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36'
-}
-    
+                    'Accept'    :   '*/*'                                                                                 
+                    ,'Accept-Encoding'   :'gzip,deflate,sdch'
+                    ,'Accept-Language'    :'zh,zh-CN;q=0.8,en-GB;q=0.6,en;q=0.4'
+                    ,'Connection'    :'keep-alive'
+                    ,'Host'    :'www.zhihu.com'
+                    ,'User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) \
+                      AppleWebKit/537.36 (KHTML, like Gecko)\
+                      Chrome/34.0.1847.116 Safari/537.36'
+                }
+                        
     rowcount    =   cursor.execute('select count(Pickle)  from VarPickle where Var="PostHeader"').fetchone()[0]    
     if  rowcount==0:
         List    =   ('2014-05-26', '_xsrf=9747077ec0374d469c91d06f4bf78c4d; q_c1=a5702f2ffc0344ae91e9efc0874012a8|1401117498000|1394290295000; q_c0="NTc1Mjk3OTkxMmM1NzU1N2MzZGQ5ZTMzMzRmNWVlMDR8MW9xU3hPdDF4U29BQlc4Qg==|1401117516|4bccb71dbbdd69c36ee800ef20586a6060ab8559";')#黄中华的cookie
@@ -429,6 +603,14 @@ def OldPostHeader(cursor=None):#可以加一个网络更新cookie的功能#Pass
         ErrorReturn(u'账号密码登录&登陆记录已过期\n程序继续无法运行\n请重新运行程序，尝试使用账号密码进行登录。\n倘若一直无法登陆的话请上知乎私信@姚泽源反馈bug,不胜感激')
     return header
 def InputUserNameandPassword():#UnitTest
+    u"""
+        *   功能
+            *   引导用户输入知乎帐号密码，在进行简单的正则校验之后返回两个值，第一个为登陆名，第二个是登陆密码
+        *   输入
+            *   无
+        *   返回
+             *   UserID,UserPassword
+     """
     print   u'请输入您的登陆用户名(知乎注册邮箱)，回车确认'    
     print   u'示例:\n用户名:mengqingxue2014@qq.com\n密码：131724qingxue\nPS:别用这个示例账号。。。登不上。。。囧'
     print   u'请输入用户名,回车确认'
@@ -461,6 +643,15 @@ def InputUserNameandPassword():#UnitTest
     return  UserID,UserPassword
     
 def returnConnCursor():#Pass
+    u"""
+        *   功能
+            *   打开ZhihuDateBase数据库，若不存在则直接新建一个
+            *   返回数据库连接，游标
+        *   输入
+            *   无
+        *   返回
+             *   conn,cursor
+     """
     if  os.path.isfile('./ZhihuDateBase.db'):
         conn    =   sqlite3.connect("./ZhihuDateBase.db")
         conn.text_factory = str
@@ -481,7 +672,16 @@ CREATE TABLE IDInfo          (IDLogoAdress  varchar(255) default "http://p1.zhim
         conn.commit()
     return  conn,cursor
 def CatchFrontInfo(ContentText='',Flag=0,Target=''):
-    
+    u"""
+        *   功能
+            *   分析提取首页信息，返回对应的InfoDict
+        *   输入
+            *   首页文本数据，首页类型标志符，若首页不是用户首页的话需附上目标ID值
+                *   最好改进为即使是用户首页也应该输入目标ID，这样的输入才便于标准话
+        *   返回
+             *  InfoDict，内含所需的信息
+                *  改进建议：应对InfoDict进行标准化处理，或者分为4个独立的应用程序进行处理
+     """
     html_parser =   HTMLParser.HTMLParser()
     def rTC(text=''):#returnTrueContent
         return  html_parser.unescape(text)
@@ -562,6 +762,25 @@ def CatchFrontInfo(ContentText='',Flag=0,Target=''):
     return  InfoDict
 
 def CreateWorkListDict(PostHeader,TargetFlag,Target):#输入http头、目标代码，目标名，返回首页信息字典与待抓取Request字典#Pass
+    u"""
+        *   功能
+            *   根据传入的目标类型，目标ID，制作待读取的Request列表并返回
+            *   后续函数只需要依次读取RequestDict内的元素所对应的网页内容即可
+            *   同时在第二个返回值处还会返回必要的首页信息
+        *   输入
+            *   PostHeader
+                *   一个可以打开的Http头字典
+                *   用于制作Rqeust字典
+            *   TargetFlag
+                *   目标类型
+            *   Target
+                *   目标ID
+        *   返回
+             *   InfoDict
+                *   目标的首页信息
+            *   RequestDict
+                *   制作完成的Request字典
+     """
     if  TargetFlag==1:
         url =   'http://www.zhihu.com/people/'+Target+'/answers?page='          
     else:
@@ -599,6 +818,15 @@ def CreateWorkListDict(PostHeader,TargetFlag,Target):#输入http头、目标代�
     return  InfoDict,RequestDict
 
 def returnIndexList(cursor=None,Target='',Flag=0,RequestDict={}):#Pass
+    u"""
+        *   功能
+            *   提取对应于目标值的答案链接列表，并同步进私人电脑中
+            *   用于为这些ID创建数据库，避免他们删答案
+        *   输入
+            *   数据库游标，目标代号，目标类型代码，待处理Reuest字典
+        *   返回
+             *   目标的索引
+     """
     print   u'读取答案成功，正在生成答案索引'
     Index   =   []
     if  Flag==1:
@@ -619,6 +847,24 @@ def returnIndexList(cursor=None,Target='',Flag=0,RequestDict={}):#Pass
     print   u'答案索引生成完毕，共有{}条答案链接'.format(len(Index))
     return  Index
 def SaveToDB(cursor=None,NeedToSaveDict={},primarykey='',TableName=''):#Pass
+    u"""
+        *   功能
+            *   提供一个简单的数据库储存函数，按照NeedToSaveDict里的设定，将值存入键所对应的数据库中
+            *   表与主键由TableName   ，  primarykey指定
+            *   注意，本函数不进行提交操作
+        *   输入
+            *   cursor
+                *   数据库游标
+            *   NeedToSaveDict
+                *   需要存入数据库中的键值对
+                *   键为数据库对应表下的列名，值为列值
+            *   primarykey
+                *   用于指定主键
+            *   TableName
+                *   用于指定表名
+        *   返回
+             *   无
+     """
     rowcount    =   cursor.execute('select count({}) from {} where {} = ?'.format(primarykey,TableName,primarykey),(NeedToSaveDict[primarykey],)).fetchone()[0]
     SQL1    =   'insert into '+TableName+' ('
     SQL2    =   ' ) values ( '
@@ -641,7 +887,10 @@ def SaveToDB(cursor=None,NeedToSaveDict={},primarykey='',TableName=''):#Pass
 
 
 def ZhihuHelp():
-    CheckUpdate()
+    u"""
+        *   主程序不解释
+     """
+    #CheckUpdate()
     conn,cursor =   returnConnCursor()
     ErrorReportText(flag=False)#初始化错误报告文件
     Mkdir(u'./知乎答案集锦')
@@ -649,7 +898,7 @@ def ZhihuHelp():
         ReadList    =   open("./ReadList.txt","r")
     except  IOError as e:
         print   e
-        ErrorReturn(u'貌似程序所在的目录里好像没有ReadList.txt这个文件，先手工新建一个在运行知乎助手吧')
+        ErrorReturn(u'程序所在的目录里好像没有ReadList.txt这个文件，先手工新建一个吧')
     ReSettingFlag=True
     if  os.path.isfile('setting.ini'):
         try :
@@ -666,16 +915,19 @@ def ZhihuHelp():
         MaxThread   =   20
         print   u'ZhihuHelp热身中。。。\n开始设定最大允许并发线程数\n线程越多速度越快，但线程过多会导致知乎服务器故障无法打开网页读取答案失败，默认最大线程数为20\n请输入一个数字（1~50），回车确认'
         MaxThread   =   setMaxThread()
-        Setting(ReadFlag=False,MaxThread=str(MaxThread))
+        PicDownload =   SetPicDownload()
+        Setting(ReadFlag=False,MaxThread=str(MaxThread),PicDownload=str(PicDownload))
     else:
-        ID,Password,MaxThread   =   Setting()
+        ID,Password,MaxThread,PicDownload   =   Setting()
         print   u'配置信息读取完毕'
-        print   u'登录帐号:{}\n登录密码:{}\n最大线程数:{}'.format(ID,Password,MaxThread)
-        PostHeader  =   Login(UserID=ID,UserPassword=Password,cursor=cursor)#
-    #***********又要重写了**************#
-    
-    #*************************#
-    
+        print   u'登录帐号\t:\t{}\n登录密码\t:\t{}\n最大线程数\t:\t{}\n图片下载模式\t:\t'.format(ID,Password,MaxThread),
+        if  not PicDownload:
+            print   u'无图模式'
+        elif    PicDownload==1:
+            print   u'标清图模式'
+        else:
+            print   u'高清图模式'
+        PostHeader  =   Login(UserID=ID,UserPassword=Password,cursor=cursor)#ID,Password在这里进行记录
     for TargetUrl in    ReadList:
         print   u'开始识别目标网址'
         TargetUrl           =   TargetUrl.replace('\n','').replace('\r','')
@@ -714,17 +966,21 @@ def ZhihuHelp():
         conn.commit()
         
         print   u'开始生成电子书'
-        EpubBuilder(MaxThread,[TargetUrl,])#一本一本的做，便于发现问题
+        EpubBuilder(MaxThread,[TargetUrl,],PicDownload)#一本一本的做，便于发现问题
     print   u'恭喜，所有电子书制作完毕'
     print   u'点按回车退出'
     raw_input()
-try:
-    pass
-    ZhihuHelp()
-except :
-    info=sys.exc_info()  
-    print   u'程序异常退出，快上知乎上@姚泽源反馈下bug\n或者把bug和ReadList.txt一块发给yaozeyuan93@gmail.com也行，谢谢啦~\n错误信息如下:\n'
-    print info[0],":",info[1]
-    print   u'错误信息显示完毕\n点按回车退出'
-    raw_input()
 
+if  not __name__ == '__main__' :
+    try:
+        pass
+        ZhihuHelp()
+    except :
+        info=sys.exc_info()  
+        print   u'程序异常退出，快上知乎上@姚泽源反馈下bug\n或者把bug和ReadList.txt一块发给yaozeyuan93@gmail.com也行，谢谢啦~\n错误信息如下:\n'
+        print info[0],":",info[1]
+        print   u'错误信息显示完毕\n点按回车退出'
+        raw_input()
+else:
+    print   "test mode"
+    ZhihuHelp()
