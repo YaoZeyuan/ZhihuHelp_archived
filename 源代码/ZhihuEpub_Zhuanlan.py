@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import  json
+from    ZhihuHelp   import  CheckUpdate
 from    ZhihuEpub   import  CheckImgFileExist, DownloadPicWithThread , returnCursor , Mkdir , CreateMimeType , CreateContainer_XML , returnTagContent , removeTag , removeAttibute , closeimg , PixName , fixPic , DownloadImg , CreateOPF , CreateNCX , PrintDict , ZipToEpub ,PrintInOneLine,CopyFile,OpenUrl,ErrorReportText#复用。。。
 
 import  sys
@@ -142,6 +143,7 @@ def setMaxThread():
     return  MaxThread
 
 def ZhihuHelp_Epub(MaxThread=20):
+    CheckUpdate()
     ErrorReportText(flag=False)
     FReadList   =   open('ReadList.txt','r')
     Mkdir(u"电子书制作临时资源库")

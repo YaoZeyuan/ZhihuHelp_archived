@@ -77,7 +77,7 @@ def Setting(ReadFlag=True,ID='',Password='',MaxThread='',PicDownload=''):#newCom
         if  PicDownload!='':
             config.set('ZhihuHelp','PicDownload',str(PicDownload))
         config.write(open('setting.ini','w'))
-    return  ID,Password,MaxThread,PicDownload
+    return  ID,Password,MaxThread,int(PicDownload)
 
 def PrintDict(Dict={},Front=''):
     u"""
@@ -546,7 +546,7 @@ def DownloadImg(imghref='',ErrorList=[]):#下载失败时应报错或重试#文�
             raise       ValueError(u'程序出现错误，未能成功提取出图片下载地址'+u'目标网址'+imghref)
         imgfilename =   './OEBPS/images/'+MetaName   
         if  not os.path.isfile(CheckName+MetaName):
-            k   =   OpenUrl(urllib2.Request(imghref),Timeout=20)#这里会返回IOError
+            k   =   OpenUrl(urllib2.Request(imghref),Timeout=10)#这里会返回IOError
             if  len(k)==0:
                 print   u'Download image '+MetaName+' error ,will try again soon'
                 return 0

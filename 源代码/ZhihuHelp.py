@@ -890,7 +890,6 @@ def ZhihuHelp():
     u"""
         *   主程序不解释
      """
-    #CheckUpdate()
     conn,cursor =   returnConnCursor()
     ErrorReportText(flag=False)#初始化错误报告文件
     Mkdir(u'./知乎答案集锦')
@@ -919,6 +918,7 @@ def ZhihuHelp():
         Setting(ReadFlag=False,MaxThread=str(MaxThread),PicDownload=str(PicDownload))
     else:
         ID,Password,MaxThread,PicDownload   =   Setting()
+        #print   "PicDownload=",PicDownload,"Type=",type(PicDownload)
         print   u'配置信息读取完毕'
         print   u'登录帐号\t:\t{}\n登录密码\t:\t{}\n最大线程数\t:\t{}\n图片下载模式\t:\t'.format(ID,Password,MaxThread),
         if  not PicDownload:
@@ -971,9 +971,10 @@ def ZhihuHelp():
     print   u'点按回车退出'
     raw_input()
 
-if  not __name__ == '__main__' :
+if  __name__ == '__main__' :
     try:
         pass
+        CheckUpdate()
         ZhihuHelp()
     except :
         info=sys.exc_info()  
@@ -982,5 +983,5 @@ if  not __name__ == '__main__' :
         print   u'错误信息显示完毕\n点按回车退出'
         raw_input()
 else:
-    print   "test mode"
+    print   "Test Mode"
     ZhihuHelp()
