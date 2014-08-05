@@ -1,334 +1,9 @@
 # -*- coding: utf-8 -*-
-import  os
-
-import  sys#修改默认编码
-reload( sys )
-sys.setdefaultencoding('utf-8')
-
-import  sqlite3#使用数据库管理数据
-import  urllib2
-import  socket#用于捕获超时错误
-import  zipfile
-import  pickle
-import  threading#使用线程下载图片，直接默认20线程#知乎图片是用CDN分发的，不必担心
-import  time#睡眠
-import  re
-
-import  ConfigParser#ini文件读取
-######复制头文件#####3
-import  urllib2
-import  HTMLParser
-import  re
-import  zlib
-import  threading
-import  time
-import  datetime
-import  HTMLParser#HTML解码&lt;
-import  json#在returnPostHeader中解析Post返回值
-import  os#打开更新页面
-import  urllib#编码请求字串，用于处理验证码
-import  sqlite3#数据库！
-###########################################################
-#数据库部分
-import  pickle
-import  socket#捕获Timeout错误
+import  zipfile#将文件夹压缩为Epub(zip)格式
 import  shutil#删除目录
-#from    ZhihuHelp  import   PrintInOneLine,OpenUrl,ThreadLiveDetect ,ErrorReportText ,ChooseTarget,ErrorReturn,CopyFile#工具类函数都放在ZhihuEpub中
 ######Tool######
 from    MarkDownCssStyle    import  returnMarkDownCssStyle
-def Setting(ReadFlag=True,ID='',Password='',MaxThread='',PicDownload=''):#newCommitTag
-    u"""
-        *   功能
-            *   在无参的情况下，读取设置文件，返回设置内容
-            *   有参时，将参数写入设置文件中
-        *   输入
-            *   ReadFlag
-                *   标志是否读取设置文件,否则重新进行设置
-            *   ID
-                *   用户名
-            *   Password
-                *   密码
-            *   MaxThread
-                *   最大线程数
-        *   返回
-             *   ID,Password,MaxThread
-
-     """
-    config  =   ConfigParser.SafeConfigParser()
-    if  not os.path.isfile('setting.ini'):
-        f   =   open('setting.ini','w')
-        f.close()
-    config.read('setting.ini')
-    if  not config.has_section('ZhihuHelp'): 
-        config.add_section('ZhihuHelp') 
-    if  ReadFlag:
-        ID          =   config.get('ZhihuHelp','UserName'   ,raw=True)
-        Password    =   config.get('ZhihuHelp','Password'   ,raw=True)
-        MaxThread   =   config.get('ZhihuHelp','MaxThread'  ,raw=True)
-        PicDownload =   config.get('ZhihuHelp','PicDownload',raw=True)
-                    #是否下载图片,0不下载，1下载普通图片，2下载高清大图
-                    #若无以上任一设置，会抛出异常
-    else    :
-        if  ID!='':
-            config.set('ZhihuHelp','UserName'   ,ID              )
-            config.set('ZhihuHelp','Password'   ,Password        )
-        if  MaxThread!='':
-            config.set('ZhihuHelp','MaxThread'  ,str(MaxThread)  )
-        if  PicDownload!='':
-            config.set('ZhihuHelp','PicDownload',str(PicDownload))
-        config.write(open('setting.ini','w'))
-    return  ID,Password,MaxThread,int(PicDownload)
-
-def PrintDict(Dict={},Front=''):
-    u"""
-        *   功能
-            *   辅助类函数
-            *   用于将字典内容以规则化的树状形式进行输出
-        *   输入
-            *   Dict
-                *   待输出字典
-            *   Front
-                *   前导空格
-        *   返回
-            *   无
-     """
-    for r   in  Dict:
-        if  type(Dict[r]) ==   type(Dict):
-            print   '||'+'\t'+Front+'\t'+str(r)+':'
-            PrintDict(Dict[r],Front=Front+'\t\t')
-        else:
-            if(len(Front)>0):
-                Front_  =   (Front[:-1]+'∟'+Front[-1:])
-            else:
-                Front_=''
-            print   '||'+u'\t'+Front_+str(r) ,':\t',str(Dict[r])
-def PrintInOneLine(text=''):#Pass
-    u"""
-        *   功能
-            *   反复在一行内输出内容
-            *   输出前会先将光标移至行首，输出完毕后不换行
-        *   输入
-            *   待输出字符
-        *   返回
-            *  无
-            *  若输出失败则将失败的文本输出至『未成功打开的页面.txt』内
-     """
-    try:
-        sys.stdout.write("\r"+" "*60+'\r')
-        sys.stdout.flush()
-        sys.stdout.write(text)
-        sys.stdout.flush()
-    except:
-        ErrorReportText(text)
-def OpenUrl(Request,Timeout=5):#打开网页,只尝试一次，失败时返回空字符串，错误信息中包含未打开网址。话说字符串分割对空列表还有效否？#OKTag
-    u"""
-        *   功能
-            *   打开Request中指定的网页，成功则返回原始网页内容\
-                （只针对gzip进行解压缩，对其他格式例如jpg直接返回二进制内容，不进行额外处理）
-            *   仅尝试一次，若打开失败则返回空字符串
-        *   输入
-            *   Request
-                *   待打开的Http请求
-            *   Timeout
-                *   超时时间
-        *   返回
-            *   所打开网页的原始内容
-            *   失败返回空字符串
-     """
-    try :
-        Content =   urllib2.urlopen(Request,timeout=Timeout)
-    except  urllib2.HTTPError   as  inst:
-        print   inst
-        if  int(inst.code/100)   ==   4:
-            print   u'您所要找的网页在一片没有知识的荒原上'
-            raise   ValueError(u"404 Not Found"+u"错误页面\t：\t"+Request.get_full_url())#此失败不可修复，通过报错直接跳过读取该页面
-        else:
-            if  int(inst.code/100)==    5:
-                print   u"知乎正在紧张的撰写答案,服务器繁忙ing，稍后重试"
-            else    :
-                print   inst.code#未知错误
-                print   u'打开网页时出现未知错误'
-    except  urllib2.URLError as inst    :
-        print   inst
-        print   inst.reason#原因不详
-        print   u'错误网址：'+Request.get_full_url()
-        print   u'打开网页异常#稍后重试'
-    except  socket.timeout  as  e   :
-        print   e
-        print   u"打开网页超时"
-    else:
-        if  Content.info().get(u"Content-Encoding")=="gzip":             
-            try:    
-                k   =   zlib.decompress(Content.read(), 16+zlib.MAX_WBITS)
-            except  zlib.error as   ziperror:
-                print   u'解压缩出错'
-                print   u'错误信息：'
-                print   zliberror
-                raise   IOError(u"解压网页内容时出现错误"+u"错误页面\t：\t"+Request.get_full_url())#此失败不可修复，通过报错直接跳过读取该页面
-        else    :
-            k   =   Content.read()
-        #去除了编码为utf-8部分
-        return  k
-    return  ''#失败则返回空字符串
-
-def ErrorReturn(ErrorInfo=""):#返回错误信息并退出，错误信息要用unicode编码
-    u"""
-        *   功能
-            *   打印错误信息，等待用户敲回车之后再退出
-        *   输入
-            *   ErrorInfo
-                *   待打印错误信息
-        *   返回
-            *   无
-     """
-    print   ErrorInfo
-    print   u"点按回车退出"
-    input()                                                                       
-    os._exit(0)                                                                     
-
-def setMaxThread():
-    u"""
-        *   功能
-            *   引导用户设定最大线程数
-            *   默认20，其间出现任何意外都会定为20
-        *   输入
-            *   无
-        *   返回
-            *   所设定的最大线程数
-     """
-    try:
-        MaxThread=int(raw_input())
-    except  ValueError as e  :
-        print   e
-        print   u'貌似输入的不是数...最大线程数重置为20，点击回车继续运行'
-        MaxThread=20
-        raw_input()
-    if  MaxThread>200   or  MaxThread<1:
-        if  MaxThread>200:
-            print   u"线程不要太大好伐\n你线程开的这么凶残你考虑过知乎服务器的感受嘛"
-        else:
-            print   u"不要输负数啊我去"
-        print u"最大线程数重置为20"
-        MaxThread=20
-        print u'猛击回车继续~'      
-        raw_input()
-    return  MaxThread     
-
-def ThreadLiveDetect(ThreadList=[]):
-    u"""
-        *   功能
-            *   等待给定list中的线程执行完毕
-        *   输入
-            *   线程列表
-        *   返回
-            *   待列表中的所有线程执行完毕后返回
-            *   不会检测死锁
-     """
-    LiveFlag =   True
-    while   LiveFlag:#等待线程执行完毕
-        LiveFlag =   False
-        Running   =   0
-        for t   in  ThreadList:
-            if  t.isAlive():
-                LiveFlag=True
-                Running+=1
-        PrintInOneLine(   u"目前还有{}条线程正在运行,等待所有线程执行完毕".format(Running))
-        time.sleep(1)
-def ErrorReportText(Info='',flag=True):
-    u"""
-        *   功能
-            *   将错误信息写入到『未能成功打开的页面.txt』中
-        *   输入
-            *   Info
-                *   错误信息
-            *   flag
-                *   标示符
-                *   True    ->  新建文件
-                *   False   ->  在原有文件上添加
-        *   返回
-            *   无
-     """
-    if  flag    :
-        f   =open(u'未能成功打开的页面.txt','ab')
-    else    :
-        f   =open(u'未能成功打开的页面.txt','wb')
-    f.write(Info)
-    f.close()
-def ChooseTarget(url=''):#选择#Pass
-    u"""
-    *   功能
-        *   识别不同的网址类别
-    *   输入
-        *   网址
-    *   返回
-        *   用户主页
-            *   1，用户ID
-        *   收藏夹主页
-            *   2，收藏夹ID
-        *   知乎圆桌
-            *   3，圆桌ID
-        *   知乎话题
-            *   4，话题ID
-    """
-    try :
-        ID      =   re.search(r'(?<=zhihu\.com/people/)[^/]*',url).group(0)#匹配ID
-    except  AttributeError:
-        pass
-    else:
-        print   u'成功匹配到知乎ID，ID=',ID
-        return  1,ID
-    try :
-        Collect =   re.search(r'(?<=zhihu\.com/collection/)\d*',url).group(0)#匹配收藏
-    except  AttributeError:
-        pass
-    else:
-        print   u'成功匹配到收藏夹，收藏夹代码=',Collect
-        return  2,Collect
-    try :
-        Roundtable= re.search(r'(?<=zhihu\.com/roundtable/)[^/]*',url).group(0)#知乎圆桌
-    except  AttributeError:
-        pass
-    else:
-        print   u'成功匹配到知乎圆桌，圆桌名=',Roundtable
-        return  3,Roundtable
-    try :
-        Topic   =   re.search(r'(?<=zhihu\.com/topic/)\d*',url).group(0)#知乎话题
-    except  AttributeError:
-        pass
-    else:
-        print   u'成功匹配到话题，话题代码=',Topic
-        return  4,Topic
-    return  0,""
-
-def CopyFile(root='',TargetFile='',flag=True):#Pass
-    u"""
-        *   功能
-            *   将root所指向的文件复制到TargetFile中
-            *   复制错误会将文件地址输出至错误文件中
-        *   输入
-            *   root
-                *   原文件地址
-            *   TargetFile
-                *   目标文件地址
-            *   flag
-                *   二进制标示符
-                *   Fasle表示其为二进制文件
-        *   返回
-            *   无
-     """
-    try :
-        if  flag    :
-            f   =   open(root,'r')
-            k   =   open(TargetFile,'w')
-        else:
-            k   =   open(TargetFile,'wb')
-            f   =   open(root,'rb')
-        k.write(f.read())
-    except  IOError as e:
-        print   e
-        ErrorReportText(str(e))
-    return
-####ToolEnd####
+from    ZhihuLib import *
 
 def CheckImgFileExist(CheckList=[],ErrorList=[]):#PassTag
     u"""
@@ -366,13 +41,21 @@ def DownloadPicWithThread(ImgList=[],MaxThread=20):#添加图片池功能#当图
         Buf_ImgList =   []
         Time+=1
         ThreadList  =   []
+        buf_t_PageRecord    =   0
         for t   in  ImgList:#因为已下载过的文件不会重新下载，所以直接重复执行十遍，不必检测错误#待下载的文件可能会突破万这一量计，所以还是需要一些优化
-            ThreadList.append(threading.Thread(target=DownloadImg,args=(t,Buf_ImgList,)))
-        for Page in  range(MaxPage):
-            if  threading.activeCount()-1 <   MaxThread:#实际上是总线程数
-                ThreadList[Page].start()
+            buf_t_PageRecord    +=  1
+            ThreadList.append(threading.Thread(target=DownloadImg,args=(t,Buf_ImgList,u"({}/{})".format(buf_t_PageRecord,MaxPage))))
+        Page    =   0
+        while Page <  MaxPage:
+            t   =   MaxThread - (threading.activeCount() - 1)
+            if  t   >   0 :
+                while  t   >   0  and Page < MaxPage :
+                    ThreadList[Page].start()
+                    Page += 1
+                    t    -= 1
+                time.sleep(0.1)
             else    :
-                PrintInOneLine(u'第({}/10)轮下载图片，线程库中还有{}条线程等待运行'.format(Time,MaxPage-Page))
+                PrintInOneLine(u'第({}/10)轮下载图片，还有{}张图片等待下载'.format(Time,MaxPage-Page))
                 time.sleep(1)
         ThreadLiveDetect(ThreadList)
         
@@ -419,25 +102,7 @@ def returnCursor():#PassTag
     else:
         ErrorReturn(u'抱歉，没有找到数据库，请先运行知乎助手')
         return  None
-def Mkdir(DirName=u''):#PassTag
-    u"""
-        *   功能
-            *   创建指定文件夹
-            *   若文件夹已存在，则跳过
-        *   输入
-            *   文件夹名
-                *   不需要指定路径
-        *   返回
-            *   无
-     """
-    if  DirName=='':
-        return
-    else:
-        try :                        
-            os.mkdir(DirName)
-        except  OSError:
-            pass#已存在
-    return
+
 def CreateMimeType():#PassTag
     u"""
         *   功能
@@ -492,8 +157,9 @@ def removeTagContentWithTag(text='',TagList=[]):#移除List中所有的Tag
     return text
 
 def removeTag(text='',tagname=[]):#NonUseTag
-    text    =   text.replace('</'+tagname+'>','')
-    text    =   re.sub(r"<"+tagname+r'.*?>','',text)
+    for tag in  tagname:
+        text    =   text.replace('</'+tag+'>','')
+        text    =   re.sub(r"<"+tag+r'.*?>','',text)
     return  text
 def removeAttibute(text='',AttList=[]):#PassTag
     for Att in  AttList:
@@ -537,7 +203,23 @@ def fixPic(t='',ImgList=[]):#PassTag#添加多看扩展
         t   =   t.replace(k,'../images/'+PixName(k))
         ImgList.append(k)
     return  '<div class="duokan-image-single">'+t+'</div>'
-def DownloadImg(imghref='',ErrorList=[]):#下载失败时应报错或重试#文件已成功下载时也添加到ErrorList中#newCommitTag
+def DownloadImg(imghref='',ErrorList=[],successprint=""):#下载失败时应报错或重试#文件已成功下载时也添加到ErrorList中#newCommitTag
+    u"""
+        *   功能
+            *   下载图片，将下载失败的图片存入ErrorList中
+            *   会先检测图片池中有没有对应的图片
+                *   若有，直接将图片池内图片复制至目标文件夹中
+                *   若无
+                    *   下载图片至图片池中
+                    *   将图片复制到目标文件夹内
+        *   输入
+            *   imghref
+                *   图片网址
+            *   ErrorList
+                *   下载失败时将链接存入此处
+        *   返回
+            *   无
+    """
     try :
         CheckName   =   u'../知乎图片池/'
         try :
@@ -570,7 +252,7 @@ def DownloadImg(imghref='',ErrorList=[]):#下载失败时应报错或重试#文�
         PrintInOneLine( u'图片{}下载失败\r'.format(MetaName))
         ErrorReportText(u'图片下载错误\t:\t'+str(e))
     else    :
-        PrintInOneLine( u'图片{}下载成功\r'.format(MetaName))
+        PrintInOneLine( u'图片{}下载成功\r'.format(MetaName)+successprint)
     return 0
 def CreateOPF(OPFInfoDict={},Mainfest='',Spine=''):#生成文件函数均假定当前目录为电子书根目录#PassTag
     f   =   open('./OEBPS/content.opf','w')
@@ -629,7 +311,17 @@ def CreateNCX(NCXInfoDict={},Ncx=''):#PassTag
     f.write(XML)
     f.close()
 
-def ZipToEpub(EpubName='a.epub'):#newCommitTag
+def ZipToEpub(EpubName = 'a.epub'):#newCommitTag
+    u"""
+        *   功能
+            *   将目标文件夹压缩成epub(zip)文件
+        *   输入
+            *   EpubName
+                *   目标文件名
+        *   返回
+            *   无
+
+    """
     epub    =   zipfile.ZipFile(os.path.abspath('../../'+os.curdir+u'/知乎答案集锦/'+EpubName),'w')
     epub.write('mimetype', compress_type=zipfile.ZIP_STORED)
     def Help_ZipToEpub(Dir='.'):
@@ -826,11 +518,11 @@ def EpubBuilder(MaxThread=20,FReadList=[],PicDownload=1):
         DictCountNo =   len(AnswerDict)
         for t   in  AnswerDict:
             DictNo+=1
-            PrintInOneLine(u'正在处理第{}个回答共{}个'.format(DictNo,DictCountNo))
+            PrintInOneLine(u'正在处理第{}个提问共{}个'.format(DictNo,DictCountNo))
             DealAnswerDict(cursor=cursor,ImgList=ImgList,AnswerDict=AnswerDict[t],PicDownload=PicDownload)
             SortList.append((t,AnswerDict[t]['AgreeCount']))
         #开始输出目录与文件
-        print   u'答案处理完成，开始输出文件'
+        print   u'\n答案处理完成，开始输出文件'
         TitleHtml   =   open("./OEBPS/html/title.html",'w')
         TitleHtml.write(u'''<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
              <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">
@@ -918,7 +610,7 @@ def EpubBuilder(MaxThread=20,FReadList=[],PicDownload=1):
         '''%InfoDict
         f.write(coverHtmlStr)
         f.close()
-        print   u'答案生成完毕'
+        print   u'\n答案生成完毕'
         #输出链接，反正最多就三四万个。。。
         print   u'开始下载图片'
         #复制CSS与cover两个文件到临时文件夹中
@@ -931,10 +623,8 @@ def EpubBuilder(MaxThread=20,FReadList=[],PicDownload=1):
             CopyFile(root=root,TargetFile=target,flag=flag)
         
         DownloadPicWithThread(ImgList,MaxThread=MaxThread)
-        ZipToEpub(InfoDict['BookTitle']+'.epub')
+        ZipToEpub(EpubName = InfoDict['BookTitle']+'.epub')
         os.chdir('..')
         os.chdir('..')#回到元目录
         PrintInOneLine('')
         PrintInOneLine( u'\n%(BookTitle)s制作完成\n'%InfoDict+'\n')
-
-

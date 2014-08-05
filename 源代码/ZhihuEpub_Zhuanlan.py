@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import  json
-from    ZhihuHelp   import  CheckUpdate
-from    ZhihuEpub   import  CheckImgFileExist, DownloadPicWithThread , returnCursor , Mkdir , CreateMimeType , CreateContainer_XML , returnTagContent , removeTag , removeAttibute , closeimg , PixName , fixPic , DownloadImg , CreateOPF , CreateNCX , PrintDict , ZipToEpub ,PrintInOneLine,CopyFile,OpenUrl,ErrorReportText#复用。。。
+from    ZhihuEpub   import  CheckUpdate,CheckImgFileExist, DownloadPicWithThread , returnCursor , Mkdir , CreateMimeType , CreateContainer_XML , returnTagContent , removeTag , removeAttibute , closeimg , PixName , fixPic , DownloadImg , CreateOPF , CreateNCX , PrintDict , ZipToEpub ,PrintInOneLine,CopyFile,OpenUrl,ErrorReportText#复用。。。
 
 import  sys
 reload( sys )
@@ -92,7 +91,7 @@ def DealAnswerDict(JsonDict=[],ImgList=[],JsonDictList=[]):#必须是符合规�
         </div>
         </body></html>
         """%Dict
-        Dict['HtmlStr'] =   closeimg(text=HtmlStr.replace('<hr>','<hr />').replace('<br>','<br />'),ImgList=ImgList)#需要进一步处理#testTag
+        Dict['HtmlStr'] =   closeimg(text=HtmlStr.replace('<hr>','<hr />').replace('<br>','<br />'),ImgList=ImgList,PicDownload=1)#需要进一步处理#testTag
         JsonDictList.append(Dict)#按发布顺序排序
 
 def MakeInfoDict(ColumnInfoDict={}):
@@ -143,7 +142,6 @@ def setMaxThread():
     return  MaxThread
 
 def ZhihuHelp_Epub(MaxThread=20):
-    CheckUpdate()
     ErrorReportText(flag=False)
     FReadList   =   open('ReadList.txt','r')
     Mkdir(u"电子书制作临时资源库")
@@ -339,6 +337,7 @@ def ZhihuHelp_Epub(MaxThread=20):
     print   u'恭喜，所有电子书制作完成\n未成功打开的页面已输出至『未成功打开的页面.txt』中\n点按回车退出'
     raw_input()
     exit()
+CheckUpdate()
 print   u'请设置下载图片时的最大线程数\n线程越多速度越快，但线程过多会导致知乎服务器故障导致图片下载失败，默认最大线程数为20\n请输入一个数字（1~50），回车确认'
 MaxThread   =   setMaxThread()
 

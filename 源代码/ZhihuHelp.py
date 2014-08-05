@@ -1,35 +1,9 @@
 ﻿# -*- coding: utf-8 -*-
-import  urllib2
-import  re
-import  zlib
-import  threading
-import  time
-import  datetime
-import  HTMLParser#HTML解码&lt;
-import  json#在returnPostHeader中解析Post返回值
-import  os#打开更新页面
-
-import  urllib#编码请求字串，用于处理验证码
 
 
-import  sys#修改默认编码
-reload( sys )
-sys.setdefaultencoding('utf-8')
-
-
-
-
-
-
-
-import  sqlite3#数据库！
-
-###########################################################
-#数据库部分
-import  pickle
-import  socket#捕获Timeout错误
 ##################Epub########################################
-from    ZhihuEpub   import  *
+from    ZhihuLib import *   #负责存放所有在Epub与Help中公用的函数
+from    ZhihuEpub   import  EpubBuilder
 ###########################################################
 #所有可复用的函数均已转移至Epub文件内
 ######################网页内容分析############################
@@ -115,11 +89,17 @@ def ThreadWorker(cursor=None,MaxThread=200,RequestDict={},Flag=1):#newCommitTag
     
     while   Times<10    and LoopFlag:
         print   u'开始第{}遍抓取，本轮共有{}张页面待抓取,共尝试10遍'.format(Times+1,len(ThreadList))
-        for Page in  range(MaxPage):
-            if  threading.activeCount()-1 <   MaxThread:#实际上是总线程数
-                ThreadList[Page].start()#有种走钢丝的感觉。。。
+        Page    =   0
+        while Page <  MaxPage:
+            t   =   MaxThread - (threading.activeCount() - 1)
+            if  t   >   0 :
+                while  t   >   0  and Page < MaxPage :
+                    ThreadList[Page].start()
+                    Page += 1
+                    t    -= 1
+                time.sleep(0.1)
             else    :
-                PrintInOneLine(u'正在读取答案页面，线程库中还有{}条线程等待运行'.format(MaxPage-Page))
+                PrintInOneLine(u'正在读取答案页面，还有{}张页面等待读取'.format(MaxPage-Page))
                 time.sleep(1)
         ThreadLiveDetect(ThreadList)
 
@@ -187,33 +167,6 @@ def AppendDictIntoDataBase(cursor=None,Dict={}) :   #假定已有数据库#PassT
     del Dict['AnswerContent']
     SaveToDB(cursor=cursor,NeedToSaveDict=Dict   ,primarykey='Questionhref',TableName='AnswerInfoTable'     )
     return 
-def CheckUpdate():#检查更新，强制更新#newCommitTag
-    u"""
-        *   功能
-            *   检测更新。
-            *   若在服务器端检测到新版本，自动打开浏览器进入新版下载页面
-            *   网页请求超时或者版本号正确都将自动跳过
-        *   输入
-            *   无
-        *   返回
-            *   无
-    """
-    print   u"检查更新。。。"
-    try:
-        UpdateTime  =   urllib2.urlopen(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt",timeout=10)
-    except:
-        return
-    Time        =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
-    url         =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
-    UpdateComment=  UpdateTime.read()#可行？
-    if  Time=="2014-07-07":
-        return
-    else:
-        print   u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(UpdateComment,Time)
-        raw_input(u'新版本下载地址:'+url)
-        import  webbrowser
-        webbrowser.open_new_tab(url)
-    return
 
 def returnReDict():#返回编译好的正则字典#Pass
     u"""
@@ -886,7 +839,7 @@ def SaveToDB(cursor=None,NeedToSaveDict={},primarykey='',TableName=''):#Pass
 
 
 
-def ZhihuHelp():
+def ZhihuHelp(Hook={}):
     u"""
         *   主程序不解释
      """
@@ -929,6 +882,7 @@ def ZhihuHelp():
             print   u'高清图模式'
         PostHeader  =   Login(UserID=ID,UserPassword=Password,cursor=cursor)#ID,Password在这里进行记录
     for TargetUrl in    ReadList:
+        Hook[0] =   TargetUrl#用于保存错误信息，供调试用
         print   u'开始识别目标网址'
         TargetUrl           =   TargetUrl.replace('\n','').replace('\r','')
         TargetFlag,Target   =   ChooseTarget(TargetUrl)
@@ -971,17 +925,29 @@ def ZhihuHelp():
     print   u'点按回车退出'
     raw_input()
 
-if  __name__ == '__main__' :
+Hook={}
+if  not __name__ == '__main__' :
     try:
         pass
         CheckUpdate()
-        ZhihuHelp()
-    except :
-        info=sys.exc_info()  
+        ZhihuHelp(Hook=Hook)
+    except  (KeyboardInterrupt, SystemExit):
+        pass#正常退出
+    except  Exception , e:
         print   u'程序异常退出，快上知乎上@姚泽源反馈下bug\n或者把bug和ReadList.txt一块发给yaozeyuan93@gmail.com也行，谢谢啦~\n错误信息如下:\n'
-        print info[0],":",info[1]
+        print   e
+        print   "\n-----------------------\n"
+        import traceback
+        f   =   open("错误信息_未能成功打开的页面.txt","ab")#应该使用错误报告文件，不应该动ReadList
+        f.write(u"\n#-----------------------\n"+u"发生时间:\n"+time.strftime("%Y-%m-%d  %H:%M:%S",time.gmtime()))
+        f.write(u"\n*    "+u"异常网址:\n"+str(Hook))
+        f.write(u"\n*    "+u"异常信息:\n"+str(e))
+        f.write(u"\n*    "+u"异常栈:\n")
+        traceback.print_tb(sys.exc_traceback)
+        traceback.print_tb(sys.exc_traceback,file=f)
+        f.write(u"\nover"+u"\n-----------------------\n")
         print   u'错误信息显示完毕\n点按回车退出'
         raw_input()
 else:
-    print   "Test Mode"
-    ZhihuHelp()
+    print   "Zhuanlan Mode"
+    ZhihuHelp(Hook=Hook)
