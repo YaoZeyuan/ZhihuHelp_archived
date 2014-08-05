@@ -934,7 +934,7 @@ if  not __name__ == '__main__' :
     except  (KeyboardInterrupt, SystemExit):
         pass#正常退出
     except  Exception , e:
-        print   u'程序异常退出，快上知乎上@姚泽源反馈下bug\n或者把bug和ReadList.txt一块发给yaozeyuan93@gmail.com也行，谢谢啦~\n错误信息如下:\n'
+        print   u'程序异常退出，快上知乎上@姚泽源反馈下bug\n或者把bug和『错误信息_未能成功打开的页面.txt』一块发给yaozeyuan93@gmail.com也行，谢谢啦~\n错误信息如下:\n'
         print   e
         print   "\n-----------------------\n"
         import traceback
