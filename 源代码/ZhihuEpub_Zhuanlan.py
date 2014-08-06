@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import  json
-from    ZhihuEpub   import  CheckUpdate,CheckImgFileExist, DownloadPicWithThread , returnCursor , Mkdir , CreateMimeType , CreateContainer_XML , returnTagContent , removeTag , removeAttibute , closeimg , PixName , fixPic , DownloadImg , CreateOPF , CreateNCX , PrintDict , ZipToEpub ,PrintInOneLine,CopyFile,OpenUrl,ErrorReportText#复用。。。
-
+from    ZhihuEpub   import  CheckImgFileExist, DownloadPicWithThread , returnCursor ,  CreateMimeType , CreateContainer_XML , returnTagContent , removeTag , removeAttibute , closeimg , PixName , fixPic , DownloadImg , CreateOPF , CreateNCX ,  ZipToEpub #复用。。。
+from    ZhihuLib    import  CheckUpdate,PrintDict ,Mkdir ,PrintInOneLine,CopyFile,OpenUrl,ErrorReportText,setMaxThread,ErrorReturn
 import  sys
 reload( sys )
 sys.setdefaultencoding('utf-8')
@@ -118,30 +118,7 @@ def OpenUrl_Zhuanlan(url=""):
     print   u'10次尝试全部失败，目标网址={} ，请检查网络链接或网址是否正确'.format(url)
     return  Content
 
-def ErrorReturn(ErrorInfo=""):#返回错误信息并退出，错误信息要用unicode编码
-    print   ErrorInfo
-    print   u"点按回车继续"
-    raw_input()                                                                  
-def setMaxThread():
-    try:
-        MaxThread=int(raw_input())
-    except  ValueError as e  :
-        print   e
-        print   u'貌似输入的不是数...最大线程数重置为20，点击回车继续运行'
-        MaxThread=20
-        raw_input()
-    if  MaxThread>200   or  MaxThread<1:
-        if  MaxThread>200:
-            print   u"线程不要太大好伐\n你线程开的这么凶残你考虑过知乎服务器的感受嘛"
-        else:
-            print   u"不要输负数啊我去"
-        print u"最大线程数重置为20"
-        MaxThread=20
-        print u'猛击回车继续~'
-        raw_input()
-    return  MaxThread
-
-def ZhihuHelp_Epub(MaxThread=20):
+def ZhihuHelp_Epub(Hook={},MaxThread=20):
     ErrorReportText(flag=False)
     FReadList   =   open('ReadList.txt','r')
     Mkdir(u"电子书制作临时资源库")
@@ -149,6 +126,7 @@ def ZhihuHelp_Epub(MaxThread=20):
     Mkdir(u"知乎答案集锦")
     ErrorUrlList    =   []
     for url in  FReadList:
+        Hook[0] =   url
         ImgList     =   []#清空ImgList
         InfoDict    =   {}
         JsonDict    =   []#初始化
@@ -337,20 +315,32 @@ def ZhihuHelp_Epub(MaxThread=20):
     print   u'恭喜，所有电子书制作完成\n未成功打开的页面已输出至『未成功打开的页面.txt』中\n点按回车退出'
     raw_input()
     exit()
-CheckUpdate()
-print   u'请设置下载图片时的最大线程数\n线程越多速度越快，但线程过多会导致知乎服务器故障导致图片下载失败，默认最大线程数为20\n请输入一个数字（1~50），回车确认'
-MaxThread   =   setMaxThread()
 
-
-try:
-    pass
-    ZhihuHelp_Epub(MaxThread)
-except :
-    print   u'程序异常退出，快上知乎上@姚泽源反馈下bug\n或者把bug和ReadList.txt一块发给yaozeyuan93@gmail.com也行，谢谢啦~\n错误信息如下:\n'
-    info=sys.exc_info()  
-    print info[0],":",info[1]
-    print   u'错误信息显示完毕\n点按回车退出'
-    raw_input()
-
-
-
+Hook={}
+if  __name__ == '__main__' :
+    try:
+        pass
+        CheckUpdate()
+        print   u'请设置下载图片时的最大线程数\n线程越多速度越快，但线程过多会导致知乎服务器故障导致图片下载失败，默认最大线程数为20\n请输入一个数字（1~50），回车确认'
+        MaxThread   =   setMaxThread()
+        ZhihuHelp_Epub(Hook=Hook,MaxThread=MaxThread)
+    except  (KeyboardInterrupt, SystemExit):
+        pass#正常退出
+    except  Exception , e:
+        print   u'程序异常退出，快上知乎上@姚泽源反馈下bug\n或者把bug和『错误信息_未能成功打开的页面.txt』一块发给yaozeyuan93@gmail.com也行，谢谢啦~\n错误信息如下:\n'
+        print   e
+        print   "\n-----------------------\n"
+        import traceback
+        f   =   open("错误信息_未能成功打开的页面.txt","ab")#应该使用错误报告文件，不应该动ReadList
+        f.write(u"\n#-----------------------\n"+u"发生时间:\n"+time.strftime("%Y-%m-%d  %H:%M:%S",time.gmtime()))
+        f.write(u"\n*    "+u"专栏助手异常网址:\n"+str(Hook))
+        f.write(u"\n*    "+u"专栏助手异常信息:\n"+str(e))
+        f.write(u"\n*    "+u"专栏助手异常栈:\n")
+        traceback.print_tb(sys.exc_traceback)
+        traceback.print_tb(sys.exc_traceback,file=f)
+        f.write(u"\nover"+u"\n-----------------------\n")
+        print   u'错误信息显示完毕，已记录至『错误信息_未能成功打开的页面.txt』文件中\n点按回车退出'
+        raw_input()
+else:
+    print   "Zhuanlan Mode"
+    #ZhihuHelp(Hook=Hook)
