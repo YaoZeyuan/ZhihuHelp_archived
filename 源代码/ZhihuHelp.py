@@ -850,7 +850,7 @@ def ZhihuHelp(Hook={}):
         ReadList    =   open("./ReadList.txt","r")
     except  IOError as e:
         print   e
-        ErrorReturn(u'程序所在的目录里好像没有ReadList.txt这个文件，先手工新建一个吧')
+        ErrorReturn(u'程序所在的目录里好像没有ReadList.txt这个文件，手工新建一个吧')
     ReSettingFlag=True
     if  os.path.isfile('setting.ini'):
         try :
@@ -926,7 +926,7 @@ def ZhihuHelp(Hook={}):
     raw_input()
 
 Hook={}
-if  not __name__ == '__main__' :
+if  __name__ == '__main__' :
     try:
         pass
         CheckUpdate()
@@ -946,8 +946,8 @@ if  not __name__ == '__main__' :
         traceback.print_tb(sys.exc_traceback)
         traceback.print_tb(sys.exc_traceback,file=f)
         f.write(u"\nover"+u"\n-----------------------\n")
-        print   u'错误信息显示完毕\n点按回车退出'
+        print   u'错误信息显示完毕，已记录至『错误信息_未能成功打开的页面.txt』文件中\n点按回车退出'
         raw_input()
 else:
     print   "Zhuanlan Mode"
-    ZhihuHelp(Hook=Hook)
+    #ZhihuHelp(Hook=Hook)
