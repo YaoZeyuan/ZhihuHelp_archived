@@ -339,6 +339,7 @@ if  __name__ == '__main__' :
         traceback.print_tb(sys.exc_traceback)
         traceback.print_tb(sys.exc_traceback,file=f)
         f.write(u"\nover"+u"\n-----------------------\n")
+        f.close()
         print   u'错误信息显示完毕，已记录至『错误信息_未能成功打开的页面.txt』文件中\n点按回车退出'
         raw_input()
 else:

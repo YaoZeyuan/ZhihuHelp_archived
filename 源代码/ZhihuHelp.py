@@ -194,7 +194,7 @@ def returnReDict():#返回编译好的正则字典#Pass
     Dict['_UnSuccessName']              =   re.compile(r'(?<=<h3 class="zm-item-answer-author-wrap">).*(?=</h3></div>)')
     Dict['_Sign']                       =   re.compile(r'(?<=<strong title=").*(?=" class="zu-question-my-bio">)')
     Dict['_NoRecord']                   =   re.compile(r'<span class="copyright zu-autohide"><span class="zg-bull">&bull;</span> 禁止转载</span>')#怎么用？   
-    Dict['_UserIDLogoAdress']           =   re.compile(r'(?<=src=")http://p\d\.zhimg\.com[/\w]{7}[_\w]{11}\.jpg(?="class="zm-list-avatar)')
+    Dict['_UserIDLogoAdress']           =   re.compile(r'(?<=src=")http://pic\d\.zhimg\.com[/_\w]*?\.jpg(?="class="zm-list-avatar)')
     return  Dict
         
 def ReadAnswer(ReDict,html_parser,LastDict,text="",Flag=1):#UnitTest#newCommitTag
@@ -648,7 +648,8 @@ def CatchFrontInfo(ContentText='',Flag=0,Target=''):
         return  InfoDict
     if  Flag    ==1:#1,ID;2,Collect;3,RoundTable;4,Topic
         ID_Name_Sign                =   re.search(r'(?<=<div class="title-section ellipsis">).*?(?=<div class="body clearfix">)',ContentText).group(0)
-        InfoDict['IDLogoAdress']        =   re.search(r'''(?<=src=")http://pic\d\.zhimg\.com/[_\w]{11}\.jpg(?="class="zm-profile-header-img zg-avatar-big zm-avatar-editor-preview")''',ContentText).group(0)#更新页面结构了我去
+        InfoDict['IDLogoAdress']        =   re.search(r'(?<=src=")http://pic\d\.zhimg\.com/[_\w]*?\.jpg(?="class="zm-profile-header-img zg-avatar-big zm-avatar-editor-preview")',ContentText).group(0)#新Logo匹配规则
+        #re.search(r'''(?<=src=")http://pic\d\.zhimg\.com/[_\w]{11}\.jpg(?="class="zm-profile-header-img zg-avatar-big zm-avatar-editor-preview")''',ContentText).group(0)#更新页面结构了我去
         InfoDict['ID']                  =   rTC(re.search(r'(?<=href="/people/)[^"]*',ID_Name_Sign).group(0))
         try:
             InfoDict['Sign']            =   rTC(re.search(r'(?<=<span class="bio" title=").*?(?=">)',ID_Name_Sign).group(0)) 
@@ -946,6 +947,7 @@ if  __name__ == '__main__' :
         traceback.print_tb(sys.exc_traceback)
         traceback.print_tb(sys.exc_traceback,file=f)
         f.write(u"\nover"+u"\n-----------------------\n")
+        f.close()
         print   u'错误信息显示完毕，已记录至『错误信息_未能成功打开的页面.txt』文件中\n点按回车退出'
         raw_input()
 else:
