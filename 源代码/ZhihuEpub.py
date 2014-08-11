@@ -133,39 +133,52 @@ def CreateContainer_XML():#PassTag
   </rootfiles>
 </container>''')
     f.close()
-def returnTagContent(text='',tagname='',TrueTagName=''):#NonUseTag#返回时会带上标签
-    TagBeginStr     =   TrueTagName
-    BeginPos        =   text.index(TagBeginStr)+len(TagBeginStr)
-    rowEndPos       =   text.index('</'+tagname+'>')
-    newText         =   text[BeginPos:rowEndPos]#初始字符位置
-    #开始检测是否有重复标签
-    completeTime    =   len(re.findall(r"<"+tagname+r'.*?>',newText)) 
-    while   completeTime:
-        bufPos  =   rowEndPos
-        for i   in  range(completeTime):
-            bufPos  =   text.index('</'+tagname+'>',bufPos+1)
-        newText         =   text[rowEndPos:bufPos]
-        completeTime    =   len(re.findall(r"<"+tagname+r'.*?>',newText)) 
-        rowEndPos       =   bufPos
-    return  text[BeginPos-len(TagBeginStr):rowEndPos+len(tagname)+3]
-def removeTagContentWithTag(text='',TagList=[]):#移除List中所有的Tag
-    for name,truename   in  TagList:
-        try     :
-            text    =   text.replace(returnTagContent(text=text,tagname=name,TrueTagName=tagname),'')
-        except  :
-            pass
-    return text
 
-def removeTag(text='',tagname=[]):#NonUseTag
-    for tag in  tagname:
-        text    =   text.replace('</'+tag+'>','')
-        text    =   re.sub(r"<"+tag+r'.*?>','',text)
-    return  text
-def removeAttibute(text='',AttList=[]):#PassTag
-    for Att in  AttList:
-        for t   in  re.findall(r'\s'+Att+'[^\s^>]*',text):
-            text    =   text.replace(t,'')
-    return text
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def closeimg(text='',ImgList=[],PicDownload=1):#PassTag#若有大图直接下载之#为图片添加点击框
     u"""
         *   功能
@@ -462,6 +475,55 @@ def MakeInfoDict(InfoDict={},TargetFlag=0):
         Dict['BookTitle']   =   Dict['BookTitle'].replace(r,'')
     return Dict   
 
+def EpubToHtml(filename=""):
+    u"""
+        *   功能
+            *   在epub文件的基础上输出为一个单一Html格式文件
+            *   假定起始位于根目录
+        *   输入
+            *   filename
+                *   目标文件名  
+                *   例如
+                    *   姚泽源的知乎回答集锦(502BadGateway)
+        *   返回
+            *   无                                            
+    """
+    shutil.rmtree(u"./知乎答案集锦/"+filename,True)#移除之前生成的答案
+    Mkdir(u"./知乎答案集锦/"+filename)
+    htmlFile    =   open(u"./知乎答案集锦/"+filename+'/'+filename+u"_HTML网页版.html","wb")
+    navigate_html=  ""#导航
+    main_html   =   ""#主体部分
+    #最后手工打开title.html，获取封面
+
+    title_Template  =   re.compile(r"<title>.*?</title>")
+    body_Template   =   re.compile(r"<body>.*?</body>"  )
+
+    for htmlcache   in  sorted(filter(lambda x:x[0]=='c' and x[1]=='h',os.listdir(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/html")),cmp = lambda x,y:int(x[7:-5])-int(y[7:-5])  ) :#if  not (htmlcache != "title.html"    or  htmlcache != "cover.html"):#安全起见可以再排个序
+        buf_file    =   open(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/html/"+htmlcache ,"r")
+        t   =   buf_file.read().replace("\r",'').replace("\n",'')
+        buf_title   =   title_Template.search(t).group(0)[7:-8]
+        buf_body    =   body_Template.search(t).group(0)[6:-7]
+        navigate_html+= '<li><a href = "#%(index)s">%(title)s</a></li>\n'%{'index':htmlcache[:-5],'body':buf_body[5:-5],'title':buf_title}
+        main_html   +=  '<hr/><br/><div id="%(index)s">%(body)s</div>\n '%{'index':htmlcache[:-5],'body':buf_body[5:-5]}
+        buf_file.close()
+    
+    buf_file    =   open(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/html/cover.html" ,"r")
+    t   =   buf_file.read().replace("\r",'').replace("\n",'')
+    buf_title   =   re.search(r"<head>.*?</head>",t).group(0)
+    buf_body    =   re.search(r"<body>.*?</body>",t).group(0)[6:-7]
+    t   =   u'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">%(title)s\n<body>\n%(body)s\n<div id="index"><h2>目录</h2><ol>%(index)s</ol></div>%(main)s<body/>'%{'title':buf_title,'body':buf_body[5:-5],'index':navigate_html,'main':main_html}
+    htmlFile.write(t.replace('src="../images/','src="./images/'))
+    htmlFile.close()
+    shutil.copytree(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/images",u"./知乎答案集锦/"+filename+'/images')
+    shutil.copy(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/stylesheet.css",u"./知乎答案集锦/"+filename+'/')
+
+
+
+
+
+
+
+
 def EpubBuilder(MaxThread=20,FReadList=[],PicDownload=1):
     cursor  =   returnCursor()
     #FReadList   =   open('ReadList.txt','r')
@@ -626,5 +688,6 @@ def EpubBuilder(MaxThread=20,FReadList=[],PicDownload=1):
         ZipToEpub(EpubName = InfoDict['BookTitle']+'.epub')
         os.chdir('..')
         os.chdir('..')#回到元目录
+        EpubToHtml(u'%(BookTitle)s(%(AuthorAddress)s)'%InfoDict)
         PrintInOneLine('')
         PrintInOneLine( u'\n%(BookTitle)s制作完成\n'%InfoDict+'\n')

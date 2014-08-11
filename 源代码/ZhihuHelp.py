@@ -389,6 +389,45 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
         *   返回
              *   携带可用cookie的header头
      """
+    def    _Decodegzip(Page):
+        if  Page.info().get(u"Content-Encoding")=="gzip":             
+            try:    
+                k   =   zlib.decompress(Page.read(), 16+zlib.MAX_WBITS)
+            except  zlib.error as   ziperror:
+                print   u'解压缩出错'
+                print   u'错误信息：'
+                print   zliberror
+                raise   IOError(u"解压网页内容时出现错误"+u"错误页面\t：\t"+Request.get_full_url())#此失败不可修复
+        else    :
+            k   =   Page.read()
+        return k         
+
+
+
+
+
+
+    header  =   {
+                    'Accept'    :   '*/*'                                                                                 
+                    ,'Accept-Encoding'   :'gzip,deflate,sdch'
+                    ,'Accept-Language'    :'zh,zh-CN;q=0.8,en-GB;q=0.6,en;q=0.4'
+                    ,'Connection'    :'keep-alive'
+                    ,'Host'    :'www.zhihu.com'
+                    ,'User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) \
+                      AppleWebKit/537.36 (KHTML, like Gecko)\
+                      Chrome/34.0.1847.116 Safari/537.36'
+                }
+    rowcount    =   cursor.execute('select count(Pickle)  from VarPickle where Var="PostHeader"').fetchone()[0]    
+    if  rowcount!=0:
+        List    =   pickle.loads(cursor.execute("select Pickle   from VarPickle  where Var='PostHeader'").fetchone()[0])#这种错误。。。真难发现啊
+        recordtime  =   datetime.datetime.strptime(List[0],'%Y-%m-%d').date()
+        today       =   datetime.date.today()
+        diff        =   10- (today - recordtime).days
+        if  diff    >   0:
+            print   u'跳过登陆流程，直接使用储存于'+List[0]+u'的记录进行登陆。'
+            header['Cookie']    =   List[1]
+            return  header
+###########################当之前有记录时直接使用旧cookie
     qc_1    =   ''#初始化
     print   u'开始验证网页能否打开，验证完毕后将开始登陆流程，请稍等。。。'
     header  =   {
@@ -416,13 +455,11 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
         print   u'话说网络链接正常不？'
         print   u'转为使用旧有PostHeader'
         return  OldPostHeader(cursor=cursor)
+    k   =   _Decodegzip(ZhihuFrontPage)
     try :
-        xsrf    =   '_xsrf=' + re.search(r'(?<=name="_xsrf" value=")[^"]*(?="/>)',ZhihuFrontPage.read()).group(0)
-        #print   xsrf
+        xsrf    =   '_xsrf=' + re.search(r'(?<=name="_xsrf" value=")[^"]*(?="/>)',k).group(0)
     except  AttributeError:
         ErrorReturn(u'xsrf读取失败，程序出现致命故障，无法继续运行。\n错误信息：知乎的登陆验证方式可能已更改，无法在返回的cookie中正则匹配到xsrf，请知乎@姚泽源更新脚本')
-    #except  KeyError:#有这个错误？
-    #    ErrorReturn( u'知乎没有设置xsrf\n可能登陆流程已修改，请知乎私信@姚泽源更新软件，不胜感激~')
 
     header['Cookie']    =   xsrf+';l_c=1'
     header['Origin']    =   'http://www.zhihu.com'#妈蛋知乎改登陆方式了这个坑坑了我整整两天！！！   
@@ -468,7 +505,7 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
                 qc_0    =   ''
 
             header['Cookie']        =  qc_1 +';'  +xsrf+'; l_c=1'+';'+qc_0
-            buf_read    = buf.read()#为什么只能读取一次？？？#info可以读取多次
+            buf_read    = _Decodegzip(buf)#为什么只能读取一次？？？#info可以读取多次
             PostInfo    =   json.loads(buf_read)
             if  PostInfo['errcode']==269:#提示输入验证码#验证码错误是270#登陆成功不返回任何信息，所以会报错，测试一下#也可能是该用户尚未注册
                 print   u'抱歉，错误代码269\n知乎返回的错误信息如下:\n-----------------begin---------------------'
@@ -751,7 +788,7 @@ def CreateWorkListDict(PostHeader,TargetFlag,Target):#输入http头、目标代�
                     url =   'http://www.zhihu.com/topic/'+Target+'/top-answers?page='#话题功能尚未测试
                 else:
                     ErrorReturn(u'输入内容有误，创建待读取列表失败，在输入中提取到的内容为：\n{}\n,错误代码:{}\n'.format(Target,TargetFlag))
-    Request =   urllib2.Request(headers=PostHeader,url=url)
+    Request =   urllib2.Request(headers=PostHeader,url=url+'1')
     k       =  ''
     Times    =   0
     while   k==''   and Times<10:
@@ -927,7 +964,7 @@ def ZhihuHelp(Hook={}):
     raw_input()
 
 Hook={}
-if  __name__ == '__main__' :
+if  not __name__ == '__main__' :
     try:
         pass
         CheckUpdate()
@@ -952,4 +989,4 @@ if  __name__ == '__main__' :
         raw_input()
 else:
     print   "Zhuanlan Mode"
-    #ZhihuHelp(Hook=Hook)
+    ZhihuHelp(Hook=Hook)

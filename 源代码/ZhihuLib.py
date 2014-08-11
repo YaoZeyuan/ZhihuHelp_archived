@@ -50,7 +50,8 @@ def CheckUpdate():#检查更新，强制更新#newCommitTag
         return
     else:
         print   u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(UpdateComment,Time)
-        raw_input(u'新版本下载地址:'+url)
+        print   u'新版本下载地址:'+url
+        raw_input()
         import  webbrowser
         webbrowser.open_new_tab(url)
     return
@@ -205,7 +206,7 @@ def ErrorReturn(ErrorInfo=""):#返回错误信息并退出，错误信息要用u
      """
     print   ErrorInfo
     print   u"点按回车退出"
-    input()                                                                       
+    raw_input()                                                                       
     os._exit(0)                                                                     
 
 def setMaxThread():
@@ -371,4 +372,50 @@ def Mkdir(DirName=u''):#PassTag
             pass#已存在
     return
 
+###网页分析部分
+def returnTagContent(text='',tagname='',TrueTagName=''):#NonUseTag#返回时会带上标签
+    u"""
+        *   功能
+            *   返回指定Tag的内容，例如<h3><body id="65">asbd<h>asd</h>sad</body></h3>，返回<body id="65">asbd<h>asd</h>sad</body>
+            *   输入
+            *   text
+                *   待处理内容
+            *   tagname
+                *   标签名
+            *   TrueTagName
+                *   起始标签名的全称，用于定位标签的位置
+        *   返回
+            *   Tag的内容
+     """
+    TagBeginStr     =   TrueTagName
+    BeginPos        =   text.index(TagBeginStr)+len(TagBeginStr)
+    rowEndPos       =   text.index('</'+tagname+'>')
+    newText         =   text[BeginPos:rowEndPos]#初始字符位置
+    #开始检测是否有重复标签
+    completeTime    =   len(re.findall(r"<"+tagname+r'.*?>',newText)) 
+    while   completeTime:
+        bufPos  =   rowEndPos
+        for i   in  range(completeTime):
+            bufPos  =   text.index('</'+tagname+'>',bufPos+1)
+        newText         =   text[rowEndPos:bufPos]
+        completeTime    =   len(re.findall(r"<"+tagname+r'.*?>',newText)) 
+        rowEndPos       =   bufPos
+    return  text[BeginPos-len(TagBeginStr):rowEndPos+len(tagname)+3]
+def removeTagContentWithTag(text='',TagList=[]):#移除List中所有的Tag
+    for name,truename   in  TagList:
+        try     :
+            text    =   text.replace(returnTagContent(text=text,tagname=name,TrueTagName=tagname),'')
+        except  :
+            pass
+    return text
 
+def removeTag(text='',tagname=[]):#NonUseTag
+    for tag in  tagname:
+        text    =   text.replace('</'+tag+'>','')
+        text    =   re.sub(r"<"+tag+r'.*?>','',text)
+    return  text
+def removeAttibute(text='',AttList=[]):#PassTag
+    for Att in  AttList:
+        for t   in  re.findall(r'\s'+Att+'[^\s^>]*',text):
+            text    =   text.replace(t,'')
+    return text
