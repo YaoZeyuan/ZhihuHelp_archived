@@ -964,7 +964,7 @@ def ZhihuHelp(Hook={}):
     raw_input()
 
 Hook={}
-if  not __name__ == '__main__' :
+if  __name__ == '__main__' :
     try:
         pass
         CheckUpdate()
@@ -989,4 +989,4 @@ if  not __name__ == '__main__' :
         raw_input()
 else:
     print   "Zhuanlan Mode"
-    ZhihuHelp(Hook=Hook)
+    #ZhihuHelp(Hook=Hook)

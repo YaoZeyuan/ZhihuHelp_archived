@@ -419,3 +419,47 @@ def removeAttibute(text='',AttList=[]):#PassTag
         for t   in  re.findall(r'\s'+Att+'[^\s^>]*',text):
             text    =   text.replace(t,'')
     return text
+
+def EpubToHtml(filename=""):
+    u"""
+        *   功能
+            *   在epub文件的基础上输出为一个单一Html格式文件
+            *   假定起始位于根目录
+        *   输入
+            *   filename
+                *   目标文件名  
+                *   例如
+                    *   姚泽源的知乎回答集锦(502BadGateway)
+        *   返回
+            *   无                                            
+    """
+    shutil.rmtree(u"./知乎答案集锦/"+filename,True)#移除之前生成的答案
+    Mkdir(u"./知乎答案集锦/"+filename)
+    htmlFile    =   open(u"./知乎答案集锦/"+filename+'/'+filename+u"_HTML网页版.html","wb")
+    navigate_html=  ""#导航
+    main_html   =   ""#主体部分
+    #最后手工打开title.html，获取封面
+
+    title_Template  =   re.compile(r"<title>.*?</title>")
+    body_Template   =   re.compile(r"<body>.*?</body>"  )
+
+    for htmlcache   in  sorted(filter(lambda x:x[0]=='c' and x[1]=='h',os.listdir(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/html")),cmp = lambda x,y:int(x[7:-5])-int(y[7:-5])  ) :#if  not (htmlcache != "title.html"    or  htmlcache != "cover.html"):#安全起见可以再排个序
+        buf_file    =   open(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/html/"+htmlcache ,"r")
+        t   =   buf_file.read().replace("\r",'').replace("\n",'')
+        buf_title   =   title_Template.search(t).group(0)[7:-8]
+        buf_body    =   body_Template.search(t).group(0)[6:-7]
+        navigate_html+= '<li><a href = "#%(index)s">%(title)s</a></li>\n'%{'index':htmlcache[:-5],'body':buf_body[5:-5],'title':buf_title}
+        main_html   +=  '<hr/><br/><div id="%(index)s">%(body)s</div>\n '%{'index':htmlcache[:-5],'body':buf_body[5:-5]}
+        buf_file.close()
+    
+    buf_file    =   open(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/html/cover.html" ,"r")
+    t   =   buf_file.read().replace("\r",'').replace("\n",'')
+    buf_title   =   re.search(r"<head>.*?</head>",t).group(0)
+    buf_body    =   re.search(r"<body>.*?</body>",t).group(0)[6:-7]
+    t   =   u'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">%(title)s\n<body>\n%(body)s\n<div id="index"><h2>目录</h2><ol>%(index)s</ol></div>%(main)s<body/>'%{'title':buf_title,'body':buf_body[5:-5],'index':navigate_html,'main':main_html}
+    htmlFile.write(t.replace('src="../images/','src="./images/'))
+    htmlFile.close()
+    shutil.copytree(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/images",u"./知乎答案集锦/"+filename+'/images')
+    shutil.copy(u"./电子书制作临时资源库/"+filename+u"_电子书制作临时文件夹/OEBPS/stylesheet.css",u"./知乎答案集锦/"+filename+'/')
+
+

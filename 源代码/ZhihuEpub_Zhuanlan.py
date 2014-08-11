@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import  json
 from    ZhihuEpub   import  CheckImgFileExist, DownloadPicWithThread , returnCursor ,  CreateMimeType , CreateContainer_XML , returnTagContent , removeTag , removeAttibute , closeimg , PixName , fixPic , DownloadImg , CreateOPF , CreateNCX ,  ZipToEpub #复用。。。
-from    ZhihuLib    import  CheckUpdate,PrintDict ,Mkdir ,PrintInOneLine,CopyFile,OpenUrl,ErrorReportText,setMaxThread,ErrorReturn
+from    ZhihuLib    import  CheckUpdate,PrintDict ,Mkdir ,PrintInOneLine,CopyFile,OpenUrl,ErrorReportText,setMaxThread,ErrorReturn,EpubToHtml
 import  sys
 reload( sys )
 sys.setdefaultencoding('utf-8')
@@ -311,6 +311,8 @@ def ZhihuHelp_Epub(Hook={},MaxThread=20):
         ZipToEpub(InfoDict['BookTitle']+'.epub')
         os.chdir('..')
         os.chdir('..')#回到元目录
+        
+        EpubToHtml(u'%(BookTitle)s(%(AuthorAddress)s)'%InfoDict)
         PrintInOneLine('\n'+u'%(BookTitle)s制作完成'%InfoDict+'\n')
     print   u'恭喜，所有电子书制作完成\n未成功打开的页面已输出至『未成功打开的页面.txt』中\n点按回车退出'
     raw_input()
