@@ -26,6 +26,7 @@ import  os#打开更新页面
 ####
 #工具程序所用模块
 import  ConfigParser#ini文件读取，Setting()
+import  shutil#文件操作模块
 #用于存放工具性函数
 def CheckUpdate():#检查更新，强制更新#newCommitTag
     u"""
@@ -46,7 +47,7 @@ def CheckUpdate():#检查更新，强制更新#newCommitTag
     Time        =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     url         =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     UpdateComment=  UpdateTime.read()#可行？
-    if  Time=="2014-08-11":
+    if  Time=="2014-08-12":
         return
     else:
         print   u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(UpdateComment,Time)

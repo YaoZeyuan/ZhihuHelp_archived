@@ -401,35 +401,6 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
         else    :
             k   =   Page.read()
         return k         
-
-
-
-
-
-
-    header  =   {
-                    'Accept'    :   '*/*'                                                                                 
-                    ,'Accept-Encoding'   :'gzip,deflate,sdch'
-                    ,'Accept-Language'    :'zh,zh-CN;q=0.8,en-GB;q=0.6,en;q=0.4'
-                    ,'Connection'    :'keep-alive'
-                    ,'Host'    :'www.zhihu.com'
-                    ,'User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) \
-                      AppleWebKit/537.36 (KHTML, like Gecko)\
-                      Chrome/34.0.1847.116 Safari/537.36'
-                }
-    rowcount    =   cursor.execute('select count(Pickle)  from VarPickle where Var="PostHeader"').fetchone()[0]    
-    if  rowcount!=0:
-        List    =   pickle.loads(cursor.execute("select Pickle   from VarPickle  where Var='PostHeader'").fetchone()[0])#这种错误。。。真难发现啊
-        recordtime  =   datetime.datetime.strptime(List[0],'%Y-%m-%d').date()
-        today       =   datetime.date.today()
-        diff        =   10- (today - recordtime).days
-        if  diff    >   0:
-            print   u'跳过登陆流程，直接使用储存于'+List[0]+u'的记录进行登陆。'
-            header['Cookie']    =   List[1]
-            return  header
-###########################当之前有记录时直接使用旧cookie
-    qc_1    =   ''#初始化
-    print   u'开始验证网页能否打开，验证完毕后将开始登陆流程，请稍等。。。'
     header  =   {
                     'Accept'    :   '*/*'                                                                                 
                     ,'Accept-Encoding'   :'gzip,deflate,sdch'
@@ -442,6 +413,27 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
                      (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36'
                     ,'X-Requested-With':'XMLHttpRequest'
                 }
+    #首先检测数据库中是否已有对应cookie
+    if  UserID  !=  'mengqingxue2014@qq.com':
+        rowcount    =   cursor.execute('select count(Pickle)  from VarPickle where Var="PostHeader"').fetchone()[0]    
+        if  rowcount!=0:
+            List    =   pickle.loads(cursor.execute("select Pickle   from VarPickle  where Var='PostHeader'").fetchone()[0])#这种错误。。。真难发现啊
+            recordtime  =   datetime.datetime.strptime(List[0],'%Y-%m-%d').date()
+            today       =   datetime.date.today()
+            diff        =   10- (today - recordtime).days
+            if  diff    >   0:
+                print   u'跳过登陆流程，直接使用储存于'+List[0]+u'的记录进行登陆。'
+                header['Cookie']    =   List[1]
+                return  header
+    
+    #没有或已过期则启动登陆流程
+    import cookielib
+    cookieJarInMemory = cookielib.CookieJar();
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookieJarInMemory));
+    urllib2.install_opener(opener);
+    
+    qc_1    =   ''#初始化
+    print   u'开始验证网页能否打开，验证完毕后将开始登陆流程，请稍等。。。'
     try :
         ZhihuFrontPage=urllib2.urlopen(u"http://www.zhihu.com")#这里也可能出错#初次打开zhihu.com,获取xsrf信息
     except  urllib2.HTTPError   as e    :
@@ -461,7 +453,6 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
     except  AttributeError:
         ErrorReturn(u'xsrf读取失败，程序出现致命故障，无法继续运行。\n错误信息：知乎的登陆验证方式可能已更改，无法在返回的cookie中正则匹配到xsrf，请知乎@姚泽源更新脚本')
 
-    header['Cookie']    =   xsrf+';l_c=1'
     header['Origin']    =   'http://www.zhihu.com'#妈蛋知乎改登陆方式了这个坑坑了我整整两天！！！   
     header['Referer']   =   'http://www.zhihu.com/'                                                
 
@@ -473,69 +464,80 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
         AskRemberFlag       =   False
         print   u'可以通过使用记事本打开setting.ini文件修改用户名与密码来更换登录帐号'
     MaxTryTime  =   0#最多重复三次，三次后自动切换为使用旧有cookie进行登录
-    try:
-        while   MaxTryTime<3:
-            LoginData   =   urllib.quote('{0}&email={1}&password={2}&rememberme=y'\
-                                        .format(xsrf,UserID,UserPassword),safe='=&')#编码Post请求
-            request     =   urllib2.Request(url='http://www.zhihu.com/login'\
-                                            ,data=LoginData,headers=header)
-            try :
-                buf         =   urllib2.urlopen(request)
-            except  urllib2.HTTPError   as e    :#还可能会有403/500错误
-                print   u'服务器错误'
-                print   u'错误内容',e
-                print   u'话说网络链接正常不？'
-                print   u'转为使用旧有Header'
-                return  OldPostHeader(cursor=cursor)
-            except  urllib2.URLError    as e    :
-                print   u'网络错误'
-                print   u'错误内容',e
-                print   u'话说网络链接正常不？'
-                print   u'转为使用旧有PostHeader'
-                return  OldPostHeader(cursor=cursor)
-            if  qc_1    ==  '':
-                try :#如果是初次打开网页的话，登陆成功之后会一并返回qc_1与qc_0,都有用
-                    qc_1    =   re.search(r'(q_c1=[^;]*)',buf.info()['set-cookie']).group(0)
-                except  AttributeError:
-                    ErrorReturn(u'qc_1读取失败，程序出现致命故障，无法继续运行。\n错误信息：知乎登陆流程可能已更改，无法在返回的cookie中正则匹配到qc_1，请知乎@姚泽源更新脚本')         
-                    qc_1    =   ''
-            try:
-                qc_0    =   re.search(r'(q_c0=[^;]*)',buf.info()['set-cookie']).group(0)
-            except  AttributeError:
-                qc_0    =   ''
-
-            header['Cookie']        =  qc_1 +';'  +xsrf+'; l_c=1'+';'+qc_0
-            buf_read    = _Decodegzip(buf)#为什么只能读取一次？？？#info可以读取多次
-            PostInfo    =   json.loads(buf_read)
-            if  PostInfo['errcode']==269:#提示输入验证码#验证码错误是270#登陆成功不返回任何信息，所以会报错，测试一下#也可能是该用户尚未注册
-                print   u'抱歉，错误代码269\n知乎返回的错误信息如下:\n-----------------begin---------------------'
-                PrintDict(PostInfo)
-                print   '------------------end----------------------'
-                ErrorReturn(u'表示无法处理这样的错误\n如果是需要输入验证码的话请用网页登陆一次知乎之后再来吧~（注：私人账号在网页上成功登陆一次之后就不会再出现验证码了）')
+    try:#当帐号或密码错误时直接退出,只处理需要输入验证码这一种情况
+        LoginData   =   urllib.quote('{0}&email={1}&password={2}'\
+                                    .format(xsrf,UserID,UserPassword)+'&rememberme=y'\
+                                    ,safe='=&')#编码Post请求
+        request     =   urllib2.Request(url='http://www.zhihu.com/login'\
+                                        ,data=LoginData,headers=header)
+        try :
+            buf         =   urllib2.urlopen(request)
+        except  urllib2.HTTPError   as e    :#还可能会有403/500错误
+            print   u'服务器错误'
+            print   u'错误内容',e
+            print   u'话说网络链接正常不？'
+            print   u'转为使用旧有Header'
+            return  OldPostHeader(cursor=cursor)
+        except  urllib2.URLError    as e    :
+            print   u'网络错误'
+            print   u'错误内容',e
+            print   u'话说网络链接正常不？'
+            print   u'转为使用旧有PostHeader'
+            return  OldPostHeader(cursor=cursor)
+        buf_read    = _Decodegzip(buf)
+        PostInfo    =   json.loads(buf_read)
+        if  PostInfo['errcode']==269:#提示输入验证码or邮箱不存在
+            print   u'抱歉，错误代码269,需要输入验证码或邮箱不存在,若邮箱不存在请重新运行本程序,验证码错误请跟随提示输入验证码\n知乎返回的错误信息如下:\n-----------------begin---------------------'
+            print   PostInfo['msg']['captcha'].encode('gbk')#win下要编码成gbk，
+            print   '------------------end----------------------'
+            while   PostInfo['errcode']==269    or  PostInfo['errcode']==270    :#开始验证码流程
+                print   u"正在获取验证码。。。"
+                new_checkcode_url   =   u'http://www.zhihu.com/captcha.gif?r='+str(int(time.time()))#验证码网址，通过cookie鉴别身份
+                buf         =   urllib2.urlopen(url=new_checkcode_url)#开始拉取验证码
+                f   =   open(u"我是登陆知乎时的验证码.gif","wb")
+                f.write(buf.read())
+                f.close()
+                print   u"请输入您所看到的验证码，验证码文件在助手所处的文件夹内,\n双击打开『我是登陆知乎时的验证码.gif』即可"
+                checkcodestr    =   raw_input()
+                LoginData   =   urllib.quote('{0}&email={1}&password={2}&captcha={3}&rememberme=y'\
+                                            .format(xsrf,UserID,UserPassword,checkcodestr),safe='=&')#编码Post请求
+                print   u"正在重新发送登陆信息"
+                request     =   urllib2.Request(url='http://www.zhihu.com/login'\
+                                                ,data=LoginData,headers=header)
+                try :                                                                             
+                    buf         =   urllib2.urlopen(request)
+                except  urllib2.HTTPError   as e    :#还可能会有403/500错误
+                    print   u'服务器错误'
+                    print   u'错误内容',e
+                    print   u'话说网络链接正常不？'
+                    print   u'转为使用旧有Header'
+                    return  ""
+                except  urllib2.URLError    as e    :
+                    print   u'网络错误'
+                    print   u'错误内容',e
+                    print   u'话说网络链接正常不？'
+                    print   u'转为使用旧有PostHeader'
+                    return  ""
+                buf_read    = _Decodegzip(buf)#为什么只能读取一次？？？#info可以读取多次
+                PostInfo    =   json.loads(buf_read)
+                print   u"错误代码："+str(PostInfo['errcode'])+u"\t错误信息:"+PostInfo['msg']['captcha']#win下要编码成gbk，
+                print   u"啊哦，验证码输入错误，再来一遍吧"
+        else    :
+            if  PostInfo['errcode']==270:#第一次出肯定是密码错误
+                ErrorReturn(u"抱歉，密码错误，请重新运行程序吧~")
             else    :
-                if  PostInfo['errcode']==270:
-                    try     :
-                        print   PostInfo['msg']['captcha'].encode('gbk')#win下要编码成gbk，
-                        print   u'验证码错误？什么情况。。。'
-                        ErrorReturn(u'好了现在需要输入验证码了。。。命令行界面表示显示图片不能。。。\n请用网页登陆一次知乎之后再来吧~（注：私人账号在网页上成功登陆一次之后就不会再出现验证码了）')
-                    except  KeyError:
-                        print   u'用户名或密码不正确，请重新输入用户名与密码\n附注:知乎返回的错误信息见下'
-                        PrintDict(PostInfo)
-                        UserID,UserPassword =   InputUserNameandPassword()
-                        AskRemberFlag       =   True
-                        print   u'再次尝试登陆。。。'
-                        MaxTryTime  +=1
-                else    :
-                    if  MaxTryTime>=3:
-                        print   '三次尝试失败，转为使用已有cookie进行登录'
-                        return  OldPostHeader(cursor=cursor)
-                    print   u'未知错误，尝试重新登陆，请重新输入用户名与密码\n\PS:知乎返回的错误信息:'
-                    PrintDict(PostInfo)
-                    UserID,UserPassword =   InputUserNameandPassword()
-                    AskRemberFlag       =   True
-                    print   u'再次尝试登陆。。。'
-                    MaxTryTime  +=1
+                print   u'未知错误，请重新运行本程序或知乎私信@姚泽源报告异常，谢谢啦\n\PS:知乎返回的错误信息:'
+                print   u"错误代码："+str(PostInfo['errcode'])+u"\t错误信息:"+PostInfo['msg']['captcha']#win下要编码成gbk，
+                ErrorReturn("")
     except  KeyError:
+        qc_0    =   ""
+        qc_1    =   ""
+        for cookie  in  cookieJarInMemory:
+            if  cookie.name ==  'q_c1':
+                qc_1    =   'q_c1=' + cookie.value
+            if  cookie.name ==  'q_c0':
+                qc_0    =   'q_c0=' + cookie.value
+        header['Cookie']        =  qc_1 +';'  +xsrf+'; l_c=1'+';'+qc_0#生成cookie
         print   u'登陆成功！'
         print   u'登陆账号:',UserID
         if  AskRemberFlag:
@@ -976,7 +978,7 @@ if  __name__ == '__main__' :
         print   e
         print   "\n-----------------------\n"
         import traceback
-        f   =   open("错误信息_未能成功打开的页面.txt","ab")#应该使用错误报告文件，不应该动ReadList
+        f   =   open("错误信息_未能成功打开的页面.txt","ab+")#应该使用错误报告文件，不应该动ReadList
         f.write(u"\n#-----------------------\n"+u"发生时间:\n"+time.strftime("%Y-%m-%d  %H:%M:%S",time.gmtime()))
         f.write(u"\n*    "+u"异常网址:\n"+str(Hook))
         f.write(u"\n*    "+u"异常信息:\n"+str(e))
