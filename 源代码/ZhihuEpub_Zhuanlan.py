@@ -333,7 +333,7 @@ if  __name__ == '__main__' :
         print   e
         print   "\n-----------------------\n"
         import traceback
-        f   =   open("错误信息_未能成功打开的页面.txt","ab+")#应该使用错误报告文件，不应该动ReadList
+        f   =   open("ErrorReport.txt","ab+")#应该使用错误报告文件，不应该动ReadList
         f.write(u"\n#-----------------------\n"+u"发生时间:\n"+time.strftime("%Y-%m-%d  %H:%M:%S",time.gmtime()))
         f.write(u"\n*    "+u"专栏助手异常网址:\n"+str(Hook))
         f.write(u"\n*    "+u"专栏助手异常信息:\n"+str(e))
