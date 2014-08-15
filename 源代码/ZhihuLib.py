@@ -47,7 +47,7 @@ def CheckUpdate():#检查更新，强制更新#newCommitTag
     Time        =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     url         =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     UpdateComment=  UpdateTime.read()#可行？
-    if  Time=="2014-08-12":
+    if  Time=="2014-08-15":
         return
     else:
         print   u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(UpdateComment,Time)
@@ -261,7 +261,7 @@ def ThreadLiveDetect(ThreadList=[]):
 def ErrorReportText(Info='',flag=True):
     u"""
         *   功能
-            *   将错误信息写入到『错误信息_未能成功打开的页面.txt』中
+            *   将错误信息写入到『ErrorReport.txt』中
         *   输入
             *   Info
                 *   错误信息
@@ -273,9 +273,9 @@ def ErrorReportText(Info='',flag=True):
             *   无
      """
     if  flag    :
-        f   =open(u'错误信息_未能成功打开的页面.txt','ab')
+        f   =open(u'ErrorReport.txt','ab')
     else    :
-        f   =open(u'错误信息_未能成功打开的页面.txt','wb')
+        f   =open(u'ErrorReport..txt','wb')
     f.write(Info)
     f.close()
 def CopyFile(root='',TargetFile='',flag=True):#Pass
