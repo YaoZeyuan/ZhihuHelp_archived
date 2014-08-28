@@ -316,7 +316,6 @@ def ZhihuHelp_Epub(Hook={},MaxThread=20):
         PrintInOneLine('\n'+u'%(BookTitle)s制作完成'%InfoDict+'\n')
     print   u'恭喜，所有电子书制作完成\n未成功打开的页面已输出至『未成功打开的页面.txt』中\n点按回车退出'
     raw_input()
-    exit()
 
 Hook={}
 if  __name__ == '__main__' :

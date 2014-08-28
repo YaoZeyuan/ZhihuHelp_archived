@@ -201,7 +201,7 @@ def closeimg(text='',ImgList=[],PicDownload=1):#PassTag#若有大图直接下载
     else:
         for t   in  re.findall(r'<img.*?>',text):#有可能没有data-original属性
             try :
-                text.index('data-original')
+                t.index('data-original')
             except  ValueError:
                 text    =   text.replace(t,fixPic(removeAttibute(t,['data-rawwidth','data-original']).replace("data-rawheight",'height')[:-1]+u'  alt="知乎图片"/>',ImgList))
             else:
@@ -455,7 +455,7 @@ def DealAnswerDict(cursor=None,AnswerDict={},ImgList=[],PicDownload=1):#必须�
 
 
 def MakeInfoDict(InfoDict={},TargetFlag=0):
-    Dict    =   {}
+    Dict    =   {}#稳定的修复应该是对所有项均做closeimg处理，但只对描述做了两处修改，应该啥事吧~
     if  TargetFlag==1:
         Dict['BookTitle']       =   InfoDict['Name']+u'的知乎回答集锦'
         Dict['AuthorAddress']   =   InfoDict['ID']
@@ -465,12 +465,12 @@ def MakeInfoDict(InfoDict={},TargetFlag=0):
         Dict['BookTitle']       =   u'知乎收藏之'+InfoDict['Title']
         Dict['AuthorAddress']   =   InfoDict['CollectionID']
         Dict['AuthorName']      =   InfoDict['AuthorName']
-        Dict['Description']     =   InfoDict['Description']
+        Dict['Description']     =   closeimg(InfoDict['Description'].replace('<hr>','<hr />').replace('<br>','<br />'),[],1)
     if  TargetFlag==4:
         Dict['BookTitle']       =   u'知乎话题精华之'+InfoDict['Title']
         Dict['AuthorAddress']   =   InfoDict['TopicID']
         Dict['AuthorName']      =   u'知乎'
-        Dict['Description']     =   InfoDict['Description']
+        Dict['Description']     =   closeimg(InfoDict['Description'].replace('<hr>','<hr />').replace('<br>','<br />'),[],1)
     for r   in  '< > / \ | : " * ?'.split(' '):#去除非法字符
         Dict['BookTitle']   =   Dict['BookTitle'].replace(r,'')
     return Dict   
@@ -593,7 +593,7 @@ def EpubBuilder(MaxThread=20,FReadList=[],PicDownload=1):
         f=  open("OEBPS/html/cover.html","w")
            
         if(InfoDict['Description']==''):
-            Description =''
+            Description =''+"</center>"
         else:
             Description ='''<br />                   
             <h4>%(Description)s</h4></center>'''%InfoDict
@@ -605,12 +605,12 @@ def EpubBuilder(MaxThread=20,FReadList=[],PicDownload=1):
          <meta name="builder" content="ZhihuHelpv1.4"/>
          <meta name="right" content="该文档由ZhihuHelp_v1.6.2生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
          <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
-                     <title>%(BookTitle)s</title>
-                     </head>
-                     <body>
-                     <center>
-                     <img  class="cover" src="../images/cover.png"/>
-                     <br />\n
+         <title>%(BookTitle)s</title>
+         </head>
+         <body>
+         <center>
+         <img  class="cover" src="../images/cover.png"/>
+         <br />\n
         <h1>%(BookTitle)s</h1>
         <br />
         <h4>%(AuthorName)s</h4>'''%InfoDict+Description+'''
