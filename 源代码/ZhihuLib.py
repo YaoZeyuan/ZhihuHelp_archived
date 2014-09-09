@@ -324,7 +324,7 @@ def ChooseTarget(url=''):#选择#Pass
             *   4，话题ID
     """
     try :
-        ID      =   re.search(r'(?<=zhihu\.com/people/)[^/]*',url).group(0)#匹配ID
+        ID      =   re.search(r'(?<=zhihu\.com/people/)[^/#]*',url).group(0)#匹配ID
     except  AttributeError:
         pass
     else:
@@ -338,7 +338,7 @@ def ChooseTarget(url=''):#选择#Pass
         print   u'成功匹配到收藏夹，收藏夹代码=',Collect
         return  2,Collect
     try :
-        Roundtable= re.search(r'(?<=zhihu\.com/roundtable/)[^/]*',url).group(0)#知乎圆桌
+        Roundtable= re.search(r'(?<=zhihu\.com/roundtable/)[^/#]*',url).group(0)#知乎圆桌
     except  AttributeError:
         pass
     else:

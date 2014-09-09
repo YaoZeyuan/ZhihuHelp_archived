@@ -30,7 +30,7 @@ import  shutil#删除文件夹
 ####################
 def ChooseTarget(url=''):#选择
     try :
-        return  re.search(r'(?<=zhuanlan.zhihu.com/)[^/]*',url).group(0)
+        return  re.search(r'(?<=zhuanlan.zhihu.com/)[^/#]*',url).group(0)
     except  AttributeError:
         print   u'未能匹配到专栏名'
         return  ''
