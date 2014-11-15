@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head profile="http://www.w3.org/2005/10/profile">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control"  content="no-transform">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知乎助手1.7.0 - {% block title %}{% endblock %}</title>
+    <link href="/static/zui/css/zui.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="static/zui/lib/ieonly/html5shiv.js"></script>
+    <script src="static/zui/lib/ieonly/respond.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  <div>
+    <div class="clearfix row-main">
+      <div class='col-md-2'>
+      </div>
+      <div class='col-md-10'>
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+    <script src="/static/zui/lib/jquery/jquery.js"></script>
+    <script src="/static/zui/js/zui.min.js"></script>
+  </body>
+</html>

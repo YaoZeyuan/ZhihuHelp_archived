@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head profile="http://www.w3.org/2005/10/profile">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Cache-Control"  content="no-transform">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>知乎助手1.7.0 - 登录</title>
+  <link href="/static/zui/css/zui.min.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="static/zui/lib/ieonly/html5shiv.js"></script>
+  <script src="static/zui/lib/ieonly/respond.js"></script>
+  <![endif]-->
+  {% include "login.css.html" %}
+</head>
+<body>
+  <style>body{background-color:#f6f5f5}</style> 
+    <div class='container'>
+      <div id='login'>
+        <div>
+          <div id='logo' class='text-center'><img src='/static/images/logo/zhihuhelpLogo.png'/></div>
+          <div id='message'>
+            <h1></h1>
+          </div>
+          <input type='text' name='account' id='account' value='' class='form-control' placeholder='请输入您的知乎注册邮箱' />
+          <input type='text' name='password' id='password' value='' class='form-control' placeholder='请输入您的知乎密码' />
+          <input type='hidden' name='captcha' id='captcha' value='' class='form-control' placeholder='请输入下方的验证码'/>
+          <input type='submit' id='submit' class='btn btn-primary btn-block' onclick='login()' value='登录' /> 
+          <div id='captchaImg'>
+          </div>
+          <h3>警告：</h3>
+          <p>输入真实用户名与密码会有不可预知的安全风险，为确保您的账户安全，请使用开发者提供的公共账号进行登录。下载私人收藏夹时请尽量使用知乎助手1.6.9或1.7.0以上版本的本地版进行登录</p>
+          <h4>公共帐号:</h4>
+          <p>帐号:mengqingxue2014@qq.com</p>
+          <p>密码:131724qingxue</p>
+        </div>
+      </div>
+    </div>
+  <script src="/static/zui/lib/jquery/jquery.js"></script>
+  <script src="/static/zui/js/zui.min.js"></script>
+  {% include 'login.js.html'%}
+</body>
+</html>

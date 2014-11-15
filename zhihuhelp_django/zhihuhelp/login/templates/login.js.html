@@ -1,0 +1,45 @@
+<script>
+function login()
+{
+    var account  = $('#account').val()
+    var password = $('#password').val()
+    var captcha  = $('#captcha').val()
+    var data 
+    if(captcha == '')
+    {
+        data = {'account':account, 'password':password}
+    }
+    else
+    {    
+        data = {'account':account, 'password':password, 'captcha':captcha}
+    }
+    $.post("login", data, function(json){
+          //alert("JSON Data: " + json.errcode);
+          if(json.r == 0) 
+          { 
+              alert('登陆成功！')
+              window.location.href = 'http://www.baidu.com'
+              return
+          }
+          for(var key in json.msg)
+          {
+              var imgAdress = '<img src="../static/captcha.gif?' + Math.random() + '"></img>'
+              alert(json.msg[key])
+              $('#message h1').text(json.msg[key])
+              if(key == 'captcha')
+              {
+                  $.get('/login/getCaptcha',function(data){
+                      $('#captcha').attr('type', 'text')
+                      $('#captchaImg').html(imgAdress)
+                      })
+              }
+          }
+          }, 'json')
+
+
+
+}
+
+
+
+</script>
