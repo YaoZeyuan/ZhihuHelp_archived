@@ -191,6 +191,19 @@ class ZhihuHelper:
             cookies = qc_1 +';'  +xsrf+'; l_c=1'+';'+qc_0  #生成cookie
             print '所使用的cookie:' + cookies
             print u'登陆成功！'
+            print u'登陆账号:', account
+            if  AskRemberFlag:
+                print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
+                if  raw_input()    ==  'yes'   :
+                    Setting(ReadFlag=False,ID=UserID,Password=UserPassword)
+                    print   u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
+                else:
+                    print   u'跳过保存环节，进入下一流程'
+            newHeader = (str(datetime.date.fromtimestamp(time.time()).strftime('%Y-%m-%d')),header['Cookie'])#time和datetime模块需要导入        
+            SaveDict  = {}
+            SaveDict['Var']    = 'PostHeader'
+            SaveDict['Pickle'] = pickle.dumps(NewHeader)
+            SaveToDB(cursor=cursor,NeedToSaveDict=SaveDict,primarykey='Var',TableName='VarPickle')
             return True
         else:
             print u'登陆失败'
