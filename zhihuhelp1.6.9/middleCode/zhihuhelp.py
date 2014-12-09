@@ -189,26 +189,52 @@ class ZhihuHelper:
                   if  cookie.name ==  'q_c0':
                       qc_0    =   'q_c0=' + cookie.value
             cookies = qc_1 +';'  +xsrf+'; l_c=1'+';'+qc_0  #生成cookie
-            print '所使用的cookie:' + cookies
             print u'登陆成功！'
             print u'登陆账号:', account
             if  AskRemberFlag:
                 print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
                 if  raw_input()    ==  'yes'   :
-                    Setting(ReadFlag=False,ID=UserID,Password=UserPassword)
+                    setting(readFlag=False,ID=UserID,Password=UserPassword)
                     print   u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
                 else:
                     print   u'跳过保存环节，进入下一流程'
-            newHeader = (str(datetime.date.fromtimestamp(time.time()).strftime('%Y-%m-%d')),header['Cookie'])#time和datetime模块需要导入        
-            SaveDict  = {}
-            SaveDict['Var']    = 'PostHeader'
-            SaveDict['Pickle'] = pickle.dumps(NewHeader)
-            SaveToDB(cursor=cursor,NeedToSaveDict=SaveDict,primarykey='Var',TableName='VarPickle')
+            newHeader = (str(datetime.date.fromtimestamp(time.time()).strftime('%Y-%m-%d')), cookies)#time和datetime模块需要导入        
+            data = {}
+            data['Var']    = 'PostHeader'
+            data['Pickle'] = pickle.dumps(NewHeader)
+            save2DB(cursor=self.cursor, data=data, primaryKey='Var', tableName='VarPickle')
             return True
         else:
             print u'登陆失败'
             printDict(result)
             return False 
 
-test = ZhihuHelper()
-test.login()
+
+class Parse:
+    def __init__(self, content):
+        self.content = content
+    
+    def getKeyInfo(self, keys=[]):
+        data = {}
+        for key in keys:
+            value = re.search(self.regDict[key], self.content) 
+            if value != None:
+                data[key] = value.group(0)
+            else:
+                data[key] = ''
+        return data
+
+    def initRegex:
+        self.regDict = {}
+        return 
+    
+
+
+
+class ParseQuestion:
+class ParseAnswer:
+class ParseCollection:
+class ParseColumn:
+class ParseTopic:
+
+    
