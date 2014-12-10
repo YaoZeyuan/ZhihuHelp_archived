@@ -228,10 +228,98 @@ class Parse:
         self.regDict = {}
         return 
     
-
-
+    def splitContent(content):
+        return re.split(self.regDict['splitContent'], content)
 
 class ParseQuestion:
+    def __init__(self, content):
+        self.content = content
+    
+    def getKeyInfo(self, keys=[]):
+        data = {}
+        for key in keys:
+            value = re.search(self.regDict[key], self.content) 
+            if value != None:
+                data[key] = value.group(0)
+            else:
+                data[key] = ''
+        return data
+
+    def initRegex:
+        self.regDict = {}
+        self.regDict['splitContent'] = r''
+        
+        self.regDict['answerContent'] = r''
+        self.regDict['noRecordFlag'] = r''
+        
+        self.regDict['questionHref'] = r''
+        self.regDict['qusetionID'] = r''
+        
+        self.regDict['answerID'] = r''
+        self.regDict['answerSign'] = r''
+        self.regDict['answerName'] = r''
+        self.regDict['answerLogo'] = r''
+        
+        self.regDict['updateDate'] = r''
+        self.regDict['commitDate'] = r''
+        
+        self.regDict['agreeCount'] = r''
+        self.regDict['collectCount'] = r''
+        self.regDict['thanksCount'] = r''
+        self.regDict['commentCount'] = r''
+        self.regDict['collectCount'] = r''
+        
+        #问题描述
+        self.regDict['questionTitle'] = r''
+        self.regDict['questionDesc'] = r''
+        self.regDict['questionFollow'] = r''
+        self.regDict['questionComment'] = r''
+        
+        #用戶信息
+        self.regDict['id'] = r''
+        self.regDict['name'] = r''
+        self.regDict['sign'] = r''
+        
+        self.regDict['followerCount'] = r''
+        self.regDict['followCount'] = r''
+        
+        self.regDict['answerCount'] = r''
+        self.regDict['questionCount'] = r''
+        self.regDict['columnCount'] = r''
+        self.regDict['editCount'] = r''
+        self.regDict['collectionCount'] = r''
+        
+        self.regDict['agreeCount'] = r''
+        self.regDict['thanksCount'] = r''
+        
+        #其它信希 
+        self.regDict['collectionID'] = r''
+        self.regDict['collectionDesc'] = r''
+        self.regDict['collectionFollower'] = r''
+        self.regDict['collectionTitle'] = r''
+        self.regDict['collectionComment'] = r''
+        self.regDict['collectionCreaterID'] = r''
+        self.regDict['collectionCreaterName'] = r''
+        self.regDict['collectionCreaterSign'] = r''
+        self.regDict['collectionCreaterID'] = r''
+
+        self.regDict['topicID'] = r''
+        self.regDict['topicTitle'] = r''
+        self.regDict['topicDesc'] = r''
+        self.regDict['topicFollower'] = r''
+
+        self.regDict['roundTableID'] = r''
+        self.regDict['roundTableTitle'] = r''
+        self.regDict['roundTableDesc'] = r''
+        self.regDict['roundTableFollower'] = r''
+
+
+        self.regDict[''] = r''
+        return 
+    
+    def splitContent(content):
+        return re.split(self.regDict['splitContent'], content)
+    
 class ParseAnswer:
 class ParseCollection:
 class ParseColumn:
