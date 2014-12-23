@@ -1,0 +1,5992 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dropEffect="none" class="no-js ">
+<head>
+<meta charset="utf-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+
+<title>
+
+如何解读支付宝十年对账单的规则？ - 知乎
+
+</title>
+
+<meta name="apple-itunes-app" content="app-id=432274380, app-argument=zhihu://questions/26988830">
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="mobile-agent" content="format=html5;url=http://www.zhihu.com/question/26988830">
+<meta id="znonce" name="znonce" content="9ac286baccb44a129f64f06afeb7f7dd">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(57px).png" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(72px).png" sizes="72x72" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(76px).png" sizes="76x76" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(114px).png" sizes="114x114" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(120px).png" sizes="120x120" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(152px).png" sizes="152x152" />
+
+
+<link rel="shortcut icon" href="http://static.zhihu.com/static/favicon.ico" type="image/x-icon">
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://static.zhihu.com/static/search.xml" title="知乎" />
+<link rel="stylesheet" href="http://static.zhihu.com/static/ver/5ba90377624e9ba2d3422abf1841b60a.z.css">
+
+
+
+<!--[if lt IE 9]>
+<script src="http://static.zhihu.com/static/components/respond/dest/respond.min.js"></script>
+<link href="http://static.zhihu.com/static/components/respond/cross-domain/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+<link href="/static/components/respond/cross-domain/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" />
+<script src="/static/components/respond/cross-domain/respond.proxy.js"></script>
+<![endif]-->
+
+<script src="http://static.zhihu.com/static/ver/c9815c35381b57c0fdc44e8d89dc4327.instant.min.js"></script>
+
+
+
+
+</head>
+
+<body class="zhi">
+<div role="navigation" class="zu-top">
+<div class="zg-wrap" id="zh-top-inner">
+<a href="/" class="zu-top-link-logo" id="zh-top-link-logo">知乎</a>
+
+<div class="top-nav-profile">
+<a href="/people/502BadGateway" class="zu-top-nav-userinfo ">
+<span class="name">姚泽源</span>
+<img class="avatar" src="http://pic2.zhimg.com/bab12adba_s.jpg" />
+<span id="zh-top-nav-new-pm" class="zg-noti-number zu-top-nav-pm-count"
+style="visibility:hidden" data-count="0">
+
+</span>
+</a>
+<ul class="top-nav-dropdown" id="top-nav-profile-dropdown">
+<li>
+<a href="/people/502BadGateway">
+<i class="zg-icon zg-icon-dd-home"></i>我的主页
+</a>
+</li>
+
+<li>
+<a href="/inbox">
+<i class="zg-icon zg-icon-dd-pm"></i>私信
+<span id="zh-top-nav-pm-count" class="zu-top-nav-pm-count zg-noti-number"
+style="visibility:hidden" data-count="0">
+
+</span>
+</a>
+</li>
+<li>
+<a href="/settings">
+<i class="zg-icon zg-icon-dd-settings"></i>设置
+</a>
+</li>
+<li>
+<a href="/logout">
+<i class="zg-icon zg-icon-dd-logout"></i>退出
+</a>
+</li>
+</ul>
+
+</div>
+
+
+<div role="search" id="zh-top-search" class="zu-top-search">
+<form method="GET" action="/search" id="zh-top-search-form" class="zu-top-search-form form-with-magnify">
+
+<input type="text" class="zu-top-search-input" id="q" name="q" autocomplete="off" value="" placeholder="搜索话题、问题或人…" />
+<input type="hidden" name="type" value="question" />
+<label for="q" class="hide-text">知乎搜索</label>
+<button type="submit" class="magnify-button"><i class="icon icon-magnify-q"></i><span class="hide-text">搜索</span></button>
+</form>
+<button class="zu-top-add-question" id="zu-top-add-question">提问</button>
+</div>
+
+
+
+<div id="zg-top-nav" class="zu-top-nav">
+<ul class="zu-top-nav-ul zg-clear">
+
+<li class="zu-top-nav-li " id="zh-top-home-link">
+<a class="zu-top-nav-link" href="/" id="zh-top-link-home">首页</a>
+</li>
+<li class="top-nav-topic-selector zu-top-nav-li " id="zh-top-nav-item-topic">
+<a class="zu-top-nav-link" href="/topic" id="top-nav-dd-topic">话题</a>
+
+</li>
+<li class="zu-top-nav-li ">
+<a class="zu-top-nav-link" href="/explore">发现</a>
+</li>
+
+<li class="top-nav-noti zu-top-nav-li ">
+<a class="zu-top-nav-link" href="javascript:;" id="zh-top-nav-count-wrap" role="button"><span class="mobi-arrow"></span>消息</a>
+</li>
+
+
+
+</ul>
+<div class="zu-top-nav-live zu-noti7-popup zg-r5px no-hovercard" id="zh-top-nav-live-new" role="popup" tabindex="0">
+<div class="zu-top-nav-live-inner zg-r5px">
+<div class="zu-top-live-icon">&nbsp;</div>
+<div class="zu-home-noti-inner" id="zh-top-nav-live-new-inner">
+<div class="zm-noti7-popup-tab-container clearfix" tabindex="0">
+<button class="zm-noti7-popup-tab-item message">
+<span class="icon">消息</span>
+<span class="new-noti" style="display:none;">0</span>
+</button>
+<button class="zm-noti7-popup-tab-item user">
+<span class="icon">用户</span>
+<span class="new-noti" style="display:none;">0</span>
+</button>
+<button class="zm-noti7-popup-tab-item thanks">
+<span class="icon">赞同和感谢</span>
+<span class="new-noti" style="display:none;">0</span>
+</button>
+</div>
+</div>
+<div class="zm-noti7-frame-border top"></div>
+<div class="zm-noti7-frame">
+<div class="zm-noti7-content">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-popup-refresh" style="display:none;">
+<img class="noti-spinner" src="/static/img/spinner2.gif" />
+</div>
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<img class="noti-spinner" src="/static/img/noti-loading.gif" />
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-popup-refresh" style="display:none;">
+<img class="noti-spinner" src="/static/img/spinner2.gif" />
+</div>
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<img class="noti-spinner" src="/static/img/noti-loading.gif" />
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-popup-refresh" style="display:none;">
+<img class="noti-spinner" src="/static/img/spinner2.gif" />
+</div>
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<img class="noti-spinner" src="/static/img/noti-loading.gif" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-frame-border bottom"></div>
+<div class="zm-noti7-popup-footer">
+<a href="/notifications" class="zm-noti7-popup-footer-all zg-right">查看全部 &raquo;</a>
+<a href="/settings/notification" class="zm-noti7-popup-footer-set" title="通知设置" ><i class="zg-icon zg-icon-settings"></i></a>
+</div>
+</div>
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+<div class="zu-global-notify" id="zh-global-message" style="display:none">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<a class="zu-global-notify-close" href="javascript:;" title="关闭" name="close">x</a>
+<span class="zu-global-notify-icon"></span>
+<span class="zu-global-notify-msg"></span>
+</div>
+</div>
+</div>
+
+
+
+<div class="zu-global-notify zu-global-notify-info" id="zh-question-redirect-info" style="display:none"></div>
+
+
+<div class="zu-global-notify zu-global-notify-info" id="zh-question-notification-summary" style="display:none;">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<span class="zu-global-notify-icon"></span>
+<ul class="zu-question-notify-wrap">
+</ul>
+</div>
+</div>
+</div>
+<div class="zg-wrap zu-main question-page" itemscope itemtype="http://schema.org/Question" id="zh-single-question-page"
+data-urltoken="26988830">
+<meta itemprop="isTopQuestion" content="false" />
+<meta itemprop="visitsCount" content="547397" />
+<div class="zu-main-content">
+<div class="zu-main-content-inner with-indention-votebar">
+
+
+<div id="zh-message-container" class="zg-info-message" style="display:none;"></div>
+
+
+
+
+<div class="zm-tag-editor zg-section">
+<div class="zm-tag-editor-labels zg-clear">
+
+<a class="zm-item-tag"
+href="/topic/19564234"
+data-tip="t$b$19564234" data-token="19564234" data-topicid="4667">
+用户隐私
+</a>
+
+<a class="zm-item-tag"
+href="/topic/19618882"
+data-tip="t$b$19618882" data-token="19618882" data-topicid="22946">
+支付宝安全
+</a>
+
+<a class="zm-item-tag"
+href="/topic/19850763"
+data-tip="t$b$19850763" data-token="19850763" data-topicid="102278">
+支付宝钱包
+</a>
+
+</div>
+</div>
+<div id="zh-question-title" data-editable="true">
+
+<h2 class="zm-item-title zm-editable-content">
+
+如何解读支付宝十年对账单的规则？
+
+</h2>
+</div>
+<div id="zh-question-detail" class="zm-item-rich-text" data-resourceid="2978487" data-action="/question/detail">
+
+
+<textarea class="content hidden">原页面：&lt;a href=&quot;https://cshall.alipay.com/lab/help_detail.htm?help_id=509571&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;2014支付宝十年账单活动规则&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;&lt;blockquote&gt;您同意：&lt;br&gt;&lt;ol&gt;&lt;li&gt;支付宝可以访问您手机通讯录（如有）以获得您的支付宝好友名单；&lt;br&gt;&lt;/li&gt;&lt;li&gt;如果您使用手机号码作为支付宝账户登录名或/及手机号码与支付宝账户绑定，那么您的支付宝账户可以被通讯录存有该手机号码的好友查询；&lt;br&gt;&lt;/li&gt;&lt;li&gt;支付宝向您的支付宝好友展示您的支付宝账户头像、实名认证姓名；&lt;br&gt;&lt;/li&gt;&lt;li&gt;参与支付宝好友“十年账单”排名，并向您的支付宝好友展示排名结果。&lt;br&gt;&lt;/li&gt;&lt;li&gt;本活动中的“支付宝好友”包括：（1）与您支付宝账户存在资金往来关系的支付宝账户持有人；（2）您手机通讯录（如有）中保存的手机号码与支付宝账户关联，该关联的支付宝账户持有人。手机号码与支付宝账户关联是指手机号码作为支付宝账户登录名或与支付宝账户绑定。&lt;br&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;免责声明：&lt;br&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;本活动中展示内容来源于支付宝系统统计，仅供参考，支付宝不对内容准确性与真实性做任何承诺与保证。&lt;br&gt;&lt;/li&gt;&lt;li&gt;您承诺参与本活动遵守国家法律法规和支付宝的相关规定以及各种社会公共利益或公共道德，因您的违法行为或/及您参与本活动与第三方产生纠纷的一切后果与责任，由您独立承担。&lt;/li&gt;&lt;/ol&gt;&lt;/blockquote&gt;截图为证。&lt;br&gt;特别是红线画出来的。&lt;br&gt;&lt;img src=&quot;http://pic1.zhimg.com/bce641bee690fa26129f7c7a90a383ca_b.jpg&quot; data-rawwidth=&quot;1336&quot; data-rawheight=&quot;961&quot; class=&quot;origin_image zh-lightbox-thumb&quot; width=&quot;1336&quot; data-original=&quot;http://pic2.zhimg.com/bce641bee690fa26129f7c7a90a383ca_r.jpg&quot;&gt;</textarea>
+<div class="zh-summary summary clearfix">
+原页面：<a href="https://cshall.alipay.com/lab/help_detail.htm?help_id=509571" class=" wrap external" target="_blank" rel="nofollow noreferrer">2014支付宝十年账单活动规则<i class="icon-external"></i></a><br><blockquote>您同意：<br><ol><li>支付宝可以访问您手机通讯录（如有）以获得您的支付宝好友名单；<br></li><li>如果您使用手机号码作为支付宝账户登录名或/及手机号码与支付宝账户绑定，那么您的支付宝账户可以被通讯录存有该手机号码的好友查询；<br></li><li>支付宝向您的支付宝好友展示您的支付宝账户头像、实名认证姓名；<br></li><li>参与支付宝好友“十年账单”排名，并向您的支付宝好友展示排名结果。<br></li><li>本活动中的“支付宝好友”包括：（1）与您支付宝账户存在资金往来关系的支付宝账户持有人；（2）您手机通讯录（如有）中保存的手机号码与支付宝账户关联，该关联的支付宝账户持有人。手机号码与支付宝账户关联是指手机号码作为支付宝账户登录名或与支付宝账户绑定。<br></li></ol><p>免责声明：<br></p><ol><li>本活动中展示内容来源于支付宝系统统计，仅供参考，支付宝不对内容准确性与真实性做任何承诺与保证。<br></li>您承诺参与本活动遵守国家法律法规和支付宝的相关规定以及各种社会公共利益或公共道德，因您的违法行为或/及您参与本活动与第三方产生纠纷的一切后果与责任，由您独立承担。</ol></blockquote>…
+<a href="javascript:;" class="toggle-expand">显示全部</a>
+</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el clearfix" id="zh-question-meta-wrap">
+<div class="zm-meta-panel">
+
+<a href="#" name="report-question" class="report zg-right">
+<i class="z-icon-no-help"></i>举报</a>
+
+<a href="#" name="addcomment" class="toggle-comment meta-item">
+<i class="z-icon-comment"></i>29 条评论
+</a>
+<a href="#" name="share" class="share meta-item">
+<i class="z-icon-share"></i>分享
+</a>
+
+
+<span class="zg-bull">&bull;</span>
+<a href="#" name="invite" class="meta-item">邀请回答</a>
+
+
+
+
+</div>
+<div class="panel-container">
+
+</div>
+</div>
+
+<div class="zh-answers-title clearfix">
+
+<div id="zh-answers-filter" class="answers-sorter">
+
+<span class="lbl">按票数排序</span>
+<a class="lbl" href="/question/26988830?sort=created">按时间排序</a>
+
+<i class="zg-icon zg-icon-double-arrow"></i>
+</div>
+
+<h3 data-num="113" id="zh-question-answer-num">113 个回答</h3>
+</div>
+<div class="zh-question-answer-summary-wrap zm-item-rich-text" id="zh-question-answer-summary-wrap" style="display:none;">
+<h3>
+<a href="http://www.zhihu.com/question/20014415" target="_blank" class="zg-right zg-link-litblue" style="font-weight:normal">什么是答案总结？</a>
+答案总结</h3>
+<div id="zh-question-answer-summary" class="zg-section"
+data-resourceid="2978487" data-action="/question/summary">
+
+<div class="zm-editable-content"></div>
+
+</div>
+</div>
+
+<div id="zh-question-answer-wrap" data-pagesize="50" class="zh-question-answer-wrapper" data-widget="navigable" data-navigable-options="{&quot;items&quot;: &quot;&gt;.zm-item-answer&quot;}" data-init="{&quot;params&quot;: {&quot;url_token&quot;: 26988830, &quot;pagesize&quot;: 50, &quot;offset&quot;: 0}, &quot;nodename&quot;: &quot;QuestionAnswerListV2&quot;}" data-fixed-summary="1">
+
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemprop="topAnswer"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9309283"
+data-atoken="34803288"
+data-collapsed="0"
+data-created="1418091784"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="520.123487688"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9309283"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">266</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$ranrys"
+class="zm-item-link-avatar"
+href="/people/ranrys">
+<img src="http://pic3.zhimg.com/18cea947a_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic4.zhimg.com/18cea947a_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$ranrys" href="/people/ranrys">然若游</a>，<strong title="CAD民工 画图狗" class="zu-question-my-bio">CAD民工 画图狗</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="266">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$cuing" href="http://www.zhihu.com/people/cuing" class="zg-link" title="崔海亮">崔海亮</a>、</span><span class="user-block"><a data-tip="p$t$boqi" href="http://www.zhihu.com/people/boqi" class="zg-link" title="社精">社精</a>、</span><span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我原本以为我这种从来都不给支付宝应用读取通讯录权限的人应该能躲过一劫，没想到只要通讯录里有我手机号的都能查看……<br><br>阿里你们做事还能要点脸吗？<br><br>另：求退出“支付宝十年对账单”活动的方法。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9309283-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34803288">编辑于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>89 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9308742"
+data-atoken="34801938"
+data-collapsed="0"
+data-created="1418090437"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="1240.12348766"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9308742"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">693</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$jiang-mo-zi"
+class="zm-item-link-avatar"
+href="/people/jiang-mo-zi">
+<img src="http://pic1.zhimg.com/017158b91_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/017158b91_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$jiang-mo-zi" href="/people/jiang-mo-zi">蒋墨梓</a>，<strong title="一名不太资深的移动互联网产品经理" class="zu-question-my-bio">一名不太资深的移动互联网产品经理</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="693">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$shicaotang" href="http://www.zhihu.com/people/shicaotang" class="zg-link" title="我实话跟您说吧">我实话跟您说吧</a>、</span><span class="user-block"><a data-tip="p$t$cuing" href="http://www.zhihu.com/people/cuing" class="zg-link" title="崔海亮">崔海亮</a>、</span><span class="user-block"><a data-tip="p$t$boqi" href="http://www.zhihu.com/people/boqi" class="zg-link" title="社精">社精</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">喜闻乐见的天朝免责申明，由于余额宝转入转出太过于频繁导致我十年消费了200多万，被各种好友“巴结”。<br><br>记得在一本书中看到过，在各个国家，各个时期，即使最好的朋友之间，个人财产情况也是属于极其敏感的<b>隐私</b>，目前好友问我工资或者存款一律都不回答。但是这个十年对账单居然在没有任何强提醒用户会暴露自己<b>个人财产隐私</b>的情况下将其公布给 “<b>存过你电话</b>”的好友。果然“疯狂来往”不是个例，而是这个公司本身就有这个问题-----对于社交网络运营没有任何成熟经验，简单粗暴，直指KPI，忽视用户<b>隐私</b>。<br>---------------------------补充------------------------------------------------------------------<br>让我们来看看他是如何引导用户同意规则的吧。<br><br>第一步，打开支付宝后提示你开启十年账单，没有任何提醒会暴露个人财产隐私。<br><noscript><img src="http://pic2.zhimg.com/04cfbe2f0b71f335b331362b9d048680_b.jpg" data-rawwidth="1080" data-rawheight="1920" class="origin_image zh-lightbox-thumb" width="1080" data-original="http://pic1.zhimg.com/04cfbe2f0b71f335b331362b9d048680_r.jpg">第二步，点击开启后，我不知这时候是否已经算作同意了十年账单的规则，23333333333333333333，然后第一个页面也没有任何提示</noscript><img src="//s1.zhimg.com/misc/whitedot.jpg" data-rawwidth="1080" data-rawheight="1920" class="origin_image zh-lightbox-thumb lazy" width="1080" data-original="http://pic1.zhimg.com/04cfbe2f0b71f335b331362b9d048680_r.jpg" data-actualsrc="http://pic2.zhimg.com/04cfbe2f0b71f335b331362b9d048680_b.jpg">第二步，点击开启后，我不知这时候是否已经算作同意了十年账单的规则，23333333333333333333，然后第一个页面也没有任何提示<br><noscript><img src="http://pic3.zhimg.com/0e8d16156b51097dc1a14798ff1112b9_b.jpg" data-rawwidth="1080" data-rawheight="1920" class="origin_image zh-lightbox-thumb" width="1080" data-original="http://pic1.zhimg.com/0e8d16156b51097dc1a14798ff1112b9_r.jpg"></noscript><img src="//s1.zhimg.com/misc/whitedot.jpg" data-rawwidth="1080" data-rawheight="1920" class="origin_image zh-lightbox-thumb lazy" width="1080" data-original="http://pic1.zhimg.com/0e8d16156b51097dc1a14798ff1112b9_r.jpg" data-actualsrc="http://pic3.zhimg.com/0e8d16156b51097dc1a14798ff1112b9_b.jpg"><br>第三步，滑动到最后一页，终于看到了活动规则四个小字，不过这时候你可能已经“同意”了规则，正常人一般都会直接点击查看账单吧，即使之前没有“同意”，那么现在也“同意”了<br><noscript><img src="http://pic4.zhimg.com/c6601ce8309ab6ee1276af2fb74884b1_b.jpg" data-rawwidth="1080" data-rawheight="1920" class="origin_image zh-lightbox-thumb" width="1080" data-original="http://pic1.zhimg.com/c6601ce8309ab6ee1276af2fb74884b1_r.jpg"></noscript><img src="//s1.zhimg.com/misc/whitedot.jpg" data-rawwidth="1080" data-rawheight="1920" class="origin_image zh-lightbox-thumb lazy" width="1080" data-original="http://pic1.zhimg.com/c6601ce8309ab6ee1276af2fb74884b1_r.jpg" data-actualsrc="http://pic4.zhimg.com/c6601ce8309ab6ee1276af2fb74884b1_b.jpg">
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9308742-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34801938">编辑于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>107 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9313477"
+data-atoken="34813760"
+data-collapsed="0"
+data-created="1418101746"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="297.123487271"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9313477"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">159</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+<h3 class="zm-item-answer-author-wrap">匿名用户</h3></div>
+<div class="zm-item-vote-info " data-votecount="159">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$powerzte" href="http://www.zhihu.com/people/powerzte" class="zg-link" title="诸忝迩">诸忝迩</a>、</span><span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$li-yi-20-66" href="http://www.zhihu.com/people/li-yi-20-66" class="zg-link" title="李一">李一</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我根本没有参加这什么狗屁活动，今天突然有同事跟我说“真土豪啊，深藏不露”什么的，我就纳闷儿了，一问才知道，他的那个榜单里我排第一，比他一富二代朋友都高。。。<br>当时就怒了！擅自记录我的消费情况，进行计算排名，并在未经本人允许的情况下公开，虽然早就知道国内公司的尿性，但做到这种程度就太过分了吧。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9313477-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34813760">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>31 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9320058"
+data-atoken="34830134"
+data-collapsed="0"
+data-created="1418116824"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="305.123486475"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9320058"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">159</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+<h3 class="zm-item-answer-author-wrap">匿名用户</h3></div>
+<div class="zm-item-vote-info " data-votecount="159">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhi-su-jia" href="http://www.zhihu.com/people/zhi-su-jia" class="zg-link" title="植速加">植速加</a>、</span><span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$jessica-dong-45" href="http://www.zhihu.com/people/jessica-dong-45" class="zg-link" title="jessica dong">jessica dong</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">这就是一起不尊重隐私的恶劣行为，放美国，股价早跌得不像话了。<br><br>我就想象着阿里内部一群傻逼产品经理在那儿骂用户傻逼了：老子写了那么明显，自己不会看吗？还来骂我们？！傻逼！！<br>到底是谁傻逼呢？<br><br>世上没有傻逼的用户，只有傻逼的产品经理。（我就是一名产品经理。敢说这样的话。）<br>如果一个产品经理连这个都意识不到的话，他就不适合做产品经理。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9320058-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34830134">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>13 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9310102"
+data-atoken="34805343"
+data-collapsed="0"
+data-created="1418093753"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="236.123486383"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9310102"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">131</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$chaichao27"
+class="zm-item-link-avatar"
+href="/people/chaichao27">
+<img src="http://pic2.zhimg.com/40940e5d4892f2c91f37560b71a63752_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/40940e5d4892f2c91f37560b71a63752_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$chaichao27" href="/people/chaichao27">灵魂出戏</a>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="131">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$li-yi-20-66" href="http://www.zhihu.com/people/li-yi-20-66" class="zg-link" title="李一">李一</a>、</span><span class="user-block"><a data-tip="p$t$feng-feng-feng-99-36" href="http://www.zhihu.com/people/feng-feng-feng-99-36" class="zg-link" title="疯丰风">疯丰风</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">虽然知道我的通讯录已经被各公司轮了个遍，但这还是第一家，呆萌到让一个仅仅存了我手机号的人，能通过上下排名关系猜到我的网购概况的公司。<br><br>也是蛮可爱的<br>---------------------------------------<br>一、能获取如此大体量高质量消费数据的公司仅此一家。但是，能力越大，责任越大。<br>二、即使我知道隐私早已各种不保，然而作为消费者和用户，我不鼓励企业耍流氓。<br>三、有人开心的在朋友圈晒排名，想必不少是把自己的土豪朋友晒出来吧？
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9310102-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34805343">编辑于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>20 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9308892"
+data-atoken="34802300"
+data-collapsed="0"
+data-created="1418090801"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="140.123487592"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9308892"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">76</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$hura-sco"
+class="zm-item-link-avatar"
+href="/people/hura-sco">
+<img src="http://pic1.zhimg.com/6671f6b664d19118953b0fb8c6135dd6_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/6671f6b664d19118953b0fb8c6135dd6_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$hura-sco" href="/people/hura-sco">hura Sco</a>，<strong title="WP开发爱好者" class="zu-question-my-bio">WP开发爱好者</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="76">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$li-nan-13-97" href="http://www.zhihu.com/people/li-nan-13-97" class="zg-link" title="李楠">李楠</a>、</span><span class="user-block"><a data-tip="p$t$lirunze" href="http://www.zhihu.com/people/lirunze" class="zg-link" title="李润泽">李润泽</a>、</span><span class="user-block"><a data-tip="p$t$chen-xin-7-6" href="http://www.zhihu.com/people/chen-xin-7-6" class="zg-link" title="陈新">陈新</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">确实有涉及到用户隐私的方面，<br>利用第二条：我可以往手机里存上千上万条号码，这样根据规则，<u><i>我就可以读取他们的消费统计了(如果他们有参与到十年账单活动里来！！！) </i></u><br>这也是最致命的一点吧！只要对方有我的号码就能读取<i><u>账单统计</u></i>，未免也太过了吧！！！<br>就算是双方都有对方的号码，都并不见得一定好。因为互相有号码只能说明双方有社会关系往来，而不能说明双方是朋友。更何况只是一方有号码呢？<br>===================================================<br><noscript><img src="http://pic1.zhimg.com/0f0bac0cc6113d3d5dbac4bb0db61dd7_b.jpg" data-rawwidth="724" data-rawheight="410" class="origin_image zh-lightbox-thumb" width="724" data-original="http://pic1.zhimg.com/0f0bac0cc6113d3d5dbac4bb0db61dd7_r.jpg"></noscript><img src="//s1.zhimg.com/misc/whitedot.jpg" data-rawwidth="724" data-rawheight="410" class="origin_image zh-lightbox-thumb lazy" width="724" data-original="http://pic1.zhimg.com/0f0bac0cc6113d3d5dbac4bb0db61dd7_r.jpg" data-actualsrc="http://pic1.zhimg.com/0f0bac0cc6113d3d5dbac4bb0db61dd7_b.jpg"><br>=====================================================<br><a data-hash="6601d90ec3701075b83b448aba57fd4f" href="http://www.zhihu.com/people/6601d90ec3701075b83b448aba57fd4f" class="member_mention" data-editable="true" data-title="@飞行蛐蛐" data-tip="p$b$6601d90ec3701075b83b448aba57fd4f">@飞行蛐蛐</a> 在评论中提醒，斜体下划线部分内容有误，实际上能看到的只是对2024年财富的YY，而不是直接的对账单，当然这个YY多少也能反应你的富裕状况。<br>由于使用WP手机(╯‵□′)╯︵┻━┻手机支付宝没有这个功能，待我中午借手机做一番实验后再对后续补上。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9308892-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34802300">编辑于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>27 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9310478"
+data-atoken="34806295"
+data-collapsed="0"
+data-created="1418094575"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="108.12348765"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9310478"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">54</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$zhang-jun-94-52"
+class="zm-item-link-avatar"
+href="/people/zhang-jun-94-52">
+<img src="http://pic3.zhimg.com/59ccaf40c_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/59ccaf40c_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$zhang-jun-94-52" href="/people/zhang-jun-94-52">张峻</a>，<strong title="学而时习之" class="zu-question-my-bio">学而时习之</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="54">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhang-yao-18-14" href="http://www.zhihu.com/people/zhang-yao-18-14" class="zg-link" title="张尧">张尧</a>、</span><span class="user-block"><a data-tip="p$t$xiaoqing80s" href="http://www.zhihu.com/people/xiaoqing80s" class="zg-link" title="晓晴">晓晴</a>、</span><span class="user-block"><a data-tip="p$t$lindh" href="http://www.zhihu.com/people/lindh" class="zg-link" title="颜季">颜季</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">如果现在用程序在手机通讯录里面写个几十万号码，这样就免费得到由阿里认证的身份和消费信息，以后诈骗和推销电话都更加有针对性了啊！<br><br>另外有人知道如果拉到这样的信息可以卖多少钱吗？
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9310478-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34806295">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>27 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9308849"
+data-atoken="34802205"
+data-collapsed="0"
+data-created="1418090730"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="103.123481524"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9308849"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">59</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$volqiu"
+class="zm-item-link-avatar"
+href="/people/volqiu">
+<img src="http://pic1.zhimg.com/c2bf2adea_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic4.zhimg.com/c2bf2adea_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$volqiu" href="/people/volqiu">李然</a>，<strong title="支付宝已弃用。" class="zu-question-my-bio">支付宝已弃用。</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="59">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$kimi-wu" href="http://www.zhihu.com/people/kimi-wu" class="zg-link" title="kimi Wu">kimi Wu</a>、</span><span class="user-block"><a data-tip="p$t$lennith" href="http://www.zhihu.com/people/lennith" class="zg-link" title="Lennith">Lennith</a>、</span><span class="user-block"><a data-tip="p$t$wang-qin-jing" href="http://www.zhihu.com/people/wang-qin-jing" class="zg-link" title="王秦镜">王秦镜</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">用之前没看条款真是……我就说好友名单是哪里来的，居然是这样来的，果然有些流氓行为干了一遍就有第二遍，只能说太年轻，是人是狗分不清。看来，以后用支付宝果断要上虚拟机了，尽可能地不给它耍流氓的机会，唉，明知道它在耍流氓，依旧还是得用它。<br>————————————————————————————————<br>晚上回来特意仔细看了，原来是以前我授权了一次支付宝读取我通讯录的权限，它居然就在后台永久保留了我那时候的通讯录，<b>将一堆和我一点金钱关系都没有的亲朋好友显示在了所谓的土豪排行榜上面，好几位我都不知道他们原来有在使用支付宝</b>，我就……了。<br>谢谢，支付宝给我好好上了一课，我将从今天开始不再使用余额宝，不再保留支付宝余额，在任何支付环境下优先使用其他支付手段！用户会用脚投票，就是那么简单！————————————————————————————————<br>支付宝在12月10日更新了这个排行榜，将无金钱交易的通讯录人名隐藏为土豪朋友，也提供了隐藏自己的选项，但是我许久前上传的通讯录还保存在了他家的服务器上，我暂时仍未找到如何删除。<br><noscript><img data-rawheight="768" data-rawwidth="480" src="http://pic3.zhimg.com/f8b8854a352b67cf2901a9bdfb1113ee_b.jpg" class="origin_image zh-lightbox-thumb" width="480" data-original="http://pic4.zhimg.com/f8b8854a352b67cf2901a9bdfb1113ee_r.jpg"></noscript><img data-rawheight="768" data-rawwidth="480" src="//s1.zhimg.com/misc/whitedot.jpg" class="origin_image zh-lightbox-thumb lazy" width="480" data-original="http://pic4.zhimg.com/f8b8854a352b67cf2901a9bdfb1113ee_r.jpg" data-actualsrc="http://pic3.zhimg.com/f8b8854a352b67cf2901a9bdfb1113ee_b.jpg">
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9308849-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34802205">编辑于 昨天 19:22</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>38 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9311033"
+data-atoken="34807636"
+data-collapsed="0"
+data-created="1418095795"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="149.123485365"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9311033"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">80</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$sun-ming-qi-34"
+class="zm-item-link-avatar"
+href="/people/sun-ming-qi-34">
+<img src="http://pic3.zhimg.com/630d244ad_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/630d244ad_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$sun-ming-qi-34" href="/people/sun-ming-qi-34">孙明琦</a>，<strong title="刍荛之言，见谅" class="zu-question-my-bio">刍荛之言，见谅</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="80">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zheng-ke-yang" href="http://www.zhihu.com/people/zheng-ke-yang" class="zg-link" title="郑轲阳">郑轲阳</a>、</span><span class="user-block"><a data-tip="p$t$owen-zhu-60" href="http://www.zhihu.com/people/owen-zhu-60" class="zg-link" title="Owen Zhu">Owen Zhu</a>、</span><span class="user-block"><a data-tip="p$t$atuge" href="http://www.zhihu.com/people/atuge" class="zg-link" title="阿土哥">阿土哥</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">怪不得支付宝不愿意做wp客户端，没权限访问不了通讯录~<br><br><br><br><br>//好吧上面的其实是抖机灵<br>其实它是有权限的<br><noscript><img src="http://pic4.zhimg.com/71e394d5a338816dbe5bdd1c2a91d63a_b.jpg" data-rawwidth="1080" data-rawheight="1920" class="origin_image zh-lightbox-thumb" width="1080" data-original="http://pic2.zhimg.com/71e394d5a338816dbe5bdd1c2a91d63a_r.jpg"></noscript><img src="//s1.zhimg.com/misc/whitedot.jpg" data-rawwidth="1080" data-rawheight="1920" class="origin_image zh-lightbox-thumb lazy" width="1080" data-original="http://pic2.zhimg.com/71e394d5a338816dbe5bdd1c2a91d63a_r.jpg" data-actualsrc="http://pic4.zhimg.com/71e394d5a338816dbe5bdd1c2a91d63a_b.jpg"><b>尼玛一个钱包软件你要我的音乐库干毛</b>
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9311033-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34807636">编辑于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>22 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9318853"
+data-atoken="34827182"
+data-collapsed="0"
+data-created="1418114156"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="77.1234765656"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9318853"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">45</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+<h3 class="zm-item-answer-author-wrap">匿名用户</h3></div>
+<div class="zm-item-vote-info " data-votecount="45">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$xu-fu-xin" href="http://www.zhihu.com/people/xu-fu-xin" class="zg-link" title="徐福鑫">徐福鑫</a>、</span><span class="user-block"><a data-tip="p$t$chen-qian-41" href="http://www.zhihu.com/people/chen-qian-41" class="zg-link" title="陈钱">陈钱</a>、</span><span class="user-block"><a data-tip="p$t$zhezhu" href="http://www.zhihu.com/people/zhezhu" class="zg-link" title="哲著">哲著</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">【微信大法好！】<br>人在做，天在看。<br>手机支付留隐患；<br>账单一出天地灭，好快出坑保平安；<br>诚心诚念企鹅好，微信支付保平安；<br>众生皆为收益来，前世险恶忘前缘；<br>知乎弟子讲真相，救您脱险莫拒绝！———早日删除支付宝，早日获得新生！                   <br> 网上搜索“支付宝十年对账单隐私”。     有。真。相。<br><br><br><br><br>————————————————<br>感觉只是调侃就匿名了，但是怎么那么多赞！你们疯了嘛？！好想要赞取消匿名！不过那样的话我知乎处女答就是个段子了感觉好low…QAQ
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9318853-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34827182">编辑于 21:28</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>6 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9317894"
+data-atoken="34824782"
+data-collapsed="0"
+data-created="1418111918"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="120.123486734"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9317894"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">70</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$cocosuma"
+class="zm-item-link-avatar"
+href="/people/cocosuma">
+<img src="http://pic4.zhimg.com/85c6539282025336cbba287a285db8c7_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/85c6539282025336cbba287a285db8c7_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$cocosuma" href="/people/cocosuma">可可苏玛</a>，<strong title="魭҉吢҉の҉尐҉哖҉錒҉筷҉呿҉創҉慥҉奇҉跡҉！҉" class="zu-question-my-bio">魭҉吢҉の҉尐҉哖҉錒҉筷…</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="70">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$thomasyang" href="http://www.zhihu.com/people/thomasyang" class="zg-link" title="杨子江">杨子江</a>、</span><span class="user-block"><a data-tip="p$t$lindh" href="http://www.zhihu.com/people/lindh" class="zg-link" title="颜季">颜季</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">Windows Phone用户：啊？你们在说啥？ （喂
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9317894-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34824782">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>17 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9318183"
+data-atoken="34825499"
+data-collapsed="0"
+data-created="1418112574"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="35.1234825504"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9318183"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">18</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$linmahua"
+class="zm-item-link-avatar"
+href="/people/linmahua">
+<img src="http://pic2.zhimg.com/e027c037a_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/e027c037a_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$linmahua" href="/people/linmahua">别业居幽处</a>，<strong title="IT+金融" class="zu-question-my-bio">IT+金融</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="18">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$ge-chen-23" href="http://www.zhihu.com/people/ge-chen-23" class="zg-link" title="Ge Chen">Ge Chen</a>、</span><span class="user-block"><a data-tip="p$t$li-yi-20-66" href="http://www.zhihu.com/people/li-yi-20-66" class="zg-link" title="李一">李一</a>、</span><span class="user-block"><a data-tip="p$t$peter-bishop-83" href="http://www.zhihu.com/people/peter-bishop-83" class="zg-link" title="Peter Bishop">Peter Bishop</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">哈哈哈，这活动规则深刻教育了我，PM做产品需求的时候，法务经理介入什么用户须知是有多么的重要。考核的时候，web端队伍KIP扣分，竟然给人找到了活动规则并截图了。移动端团队设计值得表扬，不用我和他解释色差位置什么的，一步到底就是让你视而不见。然后PM被公关boss捉住，大吼：兄弟，你出来，我保证不打脸，10周年借助这么一个负面活动搞宣传，果然脑子好使。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9318183-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34825499">编辑于 昨天 13:58</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9348547"
+data-atoken="34901028"
+data-collapsed="0"
+data-created="1418213355"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="24.123481376"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9348547"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">13</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$BlueHeaven"
+class="zm-item-link-avatar"
+href="/people/BlueHeaven">
+<img src="http://pic4.zhimg.com/b7b93e6ed_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/b7b93e6ed_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$BlueHeaven" href="/people/BlueHeaven">BlueHeaven</a>，<strong title="啥都爱好一点，自以为是的家伙" class="zu-question-my-bio">啥都爱好一点，自以为是的家伙</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="13">
+
+<span class="voters">
+<span class="user-block">匿名用户、</span><span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$chen-zhi-wei-91" href="http://www.zhihu.com/people/chen-zhi-wei-91" class="zg-link" title="陈志伟">陈志伟</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">本来以为可以取消手机绑定。。。。没想到啊<br><noscript><img src="http://pic3.zhimg.com/fc2e5e89d951da274416cec20a72af62_b.jpg" data-rawwidth="406" data-rawheight="190" class="content_image" width="406">擦</noscript><img src="//s1.zhimg.com/misc/whitedot.jpg" data-rawwidth="406" data-rawheight="190" class="content_image lazy" width="406" data-actualsrc="http://pic3.zhimg.com/fc2e5e89d951da274416cec20a72af62_b.jpg">擦
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9348547-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34901028">发布于 昨天 20:09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>3 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9310552"
+data-atoken="34806488"
+data-collapsed="0"
+data-created="1418094728"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="31.1234876423"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9310552"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">19</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$JokerDawn"
+class="zm-item-link-avatar"
+href="/people/JokerDawn">
+<img src="http://pic1.zhimg.com/8d57aef31_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/8d57aef31_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$JokerDawn" href="/people/JokerDawn">Dawn Joker</a>，<strong title="有维修癖好" class="zu-question-my-bio">有维修癖好</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="19">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$sheng-ge-34-92" href="http://www.zhihu.com/people/sheng-ge-34-92" class="zg-link" title="笙哥">笙哥</a>、</span><span class="user-block"><a data-tip="p$t$yostyang" href="http://www.zhihu.com/people/yostyang" class="zg-link" title="yostyang">yostyang</a>、</span><span class="user-block"><a data-tip="p$t$RichardZhang" href="http://www.zhihu.com/people/RichardZhang" class="zg-link" title="张瑞">张瑞</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">魅族MX2 flyme3.0系统<br><br>安装的时候特意不让他读取联系人<br><noscript><img src="http://pic4.zhimg.com/702ad2be7c3770605c511ea539283123_b.jpg" data-rawheight="1280" data-rawwidth="800" class="origin_image zh-lightbox-thumb" width="800" data-original="http://pic2.zhimg.com/702ad2be7c3770605c511ea539283123_r.jpg"></noscript><img src="//s1.zhimg.com/misc/whitedot.jpg" data-rawheight="1280" data-rawwidth="800" class="origin_image zh-lightbox-thumb lazy" width="800" data-original="http://pic2.zhimg.com/702ad2be7c3770605c511ea539283123_r.jpg" data-actualsrc="http://pic4.zhimg.com/702ad2be7c3770605c511ea539283123_b.jpg"><br><br>最后，我知道我的排名是36。<br><br>阿里不要脸。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9310552-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34806488">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>21 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9309906"
+data-atoken="34804849"
+data-collapsed="0"
+data-created="1418093287"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="17.1234877185"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9309906"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">10</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$yongxinge"
+class="zm-item-link-avatar"
+href="/people/yongxinge">
+<img src="http://pic4.zhimg.com/188665277_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/188665277_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$yongxinge" href="/people/yongxinge">用心阁</a>，<strong title="哦" class="zu-question-my-bio">哦</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="10">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$yang-dang-dang-82" href="http://www.zhihu.com/people/yang-dang-dang-82" class="zg-link" title="杨当当">杨当当</a>、</span><span class="user-block"><a data-tip="p$t$joyceqty" href="http://www.zhihu.com/people/joyceqty" class="zg-link" title="joyceqty">joyceqty</a>、</span><span class="user-block"><a data-tip="p$t$farrell-cn" href="http://www.zhihu.com/people/farrell-cn" class="zg-link" title="farrell cn">farrell cn</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">手机上没有安装支付宝应用，就是不放心国内互联网的产品狗
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9309906-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34804849">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>5 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9310480"
+data-atoken="34806300"
+data-collapsed="0"
+data-created="1418094581"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="9.1234876501"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9310480"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">6</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$scalers"
+class="zm-item-link-avatar"
+href="/people/scalers">
+<img src="http://pic1.zhimg.com/c6842b4e5_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic4.zhimg.com/c6842b4e5_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$scalers" href="/people/scalers">scalers</a>，<strong title="微信公众号scalerstalk，十万字视译训练，100小时口译训练活动进行中！" class="zu-question-my-bio">微信公众号scalerstalk，十万字视译训练…</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="6">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$qiaozhihu" href="http://www.zhihu.com/people/qiaozhihu" class="zg-link" title="乔之乎">乔之乎</a>、</span><span class="user-block"><a data-tip="p$t$Methedrine" href="http://www.zhihu.com/people/Methedrine" class="zg-link" title="人間水域">人間水域</a>、</span><span class="user-block"><a data-tip="p$t$zhang-su-franklin" href="http://www.zhihu.com/people/zhang-su-franklin" class="zg-link" title="张苏">张苏</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">来，让我们听一段马云马总的演讲，平息一下心中的怒火，拥抱一下阿里的六脉神贱和一家要做102年公司的神话
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9310480-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34806300">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9323493"
+data-atoken="34838644"
+data-collapsed="0"
+data-created="1418126326"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="18.1234859726"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9323493"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">9</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$lalalatte"
+class="zm-item-link-avatar"
+href="/people/lalalatte">
+<img src="http://pic2.zhimg.com/9ede8b5d3_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/9ede8b5d3_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$lalalatte" href="/people/lalalatte">lalalatte</a>，<strong title="如何坚信所有苦难是上帝对你的磨难" class="zu-question-my-bio">如何坚信所有苦难是上帝对你的磨难</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="9">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$yin-sha-37" href="http://www.zhihu.com/people/yin-sha-37" class="zg-link" title="尹沙">尹沙</a>、</span><span class="user-block"><a data-tip="p$t$sun-chao-fei" href="http://www.zhihu.com/people/sun-chao-fei" class="zg-link" title="孙超飞">孙超飞</a>、</span><span class="user-block"><a data-tip="p$t$mijnij" href="http://www.zhihu.com/people/mijnij" class="zg-link" title="mijnij g">mijnij g</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">不懂一个服务个人应该注重隐私的财务软件为什么非要画蛇添足加点社交功能.<br><br>并.不.需.要.
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9323493-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34838644">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9347067"
+data-atoken="34897318"
+data-collapsed="0"
+data-created="1418208904"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="16.123481611"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9347067"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">8</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$bboczeng"
+class="zm-item-link-avatar"
+href="/people/bboczeng">
+<img src="http://pic3.zhimg.com/2ea445a64_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/2ea445a64_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$bboczeng" href="/people/bboczeng">曾博</a>，<strong title="/commoner 不懂物理，会一点点光学" class="zu-question-my-bio">/commoner 不懂物理，会一点点光学</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="8">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$heresy-clyne" href="http://www.zhihu.com/people/heresy-clyne" class="zg-link" title="Heresy Clyne">Heresy Clyne</a>、</span><span class="user-block"><a data-tip="p$t$jeremytchao" href="http://www.zhihu.com/people/jeremytchao" class="zg-link" title="Jeremy Tchao">Jeremy Tchao</a>、</span><span class="user-block"><a data-tip="p$t$qing-hui-89" href="http://www.zhihu.com/people/qing-hui-89" class="zg-link" title="清徽">清徽</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">为什么不集体诉讼阿里巴巴侵犯隐私？<br>没骨气啊。这种案子古美门一接一定上亿日元了吧
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9347067-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34897318">发布于 昨天 18:55</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>5 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9313102"
+data-atoken="34812831"
+data-collapsed="0"
+data-created="1418100933"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="8.1234873144"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9313102"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">5</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$outro-bao"
+class="zm-item-link-avatar"
+href="/people/outro-bao">
+<img src="http://pic2.zhimg.com/efdca0258b85b3c0e36a26f7c1568b9f_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/efdca0258b85b3c0e36a26f7c1568b9f_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$outro-bao" href="/people/outro-bao">Outro Bao</a>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="5">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$liubang" href="http://www.zhihu.com/people/liubang" class="zg-link" title="如皋刘邦">如皋刘邦</a>、</span><span class="user-block"><a data-tip="p$t$li-zhi-yuan-33-67" href="http://www.zhihu.com/people/li-zhi-yuan-33-67" class="zg-link" title="李志远">李志远</a>、</span><span class="user-block"><a data-tip="p$t$amanda-98-54" href="http://www.zhihu.com/people/amanda-98-54" class="zg-link" title="王雨">王雨</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix"><noscript><img src="http://pic1.zhimg.com/282f37d464264227c85566ec0247a764_b.jpg" data-rawheight="1066" data-rawwidth="600" class="origin_image zh-lightbox-thumb" width="600" data-original="http://pic3.zhimg.com/282f37d464264227c85566ec0247a764_r.jpg"></noscript><img src="//s1.zhimg.com/misc/whitedot.jpg" data-rawheight="1066" data-rawwidth="600" class="origin_image zh-lightbox-thumb lazy" width="600" data-original="http://pic3.zhimg.com/282f37d464264227c85566ec0247a764_r.jpg" data-actualsrc="http://pic1.zhimg.com/282f37d464264227c85566ec0247a764_b.jpg"><br>昨天刚升级支付宝，打开之后还没好好看到底是什么就毫不犹豫的点了“跳过”。这一定是作为一个穷逼多年来玩付费游戏养成的好习惯，嗯哼。<br>但话又说回来，作为穷逼其实也不在乎对账单被曝光，因为实在是没！有！记！录！<br>╮(╯▽╰)╭
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9313102-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34812831">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>6 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9318039"
+data-atoken="34825144"
+data-collapsed="0"
+data-created="1418112252"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="3.1234867162"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9318039"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">4</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$zhang-xx-43-61"
+class="zm-item-link-avatar"
+href="/people/zhang-xx-43-61">
+<img src="http://pic4.zhimg.com/5f75085939429d89c8fdfc3816bc6aa1_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/5f75085939429d89c8fdfc3816bc6aa1_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$zhang-xx-43-61" href="/people/zhang-xx-43-61">张XX</a>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="4">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$da-lian-mao-37-51" href="http://www.zhihu.com/people/da-lian-mao-37-51" class="zg-link" title="大脸猫">大脸猫</a>、</span><span class="user-block"><a data-tip="p$t$yan-zhen-84" href="http://www.zhihu.com/people/yan-zhen-84" class="zg-link" title="颜桢">颜桢</a>、</span><span class="user-block"><a data-tip="p$t$ceremony" href="http://www.zhihu.com/people/ceremony" class="zg-link" title="达芙">达芙</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">机智的我没更新  
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9318039-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34825144">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>7 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9318096"
+data-atoken="34825285"
+data-collapsed="0"
+data-created="1418112387"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="12.1234867091"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9318096"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">19</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$jeffchen"
+class="zm-item-link-avatar"
+href="/people/jeffchen">
+<img src="http://pic3.zhimg.com/9d67b4380_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic4.zhimg.com/9d67b4380_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$jeffchen" href="/people/jeffchen">Jeffchen</a>，<strong title="程序员@腾讯" class="zu-question-my-bio">程序员@腾讯</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="19">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$proud-cai" href="http://www.zhihu.com/people/proud-cai" class="zg-link" title="Proud Cai">Proud Cai</a>、</span><span class="user-block"><a data-tip="p$t$chai-xiao-qi" href="http://www.zhihu.com/people/chai-xiao-qi" class="zg-link" title="柴小起">柴小起</a>、</span><span class="user-block"><a data-tip="p$t$Justin.C" href="http://www.zhihu.com/people/Justin.C" class="zg-link" title="张宗尉">张宗尉</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">用微信支付，私密，安全
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9318096-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34825285">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>19 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9318435"
+data-atoken="34826135"
+data-collapsed="0"
+data-created="1418113147"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="-9.8765133311"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9318435"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">8</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$xiao-xiao-jian-19-73"
+class="zm-item-link-avatar"
+href="/people/xiao-xiao-jian-19-73">
+<img src="http://pic3.zhimg.com/7a945ef8f51e994d30dcdcd5bcda3c76_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/7a945ef8f51e994d30dcdcd5bcda3c76_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$xiao-xiao-jian-19-73" href="/people/xiao-xiao-jian-19-73">小小见</a>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="8">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$wang-jun-tian_inHRB" href="http://www.zhihu.com/people/wang-jun-tian_inHRB" class="zg-link" title="右子">右子</a>、</span><span class="user-block"><a data-tip="p$t$popo4j" href="http://www.zhihu.com/people/popo4j" class="zg-link" title="秦博">秦博</a>、</span><span class="user-block"><a data-tip="p$t$zhu-li-45-88" href="http://www.zhihu.com/people/zhu-li-45-88" class="zg-link" title="朱力">朱力</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">一个2024的娱乐排名   你们以为10年后真这么有钱吗
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9318435-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34826135">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>9 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9309923"
+data-atoken="34804890"
+data-collapsed="0"
+data-created="1418093330"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="13.1234874714"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9309923"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">8</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+<h3 class="zm-item-answer-author-wrap">匿名用户</h3></div>
+<div class="zm-item-vote-info " data-votecount="8">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$budebucuo" href="http://www.zhihu.com/people/budebucuo" class="zg-link" title="不得不错">不得不错</a>、</span><span class="user-block"><a data-tip="p$t$zi-su-9999" href="http://www.zhihu.com/people/zi-su-9999" class="zg-link" title="紫苏">紫苏</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">阿里真是越来越恶心了，坐等阿里的洗地解释<br><br>有人说规则，那个电脑端是弹出一个规则，但是根本没有什么同意，放弃按钮，直接随便点一下就开始，这也算是诱导欺骗吧，还有，手机端根本没有规则提醒，不知道一些人又怎么解释啊？<br><a data-hash="37a67243932f80bd752fc232ceea3eb4" href="http://www.zhihu.com/people/37a67243932f80bd752fc232ceea3eb4" class="member_mention" data-tip="p$b$37a67243932f80bd752fc232ceea3eb4">@phpdragon</a> 你说没有暴露消费细节，但是人家看重的不是消费细节，而是不想app读取通讯录 <br>至于QQ和微信，要读取通讯录的时候有明确提醒，我手机上到现在QQ和微信都没有权利读取通讯录<br><br>如果QQ和微信有这种行为，我也会谴责的，但是目前没有遇到，每次要读取的时候都有明确的提醒，而我都是拒绝
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9309923-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34804890">编辑于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>11 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9310382"
+data-atoken="34806043"
+data-collapsed="0"
+data-created="1418094390"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="7.1234876602"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9310382"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">7</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+<h3 class="zm-item-answer-author-wrap">匿名用户</h3></div>
+<div class="zm-item-vote-info " data-votecount="7">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$richard-27-49" href="http://www.zhihu.com/people/richard-27-49" class="zg-link" title="Richard">Richard</a>、</span><span class="user-block"><a data-tip="p$t$wuliaoliaoxin" href="http://www.zhihu.com/people/wuliaoliaoxin" class="zg-link" title="Worker">Worker</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我擦。你们这群魂淡。我看了这道题之后手贱去看了下账单，结果！！！阿西吧。。。怎么退出这个活动？
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9310382-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34806043">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>13 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9310338"
+data-atoken="34805932"
+data-collapsed="0"
+data-created="1418094285"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="7.1234876657"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9310338"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">6</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$liu-nan-4-62"
+class="zm-item-link-avatar"
+href="/people/liu-nan-4-62">
+<img src="http://pic3.zhimg.com/b7944787b832b08c8a834324be241cb7_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/b7944787b832b08c8a834324be241cb7_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$liu-nan-4-62" href="/people/liu-nan-4-62">柳楠</a>，<strong title="音乐学院在读本科生" class="zu-question-my-bio">音乐学院在读本科生</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="6">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhu-li-45-88" href="http://www.zhihu.com/people/zhu-li-45-88" class="zg-link" title="朱力">朱力</a>、</span><span class="user-block"><a data-tip="p$t$xue-da-ka" href="http://www.zhihu.com/people/xue-da-ka" class="zg-link" title="薛大咖">薛大咖</a>、</span><span class="user-block"><a data-tip="p$t$zhu-qin-ru-29" href="http://www.zhihu.com/people/zhu-qin-ru-29" class="zg-link" title="朱沁茹">朱沁茹</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我只知道朋友圈出现了一群晒账单的
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9310338-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34805932">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>5 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9309559"
+data-atoken="34803965"
+data-collapsed="0"
+data-created="1418092483"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="4.123487761"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9309559"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">6</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+<h3 class="zm-item-answer-author-wrap">匿名用户</h3></div>
+<div class="zm-item-vote-info " data-votecount="6">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$lex-a-77-80" href="http://www.zhihu.com/people/lex-a-77-80" class="zg-link" title="lex A">lex A</a>、</span><span class="user-block"><a data-tip="p$t$berry-jam" href="http://www.zhihu.com/people/berry-jam" class="zg-link" title="Berry jam">Berry jam</a>、</span><span class="user-block"><a data-tip="p$t$zi-su-9999" href="http://www.zhihu.com/people/zi-su-9999" class="zg-link" title="紫苏">紫苏</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">卧槽。。。从此阿里一生黑！
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9309559-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34803965">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9319125"
+data-atoken="34827823"
+data-collapsed="0"
+data-created="1418114750"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="4.1234865842"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9319125"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">4</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$stephen-chio"
+class="zm-item-link-avatar"
+href="/people/stephen-chio">
+<img src="http://pic1.zhimg.com/afb3e0b73a75a9779da49e079a3d5584_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/afb3e0b73a75a9779da49e079a3d5584_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$stephen-chio" href="/people/stephen-chio">Stephen Chio</a>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="4">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$mei-lan-28" href="http://www.zhihu.com/people/mei-lan-28" class="zg-link" title="美兰">美兰</a>、</span><span class="user-block"><a data-tip="p$t$llllllla" href="http://www.zhihu.com/people/llllllla" class="zg-link" title="梁小胖">梁小胖</a>、</span><span class="user-block"><a data-tip="p$t$xiaojielu" href="http://www.zhihu.com/people/xiaojielu" class="zg-link" title="陆晓杰">陆晓杰</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">免责声明最后一条大意:如有犯罪团伙利用本活动规则及漏洞进行犯罪活动造成的任何损失，与本公司无任何关系。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9319125-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34827823">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9311076"
+data-atoken="34807756"
+data-collapsed="0"
+data-created="1418095893"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="7.1234875808"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9311076"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">5</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$tongxiaobai"
+class="zm-item-link-avatar"
+href="/people/tongxiaobai">
+<img src="http://pic2.zhimg.com/a7b21ae35_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/a7b21ae35_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$tongxiaobai" href="/people/tongxiaobai">童晓白</a>，<strong title="在知乎，已经没有人能回答我的问题" class="zu-question-my-bio">在知乎，已经没有人能回答我的问题</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="5">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$ma-zheng-pai" href="http://www.zhihu.com/people/ma-zheng-pai" class="zg-link" title="马正派">马正派</a>、</span><span class="user-block"><a data-tip="p$t$dongnanyanhai" href="http://www.zhihu.com/people/dongnanyanhai" class="zg-link" title="欧耶">欧耶</a>、</span><span class="user-block"><a data-tip="p$t$mao-san-28" href="http://www.zhihu.com/people/mao-san-28" class="zg-link" title="毛三">毛三</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我就想知道，早就删除的号码，是怎么显示在2024富豪榜里的？
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9311076-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34807756">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>7 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9318687"
+data-atoken="34826764"
+data-collapsed="0"
+data-created="1418113736"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="6.1234866378"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9318687"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">7</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$guo-wei-13-41"
+class="zm-item-link-avatar"
+href="/people/guo-wei-13-41">
+<img src="http://pic4.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$guo-wei-13-41" href="/people/guo-wei-13-41">郭威</a>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="7">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$li-bei-qie" href="http://www.zhihu.com/people/li-bei-qie" class="zg-link" title="李北茄">李北茄</a>、</span><span class="user-block"><a data-tip="p$t$berry-jam" href="http://www.zhihu.com/people/berry-jam" class="zg-link" title="Berry jam">Berry jam</a>、</span><span class="user-block"><a data-tip="p$t$chen-chen-50-70" href="http://www.zhihu.com/people/chen-chen-50-70" class="zg-link" title="沈晨">沈晨</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">这是支付宝和盗贼工会推出的一项活动。 <br><br>年底了，需要给小偷指点一下去谁家收获大呗。 <br><br>你家的物业，快递小哥，上门修理工，外卖员，跟你有过接触的把你们电话输进手机，打开支付宝，嚯，这个50万那个才1千，虽说不是真实资金，也是个参考不是？反正干完一票就走，50万的决定就是你了！
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9318687-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34826764">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>11 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9319641"
+data-atoken="34829115"
+data-collapsed="0"
+data-created="1418115960"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="4.1234865203"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9319641"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">3</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$king-78"
+class="zm-item-link-avatar"
+href="/people/king-78">
+<img src="http://pic4.zhimg.com/8a7769d11081042f14f33b3cbfba9419_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/8a7769d11081042f14f33b3cbfba9419_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$king-78" href="/people/king-78">king</a>，<strong title="不信命运的宿命论者" class="zu-question-my-bio">不信命运的宿命论者</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="3">
+
+<span class="voters">
+<span class="user-block">匿名用户、</span><span class="user-block"><a data-tip="p$t$lee-gates" href="http://www.zhihu.com/people/lee-gates" class="zg-link" title="lee gates">lee gates</a>、</span><span class="user-block"><a data-tip="p$t$berry-jam" href="http://www.zhihu.com/people/berry-jam" class="zg-link" title="Berry jam">Berry jam</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">请问如何起诉阿里
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9319641-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34829115">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9322263"
+data-atoken="34835673"
+data-collapsed="0"
+data-created="1418122633"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="6.1234861677"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9322263"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">3</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$liu-fa-82"
+class="zm-item-link-avatar"
+href="/people/liu-fa-82">
+<img src="http://pic2.zhimg.com/0bbee1156_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/0bbee1156_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$liu-fa-82" href="/people/liu-fa-82">刘发</a>，<strong title="船舶海洋工程 工程师" class="zu-question-my-bio">船舶海洋工程 工程师</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="3">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$susan-tang" href="http://www.zhihu.com/people/susan-tang" class="zg-link" title="susan tang">susan tang</a>、</span><span class="user-block"><a data-tip="p$t$wu-he-yang-12" href="http://www.zhihu.com/people/wu-he-yang-12" class="zg-link" title="吴赫阳">吴赫阳</a>、</span><span class="user-block"><a data-tip="p$t$zi-su-9999" href="http://www.zhihu.com/people/zi-su-9999" class="zg-link" title="紫苏">紫苏</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">坐等更新，支付宝开始擦屁股了。<noscript><img src="http://pic1.zhimg.com/515d2a4a35b62c06bfb9f5a0748b5390_b.jpg" data-rawheight="1280" data-rawwidth="720" class="origin_image zh-lightbox-thumb" width="720" data-original="http://pic4.zhimg.com/515d2a4a35b62c06bfb9f5a0748b5390_r.jpg"></noscript><img src="//s1.zhimg.com/misc/whitedot.jpg" data-rawheight="1280" data-rawwidth="720" class="origin_image zh-lightbox-thumb lazy" width="720" data-original="http://pic4.zhimg.com/515d2a4a35b62c06bfb9f5a0748b5390_r.jpg" data-actualsrc="http://pic1.zhimg.com/515d2a4a35b62c06bfb9f5a0748b5390_b.jpg">
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9322263-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34835673">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>7 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9323005"
+data-atoken="34837498"
+data-collapsed="0"
+data-created="1418124857"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="6.1234860502"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9323005"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">3</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$jiang-wang-nan"
+class="zm-item-link-avatar"
+href="/people/jiang-wang-nan">
+<img src="http://pic2.zhimg.com/29b59464c_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/29b59464c_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$jiang-wang-nan" href="/people/jiang-wang-nan">江忘南</a>，<strong title="和她的照片还摆在手边，傻傻两个人，笑的多甜" class="zu-question-my-bio">和她的照片还摆在手边，傻傻两个人，笑的…</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="3">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$lee-gates" href="http://www.zhihu.com/people/lee-gates" class="zg-link" title="lee gates">lee gates</a>、</span><span class="user-block"><a data-tip="p$t$berry-jam" href="http://www.zhihu.com/people/berry-jam" class="zg-link" title="Berry jam">Berry jam</a>、</span><span class="user-block"><a data-tip="p$t$zi-su-9999" href="http://www.zhihu.com/people/zi-su-9999" class="zg-link" title="紫苏">紫苏</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我只想问一句，够资格上诉么？
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9323005-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34837498">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9310327"
+data-atoken="34805903"
+data-collapsed="0"
+data-created="1418094269"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="5.1234876666"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9310327"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">4</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$kang-jie-33"
+class="zm-item-link-avatar"
+href="/people/kang-jie-33">
+<img src="http://pic3.zhimg.com/939d692a7_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/939d692a7_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$kang-jie-33" href="/people/kang-jie-33">康杰</a>，<strong title="Focus on Oracle" class="zu-question-my-bio">Focus on Oracle</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="4">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$yuan-deng-deng" href="http://www.zhihu.com/people/yuan-deng-deng" class="zg-link" title="袁等灯">袁等灯</a>、</span><span class="user-block"><a data-tip="p$t$berry-jam" href="http://www.zhihu.com/people/berry-jam" class="zg-link" title="Berry jam">Berry jam</a>、</span><span class="user-block"><a data-tip="p$t$zi-su-9999" href="http://www.zhihu.com/people/zi-su-9999" class="zg-link" title="紫苏">紫苏</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我一直都在屏蔽所有APP访问我的通讯录，这次，不料却被「潜规则」了。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9310327-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34805903">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9310706"
+data-atoken="34806861"
+data-collapsed="0"
+data-created="1418095094"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="5.123487623"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9310706"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">4</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+<h3 class="zm-item-answer-author-wrap">匿名用户</h3></div>
+<div class="zm-item-vote-info " data-votecount="4">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$arzoo" href="http://www.zhihu.com/people/arzoo" class="zg-link" title="Arzoo">Arzoo</a>、</span><span class="user-block"><a data-tip="p$t$zi-su-9999" href="http://www.zhihu.com/people/zi-su-9999" class="zg-link" title="紫苏">紫苏</a>、</span><span class="user-block"><a data-tip="p$t$amanda-98-54" href="http://www.zhihu.com/people/amanda-98-54" class="zg-link" title="王雨">王雨</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">没有开启通讯录功能都中枪 真是有够不检点的 求退出方法
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9310706-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34806861">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9320218"
+data-atoken="34830545"
+data-collapsed="0"
+data-created="1418117194"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="4.1234863678"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9320218"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">2</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$chiaki"
+class="zm-item-link-avatar"
+href="/people/chiaki">
+<img src="http://pic3.zhimg.com/2d3d534a532666479d1983e7d89d3d7d_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic4.zhimg.com/2d3d534a532666479d1983e7d89d3d7d_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$chiaki" href="/people/chiaki">Chiaki</a>，<strong title="脾气暴躁的温柔派" class="zu-question-my-bio">脾气暴躁的温柔派</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="2">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$berry-jam" href="http://www.zhihu.com/people/berry-jam" class="zg-link" title="Berry jam">Berry jam</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">刚刚仔细翻了翻，的确是只有2024年预测数据，暂时没有看到过去十年好友消费信息。<br>但是你特么那么小的活动规则是几个意思，不说一声读取我通讯录几个意思？我又不是不让你上，你说一声啊，什么？你说了？你说大声点啊！！！！！不然我告你强奸啊！！！<br>————————————<br>原：<br>想出这个点子的是微信派过去的卧底吧。。。<br>另外谁能告诉我怎么把这个权限关掉啊哭哭哭QAQ
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9320218-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34830545">编辑于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9323358"
+data-atoken="34838312"
+data-collapsed="0"
+data-created="1418125939"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="4.123485993"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9323358"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">2</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$ma-ge-53"
+class="zm-item-link-avatar"
+href="/people/ma-ge-53">
+<img src="http://pic3.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$ma-ge-53" href="/people/ma-ge-53">马阁</a>，<strong title="超市管理员，物流部" class="zu-question-my-bio">超市管理员，物流部</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="2">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$zi-su-9999" href="http://www.zhihu.com/people/zi-su-9999" class="zg-link" title="紫苏">紫苏</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">本人所有软件“通讯录”“联系人记录”通话记录“  全部关闭，对所有软件都是关闭的不仅仅是支付宝。但是是怎么知道我通讯录的呢？而且并没有提示我需要权限。。这点很疑问。。有朋友给我说一说么原理么？    看来还是重新提一个话题比较好~！
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9323358-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34838312">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9325260"
+data-atoken="34843002"
+data-collapsed="0"
+data-created="1418131445"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="4.1234857021"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9325260"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">2</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$tracyb"
+class="zm-item-link-avatar"
+href="/people/tracyb">
+<img src="http://pic4.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$tracyb" href="/people/tracyb">TracyB</a>，<strong title="技术探索者一枚" class="zu-question-my-bio">技术探索者一枚</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="2">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$xiaoqing80s" href="http://www.zhihu.com/people/xiaoqing80s" class="zg-link" title="晓晴">晓晴</a>、</span><span class="user-block"><a data-tip="p$t$jiang-mo-zi" href="http://www.zhihu.com/people/jiang-mo-zi" class="zg-link" title="蒋墨梓">蒋墨梓</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">贵阿里这是在强行社交啊，蛮拼的
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9325260-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34843002">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9335410"
+data-atoken="34868282"
+data-collapsed="0"
+data-created="1418179966"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="4.1234831391"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9335410"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">2</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$wang_yu"
+class="zm-item-link-avatar"
+href="/people/wang_yu">
+<img src="http://pic3.zhimg.com/d7cf8aca3_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/d7cf8aca3_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$wang_yu" href="/people/wang_yu">王宇</a>，<strong title="完全不着调的人" class="zu-question-my-bio">完全不着调的人</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="2">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$joy-joy-9" href="http://www.zhihu.com/people/joy-joy-9" class="zg-link" title="joy joy">joy joy</a>、</span><span class="user-block"><a data-tip="p$t$tang-seng-50-76" href="http://www.zhihu.com/people/tang-seng-50-76" class="zg-link" title="唐僧">唐僧</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">难道第二步不是公布官员手机号？
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9335410-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34868282">发布于 昨天 10:52</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9309441"
+data-atoken="34803659"
+data-collapsed="0"
+data-created="1418092192"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="1.1234877764"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9309441"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">2</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$rock-c"
+class="zm-item-link-avatar"
+href="/people/rock-c">
+<img src="http://pic3.zhimg.com/651a4e9e5ca82b08d699c7b85f581d3b_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/651a4e9e5ca82b08d699c7b85f581d3b_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$rock-c" href="/people/rock-c">Rock C</a>，<strong title="码农" class="zu-question-my-bio">码农</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="2">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhi-hu-zhe-ye-16-62-94" href="http://www.zhihu.com/people/zhi-hu-zhe-ye-16-62-94" class="zg-link" title="之乎者也">之乎者也</a>、</span><span class="user-block"><a data-tip="p$t$tanya" href="http://www.zhihu.com/people/tanya" class="zg-link" title="tanya">tanya</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">为什么没有任何提醒T^T<br>从此我也变阿里黑……
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9309441-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34803659">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9312337"
+data-atoken="34810919"
+data-collapsed="0"
+data-created="1418099008"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="1.1234874161"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9312337"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">2</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$break-20"
+class="zm-item-link-avatar"
+href="/people/break-20">
+<img src="http://pic2.zhimg.com/4d93dc9c3_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/4d93dc9c3_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$break-20" href="/people/break-20">Break</a>，<strong title="C++引擎架构，Unity 3D、Window 系统架构师！" class="zu-question-my-bio">C++引擎架构，Unity 3D、Window 系统架构…</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="2">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zi-su-9999" href="http://www.zhihu.com/people/zi-su-9999" class="zg-link" title="紫苏">紫苏</a>、</span><span class="user-block">匿名用户</span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">对此账单暴露无遗的隐私权深感遗憾，十年支付宝，钱进钱钱出，虽然不是电子商务用户，但对于网页的读取权限也是痛恨不已，即能读取你通讯录那支付宝隐私权将会更近一步，设如果支付宝开启无条件隐私爆发，而导致用户的金融微机，应如何面对，还有既然开启了此模式那各别技术类黑客也可读取该信息！
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9312337-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34810919">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9309782"
+data-atoken="34804527"
+data-collapsed="0"
+data-created="1418093010"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="-120.876512447"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9309782"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">33</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$phpdragon"
+class="zm-item-link-avatar"
+href="/people/phpdragon">
+<img src="http://pic2.zhimg.com/b0a9733c74dc0ded187e03f1d3c1e78a_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/b0a9733c74dc0ded187e03f1d3c1e78a_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$phpdragon" href="/people/phpdragon">phpdragon</a>，<strong title="想转型的PHPer、JAVAer 。" class="zu-question-my-bio">想转型的PHPer、JAVAer 。</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="33">
+
+<span class="voters">
+<span class="user-block">匿名用户、</span><span class="user-block"><a data-tip="p$t$lancelotnull" href="http://www.zhihu.com/people/lancelotnull" class="zg-link" title="驯致">驯致</a>、</span><span class="user-block"><a data-tip="p$t$doudoudouniwan" href="http://www.zhihu.com/people/doudoudouniwan" class="zg-link" title="窦进业">窦进业</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">据我了解。支付宝没有暴露你的消费细节。<br><br>富豪榜也只是预测2024年你可能的拥有资产，最多暴露你的消费水平。<br>一家大公司，这点考虑还是有的，不会有这么傻的程序员、PM、BM，就酱。<br><br>===========================================<br>2014-12-9 11：02更新：<br>PS：<br><b>就从隐私话题来说：</b><br>连预测数据都信以为真的话，那自己的支付宝朋友圈是不是太SB了？<br>富豪榜的巴结功能也只是增加互动而已，支付宝说你是富豪你还真富了呐，没长大的孩子？！<br>不过，楼上说支付宝暴露了哪些手机号绑定了支付宝帐号。<br>是的，这个问题一直就有，当你转账的时候，你连对方的帐号都不用知道，直接搜索手机号就行了，你什么都不用记住，方便了你的同时，也暴露了隐私，这个没有异议。<br><br><b>互联网的便捷，是把双刃剑。</b><br><br>说到这个，要谴责支付宝的话，怎么不谴责微信，QQ？同样的功能，只是支付宝跟你的经济息息相关而已，一扯这个就开始跳脚了，五十笑百步。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9309782-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34804527">编辑于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>21 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9320185"
+data-atoken="34830462"
+data-collapsed="0"
+data-created="1418117115"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="2.1234864593"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9320185"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">1</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+<h3 class="zm-item-answer-author-wrap">匿名用户</h3></div>
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$berry-jam" href="http://www.zhihu.com/people/berry-jam" class="zg-link" title="Berry jam">Berry jam</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">虽然活动规则有出现，是我瞎没看见，活该；<br><br>虽然“好友”范围实际上只包括了有转账历史的人，不包括通讯录里好友；<br><br>虽然这是在YY十年以后的账单；<br><br>虽然这账单明显是根据之前消费情况排的；<br><br>虽然这消费情况还很残的包括了转账的部分；<br><br>但是！！！！！！<br><br>你能体会，当你看到 仅 有 过 一 次 转 账 交 易 的、完 全 陌 生 的 人 ，也出现在你的榜单之上，蓝后想到自己也会同样出现在这些陌生人的榜单上的时候，那种非常非常别扭、非常非常非常恶心、又说不出来恶心在什么地方的感觉吗？！<br><br>我现在不同意参加这活动了我后悔了我想退出了可以么？！
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9320185-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34830462">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9320435"
+data-atoken="34831106"
+data-collapsed="0"
+data-created="1418117667"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="0.1234864301"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9320435"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">1</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$xu-min-cong"
+class="zm-item-link-avatar"
+href="/people/xu-min-cong">
+<img src="http://pic1.zhimg.com/7527444ff_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/7527444ff_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$xu-min-cong" href="/people/xu-min-cong">minky</a>，<strong title="除了好奇，什么都不擅长" class="zu-question-my-bio">除了好奇，什么都不擅长</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$fan-da-da-90" href="http://www.zhihu.com/people/fan-da-da-90" class="zg-link" title="樊达达">樊达达</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">以前下过支付宝客户端，那个拟物化的设计真的是太丑了，太丑了<br>果断卸载<br>颜狗躲过一劫<br>至于朋友能看得到预测什么的，果然手机号也要养小号的策略是对的
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9320435-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34831106">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9322184"
+data-atoken="34835484"
+data-collapsed="0"
+data-created="1418122390"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="2.1234861805"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9322184"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">1</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$he-ye-52"
+class="zm-item-link-avatar"
+href="/people/he-ye-52">
+<img src="http://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$he-ye-52" href="/people/he-ye-52">何晔</a>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$mei-lan-28" href="http://www.zhihu.com/people/mei-lan-28" class="zg-link" title="美兰">美兰</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">阿里果然是没有社交基因的公司
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9322184-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34835484">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9322371"
+data-atoken="34835946"
+data-collapsed="0"
+data-created="1418122903"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="2.1234861534"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9322371"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">1</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$ceremony"
+class="zm-item-link-avatar"
+href="/people/ceremony">
+<img src="http://pic3.zhimg.com/300cc306d_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/300cc306d_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$ceremony" href="/people/ceremony">达芙</a>，<strong title="Shake it!" class="zu-question-my-bio">Shake it!</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$hu-nao-92" href="http://www.zhihu.com/people/hu-nao-92" class="zg-link" title="胡闹">胡闹</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我对象就是因为非要看我的十年账单进而对我所有转账帐目不加了解便打电话过来说我花钱大手大脚现已将其加入黑名单  
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9322371-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34835946">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9326305"
+data-atoken="34845566"
+data-collapsed="0"
+data-created="1418134193"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="2.1234855569"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9326305"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">1</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$ma-yi-53"
+class="zm-item-link-avatar"
+href="/people/ma-yi-53">
+<img src="http://pic3.zhimg.com/c3c2d7b3c653b2a98212cd538c6b86f5_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic4.zhimg.com/c3c2d7b3c653b2a98212cd538c6b86f5_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$ma-yi-53" href="/people/ma-yi-53">蚂蚁</a>，<strong title="骑行、徒步爱好者" class="zu-question-my-bio">骑行、徒步爱好者</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$berry-jam" href="http://www.zhihu.com/people/berry-jam" class="zg-link" title="Berry jam">Berry jam</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我默默的对了下通讯录，才发现只要是我手机里曾今存过的手机号，不管有没有删，在2024年的那个排名里全都存在。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9326305-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34845566">编辑于 昨天 09:52</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9329516"
+data-atoken="34853615"
+data-collapsed="0"
+data-created="1418142857"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="2.1234850913"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9329516"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">1</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$pei-zhi-zhi-42"
+class="zm-item-link-avatar"
+href="/people/pei-zhi-zhi-42">
+<img src="http://pic3.zhimg.com/e2f9eba7374096ef4b112598f5be8161_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/e2f9eba7374096ef4b112598f5be8161_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$pei-zhi-zhi-42" href="/people/pei-zhi-zhi-42">裴之之</a>，<strong title="怪我咯？" class="zu-question-my-bio">怪我咯？</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$cheng-feng-zhe" href="http://www.zhihu.com/people/cheng-feng-zhe" class="zg-link" title="乘风者">乘风者</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">我就想问……没安装支付宝应用……<br>只用电脑看了一下什么十年账单日记也会被暴露出去吗……<br>我怕我妈看到会打死我<br>●︿●挺急的！在线等！
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9329516-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 昨天 00:34" target="_blank" href="/question/26988830/answer/34853615">编辑于 昨天 00:36</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>3 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9346093"
+data-atoken="34894932"
+data-collapsed="0"
+data-created="1418205820"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="2.1234817739"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9346093"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">1</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$leng-zi-yu"
+class="zm-item-link-avatar"
+href="/people/leng-zi-yu">
+<img src="http://pic2.zhimg.com/20e63e1127fd59f654344fa72845f955_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic4.zhimg.com/20e63e1127fd59f654344fa72845f955_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$leng-zi-yu" href="/people/leng-zi-yu">冷子玉</a>，<strong title="学生，巴萨球迷。努力成为一个优秀的程序员(*/ω＼*)！" class="zu-question-my-bio">学生，巴萨球迷。努力成为一个优秀的程序…</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$Lunmole" href="http://www.zhihu.com/people/Lunmole" class="zg-link" title="沦没照">沦没照</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">不用这么激动。好像只有2024年的预测排名啊，看到有几个土豪好友比我还低我就知道那个很真实不完全相关了。<br><br>不过那些个好友一开始真没搞懂从哪来的，依旧侵犯隐私。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9346093-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34894932">发布于 昨天 18:03</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9314156"
+data-atoken="34815474"
+data-collapsed="0"
+data-created="1418103367"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="-11.8765128233"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9314156"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">4</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$bei-da-huang-62"
+class="zm-item-link-avatar"
+href="/people/bei-da-huang-62">
+<img src="http://pic2.zhimg.com/4603e0f29_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/4603e0f29_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$bei-da-huang-62" href="/people/bei-da-huang-62">北大荒</a>，<strong title="机械大四在读" class="zu-question-my-bio">机械大四在读</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="4">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$mu-tian-48" href="http://www.zhihu.com/people/mu-tian-48" class="zg-link" title="目田">目田</a>、</span><span class="user-block"><a data-tip="p$t$joyceqty" href="http://www.zhihu.com/people/joyceqty" class="zg-link" title="joyceqty">joyceqty</a>、</span><span class="user-block"><a data-tip="p$t$jian-zheng-liao-li-shi" href="http://www.zhihu.com/people/jian-zheng-liao-li-shi" class="zg-link" title="见证了历史">见证了历史</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix"><b><u>是看不到好友10年的消费统计的，</u></b>只能看到自己的排名和2024年的预测排名。<br><br>只要你不在朋友圈晒，会有多少隐私的泄漏。<br><br>那个预测也没什么特别的根据吧。<br><br>十年消费统计比我高了50%的，2024我的身价是她的三倍。<br><br>可以喷下这个预测是不是有性别歧视。<br><br>这预测，一笑而过，谁会当真，其他的，大家散了吧。
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9314156-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-12-09" target="_blank" href="/question/26988830/answer/34815474">编辑于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer "
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="9311160"
+data-atoken="34807958"
+data-collapsed="0"
+data-created="1418096069"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-score="-0.8765124285"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-9311160"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">1</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$fan-fan-73-36"
+class="zm-item-link-avatar"
+href="/people/fan-fan-73-36">
+<img src="http://pic4.zhimg.com/fadd41cc7c639b9a895fe252d161ff49_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/fadd41cc7c639b9a895fe252d161ff49_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$fan-fan-73-36" href="/people/fan-fan-73-36">fan fan</a>，<strong title="kernel panic" class="zu-question-my-bio">kernel panic</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block">匿名用户</span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="2978487" data-action="/answer/content">
+
+<div class=" zm-editable-content clearfix">不看不知道，一看吓一跳。我发现手机里好多应用拥有各种权限，尤其是BAT的应用，读取短信，通话记录，联系人，修改系统设置。。。。果断全部取消授权！
+
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="9311160-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/26988830/answer/34807958">发布于 2014-12-09</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+</div>
+</div>
+</div>
+
+
+</div>
+
+<div id="zh-question-collapsed-link" class="zu-question-collap-title" style="display:" >
+<a href="javascript:;" name="expand" class="zg-link-gray" id="zh-question-collapsed-switcher">
+<span id="zh-question-collapsed-num">15</span> 个回答被折叠
+</a>
+（<a target="_blank" href="http://www.zhihu.com/question/20120168" class="zg-link-gray">为什么？</a>）
+</div>
+<div id="zh-question-collapsed-wrap" class="zh-question-answer-wrapper" style="display:none"></div>
+<a name="draft"></a>
+<div id="zh-question-answer-form-wrap" class="zh-question-answer-form-wrap" data-isabout="0">
+<div class="zm-editable-tip"></div>
+<div class="zm-editable-content"></div>
+</div>
+
+<div class="shameimaru-placeholder" data-class="QuestionBottomShameimaruV2" data-params='{&quot;token&quot;:26988830}'></div>
+<!-- end of content -->
+</div>
+</div>
+<div class="zu-main-sidebar">
+
+
+
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner" id="zh-question-side-header-wrap">
+<button data-follow="q:m:button" class="follow-button zg-unfollow zg-btn-white" data-id="2978487">取消关注</button>
+
+<div class="zg-btn-white" id="zh-question-operation-menu"
+>
+<i class="zg-icon-dropdown-menu zg-icon"></i><b class="hide-text">设置</b>
+</div>
+
+<div class="zh-question-followers-sidebar">
+<div class="zg-gray-normal">
+
+<a href="/question/26988830/followers"><strong>1288</strong></a>
+人关注该问题
+
+</div>
+
+<div class="list zu-small-avatar-list zg-clear">
+
+<a title="Yinkan Li"
+data-tip="p$t$liyinkan"
+class="zm-item-link-avatar"
+href="/people/liyinkan">
+<img src="http://pic4.zhimg.com/804575753_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="Selerare"
+data-tip="p$t$Selerare"
+class="zm-item-link-avatar"
+href="/people/Selerare">
+<img src="http://pic3.zhimg.com/c7e88c4b6_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="亦无欢"
+data-tip="p$t$jztszl"
+class="zm-item-link-avatar"
+href="/people/jztszl">
+<img src="http://pic1.zhimg.com/e35560c1c_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="vczh"
+data-tip="p$t$vczh-the-genius"
+class="zm-item-link-avatar"
+href="/people/vczh-the-genius">
+<img src="http://pic4.zhimg.com/88db1114b_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="天猪(刘勇)"
+data-tip="p$t$liuyong25"
+class="zm-item-link-avatar"
+href="/people/liuyong25">
+<img src="http://pic2.zhimg.com/fb7dabf89_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="大猫布丁"
+data-tip="p$t$Zoe2012"
+class="zm-item-link-avatar"
+href="/people/Zoe2012">
+<img src="http://pic1.zhimg.com/2490141397255f4676987bd277085430_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="唐文"
+data-tip="p$t$tang-wen-7-58"
+class="zm-item-link-avatar"
+href="/people/tang-wen-7-58">
+<img src="http://pic1.zhimg.com/da8e974dc_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="曾智升"
+data-tip="p$t$ceng-zhi-sheng"
+class="zm-item-link-avatar"
+href="/people/ceng-zhi-sheng">
+<img src="http://pic4.zhimg.com/baecb0040_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="可可"
+data-tip="p$t$ke-ke-91-41"
+class="zm-item-link-avatar"
+href="/people/ke-ke-91-41">
+<img src="http://pic3.zhimg.com/da8e974dc_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="朱超群"
+data-tip="p$t$zhu-chao-qun"
+class="zm-item-link-avatar"
+href="/people/zhu-chao-qun">
+<img src="http://pic2.zhimg.com/5aaf0f3ae_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="陈先帅"
+data-tip="p$t$danielchen1995"
+class="zm-item-link-avatar"
+href="/people/danielchen1995">
+<img src="http://pic1.zhimg.com/bc6998003_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="沈胤栋"
+data-tip="p$t$chen-yin-dong"
+class="zm-item-link-avatar"
+href="/people/chen-yin-dong">
+<img src="http://pic3.zhimg.com/14143d7c0_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="冯弗兰克"
+data-tip="p$t$feng-fu-lan-ke"
+class="zm-item-link-avatar"
+href="/people/feng-fu-lan-ke">
+<img src="http://pic1.zhimg.com/962f0643b_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="呢呢"
+data-tip="p$t$ni-ni-41"
+class="zm-item-link-avatar"
+href="/people/ni-ni-41">
+<img src="http://pic2.zhimg.com/836c3d780_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="夏末"
+data-tip="p$t$xia-mo-33"
+class="zm-item-link-avatar"
+href="/people/xia-mo-33">
+<img src="http://pic2.zhimg.com/8efdad773_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="ars rosicky"
+data-tip="p$t$ars-rosicky"
+class="zm-item-link-avatar"
+href="/people/ars-rosicky">
+<img src="http://pic1.zhimg.com/da8e974dc_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="唐钰"
+data-tip="p$t$tang-yu-82-88"
+class="zm-item-link-avatar"
+href="/people/tang-yu-82-88">
+<img src="http://pic3.zhimg.com/8ff69e117_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="Kanato"
+data-tip="p$t$brglng"
+class="zm-item-link-avatar"
+href="/people/brglng">
+<img src="http://pic4.zhimg.com/2b02030f8_s.jpg" class="zm-item-img-avatar">
+</a>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="shameimaru-placeholder" data-class="QuestionUpShameimaruV2" data-params='{&quot;token&quot;:26988830}'></div>
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<div id="zh-question-related-questions" class="zh-question-related-questions clearfix">
+
+<h3>相关问题</h3>
+<ul itemprop="relatedQuestion" itemscope itemtype="http://schema.org/ItemList">
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/21347817">PayPal怎么收款？怎么设置PayPal账单？</a> <span class="num">7 个回答</span><meta itemprop="followerCount" content="29" /></li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/24773324">如何评价支付宝十周年广告《账单日记》？</a> <span class="num">23 个回答</span><meta itemprop="followerCount" content="127" /></li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/22056839">支付宝钱包的信用卡账单功能，账单邮箱密码直接暴晒？</a> <span class="num">2 个回答</span><meta itemprop="followerCount" content="11" /></li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/22133952">两张信用卡，套现还款，怎么调整账单日，才能更合理？</a> <span class="num">0 个回答</span><meta itemprop="followerCount" content="9" /></li>
+
+<li hidden itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/22620231">交行信用卡的还款日和账单日怎么算的啊？</a> <span class="num">1 个回答</span><meta itemprop="followerCount" content="7" /></li>
+
+</ul>
+</div>
+</div>
+</div>
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<h3>分享问题</h3>
+<div id="zh-question-webshare-container" data-title="分享问题" data-type="question" data-id="2978487" data-url-token="26988830" class="zh-question-webshare-links clearfix">
+<a href="#" name="sina"><i class="zg-icon zg-icon-webshare-weibo"></i>微博</a>
+
+<a href="#" name="letter"><i class="zg-icon zg-icon-webshare-letter"></i>站内私信</a>
+</div>
+</div>
+</div>
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<h3>问题状态</h3>
+<div class="zg-gray-normal">
+最近活动于 <span class="time">21:54</span>
+<span class="zg-bull">&bull;</span>
+<a href="/question/26988830/log">查看问题日志</a>
+</div>
+<div class="zg-gray-normal">
+被浏览 <strong>547397</strong> 次，相关话题关注者 <strong>495</strong> 人
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="shameimaru-placeholder" data-class="QuestionDownShameimaruV2" data-params='{&quot;token&quot;:26988830}'></div>
+</div>
+<div class="zg-clear"></div>
+</div>
+
+<div id="zh-footer" class="zh-footer">
+<div class="zg-wrap clearfix">
+<ul>
+
+<li><a href="/question/19581624" target='_blank'>知乎指南</a></li>
+<li><a href="javascript:;" id="js-feedback-button">建议反馈</a></li>
+
+<li><a href="/app" target='_blank'>移动应用</a></li>
+<li><a href="/read">知乎阅读</a></li>
+<li><a href="/careers">加入知乎</a></li>
+<li><a href="/terms" target="_blank">知乎协议</a></li>
+<li><a href="mailto:bd@zhihu.com">商务合作</a></li>
+</ul>
+<span class="copy">&copy; 2014 知乎</span>
+</div>
+</div>
+
+
+<script type="text/json" class="json-inline" data-name="current_user">["\u59da\u6cfd\u6e90","502BadGateway","http:\/\/pic3.zhimg.com\/bab12adba_s.jpg","57842aac37ccd0de3965f9b6e17cb555","\u6613\u8f6f\u5929\u521bing~\u77e5\u4e4e\u52a9\u624b1.7.0ing",0,0,1,"547320073@qq.com","http:\/\/mail.qq.com",1,false,true]</script>
+<script type="text/json" class="json-inline" data-name="env">["zhihu.com","comet.zhihu.com",false,null]</script>
+<script type="text/json" class="json-inline" data-name="permissions">[]</script>
+
+
+<script type="text/json" class="json-inline" data-name="ga_vars">{"user_created":1337032972000,"now":1418306103000,"abtest_mask":"---------1--------------------","user_attr":[1,0,0,"-",1],"user_hash":"57842aac37ccd0de3965f9b6e17cb555"}</script>
+
+<script type="text/json" class="json-inline" data-name="current_question">{"status":"normal","isLocked":0,"detailEditReasonRequired":true,"editPermission":true,"isAnon":0,"qid":2978487,"urlToken":26988830,"showInvitePanel":false,"askAboutMember":0}</script>
+<script type="text/json" class="json-inline" data-name="current_question_owner">false</script>
+<script type="text/json" class="json-inline" data-name="draft">[]</script>
+<script type="text/json" class="json-inline" data-name="my_answer">{}</script>
+<script type="text/json" class="json-inline" data-name="need_first_answer_guide">false</script>
+
+<script type="text/json" class="json-inline" data-name="redirect_to">""</script>
+
+
+<script src="http://static.zhihu.com/static/ver/82cfd3bf774281811fa8287dc189988f.extern_src.min.js"></script>
+<script src="http://static.zhihu.com/static/ver/871aa071c2ad6bc5d6d365a03642efea.app_core.js"></script>
+<script src="http://static.zhihu.com/static/ver/2b2945b7da5cae2ac4f1724d383e573a.sign.js"></script>
+<script src="http://static.zhihu.com/static/ver/4ef13badb62126b411775dc2e4327cf9.app.js"></script>
+<script src="http://static.zhihu.com/static/ver/d7d545025901059495a8217c0b931055.rich_text_editor.js"></script>
+
+<script type="text/zscript" znonce="9ac286baccb44a129f64f06afeb7f7dd">
+ZH.entrySQ();
+
+</script>
+
+<input type="hidden" name="_xsrf" value="d258e661f5ad840e0f527ec32ccf8e14"/>
+</body>
+</html>
