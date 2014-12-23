@@ -29,14 +29,14 @@ def decodeGZip(rawPageData):
         pageContent = rawPageData.read()
         return pageContent
 
-def getHttpContent(url='', header={} , data=None, timeout=5):
+def getHttpContent(url='', extraHeader={} , data=None, timeout=5):
     u"""获取网页内容
  
     获取网页内容, 打开网页超过设定的超时时间则报错
     
     参数:
         url         一个字符串,待打开的网址
-        header      一个简单字典,需要添加的http头信息
+        extraHeader 一个简单字典,需要添加的http头信息
         data        需传输的数据,默认为空
         timeout     int格式的秒数，打开网页超过这个时间将直接退出，停止等待
     返回:
@@ -48,8 +48,8 @@ def getHttpContent(url='', header={} , data=None, timeout=5):
         request = urllib2.Request(url = url)
     else:
         request = urllib2.Request(url = url, data = data)
-    for headerKey in header.keys():
-        request.add_header(headerKey, header[headerKey])
+    for headerKey in extraHeader.keys():
+        request.add_header(headerKey, extraHeader[headerKey])
     try: 
         rawPageData = urllib2.urlopen(request, timeout = timeout)
     except  urllib2.HTTPError as error:

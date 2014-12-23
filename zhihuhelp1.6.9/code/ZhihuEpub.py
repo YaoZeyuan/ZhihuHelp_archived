@@ -42,7 +42,7 @@ def DownloadPicWithThread(ImgList=[],MaxThread=20):#添加图片池功能#当图
         Time+=1
         ThreadList  =   []
         buf_t_PageRecord    =   0
-        for t   in  ImgList:#因为已下载过的文件不会重新下载，所以直接重复执行十遍，不必检测错误#待下载的文件可能会突破万这一量计，所以还是需要一些优化
+        for t in  ImgList:#因为已下载过的文件不会重新下载，所以直接重复执行十遍，不必检测错误#待下载的文件可能会突破万这一量计，所以还是需要一些优化
             buf_t_PageRecord    +=  1
             ThreadList.append(threading.Thread(target=DownloadImg,args=(t,Buf_ImgList,u"({}/{})".format(buf_t_PageRecord,MaxPage))))
         Page    =   0
@@ -133,51 +133,6 @@ def CreateContainer_XML():#PassTag
   </rootfiles>
 </container>''')
     f.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def closeimg(text='',ImgList=[],PicDownload=1):#PassTag#若有大图直接下载之#为图片添加点击框
     u"""

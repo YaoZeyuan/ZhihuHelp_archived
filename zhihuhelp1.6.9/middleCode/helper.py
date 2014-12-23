@@ -2,6 +2,7 @@
 import sys  
 reload(sys)  
 sys.setdefaultencoding('utf8') 
+import re
 
 def printDict(data = {}, key = '', prefix = ''):
     if isinstance(data, dict):
@@ -11,20 +12,17 @@ def printDict(data = {}, key = '', prefix = ''):
         print prefix + str(key) + ' => ' + str(data)
 
 def getXsrf(content=''):
-    import re
     xsrf = re.search(r'(?<=name="_xsrf" value=")[^"]*(?="/>)',content)
     if xsrf == None:
         return ''
     else:
         return '_xsrf=' + xsrf.group(0)
 
-
-
-
 def save2DB(cursor=None, data={}, primaryKey='', tableName=''):
     u"""
         *   功能
             *   提供一个简单的数据库储存函数，按照data里的设定，将值存入键所对应的数据库中
+            *   若数据库中没有对应数据，执行插入操作，否则执行更新操作
             *   表与主键由tableName ，primarykey指定
             *   注意，本函数不进行提交操作
         *   输入
