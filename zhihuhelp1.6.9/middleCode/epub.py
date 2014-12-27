@@ -40,7 +40,8 @@ u"""
     *   根据传入字典自动生成
 
     传入缓存下来的图片地址,然后到图片地址去复制图片到images
-
+    传入的html文件名中自带路径
+    
 """
     def creator():
         self.bookInfo = ['title', 'indentifier', 'language', 'creator', 'description', 'right', 'publish']
@@ -59,11 +60,11 @@ u"""
         
         self.initOPF()
         self.initNCX()
-
         
     def initOPF(self):
-        self.OPF = u'''<?xml version='1.0' encoding='utf-8'?>'''
-    
+        self.OPF   = u'''<?xml version='1.0' encoding='utf-8'?>'''
+        self.spine = u'<spine toc="ncx">\n'
+
     def initNCX(self):
         self.NCX = u'''<?xml version='1.0' encoding='utf-8'?>
                         <!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
@@ -71,14 +72,40 @@ u"""
                    '''
     
     def addBookProperty(self, book = {}):
+        #format OPF
         bookInfo = ['title', 'indentifier', 'language', 'creator', 'description', 'right', 'publish']
         self.OPF += '<package unique-identifier="{0}" version="2.0">\n'.format(book['indentifier'])
         self.OPF += '<metadata xmlns="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/">\n'
         for key in bookInfo:
             self.OPF += "<dc:{0}>{1}</dc:{0}>\n".format(key, book[key])
         self.OPF += "</metadata>\n"
-            
 
+        #format NCX
+        self.NCX += u'''
+        <head>
+          <meta name="dtb:uid" content="{0}"/>
+          <meta name="dtb:depth" content="-1"/>
+          <meta name="dtb:totalPageCount" content="0"/>
+          <meta name="dtb:maxPageNumber" content="0"/>
+        </head>
+        '''.format(book['indentifier'])
+        self.NCX += u'''
+        <docTitle>
+          <text>{0}</text>
+        </docTitle>
+        <navMap>
+        '''.format(book['title'])
+
+    def addResourse2OPF(self, bookContent = {}):
+        for key in bookContent:
+            if:
+                chapter = bookContent[key]
+                f = open(chapter['src'], 'wb')
+                f.write(chapter['content'])
+                f.close()
+                
+        return
+    
     def copyFile(self):
         return
     

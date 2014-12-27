@@ -47,7 +47,7 @@ def CheckUpdate():#检查更新，强制更新#newCommitTag
     Time        =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     url         =   UpdateTime.readline().replace(u'\n','').replace(u'\r','')
     UpdateComment=  UpdateTime.read()#可行？
-    if  Time=="2014-09-01":
+    if  Time=="2014-12-27":
         return
     else:
         print   u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(UpdateComment,Time)
@@ -324,7 +324,7 @@ def ChooseTarget(url=''):#选择#Pass
             *   4，话题ID
     """
     try :
-        ID      =   re.search(r'(?<=zhihu\.com/people/)[^/#]*',url).group(0)#匹配ID
+        ID      =   re.search(r'(?<=zhihu\.com/people/)[^/#\n\r]*',url).group(0)#匹配ID
     except  AttributeError:
         pass
     else:
@@ -338,7 +338,7 @@ def ChooseTarget(url=''):#选择#Pass
         print   u'成功匹配到收藏夹，收藏夹代码=',Collect
         return  2,Collect
     try :
-        Roundtable= re.search(r'(?<=zhihu\.com/roundtable/)[^/#]*',url).group(0)#知乎圆桌
+        Roundtable= re.search(r'(?<=zhihu\.com/roundtable/)[^/#\n\r]*',url).group(0)#知乎圆桌
     except  AttributeError:
         pass
     else:

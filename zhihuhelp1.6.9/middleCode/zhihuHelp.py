@@ -98,7 +98,7 @@ class ZhihuHelp:
             worker.boss()
             return questionFilter 
         if kind == 'author':
-            print u'啊哦，这个功能作者还没写←_←，敬请期！'
+            print u'啊哦，这个功能作者还没写←_←，敬请待！'
         if kind == 'collection':
             print u'啊哦，这个功能作者还没写←_←，敬请期待！'
         if kind == 'table':
@@ -110,40 +110,87 @@ class ZhihuHelp:
         if kind == 'column':
             urlInfo['columnID']     = re.search(r'(?<=zhuanlan\.zhihu\.com/)^[/]*', rawUrl).group(0)
 
-
     def setFilter(self):
+        answerFilter   = {}
         questionFilter = {}
         authorFilter   = {}
         #对答案的筛选
-        questionFilter['minAgree']        = 0
-        questionFilter['maxAgree']        = 100000
-        questionFilter['minLength']       = 100
-        questionFilter['maxLength']       = 100000
-        questionFilter['minAverageAgree'] = 10#平均每字赞同数
-        questionFilter['maxAverageAgree'] = 10#平均每字赞同数
-        questionFilter['minDate']         = '2010-10-01'
-        questionFilter['maxDate']         = '2099-12-12'
+        answerFilter['minAgree']        = 0
+        answerFilter['maxAgree']        = 100000
+        answerFilter['minLength']       = 100
+        answerFilter['maxLength']       = 100000
+        answerFilter['minAverageAgree'] = 10#平均每字赞同数
+        answerFilter['maxAverageAgree'] = 10#平均每字赞同数
+        answerFilter['minDate']         = '2010-10-01'
+        answerFilter['maxDate']         = '2099-12-12'
+        answerFilter['noRecord']        = '0'
+        answerFilter['imgSize']         = 1#图片质量，0:无图，1:普通，2:高清
+        #对问题的筛选
+        questionFilter['minComment']              = 0 
+        questionFilter['maxComment']              = 1000000 
+        questionFilter['minFollowCount']          = 0 
+        questionFilter['maxFollowCount']          = 1000000 
+        questionFilter['minAnswerCount']          = 0 
+        questionFilter['maxAnswerCount']          = 1000000 
+        questionFilter['minViewCount']            = 0 
+        questionFilter['maxViewCount']            = 1000000 
+        questionFilter['minCollapsedAnswerCount'] = 0 
+        questionFilter['maxCollapsedAnswerCount'] = 1000000 
         #对人的筛选
         authorFilter['minAgree']          = 0
         authorFilter['maxAgree']          = 100000
         authorFilter['minCollect']        = 0
         authorFilter['maxCollect']        = 100000
-        authorFilter['minEdit']           = 100000
+        authorFilter['minEdit']           = 0
         authorFilter['maxEdit']           = 100000
-        authorFilter['minColumn']         = 100000
+        authorFilter['minColumn']         = 0
         authorFilter['maxColumn']         = 100000
-        authorFilter['minThanks']         = 100000
+        authorFilter['minThanks']         = 0
         authorFilter['maxThanks']         = 100000
-        authorFilter['minAnswer']         = 100000
+        authorFilter['minAnswer']         = 0
         authorFilter['maxAnswer']         = 100000
-        authorFilter['minQuestion']       = 100000
+        authorFilter['minQuestion']       = 0
         authorFilter['maxQuestion']       = 100000
-        authorFilter['minAnswerCount']    = 100
+        authorFilter['minAnswerCount']    = 0
         authorFilter['maxAnswerCount']    = 100000
-        authorFilter['minAverageAgree']   = 10#平均赞同数
-        authorFilter['maxAverageAgree']   = 10
-        authorFilter['minAverageCollect'] = 10#平均收藏数
-        authorFilter['maxAverageCollect'] = 10
+        authorFilter['minAverageAgree']   = 0#平均赞同数
+        authorFilter['maxAverageAgree']   = 100000
+        authorFilter['minAverageCollect'] = 0#平均收藏数
+        authorFilter['maxAverageCollect'] = 100000
         return questionFilter, authorFilter 
+    
+class EpubData:
+    def __init__(self, cursor = None, urlInfo = {}):
+        self.cursor  = cursor
+        self.urlInfo = urlInfo
 
+    def createQuestionFilterSQL(self):
+        self.answerQuery = "select * from AnswerContent where questionID = %s"
+        
+        sqlVarList = []
+        
+        sqlQuestionFilter['minAgree']        = 'answerAgreeCount > %s'
+        sqlQuestionFilter['maxAgree']        = 'answerAgreeCount < %s'
+        sqlQuestionFilter['minDate']         = 'updateDate > %s'
+        sqlQuestionFilter['maxDate']         = 'updateDate < %s'
+        sqlQuestionFilter['noRecord']        = 'noRecordFlag == %s'
+        
+        for key in self.urlInfo['filter']:
+            self.answerQuery += ' and ' + sqlQuestionFilter[key]
+            sqlVarList.append(self.urlInfo['filter'][key])
+        allAnswer = self.cursor.execute(self.answerQuery%sqlVarList).fetchAll()
+        
+        return 
+    
+    def formatAnswerDict(self, allAnswer):
+        itemList  = ['authorID', 'authorSign', 'authorLogo', 'authorName', 'answerAgreeCount',  'answerContent',  'questionID',  'answerID',  'commitDate',  'updateDate',  'answerCommentCount',  'noRecordFlag',  'answerHref']
+        self.answerDict = {}
+        for line in range(allAnswer):
+            self.answerDict[line] = {}
+            for index in range(itemList):
+                self.answerDict[line][itemList[index]] = allAnswer[line][index]
+
+    def imgProcess
+
+    def imgDownload
 
