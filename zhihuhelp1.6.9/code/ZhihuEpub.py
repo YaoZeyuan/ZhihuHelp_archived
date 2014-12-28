@@ -345,7 +345,7 @@ def DealAnswerDict(cursor=None,AnswerDict={},ImgList=[],PicDownload=1):#必须�
         HtmlStr =u"""
         <div    class="answer-body">
             <div    class="answer-content">
-                <img align="right" src="%(UserIDLogoAdress)s" alt=""/><a style="color:black;font:blod" href=http://www.zhihu.com/people/%(ID)s>%(UserName)s</a>
+                <img align="right" src="%(UserIDLogoAdress)s" alt=""/><a style="color:black;font:blod" href="http://www.zhihu.com/people/%(ID)s">%(UserName)s</a>
                 """%Dict+SignStr+u"""<br /><br />
                 %(AnswerContent)s    
             </div>
@@ -565,12 +565,13 @@ def EpubBuilder(MaxThread=20,FReadList=[],PicDownload=1):
          <body>
          <center>
          <img  class="cover" src="../images/cover.png"/>
-         <br />\n
+         <br />
+      
         <h1>%(BookTitle)s</h1>
         <br />
         <h4>%(AuthorName)s</h4>'''%InfoDict+Description+'''
         <center><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/cn/">
-        <img alt="知识共享许可协议" style="border-width:0" src="../images/88x31.png">
+        <img alt="知识共享许可协议" style="border-width:0" src="../images/88x31.png" />
         </a>
         </center>
         <center>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/cn/">知识共享署名-非商业性使用-禁止演绎 3.0 中国大陆许可协议</a>进行许可。</center>
