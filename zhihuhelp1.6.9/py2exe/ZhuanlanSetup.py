@@ -7,13 +7,9 @@ options = {"py2exe":
     }
     }
 setup(
-    console=[{"script":"ZhihuHelp.py",
-              "icon_resources":[(1, "www.ico")]}],
+    console=[{"script":"ZhuanlanHelper.py",
+              "icon_resources":[(1, "zhuanlan.ico")]}],
     options=options,
     zipfile=None,  
     )
-
-
-
-
 
