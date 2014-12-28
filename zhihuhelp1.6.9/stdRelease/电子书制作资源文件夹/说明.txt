@@ -1,0 +1,5 @@
+stylesheet.css为CSS文件，用于控制网页显示格式，
+BookCover.png为电子书封面，可以随意替换（替换掉之后改名成BookCover.png就行），
+cover.png是首页封面图，替换方法和BookCover.png一样，把新图片重命名为cover.png覆盖掉
+88x31.png是版权声明，请勿移动或替换，否则程序可能会无法运行。。。
+误删的话重下一遍软件，把数据库移过去就好咯~
