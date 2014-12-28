@@ -73,7 +73,7 @@ def DealAnswerDict(JsonDict=[],ImgList=[],JsonDictList=[]):#必须是符合规�
         </div>
         <div    class="answer-body">
             <div    class="answer-content">
-                <img align="right" src="%(AuthorIDLogo)s" alt=""/><a style="color:black;font:blod" href="%(AuthorIDLink)s>%(AuthorName)s"</a>
+                <img align="right" src="%(AuthorIDLogo)s" alt=""/><a style="color:black;font:blod" href="%(AuthorIDLink)s">%(AuthorName)s</a>
             <br /><br />
                 %(Content)s    
             </div>
@@ -91,7 +91,7 @@ def DealAnswerDict(JsonDict=[],ImgList=[],JsonDictList=[]):#必须是符合规�
         </div>
         </body></html>
         """%Dict
-        Dict['HtmlStr'] =   closeimg(text=HtmlStr.replace('<hr>','<hr />').replace('<br>','<br />'),ImgList=ImgList,PicDownload=1)#需要进一步处理#testTag
+        Dict['HtmlStr'] =   closeimg(text=HtmlStr.replace('<hr>','<hr />').replace('<br>','<br />'),ImgList=ImgList,PicDownload=1).replace('alt=""/', '')#需要进一步处理#testTag
         JsonDictList.append(Dict)#按发布顺序排序
 
 def MakeInfoDict(ColumnInfoDict={}):
