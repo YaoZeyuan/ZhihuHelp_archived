@@ -249,7 +249,7 @@ def ReadAnswer(ReDict,html_parser,LastDict,text="",Flag=1):#UnitTest#newCommitTa
             Dict[t]      =   ReDict['_'+t].search(text).group(0)
         except  AttributeError:
             if  flag:
-                print   u"没有收集到"   +   t
+                print   u"没有收集到" + t + u'待匹配文本为:' + text
                 print   u"知乎页面结构已变动，程序无法正常运行，快上知乎@姚泽源喊他更新脚本" 
                 return  False
             else    :
@@ -260,7 +260,10 @@ def ReadAnswer(ReDict,html_parser,LastDict,text="",Flag=1):#UnitTest#newCommitTa
     try:
         Dict["AnswerContent"]   =   html_parser.unescape(ReDict['_AnswerContent'].search(text).group(0)).encode("utf-8")
     except  AttributeError:
-        print   u"答案内容没有收集到"
+        if text.find(u"zg-icon zg-icon-question-mark") != -1:
+            print u'回答包含不健康/政治内容被知乎屏蔽暂不可见，跳过之'
+            return  Dict
+        print   u"答案内容没有收集到" + u'待匹配文本为:' + text
         print   u"知乎页面结构已变动，程序无法正常运行，快上知乎@姚泽源喊他更新脚本" 
         return  Dict
     

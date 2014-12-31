@@ -2,7 +2,7 @@
 
 def returnMarkDownCssStyle():
     return   u"""
-    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style type="text/css">
         /* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
         /* Author: Nicolas Hery - http://nicolashery.com */

@@ -163,9 +163,12 @@ def OpenUrl(Request,Timeout=5):#打开网页,只尝试一次，失败时返回�
         Content =   urllib2.urlopen(Request,timeout=Timeout)
     except  urllib2.HTTPError   as  inst:
         print   inst
-        if  int(inst.code/100)   ==   4:
-            print   u'您所要找的网页在一片没有知识的荒原上'
-            raise   ValueError(u"404 Not Found"+u"错误页面\t：\t"+Request.get_full_url())#此失败不可修复，通过报错直接跳过读取该页面
+        if  int(inst.code/100) == 4:
+            if int(inst.code) == 429:
+                print u'同时打开的网页数量过多导致打开网页请求被知乎服务器拒绝，稍后重试'
+            else:
+                print   u'您所要找的网页在一片没有知识的荒原上'
+                raise   ValueError(u"404 Not Found"+u"错误页面\t：\t"+Request.get_full_url())#此失败不可修复，通过报错直接跳过读取该页面
         else:
             if  int(inst.code/100)==    5:
                 print   u"知乎正在紧张的撰写答案,服务器繁忙ing，稍后重试"
