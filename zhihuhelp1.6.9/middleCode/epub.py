@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 class EpubData():
     def __init__(self, info):
         if info['kind'] == 'question':
