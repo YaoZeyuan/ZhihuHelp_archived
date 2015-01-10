@@ -122,6 +122,7 @@ class Book():
         self.mainfest.addHtml(fileName, id)
         self.spine.addFile(id, linear=True)
         self.ncx.addFile(fileName, id, title)
+        self.index += '<li>{0}</li>'.format(title)
         return
 
     def addImg(self, src):
@@ -144,7 +145,7 @@ class Book():
         u"""
         cover只能是html网页
         """
-        shutil.copy(src, './')
+        shutil.copy(src, './html')
         fileName = self.__getFileName(src)
         self.indentifier += 1 
         id = self.indentifier
@@ -152,13 +153,14 @@ class Book():
         self.spine.addFile(id, linear=False)
         self.ncx.addFile(fileName, id, title)
         self.guide.addCoverHtml(fileName, title)
+        self.index += '<li>{0}</li>'.format(title)
         return
 
     def addInfoPage(self, src, title):
         u"""
         cover只能是html网页
         """
-        shutil.copy(src, './')
+        shutil.copy(src, './html')
         fileName = self.__getFileName(src)
         self.indentifier += 1 
         id = self.indentifier
@@ -166,6 +168,7 @@ class Book():
         self.spine.addFile(id, linear=True)
         self.ncx.addFile(fileName, id, title)
         self.guide.addInfoPage(fileName, title)
+        self.index += '<li>{0}</li>'.format(title)
         return
 
     def addCoverImg(self, src):
@@ -183,10 +186,13 @@ class Book():
         self.indentifier += 1 
         id = self.indentifier
         self.ncx.addChapter(fileName, id, title)
+        self.index += '<li>{0}</li>'.format(title)
+        self.index += '<ol>'
         return
 
     def endChapter(self):
         self.ncx.endChapter()
+        self.index += '</ol>'
         return
 
     def addTitle(self, title):
@@ -221,7 +227,41 @@ class Book():
         return
 
     def createIndex(self):
-        return
+        content = u"""
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="provider" content="www.zhihu.com"/>
+    <meta name="builder" content="ZhihuHelpv1.7"/>
+    <meta name="right" content="该文档由ZhihuHelp_v1.7生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+    <title>目录</title>
+  </head>
+  <body>
+    <center>
+      <h1>目录</h1>
+    </center>
+    <hr/>
+    <br />
+    <ol>
+    {0}
+    </ol>
+  </body>
+  </html>
+    """.format(self.index)
+        src = './html/index.html'
+        f = open(src, 'w')
+        f.write(content)
+        f.close()
+
+        fileName = self.__getFileName(src)
+        self.indentifier += 1 
+        id = self.indentifier
+        self.mainfest.addHtml(fileName, id)
+        self.spine.addFile(id, linear=False)
+        self.ncx.addFile(fileName, id, title)
+        return 
     
     def buildingEpub(self):
         opf = open('./OEBPS/content.opf', 'w')
