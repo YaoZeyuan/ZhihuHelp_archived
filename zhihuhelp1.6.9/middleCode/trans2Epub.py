@@ -8,14 +8,20 @@ class AnswerFilter():
         return
     
     def printSql(self):
-        print self.sql
+        sql = u'select * from '
         return
 
-    def AnswerFilter(self, answerList = []):
+    def AnswerFilter(self, answerIDList = []):
         answerFilter = u"answerID in '"
-        for answerID in answerList:
+        for answerID in answerIDList:
             answerFilter += '%s, '%answerID
-        self.queryDict['answerFilter'] = answerFilter[:-1] + "'"
+        self.queryDict['answerFilter'] = answerFilter.lstrip(', ') + "'"
         return 
 
-    def 
+    def AuthorFilter(self, authorIDList = []):
+        authorFilter = u "authorID in '"
+        for authorID in authorIDList:
+            authorFilter += '%s, '%authorID
+        self.queryDict['authorFilter'] = authorFilter.lstrip(', ') + "'"
+        return
+    
