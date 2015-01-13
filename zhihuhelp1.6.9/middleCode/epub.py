@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-class EpubData():
+class EpubData(object):
     def __init__(self, info):
         if info['kind'] == 'question':
             """
@@ -12,7 +12,7 @@ class EpubData():
     
     
     
-class EpubBuilder():
+class EpubBuilder(object):
 u"""
 只负责对文件按既定规则进行处理
 传入字典,字典结构为

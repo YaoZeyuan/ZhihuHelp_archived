@@ -1,1 +1,1 @@
-/home/yao/zhihuhelp1.6.9.1/contentParse.py
+/home/yao/test_zhihuhelp/zhihuhelp/contentParse.py

@@ -1,28 +1,34 @@
 # -*- coding: utf-8 -*-
-import sqlite3
 import cookielib
 import Cookie
 import urllib2
 import json
 
+import time
+import datetime
+
 import re
 import os
+import pickle
 
 from httpLib import *
 from helper import *
+ 
 
-
-
-class Login:
+class Login(object):
     def __init__(self, conn):
-        self.conn   = conn
-        self.cursor = conn.cursor()
+        self.conn              = conn
+        self.cursor            = conn.cursor()
+        self.cookieJarInMemory = cookielib.CookieJar()
+        self.opener            = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJarInMemory))
+        urllib2.install_opener(self.opener)
 
     def getAccountAndPassword(self):
         print u'开始登陆流程，请根据下列提示输入您的账号密码'    
         print u'示例:\n用户名:mengqingxue2014@qq.com\n密码：131724qingxue\n'
         print u'请输入用户名(知乎注册邮箱),回车确认'
-        account = raw_input()
+        account = "mengqingxue2014@qq.com"#raw_input()
+        print u'测试阶段，自动填写账号，发布时请去除'
         while re.search(r'\w+@[\w\.]{3,}', account) == None:
             print u'话说，输入的账号不规范...\n请输入正确的知乎登录邮箱地址\n'
             print u'账号要求：1.必须是正确格式的邮箱\n2.邮箱用户名只能由数字、字母和下划线_构成\n3.@后面必须要有.而且长度至少为3位'
@@ -30,7 +36,8 @@ class Login:
             print u'请重新输入账号，回车确认'
             account = raw_input()
         print u'OK,验证通过\n请输入密码，回车确认'
-        password = raw_input()
+        password = "131724qingxue"#raw_input()
+        print u'测试阶段，自动填写密码，发布时请去除'
         while len(password) < 6:
             print u'密码长度不科学啊，少侠…密码至少要6位起啊亲>_<'
             print u'范例：helloworldvia27149,57aizhihu'
@@ -78,26 +85,30 @@ class Login:
             return False
         
         if result['r'] == 0:
-            for cookie  in  self.cookieJarInMemory:
-                  if  cookie.name == 'q_c1':
-                      qc_1 = 'q_c1=' + cookie.value
-                  if  cookie.name == 'q_c0':
-                      qc_0 = 'q_c0=' + cookie.value
+            for cookie in self.cookieJarInMemory:
+                if  cookie.name == 'q_c1':
+                    qc_1 = 'q_c1=' + cookie.value
+                if  cookie.name == 'q_c0':
+                    qc_0 = 'q_c0=' + cookie.value
             cookies = "{0};{1};l_c=1;{2}".format(qc_1, xsrf, qc_0)#生成cookie
             print u'登陆成功！'
             print u'登陆账号:', account
-            if AskRemberFlag:
-                print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
-                if raw_input() == 'yes':
-                    setting(readFlag = False, ID = UserID, Password = UserPassword)
-                    print u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
-                else:
-                    print u'跳过保存环节，进入下一流程'
+            print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
+            if raw_input() == 'yes':
+                setting = {
+                        'account' : account,
+                        'password' : password
+                        }
+                setSetting(setting)
+                print u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
+            else:
+                print u'跳过保存环节，进入下一流程'
             newHeader = (str(datetime.date.fromtimestamp(time.time()).strftime('%Y-%m-%d')), cookies)#time和datetime模块需要导入        
             data = {}
             data['Var']    = 'PostHeader'
-            data['Pickle'] = pickle.dumps(NewHeader)
+            data['Pickle'] = pickle.dumps(newHeader)
             save2DB(cursor = self.cursor, data = data, primaryKey = 'Var', tableName = 'VarPickle')
+            self.conn.commit()
             return True
         else:
             print u'登陆失败'
@@ -137,3 +148,4 @@ class Login:
                 self.cookieJarInMemory.set_cookie(Cookie.SimpleCookie().load(varList[1]))#载入cookie
                 return True
         return False
+

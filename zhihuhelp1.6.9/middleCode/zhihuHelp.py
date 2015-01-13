@@ -9,25 +9,22 @@ import re
 import os
 
 from httpLib import *
-from helper import *
-from worker import PageWorker
+from helper  import *
+from worker  import *
+from init    import *
+from login   import *
 
-class ZhihuHelp:
-    u"""
-    助手未来肯定是要换设置文件的结构的，
-    这个类作为中间文件，
-    负责将原始的设置文件转换为未来的标准格式
-    """
+class ZhihuHelp(object):
     def __init__(self):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
-        init  = init()
-        login = Login(conn)
-        login.login()
+        init  = Init()
         self.conn   = init.getConn()
         self.cursor = self.conn.cursor() 
-        readList = open('./ReadList.txt')
+        login = Login(self.conn)
+        login.login()
+        readList = open('./ReadList.txt', 'r')
         for line in readList:
             targetList = []
             for rawUrl in line.split('$'):
@@ -159,7 +156,7 @@ class ZhihuHelp:
         authorFilter['maxAverageCollect'] = 100000
         return questionFilter, authorFilter 
     
-class EpubData:
+class EpubData(object):
     def __init__(self, cursor = None, urlInfo = {}):
         self.cursor  = cursor
         self.urlInfo = urlInfo
@@ -190,7 +187,10 @@ class EpubData:
             for index in range(itemList):
                 self.answerDict[line][itemList[index]] = allAnswer[line][index]
 
-    def imgProcess
+    def imgProcess(self):
+        return
 
-    def imgDownload
+    def imgDownload(self):
+        return
+    
 

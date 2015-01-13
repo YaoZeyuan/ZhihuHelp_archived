@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-class AnswerFilter():
+class AnswerFilter(object):
     def __init__(self,conn):
         self.conn = conn
         self.sql  = u''

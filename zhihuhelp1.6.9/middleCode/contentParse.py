@@ -2,7 +2,7 @@
 import re
 import HTMLParser #转换网页代码
 import time #简单处理时间
-class Parse:
+class Parse(object):
     def __init__(self, content):
         self.content = content.replace('\r', '').replace('\n', '')
         self.initRegex()

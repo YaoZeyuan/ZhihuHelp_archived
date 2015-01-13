@@ -2,7 +2,7 @@
 
 from contentParse import ParseQuestion
 
-class PageWorker:
+class PageWorker(object):
     def __init__(self, conn = None, maxWorker = 1, targetUrl = ''):
         self.conn         = conn
         self.cursor       = conn.cursor()

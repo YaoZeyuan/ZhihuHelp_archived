@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-class init:
+import os
+import sqlite3
+class Init(object):
     def __init__(self):
         self.initDataBase()
         self.cursor = self.conn.cursor()

@@ -1,1 +1,1 @@
-/home/yao/zhihuhelp1.6.9.1/helper.py
+/home/yao/test_zhihuhelp/zhihuhelp/helper.py
