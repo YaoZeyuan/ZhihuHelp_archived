@@ -22,6 +22,9 @@ class ZhihuHelp(object):
         init  = Init()
         self.conn   = init.getConn()
         self.cursor = self.conn.cursor() 
+        return 
+    
+    def helperStart(self):
         login = Login(self.conn)
         login.login()
         readList = open('./ReadList.txt', 'r')
@@ -35,15 +38,15 @@ class ZhihuHelp(object):
                 targetList.append(urlInfo)
             epub = EpubBuilder(targetList)
             epub.makeEpub()
-        return 
-    
+        return
+
     def getUrlInfo(self, rawUrl):
         u"""
         返回标准格式的网址
         返回查询所需要的内容
         """
         urlInfo = {}
-        def detectUrl():
+        def detectUrl(rawUrl):
             targetPattern = {}
             targetPattern['answer']     = r'(?<=zhihu\.com/)question/\d{8}/answer/\d{8}'
             targetPattern['question']   = r'(?<=zhihu\.com/)question/\d{8}'
@@ -51,13 +54,13 @@ class ZhihuHelp(object):
             targetPattern['collection'] = r'(?<=zhihu\.com/)collection/\d*'
             targetPattern['table']      = r'(?<=zhihu\.com/)roundtable/[^/#]*'
             targetPattern['topic']      = r'(?<=zhihu\.com/)topic/\d*'
-            targetPattern['article']    = r'(?<=zhuanlan\.zhihu\.com/)^[/]/\d{8}.*'#先检测专栏，再检测文章，文章比专栏网址更长，类似问题与答案的关系，取信息可以用split('/')的方式获取
+            targetPattern['article']    = r'(?<=zhuanlan\.zhihu\.com/)[^/]*/\d{8}'#先检测专栏，再检测文章，文章比专栏网址更长，类似问题与答案的关系，取信息可以用split('/')的方式获取
             targetPattern['column']     = r'(?<=zhuanlan\.zhihu\.com/)[^/#]*'
-            for key in ['answer', 'question', 'athor', 'collection', 'table', 'topic', 'article', 'column']:
+            for key in ['answer', 'question', 'author', 'collection', 'table', 'topic', 'article', 'column']:
                 urlInfo['url'] = re.search(targetPattern[key], rawUrl)
-                if urlInfo['url']  != None:
-                    urlInfo['kind'] = kind
-                    if kind != 'article' and kind != 'column':
+                if urlInfo['url'] != None:
+                    urlInfo['kind'] = key
+                    if key != 'article' and key != 'column':
                         urlInfo['baseUrl']  = 'http://www.zhihu.com/' + urlInfo['url'].group(0) 
                     else:
                         urlInfo['baseUrl']  = 'http://zhuanlan.zhihu.com/' + urlInfo['url'].group(0) 
@@ -65,23 +68,23 @@ class ZhihuHelp(object):
             return ''   
         kind = detectUrl(rawUrl)
         if kind == 'answer':
-            urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', rawUrl).group(0)
-            urlInfo['answerID']     = re.search(r'(?<=zhihu\.com/question/\d{8}/answer/)\d{8}', rawUrl).group(0)
+            urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
+            urlInfo['answerID']     = re.search(r'(?<=zhihu\.com/question/\d{8}/answer/)\d{8}', urlInfo['baseUrl']).group(0)
         if kind == 'question':
-            urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', rawUrl).group(0)
+            urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
         if kind == 'author':
-            urlInfo['authorID']     = re.search(r'(?<=zhihu\.com/people/)[^/#]*', rawUrl).group(0)
+            urlInfo['authorID']     = re.search(r'(?<=zhihu\.com/people/)[^/#]*', urlInfo['baseUrl']).group(0)
         if kind == 'collection':
-            urlInfo['collectionID'] = re.search(r'(?<=zhihu\.com/collection/)\d*', rawUrl).group(0)
+            urlInfo['collectionID'] = re.search(r'(?<=zhihu\.com/collection/)\d*', urlInfo['baseUrl']).group(0)
         if kind == 'table':
-            urlInfo['tableID']      = re.search(r'(?<=zhihu\.com/roundtable/)[^/#]*', rawUrl).group(0)
+            urlInfo['tableID']      = re.search(r'(?<=zhihu\.com/roundtable/)[^/#]*', urlInfo['baseUrl']).group(0)
         if kind == 'topic':
-            urlInfo['topicID']      = re.search(r'(?<=zhihu\.com/topic/)\d*', rawUrl).group(0)
+            urlInfo['topicID']      = re.search(r'(?<=zhihu\.com/topic/)\d*', urlInfo['baseUrl']).group(0)
         if kind == 'article':
-            urlInfo['columnID']     = re.search(r'(?<=zhuanlan\.zhihu\.com/)^[/]*', rawUrl).group(0)
-            urlInfo['articleID']    = re.search(r'(?<=zhuanlan\.zhihu\.com/)'+ urlInfo['columnID'] +'/\d{8}.*', rawUrl).group(0)
+            urlInfo['columnID']     = re.search(r'(?<=zhuanlan\.zhihu\.com/)[^/]*', urlInfo['baseUrl']).group(0)
+            urlInfo['articleID']    = re.search(r'(?<=zhuanlan\.zhihu\.com/' + urlInfo['columnID'] + '/)' + '\d{8}', urlInfo['baseUrl']).group(0)
         if kind == 'column':
-            urlInfo['columnID']     = re.search(r'(?<=zhuanlan\.zhihu\.com/)^[/]*', rawUrl).group(0)
+            urlInfo['columnID']     = re.search(r'(?<=zhuanlan\.zhihu\.com/)[^/]*', urlInfo['baseUrl']).group(0)
         return urlInfo
 
     def manager(self, urlInfo = {}):

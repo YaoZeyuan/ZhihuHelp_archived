@@ -14,7 +14,6 @@ import pickle
 from httpLib import *
 from helper import *
  
-
 class Login(object):
     def __init__(self, conn):
         self.conn              = conn
