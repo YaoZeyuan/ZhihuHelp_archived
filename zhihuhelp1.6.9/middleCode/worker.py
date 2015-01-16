@@ -3,11 +3,11 @@
 from contentParse import ParseQuestion
 
 class PageWorker(object):
-    def __init__(self, conn = None, maxWorker = 1, targetUrl = ''):
+    def __init__(self, conn = None, maxThread = 1, targetUrl = ''):
         self.conn         = conn
         self.cursor       = conn.cursor()
         self.maxPage      = ''
-        self.maxWorker    = maxWorker
+        self.maxThread    = maxThread
         self.url          = targetUrl
         self.suffix       = ''
         self.workSchedule = {}
@@ -49,7 +49,7 @@ class QuestionWorker(PageWorker):
 
         threadsCount = len(threadPool)
         while threadCount > 0:
-            bufCount = self.maxWorker - threading.activeCount()
+            bufCount = self.maxThread - threading.activeCount()
             if bufCount > 0:
                 while bufCount > 0 and threadCount > 0:
                     threadPool[threadsCount - 1].start()

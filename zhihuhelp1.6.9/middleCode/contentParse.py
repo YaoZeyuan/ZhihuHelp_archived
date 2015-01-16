@@ -171,7 +171,7 @@ class Parse(object):
         if answerDict['updateDate'] == '':
             answerDict['updateDate'] = answerDict['commitDate']
         for key in ['updateDate', 'commitDate']:#此处的时间格式转换还可以进一步改进
-            if len(answerDict[key])!=10 :        
+            if len(answerDict[key]) != 10:        
                 1
                 #if  len(answerDict[key])==5:#这里有问题，一个汉字的长度用len算出来等于3，这么写会导致判断失误，要改掉
                 #    answerDict[key] = time.strftime(u'%Y-%m-%d',time.localtime(time.time()))#今天

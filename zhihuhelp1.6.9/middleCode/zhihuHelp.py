@@ -27,6 +27,9 @@ class ZhihuHelp(object):
     def helperStart(self):
         login = Login(self.conn)
         login.login()
+        self.setting = Setting()
+        self.maxThread  = self.guideOfMaxThread()
+        self.picQuality = self.guideOfPicQuality()
         readList = open('./ReadList.txt', 'r')
         for line in readList:
             targetList = []
@@ -94,7 +97,7 @@ class ZhihuHelp(object):
         if kind == 'answer':
             print u'啊哦，这个功能作者还没写←_←，敬请期待！'
         if kind == 'question':
-            worker = QuestionWorker(conn = self.conn, maxWorker = self.maxWorker, targetUrl=urlInfo['baseUrl'])
+            worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl=urlInfo['baseUrl'])
             worker.boss()
             return questionFilter 
         if kind == 'author':

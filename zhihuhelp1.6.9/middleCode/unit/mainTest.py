@@ -4,3 +4,4 @@ from testScript.zhihuHelp       import *
 #from testScript.login           import *
 
 mainClass = ZhihuHelp()
+mainClass.helperStart()

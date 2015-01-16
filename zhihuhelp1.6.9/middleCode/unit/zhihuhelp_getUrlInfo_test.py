@@ -2,8 +2,6 @@
 from testScript.zhihuHelp import *
 from testScript.helper    import *
 
-
-
 unitTest = ZhihuHelp()
 
 #getUrlInfo_test

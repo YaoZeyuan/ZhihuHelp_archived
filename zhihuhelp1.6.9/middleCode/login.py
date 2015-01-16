@@ -13,38 +13,17 @@ import pickle
 
 from httpLib import *
 from helper import *
+from setting import *
  
 class Login(object):
     def __init__(self, conn):
+        self.setting           = Setting()
         self.conn              = conn
         self.cursor            = conn.cursor()
         self.cookieJarInMemory = cookielib.CookieJar()
         self.opener            = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJarInMemory))
         urllib2.install_opener(self.opener)
 
-    def getAccountAndPassword(self):
-        print u'开始登陆流程，请根据下列提示输入您的账号密码'    
-        print u'示例:\n用户名:mengqingxue2014@qq.com\n密码：131724qingxue\n'
-        print u'请输入用户名(知乎注册邮箱),回车确认'
-        account = "mengqingxue2014@qq.com"#raw_input()
-        print u'测试阶段，自动填写账号，发布时请去除'
-        while re.search(r'\w+@[\w\.]{3,}', account) == None:
-            print u'话说，输入的账号不规范...\n请输入正确的知乎登录邮箱地址\n'
-            print u'账号要求：1.必须是正确格式的邮箱\n2.邮箱用户名只能由数字、字母和下划线_构成\n3.@后面必须要有.而且长度至少为3位'
-            print u'范例：mengqingxue2014@qq.com\n5719asd@sina.cn'
-            print u'请重新输入账号，回车确认'
-            account = raw_input()
-        print u'OK,验证通过\n请输入密码，回车确认'
-        password = "131724qingxue"#raw_input()
-        print u'测试阶段，自动填写密码，发布时请去除'
-        while len(password) < 6:
-            print u'密码长度不科学啊，少侠…密码至少要6位起啊亲>_<'
-            print u'范例：helloworldvia27149,57aizhihu'
-            print u'请重新输入密码，回车确认'
-            password = raw_input()
-        print u'开始发送登陆请求...'
-        return account, password
-    
     def sendMessage(self, account, password, captcha = ''):
         xsrf = getXsrf(getHttpContent('http://www.zhihu.com/login'))
         if xsrf == '':
@@ -89,7 +68,7 @@ class Login(object):
                     qc_1 = 'q_c1=' + cookie.value
                 if  cookie.name == 'q_c0':
                     qc_0 = 'q_c0=' + cookie.value
-            cookies = "{0};{1};l_c=1;{2}".format(qc_1, xsrf, qc_0)#生成cookie
+            cookies = '{0};{1};l_c=1;{2}'.format(qc_1, xsrf, qc_0)#生成cookie
             print u'登陆成功！'
             print u'登陆账号:', account
             print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
@@ -116,28 +95,40 @@ class Login(object):
     
     def getCaptcha(self):
         buf = urllib2.urlopen(u'http://www.zhihu.com/captcha.gif')#开始拉取验证码
-        f   = open(u"我是登陆知乎时的验证码.gif","wb")
+        f   = open(u'我是登陆知乎时的验证码.gif', 'wb')
         f.write(buf.read())
         f.close()
-        print   u"请输入您所看到的验证码，验证码文件在助手所处的文件夹内,\n双击打开『我是登陆知乎时的验证码.gif』即可\n如果不需要输入验证码可以直接敲击回车跳过该步"
+        print u'请输入您所看到的验证码，验证码文件在助手所处的文件夹内,\n双击打开『我是登陆知乎时的验证码.gif』即可\n如果不需要输入验证码可以直接敲击回车跳过该步'
         captcha = raw_input()
         return captcha
     
     def login(self):
-        account, password = self.getAccountAndPassword()
+        self.setting.guide()
+        account, password = self.setting.guideOfAccountAndPassword()
         captcha = ''
         while not self.sendMessage(account, password, captcha):
             print u'请按照提示重新登陆'
             print u'输入『yes』后按回车可以更换账号密码，点击回车直接重新发送登录请求'
             confirm = raw_input()
             if confirm == 'yes':
-                account,password = self.getAccountAndPassword()
+                account,password = self.guideOfAccountAndPassword()
             captcha = self.getCaptcha()
+        print u'请问是否要记住密码？'
+        print u'输入yes记住账号密码，输入其他任意字符跳过，回车确认'
+        confirm = raw_input()
+        if confirm == 'yes':
+            setDict = {
+                    'account'  : account, 
+                    'password' : password
+                    }
+            self.setSetting(setDict)
+        return
+
     
     #这个函数暂时没有用到
     def setCookie(self):
         rowcount = self.cursor.execute('select count(Pickle) from VarPickle where Var = "PostHeader"').fetchone()[0]    
-        if rowcount!=0:
+        if rowcount != 0:
             varList    = pickle.loads(self.cursor.execute("select Pickle from VarPickle where Var='PostHeader'").fetchone()[0])
             recordtime = datetime.datetime.strptime(varList[0],'%Y-%m-%d').date()#日期函数可以进一步修改
             today      = datetime.date.today()

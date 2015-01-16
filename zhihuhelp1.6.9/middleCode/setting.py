@@ -112,7 +112,7 @@ class Setting():
             maxThread = 20
             print u'点击回车继续~'      
             raw_input()
-    return maxThread
+        return maxThread
 
     def guideOfPicQuality(self):
         print u'请选择电子书内的图片质量'
@@ -124,7 +124,8 @@ class Setting():
             picQuality = int(raw_input())
         except ValueError as error:
             print error
-            print u'嗯，数字转换错误。。。图片模式重置为标准模式，点击回车继续'
+            print u'嗯，数字转换错误。。。'
+            print u'图片模式重置为标准模式，点击回车继续'
             picQuality = 1
             raw_input()
         if picQuality != 0 and picQuality != 1 and picQuality != 2:

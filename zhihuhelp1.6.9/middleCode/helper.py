@@ -15,7 +15,7 @@ def printDict(data = {}, key = '', prefix = ''):
         print prefix + str(key) + ' => ' + str(data)
 
 def getXsrf(content=''):
-    xsrf = re.search(r'(?<=name="_xsrf" value=")[^"]*(?="/>)',content)
+    xsrf = re.search(r'(?<=name="_xsrf" value=")[^"]*(?="/>)', content)
     if xsrf == None:
         return ''
     else:
@@ -52,7 +52,7 @@ def save2DB(cursor, data={}, primaryKey='', tableName=''):
         placeholder += '?,'
         varTuple.append(data[columnKey])
 
-    if rowCount==0:
+    if rowCount == 0:
         print 'sql测试'
         print 'sql = ' + insertSql[:-1] + placeholder[:-1] + ')'
         cursor.execute(insertSql[:-1] + placeholder[:-1] + ')', tuple(varTuple))
