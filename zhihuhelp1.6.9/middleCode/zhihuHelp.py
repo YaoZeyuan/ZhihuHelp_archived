@@ -26,10 +26,11 @@ class ZhihuHelp(object):
     
     def helperStart(self):
         login = Login(self.conn)
-        login.login()
+        #login.login()
+        login.setCookie()
         self.setting = Setting()
-        self.maxThread  = self.guideOfMaxThread()
-        self.picQuality = self.guideOfPicQuality()
+        self.maxThread  = self.setting.guideOfMaxThread()
+        self.picQuality = self.setting.guideOfPicQuality()
         readList = open('./ReadList.txt', 'r')
         for line in readList:
             targetList = []

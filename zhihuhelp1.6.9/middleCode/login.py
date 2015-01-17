@@ -10,6 +10,7 @@ import datetime
 import re
 import os
 import pickle
+import StringIO#使用字符串模拟一个文件
 
 from httpLib import *
 from helper import *
@@ -20,7 +21,8 @@ class Login(object):
         self.setting           = Setting()
         self.conn              = conn
         self.cursor            = conn.cursor()
-        self.cookieJarInMemory = cookielib.CookieJar()
+        self.stringFile        = StringIO.StringIO()
+        self.cookieJarInMemory = cookielib.LWPCookieJar()
         self.opener            = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJarInMemory))
         urllib2.install_opener(self.opener)
 
@@ -63,12 +65,6 @@ class Login(object):
             return False
         
         if result['r'] == 0:
-            for cookie in self.cookieJarInMemory:
-                if  cookie.name == 'q_c1':
-                    qc_1 = 'q_c1=' + cookie.value
-                if  cookie.name == 'q_c0':
-                    qc_0 = 'q_c0=' + cookie.value
-            cookies = '{0};{1};l_c=1;{2}'.format(qc_1, xsrf, qc_0)#生成cookie
             print u'登陆成功！'
             print u'登陆账号:', account
             print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
@@ -77,11 +73,12 @@ class Login(object):
                         'account' : account,
                         'password' : password
                         }
-                setSetting(setting)
+                self.setting.setSetting(setting)
                 print u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
             else:
                 print u'跳过保存环节，进入下一流程'
-            newHeader = (str(datetime.date.fromtimestamp(time.time()).strftime('%Y-%m-%d')), cookies)#time和datetime模块需要导入        
+            cookieJar = self.saveCookieJar()
+            newHeader = (str(datetime.date.fromtimestamp(time.time()).strftime('%Y-%m-%d')), cookieJar)#time和datetime模块需要导入
             data = {}
             data['Var']    = 'PostHeader'
             data['Pickle'] = pickle.dumps(newHeader)
@@ -113,29 +110,43 @@ class Login(object):
             if confirm == 'yes':
                 account,password = self.guideOfAccountAndPassword()
             captcha = self.getCaptcha()
-        print u'请问是否要记住密码？'
-        print u'输入yes记住账号密码，输入其他任意字符跳过，回车确认'
-        confirm = raw_input()
-        if confirm == 'yes':
-            setDict = {
-                    'account'  : account, 
-                    'password' : password
-                    }
-            self.setSetting(setDict)
         return
 
+    def saveCookieJar(self):
+        fileName = u'./theFileNameIsSoLongThatYouWontKnowWhatIsThat.txt' 
+        f = open(fileName, 'w')
+        f.close()
+        self.cookieJarInMemory.save(fileName)
+        f = open(fileName, 'r')
+        content = f.read()
+        f.close
+        os.remove(fileName)
+        return content
     
+    def loadCookJar(self, content = ''):
+        fileName = u'./theFileNameIsSoLongThatYouWontKnowWhatIsThat.txt' 
+        f = open(fileName, 'w')
+        f.write(content)
+        f.close()
+        self.cookieJarInMemory.load(fileName)
+        os.remove(fileName)
+        return 
+
     #这个函数暂时没有用到
     def setCookie(self):
         rowcount = self.cursor.execute('select count(Pickle) from VarPickle where Var = "PostHeader"').fetchone()[0]    
         if rowcount != 0:
-            varList    = pickle.loads(self.cursor.execute("select Pickle from VarPickle where Var='PostHeader'").fetchone()[0])
-            recordtime = datetime.datetime.strptime(varList[0],'%Y-%m-%d').date()#日期函数可以进一步修改
+            pickleVar  = self.cursor.execute("select Pickle from VarPickle where Var='PostHeader'").fetchone()[0] 
+            cookieVar  = pickle.loads(pickleVar)
+            recordDate = cookieVar[0]
+            cookieJar  = cookieVar[1]
+            recordDate = datetime.datetime.strptime(recordDate,'%Y-%m-%d').date()#日期函数可以进一步修改
             today      = datetime.date.today()
-            diff       = 20 - (today - recordtime).days
+            diff       = 20 - (today - recordDate).days
             if diff > 0:
-                print u'使用储存于' + varList[0] + u'的记录进行登陆。'
-                self.cookieJarInMemory.set_cookie(Cookie.SimpleCookie().load(varList[1]))#载入cookie
+                print u'使用储存于' + str(recordDate) + u'的记录进行登陆。'
+                self.loadCookJar(cookieJar)
+                print self.cookieJarInMemory
                 return True
         return False
 

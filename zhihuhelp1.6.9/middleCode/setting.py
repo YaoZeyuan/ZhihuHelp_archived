@@ -59,7 +59,7 @@ class Setting():
         if not config.has_section('ZhihuHelp'): 
             config.add_section('ZhihuHelp') 
         for key in self.settingList:
-            if key in self.setting:
+            if key in setting:
                 config.set('ZhihuHelp', key, setting[key])
         config.write(open('setting.ini', 'w'))
         return
