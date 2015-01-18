@@ -38,8 +38,8 @@ class Parse(object):
         
         self.regDict['answerInfo']      = r'(?<=class="zm-meta-panel").*?(?=<a href="#" name="report" class="meta-item zu-autohide">)'
         self.regTipDict['answerInfo']   = r'提取答案信息'
-        self.regDict['noRecordFlag']     = r''
-        self.regTipDict['noRecordFlag']  = r'检查是否禁止转载'
+        self.regDict['noRecordFlag']    = r''
+        self.regTipDict['noRecordFlag'] = r'检查是否禁止转载'
         self.regDict['questionID']      = r'(?<= target="_blank" href="/question/)\d*' 
         self.regTipDict['questionID']   = u'提取问题ID'
         self.regDict['answerID']        = r'(?<= target="_blank" href="/question/\d{8}/answer/)\d*'

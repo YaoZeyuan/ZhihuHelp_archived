@@ -28,9 +28,13 @@ class ZhihuHelp(object):
         login = Login(self.conn)
         #login.login()
         login.setCookie()
-        self.setting = Setting()
-        self.maxThread  = self.setting.guideOfMaxThread()
-        self.picQuality = self.setting.guideOfPicQuality()
+        self.setting   = Setting()
+        self.maxThread = 20
+        print u'测试阶段，最大线程数自动定为20，正式发布时请删除'
+        #self.setting.guideOfMaxThread()
+        self.picQuality = 1
+        #self.setting.guideOfPicQuality()
+        print u'测试阶段，图片质量自动定为1，正式发布时请删除'
         readList = open('./ReadList.txt', 'r')
         for line in readList:
             targetList = []
@@ -40,6 +44,10 @@ class ZhihuHelp(object):
                     continue
                 urlInfo['filter'] = self.manager(urlInfo)
                 targetList.append(urlInfo)
+                printDict(urlInfo)
+                raw_input()
+            print targetList
+            raw_input()
             epub = EpubBuilder(targetList)
             epub.makeEpub()
         return
@@ -98,7 +106,7 @@ class ZhihuHelp(object):
         if kind == 'answer':
             print u'啊哦，这个功能作者还没写←_←，敬请期待！'
         if kind == 'question':
-            worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl=urlInfo['baseUrl'])
+            worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
             worker.boss()
             return questionFilter 
         if kind == 'author':
@@ -173,11 +181,11 @@ class EpubData(object):
         
         sqlVarList = []
         
-        sqlQuestionFilter['minAgree']        = 'answerAgreeCount > %s'
-        sqlQuestionFilter['maxAgree']        = 'answerAgreeCount < %s'
-        sqlQuestionFilter['minDate']         = 'updateDate > %s'
-        sqlQuestionFilter['maxDate']         = 'updateDate < %s'
-        sqlQuestionFilter['noRecord']        = 'noRecordFlag == %s'
+        sqlQuestionFilter['minAgree'] = 'answerAgreeCount > %s'
+        sqlQuestionFilter['maxAgree'] = 'answerAgreeCount < %s'
+        sqlQuestionFilter['minDate']  = 'updateDate > %s'
+        sqlQuestionFilter['maxDate']  = 'updateDate < %s'
+        sqlQuestionFilter['noRecord'] = 'noRecordFlag == %s'
         
         for key in self.urlInfo['filter']:
             self.answerQuery += ' and ' + sqlQuestionFilter[key]
@@ -187,7 +195,7 @@ class EpubData(object):
         return 
     
     def formatAnswerDict(self, allAnswer):
-        itemList  = ['authorID', 'authorSign', 'authorLogo', 'authorName', 'answerAgreeCount',  'answerContent',  'questionID',  'answerID',  'commitDate',  'updateDate',  'answerCommentCount',  'noRecordFlag',  'answerHref']
+        itemList = ['authorID', 'authorSign', 'authorLogo', 'authorName', 'answerAgreeCount',  'answerContent',  'questionID',  'answerID',  'commitDate',  'updateDate',  'answerCommentCount',  'noRecordFlag',  'answerHref']
         self.answerDict = {}
         for line in range(allAnswer):
             self.answerDict[line] = {}

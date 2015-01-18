@@ -4,6 +4,9 @@ import  urllib#编码请求字串，用于处理验证码
 import  socket#用于捕获超时错误
 import  zlib
 
+import  cookielib
+import  time
+
 def decodeGZip(rawPageData):
     u"""返回处理后的正常网页内容
  
@@ -70,3 +73,24 @@ def getHttpContent(url='', extraHeader={} , data=None, timeout=5):
     else:
         return decodeGZip(rawPageData)
     return ''
+
+def makeCookie(name, value, domain):
+    cookie = cookielib.Cookie(
+            version=0,
+            name=name,
+            value=value,
+            port=None,
+            port_specified=False,
+            domain=domain,
+            domain_specified=True,
+            domain_initial_dot=False,
+            path="/",
+            path_specified=True,
+            secure=False,
+            expires=time.time() + 300000000,
+            discard=False,
+            comment=None,
+            comment_url=None,
+            rest={}
+            )
+    return cookie

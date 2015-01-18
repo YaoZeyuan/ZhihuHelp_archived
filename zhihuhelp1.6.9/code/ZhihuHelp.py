@@ -538,8 +538,8 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
         for cookie  in  cookieJarInMemory:
             if  cookie.name ==  'q_c1':
                 qc_1    =   'q_c1=' + cookie.value
-            if  cookie.name ==  'q_c0':
-                qc_0    =   'q_c0=' + cookie.value
+            if  cookie.name ==  'z_c0':
+                qc_0    =   'z_c0=' + cookie.value
         header['Cookie']        =  qc_1 +';'  +xsrf+'; l_c=1'+';'+qc_0#生成cookie
         print   u'登陆成功！'
         print   u'登陆账号:',UserID
