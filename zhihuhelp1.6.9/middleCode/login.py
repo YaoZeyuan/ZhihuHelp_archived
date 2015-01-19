@@ -24,7 +24,6 @@ class Login(object):
         self.setting           = Setting()
         self.conn              = conn
         self.cursor            = conn.cursor()
-        self.stringFile        = StringIO.StringIO()
         self.cookieJarInMemory = cookielib.LWPCookieJar()
         self.opener            = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJarInMemory))
         urllib2.install_opener(self.opener)
@@ -85,7 +84,7 @@ class Login(object):
             else:
                 print u'跳过保存环节，进入下一流程'
             cookieJar = self.saveCookieJar()
-            newHeader = (str(datetime.date.fromtimestamp(time.time()).strftime('%Y-%m-%d')), cookieJar)#time和datetime模块需要导入
+            newHeader = (datetime.date.today().isoformat(), cookieJar)#datetime模块需要导入
             data = {}
             data['Var']    = 'PostHeader'
             data['Pickle'] = pickle.dumps(newHeader)

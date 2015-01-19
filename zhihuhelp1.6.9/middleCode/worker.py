@@ -86,9 +86,7 @@ class PageWorker(object):
                 'Accept-Language':    'zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3',
                 #'Accept-Encoding':    'gzip, deflate',mao si bu neng yong
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Cookie': cookieStr
         }
-
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJarInMemory))
         urllib2.install_opener(self.opener)
         return 
