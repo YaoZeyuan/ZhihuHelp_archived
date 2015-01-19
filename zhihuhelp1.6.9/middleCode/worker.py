@@ -23,16 +23,16 @@ class PageWorker(object):
         self.maxThread    = maxThread
         self.url          = targetUrl
         self.suffix       = ''
-        self.setCookie()
-        self.workSchedule = {}
-        self.setWorkSchedule()
         self.addProperty()
+        self.setCookie()
+        self.setWorkSchedule()
         
     def getMaxPage(self, content):
+        u"Don't finding unicode char in normal string"
         try:
-            pos      = content.index(u'">下一页</a></span>')
-            rightPos = content.rfind(u"</a>",0,pos)
-            leftPos  = content.rfind(u">",0,rightPos)
+            pos      = content.index('">下一页</a></span>')
+            rightPos = content.rfind("</a>", 0, pos)
+            leftPos  = content.rfind(">", 0, rightPos)
             maxPage  = int(content[leftPos+1:rightPos])
             print u"答案列表共计{}页".format(maxPage)
             return maxPage
@@ -42,15 +42,12 @@ class PageWorker(object):
     
     def setWorkSchedule(self):
         self.workSchedule = {}
-        content      = self.getHttpContent('http://www.zhihu.com/question/27622564', extraHeader = self.extraHeader)
-        print 'hellp'
-        print content
-        exit()
-        content      = self.getHttpContent(self.url + self.suffix + str(self.maxPage))
+        detectUrl = self.url + self.suffix + str(self.maxPage)
+        content      = self.getHttpContent(detectUrl)
         self.maxPage = self.getMaxPage(content)
         for i in range(self.maxPage):
-            self.workSchedule[i] = self.url + self.suffix + str(i)
-    
+            self.workSchedule[i] = self.url + self.suffix + str(i + 1)
+
     def addProperty(self):
         return
     
@@ -111,6 +108,10 @@ class PageWorker(object):
             request = urllib2.Request(url = url)
         else:
             request = urllib2.Request(url = url, data = data)
+        #add default extra header
+        for headerKey in self.extraHeader.keys():
+            request.add_header(headerKey, self.extraHeader[headerKey])
+        #add userDefined header
         for headerKey in extraHeader.keys():
             request.add_header(headerKey, extraHeader[headerKey])
         try: 
