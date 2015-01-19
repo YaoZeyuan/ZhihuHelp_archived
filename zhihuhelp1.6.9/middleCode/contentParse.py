@@ -38,7 +38,7 @@ class Parse(object):
         
         self.regDict['answerInfo']      = r'(?<=class="zm-meta-panel").*?(?=<a href="#" name="report" class="meta-item zu-autohide">)'
         self.regTipDict['answerInfo']   = r'提取答案信息'
-        self.regDict['noRecordFlag']    = r''
+        self.regDict['noRecordFlag']    = r'<span class="copyright zu-autohide"><span class="zg-bull">'
         self.regTipDict['noRecordFlag'] = r'检查是否禁止转载'
         self.regDict['questionID']      = r'(?<= target="_blank" href="/question/)\d*' 
         self.regTipDict['questionID']   = u'提取问题ID'
@@ -46,7 +46,7 @@ class Parse(object):
         self.regTipDict['answerID']     = u'提取答案ID'
         self.regDict['updateDate']      = r'(?<=>编辑于 )[-\d]*'#没有考虑到只显示时间和昨天今天的问题
         self.regTipDict['updateDate']   = u'提取最后更新日期'
-        self.regDict['commitDate']      = r'(?<=s$t$发布于 )[-\d]*'#没有考虑到只显示时间和昨天今天的问题
+        self.regDict['commitDate']      = r'(?<=发布于 )[-\d]*'#没有考虑到只显示时间和昨天今天的问题
         self.regTipDict['commitDate']   = u'提取回答日期'
         
         
@@ -129,10 +129,10 @@ class Parse(object):
     def matchContent(self, key, content):
         targetObject = re.search(self.regDict[key], content)
         if targetObject == None:
-            print self.regTipDict[key] + u'失败'
+            #print self.regTipDict[key] + u'失败'
             return ''
         else:
-            print self.regTipDict[key] + u'成功'
+            #print self.regTipDict[key] + u'成功'
             return targetObject.group(0)
     
     def getAnswerAuthorInfoDict(self, content):
@@ -159,20 +159,23 @@ class Parse(object):
             answerDict[key] = authorInfo[key]
         answerDict['answerAgreeCount'] = self.matchContent('answerAgreeCount', content)
         answerDict['answerContent']    = self.matchContent('answerContent', content)
-        
         answerInfo = self.matchContent('answerInfo', content)
         for key in ['questionID', 'answerID', 'answerCommentCount', 'updateDate', 'commitDate', 'noRecordFlag']:
             answerDict[key] = self.matchContent(key, answerInfo)
         if answerDict['answerCommentCount'] == '':
             answerDict['answerCommentCount'] = 0
-        answerDict['answerHref']   = 'http://www.zhihu.com/question/{0}/answer/{1}'.format(answerDict['questionID'], answerDict['answerID']) 
+        if answerDict['noRecordFlag'] == '':
+            answerDict['noRecordFlag'] = False
+        else:
+            answerDict['noRecordFlag'] = True
+        answerDict['answerHref']     = 'http://www.zhihu.com/question/{0}/answer/{1}'.format(answerDict['questionID'], answerDict['answerID']) 
         answerDict['answerContent']  = HTMLParser.HTMLParser().unescape(answerDict['answerContent']).encode("utf-8")#对网页内容解码，可以进一步优化
         
         if answerDict['updateDate'] == '':
             answerDict['updateDate'] = answerDict['commitDate']
         for key in ['updateDate', 'commitDate']:#此处的时间格式转换还可以进一步改进
             if len(answerDict[key]) != 10:        
-                1
+                pass
                 #if  len(answerDict[key])==5:#这里有问题，一个汉字的长度用len算出来等于3，这么写会导致判断失误，要改掉
                 #    answerDict[key] = time.strftime(u'%Y-%m-%d',time.localtime(time.time()))#今天
                 #else:
@@ -189,8 +192,8 @@ class ParseQuestion(Parse):
     def addRegex(self):
         #实例化Regex
         #为Regex添加合适的项目
-        self.regDict['questionID']     = r'(?<=<a href="/question/)\d{8}(?=/followers"><strong>)' 
-        self.regTipDict['questionID']  = u'提取问题ID'
+        self.regDict['questionIDinQuestionDesc']     = r'(?<=<a href="/question/)\d{8}(?=/followers"><strong>)' 
+        self.regTipDict['questionIDinQuestionDesc']  = u'提取问题ID'
         self.regDict['questionFollowCount']     = r'(?<=<a href="/question/\d{8}/followers"><strong>).*(?=</strong></a>人关注该问题)' 
         self.regTipDict['questionFollowCount']  = u'提取问题关注人数'
         self.regDict['questionCommentCount']    = r'(?<=<i class="z-icon-comment"></i>).*?(?= 条评论</a>)'#该模式对答案中的评论也有效，需要小心处理
@@ -214,10 +217,10 @@ class ParseQuestion(Parse):
         contentLength = len(contentList)
         questionInfoDict = {}#仅供测试临时使用，测试完成后需删除之
         if contentList == 0:
-            #questionInfoDict = self.getQusetionInfoDict(contentList[0], contentList[0])
+            questionInfoDict = self.getQusetionInfoDict(contentList[0], contentList[0])
             answerDictList   = [{}]
         else:
-            #questionInfoDict = self.getQusetionInfoDict(contentList[0], contentList[contentLength - 1])
+            questionInfoDict = self.getQusetionInfoDict(contentList[0], contentList[contentLength - 1])
             answerDictList   = []
             for i in range(1, contentLength):
                 answerDictList.append(self.getAnswerDict(contentList[i]))
@@ -227,7 +230,7 @@ class ParseQuestion(Parse):
         questionInfoDict = {}
         for key in ['questionCommentCount', 'questionTitle', 'questionDesc', 'questionAnswerCount']:
             questionInfoDict[key] = self.matchContent(key, titleContent)   
-        for key in ['questionID', 'questionFollowCount', 'questionViewCount']:
+        for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:
             questionInfoDict[key] = self.matchContent(key, tailContent)   
         questionInfoDict['questionDesc']  = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc']).encode("utf-8")#对网页内容解码，可以进一步优化
         return questionInfoDict

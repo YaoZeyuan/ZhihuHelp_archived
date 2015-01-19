@@ -41,7 +41,14 @@ def save2DB(cursor, data={}, primaryKey='', tableName=''):
         *   返回
              *   无
      """
-    rowCount = cursor.execute('select count(%(primaryKey)s) from %(tableName)s where %(primaryKey)s = ?' % {'primaryKey' : primaryKey, 'tableName' : tableName}, (data[primaryKey], )).fetchone()[0]
+    try:
+        rowCount = cursor.execute('select count(%(primaryKey)s) from %(tableName)s where %(primaryKey)s = ?' % {'primaryKey' : primaryKey, 'tableName' : tableName}, (data[primaryKey], )).fetchone()[0]
+    except Exception as error:
+        print u'SQL runtime error'
+        print error
+        print u'SQL = ' + 'select count(%(primaryKey)s) from %(tableName)s where %(primaryKey)s = ?' % {'primaryKey' : primaryKey, 'tableName' : tableName} 
+        print u'primaryKey = ' + str(data[primaryKey])
+        exit()
     insertSql   = 'insert into '+ tableName +' ('
     updateSql   = 'update '+ tableName +' set '
     placeholder = ') values ('
@@ -62,4 +69,4 @@ def save2DB(cursor, data={}, primaryKey='', tableName=''):
         print 'sql = ' + updateSql[:-1] + ' where ' + primaryKey + '= ?'
         print varTuple
         cursor.execute(updateSql[:-1] + ' where ' + primaryKey + '= ?', tuple(varTuple))
-
+    print 'sql execute complete'

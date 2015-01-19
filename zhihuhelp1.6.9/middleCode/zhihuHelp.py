@@ -26,8 +26,10 @@ class ZhihuHelp(object):
     
     def helperStart(self):
         login = Login(self.conn)
-        #login.login()
-        login.setCookie()
+        if 1 == 2:
+            login.login()
+        else:
+            login.setCookie()
         self.setting   = Setting()
         self.maxThread = 20
         print u'测试阶段，最大线程数自动定为20，正式发布时请删除'
@@ -45,11 +47,13 @@ class ZhihuHelp(object):
                 urlInfo['filter'] = self.manager(urlInfo)
                 targetList.append(urlInfo)
                 printDict(urlInfo)
-                raw_input()
-            print targetList
-            raw_input()
-            epub = EpubBuilder(targetList)
-            epub.makeEpub()
+                #raw_input()
+            #self.conn.commit()
+            #print targetList
+            print u'test over'
+            #raw_input()
+            #epub = EpubBuilder(targetList)
+            #epub.makeEpub()
         return
 
     def getUrlInfo(self, rawUrl):

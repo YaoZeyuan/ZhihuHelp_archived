@@ -83,12 +83,13 @@ class Login(object):
                 print u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
             else:
                 print u'跳过保存环节，进入下一流程'
-            cookieJar = self.saveCookieJar()
-            newHeader = (datetime.date.today().isoformat(), cookieJar)#datetime模块需要导入
+            cookieJar2String = self.saveCookieJar()
             data = {}
-            data['Var']    = 'PostHeader'
-            data['Pickle'] = pickle.dumps(newHeader)
-            save2DB(cursor = self.cursor, data = data, primaryKey = 'Var', tableName = 'VarPickle')
+            data['account']    = account
+            data['password']   = password
+            data['recordDate'] = datetime.date.today().isoformat()
+            data['cookieStr']  = cookieJar2String
+            save2DB(cursor = self.cursor, data = data, primaryKey = 'account', tableName = 'LoginRecord')
             self.conn.commit()
             return True
         else:
@@ -139,20 +140,33 @@ class Login(object):
         return 
 
     #这个函数暂时没有用到
-    def setCookie(self):
-        rowcount = self.cursor.execute('select count(Pickle) from VarPickle where Var = "PostHeader"').fetchone()[0]    
-        if rowcount != 0:
-            pickleVar  = self.cursor.execute("select Pickle from VarPickle where Var='PostHeader'").fetchone()[0] 
-            cookieVar  = pickle.loads(pickleVar)
-            recordDate = cookieVar[0]
-            cookieJar  = cookieVar[1]
-            recordDate = datetime.datetime.strptime(recordDate,'%Y-%m-%d').date()#日期函数可以进一步修改
-            today      = datetime.date.today()
-            diff       = 20 - (today - recordDate).days
-            if diff > 0:
-                print u'使用储存于' + str(recordDate) + u'的记录进行登陆。'
-                self.loadCookJar(cookieJar)
-                return True
+    def setCookie(self, account = ''):
+        if account == '':
+            rowcount = self.cursor.execute('select count(cookieStr) from LoginRecord').fetchone()[0]    
+            if rowcount != 0:
+                Var  = self.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc").fetchone()
+                cookieStr  = Var[0]
+                recordDate = Var[1]
+                recordDate = datetime.datetime.strptime(recordDate,'%Y-%m-%d').date()#日期函数可以进一步修改
+                today      = datetime.date.today()
+                diff       = 20 - (today - recordDate).days
+                if diff > 0:
+                    print u'使用储存于' + str(recordDate) + u'的记录进行登陆。'
+                    self.loadCookJar(cookieStr)
+                    return True
+        else:
+            rowcount = self.cursor.execute('select count(cookieStr) from LoginRecord where account = `{}`'.format(account)).fetchone()[0]    
+            if rowcount != 0:
+                Var  = self.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc where account = `{}`".format(account)).fetchone()
+                cookieStr  = Var[0]
+                recordDate = Var[1]
+                recordDate = datetime.datetime.strptime(recordDate,'%Y-%m-%d').date()#日期函数可以进一步修改
+                today      = datetime.date.today()
+                diff       = 20 - (today - recordDate).days
+                if diff > 0:
+                    print u'使用储存于' + str(recordDate) + u'的记录进行登陆。'
+                    self.loadCookJar(cookieStr)
+                    return True
         return False
 
     def getCookieHeader(self):

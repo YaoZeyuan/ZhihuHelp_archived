@@ -22,35 +22,41 @@ class Init(object):
             cursor                 = self.conn.cursor()
             #没有数据库就新建一个出来
             cursor.execute("""create table VarPickle(Var varchar(255), Pickle varchar(50000), primary key (Var))""")
+            cursor.execute("""create table LoginRecord(
+                    account     varchar(255)    default '',
+                    password    varchar(255)    default '', 
+                    recordDate  date            default '2000-01-01', 
+                    cookieStr   varchar(50000)  default '', 
+                    primary key (account))""")
             cursor.execute("""create table AnswerContent( 
-                            authorID            varchar(255)    not Null, 
-                            authorSign          varchar(2000)   not Null,
-                            authorLogo          varchar(255)    not Null,
-                            authorName          varchar(255)    not Null,
+                            authorID            varchar(255)    not Null    default '', 
+                            authorSign          varchar(2000)   not Null    default '',
+                            authorLogo          varchar(255)    not Null    default '',
+                            authorName          varchar(255)    not Null    default '',
         
-                            answerAgreeCount    int(8)          not Null, 
-                            answerContent       longtext        not Null, 
-                            questionID          int(8)          not Null,
-                            answerID            int(8)          not Null,
-                            commitDate          date            not Null,
-                            updateDate          date            not Null,
-                            answerCommentCount  int(8)          not Null,
-                            noRecordFlag        int(1)          not Null,
+                            answerAgreeCount    int(8)          not Null    default 0, 
+                            answerContent       longtext        not Null    default '', 
+                            questionID          int(8)          not Null    default 0,
+                            answerID            int(8)          not Null    default 0,
+                            commitDate          date            not Null    default '2000-01-01',
+                            updateDate          date            not Null    default '2000-01-01',
+                            answerCommentCount  int(8)          not Null    default 0,
+                            noRecordFlag        int(1)          not Null    default 0,
                             
-                            answerHref          varchar(255)    not Null,
+                            answerHref          varchar(255)    not Null    default '',
                             primary key(answerHref))""")
             
             cursor.execute("""create table QuestionInfo( 
-                            questionID           int(8)         not Null,
-                            questionCommentCount int(8)         not Null, 
-                            questionFollowCount  int(8)         not Null,
-                            questionAnswerCount  int(8)         not Null,
-                            questionViewCount    int(8)         not Null,
-                            questionTitle        varchar(200)   not Null, 
-                            questionDesc         longtext       not Null, 
-                            questionCollapsedAnswerCount int(8) not Null,
+                            questionIDinQuestionDesc     int(8)       not Null    default 0,
+                            questionCommentCount         int(8)       not Null    default 0, 
+                            questionFollowCount          int(8)       not Null    default 0,
+                            questionAnswerCount          int(8)       not Null    default 0,
+                            questionViewCount            int(8)       not Null    default 0,
+                            questionTitle                varchar(200) not Null    default '', 
+                            questionDesc                 longtext     not Null    default '', 
+                            questionCollapsedAnswerCount int(8)       not Null    default 0,
 
-                            primary key(questionID))""")
+                            primary key(questionIDinQuestionDesc))""")
             
             u'''
             cursor.execute("""
@@ -61,7 +67,7 @@ class Init(object):
             cursor.execute("""
                             CREATE TABLE IDInfo (
                             iDLogoAdress        varchar(255)    default "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
-                            ID                  varchar(255)    not Null,
+                            ID                  varchar(255)    not Null default 'null',
                             sign                varchar(255)    default '',
                             name                varchar(255)    default '',
                             ask                 varchar(255)    default '',
