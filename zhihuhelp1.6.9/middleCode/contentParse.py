@@ -44,9 +44,9 @@ class Parse(object):
         self.regTipDict['questionID']   = u'提取问题ID'
         self.regDict['answerID']        = r'(?<= target="_blank" href="/question/\d{8}/answer/)\d*'
         self.regTipDict['answerID']     = u'提取答案ID'
-        self.regDict['updateDate']      = r'(?<=>编辑于 )[-\d]*'#没有考虑到只显示时间和昨天今天的问题
+        self.regDict['updateDate']      = r'(?<=>编辑于 )[-:\d]*'#没有考虑到只显示时间和昨天今天的问题
         self.regTipDict['updateDate']   = u'提取最后更新日期'
-        self.regDict['commitDate']      = r'(?<=发布于 )[-\d]*'#没有考虑到只显示时间和昨天今天的问题
+        self.regDict['commitDate']      = r'(?<=发布于 )[-:\d]*'#没有考虑到只显示时间和昨天今天的问题
         self.regTipDict['commitDate']   = u'提取回答日期'
         
         
@@ -175,12 +175,21 @@ class Parse(object):
             answerDict['updateDate'] = answerDict['commitDate']
         for key in ['updateDate', 'commitDate']:#此处的时间格式转换还可以进一步改进
             if len(answerDict[key]) != 10:        
-                answerDict[key] = datetime.date.today().isoformat()
+                if len(answerDict[key]) == 0:
+                    answerDict[key] = self.getYesterday.isoformat()
+                else:
+                    answerDict[key] = datetime.date.today().isoformat()
         #print 'content = '
         #print content
         #print 'answerDict = '
         #printDict(answerDict)
         return answerDict
+    
+    def getYesterday(self):
+        today=datetime.date.today() 
+        oneday=datetime.timedelta(days=1) 
+        yesterday=today-oneday  
+        return yesterday
 
 class ParseQuestion(Parse):
     u'''
