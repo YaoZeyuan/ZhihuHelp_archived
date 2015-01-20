@@ -46,7 +46,6 @@ class ZhihuHelp(object):
                     continue
                 urlInfo['filter'] = self.manager(urlInfo)
                 targetList.append(urlInfo)
-                printDict(urlInfo)
                 #raw_input()
             #self.conn.commit()
             #print targetList

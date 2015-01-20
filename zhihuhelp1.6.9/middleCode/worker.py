@@ -61,9 +61,13 @@ class PageWorker(object):
         os.remove(fileName)
         return 
 
-    def setCookie(self):
+    def setCookie(self, account = ''):
         self.cookieJarInMemory = cookielib.LWPCookieJar()
-        Var       = self.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc").fetchone()
+        if account == '':
+            Var       = self.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc").fetchone()
+        else:
+            Var       = self.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc where account = `{}`".format(account)).fetchone()
+
         cookieStr = Var[0]
         self.loadCookJar(cookieStr)
         
@@ -159,7 +163,7 @@ class PageWorker(object):
 
 class QuestionWorker(PageWorker):
     def boss(self):
-        self.complate = []
+        self.complete = set()
         maxTry = self.maxTry
         while maxTry > 0 and len(self.workSchedule) > 0:
             self.leader()
@@ -170,34 +174,30 @@ class QuestionWorker(PageWorker):
         threadPool = []
         self.questionInfoDictList = []
         self.answerDictList       = []
-        print 'leader beginning!'
-        print 'workSchedule = '
-        printDict(self.workSchedule)
         for key in self.workSchedule:
             threadPool.append(threading.Thread(target=self.worker, kwargs={'workNo':key}))
-            print 'here is test, remember to remove it and key = ' + str(key)
         threadsCount = len(threadPool)
-        while threadsCount > 0 or threading.activeCount() > 1:
-            print 'threading.activeCount() = {}'.format(threading.activeCount())
-            bufCount = self.maxThread - threading.activeCount()
-            if bufCount > 0 and threadsCount > 0:
-                while bufCount > 0 and threadsCount > 0:
+        threadLiving = 2
+        while (threadsCount > 0 or threadLiving > 1):
+            print 'threading.activeCount() = {}'.format(threadLiving)
+            bufLength = self.maxThread - threadLiving
+            if bufLength > 0 and threadsCount > 0:
+                while bufLength > 0 and threadsCount > 0:
                     threadPool[threadsCount - 1].start()
-                    bufCount    -= 1
+                    bufLength -= 1
                     threadsCount -= 1
                     time.sleep(0.1)
             else:
-                print u'正在读取答案页面，还有{}张页面等待读取'.format(threadsCount)
+                print u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule))
                 time.sleep(1)
-        print self.questionInfoDictList
+            threadLiving = threading.activeCount()
         for questionInfoDict in self.questionInfoDictList:
-            printDict(questionInfoDict)
             save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
         for answerDict in self.answerDictList:
-            printDict(answerDict)
             save2DB(self.cursor, answerDict, 'answerHref', 'AnswerContent')
         self.conn.commit()
         print 'commit complete'
+        return
 
     def worker(self, workNo = 0):
         u"""
@@ -205,7 +205,7 @@ class QuestionWorker(PageWorker):
         重复的次数由self.maxTry指定
         这样可以给知乎服务器留出生成页面缓存的时间
         """
-        if workNo in self.complate:
+        if workNo in self.complete:
             return
         print 'this is an test rember to remove it workNo = {}'.format(workNo)
         content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
@@ -214,17 +214,15 @@ class QuestionWorker(PageWorker):
         parse = ParseQuestion(content)
         questionInfoDict, answerDictList = parse.getInfoDict()
         self.questionInfoDictList.append(questionInfoDict)
-        #save2DB(cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
         for answerDict in answerDictList:
             self.answerDictList.append(answerDict)
-            #save2DB(cursor, answerDict, 'answerHref', 'AnswerContent')
-        self.complate.append(workNo)
+        self.complete.add(workNo)
         return 
 
     def addProperty(self):
         self.maxPage   = 1
         self.suffix    = '?sort=created&page='
-        self.maxTry    = 2
+        self.maxTry    = 1
         self.waitFor   = 5
         return
 """

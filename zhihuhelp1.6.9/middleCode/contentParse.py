@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import HTMLParser #转换网页代码
-import time #简单处理时间
+import datetime#简单处理时间
 class Parse(object):
     def __init__(self, content):
         self.content = content.replace('\r', '').replace('\n', '')
@@ -165,9 +165,9 @@ class Parse(object):
         if answerDict['answerCommentCount'] == '':
             answerDict['answerCommentCount'] = 0
         if answerDict['noRecordFlag'] == '':
-            answerDict['noRecordFlag'] = False
+            answerDict['noRecordFlag'] = 0
         else:
-            answerDict['noRecordFlag'] = True
+            answerDict['noRecordFlag'] = 1
         answerDict['answerHref']     = 'http://www.zhihu.com/question/{0}/answer/{1}'.format(answerDict['questionID'], answerDict['answerID']) 
         answerDict['answerContent']  = HTMLParser.HTMLParser().unescape(answerDict['answerContent']).encode("utf-8")#对网页内容解码，可以进一步优化
         
@@ -175,12 +175,11 @@ class Parse(object):
             answerDict['updateDate'] = answerDict['commitDate']
         for key in ['updateDate', 'commitDate']:#此处的时间格式转换还可以进一步改进
             if len(answerDict[key]) != 10:        
-                pass
-                #if  len(answerDict[key])==5:#这里有问题，一个汉字的长度用len算出来等于3，这么写会导致判断失误，要改掉
-                #    answerDict[key] = time.strftime(u'%Y-%m-%d',time.localtime(time.time()))#今天
-                #else:
-                #    answerDict[key] = time.strftime(u'%Y-%m-%d',time.localtime(time.time()-86400))#昨天
-
+                answerDict[key] = datetime.date.today().isoformat()
+        #print 'content = '
+        #print content
+        #print 'answerDict = '
+        #printDict(answerDict)
         return answerDict
 
 class ParseQuestion(Parse):
