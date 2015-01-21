@@ -46,7 +46,8 @@ class ZhihuHelp(object):
                     continue
                 urlInfo['filter'] = self.manager(urlInfo)
                 targetList.append(urlInfo)
-                #raw_input()
+                printDict(urlInfo)
+                raw_input()
             #self.conn.commit()
             #print targetList
             print u'test over'
@@ -130,16 +131,18 @@ class ZhihuHelp(object):
         questionFilter = {}
         authorFilter   = {}
         #对答案的筛选
-        answerFilter['minAgree']        = 0
-        answerFilter['maxAgree']        = 100000
-        answerFilter['minLength']       = 100
-        answerFilter['maxLength']       = 100000
-        answerFilter['minAverageAgree'] = 10#平均每字赞同数
-        answerFilter['maxAverageAgree'] = 10#平均每字赞同数
-        answerFilter['minDate']         = '2010-10-01'
-        answerFilter['maxDate']         = '2099-12-12'
-        answerFilter['noRecord']        = '0'
-        answerFilter['imgSize']         = 1#图片质量，0:无图，1:普通，2:高清
+        answerFilter['minAgree']              = 0
+        answerFilter['maxAgree']              = 100000
+        answerFilter['minLength']             = 100
+        answerFilter['maxLength']             = 100000
+        answerFilter['minAverageAgree']       = 10#平均每字赞同数
+        answerFilter['maxAverageAgree']       = 10#平均每字赞同数
+        answerFilter['minDate']               = '2000-01-01'
+        answerFilter['maxDate']               = '2099-12-30'
+        answerFilter['noRecord']              = 0
+        answerFilter['imgSize']               = 1#图片质量，0:无图，1:普通，2:高清
+        answerFilter['minAnswerCommentCount'] = 0
+        answerFilter['maxAnswerCommentCount'] = 1000000
         #对问题的筛选
         questionFilter['minComment']              = 0 
         questionFilter['maxComment']              = 1000000 

@@ -176,7 +176,7 @@ class Parse(object):
         for key in ['updateDate', 'commitDate']:#此处的时间格式转换还可以进一步改进
             if len(answerDict[key]) != 10:        
                 if len(answerDict[key]) == 0:
-                    answerDict[key] = self.getYesterday.isoformat()
+                    answerDict[key] = self.getYesterday().isoformat()
                 else:
                     answerDict[key] = datetime.date.today().isoformat()
         #print 'content = '
