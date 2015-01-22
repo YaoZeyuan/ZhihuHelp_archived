@@ -8,11 +8,12 @@ import json
 import re
 import os
 
-from httpLib import *
-from helper  import *
-from worker  import *
-from init    import *
-from login   import *
+from httpLib      import *
+from helper       import *
+from worker       import *
+from init         import *
+from login        import *
+from simpleFilter import *
 
 class ZhihuHelp(object):
     def __init__(self):
@@ -46,8 +47,11 @@ class ZhihuHelp(object):
                     continue
                 urlInfo['filter'] = self.manager(urlInfo)
                 targetList.append(urlInfo)
-                printDict(urlInfo)
-                raw_input()
+            printDict(self.answerFilter.getQuestionInfoDict())
+            #answerList = self.answerFilter.getAnswerContentDictList()
+            #for answerDict in answerList:
+            #    printDict(answerDict)
+            #    raw_input('==========')
             #self.conn.commit()
             #print targetList
             print u'test over'
@@ -105,13 +109,12 @@ class ZhihuHelp(object):
 
     def manager(self, urlInfo = {}):
         kind = urlInfo['kind']
-        questionFilter, authorFilter = self.setFilter()
-
         if kind == 'answer':
             print u'啊哦，这个功能作者还没写←_←，敬请期待！'
         if kind == 'question':
-            worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
-            worker.boss()
+            #worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
+            #worker.boss()
+            self.answerFilter = questionFilter(self.cursor, urlInfo)
             return questionFilter 
         if kind == 'author':
             print u'啊哦，这个功能作者还没写←_←，敬请待！'

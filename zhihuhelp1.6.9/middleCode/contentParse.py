@@ -162,6 +162,8 @@ class Parse(object):
         answerInfo = self.matchContent('answerInfo', content)
         for key in ['questionID', 'answerID', 'answerCommentCount', 'updateDate', 'commitDate', 'noRecordFlag']:
             answerDict[key] = self.matchContent(key, answerInfo)
+        if answerDict['answerAgreeCount'] == '':
+            answerDict['answerAgreeCount'] = 0
         if answerDict['answerCommentCount'] == '':
             answerDict['answerCommentCount'] = 0
         if answerDict['noRecordFlag'] == '':
