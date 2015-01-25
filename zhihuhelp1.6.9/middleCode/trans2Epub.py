@@ -1,27 +1,7 @@
 # -*- coding: utf-8 -*-
 
-class AnswerFilter(object):
-    def __init__(self,conn):
-        self.conn = conn
-        self.sql  = u''
-        self.queryDict = {}
-        return
-    
-    def printSql(self):
-        sql = u'select * from '
-        return
-
-    def AnswerFilter(self, answerIDList = []):
-        answerFilter = u"answerID in '"
-        for answerID in answerIDList:
-            answerFilter += '%s, '%answerID
-        self.queryDict['answerFilter'] = answerFilter.lstrip(', ') + "'"
-        return 
-
-    def AuthorFilter(self, authorIDList = []):
-        authorFilter = u "authorID in '"
-        for authorID in authorIDList:
-            authorFilter += '%s, '%authorID
-        self.queryDict['authorFilter'] = authorFilter.lstrip(', ') + "'"
-        return
-    
+class AnswerFactory():
+    u'用于将形似Question-Answer结构的电子书转换为html文件，储存于指定目录下，然后调用Epub模块进行生成'
+    def __init__(self, resultDict = {}):
+        self.baseDir = '.'
+        self.filePath = {}
