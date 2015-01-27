@@ -14,6 +14,7 @@ from worker       import *
 from init         import *
 from login        import *
 from simpleFilter import *
+from epubBuilder.epubBuilder import * 
 
 class ZhihuHelp(object):
     def __init__(self):
@@ -21,8 +22,9 @@ class ZhihuHelp(object):
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
         init  = Init()
-        self.conn   = init.getConn()
-        self.cursor = self.conn.cursor() 
+        self.conn        = init.getConn()
+        self.cursor      = self.conn.cursor() 
+        self.epubContent = []
         return 
     
     def helperStart(self):
@@ -47,7 +49,9 @@ class ZhihuHelp(object):
                     continue
                 urlInfo['filter'] = self.manager(urlInfo)
                 targetList.append(urlInfo)
-            printDict(self.answerFilter.getQuestionInfoDict())
+                self.epubContent.append(self.answerFilter.getResult())
+            epubBuilder(self.epubContent)
+            self.epubContent = []
             #answerList = self.answerFilter.getAnswerContentDictList()
             #for answerDict in answerList:
             #    printDict(answerDict)
@@ -112,8 +116,8 @@ class ZhihuHelp(object):
         if kind == 'answer':
             print u'啊哦，这个功能作者还没写←_←，敬请期待！'
         if kind == 'question':
-            #worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
-            #worker.boss()
+            worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
+            worker.boss()
             self.answerFilter = questionFilter(self.cursor, urlInfo)
             return questionFilter 
         if kind == 'author':

@@ -9,8 +9,17 @@ class baseFilter():
     '''
     def __init__(self, cursor = None, kind = {}):
         return
+    def getChapterFrontPage(self):
+        infoDict = {
+                'Title'    : '',
+                'Author'   : '',
+                'Desc'     : '',
+                'GuideImg' : '',
+                }
+        return infoDict
 
 class questionFilter(baseFilter):
+    u'每运行一次filter就相当于生成了一本电子书，所以在这个里面也应当为之加上封面，最后输出时大不了再跳过封面输出就好了，电子书应当每个章节都有自己的封面，同时也要有一个总封面'
     def __init__(self, cursor = None, urlInfo = {}):
         self.cursor = cursor
         self.questionID = urlInfo['questionID']
@@ -81,8 +90,14 @@ class questionFilter(baseFilter):
 
     def getResult(self):
         self.result = {}
-        self.result[self.questionInfo['questionID']] = {
-                'question'   : self.questionInfo,
-                'answerList' : self.answerList.sort(cmp=lambda x,y:cmp(x['answerAgreeCount'],y['answerAgreeCount']))
+        self.result = {
+                'questionInfo' : self.questionInfo,
+                'answerList'   : self.answerList.sort(cmp=lambda x,y:cmp(x['answerAgreeCount'],y['answerAgreeCount']))
                 }
+        agreeCount = 0
+        for answerDict in self.result['answerList']:
+            agreeCount += answerDict['answerAgreeCount']
+        self.result['agreeCount']  = agreeCount
+        self.result['answerCount'] = len(self.answerList)
+        self.result['FrontDict']   = self.getChapterFrontPage()
         return self.result
