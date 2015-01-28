@@ -50,7 +50,7 @@ class ZhihuHelp(object):
                 urlInfo['filter'] = self.manager(urlInfo)
                 targetList.append(urlInfo)
                 self.epubContent.append(self.answerFilter.getResult())
-            epubBuilder(self.epubContent)
+            Zhihu2Epub(self.epubContent)
             self.epubContent = []
             #answerList = self.answerFilter.getAnswerContentDictList()
             #for answerDict in answerList:

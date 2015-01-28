@@ -73,11 +73,11 @@ class Book():
         self.indentifier = 1 #用于生成递增ID
         self.index       = ''#用于生成目录 
 
-        mkdir('./' + (str)bookTitle)
-        chdir('./' + (str)bookTitle)
+        mkdir('./' + str(bookTitle))
+        chdir('./' + str(bookTitle))
         self.__writeMimetype()
-        self.addTitle(self, bookTitle):
-        self.addIdentifier(self, bookID):
+        self.addTitle(bookTitle):
+        self.addIdentifier(bookID):
 
         mkdir('./META-INF')
         chdir('./META-INF')
