@@ -14,12 +14,12 @@ def baseTemplate(dataDict = {}):
             <html lang="zh-CN">
                 <head>
                     <meta charset="utf-8" />
-                    <title>{PageTitle}</title>
+                    <title>%(PageTitle)s</title>
                 </head>
                 <body>
-                {Guide}
-                {Index}
-                {Content}
+                %(Guide)s
+                %(Index)s
+                %(Content)s
                 </body>
             </html>
             """ % dataDict
@@ -36,10 +36,10 @@ def guideTemplate(dataDict = {}):
     '''
     return u'''
             <center>
-                <img  class="guide-img" src="../images/{guideImg}" />
-                <h1>{title}</h1>
-                <h3>{author}</h3>
-                <p>{desc}</p>
+                <img  class="guide-img" src="../images/%(guideImg)s" />
+                <h1>%(title)s</h1>
+                <h3>%(author)s</h3>
+                <p>%(desc)s</p>
             </center>
             ''' % dataDict
 
@@ -52,7 +52,7 @@ def indexTemplate(dataDict = {}):
     }
     '''
     return u'''
-            <a href='#{index}'>{index} . {title}</a>
+            <a href='#%(index)s'>%(index)s . %(title)s</a>
             ''' % dataDict
 
 
@@ -65,10 +65,10 @@ def contentTemplate(dataDict = {}):
     }
     '''
     return u"""
-            {QuestionContent}
+            %(QuestionContent)s
             <br />
             <hr />
-            {AnswerContent}
+            %(AnswerContent)s
             """ % dataDict
 
 def questionContentTemplate(dataDict = {}):
@@ -82,11 +82,11 @@ def questionContentTemplate(dataDict = {}):
     }
     '''
     return u'''
-            <div class='question' id='{index}'>
-                <div class='question-index'>{index}</div>
-                <div class='question-title'>{title}</div>
-                <div class='question-desc'>{desc}</div>
-                <div class='question-comment'>{comment}</div>
+            <div class='question' id='%(index)s'>
+                <div class='question-index'>%(index)s</div>
+                <div class='question-title'>%(title)s</div>
+                <div class='question-desc'>%(desc)s</div>
+                <div class='question-comment'>%(comment)s</div>
             </div>
             ''' % dataDict
 
@@ -108,27 +108,27 @@ def answerContentTemplate(dataDict = {}):
             <div class='answer'>
                 <div class='author-info'>
                     <div class='author-logo'>
-                    {authorLogo}
+                    %(authorLogo)s
                     </div>
                     <div class='author-name'>
-                    <a href='{authorLink}'>{authorName}</a>,
+                    <a href='%(authorLink)s'>%(authorName)s</a>,
                     </div>
                     <div class='author-sign'>
-                    {authorSign}
+                    %(authorSign)s
                     </div>
                 </div>
                 <div class='answer-content'>
-                    {answerContent}
+                    %(answerContent)s
                 </div>
                 <div class='answer-info'>
                     <div class='answer-agree'>
-                    {answerAgree}
+                    %(answerAgree)s
                     </div>
                     <div class='answer-comment'>
-                    {answerComment}
+                    %(answerComment)s
                     </div>
                     <div class='answer-date'>
-                    {answerDate}
+                    %(answerDate)s
                     </div>
                 </div>
             </div>

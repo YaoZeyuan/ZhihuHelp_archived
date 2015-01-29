@@ -86,18 +86,28 @@ class questionFilter(baseFilter):
         return answerDictList
     
     def str2Date(self, date = ''):
-        return datetime.date.strptime(date, '%Y-%m-%d') 
+        return datetime.datetime.strptime(date, '%Y-%m-%d') 
 
     def getResult(self):
         self.result = {}
+        self.getQuestionInfoDict()
+        self.getAnswerContentDictList()
         self.result = {
                 'questionInfo' : self.questionInfo,
-                'answerList'   : self.answerList.sort(cmp=lambda x,y:cmp(x['answerAgreeCount'],y['answerAgreeCount']))
+                'answerList'   : sorted(self.answerDictList, key=lambda answerDict: answerDict['answerAgreeCount'], reverse=True)
                 }
         agreeCount = 0
         for answerDict in self.result['answerList']:
             agreeCount += answerDict['answerAgreeCount']
         self.result['agreeCount']  = agreeCount
-        self.result['answerCount'] = len(self.answerList)
+        self.result['answerCount'] = len(self.answerDictList)
         self.result['FrontDict']   = self.getChapterFrontPage()
         return self.result
+        
+    def printDict(data = {}, key = '', prefix = ''):
+        if isinstance(data, dict):
+            for key in data.keys():
+                printDict(data[key], key, prefix + '   ')
+        else:
+            print prefix + str(key) + ' => ' + str(data)
+    

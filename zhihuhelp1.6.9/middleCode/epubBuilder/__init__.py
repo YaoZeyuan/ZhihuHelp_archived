@@ -76,8 +76,8 @@ class Book():
         mkdir('./' + str(bookTitle))
         chdir('./' + str(bookTitle))
         self.__writeMimetype()
-        self.addTitle(bookTitle):
-        self.addIdentifier(bookID):
+        self.addTitle(bookTitle)
+        self.addIdentifier(bookID)
 
         mkdir('./META-INF')
         chdir('./META-INF')
@@ -311,19 +311,21 @@ class Mainfest():
         self.imgType = {'jepg' : 'jpg', 'png' : 'png', 'svg' : 'svg', 'gif' : 'gif'}
         return
 
-    def addImg(fileName='', id=1):
+    def addImg(fileName = '', id = 1):
         u"图像文件只能是png,jpg,gif和svg四种类型"
         fileExt  =  os.path.splitText(fileName)[1][1:]
         fileType =  'image/' + self.imgType.get((fileExt[1:]).lower(), 'png')
-        self.img += u"""<item id='{0}' href='{1}' media-type="{2}"/>\n""".format((str)id, 'images/' + fileName, fileType)
+        href     =  'images/' + fileName
+        self.img += """<item id='{0}' href='{1}' media-type="{2}"/>\n""".format(str(id), href, fileType)
         return
 
-    def addHtml(fileName='', id=1):
-        self.html += u"""<item id='{0}' href='{1}' media-type="application/xhtml+xml"/>\n""".format((str)id, 'html/' + fileName)
+    def addHtml(fileName = '', id = 1):
+        href     =  'html/' + fileName
+        self.html += """<item id='{0}' href='{1}' media-type="application/xhtml+xml"/>\n""".format(str(id), href)
         return
 
-    def addCss(fileName='', id=1):
-        self.css  += u"""<item id="{0}" href="{1}" media-type="text/css"/>\n""".format((str)id, fileName)
+    def addCss(fileName = '', id = 1):
+        self.css  += u"""<item id="{0}" href="{1}" media-type="text/css"/>\n""".format(str(id), fileName)
         return
     
     def getString(self):
@@ -346,7 +348,7 @@ class Spine():
             linear = 'yes'
         else:
             linear = 'no'
-        self.spine += u"""<itemref idref="{0}" linear="{1}"/>\n""".format((str)id, linear)
+        self.spine += u"""<itemref idref="{0}" linear="{1}"/>\n""".format(str(id), linear)
         return
     
     def getString(self):
@@ -399,7 +401,7 @@ class Ncx():
           </navLabel>
           <content src="html/{2}"/>
         </navPoint>
-        """.format((str)id, title, fileName)
+        """.format(str(id), title, fileName)
         return
 
     def addChapter(self, fileName, id, title):
@@ -409,7 +411,7 @@ class Ncx():
              <text>{1}</text>
           </navLabel>
           <content src="html/{2}"/>
-        """.format((str)id, title, fileName)
+        """.format(str(id), title, fileName)
         return 
 
     def endChapter(self):
@@ -432,7 +434,7 @@ class Ncx():
           <meta name="dtb:totalPageCount" content="0"/>
           <meta name="dtb:maxPageNumber" content="0"/>
         </head>
-        """.format((str)uid)
+        """.format(str(id))
         return
     
     def getString(self):

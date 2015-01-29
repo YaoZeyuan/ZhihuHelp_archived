@@ -13,37 +13,36 @@ class EpubData(object):
     
     
 class EpubBuilder(object):
-u"""
-只负责对文件按既定规则进行处理
-传入字典,字典结构为
-{
-    "index"     : "html文件地址"
-    "index"     : {新的字典}
-    "index"     : "html文件结构地址"
-    ...
-}
-    #然后有些关键属性自行添加
-关键属性
-*   "bookInfo" 
-    *   title
-    *   identifier
-    *   language
-    *   creator
-    *   description
-    *   right#版权声明
-    *   publisher#出版人
-*   mainfest#资源列表
-    *   可以自行添加
-    *   自动判断文件类型或手工指定文件类型
-*   spine#显示顺序
-    *   根据传入顺序自动生成
-*   NCX#目录结构
-    *   根据传入字典自动生成
-
-    传入缓存下来的图片地址,然后到图片地址去复制图片到images
-    传入的html文件名中自带路径
+    u"""
+    只负责对文件按既定规则进行处理
+    传入字典,字典结构为
+    {
+        "index"     : "html文件地址"
+        "index"     : {新的字典}
+        "index"     : "html文件结构地址"
+        ...
+    }
+        #然后有些关键属性自行添加
+    关键属性
+    *   "bookInfo" 
+        *   title
+        *   identifier
+        *   language
+        *   creator
+        *   description
+        *   right#版权声明
+        *   publisher#出版人
+    *   mainfest#资源列表
+        *   可以自行添加
+        *   自动判断文件类型或手工指定文件类型
+    *   spine#显示顺序
+        *   根据传入顺序自动生成
+    *   NCX#目录结构
+        *   根据传入字典自动生成
     
-"""
+        传入缓存下来的图片地址,然后到图片地址去复制图片到images
+        传入的html文件名中自带路径
+    """
     def creator():
         self.bookInfo = ['title', 'indentifier', 'language', 'creator', 'description', 'right', 'publish']
         self.epub     = epubBuilder() 
@@ -98,13 +97,13 @@ u"""
         '''.format(book['title'])
 
     def addResourse2OPF(self, bookContent = {}):
-        for key in bookContent:
-            if:
-                chapter = bookContent[key]
-                f = open(chapter['src'], 'wb')
-                f.write(chapter['content'])
-                f.close()
-                
+        #for key in bookContent:
+        #    if:
+        #        chapter = bookContent[key]
+        #        f = open(chapter['src'], 'wb')
+        #        f.write(chapter['content'])
+        #        f.close()
+        #        
         return
     
     def copyFile(self):

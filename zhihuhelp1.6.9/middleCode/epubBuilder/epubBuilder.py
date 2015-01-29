@@ -2,7 +2,7 @@
 import os
 import re
 
-from epup import *
+from epub import *
 from htmlTemplate import *
 class Zhihu2Epub():
     u'''
@@ -10,15 +10,16 @@ class Zhihu2Epub():
     预计1.7.3版本之后再提供将专栏文章转换为电子书的功能
     '''
     def __init__(self, contentList = []):
-        self.contentList = contentList.sort(cmp=lambda x,y:cmp(x['agreeCount'],y['agreeCount']))
+        self.contentList = sorted(contentList, lambda x:x['agreeCount'], reverse=True)
         self.frontPage = u''
-        self.indexList = []
-	    self.indexNo   = 0
+        self.indexList = [] 
+        self.indexNo   = 0 
+        self.mananger()
         return
 
     def mananger(self):
         basePath = u'./知乎助手1.7.0小试牛刀版/'
-        mkdir(basePath)
+        self.mkdir(basePath)
         for content in self.contentList:
             self.worker(content, basePath)
         return
@@ -64,16 +65,16 @@ class Zhihu2Epub():
         htmlFile.write(html)
         htmlFile.close()
         self.indexNo += 1
-	    return
+        return
 
-    def mkdir(path):
+    def mkdir(self, path):
         try:
             os.mkdir(path)
         except OSError:
             print u'指定目录已存在'
         return 
     
-    def chdir(path):
+    def chdir(self, path):
         try:
             os.chdir(path)
         except OSError:
