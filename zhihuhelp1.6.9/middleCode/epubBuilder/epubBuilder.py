@@ -10,7 +10,7 @@ class Zhihu2Epub():
     预计1.7.3版本之后再提供将专栏文章转换为电子书的功能
     '''
     def __init__(self, contentList = []):
-        self.contentList = sorted(contentList, lambda x:x['agreeCount'], reverse=True)
+        self.contentList = sorted(contentList, key=lambda x:x['agreeCount'], reverse=True)
         self.frontPage = u''
         self.indexList = [] 
         self.indexNo   = 0 

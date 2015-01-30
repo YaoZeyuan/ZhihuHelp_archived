@@ -116,8 +116,8 @@ class ZhihuHelp(object):
         if kind == 'answer':
             print u'啊哦，这个功能作者还没写←_←，敬请期待！'
         if kind == 'question':
-            #worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
-            #worker.boss()
+            worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
+            worker.boss()
             self.answerFilter = questionFilter(self.cursor, urlInfo)
             return questionFilter 
         if kind == 'author':
