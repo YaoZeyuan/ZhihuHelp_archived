@@ -13,6 +13,8 @@ def baseTemplate(dataDict = {}):
             <!DOCTYPE html>
             <html lang="zh-CN">
                 <head>
+                    <link rel="stylesheet" type="text/css" href="./markdownStyle.css"/>
+                    <link rel="stylesheet" type="text/css" href="./userDefine.css"/>
                     <meta charset="utf-8" />
                     <title>%(PageTitle)s</title>
                 </head>
@@ -86,7 +88,7 @@ def questionContentTemplate(dataDict = {}):
                 <div class='question-index'>%(index)s</div>
                 <div class='question-title'>%(title)s</div>
                 <div class='question-desc'>%(desc)s</div>
-                <div class='question-comment'>%(comment)s</div>
+                <div class='question-comment'>评论数:%(comment)s</div>
             </div>
             ''' % dataDict
 
@@ -122,13 +124,13 @@ def answerContentTemplate(dataDict = {}):
                 </div>
                 <div class='answer-info'>
                     <div class='answer-agree'>
-                    %(answerAgree)s
+                    赞同数%(answerAgree)s
                     </div>
                     <div class='answer-comment'>
-                    %(answerComment)s
+                    评论数:%(answerComment)s
                     </div>
                     <div class='answer-date'>
-                    %(answerDate)s
+                    更新日期:%(answerDate)s
                     </div>
                 </div>
             </div>
