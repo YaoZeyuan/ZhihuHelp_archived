@@ -1,0 +1,65 @@
+/*****个人测试***/
+
+.zh-fav-head-title{
+    font-size:18px;/*收藏夹标题大小*/;
+}
+.zm-item-title{
+    color:#259/*知乎问题标题颜色*/; 
+    font-size:18px;
+}
+
+.zh-list-title .zm-editable-editor-input{font-size:18px;font-weight:700}/*设定列表名、编辑框的宽*/
+
+.zg-bull{   
+    padding:0 3px;
+    color:#BBB;
+    display:inline-block;
+    font-family:Arial
+}/*添加评论 修改记录 中间的点*/
+h3.zm-tiem-answer-author-info/*答主用户名与签名*/
+{
+    color:#222
+    font-family: 'Helvetica Neue',Helvetica,Arial,Sans-serif;
+    font-size:13px;
+}
+strong  {
+    font-weight: bold;
+
+}
+.zm-item-rich-text
+{
+    font-size: 13px;
+    color:#222;
+}
+
+.zm-item-comment-el{
+    color:#999/*添加品论、关注问题等的颜色*/;
+    font-size:13px;
+}
+.answer-content
+{
+    postion:relative;
+    top:-25px;
+}
+.update{
+    float:left;
+}
+/************/
+=========================================================
+/*1.7.0版助手css代码*/
+a:link      {text-decoration:none;      color:#259;}
+a:visited   {text-decoration:none;      color:#259;}
+a:hover     {text-decoration:underline; color:#259;}
+a:active    {text-decoration:underline; color:#259;}
+
+.question-title   {text-align:center;}
+.question-desc    {}
+.question-comment {float:right; color:#777;}
+
+.author-logo      {float:right;}
+.author-name      {float:left; font-weight:bold; }
+.author-sign      {float:left; font-weight:bold; left:25px;}
+
+.answer-agree   {float:left;}
+.answer-comment {float:left; position:relative; left:25px;}
+.answer-date    {float:right;}
