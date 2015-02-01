@@ -68,7 +68,6 @@ def contentTemplate(dataDict = {}):
     '''
     return u"""
             %(QuestionContent)s
-            <br />
             <hr />
             %(AnswerContent)s
             """ % dataDict
@@ -85,8 +84,7 @@ def questionContentTemplate(dataDict = {}):
     '''
     return u'''
             <div class='question' id='%(index)s'>
-                <div class='question-index'>%(index)s</div>
-                <div class='question-title'>%(title)s</div>
+                <div class='question-title'>%(index)s.%(title)s</div>
                 <div class='question-desc'>%(desc)s</div>
                 <div class='question-comment'>评论数:%(comment)s</div>
             </div>
@@ -118,13 +116,16 @@ def answerContentTemplate(dataDict = {}):
                     <div class='author-sign'>
                     %(authorSign)s
                     </div>
+                    <br >
                 </div>
+                <br >
                 <div class='answer-content'>
                     %(answerContent)s
                 </div>
+                <br >
                 <div class='answer-info'>
                     <div class='answer-agree'>
-                    赞同数%(answerAgree)s
+                    赞同数:%(answerAgree)s
                     </div>
                     <div class='answer-comment'>
                     评论数:%(answerComment)s
@@ -134,6 +135,7 @@ def answerContentTemplate(dataDict = {}):
                     </div>
                 </div>
             </div>
+            <br >
             <hr />
             """ % dataDict
 
