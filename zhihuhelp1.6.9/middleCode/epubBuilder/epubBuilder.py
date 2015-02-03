@@ -44,7 +44,7 @@ class Zhihu2Epub():
                         'answerContent' : answerContent['answerContent'],
                         'answerAgree'   : answerContent['answerAgreeCount'],
                         'answerComment' : answerContent['answerCommentCount'],
-                        'answerDate'    : str(answerContent['updateDate']),
+                        'answerDate'    : answerContent['updateDate'].strftime('%Y-%m-%d'),
                     }
             answer2Html += answerContentTemplate(buf)
         

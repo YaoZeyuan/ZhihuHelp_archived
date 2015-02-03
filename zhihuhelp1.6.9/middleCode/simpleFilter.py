@@ -37,25 +37,25 @@ class baseFilter():
                     imgTag.index('misc/whitedot.jpg')
                 except:
                     imgContent = imgTag.replace('data-rawwidth', 'width')
-                    answerContent.replace(imgTag, imgContent) 
+                    imgContent = self.removeTagAttribute(imgContent, ['class'])
+                    answerContent = answerContent.replace(imgTag, imgContent) 
                 else:
-                    answerContent.replace(imgTag, '')
-            
+                    answerContent = answerContent.replace(imgTag, '')
                         
             if imgQuarty == 1:
                 for imgTag in re.findall(r'<img.*?>', answerContent):
-                    imgContent = imgTag[:-1] + u' alt="知乎图片"/>'
-                    answerContent = answerContent.replace(imgTag, self.fixPic(imgContent))
+                    imgContent = imgTag[:-1] + u'class="answer-content-img" alt="知乎图片"/>'
+                    answerContent = answerContent.replace(imgTag, '<p>' + self.fixPic(imgContent) + '</p>')
             else:
                 for imgTag in re.findall(r'<img.*?>', answerContent):
                     try :
                         imgTag.index('data-original')
                     except  ValueError:
                         #所考虑的这种情况存在吗？存疑
-                        answerContent = answerContent.replace(imgTag, self.fixPic(imgTag[:-1] + u' alt="知乎图片"/>'))
+                        answerContent = answerContent.replace(imgTag, '<p>' + self.fixPic(imgTag[:-1] + u'class="answer-content-img" alt="知乎图片"/> </p>'))
                     else:
                         #将data-original替换为src即为原图
-                        answerContent = answerContent.replace(imgTag, self.fixPic(self.removeTagAttribute(imgTag, ['src']).replace('data-original', 'src')[:-1] + u' alt="知乎图片"/>'))
+                        answerContent = answerContent.replace(imgTag, '<p>' + self.fixPic(self.removeTagAttribute(imgTag, ['src']).replace('data-original', 'src')[:-1] + u'class="answer-content-img" alt="知乎图片"/> </p>'))
         
         return answerContent
 

@@ -63,3 +63,6 @@ a:active    {text-decoration:underline; color:#259;}
 .answer-agree   {float:left;}
 .answer-comment {float:left; position:relative; left:25px;}
 .answer-date    {float:right;}
+
+/*.answer-content-img {float:left; clear:both;}
+*/
