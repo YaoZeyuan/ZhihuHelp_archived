@@ -64,5 +64,5 @@ a:active    {text-decoration:underline; color:#259;}
 .answer-comment {float:left; position:relative; left:25px;}
 .answer-date    {float:right;}
 
-/*.answer-content-img {float:left; clear:both;}
-*/
+.answer-content-img {display:block;}
+

@@ -211,7 +211,7 @@ class ParseQuestion(Parse):
         
         self.regDict['questionTitle']    = r'(?<=<h2 class="zm-item-title zm-editable-content">).*?(?=</h2>)'
         self.regTipDict['questionTitle'] = u'提取问题标题'
-        self.regDict['questionDesc']     = r'(?<=<textarea class="content hidden">).*?(?=</textarea>)'#取到的数据是html编码过的数据，需要逆处理一次才能存入数据库里
+        self.regDict['questionDesc']     = r'(?<=<div class="zm-editable-content">).*?(?=</div>)'#取到的数据是html编码过的数据，需要逆处理一次才能存入数据库里
         self.regTipDict['questionDesc']  = u'提取问题描述'
 
         self.regDict['questionAnswerCount']    = r'(?<=id="zh-question-answer-num">)\d*'

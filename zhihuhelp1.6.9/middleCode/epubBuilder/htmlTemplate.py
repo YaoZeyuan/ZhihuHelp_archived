@@ -85,6 +85,7 @@ def questionContentTemplate(dataDict = {}):
     return u'''
             <div class='question' id='%(index)s'>
                 <div class='question-title'>%(index)s.%(title)s</div>
+                <hr />
                 <div class='question-desc'>%(desc)s</div>
                 <div class='question-comment'>评论数:%(comment)s</div>
             </div>

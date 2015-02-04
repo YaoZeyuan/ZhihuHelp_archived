@@ -26,38 +26,38 @@ class baseFilter():
         #return self.imgBasePath + self.getFileName(imgHref)
         return '<img src="{}"/>'.format(imgHref)
 
-    def answerImgFix(self, answerContent = '', imgQuarty = 1):
+    def contentImgFix(self, content = '', imgQuarty = 1):
         if imgQuarty == 0:
-            answerContent = self.removeTag(answerContent, ['img', 'noscript'])
+            content = self.removeTag(content, ['img', 'noscript'])
         else:
             #将writedot.jpg替换为正常图片
-            answerContent = self.removeTag(answerContent, ['noscript'])
-            for imgTag in re.findall(r'<img.*?>', answerContent):
+            content = self.removeTag(content, ['noscript'])
+            for imgTag in re.findall(r'<img.*?>', content):
                 try:
                     imgTag.index('misc/whitedot.jpg')
                 except:
                     imgContent = imgTag.replace('data-rawwidth', 'width')
                     imgContent = self.removeTagAttribute(imgContent, ['class'])
-                    answerContent = answerContent.replace(imgTag, imgContent) 
+                    content = content.replace(imgTag, imgContent) 
                 else:
-                    answerContent = answerContent.replace(imgTag, '')
+                    content = content.replace(imgTag, '')
                         
             if imgQuarty == 1:
-                for imgTag in re.findall(r'<img.*?>', answerContent):
+                for imgTag in re.findall(r'<img.*?>', content):
                     imgContent = imgTag[:-1] + u'class="answer-content-img" alt="知乎图片"/>'
-                    answerContent = answerContent.replace(imgTag, '<p>' + self.fixPic(imgContent) + '</p>')
+                    content = content.replace(imgTag, self.fixPic(imgContent))
             else:
-                for imgTag in re.findall(r'<img.*?>', answerContent):
+                for imgTag in re.findall(r'<img.*?>', content):
                     try :
                         imgTag.index('data-original')
                     except  ValueError:
                         #所考虑的这种情况存在吗？存疑
-                        answerContent = answerContent.replace(imgTag, '<p>' + self.fixPic(imgTag[:-1] + u'class="answer-content-img" alt="知乎图片"/> </p>'))
+                        content = content.replace(imgTag, self.fixPic(imgTag[:-1] + u'class="answer-content-img" alt="知乎图片"/>'))
                     else:
                         #将data-original替换为src即为原图
-                        answerContent = answerContent.replace(imgTag, '<p>' + self.fixPic(self.removeTagAttribute(imgTag, ['src']).replace('data-original', 'src')[:-1] + u'class="answer-content-img" alt="知乎图片"/> </p>'))
+                        content = content.replace(imgTag, self.fixPic(self.removeTagAttribute(imgTag, ['src']).replace('data-original', 'src')[:-1] + u'class="answer-content-img" alt="知乎图片"/>'))
         
-        return answerContent
+        return content
 
     def fixPic(self, imgTagContent = ''):
         return imgTagContent
@@ -108,7 +108,7 @@ class questionFilter(baseFilter):
         questionInfo['answerCount']   = bufDict[3]
         questionInfo['viewCount']     = bufDict[4]
         questionInfo['questionTitle'] = bufDict[5]
-        questionInfo['questionDesc']  = bufDict[6]
+        questionInfo['questionDesc']  = self.contentImgFix(bufDict[6])
         self.questionInfo = questionInfo
         return questionInfo
 
@@ -137,7 +137,7 @@ class questionFilter(baseFilter):
             answerDict['authorLogo']         = self.authorLogoFix(answer[2])
             answerDict['authorName']         = answer[3]
             answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.answerImgFix(answer[5])
+            answerDict['answerContent']      = self.contentImgFix(answer[5])
             answerDict['questionID']         = answer[6]
             answerDict['answerID']           = answer[7]
             answerDict['commitDate']         = self.str2Date(answer[8])
