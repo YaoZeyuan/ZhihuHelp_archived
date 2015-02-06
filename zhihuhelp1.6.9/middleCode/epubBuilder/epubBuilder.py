@@ -2,7 +2,6 @@
 import os
 import re
 
-from epub import *
 from htmlTemplate import *
 class Zhihu2Epub():
     u'''
@@ -61,7 +60,8 @@ class Zhihu2Epub():
                   'Content'   : content2Html,
               }
         html = baseTemplate(buf)
-        htmlFile = open(basePath + str(self.indexNo) + '.html', 'wb')
+        fileIndex = basePath + str(self.indexNo) + '.html'
+        htmlFile = open(fileIndex, 'wb')
         htmlFile.write(html)
         htmlFile.close()
         self.indexNo += 1

@@ -21,7 +21,7 @@ class ZhihuHelp(object):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
-        init  = Init()
+        init = Init()
         self.conn        = init.getConn()
         self.cursor      = self.conn.cursor() 
         self.epubContent = []
