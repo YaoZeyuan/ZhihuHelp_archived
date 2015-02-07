@@ -28,46 +28,66 @@ class ZhihuHelp(object):
         return 
     
     def helperStart(self):
+        #登陆
         login = Login(self.conn)
         if 1 == 2:
             login.login()
         else:
             login.setCookie()
-        self.setting   = Setting()
-        self.maxThread = 20
-        print u'测试阶段，最大线程数自动定为20，正式发布时请删除'
+        #设置运行参数
+        self.setting = Setting()
         #self.setting.guideOfMaxThread()
-        self.picQuality = 1
+        print u'测试阶段，最大线程数自动定为20，正式发布时请删除'
+        self.maxThread = 20
         #self.setting.guideOfPicQuality()
         print u'测试阶段，图片质量自动定为1，正式发布时请删除'
+        self.picQuality = 1
+        
+        #主程序开始运行
         readList = open('./ReadList.txt', 'r')
         for line in readList:
-            targetList = []
+            #一行内容代表一本电子书
             for rawUrl in line.split('$'):
                 urlInfo = self.getUrlInfo(rawUrl)
                 if urlInfo == {}:
                     continue
-                urlInfo['filter'] = self.manager(urlInfo)
-                targetList.append(urlInfo)
-                self.epubContent.append(self.answerFilter.getResult())
+                self.manager(urlInfo)
+                self.epubContent.append(urlInfo['filter'].getResult())
             Zhihu2Epub(self.epubContent)
             self.epubContent = []
-            #answerList = self.answerFilter.getAnswerContentDictList()
-            #for answerDict in answerList:
-            #    printDict(answerDict)
-            #    raw_input('==========')
-            #self.conn.commit()
-            #print targetList
             print u'test over'
-            #raw_input()
-            #epub = EpubBuilder(targetList)
-            #epub.makeEpub()
         return
 
     def getUrlInfo(self, rawUrl):
         u"""
         返回标准格式的网址
         返回查询所需要的内容
+        urlInfo 结构
+        *   kind
+            *   answer
+                *   questionID
+                *   answerID
+            *   question
+                *   questionID
+            *   author
+                *   authorID
+            *   collection
+                *   colliectionID
+            *   table
+                *   tableID
+            *   topic
+                *   topicID
+            *   article
+                *   columnID
+                *   articleID
+            *   column
+                *   columnID
+        *   guide
+            *   用于输出引导语，告知用户当前工作的状态
+        *   worker
+            *   用于生成抓取对象，负责抓取网页内容
+        *   filter
+            *   用于生成过滤器，负责在数据库中提取答案，并将答案组织成便于生成电子书的结构
         """
         urlInfo = {}
         def detectUrl(rawUrl):
@@ -96,6 +116,9 @@ class ZhihuHelp(object):
             urlInfo['answerID']     = re.search(r'(?<=zhihu\.com/question/\d{8}/answer/)\d{8}', urlInfo['baseUrl']).group(0)
         if kind == 'question':
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
+            urlInfo['guide']        = u'成功匹配到问题地址，开始执行抓取任务'
+            urlInfo['worker']       = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
+            urlInfo['filter']       = questionFilter(self.cursor, urlInfo)
         if kind == 'author':
             urlInfo['authorID']     = re.search(r'(?<=zhihu\.com/people/)[^/#]*', urlInfo['baseUrl']).group(0)
         if kind == 'collection':
@@ -112,77 +135,59 @@ class ZhihuHelp(object):
         return urlInfo
 
     def manager(self, urlInfo = {}):
-        kind = urlInfo['kind']
-        if kind == 'answer':
-            print u'啊哦，这个功能作者还没写←_←，敬请期待！'
-        if kind == 'question':
-            #worker = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
-            #worker.boss()
-            self.answerFilter = questionFilter(self.cursor, urlInfo)
-            return questionFilter 
-        if kind == 'author':
-            print u'啊哦，这个功能作者还没写←_←，敬请待！'
-        if kind == 'collection':
-            print u'啊哦，这个功能作者还没写←_←，敬请期待！'
-        if kind == 'table':
-            print u'啊哦，这个功能作者还没写←_←，敬请期待！'
-        if kind == 'topic':
-            print u'啊哦，这个功能作者还没写←_←，敬请期待！'
-        if kind == 'article':
-            print u'啊哦，这个功能作者还没写←_←，敬请期待！'
-        if kind == 'column':
-            urlInfo['columnID']     = re.search(r'(?<=zhuanlan\.zhihu\.com/)^[/]*', rawUrl).group(0)
+        urlInfo['worker'].start()
+        return
 
-    def setFilter(self):
-        answerFilter   = {}
-        questionFilter = {}
-        authorFilter   = {}
-        #对答案的筛选
-        answerFilter['minAgree']              = 0
-        answerFilter['maxAgree']              = 100000
-        answerFilter['minLength']             = 100
-        answerFilter['maxLength']             = 100000
-        answerFilter['minAverageAgree']       = 10#平均每字赞同数
-        answerFilter['maxAverageAgree']       = 10#平均每字赞同数
-        answerFilter['minDate']               = '2000-01-01'
-        answerFilter['maxDate']               = '2099-12-30'
-        answerFilter['noRecord']              = 0
-        answerFilter['imgSize']               = 1#图片质量，0:无图，1:普通，2:高清
-        answerFilter['minAnswerCommentCount'] = 0
-        answerFilter['maxAnswerCommentCount'] = 1000000
-        #对问题的筛选
-        questionFilter['minComment']              = 0 
-        questionFilter['maxComment']              = 1000000 
-        questionFilter['minFollowCount']          = 0 
-        questionFilter['maxFollowCount']          = 1000000 
-        questionFilter['minAnswerCount']          = 0 
-        questionFilter['maxAnswerCount']          = 1000000 
-        questionFilter['minViewCount']            = 0 
-        questionFilter['maxViewCount']            = 1000000 
-        questionFilter['minCollapsedAnswerCount'] = 0 
-        questionFilter['maxCollapsedAnswerCount'] = 1000000 
-        #对人的筛选
-        authorFilter['minAgree']          = 0
-        authorFilter['maxAgree']          = 100000
-        authorFilter['minCollect']        = 0
-        authorFilter['maxCollect']        = 100000
-        authorFilter['minEdit']           = 0
-        authorFilter['maxEdit']           = 100000
-        authorFilter['minColumn']         = 0
-        authorFilter['maxColumn']         = 100000
-        authorFilter['minThanks']         = 0
-        authorFilter['maxThanks']         = 100000
-        authorFilter['minAnswer']         = 0
-        authorFilter['maxAnswer']         = 100000
-        authorFilter['minQuestion']       = 0
-        authorFilter['maxQuestion']       = 100000
-        authorFilter['minAnswerCount']    = 0
-        authorFilter['maxAnswerCount']    = 100000
-        authorFilter['minAverageAgree']   = 0#平均赞同数
-        authorFilter['maxAverageAgree']   = 100000
-        authorFilter['minAverageCollect'] = 0#平均收藏数
-        authorFilter['maxAverageCollect'] = 100000
-        return questionFilter, authorFilter 
+   # def setFilter(self):
+   #     answerFilter   = {}
+   #     questionFilter = {}
+   #     authorFilter   = {}
+   #     #对答案的筛选
+   #     answerFilter['minAgree']              = 0
+   #     answerFilter['maxAgree']              = 100000
+   #     answerFilter['minLength']             = 100
+   #     answerFilter['maxLength']             = 100000
+   #     answerFilter['minAverageAgree']       = 10#平均每字赞同数
+   #     answerFilter['maxAverageAgree']       = 10#平均每字赞同数
+   #     answerFilter['minDate']               = '2000-01-01'
+   #     answerFilter['maxDate']               = '2099-12-30'
+   #     answerFilter['noRecord']              = 0
+   #     answerFilter['imgSize']               = 1#图片质量，0:无图，1:普通，2:高清
+   #     answerFilter['minAnswerCommentCount'] = 0
+   #     answerFilter['maxAnswerCommentCount'] = 1000000
+   #     #对问题的筛选
+   #     questionFilter['minComment']              = 0 
+   #     questionFilter['maxComment']              = 1000000 
+   #     questionFilter['minFollowCount']          = 0 
+   #     questionFilter['maxFollowCount']          = 1000000 
+   #     questionFilter['minAnswerCount']          = 0 
+   #     questionFilter['maxAnswerCount']          = 1000000 
+   #     questionFilter['minViewCount']            = 0 
+   #     questionFilter['maxViewCount']            = 1000000 
+   #     questionFilter['minCollapsedAnswerCount'] = 0 
+   #     questionFilter['maxCollapsedAnswerCount'] = 1000000 
+   #     #对人的筛选
+   #     authorFilter['minAgree']          = 0
+   #     authorFilter['maxAgree']          = 100000
+   #     authorFilter['minCollect']        = 0
+   #     authorFilter['maxCollect']        = 100000
+   #     authorFilter['minEdit']           = 0
+   #     authorFilter['maxEdit']           = 100000
+   #     authorFilter['minColumn']         = 0
+   #     authorFilter['maxColumn']         = 100000
+   #     authorFilter['minThanks']         = 0
+   #     authorFilter['maxThanks']         = 100000
+   #     authorFilter['minAnswer']         = 0
+   #     authorFilter['maxAnswer']         = 100000
+   #     authorFilter['minQuestion']       = 0
+   #     authorFilter['maxQuestion']       = 100000
+   #     authorFilter['minAnswerCount']    = 0
+   #     authorFilter['maxAnswerCount']    = 100000
+   #     authorFilter['minAverageAgree']   = 0#平均赞同数
+   #     authorFilter['maxAverageAgree']   = 100000
+   #     authorFilter['minAverageCollect'] = 0#平均收藏数
+   #     authorFilter['maxAverageCollect'] = 100000
+   #     return questionFilter, authorFilter 
     
 class EpubData(object):
     def __init__(self, cursor = None, urlInfo = {}):

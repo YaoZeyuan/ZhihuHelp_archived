@@ -19,15 +19,37 @@ class Setting():
             *   0 =>   无图
             *   1 => 普通图
             *   2 => 高清图
+    *   以下内容为答案过滤标准，不提供修改接口，只能在设置文件中手工修改
+    *   contentLength
+        *   答案长度
+    *   contentAgree
+        *   答案赞同数
+    *   answerOrderBy
+        *   答案排序依据
+            *   length
+            *   agree
+            *   update
+            *   userDefine(自定义排序顺序，为GUI做准备)
+    *   questionOrderBy
+        *   问题排序依据
+            *   answerCount
+            *   agreeCount
+            *   userDefine
+    *   contentLength
+        *   答案长度
     """
     def __init__(self):
         self.config      = ConfigParser.SafeConfigParser() 
-        self.settingList = ['account', 'password', 'maxThread', 'picQuality']
+        self.settingList = ['account', 'password', 'maxThread', 'picQuality', 'contentLength', 'contentAgree', 'answerOrderBy', 'questionOrderBy']
         self.setDict     = {
-            'account'    : 'mengqingxue2014@qq.com',
-            'password'   : '131724qingxue',
-            'maxThread'  : 20,
-            'picQuality' : 0,
+            'account'         : 'mengqingxue2014@qq.com',
+            'password'        : '131724qingxue',
+            'maxThread'       : 20,
+            'picQuality'      : 0,
+            'contentLength'   : 0,
+            'contentAgree'    : 5,
+            'answerOrderBy'   : 'agree',
+            'questionOrderBy' : 'agreeCount',
         }
         self.initConfig()
         self.config.read('setting.ini')

@@ -162,7 +162,7 @@ class PageWorker(object):
             return pageContent
 
 class QuestionWorker(PageWorker):
-    def boss(self):
+    def start(self):
         self.complete = set()
         maxTry = self.maxTry
         while maxTry > 0 and len(self.workSchedule) > 0:
