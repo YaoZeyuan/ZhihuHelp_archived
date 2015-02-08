@@ -225,7 +225,7 @@ class QuestionWorker(PageWorker):
         self.waitFor = 5
         return
 
-class answerWorker(PageWorker):
+class AnswerWorker(PageWorker):
     def addProperty(self):
         self.maxPage = ''
         self.suffix  = ''

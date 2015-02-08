@@ -114,13 +114,19 @@ class ZhihuHelp(object):
         if kind == 'answer':
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['answerID']     = re.search(r'(?<=zhihu\.com/question/\d{8}/answer/)\d{8}', urlInfo['baseUrl']).group(0)
+            urlInfo['guide']        = u'成功匹配到答案地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
+            urlInfo['worker']       = AnswerWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
+            urlInfo['filter']       = AnswerFilter(self.cursor, urlInfo)
         if kind == 'question':
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到问题地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
             urlInfo['worker']       = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
-            urlInfo['filter']       = questionFilter(self.cursor, urlInfo)
+            urlInfo['filter']       = QuestionFilter(self.cursor, urlInfo)
         if kind == 'author':
             urlInfo['authorID']     = re.search(r'(?<=zhihu\.com/people/)[^/#]*', urlInfo['baseUrl']).group(0)
+            urlInfo['guide']        = u'成功匹配到用户主页地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
+            urlInfo['worker']       = AuthorWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
+            urlInfo['filter']       = AuthorFilter(self.cursor, urlInfo)
         if kind == 'collection':
             urlInfo['collectionID'] = re.search(r'(?<=zhihu\.com/collection/)\d*', urlInfo['baseUrl']).group(0)
         if kind == 'table':
