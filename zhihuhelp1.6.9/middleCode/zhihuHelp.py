@@ -116,7 +116,7 @@ class ZhihuHelp(object):
             urlInfo['answerID']     = re.search(r'(?<=zhihu\.com/question/\d{8}/answer/)\d{8}', urlInfo['baseUrl']).group(0)
         if kind == 'question':
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
-            urlInfo['guide']        = u'成功匹配到问题地址，开始执行抓取任务'
+            urlInfo['guide']        = u'成功匹配到问题地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
             urlInfo['worker']       = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
             urlInfo['filter']       = questionFilter(self.cursor, urlInfo)
         if kind == 'author':
@@ -189,41 +189,41 @@ class ZhihuHelp(object):
    #     authorFilter['maxAverageCollect'] = 100000
    #     return questionFilter, authorFilter 
     
-class EpubData(object):
-    def __init__(self, cursor = None, urlInfo = {}):
-        self.cursor  = cursor
-        self.urlInfo = urlInfo
-
-    def createQuestionFilterSQL(self):
-        self.answerQuery = "select * from AnswerContent where questionID = %s"
-        
-        sqlVarList = []
-        
-        sqlQuestionFilter['minAgree'] = 'answerAgreeCount > %s'
-        sqlQuestionFilter['maxAgree'] = 'answerAgreeCount < %s'
-        sqlQuestionFilter['minDate']  = 'updateDate > %s'
-        sqlQuestionFilter['maxDate']  = 'updateDate < %s'
-        sqlQuestionFilter['noRecord'] = 'noRecordFlag == %s'
-        
-        for key in self.urlInfo['filter']:
-            self.answerQuery += ' and ' + sqlQuestionFilter[key]
-            sqlVarList.append(self.urlInfo['filter'][key])
-        allAnswer = self.cursor.execute(self.answerQuery%sqlVarList).fetchAll()
-        
-        return 
-    
-    def formatAnswerDict(self, allAnswer):
-        itemList = ['authorID', 'authorSign', 'authorLogo', 'authorName', 'answerAgreeCount',  'answerContent',  'questionID',  'answerID',  'commitDate',  'updateDate',  'answerCommentCount',  'noRecordFlag',  'answerHref']
-        self.answerDict = {}
-        for line in range(allAnswer):
-            self.answerDict[line] = {}
-            for index in range(itemList):
-                self.answerDict[line][itemList[index]] = allAnswer[line][index]
-
-    def imgProcess(self):
-        return
-
-    def imgDownload(self):
-        return
-    
-
+#class EpubData(object):
+#    def __init__(self, cursor = None, urlInfo = {}):
+#        self.cursor  = cursor
+#        self.urlInfo = urlInfo
+#
+#    def createQuestionFilterSQL(self):
+#        self.answerQuery = "select * from AnswerContent where questionID = %s"
+#        
+#        sqlVarList = []
+#        
+#        sqlQuestionFilter['minAgree'] = 'answerAgreeCount > %s'
+#        sqlQuestionFilter['maxAgree'] = 'answerAgreeCount < %s'
+#        sqlQuestionFilter['minDate']  = 'updateDate > %s'
+#        sqlQuestionFilter['maxDate']  = 'updateDate < %s'
+#        sqlQuestionFilter['noRecord'] = 'noRecordFlag == %s'
+#        
+#        for key in self.urlInfo['filter']:
+#            self.answerQuery += ' and ' + sqlQuestionFilter[key]
+#            sqlVarList.append(self.urlInfo['filter'][key])
+#        allAnswer = self.cursor.execute(self.answerQuery%sqlVarList).fetchAll()
+#        
+#        return 
+#    
+#    def formatAnswerDict(self, allAnswer):
+#        itemList = ['authorID', 'authorSign', 'authorLogo', 'authorName', 'answerAgreeCount',  'answerContent',  'questionID',  'answerID',  'commitDate',  'updateDate',  'answerCommentCount',  'noRecordFlag',  'answerHref']
+#        self.answerDict = {}
+#        for line in range(allAnswer):
+#            self.answerDict[line] = {}
+#            for index in range(itemList):
+#                self.answerDict[line][itemList[index]] = allAnswer[line][index]
+#
+#    def imgProcess(self):
+#        return
+#
+#    def imgDownload(self):
+#        return
+#    
+#

@@ -64,9 +64,9 @@ class PageWorker(object):
     def setCookie(self, account = ''):
         self.cookieJarInMemory = cookielib.LWPCookieJar()
         if account == '':
-            Var       = self.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc").fetchone()
+            Var = self.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc").fetchone()
         else:
-            Var       = self.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc where account = `{}`".format(account)).fetchone()
+            Var = self.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc where account = `{}`".format(account)).fetchone()
 
         cookieStr = Var[0]
         self.loadCookJar(cookieStr)
@@ -207,7 +207,6 @@ class QuestionWorker(PageWorker):
         """
         if workNo in self.complete:
             return
-        print 'this is an test rember to remove it workNo = {}'.format(workNo)
         content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
         if content == '':
             return
@@ -220,11 +219,49 @@ class QuestionWorker(PageWorker):
         return 
 
     def addProperty(self):
-        self.maxPage   = 1
-        self.suffix    = '?sort=created&page='
-        self.maxTry    = 1
-        self.waitFor   = 5
+        self.maxPage = 1
+        self.suffix  = '?sort=created&page='
+        self.maxTry  = 1
+        self.waitFor = 5
         return
+
+class answerWorker(PageWorker):
+    def addProperty(self):
+        self.maxPage = ''
+        self.suffix  = ''
+        self.maxTry  = 1
+        self.waitFor = 5
+        return
+
+    def start(self):
+        maxTry = self.maxTry
+        while maxTry > 0 and not self.answerDictList:
+            self.leader()
+            maxTry -= 1
+        return 
+
+    def leader(self):
+        self.questionInfoDictList = []
+        self.answerDictList       = []
+        self.worker()
+        for questionInfoDict in self.questionInfoDictList:
+            save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
+        for answerDict in self.answerDictList:
+            save2DB(self.cursor, answerDict, 'answerHref', 'AnswerContent')
+        self.conn.commit()
+        print 'commit complete'
+        return
+
+    def worker(self):
+        content = self.getHttpContent(url = self.url, extraHeader = self.extraHeader, timeout = self.waitFor)
+        if content == '':
+            return
+        parse = ParseAnswer(content)
+        questionInfoDict, answerDict = parse.getInfoDict()
+        self.questionInfoDictList.append(questionInfoDict)
+        self.answerDictList.append(answerDict)
+        return
+
 """
 class JsonWorker:
 """

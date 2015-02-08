@@ -181,10 +181,6 @@ class Parse(object):
                     answerDict[key] = self.getYesterday().isoformat()
                 else:
                     answerDict[key] = datetime.date.today().isoformat()
-        #print 'content = '
-        #print content
-        #print 'answerDict = '
-        #printDict(answerDict)
         return answerDict
     
     def getYesterday(self):
@@ -195,8 +191,7 @@ class Parse(object):
 
 class ParseQuestion(Parse):
     u'''
-    理想情况应当是：输入网页内容，返回两个dict，一个是问题信息dict，一个是答案dict列表
-    如果答案太多一页显示不完该当何如？
+    输入网页内容，返回两个dict，一个是问题信息dict，一个是答案dict列表
     '''
 
     def addRegex(self):
@@ -204,28 +199,28 @@ class ParseQuestion(Parse):
         #为Regex添加合适的项目
         self.regDict['questionIDinQuestionDesc']     = r'(?<=<a href="/question/)\d{8}(?=/followers"><strong>)' 
         self.regTipDict['questionIDinQuestionDesc']  = u'提取问题ID'
-        self.regDict['questionFollowCount']     = r'(?<=<a href="/question/\d{8}/followers"><strong>).*(?=</strong></a>人关注该问题)' 
-        self.regTipDict['questionFollowCount']  = u'提取问题关注人数'
-        self.regDict['questionCommentCount']    = r'(?<=<i class="z-icon-comment"></i>).*?(?= 条评论</a>)'#该模式对答案中的评论也有效，需要小心处理
-        self.regTipDict['questionCommentCount'] = u'提取问题评论数'
+        self.regDict['questionFollowCount']          = r'(?<=<a href="/question/\d{8}/followers"><strong>).*(?=</strong></a>人关注该问题)' 
+        self.regTipDict['questionFollowCount']       = u'提取问题关注人数'
+        self.regDict['questionCommentCount']         = r'(?<=<i class="z-icon-comment"></i>).*?(?= 条评论</a>)'#该模式对答案中的评论也有效，需要小心处理
+        self.regTipDict['questionCommentCount']      = u'提取问题评论数'
         
-        self.regDict['questionTitle']    = r'(?<=<h2 class="zm-item-title zm-editable-content">).*?(?=</h2>)'
+        self.regDict['questionTitle']    = r'(?<=<title>)[^-]*?(?=-)'
         self.regTipDict['questionTitle'] = u'提取问题标题'
         self.regDict['questionDesc']     = r'(?<=<div class="zm-editable-content">).*?(?=</div>)'#取到的数据是html编码过的数据，需要逆处理一次才能存入数据库里
         self.regTipDict['questionDesc']  = u'提取问题描述'
 
-        self.regDict['questionAnswerCount']    = r'(?<=id="zh-question-answer-num">)\d*'
-        self.regTipDict['questionAnswerCount'] = u'问题下回答数'
-        self.regDict['questionCollapsedAnswerCount']    = r'(?<=<span id="zh-question-collapsed-num">)\d*(?=</span>)'
-        self.regDict['questionCollapsedAnswerCount']    = u'问题下回答折叠数'
-        self.regDict['questionViewCount']        = r'(?<=<div class="zg-gray-normal">被浏览 <strong>)\d*(?=</strong>)'
-        self.regTipDict['questionViewCount']     = u'问题浏览数'
+        self.regDict['questionAnswerCount']          = r'(?<=id="zh-question-answer-num">)\d*'
+        self.regTipDict['questionAnswerCount']       = u'问题下回答数'
+        self.regDict['questionCollapsedAnswerCount'] = r'(?<=<span id="zh-question-collapsed-num">)\d*(?=</span>)'
+        self.regDict['questionCollapsedAnswerCount'] = u'问题下回答折叠数'
+        self.regDict['questionViewCount']            = r'(?<=<div class="zg-gray-normal">被浏览 <strong>)\d*(?=</strong>)'
+        self.regTipDict['questionViewCount']         = u'问题浏览数'
     
     def getInfoDict(self):
         "列表长度有可能为0(没有回答),1(1个回答),2(2个回答)...,需要分情况处理"
         contentList = self.getSplitContent() 
         contentLength = len(contentList)
-        questionInfoDict = {}#仅供测试临时使用，测试完成后需删除之
+        questionInfoDict = {}
         if contentList == 0:
             questionInfoDict = self.getQusetionInfoDict(contentList[0], contentList[0])
             answerDictList   = [{}]
@@ -242,10 +237,43 @@ class ParseQuestion(Parse):
             questionInfoDict[key] = self.matchContent(key, titleContent)   
         for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:
             questionInfoDict[key] = self.matchContent(key, tailContent)   
+        questionInfoDict['questionDesc'] = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc']).encode("utf-8")#对网页内容解码，可以进一步优化
+        return questionInfoDict
+
+class ParseAnswer(ParseQuestion):
+    def addRegex(self):
+        #实例化Regex
+        #为Regex添加合适的项目
+        self.regDict['questionIDinQuestionDesc']    = r'(?<=<a href="/question/)\d{8}(?=/followers"><strong>)' 
+        self.regTipDict['questionIDinQuestionDesc'] = u'提取问题ID'
+        self.regDict['questionFollowCount']         = r'(?<=<a href="/question/\d{8}/followers"><strong>).*(?=</strong></a>人关注该问题)' 
+        self.regTipDict['questionFollowCount']      = u'提取问题关注人数'
+        self.regDict['questionCommentCount']        = r'(?<=<i class="z-icon-comment"></i>).*?(?= 条评论</a>)'#该模式对答案中的评论也有效，需要小心处理
+        self.regTipDict['questionCommentCount']     = u'提取问题评论数'
+        
+        self.regDict['questionTitle']    = r'(?<=<title>)[^-]*?(?=-)'
+        self.regTipDict['questionTitle'] = u'提取问题标题'
+        self.regDict['questionDesc']     = r'(?<=<div class="zm-editable-content">).*?(?=</div>)'#取到的数据是html编码过的数据，需要逆处理一次才能存入数据库里
+        self.regTipDict['questionDesc']  = u'提取问题描述'
+
+        self.regDict['questionAnswerCount']          = r'(?<=查看全部 )\d*(?= 个回答)'
+        self.regTipDict['questionAnswerCount']       = u'问题下回答数'
+        self.regDict['questionCollapsedAnswerCount'] = r'(?<=<span id="zh-question-collapsed-num">)\d*(?=</span>)'
+        self.regDict['questionCollapsedAnswerCount'] = u'问题下回答折叠数'
+        self.regDict['questionViewCount']            = r'(?<=<p>所属问题被浏览 <strong>)\d*(?=</strong>)'
+        self.regTipDict['questionViewCount']         = u'问题浏览数'
+    
+    def getQusetionInfoDict(self, titleContent, tailContent):
+        questionInfoDict = {}
+        for key in ['questionCommentCount', 'questionTitle', 'questionDesc', 'questionAnswerCount']:
+            questionInfoDict[key] = self.matchContent(key, titleContent)   
+        for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:
+            questionInfoDict[key] = self.matchContent(key, tailContent)   
+        questionInfoDict['questionAnswerCount'] = int(questionInfoDict['questionAnswerCount']) + 1 #知乎显示的全部回答数是被js处理过的。。。需要手工加一。。。汗
         questionInfoDict['questionDesc']  = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc']).encode("utf-8")#对网页内容解码，可以进一步优化
         return questionInfoDict
+
 '''   
-class ParseAnswer:
 class ParseCollection:
 class ParseColumn:
 class ParseTopic:
