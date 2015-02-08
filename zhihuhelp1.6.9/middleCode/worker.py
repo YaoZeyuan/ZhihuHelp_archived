@@ -266,7 +266,7 @@ class AnswerWorker(PageWorker):
         return
 
 
-class AnswerWorker(PageWorker):
+class AuthorWorker(PageWorker):
     def start(self):
         self.complete = set()
         maxTry = self.maxTry
@@ -295,6 +295,8 @@ class AnswerWorker(PageWorker):
                 print u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule))
                 time.sleep(1)
             threadLiving = threading.activeCount()
+        for questionInfoDict in self.questionInfoDictList:
+            save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
         for answerDict in self.answerDictList:
             save2DB(self.cursor, answerDict, 'answerHref', 'AnswerContent')
         self.conn.commit()
@@ -328,6 +330,21 @@ class AnswerWorker(PageWorker):
         self.waitFor = 5
         return
 
+class TopicWorker(AuthorWorker):
+    def worker(self):
+        if workNo in self.complete:
+            return
+        content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
+        if content == '':
+            return
+        parse = ParseTopic(content)
+        questionInfoDictList, answerDictList = parse.getInfoDict()
+        for questionInfoDict in questionInfoDictList:
+            self.questionInfoDictList.append(questionInfoDict)
+        for answerDict in answerDictList:
+            self.answerDictList.append(answerDict)
+        self.complete.add(workNo)
+        return 
 """
 class JsonWorker:
 """

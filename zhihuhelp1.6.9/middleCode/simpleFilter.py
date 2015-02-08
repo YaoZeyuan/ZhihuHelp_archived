@@ -6,7 +6,6 @@ class ImgDownloader():
     u'''
      负责下载图片到指定文件夹内 
     '''
-
     def __init__(self, targetDir = '', maxThread = 5, maxTry = 5, imgSet = set()):
         self.targetDir  = targetDir
         self.maxThread  = maxThread
@@ -354,3 +353,96 @@ class AnswerFilter(QuestionFilter):
 
         self.answerDictList = answerDictList
         return answerDictList
+
+class AuthorFilter(QuestionFilter):
+    def addProperty(self):
+        self.authorID   = self.urlInfo['author']
+        return
+
+    def getQuestionInfoDict(self, questionID = ''):
+        sql = '''select 
+                questionIDinQuestionDesc         as questionID, 
+                questionCommentCount             as commentCount, 
+                questionFollowCount              as followCount,
+                questionAnswerCount              as answerCount,       
+                questionViewCount                as viewCount,
+                questionTitle                    as questionTitle,
+                questionDesc                     as questionDesc
+                from QuestionInfo where questionIDinQuestionDesc = ?'''
+        bufDict = self.cursor.execute(sql, [self.questionID,]).fetchone()
+        questionInfo = {}
+        questionInfo['questionID']    = bufDict[0]
+        questionInfo['commentCount']  = bufDict[1]
+        questionInfo['followCount']   = bufDict[2]
+        questionInfo['answerCount']   = bufDict[3]
+        questionInfo['viewCount']     = bufDict[4]
+        questionInfo['questionTitle'] = bufDict[5]
+        questionInfo['questionDesc']  = self.contentImgFix(bufDict[6])
+        self.questionInfo = questionInfo
+        return questionInfo
+
+    def getAnswerContentDictList(self):
+        sql = '''select 
+                    authorID,
+                    authorSign,
+                    authorLogo,
+                    authorName,
+                    answerAgreeCount,
+                    answerContent,
+                    questionID,
+                    answerID,
+                    commitDate,
+                    updateDate,
+                    answerCommentCount,
+                    noRecordFlag,
+                    answerHref
+                from AnswerContent where authorID = ? and noRecordFlag = 0'''
+        bufList = self.cursor.execute(sql, [self.authorID, ]).fetchall()
+        answerDictList = []
+        for answer in bufList:
+            answerDict = {}
+            answerDict['authorID']           = answer[0]
+            answerDict['authorSign']         = answer[1]
+            answerDict['authorLogo']         = self.authorLogoFix(answer[2])
+            answerDict['authorName']         = answer[3]
+            answerDict['answerAgreeCount']   = int(answer[4])
+            answerDict['answerContent']      = self.contentImgFix(answer[5])
+            answerDict['questionID']         = answer[6]
+            answerDict['answerID']           = answer[7]
+            answerDict['commitDate']         = self.str2Date(answer[8])
+            answerDict['updateDate']         = self.str2Date(answer[9])
+            answerDict['answerCommentCount'] = int(answer[10])
+            answerDict['noRecordFlag']       = bool(answer[11])
+            answerDict['answerHref']         = answer[12]
+            answerDictList.append(answerDict)
+
+        self.answerDictList = answerDictList
+        return answerDictList
+
+    def preFixResult(self):
+        self.preResult = {}
+        for answerDict in self.answerDictList:
+            if answerDict['questionID'] in self.preResult:
+                self.preResult[answerDict['questionID']]['answerList'].append(answerDict)
+                self.preResult[answerDict['questionID']]['agreeCount'] += answerDict['answerAgreeCount']
+            else:
+                self.preResult[answerDict['questionID']] = {}
+                self.preResult[answerDict['questionID']]['answerList']   = [answerDict,]
+                self.preResult[answerDict['questionID']]['agreeCount']   = answerDict['answerAgreeCount']
+                self.preResult[answerDict['questionID']]['questionInfo'] = self.getQuestionInfoDict(answerDict['questionID'])
+
+        return
+
+    def getResult(self):
+        self.result = {}
+        self.getQuestionInfoDict()
+        self.getAnswerContentDictList()
+        self.preFixResult()
+        self.result = []
+        for key in self.preResult:
+            result = self.preResult[key]
+            result['answerList']  = sorted(result['answerList'], key=lambda answerDict: answerDict['answerAgreeCount'], reverse=True)
+            result['answerCount'] = len(result['answerList']) 
+            self.result.append(result)
+        self.result['FrontDict']   = self.getChapterFrontPage()
+        return self.result

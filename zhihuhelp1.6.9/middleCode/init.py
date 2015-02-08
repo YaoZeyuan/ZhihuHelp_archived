@@ -57,16 +57,18 @@ class Init(object):
                             questionCollapsedAnswerCount int(8)       not Null    default 0,
 
                             primary key(questionIDinQuestionDesc))""")
-            
-            u'''
+            #新数据表
+            #收藏夹内容表
             cursor.execute("""
-                            create  table   CollectionIndex(
+                            create  table       CollectionIndex(
                             collectionID        varchar(50)     not Null,
                             questionHref        varchar(255)    not Null,
                             primary key(CollectionID, questionHref))""")#负责永久保存收藏夹链接，防止丢收藏
+
+            #用户信息表
             cursor.execute("""
                             CREATE TABLE IDInfo (
-                            iDLogoAdress        varchar(255)    default "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
+                            IDLogoAdress        varchar(255)    default "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
                             ID                  varchar(255)    not Null default 'null',
                             sign                varchar(255)    default '',
                             name                varchar(255)    default '',
@@ -81,6 +83,8 @@ class Init(object):
                             follower            int             default 0,
                             watched             int             default 0,
                             primary key(ID))""")#负责保存ID信息
+
+            #收藏夹信息表
             cursor.execute("""
                             create table CollectionInfo(
                             collectionID        varchar(50)     not Null,
@@ -91,6 +95,8 @@ class Init(object):
                             authorSign          varchar(255),
                             followerCount       int(20)         not Null,
                             primary key(CollectionID))""")#负责保存收藏夹信息
+
+            #话题信息表
             cursor.execute("""create table TopicInfo (
                             title               varchar(255),
                             adress              varchar(255),
@@ -98,5 +104,5 @@ class Init(object):
                             description         varchar(3000),
                             topicID             varchar(50),
                             primary key (TopicID))""")#负责保存话题信息
-            '''
+
             self.conn.commit()
