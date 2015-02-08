@@ -26,17 +26,35 @@ sys.setdefaultencoding('utf8')
 #    print "<<<<<<<<<<<<<<<<<<<<<"
 
 #Answer Test
-targetFileList = ['simpleAnswerContent1.txt']
+#targetFileList = ['simpleAnswerContent1.txt']
+#for filePath in targetFileList:
+#    content = open('./htmlFile/' + filePath).read()
+#    questionObject = ParseAnswer(content)
+#    questionInfoDict, answerDictList = questionObject.getInfoDict()
+#    print ">>>>>>>>>>>>>>>>>>>>>"
+#    print u'问题信息：'
+#    printDict(questionInfoDict)
+#    print "====================="
+#    print u'答案内容:'
+#    for answer in answerDictList:
+#        printDict(answer)
+#        print "====================="
+#        print "<<<<<<<<<<<<<<<<<<<<<"
+    
+#Author Test
+targetFileList = ['simpleAuthorContent1.txt']
 for filePath in targetFileList:
     content = open('./htmlFile/' + filePath).read()
-    questionObject = ParseAnswer(content)
-    questionInfoDict, answerDictList = questionObject.getInfoDict()
-    print ">>>>>>>>>>>>>>>>>>>>>"
+    questionObject = ParseAuthor(content)
+    questionDictList, answerDictList = questionObject.getInfoDict()
     print u'问题信息：'
-    printDict(questionInfoDict)
-    print "====================="
+    for questionInfoDict in questionDictList:
+        printDict(questionInfoDict)
+        print "====================="
+    print ">>>>>>>>>>>>>>>>>>>>>"
     print u'答案内容:'
     for answer in answerDictList:
-        printDict(answer)
-        print "====================="
+        pass
+        #printDict(answer)
+        #print "====================="
     print "<<<<<<<<<<<<<<<<<<<<<"

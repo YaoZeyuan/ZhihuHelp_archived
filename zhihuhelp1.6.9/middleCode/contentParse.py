@@ -47,7 +47,7 @@ class Parse(object):
         self.regDict['updateDate']      = r'(?<=>编辑于 )[-:\d]*'#没有考虑到只显示时间和昨天今天的问题
         self.regTipDict['updateDate']   = u'提取最后更新日期'
         self.regDict['commitDate']      = r'(?<=发布于 )[-:\d]*'#没有考虑到只显示时间和昨天今天的问题
-        self.regTipDict['commitDate']   = u'提取回答日期'
+        self.regTipDict['commitDate']   = u'提取回答发布日期'
         
         
         ##以下正则交由子类自定义之 
@@ -130,6 +130,9 @@ class Parse(object):
         targetObject = re.search(self.regDict[key], content)
         if targetObject == None:
             #print self.regTipDict[key] + u'失败'
+            #print u'匹配失败的内容为'
+            #print content
+            #exit()
             return ''
         else:
             #print self.regTipDict[key] + u'成功'
@@ -220,16 +223,15 @@ class ParseQuestion(Parse):
         "列表长度有可能为0(没有回答),1(1个回答),2(2个回答)...,需要分情况处理"
         contentList = self.getSplitContent() 
         contentLength = len(contentList)
-        questionInfoDict = {}
+        questionInfoDictList = []
+        answerDictList       = []
         if contentList == 0:
-            questionInfoDict = self.getQusetionInfoDict(contentList[0], contentList[0])
-            answerDictList   = [{}]
+            questionInfoDictList.append(self.getQusetionInfoDict(contentList[0], contentList[0]))
         else:
-            questionInfoDict = self.getQusetionInfoDict(contentList[0], contentList[contentLength - 1])
-            answerDictList   = []
+            questionInfoDictList.append(self.getQusetionInfoDict(contentList[0], contentList[contentLength - 1]))
             for i in range(1, contentLength):
                 answerDictList.append(self.getAnswerDict(contentList[i]))
-        return questionInfoDict, answerDictList
+        return questionInfoDictList, answerDictList
     
     def getQusetionInfoDict(self, titleContent, tailContent):
         questionInfoDict = {}
@@ -272,6 +274,78 @@ class ParseAnswer(ParseQuestion):
         questionInfoDict['questionAnswerCount'] = int(questionInfoDict['questionAnswerCount']) + 1 #知乎显示的全部回答数是被js处理过的。。。需要手工加一。。。汗
         questionInfoDict['questionDesc']  = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc']).encode("utf-8")#对网页内容解码，可以进一步优化
         return questionInfoDict
+
+
+class ParseAuthor(Parse):
+    u'''
+    输入网页内容，返回一个dict，答案dict列表
+    '''
+
+    def addRegex(self):
+        #实例化Regex
+        #为Regex添加合适的项目
+        self.regDict['splitContent']    = r'div class="zm-item" id="mi'#关键表达式，用于切分答案
+        self.regDict['answerContent']   = r'(?<=<textarea class="content hidden">).*(?=<span class="answer-date-link-wrap">)'
+        self.regDict['answerInfo']      = r'(?<=<div class="zm-meta-panel">).*?(?=<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold">)'
+        self.regDict['updateInfo']      = r'(?<=<span class="answer-date-link-wrap">).*?(?=</span>)'
+        self.regTipDict['updateInfo']   = u'提取答案更新日期信息'
+
+        self.regDict['questionInfo']             = r'(?<=<h2><a class="question_link").*?(?=</a></h2>)'
+        self.regTipDict['questionInfo']          = u'提取问题相关信息'
+        self.regDict['questionIDinQuestionDesc'] = r'(?<=href="/question/)\d{8}'
+        self.regDict['questionTitle']            = r'(?<=>).*'
+
+    def getInfoDict(self):
+        contentList = self.getSplitContent() 
+        answerDictList       = []
+        questionInfoDictList = []
+        for content in contentList:
+            questionInfoDictList.append(self.getQusetionInfoDict(content))
+            answerDictList.append(self.getAnswerDict(content))
+        return questionInfoDictList, answerDictList
+
+    def getAnswerDict(self, content):
+        answerDict = {}
+        authorInfo = self.getAnswerAuthorInfoDict(content)
+        for key in authorInfo:
+            answerDict[key] = authorInfo[key]
+        answerDict['answerAgreeCount'] = self.matchContent('answerAgreeCount', content)
+        answerDict['answerContent']    = self.matchContent('answerContent', content)
+        answerInfo = self.matchContent('answerInfo', content)
+        updateInfo = self.matchContent('updateInfo', content)
+        for key in ['questionID', 'answerID', 'updateDate', 'commitDate']:
+            answerDict[key] = self.matchContent(key, updateInfo)
+        for key in ['answerCommentCount','noRecordFlag']:
+            answerDict[key] = self.matchContent(key, answerInfo)
+
+        if answerDict['answerAgreeCount']   == '':
+            answerDict['answerAgreeCount']   = 0
+        if answerDict['answerCommentCount'] == '':
+            answerDict['answerCommentCount'] = 0
+        if answerDict['noRecordFlag']       == '':
+            answerDict['noRecordFlag']       = 0
+        else:
+            answerDict['noRecordFlag'] = 1
+        answerDict['answerHref']     = 'http://www.zhihu.com/question/{0}/answer/{1}'.format(answerDict['questionID'], answerDict['answerID']) 
+        answerDict['answerContent']  = HTMLParser.HTMLParser().unescape(answerDict['answerContent']).encode("utf-8")#对网页内容解码，可以进一步优化
+        
+        if answerDict['updateDate'] == '':
+            answerDict['updateDate'] = answerDict['commitDate']
+        for key in ['updateDate', 'commitDate']:#此处的时间格式转换还可以进一步改进
+            if len(answerDict[key]) != 10:        
+                if len(answerDict[key]) == 0:
+                    answerDict[key] = self.getYesterday().isoformat()
+                else:
+                    answerDict[key] = datetime.date.today().isoformat()
+        return answerDict
+
+    def getQusetionInfoDict(self, content):
+        questionInfoDict = {}
+        questionInfo = self.matchContent('questionInfo', content)
+        for key in ['questionTitle', 'questionIDinQuestionDesc']:
+            questionInfoDict[key] = self.matchContent(key, questionInfo)   
+        return questionInfoDict
+
 
 '''   
 class ParseCollection:

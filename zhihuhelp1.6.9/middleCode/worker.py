@@ -211,8 +211,9 @@ class QuestionWorker(PageWorker):
         if content == '':
             return
         parse = ParseQuestion(content)
-        questionInfoDict, answerDictList = parse.getInfoDict()
-        self.questionInfoDictList.append(questionInfoDict)
+        questionInfoDictList, answerDictList = parse.getInfoDict()
+        for questionInfoDict in questionInfoDictList:
+            self.questionInfoDictList.append(questionInfoDict)
         for answerDict in answerDictList:
             self.answerDictList.append(answerDict)
         self.complete.add(workNo)
@@ -257,9 +258,74 @@ class AnswerWorker(PageWorker):
         if content == '':
             return
         parse = ParseAnswer(content)
-        questionInfoDict, answerDict = parse.getInfoDict()
-        self.questionInfoDictList.append(questionInfoDict)
-        self.answerDictList.append(answerDict)
+        questionInfoDictList, answerDictList = parse.getInfoDict()
+        for questionInfoDict in questionInfoDictList:
+            self.questionInfoDictList.append(questionInfoDict)
+        for answerDict in answerDictList:
+            self.answerDictList.append(answerDict)
+        return
+
+
+class AnswerWorker(PageWorker):
+    def start(self):
+        self.complete = set()
+        maxTry = self.maxTry
+        while maxTry > 0 and len(self.workSchedule) > 0:
+            self.leader()
+            maxTry -= 1
+        return 
+    
+    def leader(self):
+        threadPool = []
+        self.answerDictList       = []
+        for key in self.workSchedule:
+            threadPool.append(threading.Thread(target=self.worker, kwargs={'workNo':key}))
+        threadsCount = len(threadPool)
+        threadLiving = 2
+        while (threadsCount > 0 or threadLiving > 1):
+            print 'threading.activeCount() = {}'.format(threadLiving)
+            bufLength = self.maxThread - threadLiving
+            if bufLength > 0 and threadsCount > 0:
+                while bufLength > 0 and threadsCount > 0:
+                    threadPool[threadsCount - 1].start()
+                    bufLength -= 1
+                    threadsCount -= 1
+                    time.sleep(0.1)
+            else:
+                print u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule))
+                time.sleep(1)
+            threadLiving = threading.activeCount()
+        for answerDict in self.answerDictList:
+            save2DB(self.cursor, answerDict, 'answerHref', 'AnswerContent')
+        self.conn.commit()
+        print 'commit complete'
+        return
+
+    def worker(self, workNo = 0):
+        u"""
+        worker只执行一次，待全部worker执行完毕后由调用函数决定哪些worker需要再次运行
+        重复的次数由self.maxTry指定
+        这样可以给知乎服务器留出生成页面缓存的时间
+        """
+        if workNo in self.complete:
+            return
+        content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
+        if content == '':
+            return
+        parse = ParseAuthor(content)
+        questionInfoDictList, answerDictList = parse.getInfoDict()
+        for questionInfoDict in questionInfoDictList:
+            self.questionInfoDictList.append(questionInfoDict)
+        for answerDict in answerDictList:
+            self.answerDictList.append(answerDict)
+        self.complete.add(workNo)
+        return 
+
+    def addProperty(self):
+        self.maxPage = 1
+        self.suffix  = '?order_by=vote_num&page='
+        self.maxTry  = 1
+        self.waitFor = 5
         return
 
 """
