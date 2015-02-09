@@ -295,19 +295,37 @@ class QuestionFilter(baseFilter):
         return answerDictList
 
     def getResult(self):
-        self.result = {}
+        u'''
+        self.result格式
+        *   contentList
+            *   内容列表，其内为内容字典
+            *   字典结构
+                *   questionInfo
+                    *   问题信息
+                *   answerList
+                    *   答案字典列表   
+                *   agreeCount
+                    *   答案列表中的赞同数和
+                *   answerCount
+                    *   答案列表中的答案数量      
+        *   frontDict
+            *   章节首页
+        '''
         self.getQuestionInfoDict()
         self.getAnswerContentDictList()
-        self.result = {
+        self.result = {}
+        self.result['content'] = []
+        result = {
                 'questionInfo' : self.questionInfo,
                 'answerList'   : sorted(self.answerDictList, key=lambda answerDict: answerDict['answerAgreeCount'], reverse=True)
                 }
         agreeCount = 0
         for answerDict in self.result['answerList']:
             agreeCount += answerDict['answerAgreeCount']
-        self.result['agreeCount']  = agreeCount
-        self.result['answerCount'] = len(self.answerDictList)
-        self.result['FrontDict']   = self.getChapterFrontPage()
+        result['agreeCount']  = agreeCount
+        result['answerCount'] = len(self.answerDictList)
+        self.result['contentList'] = [result]
+        self.result['frontDict']   = self.getChapterFrontPage()
         return self.result
         
 class AnswerFilter(QuestionFilter):
@@ -434,15 +452,17 @@ class AuthorFilter(QuestionFilter):
         return
 
     def getResult(self):
-        self.result = {}
         self.getQuestionInfoDict()
         self.getAnswerContentDictList()
         self.preFixResult()
-        self.result = []
+        self.result = {}
+        self.result['contentList'] = []
         for key in self.preResult:
-            result = self.preResult[key]
-            result['answerList']  = sorted(result['answerList'], key=lambda answerDict: answerDict['answerAgreeCount'], reverse=True)
-            result['answerCount'] = len(result['answerList']) 
-            self.result.append(result)
-        self.result['FrontDict']   = self.getChapterFrontPage()
+            buf = self.preResult[key]
+            buf['answerList']  = sorted(buf['answerList'], key=lambda answerDict: answerDict['answerAgreeCount'], reverse=True)
+            buf['answerCount'] = len(buf['answerList']) 
+            self.result['contentList'].append(buf)
+
+        self.result['contentList'] = sorted(self.result['contentList'], key=lambda answerDict: answerDict['answerCount'], reverse=True)
+        self.result['frontDict']   = self.getChapterFrontPage()
         return self.result
