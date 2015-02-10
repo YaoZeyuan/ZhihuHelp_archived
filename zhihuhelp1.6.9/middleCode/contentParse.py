@@ -346,10 +346,40 @@ class ParseAuthor(Parse):
             questionInfoDict[key] = self.matchContent(key, questionInfo)   
         return questionInfoDict
 
+class ParseCollection(ParseAuthor):
+    u"""
+    直接继承即可
+    """
+    def addRegex(self):
+        #实例化Regex
+        #为Regex添加合适的项目
+        self.regDict['splitContent']    = r'div class="zm-item"'#关键表达式，用于切分答案
+        self.regDict['answerContent']   = r'(?<=<textarea class="content hidden">).*(?=<span class="answer-date-link-wrap">)'
+        self.regDict['answerInfo']      = r'(?<=<div class="zm-meta-panel">).*?(?=<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold">)'
+        self.regDict['updateInfo']      = r'(?<=<span class="answer-date-link-wrap">).*?(?=</span>)'
+        self.regTipDict['updateInfo']   = u'提取答案更新日期信息'
 
+        self.regDict['questionInfo']             = r'(?<=<h2 class="zm-item-title"><a target="_blank" ).*?(?=</a></h2>)'
+        self.regTipDict['questionInfo']          = u'提取问题相关信息'
+        self.regDict['questionIDinQuestionDesc'] = r'(?<=href="/question/)\d{8}'
+        self.regDict['questionTitle']            = r'(?<=>).*'
+
+class ParseTopic(ParseAuthor):
+    def addRegex(self):
+        #实例化Regex
+        #为Regex添加合适的项目
+        self.regDict['splitContent']     = r'<div class="feed-main">'#关键表达式，用于切分答案
+        self.regDict['answerContent']    = r'(?<=<textarea class="content hidden">).*(?=<span class="answer-date-link-wrap">)'
+        self.regDict['answerInfo']       = r'(?<=<div class="zm-meta-panel">).*?(?=<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold">)'
+        self.regDict['updateInfo']       = r'(?<=<span class="answer-date-link-wrap">).*?(?=</span>)'
+        self.regTipDict['updateInfo']    = u'提取答案更新日期信息'
+        self.regDict['answerAuthorSign'] = r'(?<=<strong title=")[^<]*(?=" class="zu-question-my-bio">)'
+
+        self.regDict['questionInfo']             = r'(?<=<h2><a class="question_link").*?(?=</a></h2>)'
+        self.regTipDict['questionInfo']          = u'提取问题相关信息'
+        self.regDict['questionIDinQuestionDesc'] = r'(?<=href="/question/)\d{8}'
+        self.regDict['questionTitle']            = r'(?<=>).*'
 '''   
-class ParseCollection:
 class ParseColumn:
-class ParseTopic:
 class ParseTable:
 '''

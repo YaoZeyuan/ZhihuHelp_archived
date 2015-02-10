@@ -129,6 +129,9 @@ class ZhihuHelp(object):
             urlInfo['filter']       = AuthorFilter(self.cursor, urlInfo)
         if kind == 'collection':
             urlInfo['collectionID'] = re.search(r'(?<=zhihu\.com/collection/)\d*', urlInfo['baseUrl']).group(0)
+            urlInfo['guide']        = u'成功匹配到收藏夹地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
+            urlInfo['worker']       = CollectionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
+            urlInfo['filter']       = CollectionFilter(self.cursor, urlInfo)
         if kind == 'topic':
             urlInfo['topicID']      = re.search(r'(?<=zhihu\.com/topic/)\d*', urlInfo['baseUrl']).group(0)
         if kind == 'table':

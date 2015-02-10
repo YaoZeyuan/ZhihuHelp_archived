@@ -345,6 +345,23 @@ class TopicWorker(AuthorWorker):
             self.answerDictList.append(answerDict)
         self.complete.add(workNo)
         return 
+
+class CollectionWorker(AuthorWorker):
+    def worker(self):
+        if workNo in self.complete:
+            return
+        content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
+        if content == '':
+            return
+        parse = ParseCollection(content)
+        questionInfoDictList, answerDictList = parse.getInfoDict()
+        for questionInfoDict in questionInfoDictList:
+            self.questionInfoDictList.append(questionInfoDict)
+        for answerDict in answerDictList:
+            self.answerDictList.append(answerDict)
+        self.complete.add(workNo)
+        return 
+
 """
 class JsonWorker:
 """
