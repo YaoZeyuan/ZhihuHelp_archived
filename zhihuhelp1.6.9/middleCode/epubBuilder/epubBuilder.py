@@ -16,11 +16,23 @@ class Zhihu2Epub():
         self.mananger()
         return
 
+    def trans2OneFile(self):
+        u'''
+        将电子书内容转换为一页html文件
+        '''
+        return
+    
+    def trans2Tree(self):
+        u'''
+        将电子书内容转换为一系列文件夹+html网页
+        '''
+        return
     def mananger(self):
         basePath = u'./知乎助手1.7.0小试牛刀版/'
         self.mkdir(basePath)
-        for content in self.contentList:
-            self.worker(content, basePath)
+        for contentDict in self.contentList:
+            for content in contentDict['contentList']:
+                self.worker(content, basePath)
         return
 
     def worker(self, content, basePath):
