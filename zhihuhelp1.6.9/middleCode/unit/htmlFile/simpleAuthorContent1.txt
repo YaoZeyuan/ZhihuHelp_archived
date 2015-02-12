@@ -1,0 +1,2269 @@
+
+<h2><a class="question_link" href="/question/23478854/answer/25252930">如何将某个话题下的精华批量导出至kindle nook等阅读器查看？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="5394713"
+data-atoken="25252930"
+data-collapsed="0"
+data-created="1399282964"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-5394713"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="8">8</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic2.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="随手举报净化知乎" class="zu-question-my-bio">随手举报净化知乎</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="8">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$hungwan-kau" href="http://www.zhihu.com/people/hungwan-kau" class="zg-link" title="hungwan Kau">hungwan Kau</a>、</span><span class="user-block"><a data-tip="p$t$jessica-xu-30" href="http://www.zhihu.com/people/jessica-xu-30" class="zg-link" title="jessica xu">jessica xu</a>、</span><span class="user-block"><a data-tip="p$t$wanziwanzi" href="http://www.zhihu.com/people/wanziwanzi" class="zg-link" title="freestyle">freestyle</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="1572908" data-action="/answer/content">
+
+<textarea class="content hidden">
+-&lt;br&gt;&lt;br&gt;谢 &lt;a data-hash=&quot;b71ef864836f5f6ca5cd0974c1268e59&quot; href=&quot;http://www.zhihu.com/people/b71ef864836f5f6ca5cd0974c1268e59&quot; class=&quot;member_mention&quot; data-editable=&quot;true&quot; data-title=&quot;@freestyle&quot; data-tip=&quot;p$b$b71ef864836f5f6ca5cd0974c1268e59&quot;&gt;@freestyle&lt;/a&gt;邀，回答下问题，顺带给新版的知乎助手打下广告&lt;br&gt;直接使用我在&lt;a href=&quot;http://www.zhihu.com/question/22719537/answer/22733181&quot; class=&quot;internal&quot;&gt;如何保存某位知乎用户的所有答案？&lt;/a&gt;所提供的知乎助手即可，目前知乎助手可以提取用户/收藏夹/话题精华下的所有回答并&lt;b&gt;直接输出为Epub电子书&lt;/b&gt;（带图片，与知乎日报的样式相近） &lt;br&gt;然后，申请 &lt;a data-hash=&quot;6733f12c60e7e98ea7491f20de46f79e&quot; href=&quot;http://www.zhihu.com/people/6733f12c60e7e98ea7491f20de46f79e&quot; class=&quot;member_mention&quot; data-editable=&quot;true&quot; data-title=&quot;@周源&quot; data-tip=&quot;p$b$6733f12c60e7e98ea7491f20de46f79e&quot;&gt;@周源&lt;/a&gt;开发一下答案更新提醒功能，当作者更新答案后可以选择把答案重新提交到所有赞同过这个答案人的时间线上一次，要不还得专门跑过来答题。以及，为什么在回答的时候怎么@都@不到你，只能@到周源或者zhouyuan，各种重名。。。可否设置成@+知乎主页地址就能直接@到对应用户呢？盼改进~&lt;br&gt;好吧，跑题了╮（￣▽￣）╭&lt;br&gt;欢迎使用新版知乎助手~&lt;br&gt;&lt;a href=&quot;http://pan.baidu.com/s/1eQ7UiEQ&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;ZhihuHelp2014年5月5日.zip_免费高速下载&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;&lt;br&gt;-
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-05-05" target="_blank" href="/question/23478854/answer/25252930">编辑于 2014-05-05</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+-谢 <a data-hash="b71ef864836f5f6ca5cd0974c1268e59" href="http://www.zhihu.com/people/b71ef864836f5f6ca5cd0974c1268e59" class="member_mention" data-editable="true" data-title="@freestyle" data-tip="p$b$b71ef864836f5f6ca5cd0974c1268e59">@freestyle</a>邀，回答下问题，顺带给新版的知乎助手打下广告直接使用我在<a href="http://www.zhihu.com/question/22719537/answer/22733181" class="internal">如何保存某位知乎用户的所有答案？</a>所提供的知乎助手即可，目前知乎助手可以提取用户/收藏夹/话题精华下的所有回答并<b>直接输出为Epub电子书</b>（带图片，与知乎日报的样式相近） 然后，…
+
+<a href="/question/23478854/answer/25252930" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-1572908"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>9 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1387208389">
+<h2><a class="question_link" href="/question/22261082/answer/20902036">为什么知乎上有很多人推荐舒伯乐耳机？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="3556561"
+data-atoken="20902036"
+data-collapsed="0"
+data-created="1387208389"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-3556561"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="8">8</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic3.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="8">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$200" href="http://www.zhihu.com/people/200" class="zg-link" title="亦行">亦行</a>、</span><span class="user-block"><a data-tip="p$t$isla" href="http://www.zhihu.com/people/isla" class="zg-link" title="isla">isla</a>、</span><span class="user-block"><a data-tip="p$t$zhang-wang-80-83" href="http://www.zhihu.com/people/zhang-wang-80-83" class="zg-link" title="张网">张网</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="1085353" data-action="/answer/content">
+
+<textarea class="content hidden">
+-&lt;br&gt;&lt;br&gt;因为 舒伯乐 的Hd381耳机&lt;b&gt;确实好&lt;/b&gt;，真的是那种听完后觉得整个世界都不一样的感觉&lt;br&gt;当然，他的质量的确&lt;b&gt;不算太好&lt;/b&gt;，在我用了两个月之后右耳耳塞就坏掉了&lt;br&gt;但重点在于：&lt;br&gt;1、截至到目前为止我没有一款耳机能用半年以上，所以这款耳机两个月的生存期在我的感觉里已经合格了&lt;br&gt;2、它&lt;b&gt;确实&lt;/b&gt;带给了我一个全新的世界&lt;br&gt;3、坏了之后还可以修，只需要交来回运费就行，我认为这相当值。&lt;br&gt;如果有任何人能推荐一款与舒伯乐一样音质而且能用半年以上200块钱以下的耳机的话，我想我会去试一试的，但是，&lt;b&gt;有吗&lt;/b&gt;？&lt;br&gt;&lt;br&gt;要是连更好的选择都没有的话&lt;br&gt;&lt;br&gt;那还吐槽个毛线啊&lt;br&gt;&lt;br&gt;2013年12月23日update：&lt;br&gt; 舒伯乐 耳机返修记录&lt;br&gt;&lt;img src=&quot;http://pic1.zhimg.com/5e7b3c0b9fa7197c9ec89d3c11a4a263_b.jpg&quot; data-rawwidth=&quot;955&quot; data-rawheight=&quot;561&quot; class=&quot;origin_image zh-lightbox-thumb&quot; width=&quot;955&quot; data-original=&quot;http://pic4.zhimg.com/5e7b3c0b9fa7197c9ec89d3c11a4a263_r.jpg&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://pic1.zhimg.com/03106a69e294a6b62bc8de1a84171b09_b.jpg&quot; data-rawwidth=&quot;600&quot; data-rawheight=&quot;439&quot; class=&quot;origin_image zh-lightbox-thumb&quot; width=&quot;600&quot; data-original=&quot;http://pic1.zhimg.com/03106a69e294a6b62bc8de1a84171b09_r.jpg&quot;&gt;从16号收件到21号修好送回，舒伯乐的速度还是蛮快的，除了一点——&lt;br&gt;60来块的东西你发毛线的顺丰啊！！！来回运费花了34啊啊啊啊&lt;br&gt;(&amp;gt;_&amp;lt;) &lt;br&gt;2014年2月18日21:15:32update:&lt;br&gt;昨天跑步的时候右耳塞又坏了，看来还真是两个月坏一次。。。&lt;br&gt;鉴于来回运费实在太贵，我决定等左耳塞也坏掉之后再换，泪TT&lt;br&gt;-
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2013-12-16" target="_blank" href="/question/22261082/answer/20902036">编辑于 2014-02-18</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+<img src="http://pic4.zhimg.com/5e7b3c0b9fa7197c9ec89d3c11a4a263_xld.jpg" data-rawwidth="955" data-rawheight="561" class="origin_image inline-img zh-lightbox-thumb" data-original="http://pic1.zhimg.com/5e7b3c0b9fa7197c9ec89d3c11a4a263_r.jpg">
+-因为 舒伯乐 的Hd381耳机<b>确实好</b>，真的是那种听完后觉得整个世界都不一样的感觉当然，他的质量的确<b>不算太好</b>，在我用了两个月之后右耳耳塞就坏掉了但重点在于：1、截至到目前为止我没有一款耳机能用半年以上，所以这款耳机两个月的生存期在我的感觉里已经合…
+
+<a href="/question/22261082/answer/20902036" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-1085353"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>60 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1360122277">
+<h2><a class="question_link" href="/question/20749386/answer/16106700">怎么才能自然地和女生牵手？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1572104"
+data-atoken="16106700"
+data-collapsed="0"
+data-created="1360122277"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1572104"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="7">7</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="7">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$hao-bo-12" href="http://www.zhihu.com/people/hao-bo-12" class="zg-link" title="郝博">郝博</a>、</span><span class="user-block"><a data-tip="p$t$lin-kai-44-88" href="http://www.zhihu.com/people/lin-kai-44-88" class="zg-link" title="林凯">林凯</a>、</span><span class="user-block"><a data-tip="p$t$bruce-24" href="http://www.zhihu.com/people/bruce-24" class="zg-link" title="Bruce">Bruce</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="480202" data-action="/answer/content">
+
+<textarea class="content hidden">
+该问题要分情况讨论&lt;br&gt;&lt;br&gt;天冷：&lt;br&gt;唔，好冷啊，帮你暖暖手吧。（生命中40%的牵手经历都是这么来的）&lt;br&gt;&lt;br&gt;&lt;br&gt;天热：&lt;br&gt;“额，热？”  &lt;br&gt; “恩”。    &lt;br&gt;“一等”（跑水管处用凉水猛冰手）   &lt;br&gt;三分钟之后……&lt;br&gt;“来，抓住我的手~” （火车上某次经历）&lt;br&gt;&lt;br&gt;&lt;br&gt;天不冷不热：&lt;br&gt;我去，公交到了！赶紧过来！（然后一把抓住，拉着往前跑……）&lt;br&gt;or&lt;br&gt;”陪我做个试验吧“&lt;br&gt;”嗯？“&lt;br&gt;”我看看我还会不会激动“&lt;br&gt;”嗯？“&lt;br&gt;拉过来，握住……&lt;br&gt;&lt;br&gt;&lt;br&gt;以上……
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/20749386/answer/16106700">发布于 2013-02-06</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+该问题要分情况讨论天冷：唔，好冷啊，帮你暖暖手吧。（生命中40%的牵手经历都是这么来的）天热：“额，热？” “恩”。 “一等”（跑水管处用凉水猛冰手） 三分钟之后……“来，抓住我的手~” （火车上某次经历）天不冷不热：我去，公交到了！赶紧过来！（…
+
+<a href="/question/20749386/answer/16106700" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-480202"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1379341839">
+<h2><a class="question_link" href="/question/20665400/answer/18906546">各地名小吃有哪些不为外人所知的真相？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="2738706"
+data-atoken="18906546"
+data-collapsed="0"
+data-created="1379341839"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-2738706"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="6">6</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic4.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="6">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$jessy-sun" href="http://www.zhihu.com/people/jessy-sun" class="zg-link" title="jessy sun">jessy sun</a>、</span><span class="user-block"><a data-tip="p$t$doll-zoe" href="http://www.zhihu.com/people/doll-zoe" class="zg-link" title="doll zoe">doll zoe</a>、</span><span class="user-block"><a data-tip="p$t$yun-jing-14" href="http://www.zhihu.com/people/yun-jing-14" class="zg-link" title="云竞">云竞</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="446555" data-action="/answer/content">
+
+<textarea class="content hidden">
+青岛表示王姐烧烤的鱿鱼其实很一般，劈材院里的豆腐脑是小城市里小巷里的水平，至于青岛所有的路边臭豆腐摊——谁吃谁知道。。。正儿八经的。。。灾难。。。
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/20665400/answer/18906546">发布于 2013-09-16</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+青岛表示王姐烧烤的鱿鱼其实很一般，劈材院里的豆腐脑是小城市里小巷里的水平，至于青岛所有的路边臭豆腐摊——谁吃谁知道。。。正儿八经的。。。灾难。。。
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-446555"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>13 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1367482295">
+<h2><a class="question_link" href="/question/21005935/answer/16879846">你觉得哪句诗或词最虐心？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1884805"
+data-atoken="16879846"
+data-collapsed="0"
+data-created="1367482295"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1884805"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="5">5</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="5">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$li-shang-yin-46" href="http://www.zhihu.com/people/li-shang-yin-46" class="zg-link" title="李商隐">李商隐</a>、</span><span class="user-block"><a data-tip="p$t$li-mang-guo-27" href="http://www.zhihu.com/people/li-mang-guo-27" class="zg-link" title="李芒果">李芒果</a>、</span><span class="user-block"><a data-tip="p$t$xiang-wang-40" href="http://www.zhihu.com/people/xiang-wang-40" class="zg-link" title="向往">向往</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="582841" data-action="/answer/content">
+
+<textarea class="content hidden">
+何日功成名遂了，还乡，醉笑陪公三万场！
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/21005935/answer/16879846">发布于 2013-05-02</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+何日功成名遂了，还乡，醉笑陪公三万场！
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-582841"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1349763421">
+<h2><a class="question_link" href="/question/20519638/answer/15363530">被阉割的男子长胡子吗？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1272680"
+data-atoken="15363530"
+data-collapsed="0"
+data-created="1349763421"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1272680"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="5">5</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="5">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$andrew-62" href="http://www.zhihu.com/people/andrew-62" class="zg-link" title="刘安">刘安</a>、</span><span class="user-block"><a data-tip="p$t$fu-er" href="http://www.zhihu.com/people/fu-er" class="zg-link" title="负二">负二</a>、</span><span class="user-block"><a data-tip="p$t$feng-qing-38" href="http://www.zhihu.com/people/feng-qing-38" class="zg-link" title="风清">风清</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="388366" data-action="/answer/content">
+
+<textarea class="content hidden">
+贯状魁梧，伟观视，颐下生须十数，皮骨劲如铁，不类阉人。——宋史，童贯，&lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://baike.baidu.com/view/81863.htm&quot; class=&quot; external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;&lt;span class=&quot;invisible&quot;&gt;http://&lt;/span&gt;&lt;span class=&quot;visible&quot;&gt;baike.baidu.com/view/81&lt;/span&gt;&lt;span class=&quot;invisible&quot;&gt;863.htm&lt;/span&gt;&lt;span class=&quot;ellipsis&quot;&gt;&lt;/span&gt;&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;      童贯条&lt;br&gt;&lt;br&gt;PS：男性的主要雄激素为睾丸酮，95%是由睾丸间质细胞分泌，5%由肾上腺分泌。阉割只是去除睾丸，但是肾上腺依旧可以分泌出雄性激素，所以，被阉割的人在理论上也是可以长胡子的……&lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://baike.baidu.com/view/179581.htm&quot; class=&quot; external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;&lt;span class=&quot;invisible&quot;&gt;http://&lt;/span&gt;&lt;span class=&quot;visible&quot;&gt;baike.baidu.com/view/17&lt;/span&gt;&lt;span class=&quot;invisible&quot;&gt;9581.htm&lt;/span&gt;&lt;span class=&quot;ellipsis&quot;&gt;&lt;/span&gt;&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;    雄性激素条
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2012-10-09" target="_blank" href="/question/20519638/answer/15363530">编辑于 2012-10-09</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+贯状魁梧，伟观视，颐下生须十数，皮骨劲如铁，不类阉人。——宋史，童贯，<a href="http://baike.baidu.com/view/81863.htm" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">baike.baidu.com/view/81</span><span class="invisible">863.htm</span><span class="ellipsis"></span><i class="icon-external"></i></a> 童贯条PS：男性的主要雄激素为睾丸酮，95%是由睾丸间质细胞分泌，5%由肾上腺分泌。阉割只是去除睾丸，但是肾上腺依旧可以分泌出雄性激素，所以，被阉割的人在…
+
+<a href="/question/20519638/answer/15363530" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-388366"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1399130945">
+<h2><a class="question_link" href="/question/20869340/answer/25185901">哪些真相你知道的时候眼泪都要掉下来？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="5367749"
+data-atoken="25185901"
+data-collapsed="0"
+data-created="1399130945"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-5367749"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="4">4</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic2.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="4">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$tim-xu-87" href="http://www.zhihu.com/people/tim-xu-87" class="zg-link" title="TIM XU">TIM XU</a>、</span><span class="user-block"><a data-tip="p$t$gu-cheng-13" href="http://www.zhihu.com/people/gu-cheng-13" class="zg-link" title="顾城">顾城</a>、</span><span class="user-block"><a data-tip="p$t$zhang-trouble" href="http://www.zhihu.com/people/zhang-trouble" class="zg-link" title="张trouble">张trouble</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="528275" data-action="/answer/content">
+
+<textarea class="content hidden">
+藏獒是勤劳勇敢的藏族同胞养大之后用来。。。吃肉的。。。&lt;br&gt;&lt;a href=&quot;http://baike.baidu.com/view/597569.htm&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;肉狗_百度百科&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;&lt;blockquote&gt;国内品种&lt;a href=&quot;http://baike.baidu.com/view/597569.htm#&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;编辑&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;藏獒&lt;br&gt;藏獒，又名藏狗、蕃狗、龙狗、羌狗，原产于中国&lt;a href=&quot;http://baike.baidu.com/view/4979.htm&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;青藏高原&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;，是一种高大、凶猛、垂耳的&lt;a href=&quot;http://baike.baidu.com/view/1263712.htm&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;家犬&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;。身长约120厘米左右，体毛粗硬，丰厚，外层披毛不太长，底毛在寒冷的气候条件下，则浓密且软如羊毛，耐寒冷，能在冰雪中安然入睡。而在温暖的气候条件下，则非常稀少。智商不高，性格刚毅，力大凶猛，野性尚存，使人望而生畏。护领地，护食物，善攻击，对&lt;a href=&quot;http://baike.baidu.com/view/289885.htm&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;陌生人&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;有强烈敌意，但对&lt;a href=&quot;http://baike.baidu.com/view/53194.htm&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;主人&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;极为亲热。&lt;b&gt;以前是藏区人民的肉狗，有因商人炒作，成为今日最商业化的狗&lt;/b&gt;。&lt;/blockquote&gt;
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/20869340/answer/25185901">发布于 2014-05-03</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+藏獒是勤劳勇敢的藏族同胞养大之后用来。。。吃肉的。。。<a href="http://baike.baidu.com/view/597569.htm" class=" wrap external" target="_blank" rel="nofollow noreferrer">肉狗_百度百科<i class="icon-external"></i></a>国内品种<a href="http://baike.baidu.com/view/597569.htm#" class=" wrap external" target="_blank" rel="nofollow noreferrer">编辑<i class="icon-external"></i></a>藏獒藏獒，又名藏狗、蕃狗、龙狗、羌狗，原产于中国<a href="http://baike.baidu.com/view/4979.htm" class=" wrap external" target="_blank" rel="nofollow noreferrer">青藏高原<i class="icon-external"></i></a>，是一种高大、凶猛、垂耳的<a href="http://baike.baidu.com/view/1263712.htm" class=" wrap external" target="_blank" rel="nofollow noreferrer">家犬<i class="icon-external"></i></a>。身长约120厘米左右，体毛粗硬，丰厚，外层披毛不太长，底毛在寒冷的气候条件…
+
+<a href="/question/20869340/answer/25185901" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-528275"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1363072415">
+<h2><a class="question_link" href="/question/20605956/answer/16359665">做不了俯卧撑的话，该从哪几项先分别锻炼起？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1674403"
+data-atoken="16359665"
+data-collapsed="0"
+data-created="1363072415"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1674403"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="4">4</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic2.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="4">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$le-yuan-92-95" href="http://www.zhihu.com/people/le-yuan-92-95" class="zg-link" title="乐元">乐元</a>、</span><span class="user-block"><a data-tip="p$t$zhang-trouble" href="http://www.zhihu.com/people/zhang-trouble" class="zg-link" title="张trouble">张trouble</a>、</span><span class="user-block"><a data-tip="p$t$chen-ying-44-33" href="http://www.zhihu.com/people/chen-ying-44-33" class="zg-link" title="沉影">沉影</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="422807" data-action="/answer/content">
+
+<textarea class="content hidden">
+每天只做一个，关键在于，坚持。&lt;br&gt;我是从高三开始做的，那时候体质很差，一次只能做五个，每天晚上做一次，然后就一直坚持呗，现在大二了，一次能做100多个（分五组，用俯卧撑教练计的数）&lt;br&gt;就酱。&lt;br&gt;╮(╯▽╰)╭
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/20605956/answer/16359665">发布于 2013-03-12</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+每天只做一个，关键在于，坚持。我是从高三开始做的，那时候体质很差，一次只能做五个，每天晚上做一次，然后就一直坚持呗，现在大二了，一次能做100多个（分五组，用俯卧撑教练计的数）就酱。╮(╯▽╰)╭
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-422807"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>1 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1360288597">
+<h2><a class="question_link" href="/question/20755916/answer/16117278">为什么被人质问心虚时会想笑？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1576429"
+data-atoken="16117278"
+data-collapsed="0"
+data-created="1360288597"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1576429"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="4">4</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic3.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="4">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zhang-trouble" href="http://www.zhihu.com/people/zhang-trouble" class="zg-link" title="张trouble">张trouble</a>、</span><span class="user-block"><a data-tip="p$t$yang-jin-67-36" href="http://www.zhihu.com/people/yang-jin-67-36" class="zg-link" title="杨进">杨进</a>、</span><span class="user-block"><a data-tip="p$t$song-yang-bo" href="http://www.zhihu.com/people/song-yang-bo" class="zg-link" title="宋洋博">宋洋博</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="482813" data-action="/answer/content">
+
+<textarea class="content hidden">
+&lt;blockquote&gt;笑声除了表达快乐的感觉外，也是用来掩饰真实情绪的主要方式，例如当在团体生活的人类被同类在心理上被攻击时，受害者若无法逆转对自己不利的局面的话，他会以笑来掩饰对自己不利的气氛和情绪；部分人类在做对团体/其他个体不利的行为时，会透过笑产生的&lt;a href=&quot;http://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B7%B4%E8%83%BA&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;多巴胺&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;来压抑令他感到不安/罪恶感的化学物质。&lt;/blockquote&gt;&lt;br&gt;转引自维基百科—笑词条&lt;br&gt;&lt;a href=&quot;http://zh.wikipedia.org/wiki/%E7%AC%91&quot; class=&quot; external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;&lt;span class=&quot;invisible&quot;&gt;http://&lt;/span&gt;&lt;span class=&quot;visible&quot;&gt;zh.wikipedia.org/wiki/%&lt;/span&gt;&lt;span class=&quot;invisible&quot;&gt;E7%AC%91&lt;/span&gt;&lt;span class=&quot;ellipsis&quot;&gt;&lt;/span&gt;&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;&lt;br&gt;PS：以往在听心理讲座的时候，也曾听说过笑是人类的心理防御机制的一种的说法。
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2013-02-08" target="_blank" href="/question/20755916/answer/16117278">编辑于 2013-02-08</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+笑声除了表达快乐的感觉外，也是用来掩饰真实情绪的主要方式，例如当在团体生活的人类被同类在心理上被攻击时，受害者若无法逆转对自己不利的局面的话，他会以笑来掩饰对自己不利的气氛和情绪；部分人类在做对团体/其他个体不利的行为时，会透过笑产生的<a href="http://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B7%B4%E8%83%BA" class=" wrap external" target="_blank" rel="nofollow noreferrer">多…<i class="icon-external"></i></a>
+
+<a href="/question/20755916/answer/16117278" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-482813"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1383808068">
+<h2><a class="question_link" href="/question/21978948/answer/19917298">慢跑跑多快合适？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="3151158"
+data-atoken="19917298"
+data-collapsed="0"
+data-created="1383808068"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-3151158"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="3">3</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic4.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="3">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$chuncan" href="http://www.zhihu.com/people/chuncan" class="zg-link" title="王春蚕">王春蚕</a>、</span><span class="user-block"><a data-tip="p$t$qnmtj" href="http://www.zhihu.com/people/qnmtj" class="zg-link" title="千年面条君">千年面条君</a>、</span><span class="user-block"><a data-tip="p$t$young-chen" href="http://www.zhihu.com/people/young-chen" class="zg-link" title="Young Chen">Young Chen</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="972459" data-action="/answer/content">
+
+<textarea class="content hidden">
+很多事情只要到火候了自然就能成，没必要刻意强求。&lt;br&gt;我是大一开始跑的，没有任何理论指导与基础，就只是每天下了自习之后从操场上跑跑。距离从刚开始只能跑两公里而且跑完后还累个半死一直到现在（大三）的轻轻松松一万米。我现在跑一万米的均速基本就是10km/h，这是一个很正常的数字，只要坚持的时间足够自然就能达到这个水平。所以，没啥好担心的，慢慢跑就是咯~
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2013-11-07" target="_blank" href="/question/21978948/answer/19917298">编辑于 2013-11-07</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+很多事情只要到火候了自然就能成，没必要刻意强求。我是大一开始跑的，没有任何理论指导与基础，就只是每天下了自习之后从操场上跑跑。距离从刚开始只能跑两公里而且跑完后还累个半死一直到现在（大三）的轻轻松松一万米。我现在跑一万米的均速基本就是10km…
+
+<a href="/question/21978948/answer/19917298" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-972459"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>3 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1365570536">
+<h2><a class="question_link" href="/question/20934289/answer/16651694">所谓的消毒液到底是消灭细菌还是消灭病毒？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1792589"
+data-atoken="16651694"
+data-collapsed="0"
+data-created="1365570536"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1792589"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="3">3</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="3">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$kao-zi-qiang-86" href="http://www.zhihu.com/people/kao-zi-qiang-86" class="zg-link" title="考自强">考自强</a>、</span><span class="user-block"><a data-tip="p$t$jia-mu-24" href="http://www.zhihu.com/people/jia-mu-24" class="zg-link" title="嘉木">嘉木</a>、</span><span class="user-block"><a data-tip="p$t$sw-flu" href="http://www.zhihu.com/people/sw-flu" class="zg-link" title="谭大毛">谭大毛</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="554232" data-action="/answer/content">
+
+<textarea class="content hidden">
+-&lt;br&gt;有些消毒液确实可以做到同时杀灭细菌与病毒。&lt;br&gt;&lt;br&gt;细菌的组成成分和人类似（水、糖、蛋白质【到处都有】、核苷酸【细菌生长的关键】、脂质【构成细胞膜】、），病毒则主要是由蛋白质和核苷酸构成。所以，只要消毒液能破坏掉蛋白质或核苷酸的生理活性，就可以认为它能够同时消灭细菌与病毒。&lt;br&gt;&lt;br&gt;具体的破坏方法根据消毒剂的种类各有不同，常见的是利用消毒液的强氧化性（比如84）去完成消毒过程。实际效果可以想象成你在拿着一台火焰喷射器去烤鸡蛋，只要温度足够高，鸡蛋失去生理活性（孵出小鸡）也就是分分钟的事儿。&lt;br&gt;&lt;br&gt;恩哼~&lt;br&gt;&lt;br&gt;PS：参考资料&lt;br&gt;&lt;br&gt;&lt;blockquote&gt;A、氧化类&lt;br&gt;杀菌机理是释放出新生态原子氧、氧化菌体中的活性基团；杀菌特点是作用快而强，能杀死所有微生物，包括细菌芽孢、病毒。以表面消毒为主，如二氧化氯、双氧水、臭氧、次氯酸钠等，该类消毒剂为灭菌剂。&lt;br&gt;B、醛类&lt;br&gt;杀菌机理是使蛋白变性或烷基化；杀菌特点是对细菌、芽孢、真菌、病毒均有效。但温度影响较大。如甲醛、戊二醛等。该类消毒剂可做灭菌剂使用。&lt;br&gt;C、酚类&lt;br&gt;杀菌机理是使蛋白变性、沉淀或使酶系统失活；杀菌特点是对真菌和部分病毒有效。&lt;br&gt;D、醇类&lt;br&gt;杀菌机理是使蛋白变性,干扰代谢；杀菌特点是对细菌有效，对芽孢、真菌、病毒无效，如乙醇、乙丙醇等。该类消毒剂为中效消毒剂，只能用于一般性消毒。&lt;br&gt;E、碱、盐类&lt;br&gt;杀菌机理是使蛋白变性、沉淀或溶解；杀菌特点是能杀死细菌繁殖体，能杀死细菌芽孢、病毒和一些难杀死的微生物。杀菌作用强，有强腐蚀性，如氢氧化钠，氧化钙，食盐（无腐蚀性）等。一般只能作为预防消毒液和灭菌洗涤液。&lt;br&gt;F、卤素类&lt;br&gt;杀菌机理是氧化菌体中的活性基因，与氨基结合使蛋白变性；特点是能杀死大部分微生物，以表面消毒为主，性质不稳定，杀菌效果受环境条件影响大，如次氯酸钠、优氯净等。该类消毒剂为中效消毒液，可以作为一般消毒剂使用。&lt;br&gt;G、表面活性剂类&lt;br&gt;杀菌机理是改变细胞膜透性，使细胞质外漏，妨碍呼吸或使蛋白酶变性；杀菌特点是能杀死细菌繁殖体，但对芽孢、真菌、病毒、结核病菌作用差。碱性、中性条件下效果好，如新洁尔灭、百毒杀等。该类消毒剂为中低效消毒剂，可以作为一般消毒剂使用。&lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://baike.baidu.com/view/1776044.htm&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;消毒液_百度百科&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/blockquote&gt;-
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2013-04-10" target="_blank" href="/question/20934289/answer/16651694">编辑于 2013-04-10</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+-有些消毒液确实可以做到同时杀灭细菌与病毒。细菌的组成成分和人类似（水、糖、蛋白质【到处都有】、核苷酸【细菌生长的关键】、脂质【构成细胞膜】、），病毒则主要是由蛋白质和核苷酸构成。所以，只要消毒液能破坏掉蛋白质或核苷酸的生理活性，就可以认…
+
+<a href="/question/20934289/answer/16651694" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-554232"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1361847802">
+<h2><a class="question_link" href="/question/19928377/answer/16232193">社会学怎么入门？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1622788"
+data-atoken="16232193"
+data-collapsed="0"
+data-created="1361847802"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1622788"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="3">3</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic1.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic4.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="3">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$lilyizzh" href="http://www.zhihu.com/people/lilyizzh" class="zg-link" title="lilyizzh">lilyizzh</a>、</span><span class="user-block"><a data-tip="p$t$mengkai" href="http://www.zhihu.com/people/mengkai" class="zg-link" title="孟開">孟開</a>、</span><span class="user-block"><a data-tip="p$t$spoontzc" href="http://www.zhihu.com/people/spoontzc" class="zg-link" title="湖上骑士">湖上骑士</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="151398" data-action="/answer/content">
+
+<textarea class="content hidden">
+买本《社会学的邀请》，非常好的一本入门书，看这本书的时候我说的最多的一句话就是：原来是这样！&lt;br&gt;&lt;br&gt;豆瓣链接：&lt;a href=&quot;http://book.douban.com/subject/3215660/&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;社会学的邀请 (豆瓣)&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;   8.1/10&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://pic2.zhimg.com/43a3e1ffbea18258c38ce30507d18818_b.jpg&quot; data-rawwidth=&quot;300&quot; data-rawheight=&quot;444&quot; class=&quot;content_image&quot; width=&quot;300&quot;&gt;
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/19928377/answer/16232193">发布于 2013-02-26</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+<img src="http://pic1.zhimg.com/43a3e1ffbea18258c38ce30507d18818_xld.jpg" data-rawwidth="300" data-rawheight="444" class="origin_image inline-img zh-lightbox-thumb" data-original="http://pic1.zhimg.com/43a3e1ffbea18258c38ce30507d18818_r.jpg">
+买本《社会学的邀请》，非常好的一本入门书，看这本书的时候我说的最多的一句话就是：原来是这样！豆瓣链接：<a href="http://book.douban.com/subject/3215660/" class=" wrap external" target="_blank" rel="nofollow noreferrer">社会学的邀请 (豆瓣)<i class="icon-external"></i></a> 8.1/10
+
+<a href="/question/19928377/answer/16232193" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-151398"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1348493266">
+<h2><a class="question_link" href="/question/20290459/answer/15291882">男友告诉我每次想到我出轨的情形就会很性奋，这是怎么一回事？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1243914"
+data-atoken="15291882"
+data-collapsed="0"
+data-created="1348493266"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1243914"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="3">3</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic2.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="3">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$ff-df" href="http://www.zhihu.com/people/ff-df" class="zg-link" title="ff df">ff df</a>、</span><span class="user-block"><a data-tip="p$t$tan-jun-92-5" href="http://www.zhihu.com/people/tan-jun-92-5" class="zg-link" title="谭俊">谭俊</a>、</span><span class="user-block"><a data-tip="p$t$xie-ping-fan" href="http://www.zhihu.com/people/xie-ping-fan" class="zg-link" title="谢平凡">谢平凡</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="296444" data-action="/answer/content">
+
+<textarea class="content hidden">
+       类似这种立即交配的行为，其实是在精子战争中获胜的一种重要策略（请参阅场景21）。如果第二次和第一次交尾时间相隔太久，来自第一次交配的精子就有足够时间游出精液池。这些精子大军因此便有机会遍布于雌性的整个生殖器官之中，它们不但会堵住子宫颈粘液的通道，还能把子宫颈里的精子储藏库装满，同时，它们也会为精子杀手和取卵者开通数日之后所必需的通道。另一方面，如果雄性配偶尽快进行第二次交尾，它的精子军队就有可能在雌性配偶体内争取优势。根据对老鼠的研究表明，在这场精子竞赛中，每一秒钟都是关键时刻。与第二次交尾时间相隔越久，由第一次交尾产生的下一代数目就越多。 &lt;br&gt;&lt;br&gt;　　&lt;b&gt;老鼠、猴子以及人类，看到同类正在进行性交时都会感到兴奋，也正是由于这个原因。&lt;/b&gt;雄性动物这时不仅阴茎勃起，有时甚至连精子也会充溢在尿道之中。人类的性行为从各方面来看，都差不多与此相同，另外，人类会被色情图片所吸引，也是为了在精子战争中求胜的一种行为表现。 &lt;br&gt;&lt;br&gt;　　为了避免因配偶的不忠而付出代价，男性除了随时对配偶的不忠讯号保持警戒外，还要尽量不让配偶有这种机会，同时，他还会用抛弃或复仇等手段来威胁配偶。如果男性发现了配偶不忠的征兆，他对配偶的监视与威胁就会变本加厉。但只有在配偶真的发生了不忠行为时，男性才会去实施那些威胁手段。尽管如此，如果这名男性从繁衍子孙的角度上来考虑，他会觉得跟现有的配偶继续生活要强过另找对象，这时他就会减轻对配偶的威胁。 &lt;br&gt;&lt;br&gt;                                                                                                   ——《精子战争》，场景9
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2012-09-24" target="_blank" href="/question/20290459/answer/15291882">编辑于 2012-09-24</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+类似这种立即交配的行为，其实是在精子战争中获胜的一种重要策略（请参阅场景21）。如果第二次和第一次交尾时间相隔太久，来自第一次交配的精子就有足够时间游出精液池。这些精子大军因此便有机会遍布于雌性的整个生殖器官之中，它们不但会堵住子宫颈粘液的…
+
+<a href="/question/20290459/answer/15291882" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-296444"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1404993125">
+<h2><a class="question_link" href="/question/22113980/answer/27807776">三门问题的疑问？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="6462324"
+data-atoken="27807776"
+data-collapsed="0"
+data-created="1404993125"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-6462324"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="1">1</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic2.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$tud0u" href="http://www.zhihu.com/people/tud0u" class="zg-link" title="tud0uyo">tud0uyo</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="1026422" data-action="/answer/content">
+
+<textarea class="content hidden">
+这的确是一个反直觉的问题，我在写脚本验证之前一直与题主持相同观点，直到用脚本实际验证了一下~&lt;br&gt;语言版本python2.7，代码如下，参照『#』后面的注释很容易明白我们在哪一步上出现了理解错误&lt;br&gt;：）&lt;br&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot;&gt;# -*- coding: utf-8 -*-
+from __future__ import division  
+import random
+size    =   1000   #门的数量
+times   =   10000   #试验次数
+def NoChangeTest(size=100):    
+    goal        =   random.randint(1,size)  #正确结果，从1~size(1000)之间随机生成
+
+    guess       =   random.randint(1,size)  #猜测结果，从1~size(1000)之间随机生成
+
+    if  goal==guess:
+        return  True#最后只剩下两个门，若猜测结果与正确结果相等，则返回真，试验成功(意即两次生成的随机数相同)
+    else:
+        return  False#猜测结果与正确结果不等，试验失败，返回假
+runcount        =   0#初始化试验次数
+successcount    =   0#初始化成功次数
+while runcount &amp;lt; times:
+    runcount+=1
+    if  NoChangeTest(size):
+        successcount+=1#试验成功则加一
+print   u&quot;在不交换的情况下,成功的概率为%d/%d = %s&quot; %(successcount,times,(successcount/times))#输出结果
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;br&gt;从代码上看，这个问题等价于：&lt;b&gt;在1~n之间随机生成两个数，两个数相等的概率是多少？ &lt;/b&gt;这样的话，答案就明显多了~ 
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2014-07-10" target="_blank" href="/question/22113980/answer/27807776">编辑于 2014-07-22</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+这的确是一个反直觉的问题，我在写脚本验证之前一直与题主持相同观点，直到用脚本实际验证了一下~语言版本python2.7，代码如下，参照『#』后面的注释很容易明白我们在哪一步上出现了理解错误：）# -*- coding: utf-8 -*-
+from __future__ import division 
+…
+
+<a href="/question/22113980/answer/27807776" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-1026422"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1387983794">
+<h2><a class="question_link" href="/question/22365895/answer/21132160">知乎现在难道有刷赞同的脚本？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="3649718"
+data-atoken="21132160"
+data-collapsed="0"
+data-created="1387983794"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-3649718"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="1">1</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic4.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="随手举报净化知乎" class="zu-question-my-bio">随手举报净化知乎</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$waypig" href="http://www.zhihu.com/people/waypig" class="zg-link" title="亚光">亚光</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="1127261" data-action="/answer/content">
+
+<textarea class="content hidden">
+所有点赞同的都是0关注，0回答的新用户，肯定是刷的无疑。&lt;br&gt;不过刷赞也不用写脚本，太麻烦，用python存一下每个用户的登录cookie，执行n次urlopen就能点n个赞。它15分钟才刷完，技术明显不过关啊&lt;br&gt;至于解决方案嘛，请参考我的签名&lt;br&gt;嗯
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2013-12-25" target="_blank" href="/question/22365895/answer/21132160">编辑于 2013-12-25</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+所有点赞同的都是0关注，0回答的新用户，肯定是刷的无疑。不过刷赞也不用写脚本，太麻烦，用python存一下每个用户的登录cookie，执行n次urlopen就能点n个赞。它15分钟才刷完，技术明显不过关啊至于解决方案嘛，请参考我的签名嗯
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-1127261"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>4 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1386126268">
+<h2><a class="question_link" href="/question/22184289/answer/20555618">作为末日论的支持者，当预料的末日没有降临时是什么感觉？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="3413090"
+data-atoken="20555618"
+data-collapsed="0"
+data-created="1386126268"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-3413090"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="1">1</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic3.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$zoglun" href="http://www.zhihu.com/people/zoglun" class="zg-link" title="baskice">baskice</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="1054569" data-action="/answer/content">
+
+<textarea class="content hidden">
+因为某些原因，我曾经在高三的暑假里很坚定地预期我会在上大学一个月内死去，于是那个假期我干了非常多的让我现在依然是一想起来就崩溃的事情。&lt;br&gt;2011年10月1号，我还活着，慢慢的也恢复了正常，但悲剧的是，11年6月到9月间我干的事我都清清楚楚地记得……&lt;br&gt;于是我就彻底崩溃了（&amp;gt;_&amp;lt;），无限内疚，不敢见人，一想起来之前自己做的事情就想一头撞死。。。花了两年，现在大概或许可能maybe好一些了。。。。。。。。。&lt;br&gt;&lt;br&gt;料末日论的真诚信仰者应如是 Orz
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2013-12-04" target="_blank" href="/question/22184289/answer/20555618">编辑于 2013-12-04</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+因为某些原因，我曾经在高三的暑假里很坚定地预期我会在上大学一个月内死去，于是那个假期我干了非常多的让我现在依然是一想起来就崩溃的事情。2011年10月1号，我还活着，慢慢的也恢复了正常，但悲剧的是，11年6月到9月间我干的事我都清清楚楚地记得……于…
+
+<a href="/question/22184289/answer/20555618" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-1054569"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>2 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1384609643">
+<h2><a class="question_link" href="/question/22046674/answer/20125219">做爱没带套，分手后发现怀孕，男方就一定应该付堕胎费吗？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="3235247"
+data-atoken="20125219"
+data-collapsed="1"
+data-created="1384609643"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-3235247"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="1">1</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic3.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic3.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$gu-gu-89-84" href="http://www.zhihu.com/people/gu-gu-89-84" class="zg-link" title="菰菇">菰菇</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="999523" data-action="/answer/content">
+
+<textarea class="content hidden">
+&lt;p&gt;愿赌服输&lt;/p&gt;
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/22046674/answer/20125219">发布于 2013-11-16</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+愿赌服输
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-999523"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1354723325">
+<h2><a class="question_link" href="/question/20639324/answer/15712326">对于电脑城里的卖家用类似欺诈的手段骗用户买价格与配置完全不相等的电脑这一情况，有什么办法可以维权么？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1413343"
+data-atoken="15712326"
+data-collapsed="0"
+data-created="1354723325"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1413343"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="1">1</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic3.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic2.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$luobo8023" href="http://www.zhihu.com/people/luobo8023" class="zg-link" title="萝卜">萝卜</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="436150" data-action="/answer/content">
+
+<textarea class="content hidden">
+表示我同学就被骗过。青岛百脑汇，一寝室六个人一起出去，买回来四台电脑。性价比最夸张的一台直接是5000+换了一部奔腾处理器的本（12年9月）。我知道之后大怒，于是带着那部5000+的电脑去要求换货。最终又加了1000元换了部东芝7000元的本。（结果比较失败，主要是到最后的时候懈怠了，望各位引以为鉴）&lt;br&gt;&lt;br&gt;我方优势：&lt;br&gt;1、主动。电脑城方不知道我们到底会使用多少维权渠道。他们只能猜测，而未知的威胁必然会带来恐惧。&lt;br&gt;2、成本优势。我方检举电脑城方几乎为0成本，但是一旦有关部门来查一次，光招待费就已经远远超过了他们所能在我们身上所取得的利润。&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;电脑城方优势：&lt;br&gt;1、消费过程没有漏洞。无从检举。&lt;br&gt;2、消费者必须要与电脑城方达成妥协，否则消费者方的损失比例会最大。&lt;br&gt;3.、专业。对于一般的消费者，完全可以一口咬定奔腾处理器是最快的处理器，基本随便甩几个晶体管之类的专业术语维权的人就只有愣在那里的分了。&lt;br&gt;4、如若退货，消费者是实质上的违约方。而且，完全可以用渠道内部禁止退货之类的理由来堵消费者，或者要求消费者给予更高的赔偿。&lt;br&gt;5、对于电脑故障，会要求走官方鉴定程序，消费者耗不起这个时间成本（动辄数月，且会要求消费者方承担检测费用，增加消费者方得维权成本）&lt;br&gt;6、……&lt;br&gt;……&lt;br&gt;n、……&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;总之，这完全是一个零和博弈，这种情况下的维权，就是要我们去当恶人的！&lt;/b&gt;&lt;br&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;br&gt;维权要点：&lt;br&gt;1、全程录音，最好两台手机一起录，然后让他们发现一台，以示威慑。&lt;br&gt;2、提出解决方案：1、我方退货，电脑城受损失，我方上策，电脑城方下策，2、我方换货，两方都只受一点损失，我方中策，电脑城方中策 ，3、拒绝退换货。我方下策，电脑城方&lt;b&gt;貌似&lt;/b&gt;上策。然后，把我方对于第三点的对应方案列出来：①最低限度的报复：向周围人讲自己的事。砸掉电脑城的牌子②中等程度上的报复：向工商局投诉，拨打12315等③最高限度上的报复：&lt;b&gt;不说&lt;/b&gt;（就是不说，利用未知去威胁他们，具体比如打砸抢什么的，自己心里知道就行）&lt;br&gt;3、时刻清楚双方都是在演戏这一事实，谁演的像谁赢。&lt;br&gt;4、喊个专业人士，至少在甩术语上不能输给他们。&lt;br&gt;5、商业谈判里常用的红黑脸之类的策略，尽情的用吧。&lt;br&gt;6、做好要花费大量时间的心理准备。那天我跟他从早上8点一直辩到下午3点，六个小时双方均未喝水吃饭。&lt;br&gt;7、不要以为搞定了柜台的那个就能赢，电脑城楼上的那个才是最终boss……（不排除那天我遇见演双簧的可能性。不过当时是真心累了，不想再捣鼓了，唉）&lt;br&gt;8、给自己设个止损线吧，过了止损线自己抽自己完了&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;谁让你不去京东商城的！！！！！&lt;/b&gt;&lt;br&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;以上……
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/20639324/answer/15712326">发布于 2012-12-06</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+表示我同学就被骗过。青岛百脑汇，一寝室六个人一起出去，买回来四台电脑。性价比最夸张的一台直接是5000+换了一部奔腾处理器的本（12年9月）。我知道之后大怒，于是带着那部5000+的电脑去要求换货。最终又加了1000元换了部东芝7000元的本。（结果比较失败…
+
+<a href="/question/20639324/answer/15712326" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-436150"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1349764411">
+<h2><a class="question_link" href="/question/20519975/answer/15363683">老听说有流星雨，同事说昨晚有，明晚还会有流星雨。但是有谁真的看见过吗？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1272734"
+data-atoken="15363683"
+data-collapsed="0"
+data-created="1349764411"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1272734"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="1">1</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic3.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic1.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block">匿名用户</span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="388497" data-action="/answer/content">
+
+<textarea class="content hidden">
+我曾经实际观测过两次流星雨。&lt;br&gt;&lt;br&gt;第一次是在09年暑假，由同学组织一起去看得英仙座流星雨，当时是在市内观看的，光污染比较严重。在11点至3点期间看到过三四颗流星，我们一行十多人大概看到了15颗左右的流星。&lt;br&gt;&lt;br&gt;第二次是去年冬天，哪个座的忘了，那一夜从10点到1点大概看见了5颗流星，其中有一颗3度那么宽的火流星，印象深刻。&lt;br&gt;&lt;br&gt;在市内观测流星雨实际上是很困难的。一个是光污染（预测值除以100大致是你在市内所能实际观测到的流星数量），一个是脖子问题……（须连续保持抬头状态，至少20分钟起） &lt;br&gt;&lt;br&gt;另外要说的一点是流星的速度比雨快多了，比眨眼都快，从那里感受人生还行，至于许愿什么的，还是洗洗睡吧：）&lt;br&gt;2012年10月11日0:34:45更新&lt;br&gt;也有慢的流星，今天就看见了一颗，整整持续了两秒钟，等我喊完了流星之后才消失。两秒的话，如果许愿念快点应该够了吧哈哈
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2012-10-09" target="_blank" href="/question/20519975/answer/15363683">编辑于 2012-10-11</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+我曾经实际观测过两次流星雨。第一次是在09年暑假，由同学组织一起去看得英仙座流星雨，当时是在市内观看的，光污染比较严重。在11点至3点期间看到过三四颗流星，我们一行十多人大概看到了15颗左右的流星。第二次是去年冬天，哪个座的忘了，那一夜从10点到1…
+
+<a href="/question/20519975/answer/15363683" class="toggle-expand">显示全部</a>
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-388497"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>7 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-item" id="mi-1348038091">
+<h2><a class="question_link" href="/question/20487112/answer/15264551">能否停止网页视频的加载？</a></h2>
+<div tabindex="-1" class="zm-item-answer zm-item-answer-owner"
+data-aid="1232950"
+data-atoken="15264551"
+data-collapsed="0"
+data-created="1348038091"
+data-deleted="0"
+data-isowner="1"
+data-helpful="1"
+>
+<a class="zg-anchor-hidden" name="answer-1232950"></a>
+
+<div class="zm-item-vote">
+<a name="expand" class="zm-item-vote-count" href="javascript:;" data-votecount="1">1</a>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="http://pic3.zhimg.com/da8e974dc_s.jpg"
+class="zm-list-avatar"
+data-source="http://pic4.zhimg.com/da8e974dc_s.jpg" />
+</a>
+
+
+
+<a data-tip="p$t$404-Page-Not-found" href="/people/404-Page-Not-found">姚泽源</a>，<strong title="头像被知乎官方移除了＝ ＝" class="zu-question-my-bio">头像被知乎官方移除了＝ ＝</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="1">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$xiahao" href="http://www.zhihu.com/people/xiahao" class="zg-link" title="夏昊">夏昊</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="375301" data-action="/answer/content">
+
+<textarea class="content hidden">
+能不能换种思路，找到一个能限制浏览器网速的软件（如360网速管理），限制它的下载速度为100k每秒，让它下不完。这样就能解决流量问题了。另外现在的优酷好像就是看一段下一段，至少我在deeplinux用chrome看视频的时候就是这样
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/20487112/answer/15264551">发布于 2012-09-19</a>
+</span>
+
+</textarea>
+<div class="zh-summary summary clearfix">
+
+能不能换种思路，找到一个能限制浏览器网速的软件（如360网速管理），限制它的下载速度为100k每秒，让它下不完。这样就能解决流量问题了。另外现在的优酷好像就是看一段下一段，至少我在deeplinux用chrome看视频的时候就是这样
+
+</div>
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-unfollow meta-item" href="javascript:;" id="sfb-375301"><i class="z-icon-follow"></i>取消关注</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="comment_opt" data-copyable="true"><i class="zg-icon zg-icon-settings"></i>设置</a>
+
+
+
+
+
+
+<span class="copyright zu-autohide"></span>
+
+
+<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="border-pager">
+<div class="zm-invite-pager">
+
+<span><a href="?order_by=vote_num&amp;page=1">上一页</a></span>
+
+
+
+
+
+
+
+
+<span><a href="?order_by=vote_num&amp;page=1">1</a></span>
+
+
+
+<span class="zg-gray-normal">2</span>
+
+
+
+<span><a href="?order_by=vote_num&amp;page=3">3</a></span>
+
+
+
+
+
+
+<span><a href="?order_by=vote_num&amp;page=3">下一页</a></span>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class="zu-main-sidebar">
+<div class="zm-profile-side-following zg-clear">
+<a class="item" href="/people/404-Page-Not-found/followees">
+<span class="zg-gray-normal">关注了</span><br />
+<strong>570</strong><label> 人</label>
+</a>
+<a class="item" href="/people/404-Page-Not-found/followers">
+<span class="zg-gray-normal">关注者</span><br />
+<strong>1697</strong><label> 人</label>
+</a>
+</div>
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner zg-clear">
+<div class="zm-profile-side-section-title">
+关注了 <a href="/people/404-Page-Not-found/columns/followed" class="zg-link-litblue"><strong>118 个专栏</strong></a>
+</div>
+<div class="zm-profile-side-columns">
+
+<a href="http://zhuanlan.zhihu.com/SVlaw" data-tip="c$t$SVlaw" class="link" target="_blank">
+<img src="http://pic3.zhimg.com/437d6097c_l.jpg" title="硅谷八卦及创业法律" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/robbin" data-tip="c$t$robbin" class="link" target="_blank">
+<img src="http://pic3.zhimg.com/d9b9ad561_l.jpg" title="robbin的自言自语" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/svithjod" data-tip="c$t$svithjod" class="link" target="_blank">
+<img src="http://pic2.zhimg.com/57fba6e2b_l.jpg" title="扇贝网特派段子手" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/lizzie" data-tip="c$t$lizzie" class="link" target="_blank">
+<img src="http://pic2.zhimg.com/f9e913f32_l.jpg" title="饭。祷。爱。" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/kritik" data-tip="c$t$kritik" class="link" target="_blank">
+<img src="http://pic2.zhimg.com/4b70deef7_l.jpg" title="牛膝多糖" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/shuhangli" data-tip="c$t$shuhangli" class="link" target="_blank">
+<img src="http://pic4.zhimg.com/6b41fd97c_l.jpg" title="羞耻Play" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/liejiudang" data-tip="c$t$liejiudang" class="link" target="_blank">
+<img src="http://pic1.zhimg.com/1e3ed9c3a_l.jpg" title="猎酒党" class="avatar">
+</a>
+
+</div>
+</div>
+</div>
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner zg-clear">
+<div class="zm-profile-side-section-title">
+关注了 <a href="/people/404-Page-Not-found/topics" class="zg-link-litblue"><strong>23 个话题</strong></a>
+</div>
+<div class="zm-profile-side-topics" id="zh-profile-following-topic">
+
+<a class="link" data-tip="t$t$19551147" href="/topic/19551147">
+<img class="avatar" src="http://pic1.zhimg.com/d5aed1527_m.jpg" title="生活">
+</a>
+
+<a class="link" data-tip="t$t$19560104" href="/topic/19560104">
+<img class="avatar" src="http://pic4.zhimg.com/cd35fa984_m.jpg" title="青岛">
+</a>
+
+<a class="link" data-tip="t$t$19550937" href="/topic/19550937">
+<img class="avatar" src="http://pic3.zhimg.com/8aa11b633_m.jpg" title="健康">
+</a>
+
+<a class="link" data-tip="t$t$19551783" href="/topic/19551783">
+<img class="avatar" src="http://pic4.zhimg.com/a8e85af60_m.jpg" title="租房">
+</a>
+
+<a class="link" data-tip="t$t$19554055" href="/topic/19554055">
+<img class="avatar" src="http://pic4.zhimg.com/e82bab09c_m.jpg" title="办公室">
+</a>
+
+<a class="link" data-tip="t$t$19554569" href="/topic/19554569">
+<img class="avatar" src="http://pic1.zhimg.com/d4f120f55_m.jpg" title="房价">
+</a>
+
+<a class="link" data-tip="t$t$19560200" href="/topic/19560200">
+<img class="avatar" src="http://pic3.zhimg.com/78c945566_m.jpg" title="知乎答案总结">
+</a>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner">
+<span class="zg-gray-normal">个人主页被 <strong>1865</strong> 人浏览</span>
+</div>
+</div>
+
+<script type="text/json" class="json-inline" data-name="current_people">["\u59da\u6cfd\u6e90","404-Page-Not-found","http:\/\/pic1.zhimg.com\/da8e974dc_s.jpg","57842aac37ccd0de3965f9b6e17cb555"]</script>
+<div id="zh-footer" class="zh-footer">
+<div class="zg-wrap clearfix">
+<ul>
+
+<li><a href="/question/19581624" target='_blank'>知乎指南</a></li>
+<li><a href="javascript:;" id="js-feedback-button">建议反馈</a></li>
+
+<li><a href="/app" target='_blank'>移动应用</a></li>
+<li><a href="/careers">加入知乎</a></li>
+<li><a href="/terms" target="_blank">知乎协议</a></li>
+<li><a href="mailto:bd@zhihu.com">商务合作</a></li>
+</ul>
+<span class="copy">&copy; 2015 知乎</span>
+</div>
+</div>
+
+</div>
+<div class="zg-clear"></div>
+</div>
+
+
+
+<script type="text/json" class="json-inline" data-name="current_user">["\u59da\u6cfd\u6e90","404-Page-Not-found","http:\/\/pic4.zhimg.com\/da8e974dc_s.jpg","57842aac37ccd0de3965f9b6e17cb555","\u5934\u50cf\u88ab\u77e5\u4e4e\u5b98\u65b9\u79fb\u9664\u4e86\uff1d \uff1d",0,0,1,"547320073@qq.com","http:\/\/mail.qq.com",1,false,true]</script>
+<script type="text/json" class="json-inline" data-name="env">["zhihu.com","comet.zhihu.com",false,null]</script>
+<script type="text/json" class="json-inline" data-name="permissions">[]</script>
+
+
+<script type="text/json" class="json-inline" data-name="ga_vars">{"user_created":1337032972000,"now":1423382044000,"abtest_mask":"---------1--------------------","user_attr":[1,0,0,"-",1],"user_hash":"57842aac37ccd0de3965f9b6e17cb555"}</script>
+
+<script src="http://static.zhihu.com/static/ver/82cfd3bf774281811fa8287dc189988f.extern_src.min.js"></script>
+<script src="http://static.zhihu.com/static/ver/58a54d89525268dc5a612f54473ead2d.app_core.js"></script>
+<script src="http://static.zhihu.com/static/ver/f6ddbf3143053a0abe68322eb5e83c1a.sign.js"></script>
+<script src="http://static.zhihu.com/static/ver/f0b777516e58b8d25f09b2f4ff2998cf.app.js"></script>
+<script src="http://static.zhihu.com/static/ver/f5daab66eb839b41557727239e381a6b.rich_text_editor.js"></script>
+
+<script type="text/zscript" znonce="cf11aa6c6be247fd93d1fd68e7f1ef06">
+ZH.entryP();
+</script>
+
+<input type="hidden" name="_xsrf" value="3cc2b7d5da8e8151969e0028643a7975"/>
+</body>
+</html>
