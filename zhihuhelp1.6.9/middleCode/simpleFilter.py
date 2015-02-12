@@ -273,7 +273,7 @@ class QuestionFilter(baseFilter):
                     answerHref
                 from AnswerContent where questionID = ? and noRecordFlag = 0'''
         bufList = self.cursor.execute(sql, [self.questionID,]).fetchall()
-        answerDictList = []
+        answerListDict = {}
         for answer in bufList:
             answerDict = {}
             answerDict['authorID']           = answer[0]
@@ -289,43 +289,37 @@ class QuestionFilter(baseFilter):
             answerDict['answerCommentCount'] = int(answer[10])
             answerDict['noRecordFlag']       = bool(answer[11])
             answerDict['answerHref']         = answer[12]
-            answerDictList.append(answerDict)
+            answerListDict[answerDict['answerID']] = answerDict
 
-        self.answerDictList = answerDictList
-        return answerDictList
+        self.answerListDict = answerListDict
+        return answerListDict
 
     def getResult(self):
         u'''
         self.result格式
-        *   contentList
-            *   内容列表，其内为内容字典
-            *   字典结构
-                *   questionInfo
-                    *   问题信息
-                *   answerList
-                    *   答案字典列表   
-                *   agreeCount
-                    *   答案列表中的赞同数和
-                *   answerCount
-                    *   答案列表中的答案数量      
-        *   frontDict
-            *   章节首页
+        *   contentListDict
+            *   内容列表，其内为questionID => 答案内容的映射
+            *   数据结构
+                *   questionID
+                    *   核心key值
+                    *   questionInfo
+                        *   问题信息
+                    *   answerListDict
+                        *   答案列表,其内为 answerID => 答案内容 的映射   
+                        *   answerID
+                            *   核心key值
+                            *   其内为正常取出的答案
         '''
         self.getQuestionInfoDict()
         self.getAnswerContentDictList()
+
+
         self.result = {}
-        self.result['content'] = []
         result = {
-                'questionInfo' : self.questionInfo,
-                'answerList'   : sorted(self.answerDictList, key=lambda answerDict: answerDict['answerAgreeCount'], reverse=True)
+                'questionInfo'   : self.questionInfo,
+                'answerListDict' : self.answerListDict
                 }
-        agreeCount = 0
-        for answerDict in self.result['answerList']:
-            agreeCount += answerDict['answerAgreeCount']
-        result['agreeCount']  = agreeCount
-        result['answerCount'] = len(self.answerDictList)
-        self.result['contentList'] = [result]
-        self.result['frontDict']   = self.getChapterFrontPage()
+        self.result[result['questionInfo']['questionID']] = result
         return self.result
         
 class AnswerFilter(QuestionFilter):
@@ -351,7 +345,7 @@ class AnswerFilter(QuestionFilter):
                     answerHref
                 from AnswerContent where questionID = ? and answerID = ? and noRecordFlag = 0'''
         bufList = self.cursor.execute(sql, [self.questionID, self.answerID, ]).fetchall()
-        answerDictList = []
+        answerListDict = {}
         for answer in bufList:
             answerDict = {}
             answerDict['authorID']           = answer[0]
@@ -367,10 +361,10 @@ class AnswerFilter(QuestionFilter):
             answerDict['answerCommentCount'] = int(answer[10])
             answerDict['noRecordFlag']       = bool(answer[11])
             answerDict['answerHref']         = answer[12]
-            answerDictList.append(answerDict)
+            answerListDict[answerDict['answerID']] = answerDict
 
-        self.answerDictList = answerDictList
-        return answerDictList
+        self.answerListDict = answerListDict
+        return answerListDict
 
 class AuthorFilter(QuestionFilter):
     def addProperty(self):
@@ -416,7 +410,7 @@ class AuthorFilter(QuestionFilter):
                     answerHref
                 from AnswerContent where authorID = ? and noRecordFlag = 0'''
         bufList = self.cursor.execute(sql, [self.authorID, ]).fetchall()
-        answerDictList = []
+        answerListDict = {}
         for answer in bufList:
             answerDict = {}
             answerDict['authorID']           = answer[0]
@@ -432,37 +426,23 @@ class AuthorFilter(QuestionFilter):
             answerDict['answerCommentCount'] = int(answer[10])
             answerDict['noRecordFlag']       = bool(answer[11])
             answerDict['answerHref']         = answer[12]
-            answerDictList.append(answerDict)
+            answerListDict[answerDict['answerID']] = answerDict
 
-        self.answerDictList = answerDictList
-        return answerDictList
-
-    def preFixResult(self):
-        self.preResult = {}
-        for answerDict in self.answerDictList:
-            if answerDict['questionID'] in self.preResult:
-                self.preResult[answerDict['questionID']]['answerList'].append(answerDict)
-                self.preResult[answerDict['questionID']]['agreeCount'] += answerDict['answerAgreeCount']
-            else:
-                self.preResult[answerDict['questionID']] = {}
-                self.preResult[answerDict['questionID']]['answerList']   = [answerDict,]
-                self.preResult[answerDict['questionID']]['agreeCount']   = answerDict['answerAgreeCount']
-                self.preResult[answerDict['questionID']]['questionInfo'] = self.getQuestionInfoDict(answerDict['questionID'])
-
-        return
+        self.answerListDict = answerListDict
+        return answerListDict
 
     def getResult(self):
         self.getQuestionInfoDict()
         self.getAnswerContentDictList()
-        self.preFixResult()
-        self.result = {}
-        self.result['contentList'] = []
-        for key in self.preResult:
-            buf = self.preResult[key]
-            buf['answerList']  = sorted(buf['answerList'], key=lambda answerDict: answerDict['answerAgreeCount'], reverse=True)
-            buf['answerCount'] = len(buf['answerList']) 
-            self.result['contentList'].append(buf)
 
-        self.result['contentList'] = sorted(self.result['contentList'], key=lambda answerDict: answerDict['answerCount'], reverse=True)
-        self.result['frontDict']   = self.getChapterFrontPage()
+        for answerID in self.answerListDict:
+            answerDict = self.answerListDict[answerID]
+            if answerDict['questionID'] in self.result:
+                self.result[answerDict['questionID']]['answerListDict'][answerDict['answerID']] = answerDict
+            else:
+                self.result[answerDict['questionID']] = {}
+                self.result[answerDict['questionID']]['answerListDict'] = {}
+                self.result[answerDict['questionID']]['answerListDict'][answerDict['answerID']] = answerDict
+                self.result[answerDict['questionID']]['questionInfo'] = self.getQuestionInfoDict(answerDict['questionID'])
+
         return self.result

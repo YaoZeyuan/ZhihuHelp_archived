@@ -24,7 +24,7 @@ class ZhihuHelp(object):
         init = Init()
         self.conn        = init.getConn()
         self.cursor      = self.conn.cursor() 
-        self.epubContent = []
+        self.epubContent = {}
         return 
     
     def helperStart(self):
@@ -56,6 +56,19 @@ class ZhihuHelp(object):
             Zhihu2Epub(self.epubContent)
             self.epubContent = []
             print u'test over'
+        return
+
+    def addEpubChapter(self, result = {}):
+        for questionID in result:
+            if questionID in self.epubContent:
+                self.epubContent[questionID]['questionInfo'] = result['questionID']['questionInfo']
+            else:
+                self.epubContent[questionID] = {}
+                self.epubContent[questionID]['questionInfo'] = result['questionID']['questionInfo']
+            for answerID in result['questionID']['answerListDict']:
+                answerDict = result['questionID']['answerListDict'][answerID]
+
+
         return
 
     def getUrlInfo(self, rawUrl):
