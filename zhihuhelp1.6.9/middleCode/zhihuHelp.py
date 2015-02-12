@@ -52,7 +52,7 @@ class ZhihuHelp(object):
                 if urlInfo == {}:
                     continue
                 self.manager(urlInfo)
-                self.epubContent.append(urlInfo['filter'].getResult())
+                self.addEpubChapter(urlInfo['filter'].getResult())
             Zhihu2Epub(self.epubContent)
             self.epubContent = []
             print u'test over'
@@ -65,10 +65,9 @@ class ZhihuHelp(object):
             else:
                 self.epubContent[questionID] = {}
                 self.epubContent[questionID]['questionInfo'] = result['questionID']['questionInfo']
-            for answerID in result['questionID']['answerListDict']:
-                answerDict = result['questionID']['answerListDict'][answerID]
-
-
+            for answerID in result[questionID]['answerListDict']:
+                answerDict = result[questionID]['answerListDict'][answerID]
+                self.epubContent[questionID]['answerListDict'][answerID] = answerDict
         return
 
     def getUrlInfo(self, rawUrl):
