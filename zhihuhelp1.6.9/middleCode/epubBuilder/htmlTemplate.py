@@ -55,6 +55,7 @@ def indexTemplate(dataDict = {}):
     '''
     return u'''
             <a href='#%(index)s'>%(index)s . %(title)s</a>
+            <br />
             ''' % dataDict
 
 

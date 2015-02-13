@@ -228,7 +228,7 @@ class BaseFilter():
             print prefix + str(key) + ' => ' + str(data)
 
 
-class QuestionFilter(baseFilter):
+class QuestionFilter(BaseFilter):
     u'每运行一次filter就相当于生成了一本电子书，所以在这个里面也应当为之加上封面，最后输出时大不了再跳过封面输出就好了，电子书应当每个章节都有自己的封面，同时也要有一个总封面'
     def addProperty(self):
         self.questionID = self.urlInfo['questionID']
