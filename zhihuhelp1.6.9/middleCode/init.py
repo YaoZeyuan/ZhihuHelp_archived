@@ -62,8 +62,22 @@ class Init(object):
             cursor.execute("""
                             create  table       CollectionIndex(
                             collectionID        varchar(50)     not Null,
-                            questionHref        varchar(255)    not Null,
-                            primary key(CollectionID, questionHref))""")#负责永久保存收藏夹链接，防止丢收藏
+                            answerHref          varchar(255)    not Null,
+                            primary key(collectionID, answerHref))""")#负责永久保存收藏夹链接，防止丢收藏
+
+            #话题内容表
+            cursor.execute("""
+                            create  table       TopicIndex(
+                            topicID             varchar(50)     not Null,
+                            answerHref          varchar(255)    not Null,
+                            primary key(topicID, answerHref))""")#负责保存话题链接，每次获取话题内容时都要重新更新之
+
+            #圆桌内容表
+            cursor.execute("""
+                            create  table       TableIndex(
+                            tableID             varchar(50)     not Null,
+                            answerHref          varchar(255)    not Null,
+                            primary key(tableID, answerHref))""")#负责保存圆桌内的答案链接，每次获取圆桌内容时都要重新更新之
 
             #用户信息表
             cursor.execute("""
@@ -105,4 +119,15 @@ class Init(object):
                             topicID             varchar(50),
                             primary key (TopicID))""")#负责保存话题信息
 
+            #圆桌信息表
+            cursor.execute("""create table TableInfo (
+                            title               varchar(255),
+                            adress              varchar(255),
+                            logoAddress         varchar(255),
+                            description         varchar(3000),
+                            activeCount         int             default 0,
+                            questionCount       int             default 0,
+                            commentCount        int             default 0,
+                            tableID             varchar(50),
+                            primary key (tableID))""")#负责保存圆桌信息
             self.conn.commit()
