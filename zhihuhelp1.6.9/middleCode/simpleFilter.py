@@ -145,15 +145,6 @@ class BaseFilter():
     def addProperty(self):
         return
     
-    def getChapterFrontPage(self):
-        infoDict = {
-                'Title'    : '',
-                'Author'   : '',
-                'Desc'     : '',
-                'GuideImg' : '',
-                }
-        return infoDict
-    
     def authorLogoFix(self, imgHref = ''):
         self.imgSet.add(imgHref)
         #return self.imgBasePath + self.getFileName(imgHref)
@@ -319,7 +310,7 @@ class QuestionFilter(BaseFilter):
                 'questionInfo'   : self.questionInfo,
                 'answerListDict' : self.answerListDict
                 }
-        self.result[result['questionInfo']['questionID']] = result
+        self.result[result['questionInfo'][questionID]] = result
         return self.result
         
 class AnswerFilter(QuestionFilter):

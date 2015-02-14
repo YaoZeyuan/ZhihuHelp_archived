@@ -16,3 +16,5 @@
 
 7.  ID无论在何处使用都是大写
 
+8.  首先应当实现collection,Topic,TableInfo的储存，这样才能生成带标题的电子书
+    
