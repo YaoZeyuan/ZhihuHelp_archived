@@ -361,7 +361,7 @@ class AnswerFilter(QuestionFilter):
 
 class AuthorFilter(QuestionFilter):
     def addProperty(self):
-        self.authorID   = self.urlInfo['author']
+        self.authorID   = self.urlInfo['authorID']
         return
 
     def getQuestionInfoDict(self, questionID = ''):

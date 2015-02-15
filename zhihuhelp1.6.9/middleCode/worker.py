@@ -183,17 +183,12 @@ class QuestionWorker(PageWorker):
             print 'threading.activeCount() = {}'.format(threadLiving)
             bufLength = self.maxThread - threadLiving
             if bufLength > 0 and threadsCount > 0:
-                print "if_缓冲队列剩余长度 = {}".format(bufLength)  
-                print "if_当前线程总数     = {}".format(threadsCount)  
                 while bufLength > 0 and threadsCount > 0:
-                    print u'开始新建线程:线程工作号:{}'.format(threadsCount - 1)
                     threadPool[threadsCount - 1].start()
                     bufLength -= 1
                     threadsCount -= 1
                     time.sleep(0.1)
             else:
-                print "else_缓冲队列剩余长度 = {}".format(bufLength)  
-                print "else_当前线程总数     = {}".format(threadsCount)  
                 print u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule))
                 time.sleep(1)
             threadLiving = threading.activeCount()
@@ -219,7 +214,7 @@ class QuestionWorker(PageWorker):
         parse = ParseQuestion(content)
         questionInfoDictList, answerDictList = parse.getInfoDict()
         for questionInfoDict in questionInfoDictList:
-            questionInfoDictList.append(questionInfoDict)
+            self.questionInfoDictList.append(questionInfoDict)
         for answerDict in answerDictList:
             self.answerDictList.append(answerDict)
         self.complete.add(workNo)

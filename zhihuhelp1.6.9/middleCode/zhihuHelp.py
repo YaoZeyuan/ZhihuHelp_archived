@@ -37,11 +37,11 @@ class ZhihuHelp(object):
         #设置运行参数
         self.setting = Setting()
         #self.setting.guideOfMaxThread()
-        print u'测试阶段，最大线程数自动定为20，正式发布时请删除'
-        self.maxThread = 20
+        self.maxThread = 5
+        print u'测试阶段，最大线程数自动定为{}，正式发布时请删除'.format(self.maxThread)
         #self.setting.guideOfPicQuality()
-        print u'测试阶段，图片质量自动定为1，正式发布时请删除'
         self.picQuality = 1
+        print u'测试阶段，图片质量自动定为1，正式发布时请删除'
         
         #主程序开始运行
         readList = open('./ReadList.txt', 'r')
@@ -107,12 +107,12 @@ class ZhihuHelp(object):
             targetPattern = {}
             targetPattern['answer']     = r'(?<=zhihu\.com/)question/\d{8}/answer/\d{8}'
             targetPattern['question']   = r'(?<=zhihu\.com/)question/\d{8}'
-            targetPattern['author']     = r'(?<=zhihu\.com/)people/[^/#]*'#使用#作为备注起始标识符，所以在正则中要去掉#
+            targetPattern['author']     = r'(?<=zhihu\.com/)people/[^/#\n\r]*'#使用#作为备注起始标识符，所以在正则中要去掉#
             targetPattern['collection'] = r'(?<=zhihu\.com/)collection/\d*'
-            targetPattern['table']      = r'(?<=zhihu\.com/)roundtable/[^/#]*'
+            targetPattern['table']      = r'(?<=zhihu\.com/)roundtable/[^/#\n\r]*'
             targetPattern['topic']      = r'(?<=zhihu\.com/)topic/\d*'
             targetPattern['article']    = r'(?<=zhuanlan\.zhihu\.com/)[^/]*/\d{8}'#先检测专栏，再检测文章，文章比专栏网址更长，类似问题与答案的关系，取信息可以用split('/')的方式获取
-            targetPattern['column']     = r'(?<=zhuanlan\.zhihu\.com/)[^/#]*'
+            targetPattern['column']     = r'(?<=zhuanlan\.zhihu\.com/)[^/#\n\r]*'
             for key in ['answer', 'question', 'author', 'collection', 'table', 'topic', 'article', 'column']:
                 urlInfo['url'] = re.search(targetPattern[key], rawUrl)
                 if urlInfo['url'] != None:
