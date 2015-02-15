@@ -300,8 +300,12 @@ class ParseAuthor(Parse):
         answerDictList       = []
         questionInfoDictList = []
         for content in contentList:
+            answerDict = self.getAnswerDict(content)
+            #切割时会把最开始的个人介绍内容也切出来，在那里提取不到答案内容，会导致程序故障，需要跳过
+            if len(answerDict['answerID']) == 0:
+                continue
+            answerDictList.append(answerDict)
             questionInfoDictList.append(self.getQusetionInfoDict(content))
-            answerDictList.append(self.getAnswerDict(content))
         return questionInfoDictList, answerDictList
 
     def getAnswerDict(self, content):

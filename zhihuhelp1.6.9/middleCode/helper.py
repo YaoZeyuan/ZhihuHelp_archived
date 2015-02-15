@@ -41,34 +41,12 @@ def save2DB(cursor, data={}, primaryKey='', tableName=''):
         *   返回
              *   无
      """
-    try:
-        rowCount = cursor.execute('select count(%(primaryKey)s) from %(tableName)s where %(primaryKey)s = ?' % {'primaryKey' : primaryKey, 'tableName' : tableName}, (data[primaryKey], )).fetchone()[0]
-        pass
-    except Exception as error:
-        print u'SQL runtime error'
-        print error
-        print u'SQL = ' + 'select count(%(primaryKey)s) from %(tableName)s where %(primaryKey)s = ?' % {'primaryKey' : primaryKey, 'tableName' : tableName} 
-        print u'primaryKey = ' + str(data[primaryKey])
-        printDict(data)
-        exit()
-    insertSql   = 'insert into '+ tableName +' ('
-    updateSql   = 'update '+ tableName +' set '
+    replaceSql   = 'replace into '+ tableName +' ('
     placeholder = ') values ('
     varTuple = []
     for columnKey in data:
-        insertSql   += columnKey + ','
-        updateSql   += columnKey + ' = ?,'
+        replaceSql  += columnKey + ','
         placeholder += '?,'
         varTuple.append(data[columnKey])
 
-    if rowCount == 0:
-        #print 'sql测试'
-        #print 'sql = ' + insertSql[:-1] + placeholder[:-1] + ')'
-        cursor.execute(insertSql[:-1] + placeholder[:-1] + ')', tuple(varTuple))
-    else:
-        varTuple.append(data[primaryKey])
-        #print 'sql测试'
-        #print 'sql = ' + updateSql[:-1] + ' where ' + primaryKey + '= ?'
-        #print varTuple
-        cursor.execute(updateSql[:-1] + ' where ' + primaryKey + '= ?', tuple(varTuple))
-    #print 'sql execute complete'
+    cursor.execute(replaceSql[:-1] + placeholder[:-1] + ')', tuple(varTuple))

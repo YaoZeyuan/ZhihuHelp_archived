@@ -51,10 +51,10 @@ class ZhihuHelp(object):
                 urlInfo = self.getUrlInfo(rawUrl)
                 if urlInfo == {}:
                     continue
-                #self.manager(urlInfo)
+                self.manager(urlInfo)
                 self.addEpubChapter(urlInfo['filter'].getResult())
             Zhihu2Epub(self.epubContent)
-            self.epubContent = []
+            self.epubContent = {}
             print u'test over'
         return
 
@@ -147,6 +147,9 @@ class ZhihuHelp(object):
             urlInfo['filter']       = CollectionFilter(self.cursor, urlInfo)
         if kind == 'topic':
             urlInfo['topicID']      = re.search(r'(?<=zhihu\.com/topic/)\d*', urlInfo['baseUrl']).group(0)
+            urlInfo['guide']        = u'成功匹配到话题地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
+            urlInfo['worker']       = TopicWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo['baseUrl'])
+            urlInfo['filter']       = TopicFilter(self.cursor, urlInfo)
         if kind == 'table':
             urlInfo['tableID']      = re.search(r'(?<=zhihu\.com/roundtable/)[^/#]*', urlInfo['baseUrl']).group(0)
         if kind == 'article':
@@ -157,6 +160,7 @@ class ZhihuHelp(object):
         return urlInfo
 
     def manager(self, urlInfo = {}):
+        print urlInfo['guide']
         urlInfo['worker'].start()
         return
 

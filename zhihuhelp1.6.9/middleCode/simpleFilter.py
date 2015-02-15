@@ -2,6 +2,8 @@
 import datetime
 import re
 
+from helper import *#仅作测试使用，用完需删除
+
 class ImgDownloader():
     u'''
      负责下载图片到指定文件夹内 
@@ -310,7 +312,7 @@ class QuestionFilter(BaseFilter):
                 'questionInfo'   : self.questionInfo,
                 'answerListDict' : self.answerListDict
                 }
-        self.result[result['questionInfo'][questionID]] = result
+        self.result[result['questionInfo']['questionID']] = result
         return self.result
         
 class AnswerFilter(QuestionFilter):
@@ -372,7 +374,7 @@ class AuthorFilter(QuestionFilter):
                 questionTitle                    as questionTitle,
                 questionDesc                     as questionDesc
                 from QuestionInfo where questionIDinQuestionDesc = ?'''
-        bufDict = self.cursor.execute(sql, [self.questionID,]).fetchone()
+        bufDict = self.cursor.execute(sql, [questionID,]).fetchone()
         questionInfo = {}
         questionInfo['questionID']    = bufDict[0]
         questionInfo['commentCount']  = bufDict[1]
@@ -423,9 +425,8 @@ class AuthorFilter(QuestionFilter):
         return answerListDict
 
     def getResult(self):
-        self.getQuestionInfoDict()
         self.getAnswerContentDictList()
-
+        self.result = {}
         for answerID in self.answerListDict:
             answerDict = self.answerListDict[answerID]
             if answerDict['questionID'] in self.result:
@@ -437,3 +438,74 @@ class AuthorFilter(QuestionFilter):
                 self.result[answerDict['questionID']]['questionInfo'] = self.getQuestionInfoDict(answerDict['questionID'])
 
         return self.result
+
+class CollectionFilter(AuthorFilter):
+    def addProperty(self):
+        self.collectionID = self.urlInfo['collectionID']
+        return
+
+    def getIndexList(self):
+        sql = 'select answerHref from CollectionIndex where collectionID = ?'
+        indexTuple = self.cursor.execute(sql, [self.collectionID,]).fetchall()
+        indexList  = []
+        for index in indexTuple:
+            indexList.append(index[0])
+        return indexList
+
+    def getAnswerContentDictList(self):
+        indexList = self.getIndexList()
+        sql = '''select 
+                    authorID,
+                    authorSign,
+                    authorLogo,
+                    authorName,
+                    answerAgreeCount,
+                    answerContent,
+                    questionID,
+                    answerID,
+                    commitDate,
+                    updateDate,
+                    answerCommentCount,
+                    noRecordFlag,
+                    answerHref
+                from AnswerContent where answerHref = ? and noRecordFlag = 0'''
+        bufList = []
+        for answerHref in indexList:
+            buf = self.cursor.execute(sql, [answerHref, ]).fetchone()
+            if buf == None :
+                #noRecordFlag == True
+                continue
+            bufList.append(buf)
+        answerListDict = {}
+        for answer in bufList:
+            answerDict = {}
+            answerDict['authorID']           = answer[0]
+            answerDict['authorSign']         = answer[1]
+            answerDict['authorLogo']         = self.authorLogoFix(answer[2])
+            answerDict['authorName']         = answer[3]
+            answerDict['answerAgreeCount']   = int(answer[4])
+            answerDict['answerContent']      = self.contentImgFix(answer[5])
+            answerDict['questionID']         = answer[6]
+            answerDict['answerID']           = answer[7]
+            answerDict['commitDate']         = self.str2Date(answer[8])
+            answerDict['updateDate']         = self.str2Date(answer[9])
+            answerDict['answerCommentCount'] = int(answer[10])
+            answerDict['noRecordFlag']       = bool(answer[11])
+            answerDict['answerHref']         = answer[12]
+            answerListDict[answerDict['answerID']] = answerDict
+
+        self.answerListDict = answerListDict
+        return answerListDict
+
+class TopicFilter(CollectionFilter):
+    def addProperty(self):
+        self.topicID = self.urlInfo['topicID']
+        return
+
+    def getIndexList(self):
+        sql = 'select answerHref from TopicIndex where topicID = ?'
+        indexTuple = self.cursor.execute(sql, [self.topicID, ]).fetchall()
+        indexList  = []
+        for index in indexTuple:
+            indexList.append(index[0])
+        return indexList

@@ -8,9 +8,10 @@ import urllib#编码请求字串，用于处理验证码
 import socket#用于捕获超时错误
 import zlib
 import pickle
+import re#获取TpoicID/CollectionID时用
 import os
 
-from contentParse import ParseQuestion
+from contentParse import *
 from httpLib import *
 from helper import *
 
@@ -175,19 +176,24 @@ class QuestionWorker(PageWorker):
         self.questionInfoDictList = []
         self.answerDictList       = []
         for key in self.workSchedule:
-            threadPool.append(threading.Thread(target=self.worker, kwargs={'workNo':key}))
+            threadPool.append(threading.Thread(target = self.worker, kwargs = {'workNo' : key}))
         threadsCount = len(threadPool)
         threadLiving = 2
         while (threadsCount > 0 or threadLiving > 1):
             print 'threading.activeCount() = {}'.format(threadLiving)
             bufLength = self.maxThread - threadLiving
             if bufLength > 0 and threadsCount > 0:
+                print "if_缓冲队列剩余长度 = {}".format(bufLength)  
+                print "if_当前线程总数     = {}".format(threadsCount)  
                 while bufLength > 0 and threadsCount > 0:
+                    print u'开始新建线程:线程工作号:{}'.format(threadsCount - 1)
                     threadPool[threadsCount - 1].start()
                     bufLength -= 1
                     threadsCount -= 1
                     time.sleep(0.1)
             else:
+                print "else_缓冲队列剩余长度 = {}".format(bufLength)  
+                print "else_当前线程总数     = {}".format(threadsCount)  
                 print u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule))
                 time.sleep(1)
             threadLiving = threading.activeCount()
@@ -213,7 +219,7 @@ class QuestionWorker(PageWorker):
         parse = ParseQuestion(content)
         questionInfoDictList, answerDictList = parse.getInfoDict()
         for questionInfoDict in questionInfoDictList:
-            self.questionInfoDictList.append(questionInfoDict)
+            questionInfoDictList.append(questionInfoDict)
         for answerDict in answerDictList:
             self.answerDictList.append(answerDict)
         self.complete.add(workNo)
@@ -275,11 +281,34 @@ class AuthorWorker(PageWorker):
             maxTry -= 1
         return 
     
+    def getIndexID(self):
+        u'''
+        用于为Topic，collection，userAgree添加Index
+        '''
+        return 
+    
+    def clearIndex(self):
+        u'''
+        用于在插入Index之前先清空Index表
+        '''
+        return
+
+    def addIndex(self, answerHref):
+        u'''
+        用于插入Index
+        '''
+        return
+
     def leader(self):
+        #clear index cache
+        self.getIndexID()
+        self.clearIndex()
+
         threadPool = []
+        self.questionInfoDictList = []
         self.answerDictList       = []
         for key in self.workSchedule:
-            threadPool.append(threading.Thread(target=self.worker, kwargs={'workNo':key}))
+            threadPool.append(threading.Thread(target = self.worker, kwargs = {'workNo' : key}))
         threadsCount = len(threadPool)
         threadLiving = 2
         while (threadsCount > 0 or threadLiving > 1):
@@ -299,6 +328,7 @@ class AuthorWorker(PageWorker):
             save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
         for answerDict in self.answerDictList:
             save2DB(self.cursor, answerDict, 'answerHref', 'AnswerContent')
+            self.addIndex(answerDict['answerHref'])
         self.conn.commit()
         print 'commit complete'
         return
@@ -331,7 +361,27 @@ class AuthorWorker(PageWorker):
         return
 
 class TopicWorker(AuthorWorker):
-    def worker(self):
+    def getIndexID(self):
+        topicMatch = re.search(r'(?<=www.zhihu.com/topic/)\d{8}', self.url)
+        if topicMatch == None:
+            print u'抱歉，没能在网址中匹配到话题ID'
+            print u'输入的话题网址为：{}'.format(self.url)
+            print u'程序无法继续运行，请检查网址是否正确后重试'
+            exit()
+        self.topicID = topicMatch.group(0)
+        return self.topicID
+    
+    def clearIndex(self):
+        self.getIndexID()
+        self.cursor.execute('delete from TopicIndex where topicID = ?', [self.topicID,])
+        self.conn.commit()
+        return
+
+    def addIndex(self, answerHref):
+        self.cursor.execute('replace into TopicIndex (answerHref, topicID) values (?, ?)', [answerHref, self.topicID])
+        return
+
+    def worker(self, workNo = 0):
         if workNo in self.complete:
             return
         content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
@@ -347,7 +397,21 @@ class TopicWorker(AuthorWorker):
         return 
 
 class CollectionWorker(AuthorWorker):
-    def worker(self):
+    def getIndexID(self):
+        collectionMatch = re.search(r'(?<=www.zhihu.com/collection/)\d{8}', self.url)
+        if collectionMatch == None:
+            print u'抱歉，没能在网址中匹配到收藏夹ID'
+            print u'输入的收藏夹网址为：{}'.format(self.url)
+            print u'程序无法继续运行，请检查网址是否正确后重试'
+            exit()
+        self.collectionID = collectionMatch.group(0)
+        return self.collectionID
+
+    def addIndex(self, answerHref):
+        self.cursor.execute('replace into CollectionIndex (answerHref, collectionID) values (?, ?)', [answerHref, self.collectionID])
+        return
+
+    def worker(self, workNo = 0):
         if workNo in self.complete:
             return
         content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
