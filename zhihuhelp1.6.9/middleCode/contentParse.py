@@ -387,3 +387,40 @@ class ParseTopic(ParseAuthor):
 class ParseColumn:
 class ParseTable:
 '''
+
+
+
+#ParseFrontPageInfo
+class AuthorInfoParse(Parse):
+    def addRegex(self):
+        self.regDict = {}
+        self.regDict['weiboContent'] = r'(?<=<div class="weibo-wrap">).*?(?=</div>)'
+        self.regTip['weiboContent']  = u'微博内容'
+        self.regDict['nameInfoContent'] = r'(?<=<div class="title-section ellipsis">).*?(?=</div>)'
+        self.regTip['nameInfoContent'] = u'用户名&ID&签名内容'
+        self.regDict['userDesc'] = r'(?<=<span class="description unfold-item"><span class="content">).*?(?=</span>)'
+        self.regTip['userDesc']  = u'用户描述'
+        
+        self.regDict['userActiveInfo'] = r'(?<=<div class="profile-navbar clearfix">).*?(?=<div class="zm-profile-section-wrap zm-profile-details-wrap">)'
+        self.regTip['userActiveInfo']  = u'用户提问/回答/专栏/收藏夹数'
+
+        self.regDict['userHonourInfo'] = r'(?<=<div class="zm-profile-module-desc">).*?(?=<div class="zm-profile-module zg-clear">)'
+        self.regTip['userHonourInfo']  = u'用户赞同数/感谢数/收藏数/分享数'
+
+        self.regDict['userFollowInfoContent'] = r'(?<=<div class="zm-profile-side-following zg-clear">).*?(?=</div>)'
+        self.regTip['userFollowInfoContent']  = u'用户关注数&被关注数'
+
+        self.regDict['columnCountInfo'] = r'(?<=<div class="zm-profile-side-section-title">).*?(?=</div>)'
+        self.regTip['columnCountInfo']  = u'关注的专栏数信息'
+
+        self.regDict['topicCountInfo'] = r'(?<=<div class="zm-profile-side-section-title">).*?(?=</div>)'
+        self.regTip['topicCountInfo']  = u'关注的话题数信息'
+        
+        self.regDict['userViewContent'] = r'(?<=<div class="zm-side-section-inner">).*?(?=</div>)'
+        self.regTip['userViewContent']  = u'用户浏览数信息'
+
+
+class TopicInfoParse(Parse):
+    def addRegex(self):
+        self.regDict = {}
+        return
