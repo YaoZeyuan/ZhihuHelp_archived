@@ -15,11 +15,32 @@ sys.setdefaultencoding('utf8')
 #Answer Test
 #targetFileList = ['simpleAnswerContent1.txt']
     
-#Author Test
-#targetFileList = ['simpleAuthorContent1.txt']
+Author Test
+targetFileList = ['simpleAuthorContent1.txt']
+for filePath in targetFileList:
+    content = open('./htmlFile/' + filePath).read()
+    questionObject = ParseAuthor(content)
+    authorInfoDict, questionDictList, answerDictList = questionObject.getInfoDict()
+    print u'作者信息：'
+    printDict(authorInfoDict)
+    print "====================="
+    #print u'问题信息：'
+    #for questionInfoDict in questionDictList:
+    #    printDict(questionInfoDict)
+    #    print "====================="
+    #print ">>>>>>>>>>>>>>>>>>>>>"
+    #print u'答案内容:'
+    #for answer in answerDictList:
+    #    pass
+    #    #printDict(answer)
+    #    #print "====================="
+    print "<<<<<<<<<<<<<<<<<<<<<"
+
+#Topic Test
+#targetFileList = ['simpleTopicContent1.txt']
 #for filePath in targetFileList:
 #    content = open('./htmlFile/' + filePath).read()
-#    questionObject = ParseAuthor(content)
+#    questionObject = ParseTopic(content)
 #    questionDictList, answerDictList = questionObject.getInfoDict()
 #    print u'问题信息：'
 #    for questionInfoDict in questionDictList:
@@ -29,27 +50,9 @@ sys.setdefaultencoding('utf8')
 #    print u'答案内容:'
 #    for answer in answerDictList:
 #        pass
-#        #printDict(answer)
-#        #print "====================="
+#        printDict(answer)
+#        print "====================="
 #    print "<<<<<<<<<<<<<<<<<<<<<"
-
-#Topic Test
-targetFileList = ['simpleTopicContent1.txt']
-for filePath in targetFileList:
-    content = open('./htmlFile/' + filePath).read()
-    questionObject = ParseTopic(content)
-    questionDictList, answerDictList = questionObject.getInfoDict()
-    print u'问题信息：'
-    for questionInfoDict in questionDictList:
-        printDict(questionInfoDict)
-        print "====================="
-    print ">>>>>>>>>>>>>>>>>>>>>"
-    print u'答案内容:'
-    for answer in answerDictList:
-        pass
-        printDict(answer)
-        print "====================="
-    print "<<<<<<<<<<<<<<<<<<<<<"
 
 #Collection Test
 #targetFileList = ['simpleCollectionContent1.txt']
