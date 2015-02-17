@@ -84,10 +84,20 @@ sys.setdefaultencoding('utf8')
 #    print "====================="
 
 #Topic Test
-targetFileList = ['topicInfoContent1.txt']
+#targetFileList = ['topicInfoContent1.txt']
+#for filePath in targetFileList:
+#    content = open('./htmlFile/' + filePath).read()
+#    parse = TopicInfoParse(content)
+#    infoDict = parse.getInfoDict()
+#    print u'信息字典：'
+#    printDict(infoDict)
+#    print "====================="
+
+#Author Test
+targetFileList = ['authorInfoContent1.txt']
 for filePath in targetFileList:
     content = open('./htmlFile/' + filePath).read()
-    parse = TopicInfoParse(content)
+    parse = AuthorInfoParse(content)
     infoDict = parse.getInfoDict()
     print u'信息字典：'
     printDict(infoDict)

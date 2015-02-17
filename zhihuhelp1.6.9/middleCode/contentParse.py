@@ -396,15 +396,26 @@ class AuthorInfoParse(Parse):
     u'标准网页：/about'
     def addRegex(self):
         self.regDict = {}
-        self.regDict['weiboContent'] = r'(?<=<div class="weibo-wrap">).*?(?=</div>)'
-        self.regTipDict['weiboContent']  = u'微博内容'
+        self.regDict['weiboContent']    = r'(?<=<div class=\'weibo-wrap\'>).*?(?=</div>)'
+        self.regTipDict['weiboContent'] = u'微博内容'
+        self.regDict['weiboAddress']    = r'(?<=href=").*?(?=")'
+        self.regTipDict['weiboAddress'] = u'微博地址'
+
         self.regDict['nameInfoContent'] = r'(?<=<div class="title-section ellipsis">).*?(?=</div>)'
         self.regTipDict['nameInfoContent'] = u'用户名&ID&签名内容'
-        self.regDict['userDesc'] = r'(?<=<span class="description unfold-item"><span class="content">).*?(?=</span>)'
+        self.regDict['ID'] = r'(?<=href="/people/).*?(?=")'
+        self.regTipDict['ID'] = u'用户ID'
+        self.regDict['sign'] = r'(?<=<span class="bio" title=").*?(?=")'#不必担心引号问题，引号会在html中被自动转义
+        self.regTipDict['sign'] = u'用户签名'
+        self.regDict['name'] = r'(?<=">).*?(?=</a>)'
+        self.regTipDict['name'] = u'用户名'
+        
+
+        self.regDict['userDesc'] = r'(?<=<span class="description unfold-item"><span class="content">).*?(?=</span><a href="javascript:;" class="unfold")'
         self.regTipDict['userDesc']  = u'用户描述'
         
         self.regDict['userActiveInfoContent'] = r'(?<=<div class="profile-navbar clearfix">).*?(?=<div class="zm-profile-section-wrap zm-profile-details-wrap">)'
-        self.regTipDict['userActiveInfoContent']  = u'用户提问/回答/专栏/收藏夹数'
+        self.regTipDict['userActiveInfoContent']  = u'用户提问/回答/专栏/收藏夹数/公共编辑数'
 
         self.regDict['userHonourInfoContent'] = r'(?<=<div class="zm-profile-module-desc">).*?(?=<div class="zm-profile-module zg-clear">)'
         self.regTipDict['userHonourInfoContent']  = u'用户赞同数/感谢数/收藏数/分享数'
@@ -418,30 +429,118 @@ class AuthorInfoParse(Parse):
         self.regDict['topicCountInfoContent'] = r'(?<=<div class="zm-profile-side-section-title">).*?(?=</div>)'
         self.regTipDict['topicCountInfoContent']  = u'关注的话题数信息'
         
-        self.regDict['userViewContent'] = r'(?<=<div class="zm-side-section-inner">).*?(?=</div>)'
+        self.regDict['userViewContent'] = r'(?<=<div class="zm-profile-side-section"><div class="zm-side-section-inner"><span class="zg-gray-normal">).*?(?=</div>)'
         self.regTipDict['userViewContent']  = u'用户浏览数信息'
+        self.regDict['watched']    = r'(?<=<strong>)\d*(?=</strong>)'
+        self.regTipDict['watched'] = u'用户浏览数'
+        
+        self.regDict['IDLogoContent']    = r'(?<=<div class="zm-profile-header-avatar-container ">).*?(?="class="zm-profile-header-img zg-avatar-big zm-avatar-editor-preview"/>)'
+        self.regTipDict['IDLogoContent'] = u'用户头像内容'
+        self.regDict['IDLogoAdress']    = r'(?<=src=").*'
+        self.regTipDict['IDLogoAdress'] = u'用户头像'
+        
+        self.regDict['dataID']    = r'(?<=data-id=").*?(?=")'
+        self.regTipDict['dataID'] = u'dataID'
+    
+    def getInfoDict(self):
+        u'''
+                            IDLogoAdress        varchar(255)    default "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
+                            √ID                  varchar(255)    not Null default 'null',
+                            dataID              varchar(255)    default '',
+                            √sign                varchar(255)    default '',
+                            √name                varchar(255)    default '',
+                            √ask                 varchar(255)    default '',
+                            √answer              int             default 0,
+                            √post                int             default 0,
+                            √collect             int             default 0,
+                            √edit                int             default 0,
+                            √agree               int             default 0,
+                            √thanks              int             default 0,
+                            √collected           int             default 0,
+                            √shared              int             default 0,
+                            √followee            int             default 0,
+                            √follower            int             default 0,
+                            watched             int             default 0,
+                            √weiboAddress        varchar(255)    default '',
+        '''
+        infoDict = {}
 
+        infoDict['dataID'] = self.matchContent('dataID', self.content)
+
+        IDLogoContent = self.matchContent('IDLogoContent', self.content)
+        infoDict['IDLogoAdress'] = self.matchContent('IDLogoAdress', IDLogoContent)
+
+        weiboContent = self.matchContent('weiboContent', self.content)
+        infoDict['weiboAddress'] = self.matchContent('weiboAddress', weiboContent)
+
+        userViewContent     = self.matchContent('userViewContent', self.content)
+        infoDict['watched'] = self.matchContent('watched', userViewContent)
+
+        nameInfoContent = self.matchContent('nameInfoContent', self.content)
+        for key in ['ID', 'name', 'sign']:
+            infoDict[key] = self.matchContent(key, nameInfoContent)
+        infoDict['desc'] = self.matchContent('userDesc', self.content)
+
+        try:
+            userActiveInfoContent = self.matchContent('userActiveInfoContent', self.content)
+            infoDict['ask'], infoDict['answer'], infoDict['post'], infoDict['collect'], infoDict['edit'] = re.findall(r'(?<=<span class="num">)\d*(?=</span></a>)', userActiveInfoContent)
+        except ValueError as error:
+            print u'匹配用户提问数/回答数/专栏数/收藏夹数/公共编辑数失败'
+            print u'错误内容:'
+            print error
+
+        try:
+            userFollowInfoContent = self.matchContent('userFollowInfoContent', self.content)
+            infoDict['followee'], infoDict['follower'] = re.findall(r'(?<=<strong>)\d*(?=</strong><label>)', userFollowInfoContent)
+        except ValueError as error:
+            print u'匹配用户关注数/被关注数失败'
+            print u'错误内容:'
+            print error
+        
+        try:
+            userHonourInfoContent = self.matchContent('userHonourInfoContent', self.content)
+            infoDict['agree'], infoDict['thanks'], infoDict['collected'], infoDict['shared'] = re.findall(r'(?<=<span><strong>)\d*(?=</strong>)', userHonourInfoContent)
+        except ValueError as error:
+            print u'匹配用户赞同数/感谢数/被收藏数/被分享数失败'
+            print u'错误内容:'
+            print error
+
+        return infoDict
 
 class TopicInfoParse(Parse):
     u'标准网页:正常值'
     def addRegex(self):
         self.regDict = {}
-        self.regDict['topicTitle'] = r'(?<=<title>).*?(?= - )'
-        self.regTipDict['topicTitle']  = u'话题标题'
+        self.regDict['topicTitle']    = r'(?<=<title>).*?(?= - )'
+        self.regTipDict['topicTitle'] = u'话题标题'
+        self.regDict['topicID']    = r'(?<=href="/topic/)\d{8}(?=/hot)'
+        self.regTipDict['topicID'] = u'话题ID'
 
-        self.regDict['watchCountInfoContent'] = r'(?<=<div class="zm-topic-side-followers-info">).*?(?=</div>)'
-        self.regTipDict['watchCountInfoContent']  = u'关注人数信息'
+        self.regDict['watchCountInfoContent']    = r'(?<=<div class="zm-topic-side-followers-info">).*?(?=</div>)'
+        self.regTipDict['watchCountInfoContent'] = u'关注人数信息'
+        self.regDict['watchCount']    = r'(?<=<strong>)\d*(?=</strong>)'
+        self.regTipDict['watchCount'] = u'关注人数'
 
-        self.regDict['topicDesc'] = r'(?<=<div class="zm-editable-content" data-editable-maxlength="130">).*?(?=<a href="javascript:;" class="zu-edit-button")'
-        self.regTipDict['topicDesc']  = u'问题描述'
+        self.regDict['topicDesc']    = r'(?<=<div class="zm-editable-content" data-editable-maxlength="130" >).*?(?=</div>)'
+        self.regTipDict['topicDesc'] = u'问题描述'
 
-        self.regDict['topicLogo'] = r'(?<=<a class="zm-entry-head-avatar-link" ).*?(?=</div>)'
-        self.regTipDict['topicLogo']  = u'话题题图'
+        self.regDict['topicLogoContent']    = r'(?<=<a class="zm-entry-head-avatar-link" ).*?(?=</div>)'
+        self.regTipDict['topicLogoContent'] = u'话题题图信息'
+        self.regDict['topicLogo']    = r'(?<=src=").*?(?=")'
+        self.regTipDict['topicLogo'] = u'话题题图'
         return
 
     def getInfoDict(self):
         infoDict = {}
-        infoDict['buf'] = 
+        infoDict['title'] = self.matchContent('topicTitle', self.content) 
+        infoDict['description'] = self.matchContent('topicDesc', self.content) 
+        infoDict['topicID'] = self.matchContent('topicID', self.content) 
+
+        topicLogoContent = self.matchContent('topicLogoContent', self.content) 
+        infoDict['logoAddress'] = self.matchContent('topicLogo', topicLogoContent) 
+
+        watchCountInfoContent = self.matchContent('watchCountInfoContent', self.content)
+        infoDict['followerCount'] = self.matchContent('watchCount', watchCountInfoContent)
         return infoDict
 
 class CollectionInfoParse(Parse):
@@ -459,7 +558,7 @@ class CollectionInfoParse(Parse):
         self.regDict['collectionCommentCount']    = r'(?<=<i class="z-icon-comment"></i>)\d*'
         self.regTipDict['collectionCommentCount'] = u'收藏夹评论数'
 
-        self.regDict['collectionWatchCountContent'] = r'(?<=<!--分享收藏夹结束--><div class="zm-side-section">).*?(?=<div class="zm-side-section">)'
+        self.regDict['collectionWatchCountContent'] = r'(?<=<div id="zh-favlist-webshare-container" class="zh-question-webshare-links clearfix">).*?(?=<div id="zh-favlist-followers" class="zu-small-avatar-list">)'
         self.regTipDict['collectionWatchCountContent']  = u'收藏夹关注数内容'
         self.regDict['collectionWatchCount'] = r'(?<=<div class="zg-gray-normal"><a href="/collection/\d{8}/followers">)\d*(?=</a>)'
         self.regTipDict['collectionWatchCount']  = u'收藏夹关注数内容'

@@ -82,9 +82,11 @@ class Init(object):
             #用户信息表
             cursor.execute("""
                             CREATE TABLE IDInfo (
-                            IDLogoAdress        varchar(255)    default "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
+                            IDLogoAddress       varchar(255)    default "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
                             ID                  varchar(255)    not Null default 'null',
+                            dataID              varchar(255)    default '',
                             sign                varchar(255)    default '',
+                            desc                varchar(10000)  default '',
                             name                varchar(255)    default '',
                             ask                 varchar(255)    default '',
                             answer              int             default 0,
@@ -93,9 +95,12 @@ class Init(object):
                             edit                int             default 0,
                             agree               int             default 0,
                             thanks              int             default 0,
+                            collected           int             default 0,
+                            shared              int             default 0,
                             followee            int             default 0,
                             follower            int             default 0,
                             watched             int             default 0,
+                            weiboAddress        varchar(255)    default '',
                             primary key(ID))""")#负责保存ID信息
 
             #收藏夹信息表
@@ -107,23 +112,22 @@ class Init(object):
                             authorName          varchar(255),
                             authorID            varchar(255),
                             authorSign          varchar(255),
-                            followerCount       int(20)         not Null,
-                            commentCount        int(20)         not Null,
-                            primary key(CollectionID))""")#负责保存收藏夹信息
+                            followerCount       int(20)         not Null    default 0,
+                            commentCount        int(20)         not Null    default 0,
+                            primary key(collectionID))""")#负责保存收藏夹信息
 
             #话题信息表
             cursor.execute("""create table TopicInfo (
                             title               varchar(255),
-                            adress              varchar(255),
                             logoAddress         varchar(255),
                             description         varchar(3000),
                             topicID             varchar(50),
-                            primary key (TopicID))""")#负责保存话题信息
+                            followerCount       int(20)         default 0,
+                            primary key (topicID))""")#负责保存话题信息
 
             #圆桌信息表
             cursor.execute("""create table TableInfo (
                             title               varchar(255),
-                            adress              varchar(255),
                             logoAddress         varchar(255),
                             description         varchar(3000),
                             activeCount         int             default 0,

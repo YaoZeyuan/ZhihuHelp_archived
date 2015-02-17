@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dropEffect="none" class="no-js ">
+<head>
+<meta charset="utf-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+
+<title> robbin - 知乎</title>
+
+<meta name="apple-itunes-app" content="app-id=432274380, app-argument=zhihu://people/robbin">
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="mobile-agent" content="format=html5;url=http://www.zhihu.com/people/robbin/about">
+<meta id="znonce" name="znonce" content="418c17ec9f3e4b3b923760b8f9df6681">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(57px).png" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(72px).png" sizes="72x72" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(76px).png" sizes="76x76" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(114px).png" sizes="114x114" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(120px).png" sizes="120x120" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(152px).png" sizes="152x152" />
+
+
+<link rel="shortcut icon" href="http://static.zhihu.com/static/favicon.ico" type="image/x-icon">
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://static.zhihu.com/static/search.xml" title="知乎" />
+<link rel="stylesheet" href="http://static.zhihu.com/static/ver/012ee17a8ea33a674d13f13fa97cffb4.z.css">
+
+
+
+<!--[if lt IE 9]>
+<script src="http://static.zhihu.com/static/components/respond/dest/respond.min.js"></script>
+<link href="http://static.zhihu.com/static/components/respond/cross-domain/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+<link href="/static/components/respond/cross-domain/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" />
+<script src="/static/components/respond/cross-domain/respond.proxy.js"></script>
+<![endif]-->
+
+<script src="http://static.zhihu.com/static/ver/c9815c35381b57c0fdc44e8d89dc4327.instant.min.js"></script>
+
+<style>
+.zm-side-section + .zm-side-section {
+margin: 20px 0 0 0;
+}
+.zm-profile-side-nav{
+padding:0;
+}
+.zm-profile-section-list .zm-item-answer-author-info .zm-item-link-avatar{
+display: none;
+}
+/*弱化同类链接颜色*/
+#zh-profile-answer-list .zm-item-answer-author-wrap a{
+color:#222;
+}
+</style>
+
+</head>
+
+<body class="zhi">
+<div role="navigation" class="zu-top">
+<div class="zg-wrap" id="zh-top-inner">
+<a href="/" class="zu-top-link-logo" id="zh-top-link-logo">知乎</a>
+
+<div class="top-nav-profile">
+<a href="/people/404-Page-Not-found" class="zu-top-nav-userinfo ">
+<span class="name">姚泽源</span>
+<img class="avatar" src="http://pic3.zhimg.com/dce9dde98c91a4d1e3cb86e627ecca86_s.jpg" />
+<span id="zh-top-nav-new-pm" class="zg-noti-number zu-top-nav-pm-count"
+style="visibility:hidden" data-count="0">
+
+</span>
+</a>
+<ul class="top-nav-dropdown" id="top-nav-profile-dropdown">
+<li>
+<a href="/people/404-Page-Not-found">
+<i class="zg-icon zg-icon-dd-home"></i>我的主页
+</a>
+</li>
+
+<li>
+<a href="/inbox">
+<i class="zg-icon zg-icon-dd-pm"></i>私信
+<span id="zh-top-nav-pm-count" class="zu-top-nav-pm-count zg-noti-number"
+style="visibility:hidden" data-count="0">
+
+</span>
+</a>
+</li>
+<li>
+<a href="/settings">
+<i class="zg-icon zg-icon-dd-settings"></i>设置
+</a>
+</li>
+<li>
+<a href="/logout">
+<i class="zg-icon zg-icon-dd-logout"></i>退出
+</a>
+</li>
+</ul>
+
+</div>
+
+
+<div role="search" id="zh-top-search" class="zu-top-search">
+<form method="GET" action="/search" id="zh-top-search-form" class="zu-top-search-form form-with-magnify">
+
+<input type="text" class="zu-top-search-input" id="q" name="q" autocomplete="off" value="" placeholder="搜索话题、问题或人…" />
+<input type="hidden" name="type" value="question" />
+<label for="q" class="hide-text">知乎搜索</label>
+<button type="submit" class="magnify-button"><i class="icon icon-magnify-q"></i><span class="hide-text">搜索</span></button>
+</form>
+<button class="zu-top-add-question" id="zu-top-add-question">提问</button>
+</div>
+
+
+
+<div id="zg-top-nav" class="zu-top-nav">
+<ul class="zu-top-nav-ul zg-clear">
+
+<li class="zu-top-nav-li " id="zh-top-home-link">
+<a class="zu-top-nav-link" href="/" id="zh-top-link-home">首页</a>
+</li>
+<li class="top-nav-topic-selector zu-top-nav-li " id="zh-top-nav-item-topic">
+<a class="zu-top-nav-link" href="/topic" id="top-nav-dd-topic">话题</a>
+
+</li>
+<li class="zu-top-nav-li ">
+<a class="zu-top-nav-link" href="/explore">发现</a>
+</li>
+
+<li class="top-nav-noti zu-top-nav-li ">
+<a class="zu-top-nav-link" href="javascript:;" id="zh-top-nav-count-wrap" role="button"><span class="mobi-arrow"></span>消息</a>
+</li>
+
+
+
+</ul>
+<div class="zu-top-nav-live zu-noti7-popup zg-r5px no-hovercard" id="zh-top-nav-live-new" role="popup" tabindex="0">
+<div class="zu-top-nav-live-inner zg-r5px">
+<div class="zu-top-live-icon">&nbsp;</div>
+<div class="zu-home-noti-inner" id="zh-top-nav-live-new-inner">
+<div class="zm-noti7-popup-tab-container clearfix" tabindex="0">
+<button class="zm-noti7-popup-tab-item message">
+<span class="icon">消息</span>
+<span class="new-noti" style="display:none;">0</span>
+</button>
+<button class="zm-noti7-popup-tab-item user">
+<span class="icon">用户</span>
+<span class="new-noti" style="display:none;">0</span>
+</button>
+<button class="zm-noti7-popup-tab-item thanks">
+<span class="icon">赞同和感谢</span>
+<span class="new-noti" style="display:none;">0</span>
+</button>
+</div>
+</div>
+<div class="zm-noti7-frame-border top"></div>
+<div class="zm-noti7-frame">
+<div class="zm-noti7-content">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-popup-refresh" style="display:none;">
+<img class="noti-spinner" src="/static/img/spinner2.gif" />
+</div>
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<img class="noti-spinner" src="/static/img/noti-loading.gif" />
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-popup-refresh" style="display:none;">
+<img class="noti-spinner" src="/static/img/spinner2.gif" />
+</div>
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<img class="noti-spinner" src="/static/img/noti-loading.gif" />
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-popup-refresh" style="display:none;">
+<img class="noti-spinner" src="/static/img/spinner2.gif" />
+</div>
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<img class="noti-spinner" src="/static/img/noti-loading.gif" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-frame-border bottom"></div>
+<div class="zm-noti7-popup-footer">
+<a href="/notifications" class="zm-noti7-popup-footer-all zg-right">查看全部 &raquo;</a>
+<a href="/settings/notification" class="zm-noti7-popup-footer-set" title="通知设置" ><i class="zg-icon zg-icon-settings"></i></a>
+</div>
+</div>
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+<div class="zu-global-notify" id="zh-global-message" style="display:none">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<a class="zu-global-notify-close" href="javascript:;" title="关闭" name="close">x</a>
+<span class="zu-global-notify-icon"></span>
+<span class="zu-global-notify-msg"></span>
+</div>
+</div>
+</div>
+
+<div class="zg-wrap zu-main">
+<div class="zu-main-content">
+<div class="zu-main-content-inner" id="zh-pm-page-wrap">
+
+
+
+
+<div class="zm-profile-header">
+<div class="zm-profile-header-main">
+<div class="top">
+
+<div class='weibo-wrap'>
+
+<a class="zm-profile-header-user-weibo" target="_blank" href="http://weibo.com/robbinfan" data-tip="s$b$新浪微博"><i class="zm-profile-header-icon sina"></i></a>
+
+</div>
+
+<div class="title-section ellipsis">
+<a class="name" href="/people/robbin">robbin</a>，<span class="bio" title="互联网创业者，前JavaEye网站创始人">互联网创业者，前JavaEye网站创始人</span>
+</div>
+</div>
+<div class="body clearfix">
+<div class="zm-profile-header-avatar-container ">
+<img alt="robbin"
+src="http://pic4.zhimg.com/efc08cfc390270a1b4da043b923bf0f3_l.jpg"
+class="zm-profile-header-img zg-avatar-big zm-avatar-editor-preview"/>
+
+</div>
+<div class="zm-profile-header-info">
+<div class="zm-profile-header-user-describe">
+<div class="items">
+<div class="item editable-group" data-name="location">
+
+<i class="icon icon-profile-location"></i>
+
+<span class="info-wrap">
+
+<span class="location item" title="上海市"><a href="/topic/19691883" title="上海市" class="topic-link" data-token="19691883" data-topicid="47353">上海市</a></span>
+
+
+<span class="business item" title="互联网"><a href="/topic/19550517" title="互联网" class="topic-link" data-token="19550517" data-topicid="99">互联网</a></span>
+
+
+<span class="item gender" ><i class="icon icon-profile-male"></i></span>
+
+
+</span>
+<span class="edit-wrap" style="display:none;">
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="location" value="上海市" class="zg-form-text-input location" placeholder="居住地"/></span>
+<div class="business-selection">
+<select name="business">
+<option value="">选择行业</option>
+
+
+<option value="高新科技">高新科技</option>
+
+<option value="互联网" selected>&nbsp;&nbsp;&nbsp;互联网</option>
+
+<option value="电子商务">&nbsp;&nbsp;&nbsp;电子商务</option>
+
+<option value="电子游戏">&nbsp;&nbsp;&nbsp;电子游戏</option>
+
+<option value="计算机软件">&nbsp;&nbsp;&nbsp;计算机软件</option>
+
+<option value="计算机硬件">&nbsp;&nbsp;&nbsp;计算机硬件</option>
+
+
+
+
+<option value="信息传媒">信息传媒</option>
+
+<option value="出版业">&nbsp;&nbsp;&nbsp;出版业</option>
+
+<option value="电影录音">&nbsp;&nbsp;&nbsp;电影录音</option>
+
+<option value="广播电视">&nbsp;&nbsp;&nbsp;广播电视</option>
+
+<option value="通信">&nbsp;&nbsp;&nbsp;通信</option>
+
+
+
+
+<option value="金融">金融</option>
+
+<option value="银行">&nbsp;&nbsp;&nbsp;银行</option>
+
+<option value="资本投资">&nbsp;&nbsp;&nbsp;资本投资</option>
+
+<option value="证券投资">&nbsp;&nbsp;&nbsp;证券投资</option>
+
+<option value="保险">&nbsp;&nbsp;&nbsp;保险</option>
+
+<option value="信贷">&nbsp;&nbsp;&nbsp;信贷</option>
+
+<option value="财务">&nbsp;&nbsp;&nbsp;财务</option>
+
+<option value="审计">&nbsp;&nbsp;&nbsp;审计</option>
+
+
+
+
+<option value="服务业">服务业</option>
+
+<option value="法律">&nbsp;&nbsp;&nbsp;法律</option>
+
+<option value="餐饮">&nbsp;&nbsp;&nbsp;餐饮</option>
+
+<option value="酒店">&nbsp;&nbsp;&nbsp;酒店</option>
+
+<option value="旅游">&nbsp;&nbsp;&nbsp;旅游</option>
+
+<option value="广告">&nbsp;&nbsp;&nbsp;广告</option>
+
+<option value="公关">&nbsp;&nbsp;&nbsp;公关</option>
+
+<option value="景观">&nbsp;&nbsp;&nbsp;景观</option>
+
+<option value="咨询分析">&nbsp;&nbsp;&nbsp;咨询分析</option>
+
+<option value="市场推广">&nbsp;&nbsp;&nbsp;市场推广</option>
+
+<option value="人力资源">&nbsp;&nbsp;&nbsp;人力资源</option>
+
+<option value="社工服务">&nbsp;&nbsp;&nbsp;社工服务</option>
+
+<option value="养老服务">&nbsp;&nbsp;&nbsp;养老服务</option>
+
+
+
+
+<option value="教育">教育</option>
+
+<option value="高等教育">&nbsp;&nbsp;&nbsp;高等教育</option>
+
+<option value="基础教育">&nbsp;&nbsp;&nbsp;基础教育</option>
+
+<option value="职业教育">&nbsp;&nbsp;&nbsp;职业教育</option>
+
+<option value="幼儿教育">&nbsp;&nbsp;&nbsp;幼儿教育</option>
+
+<option value="特殊教育">&nbsp;&nbsp;&nbsp;特殊教育</option>
+
+<option value="培训">&nbsp;&nbsp;&nbsp;培训</option>
+
+
+
+
+<option value="医疗服务">医疗服务</option>
+
+<option value="临床医疗">&nbsp;&nbsp;&nbsp;临床医疗</option>
+
+<option value="制药">&nbsp;&nbsp;&nbsp;制药</option>
+
+<option value="保健">&nbsp;&nbsp;&nbsp;保健</option>
+
+<option value="美容">&nbsp;&nbsp;&nbsp;美容</option>
+
+<option value="医疗器材">&nbsp;&nbsp;&nbsp;医疗器材</option>
+
+<option value="生物工程">&nbsp;&nbsp;&nbsp;生物工程</option>
+
+<option value="疗养服务">&nbsp;&nbsp;&nbsp;疗养服务</option>
+
+<option value="护理服务">&nbsp;&nbsp;&nbsp;护理服务</option>
+
+
+
+
+<option value="艺术娱乐">艺术娱乐</option>
+
+<option value="创意艺术">&nbsp;&nbsp;&nbsp;创意艺术</option>
+
+<option value="体育健身">&nbsp;&nbsp;&nbsp;体育健身</option>
+
+<option value="娱乐休闲">&nbsp;&nbsp;&nbsp;娱乐休闲</option>
+
+<option value="图书馆">&nbsp;&nbsp;&nbsp;图书馆</option>
+
+<option value="博物馆">&nbsp;&nbsp;&nbsp;博物馆</option>
+
+<option value="策展">&nbsp;&nbsp;&nbsp;策展</option>
+
+<option value="博彩">&nbsp;&nbsp;&nbsp;博彩</option>
+
+
+
+
+<option value="制造加工">制造加工</option>
+
+<option value="食品饮料业">&nbsp;&nbsp;&nbsp;食品饮料业</option>
+
+<option value="纺织皮革业">&nbsp;&nbsp;&nbsp;纺织皮革业</option>
+
+<option value="服装业">&nbsp;&nbsp;&nbsp;服装业</option>
+
+<option value="烟草业">&nbsp;&nbsp;&nbsp;烟草业</option>
+
+<option value="造纸业">&nbsp;&nbsp;&nbsp;造纸业</option>
+
+<option value="印刷业">&nbsp;&nbsp;&nbsp;印刷业</option>
+
+<option value="化工业">&nbsp;&nbsp;&nbsp;化工业</option>
+
+<option value="汽车">&nbsp;&nbsp;&nbsp;汽车</option>
+
+<option value="家具">&nbsp;&nbsp;&nbsp;家具</option>
+
+<option value="电子电器">&nbsp;&nbsp;&nbsp;电子电器</option>
+
+<option value="机械设备">&nbsp;&nbsp;&nbsp;机械设备</option>
+
+<option value="塑料工业">&nbsp;&nbsp;&nbsp;塑料工业</option>
+
+<option value="金属加工">&nbsp;&nbsp;&nbsp;金属加工</option>
+
+<option value="军火">&nbsp;&nbsp;&nbsp;军火</option>
+
+
+
+
+<option value="地产建筑">地产建筑</option>
+
+<option value="房地产">&nbsp;&nbsp;&nbsp;房地产</option>
+
+<option value="装饰装潢">&nbsp;&nbsp;&nbsp;装饰装潢</option>
+
+<option value="物业服务">&nbsp;&nbsp;&nbsp;物业服务</option>
+
+<option value="特殊建造">&nbsp;&nbsp;&nbsp;特殊建造</option>
+
+<option value="建筑设备">&nbsp;&nbsp;&nbsp;建筑设备</option>
+
+
+
+
+<option value="贸易零售">贸易零售</option>
+
+<option value="零售">&nbsp;&nbsp;&nbsp;零售</option>
+
+<option value="大宗交易">&nbsp;&nbsp;&nbsp;大宗交易</option>
+
+<option value="进出口贸易">&nbsp;&nbsp;&nbsp;进出口贸易</option>
+
+
+
+
+<option value="公共服务">公共服务</option>
+
+<option value="政府">&nbsp;&nbsp;&nbsp;政府</option>
+
+<option value="国防军事">&nbsp;&nbsp;&nbsp;国防军事</option>
+
+<option value="航天">&nbsp;&nbsp;&nbsp;航天</option>
+
+<option value="科研">&nbsp;&nbsp;&nbsp;科研</option>
+
+<option value="给排水">&nbsp;&nbsp;&nbsp;给排水</option>
+
+<option value="水利能源">&nbsp;&nbsp;&nbsp;水利能源</option>
+
+<option value="电力电网">&nbsp;&nbsp;&nbsp;电力电网</option>
+
+<option value="公共管理">&nbsp;&nbsp;&nbsp;公共管理</option>
+
+<option value="环境保护">&nbsp;&nbsp;&nbsp;环境保护</option>
+
+<option value="非营利组织">&nbsp;&nbsp;&nbsp;非营利组织</option>
+
+
+
+
+<option value="开采冶金">开采冶金</option>
+
+<option value="煤炭工业">&nbsp;&nbsp;&nbsp;煤炭工业</option>
+
+<option value="石油工业">&nbsp;&nbsp;&nbsp;石油工业</option>
+
+<option value="黑色金属">&nbsp;&nbsp;&nbsp;黑色金属</option>
+
+<option value="有色金属">&nbsp;&nbsp;&nbsp;有色金属</option>
+
+<option value="土砂石开采">&nbsp;&nbsp;&nbsp;土砂石开采</option>
+
+<option value="地热开采">&nbsp;&nbsp;&nbsp;地热开采</option>
+
+
+
+
+<option value="交通仓储">交通仓储</option>
+
+<option value="邮政">&nbsp;&nbsp;&nbsp;邮政</option>
+
+<option value="物流递送">&nbsp;&nbsp;&nbsp;物流递送</option>
+
+<option value="地面运输">&nbsp;&nbsp;&nbsp;地面运输</option>
+
+<option value="铁路运输">&nbsp;&nbsp;&nbsp;铁路运输</option>
+
+<option value="管线运输">&nbsp;&nbsp;&nbsp;管线运输</option>
+
+<option value="航运业">&nbsp;&nbsp;&nbsp;航运业</option>
+
+<option value="民用航空业">&nbsp;&nbsp;&nbsp;民用航空业</option>
+
+
+
+
+<option value="农林牧渔">农林牧渔</option>
+
+<option value="种植业">&nbsp;&nbsp;&nbsp;种植业</option>
+
+<option value="畜牧养殖业">&nbsp;&nbsp;&nbsp;畜牧养殖业</option>
+
+<option value="林业">&nbsp;&nbsp;&nbsp;林业</option>
+
+<option value="渔业">&nbsp;&nbsp;&nbsp;渔业</option>
+
+
+
+</select>
+</div>
+<span class="zg-bull">|</span>
+<input type="radio" name="gender" value="1" checked="checked" class="male"/> 男&nbsp;&nbsp;
+<input type="radio" name="gender" value="0"  class="female"/> 女
+<a class="zg-btn-blue" name="save" href="javascript:;">确定</a>
+</span>
+</div>
+
+<div class="item editable-group " data-name="employment">
+<i class="icon icon-profile-company"></i>
+<span class="info-wrap">
+
+<span class="employment item" title="上海麦田文化传播有限公司">上海麦田文化传播有限公司</span>
+
+
+<span class="position item" title="CTO"><a href="/topic/19559426" title="CTO" class="topic-link" data-token="19559426" data-topicid="3075">CTO</a></span>
+
+
+</span>
+<span class='info-empty-wrap'><a href="javascript:;" name="edit" class="zg-link-litblue-normal">填写工作信息</a></span>
+<span class="edit-wrap" style="display:none;">
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="employment" value="上海麦田文化传播有限公司" class="zg-form-text-input employment" placeholder="公司或组织名称"/></span>
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="position" value="CTO" class="zg-form-text-input position" placeholder="你的职位"/></span>
+<a class="zg-btn-blue" name="save" href="javascript:;">确定</a>
+</span>
+</div>
+
+
+<div class="item editable-group " data-name="education" >
+<i class="icon icon-profile-education"></i>
+<span class="info-wrap">
+
+<span class="education item" title="天津大学"><a href="/topic/19606313" title="天津大学" class="topic-link" data-token="19606313" data-topicid="18738">天津大学</a></span>
+
+
+
+</span>
+<span class='info-empty-wrap'><a href="javascript:;" name="edit" class="zg-link-litblue-normal">填写教育信息</a></span>
+<span class="edit-wrap" style="display:none;">
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="education" value="天津大学" class="zg-form-text-input education" placeholder="学校或教育机构"/></span>
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="education" value="" class="zg-form-text-input education-extra" placeholder="专业方向"/></span>
+<a class="zg-btn-blue" name="save" href="javascript:;">确定</a>
+</span>
+</div>
+
+
+<a class="zm-profile-header-user-detail zg-link-litblue-normal zm-profile-icon-return" href="/people/robbin">
+<i class="zm-profile-header-icon"></i>
+<span>返回个人主页</span>
+</a>
+
+</div>
+
+<div class="zm-profile-header-description editable-group " data-name="description">
+<span class="info-wrap fold-wrap fold disable-fold">
+<span class="description unfold-item">
+<span class="content">
+
+范凯，JavaEye创办者，创业爱好者， Entrepreneur Nerd<a href="http://robbinfan.com" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">robbinfan.com</span><span class="invisible"></span><i class="icon-external"></i></a>
+
+</span>
+<a href="javascript:;" name="fold" class="fold collapse meta-item"><i class="z-icon-fold"></i>收起</a>
+</span>
+<span class="fold-item">
+<span class="content">
+
+范凯，JavaEye创办者，创业爱好者， Entrepreneur Nerd<a href="http://robbinfan.com" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">robbinfan.com</span><span class="invisible"></span><i class="icon-external"></i></a>
+
+</span>
+<a href="javascript:;" class="unfold" name="unfold">显示全部 »</a>
+</span>
+
+</span>
+<span class='info-empty-wrap'><a href="javascript:;" name="edit" class="zg-link-litblue-normal"><i class="zg-icon zg-icon-edit-button-blue"></i>填写个人简介</a></span>
+<span class="edit-wrap" style="display:none;">
+<div class="zm-editable-editor-outer">
+<div class="zm-editable-editor-inner zg-form-text-input">
+<textarea name="description" value="" class="zm-editable-editor-input description" id="profile-header-description-input">范凯，JavaEye创办者，创业爱好者， Entrepreneur Nerdhttp://robbinfan.com</textarea>
+</div>
+</div>
+<a class="zg-btn-blue" name="save" href="javascript:;">确定</a>
+</span>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="zm-profile-header-operation zg-clear ">
+<div class="zm-profile-header-info-list">
+<span class="zm-profile-header-info-title">获得</span>
+<span class="zm-profile-header-user-agree"><span class="zm-profile-header-icon"></span><strong>12148</strong>赞同</span>
+<span class="zm-profile-header-user-thanks"><span class="zm-profile-header-icon"></span><strong>1784</strong>感谢</span>
+
+</div>
+
+<div class="zm-profile-header-op-btns clearfix">
+
+
+<button data-follow="m:button" data-id="697a4dcc9a634bbe987606a7ae29dc92" class="zg-btn zg-btn-unfollow zm-rich-follow-btn">取消关注</button>
+
+
+
+<a href="/inbox/2833324000" class="zg-btn-white zm-profile-header-pm-btn" id="zm-profile-header-pm-btn"><i class="zg-icon">私信</i></a>
+
+
+</div>
+
+</div>
+<div class="profile-navbar clearfix">
+<a class="item home first "
+href="/people/robbin">
+<i class="icon icon-profile-tab-home"></i><span class="hide-text">主页</span>
+</a>
+<a class="item "
+href="/people/robbin/asks">
+提问
+<span class="num">4</span>
+</a>
+<a class="item "
+href="/people/robbin/answers">
+回答
+<span class="num">211</span>
+</a>
+<a class="item "
+href="/people/robbin/posts">
+专栏文章
+<span class="num">9</span>
+</a>
+<a class="item "
+href="/people/robbin/collections">
+收藏
+<span class="num">1</span>
+</a>
+<a class="item "
+href="/people/robbin/logs">
+公共编辑
+<span class="num">13</span>
+</a>
+</div>
+
+</div>
+
+
+<div class="zm-profile-section-wrap zm-profile-details-wrap">
+<div class="zm-profile-section-head">
+<span class="zm-profile-section-name"><a href="/people/robbin">robbin</a> 的详细资料</span>
+<a class="zg-right zg-link-litblue-normal zm-profile-answer-page-return" href="/people/robbin">返回个人主页</a>
+</div>
+<div class="zm-profile-section-list zm-profile-details">
+<div class="zm-profile-module zm-profile-details-reputation">
+<h3><i class="zm-profile-icon zm-profile-icon-repu"></i> <span>个人成就</span></h3>
+<div class="zm-profile-module-desc">
+<span class="zm-profile-desc-label">获得</span>
+<i class="zm-profile-icon zm-profile-icon-vote"></i>
+<span>
+<strong>12148</strong> 赞同
+</span>
+<i class="zm-profile-icon zm-profile-icon-thank"></i>
+<span>
+<strong>1784</strong> 感谢
+</span>
+<i class="zm-profile-icon zm-profile-icon-fav"></i>
+<span>
+<strong>3705</strong> 收藏
+</span>
+<i class="zm-profile-icon zm-profile-icon-share"></i>
+<span>
+<strong>271</strong> 分享
+</span>
+</div>
+</div>
+<div class="zm-profile-module zg-clear">
+<h3><i class="zm-profile-icon zm-profile-icon-company"></i> <span>职业经历</span></h3>
+<div class="zm-profile-module-desc">
+
+<ul class="zm-profile-details-items">
+
+<li data-title="上海麦田文化传播有限公司" data-sub-title="CTO">
+
+<span tabindex="-1" class="zm-profile-details-item-image">
+<img src="http://p2.zhimg.com/e8/2b/e82bab09c_is.jpg">
+</span>
+
+<div class="zm-profile-details-item-detail">
+
+
+<strong title="上海麦田文化传播有限公司">上海麦田文化传播有限公司</strong>
+
+
+<strong>
+<span class="zm-profile-details-middot">·</span>
+<a href="/topic/19559426">CTO</a>
+</strong>
+
+
+</div>
+<div class="goog-inline-block goog-flat-button zm-profile-tag-btn zm-profile-tag-btn-del" title="删除" role="button" style="-webkit-user-select: none;" tabindex="0" data-tip="s$b$删除" name="del"></div>
+</li>
+
+<li data-title="JavaEye" data-sub-title="CEO">
+
+<a tabindex="-1" href="/topic/19578298" class="zm-profile-details-item-image">
+<img src="http://pic1.zhimg.com/e82bab09c_is.jpg" alt="JavaEye">
+</a>
+
+<div class="zm-profile-details-item-detail">
+
+
+<strong><a href="/topic/19578298">JavaEye</a></strong>
+
+
+<strong>
+<span class="zm-profile-details-middot">·</span>
+<a href="/topic/19550368">CEO</a>
+</strong>
+
+
+</div>
+<div class="goog-inline-block goog-flat-button zm-profile-tag-btn zm-profile-tag-btn-del" title="删除" role="button" style="-webkit-user-select: none;" tabindex="0" data-tip="s$b$删除" name="del"></div>
+</li>
+
+<li data-title="CSDN" data-sub-title="CTO">
+
+<a tabindex="-1" href="/topic/19565864" class="zm-profile-details-item-image">
+<img src="http://pic3.zhimg.com/f20bb57ca_is.jpg" alt="CSDN">
+</a>
+
+<div class="zm-profile-details-item-detail">
+
+
+<strong><a href="/topic/19565864">CSDN</a></strong>
+
+
+<strong>
+<span class="zm-profile-details-middot">·</span>
+<a href="/topic/19559426">CTO</a>
+</strong>
+
+
+</div>
+<div class="goog-inline-block goog-flat-button zm-profile-tag-btn zm-profile-tag-btn-del" title="删除" role="button" style="-webkit-user-select: none;" tabindex="0" data-tip="s$b$删除" name="del"></div>
+</li>
+
+</ul>
+
+</div>
+</div>
+<div class="zm-profile-module zg-clear">
+<h3><i class="zm-profile-icon zm-profile-icon-location"></i> <span>居住信息</span></h3>
+<div class="zm-profile-module-desc">
+
+<ul class="zm-profile-details-items">
+
+<li data-title="上海市" data-sub-title="">
+
+<a tabindex="-1" href="/topic/19691883" class="zm-profile-details-item-image">
+<img src="http://pic1.zhimg.com/e82bab09c_is.jpg" alt="上海市">
+</a>
+
+<div class="zm-profile-details-item-detail">
+
+
+<strong><a href="/topic/19691883">上海市</a></strong>
+
+
+
+</div>
+<div class="goog-inline-block goog-flat-button zm-profile-tag-btn zm-profile-tag-btn-del" title="删除" role="button" style="-webkit-user-select: none;" tabindex="0" data-tip="s$b$删除" name="del"></div>
+</li>
+
+</ul>
+
+</div>
+</div>
+<div class="zm-profile-module zg-clear">
+<h3><i class="zm-profile-icon zm-profile-icon-edu"></i> <span>教育经历</span></h3>
+<div class="zm-profile-module-desc">
+
+<ul class="zm-profile-details-items">
+
+<li data-title="天津大学" data-sub-title="">
+
+<a tabindex="-1" href="/topic/19606313" class="zm-profile-details-item-image">
+<img src="http://pic4.zhimg.com/c97fde277_is.jpg" alt="天津大学">
+</a>
+
+<div class="zm-profile-details-item-detail">
+
+
+<strong><a href="/topic/19606313">天津大学</a></strong>
+
+
+
+</div>
+<div class="goog-inline-block goog-flat-button zm-profile-tag-btn zm-profile-tag-btn-del" title="删除" role="button" style="-webkit-user-select: none;" tabindex="0" data-tip="s$b$删除" name="del"></div>
+</li>
+
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div class="zu-main-sidebar">
+<div class="zm-profile-side-following zg-clear">
+<a class="item" href="/people/robbin/followees">
+<span class="zg-gray-normal">关注了</span><br />
+<strong>143</strong><label> 人</label>
+</a>
+<a class="item" href="/people/robbin/followers">
+<span class="zg-gray-normal">关注者</span><br />
+<strong>20232</strong><label> 人</label>
+</a>
+</div>
+
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner zg-clear">
+<div class="zm-profile-side-same-friends">
+<div class="zm-profile-side-section-title">
+我关注的人中，<a href="/people/robbin/mutuals" class="zg-link-litblue">54 人</a>也关注他
+</div>
+<div class="zu-small-avatar-list zg-clear">
+
+<a title="王納米"
+data-tip="p$t$nami.wang"
+class="zm-item-link-avatar"
+href="/people/nami.wang">
+<img src="http://pic1.zhimg.com/0c5111030_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="景小亮"
+data-tip="p$t$jing-xiao-liang"
+class="zm-item-link-avatar"
+href="/people/jing-xiao-liang">
+<img src="http://pic1.zhimg.com/680c30ef919c57d1828aa5cc0dfa6894_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="颜馨琪"
+data-tip="p$t$yan-xin-qi"
+class="zm-item-link-avatar"
+href="/people/yan-xin-qi">
+<img src="http://pic4.zhimg.com/e35032d64fdb91f39c1b632c01fd691b_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="潘运滨"
+data-tip="p$t$panyunbin"
+class="zm-item-link-avatar"
+href="/people/panyunbin">
+<img src="http://pic4.zhimg.com/d8b171507_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="张亮"
+data-tip="p$t$imike"
+class="zm-item-link-avatar"
+href="/people/imike">
+<img src="http://pic4.zhimg.com/465513667_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="黄继新"
+data-tip="p$t$jixin"
+class="zm-item-link-avatar"
+href="/people/jixin">
+<img src="http://pic2.zhimg.com/0626f4164009f291b26a79d96c6962c5_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="OnlySwan"
+data-tip="p$t$onlyswan"
+class="zm-item-link-avatar"
+href="/people/onlyswan">
+<img src="http://pic4.zhimg.com/afb4010c3_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="Lydia"
+data-tip="p$t$lydia-62"
+class="zm-item-link-avatar"
+href="/people/lydia-62">
+<img src="http://pic4.zhimg.com/88d61d391cc3c91be7e45ecc17026fe7_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="枯禅"
+data-tip="p$t$_Zen"
+class="zm-item-link-avatar"
+href="/people/_Zen">
+<img src="http://pic1.zhimg.com/f75922e769d9d9bc727eb399b83ae214_s.jpg" class="zm-item-img-avatar">
+</a>
+
+</div>
+</div>
+</div>
+</div>
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner zg-clear">
+<div class="zm-profile-side-section-title">
+关注了 <a href="/people/robbin/columns/followed" class="zg-link-litblue"><strong>25 个专栏</strong></a>
+</div>
+<div class="zm-profile-side-columns">
+
+<a href="http://zhuanlan.zhihu.com/xiepanda" data-tip="c$t$xiepanda" class="link" target="_blank">
+<img src="http://pic3.zhimg.com/993d9179c_l.jpg" title="谢熊猫出没注意" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/TheWorldOutside" data-tip="c$t$TheWorldOutside" class="link" target="_blank">
+<img src="http://pic1.zhimg.com/3066578cf937e590835052b83468adf9_l.jpg" title="外面的世界" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/cxwangyi" data-tip="c$t$cxwangyi" class="link" target="_blank">
+<img src="http://pic2.zhimg.com/6dd3019af3290aa988cc7f6a7ea9c1ed_l.jpg" title="Occam's Razor" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/magasa" data-tip="c$t$magasa" class="link" target="_blank">
+<img src="http://pic3.zhimg.com/4b70deef7_l.jpg" title="《虹膜》与数字出版" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/imike" data-tip="c$t$imike" class="link" target="_blank">
+<img src="http://pic4.zhimg.com/bef4f1252_l.jpg" title="逆旅" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/toureet" data-tip="c$t$toureet" class="link" target="_blank">
+<img src="http://pic2.zhimg.com/5e68ab9e3_l.jpg" title="途客们的旅行梦" class="avatar">
+</a>
+
+<a href="http://zhuanlan.zhihu.com/prattle" data-tip="c$t$prattle" class="link" target="_blank">
+<img src="http://pic4.zhimg.com/d1366e3e3_l.jpg" title="迷思" class="avatar">
+</a>
+
+</div>
+</div>
+</div>
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner zg-clear">
+<div class="zm-profile-side-section-title">
+关注了 <a href="/people/robbin/topics" class="zg-link-litblue"><strong>27 个话题</strong></a>
+</div>
+<div class="zm-profile-side-topics" id="zh-profile-following-topic">
+
+<a class="link" data-tip="t$t$19550290" href="/topic/19550290">
+<img class="avatar" src="http://pic1.zhimg.com/ef2309750_m.jpg" title="OS X">
+</a>
+
+<a class="link" data-tip="t$t$19550246" href="/topic/19550246">
+<img class="avatar" src="http://pic4.zhimg.com/564077033_m.jpg" title="史蒂夫·乔布斯（Steve Jobs）">
+</a>
+
+<a class="link" data-tip="t$t$19552720" href="/topic/19552720">
+<img class="avatar" src="http://pic1.zhimg.com/722691568_m.jpg" title="李开复（人物）">
+</a>
+
+<a class="link" data-tip="t$t$19554470" href="/topic/19554470">
+<img class="avatar" src="http://pic4.zhimg.com/779239c11ebbd513721a8631770e1853_m.jpg" title="微信">
+</a>
+
+<a class="link" data-tip="t$t$19552439" href="/topic/19552439">
+<img class="avatar" src="http://pic1.zhimg.com/5daddd688_m.jpg" title="NBA">
+</a>
+
+<a class="link" data-tip="t$t$19552922" href="/topic/19552922">
+<img class="avatar" src="http://pic1.zhimg.com/af0d0f91c_m.jpg" title="乔纳森・艾弗 (Jonathan Ive)">
+</a>
+
+<a class="link" data-tip="t$t$19550307" href="/topic/19550307">
+<img class="avatar" src="http://pic2.zhimg.com/4f8121f25_m.jpg" title="iTunes">
+</a>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner">
+<ul id="profile-side-op" class="profile-side-op">
+
+<li><a href="javascript:void(0);" name="report" class="zg-link-gray-normal">举报用户</a></li>
+
+
+<li><a href="javascript:void(0);" name="block" class="zg-link-gray-normal">屏蔽用户</a></li>
+
+</ul>
+</div>
+</div>
+
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner">
+<span class="zg-gray-normal">个人主页被 <strong>8605</strong> 人浏览</span>
+</div>
+</div>
+
+<script type="text/json" class="json-inline" data-name="current_people">["robbin","robbin","http:\/\/pic4.zhimg.com\/efc08cfc390270a1b4da043b923bf0f3_s.jpg","697a4dcc9a634bbe987606a7ae29dc92"]</script>
+<div id="zh-footer" class="zh-footer">
+<div class="zg-wrap clearfix">
+<ul>
+
+<li><a href="/question/19581624" target='_blank'>知乎指南</a></li>
+<li><a href="javascript:;" id="js-feedback-button">建议反馈</a></li>
+
+<li><a href="/app" target='_blank'>移动应用</a></li>
+<li><a href="/careers">加入知乎</a></li>
+<li><a href="/terms" target="_blank">知乎协议</a></li>
+<li><a href="mailto:bd@zhihu.com">商务合作</a></li>
+</ul>
+<span class="copy">&copy; 2015 知乎</span>
+</div>
+</div>
+
+</div>
+<div class="zg-clear"></div>
+</div>
+
+
+
+<script type="text/json" class="json-inline" data-name="current_user">["\u59da\u6cfd\u6e90","404-Page-Not-found","http:\/\/pic3.zhimg.com\/dce9dde98c91a4d1e3cb86e627ecca86_s.jpg","57842aac37ccd0de3965f9b6e17cb555","\u7b7e\u540d\u957f\u5ea6\u6d4b\u8bd5\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341",0,0,1,"547320073@qq.com","http:\/\/mail.qq.com",1,false,true]</script>
+<script type="text/json" class="json-inline" data-name="env">["zhihu.com","comet.zhihu.com",false,null]</script>
+<script type="text/json" class="json-inline" data-name="permissions">[]</script>
+
+
+<script type="text/json" class="json-inline" data-name="ga_vars">{"user_created":1337032972000,"now":1424192314000,"abtest_mask":"---------1--------------------","user_attr":[1,0,0,"-",1],"user_hash":"57842aac37ccd0de3965f9b6e17cb555"}</script>
+
+<script src="http://static.zhihu.com/static/ver/82cfd3bf774281811fa8287dc189988f.extern_src.min.js"></script>
+<script src="http://static.zhihu.com/static/ver/fe716e6c6b85de6569dc2bdb9c26765c.app_core.js"></script>
+<script src="http://static.zhihu.com/static/ver/f6ddbf3143053a0abe68322eb5e83c1a.sign.js"></script>
+<script src="http://static.zhihu.com/static/ver/f9ef5be92395ba25c9d6499ebfd7473e.app.js"></script>
+<script src="http://static.zhihu.com/static/ver/afc41ea0351eb5f7f397c0c25a4749a5.rich_text_editor.js"></script>
+
+<script type="text/zscript" znonce="418c17ec9f3e4b3b923760b8f9df6681">
+ZH.entryP();
+</script>
+
+<input type="hidden" name="_xsrf" value="6368b88d3820e4553aa78334f626c10f"/>
+</body>
+</html>
