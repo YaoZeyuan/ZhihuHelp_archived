@@ -108,6 +108,7 @@ class Init(object):
                             authorID            varchar(255),
                             authorSign          varchar(255),
                             followerCount       int(20)         not Null,
+                            commentCount        int(20)         not Null,
                             primary key(CollectionID))""")#负责保存收藏夹信息
 
             #话题信息表

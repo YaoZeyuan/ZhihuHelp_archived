@@ -15,26 +15,26 @@ sys.setdefaultencoding('utf8')
 #Answer Test
 #targetFileList = ['simpleAnswerContent1.txt']
     
-Author Test
-targetFileList = ['simpleAuthorContent1.txt']
-for filePath in targetFileList:
-    content = open('./htmlFile/' + filePath).read()
-    questionObject = ParseAuthor(content)
-    authorInfoDict, questionDictList, answerDictList = questionObject.getInfoDict()
-    print u'作者信息：'
-    printDict(authorInfoDict)
-    print "====================="
-    #print u'问题信息：'
-    #for questionInfoDict in questionDictList:
-    #    printDict(questionInfoDict)
-    #    print "====================="
-    #print ">>>>>>>>>>>>>>>>>>>>>"
-    #print u'答案内容:'
-    #for answer in answerDictList:
-    #    pass
-    #    #printDict(answer)
-    #    #print "====================="
-    print "<<<<<<<<<<<<<<<<<<<<<"
+#Author Test
+#targetFileList = ['simpleAuthorContent1.txt']
+#for filePath in targetFileList:
+#    content = open('./htmlFile/' + filePath).read()
+#    questionObject = ParseAuthor(content)
+#    questionDictList, answerDictList = questionObject.getInfoDict()
+#    print u'作者信息：'
+#    printDict(authorInfoDict)
+#    print "====================="
+#    #print u'问题信息：'
+#    #for questionInfoDict in questionDictList:
+#    #    printDict(questionInfoDict)
+#    #    print "====================="
+#    #print ">>>>>>>>>>>>>>>>>>>>>"
+#    #print u'答案内容:'
+#    #for answer in answerDictList:
+#    #    pass
+#    #    #printDict(answer)
+#    #    #print "====================="
+#    print "<<<<<<<<<<<<<<<<<<<<<"
 
 #Topic Test
 #targetFileList = ['simpleTopicContent1.txt']
@@ -71,3 +71,24 @@ for filePath in targetFileList:
 #        #printDict(answer)
 #        #print "====================="
 #    print "<<<<<<<<<<<<<<<<<<<<<"
+
+#Info Test
+#CollectionInfoParse Test
+#targetFileList = ['collectionInfoContent1.txt']
+#for filePath in targetFileList:
+#    content = open('./htmlFile/' + filePath).read()
+#    parse = CollectionInfoParse(content)
+#    infoDict = parse.getInfoDict()
+#    print u'信息字典：'
+#    printDict(infoDict)
+#    print "====================="
+
+#Topic Test
+targetFileList = ['topicInfoContent1.txt']
+for filePath in targetFileList:
+    content = open('./htmlFile/' + filePath).read()
+    parse = TopicInfoParse(content)
+    infoDict = parse.getInfoDict()
+    print u'信息字典：'
+    printDict(infoDict)
+    print "====================="
