@@ -436,8 +436,8 @@ class AuthorInfoParse(Parse):
         
         self.regDict['authorLogoContent']    = r'(?<=<div class="zm-profile-header-avatar-container ">).*?(?="class="zm-profile-header-img zg-avatar-big zm-avatar-editor-preview"/>)'
         self.regTipDict['authorLogoContent'] = u'用户头像内容'
-        self.regDict['authorLogoAdress']    = r'(?<=src=").*'
-        self.regTipDict['authorLogoAdress'] = u'用户头像'
+        self.regDict['authorLogoAddress']    = r'(?<=src=").*'
+        self.regTipDict['authorLogoAddress'] = u'用户头像'
         
         self.regDict['dataID']    = r'(?<=data-id=").*?(?=")'
         self.regTipDict['dataID'] = u'dataID'
@@ -448,7 +448,7 @@ class AuthorInfoParse(Parse):
         infoDict['dataID'] = self.matchContent('dataID', self.content)
 
         authorLogoContent = self.matchContent('authorLogoContent', self.content)
-        infoDict['authorLogoAdress'] = self.matchContent('authorLogoAdress', authorLogoContent)
+        infoDict['authorLogoAddress'] = self.matchContent('authorLogoAddress', authorLogoContent)
 
         weiboContent = self.matchContent('weiboContent', self.content)
         infoDict['weiboAddress'] = self.matchContent('weiboAddress', weiboContent)

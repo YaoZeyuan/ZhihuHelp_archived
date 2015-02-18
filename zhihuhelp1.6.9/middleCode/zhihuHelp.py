@@ -130,31 +130,31 @@ class ZhihuHelp(object):
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['answerID']     = re.search(r'(?<=zhihu\.com/question/\d{8}/answer/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到答案地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = AnswerWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo)
+            urlInfo['worker']       = AnswerWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
             urlInfo['filter']       = AnswerFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = ''
         if kind == 'question':
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到问题地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = QuestionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo)
+            urlInfo['worker']       = QuestionWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
             urlInfo['filter']       = QuestionFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = ''
         if kind == 'author':
             urlInfo['authorID']     = re.search(r'(?<=zhihu\.com/people/)[^/#]*', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到用户主页地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = AuthorWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo)
+            urlInfo['worker']       = AuthorWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
             urlInfo['filter']       = AuthorFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = urlInfo['baseUrl'] + '/about'
         if kind == 'collection':
             urlInfo['collectionID'] = re.search(r'(?<=zhihu\.com/collection/)\d*', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到收藏夹地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = CollectionWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo)
+            urlInfo['worker']       = CollectionWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
             urlInfo['filter']       = CollectionFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = urlInfo['baseUrl']
         if kind == 'topic':
             urlInfo['topicID']      = re.search(r'(?<=zhihu\.com/topic/)\d*', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到话题地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = TopicWorker(conn = self.conn, maxThread = self.maxThread, targetUrl = urlInfo)
+            urlInfo['worker']       = TopicWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
             urlInfo['filter']       = TopicFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = urlInfo['baseUrl']
         if kind == 'table':
