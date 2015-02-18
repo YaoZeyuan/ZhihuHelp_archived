@@ -412,6 +412,13 @@ class TopicWorker(AuthorWorker):
         self.complete.add(workNo)
         return 
 
+    def addProperty(self):
+        self.maxPage = 1
+        self.suffix  = '/top-answers?page='
+        self.maxTry  = 1
+        self.waitFor = 5
+        return
+
 class CollectionWorker(AuthorWorker):
     def getIndexID(self):
         collectionMatch = re.search(r'(?<=www.zhihu.com/collection/)\d{8}', self.url)
@@ -451,6 +458,12 @@ class CollectionWorker(AuthorWorker):
         self.complete.add(workNo)
         return 
 
+    def addProperty(self):
+        self.maxPage = 1
+        self.suffix  = '?page='
+        self.maxTry  = 1
+        self.waitFor = 5
+        return
 """
 class JsonWorker:
 """
