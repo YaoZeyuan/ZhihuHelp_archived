@@ -22,9 +22,10 @@ class ZhihuHelp(object):
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
         init = Init()
-        self.conn        = init.getConn()
-        self.cursor      = self.conn.cursor() 
-        self.epubContent = {}
+        self.conn         = init.getConn()
+        self.cursor       = self.conn.cursor() 
+        self.epubContent  = {}
+        self.epubInfoList = []
         return 
     
     def helperStart(self):
@@ -53,8 +54,10 @@ class ZhihuHelp(object):
                     continue
                 self.manager(urlInfo)
                 self.addEpubChapter(urlInfo['filter'].getResult())
-            Zhihu2Epub(self.epubContent)
-            self.epubContent = {}
+                self.epubInfoList.append(urlInfo['filter'].getInfoDict())
+            Zhihu2Epub(self.epubContent, self.epubInfoList)
+            self.epubContent  = {}
+            self.epubInfoList = []
             print u'test over'
         return
 

@@ -314,6 +314,14 @@ class QuestionFilter(BaseFilter):
                 }
         self.result[result['questionInfo']['questionID']] = result
         return self.result
+    
+    def getInfoDict(self):
+        infoDict = {
+                'title': '',
+                'href' : ''
+                }
+        return infoDict
+
         
 class AnswerFilter(QuestionFilter):
     def addProperty(self):
@@ -439,6 +447,14 @@ class AuthorFilter(QuestionFilter):
 
         return self.result
 
+    def getInfoDict(self):
+        infoDict = {}
+        sql = 'select authorID, name from AuthorInfo where authorID = ?'
+        authorID, name = self.cursor.execute(sql, [self.authorID,]).fetchone()
+        infoDict['title'] = name
+        infoDict['href']  = 'http://www.zhihu.com/people/' + authorID
+        return infoDict
+
 class CollectionFilter(AuthorFilter):
     def addProperty(self):
         self.collectionID = self.urlInfo['collectionID']
@@ -497,6 +513,14 @@ class CollectionFilter(AuthorFilter):
         self.answerListDict = answerListDict
         return answerListDict
 
+    def getInfoDict(self):
+        infoDict = {}
+        sql = 'select collectionID, title from CollectionFilter where collectionID = ?'
+        collectionID, title = self.cursor.execute(sql, [self.collectionID,]).fetchone()
+        infoDict['title'] = title
+        infoDict['href']  = 'http://www.zhihu.com/collection/' + collectionID
+        return infoDict
+
 class TopicFilter(CollectionFilter):
     def addProperty(self):
         self.topicID = self.urlInfo['topicID']
@@ -509,3 +533,11 @@ class TopicFilter(CollectionFilter):
         for index in indexTuple:
             indexList.append(index[0])
         return indexList
+
+    def getInfoDict(self):
+        infoDict = {}
+        sql = 'select topicID, title from TopicInfo where topicID = ?'
+        topicID, title = self.cursor.execute(sql, [self.topicID,]).fetchone()
+        infoDict['title'] = title
+        infoDict['href']  = 'http://www.zhihu.com/topic/' + topicID
+        return infoDict

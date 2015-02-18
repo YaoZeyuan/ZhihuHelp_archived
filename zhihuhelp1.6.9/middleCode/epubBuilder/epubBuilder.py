@@ -8,18 +8,19 @@ class Zhihu2Epub():
     初版只提供将Question-Answer格式的数据转换为电子书的功能
     预计1.7.3版本之后再提供将专栏文章转换为电子书的功能
     '''
-    def __init__(self, resultList = []):
-        self.resultList  = self.fixResultList(resultList)
-        self.frontPage = u''
-        self.indexList = [] 
-        self.indexNo   = 0 
+    def __init__(self, resultDict = {}, infoList = []):
+        self.infoList   = infoList 
+        self.resultList = self.fixResultList(resultDict)
+        self.frontPage  = u''
+        self.indexList  = [] 
+        self.indexNo    = 0 
         self.trans2OneFile()
         return
     
-    def fixResultList(self, resultList):
+    def fixResultList(self, resultDict):
         contentList = []
-        for questionID in resultList:
-            contentDict = resultList[questionID]
+        for questionID in resultDict:
+            contentDict = resultDict[questionID]
             agreeCount  = 0
             for answerID in contentDict['answerListDict']:
                 agreeCount += contentDict['answerListDict'][answerID]['answerAgreeCount']
@@ -86,7 +87,7 @@ class Zhihu2Epub():
                             *   核心key值
                             *   其内为正常取出的答案
         '''
-        questionInfo     = contentDict['questionInfo']
+        questionInfo = contentDict['questionInfo']
         if treeFlag == True:
             questionInfoDict = {
                 'index'   : self.indexNo,
