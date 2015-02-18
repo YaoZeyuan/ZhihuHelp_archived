@@ -81,9 +81,9 @@ class Init(object):
 
             #用户信息表
             cursor.execute("""
-                            CREATE TABLE IDInfo (
-                            IDLogoAddress       varchar(255)    default "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
-                            ID                  varchar(255)    not Null default 'null',
+                            CREATE TABLE AuthorInfo (
+                            authorLogoAddress   varchar(255)    default "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
+                            authorID            varchar(255)    not Null default 'null',
                             dataID              varchar(255)    default '',
                             sign                varchar(255)    default '',
                             desc                varchar(10000)  default '',
@@ -101,7 +101,7 @@ class Init(object):
                             follower            int             default 0,
                             watched             int             default 0,
                             weiboAddress        varchar(255)    default '',
-                            primary key(ID))""")#负责保存ID信息
+                            primary key(authorID))""")#负责保存ID信息
 
             #收藏夹信息表
             cursor.execute("""

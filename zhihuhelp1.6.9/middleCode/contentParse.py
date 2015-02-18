@@ -403,8 +403,8 @@ class AuthorInfoParse(Parse):
 
         self.regDict['nameInfoContent'] = r'(?<=<div class="title-section ellipsis">).*?(?=</div>)'
         self.regTipDict['nameInfoContent'] = u'用户名&ID&签名内容'
-        self.regDict['ID'] = r'(?<=href="/people/).*?(?=")'
-        self.regTipDict['ID'] = u'用户ID'
+        self.regDict['authorID'] = r'(?<=href="/people/).*?(?=")'
+        self.regTipDict['authorID'] = u'用户ID'
         self.regDict['sign'] = r'(?<=<span class="bio" title=").*?(?=")'#不必担心引号问题，引号会在html中被自动转义
         self.regTipDict['sign'] = u'用户签名'
         self.regDict['name'] = r'(?<=">).*?(?=</a>)'
@@ -434,41 +434,21 @@ class AuthorInfoParse(Parse):
         self.regDict['watched']    = r'(?<=<strong>)\d*(?=</strong>)'
         self.regTipDict['watched'] = u'用户浏览数'
         
-        self.regDict['IDLogoContent']    = r'(?<=<div class="zm-profile-header-avatar-container ">).*?(?="class="zm-profile-header-img zg-avatar-big zm-avatar-editor-preview"/>)'
-        self.regTipDict['IDLogoContent'] = u'用户头像内容'
-        self.regDict['IDLogoAdress']    = r'(?<=src=").*'
-        self.regTipDict['IDLogoAdress'] = u'用户头像'
+        self.regDict['authorLogoContent']    = r'(?<=<div class="zm-profile-header-avatar-container ">).*?(?="class="zm-profile-header-img zg-avatar-big zm-avatar-editor-preview"/>)'
+        self.regTipDict['authorLogoContent'] = u'用户头像内容'
+        self.regDict['authorLogoAdress']    = r'(?<=src=").*'
+        self.regTipDict['authorLogoAdress'] = u'用户头像'
         
         self.regDict['dataID']    = r'(?<=data-id=").*?(?=")'
         self.regTipDict['dataID'] = u'dataID'
     
     def getInfoDict(self):
-        u'''
-                            IDLogoAdress        varchar(255)    default "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
-                            √ID                  varchar(255)    not Null default 'null',
-                            dataID              varchar(255)    default '',
-                            √sign                varchar(255)    default '',
-                            √name                varchar(255)    default '',
-                            √ask                 varchar(255)    default '',
-                            √answer              int             default 0,
-                            √post                int             default 0,
-                            √collect             int             default 0,
-                            √edit                int             default 0,
-                            √agree               int             default 0,
-                            √thanks              int             default 0,
-                            √collected           int             default 0,
-                            √shared              int             default 0,
-                            √followee            int             default 0,
-                            √follower            int             default 0,
-                            watched             int             default 0,
-                            √weiboAddress        varchar(255)    default '',
-        '''
         infoDict = {}
 
         infoDict['dataID'] = self.matchContent('dataID', self.content)
 
-        IDLogoContent = self.matchContent('IDLogoContent', self.content)
-        infoDict['IDLogoAdress'] = self.matchContent('IDLogoAdress', IDLogoContent)
+        authorLogoContent = self.matchContent('authorLogoContent', self.content)
+        infoDict['authorLogoAdress'] = self.matchContent('authorLogoAdress', authorLogoContent)
 
         weiboContent = self.matchContent('weiboContent', self.content)
         infoDict['weiboAddress'] = self.matchContent('weiboAddress', weiboContent)
@@ -477,7 +457,7 @@ class AuthorInfoParse(Parse):
         infoDict['watched'] = self.matchContent('watched', userViewContent)
 
         nameInfoContent = self.matchContent('nameInfoContent', self.content)
-        for key in ['ID', 'name', 'sign']:
+        for key in ['authorID', 'name', 'sign']:
             infoDict[key] = self.matchContent(key, nameInfoContent)
         infoDict['desc'] = self.matchContent('userDesc', self.content)
 

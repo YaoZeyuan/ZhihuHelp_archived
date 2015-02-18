@@ -17,12 +17,13 @@ from helper import *
 
 
 class PageWorker(object):
-    def __init__(self, conn = None, maxThread = 1, targetUrl = ''):
+    def __init__(self, conn = None, maxThread = 1, urlInfo = {}):
         self.conn         = conn
         self.cursor       = conn.cursor()
         self.maxPage      = ''
         self.maxThread    = maxThread
-        self.url          = targetUrl
+        self.urlInfo      = urlInfo
+        self.url          = urlInfo['baseUrl']
         self.suffix       = ''
         self.addProperty()
         self.setCookie()
@@ -299,6 +300,7 @@ class AuthorWorker(PageWorker):
         self.getIndexID()
         self.clearIndex()
 
+        self.catchFrontInfo()
         threadPool = []
         self.questionInfoDictList = []
         self.answerDictList       = []
@@ -327,6 +329,16 @@ class AuthorWorker(PageWorker):
         self.conn.commit()
         print 'commit complete'
         return
+    
+    def catchFrontInfo(self):
+        content = self.getHttpContent(url = self.urlInfo['infoUrl'], extraHeader = self.extraHeader, timeout = self.waitFor)
+        if content == '':
+            return
+        parse    = AuthorInfoParse(content)
+        infoDict = parse.getInfoDict()
+        save2DB(self.cursor, infoDict, 'authorID', 'AuthorInfo')
+        return 
+
 
     def worker(self, workNo = 0):
         u"""
@@ -376,6 +388,15 @@ class TopicWorker(AuthorWorker):
         self.cursor.execute('replace into TopicIndex (answerHref, topicID) values (?, ?)', [answerHref, self.topicID])
         return
 
+    def catchFrontInfo(self):
+        content = self.getHttpContent(url = self.urlInfo['infoUrl'], extraHeader = self.extraHeader, timeout = self.waitFor)
+        if content == '':
+            return
+        parse    = TopicInfoParse(content)
+        infoDict = parse.getInfoDict()
+        save2DB(self.cursor, infoDict, 'topicID', 'TopicInfo')
+        return 
+
     def worker(self, workNo = 0):
         if workNo in self.complete:
             return
@@ -405,6 +426,15 @@ class CollectionWorker(AuthorWorker):
     def addIndex(self, answerHref):
         self.cursor.execute('replace into CollectionIndex (answerHref, collectionID) values (?, ?)', [answerHref, self.collectionID])
         return
+
+    def catchFrontInfo(self):
+        content = self.getHttpContent(url = self.urlInfo['infoUrl'], extraHeader = self.extraHeader, timeout = self.waitFor)
+        if content == '':
+            return
+        parse    = CollectionInfoParse(content)
+        infoDict = parse.getInfoDict()
+        save2DB(self.cursor, infoDict, 'collectionID', 'CollectionInfo')
+        return 
 
     def worker(self, workNo = 0):
         if workNo in self.complete:
