@@ -9,12 +9,19 @@ class Zhihu2Epub():
     预计1.7.3版本之后再提供将专栏文章转换为电子书的功能
     '''
     def __init__(self, resultDict = {}, infoList = []):
-        self.infoList   = infoList 
         self.resultList = self.fixResultList(resultDict)
         self.frontPage  = u''
         self.indexList  = [] 
         self.indexNo    = 0 
-        self.trans2OneFile()
+
+        self.infoList   = []
+        for info in infoList:
+            if info != {}:
+                self.infoList.append(info)
+
+        self.info2Title()
+        self.initBasePath()
+        self.trans2Tree()
         return
     
     def fixResultList(self, resultDict):
@@ -29,6 +36,15 @@ class Zhihu2Epub():
         
         return sorted(contentList, key=lambda contentDict: contentDict['agreeCount'], reverse=True)
 
+    def initBasePath(self):
+        basePath = u'./知乎助手临时资源库'
+        self.mkdir(basePath)
+        self.chdir(basePath)
+        baseImfPath = u'./知乎图片池'
+        self.baseContentPath = u'./' + self.fileTitle + '/'
+        self.mkdir(self.baseContentPath)
+        return
+
     def trans2OneFile(self):
         u'''
         将电子书内容转换为一页html文件
@@ -36,19 +52,17 @@ class Zhihu2Epub():
         indexHtml   = self.createIndexHtml(self.resultList)
         contentHtml = ''
         for contentDict in self.resultList:
-            contentHtml += self.contentDict2Html(contentDict, False)
+            contentHtml  += self.contentDict2Html(contentDict, False)
             self.indexNo += 1
         
         htmlDict = {
                   'PageTitle' : 'HTML生成测试',
-                  'Guide'     : '',
+                  'Guide'     : self.guideLink,
                   'Index'     : indexHtml,
                   'Content'   : contentHtml,
         }
-        basePath = u'./知乎助手1.7.0小试牛刀版/'
-        self.mkdir(basePath)
         finalHtml = baseTemplate(htmlDict)
-        fileIndex = basePath + 'HTML生成测试' + '.html'
+        fileIndex = self.baseContentPath + self.fileTitle + '.html'
         htmlFile = open(fileIndex, 'wb')
         htmlFile.write(finalHtml)
         htmlFile.close()
@@ -58,18 +72,65 @@ class Zhihu2Epub():
         u'''
         将电子书内容转换为一系列文件夹+html网页
         '''
+        indexHtml = self.createIndexHtml(self.resultList)
+        indexHtml = simpleIndexTemplate(indexHtml) 
+        fileIndex = self.baseContentPath + str('index') + '.html'
+        htmlFile = open(fileIndex, 'wb')
+        htmlFile.write(indexHtml)
+        htmlFile.close()
+
+        for contentDict in self.resultList:
+            contentHtml = self.contentDict2Html(contentDict, True)
+        
+            htmlDict = {
+                      'PageTitle' : contentDict['questionInfo']['questionTitle'],
+                      'Guide'     : '',
+                      'Index'     : '',
+                      'Content'   : contentHtml,
+            }
+            finalHtml = baseTemplate(htmlDict)
+            fileIndex = self.baseContentPath + str(contentDict['questionInfo']['questionID']) + '.html'
+            htmlFile = open(fileIndex, 'wb')
+            htmlFile.write(finalHtml)
+            htmlFile.close()
+
         return
 
-    def createIndexHtml(self, contentList = []):
-        indexHtml = ''
-        indexNo   = self.indexNo
-        for contentDict in contentList:
-            indexDict = {
-                'title' : contentDict['questionInfo']['questionTitle'],
-                'index' : indexNo,
-            }
-            indexHtml += indexTemplate(indexDict)
-            indexNo   += 1
+    def info2Title(self):
+        if len(self.infoList) > 5:
+            self.infoList = self.infoList[0:4]
+
+        title = ''
+        link  = ''
+        for info in self.infoList:
+            title = title + u'&' + info['title']
+            link  = link + u'、' + u'<a href="{}">{}</a>'.format(info['href'], info['title'])
+        self.fileTitle = title[1:] + u'的知乎回答集锦'
+        self.guideLink = link[1:]  + u'的知乎回答集锦'
+        return
+    
+    def createIndexHtml(self, contentList = [], treeFlag = True):
+        if treeFlag == True:
+            indexHtml = ''
+            indexNo   = self.indexNo
+            for contentDict in contentList:
+                indexDict = {
+                    'title' : contentDict['questionInfo']['questionTitle'],
+                    'index' : indexNo,
+                    'href'  : './{}.html'.format(contentDict['questionInfo']['questionID']),
+                }
+                indexHtml += treeFileIndexTemplate(indexDict)
+                indexNo   += 1
+        else:
+            indexHtml = ''
+            indexNo   = self.indexNo
+            for contentDict in contentList:
+                indexDict = {
+                    'title' : contentDict['questionInfo']['questionTitle'],
+                    'index' : indexNo,
+                }
+                indexHtml += oneFileIndexTemplate(indexDict)
+                indexNo   += 1
         return indexHtml
 
     def contentDict2Html(self, contentDict = {}, treeFlag = True):
@@ -130,17 +191,6 @@ class Zhihu2Epub():
         }
         contentHtml = contentTemplate(contentDict)
         return contentHtml
-    
-    def mananger(self):
-        basePath = u'./知乎助手1.7.0小试牛刀版/'
-        self.mkdir(basePath)
-        for contentDict in self.contentList:
-            for content in contentDict['contentList']:
-                self.worker(content, basePath)
-        return
-
-    def worker(self, content, basePath):
-        return
 
     def mkdir(self, path):
         try:

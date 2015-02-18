@@ -316,10 +316,7 @@ class QuestionFilter(BaseFilter):
         return self.result
     
     def getInfoDict(self):
-        infoDict = {
-                'title': '',
-                'href' : ''
-                }
+        infoDict = {}
         return infoDict
 
         
@@ -515,9 +512,9 @@ class CollectionFilter(AuthorFilter):
 
     def getInfoDict(self):
         infoDict = {}
-        sql = 'select collectionID, title from CollectionFilter where collectionID = ?'
+        sql = 'select collectionID, title from CollectionInfo where collectionID = ?'
         collectionID, title = self.cursor.execute(sql, [self.collectionID,]).fetchone()
-        infoDict['title'] = title
+        infoDict['title'] = u'收藏夹_' + title
         infoDict['href']  = 'http://www.zhihu.com/collection/' + collectionID
         return infoDict
 
@@ -538,6 +535,6 @@ class TopicFilter(CollectionFilter):
         infoDict = {}
         sql = 'select topicID, title from TopicInfo where topicID = ?'
         topicID, title = self.cursor.execute(sql, [self.topicID,]).fetchone()
-        infoDict['title'] = title
+        infoDict['title'] = '话题_' + title
         infoDict['href']  = 'http://www.zhihu.com/topic/' + topicID
         return infoDict

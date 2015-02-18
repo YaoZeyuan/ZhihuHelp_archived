@@ -20,6 +20,7 @@ def baseTemplate(dataDict = {}):
                 </head>
                 <body>
                 %(Guide)s
+                <hr />
                 %(Index)s
                 %(Content)s
                 </body>
@@ -45,7 +46,7 @@ def guideTemplate(dataDict = {}):
             </center>
             ''' % dataDict
 
-def indexTemplate(dataDict = {}):
+def oneFileIndexTemplate(dataDict = {}):
     u'''
     *   stdStruct 
     {
@@ -58,6 +59,19 @@ def indexTemplate(dataDict = {}):
             <br />
             ''' % dataDict
 
+def treeFileIndexTemplate(dataDict = {}):
+    u'''
+    *   stdStruct 
+    {
+        'title'    : '',
+        'index'    : '',
+        'href'     : '',
+    }
+    '''
+    return u'''
+            <a href='%(href)s'>%(index)s . %(title)s</a>
+            <br />
+            ''' % dataDict
 
 def contentTemplate(dataDict = {}):
     u'''
@@ -141,3 +155,19 @@ def answerContentTemplate(dataDict = {}):
             <hr />
             """ % dataDict
 
+def simpleIndexTemplate(indexContent = ''):
+    return u'''
+            <!DOCTYPE html>
+            <html lang="zh-CN">
+                <head>
+                    <link rel="stylesheet" type="text/css" href="./markdownStyle.css"/>
+                    <link rel="stylesheet" type="text/css" href="./userDefine.css"/>
+                    <meta charset="utf-8" />
+                    <title>目录</title>
+                </head>
+                <body>
+                <center>目录</center>
+                <br />
+                {}
+                </body>
+            </html>'''.format(indexContent)

@@ -493,7 +493,7 @@ class TopicInfoParse(Parse):
         self.regDict = {}
         self.regDict['topicTitle']    = r'(?<=<title>).*?(?= - )'
         self.regTipDict['topicTitle'] = u'话题标题'
-        self.regDict['topicID']    = r'(?<=href="/topic/)\d{8}(?=/hot)'
+        self.regDict['topicID']    = r'(?<=zhihu://topics/)\d{8}(?="><meta name="description")'
         self.regTipDict['topicID'] = u'话题ID'
 
         self.regDict['watchCountInfoContent']    = r'(?<=<div class="zm-topic-side-followers-info">).*?(?=</div>)'
