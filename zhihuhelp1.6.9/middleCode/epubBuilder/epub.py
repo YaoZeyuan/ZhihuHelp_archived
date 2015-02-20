@@ -44,7 +44,7 @@ class Metadata():
     def addCoverImg(self, id = ''):#需要和mainfest同步执行
         self.coverImg += '<meta name="cover" content="{0}" />\n'.format(id)
         return
-    
+
     def getString(self):#返回根据设定数据产生的metadata字符串
         content = '<metadata>\n'
         for key in self.metadateList:
@@ -235,7 +235,7 @@ class Book():
     <meta name="provider" content="www.zhihu.com"/>
     <meta name="builder" content="ZhihuHelpv1.7"/>
     <meta name="right" content="该文档由ZhihuHelp_v1.7生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+    <link rel="../stylesheet" type="text/css" href="../stylesheet.css"/>
     <title>目录</title>
   </head>
   <body>
@@ -264,14 +264,15 @@ class Book():
         return 
     
     def writeIndex(self):
-        content = u"""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        content = u"""
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="provider" content="www.zhihu.com"/>
     <meta name="builder" content="ZhihuHelpv1.7"/>
     <meta name="right" content="该文档由ZhihuHelp_v1.7生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+    <link rel="../stylesheet" type="text/css" href="../stylesheet.css"/>
     <title>目录</title>
   </head>
   <body>
@@ -345,13 +346,13 @@ class Mainfest():
         self.img  = u''
         self.html = u''
         self.css  = u''
-        self.imgType = {'jepg' : 'jpg', 'png' : 'png', 'svg' : 'svg', 'gif' : 'gif'}
+        self.imgType = {'jepg' : 'jpg', 'jpg' : 'jpg', 'png' : 'png', 'svg' : 'svg', 'gif' : 'gif'}
         return
 
     def addImg(self, fileName, id):
         u"图像文件只能是png,jpg,gif和svg四种类型"
         fileExt  =  os.path.splitext(fileName)[1][1:]
-        fileType =  'image/' + self.imgType.get((fileExt[1:]).lower(), 'png')
+        fileType =  'image/' + self.imgType.get((fileExt).lower(), 'png')
         href     =  'images/' + fileName
         self.img += """<item id='{0}' href='{1}' media-type="{2}"/>\n""".format(str(id), href, fileType)
         return
@@ -368,6 +369,7 @@ class Mainfest():
     def getString(self):
         content = u"""
           <manifest>
+          <item id="ncx" href="toc.ncx" media-type="text/xml"/>
           {0}
           {1}
           {2}
@@ -471,7 +473,7 @@ class Ncx():
           <meta name="dtb:totalPageCount" content="0"/>
           <meta name="dtb:maxPageNumber" content="0"/>
         </head>
-        """.format(str(id))
+        """.format(str(uid))
         return
     
     def getString(self):

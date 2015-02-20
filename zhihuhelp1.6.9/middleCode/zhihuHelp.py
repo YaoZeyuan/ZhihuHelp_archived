@@ -39,7 +39,7 @@ class ZhihuHelp(object):
         #设置运行参数
         self.setting = Setting()
         #self.setting.guideOfMaxThread()
-        self.maxThread = 5
+        self.maxThread = 20
         print u'测试阶段，最大线程数自动定为{}，正式发布时请删除'.format(self.maxThread)
         #self.setting.guideOfPicQuality()
         self.picQuality = 1
@@ -53,7 +53,7 @@ class ZhihuHelp(object):
                 urlInfo = self.getUrlInfo(rawUrl)
                 if urlInfo == {}:
                     continue
-                self.manager(urlInfo)
+                #self.manager(urlInfo)
                 self.addEpubContent(urlInfo['filter'].getResult())
                 self.epubInfoList.append(urlInfo['filter'].getInfoDict())
             Zhihu2Epub(self.epubContent, self.epubInfoList)
