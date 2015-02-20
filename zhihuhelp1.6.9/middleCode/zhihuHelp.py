@@ -53,7 +53,7 @@ class ZhihuHelp(object):
                 urlInfo = self.getUrlInfo(rawUrl)
                 if urlInfo == {}:
                     continue
-                #self.manager(urlInfo)
+                self.manager(urlInfo)
                 self.addEpubContent(urlInfo['filter'].getResult())
                 self.epubInfoList.append(urlInfo['filter'].getInfoDict())
             Zhihu2Epub(self.epubContent, self.epubInfoList)

@@ -21,7 +21,7 @@ class Parse(object):
         self.regTipDict['answerAuthorID']   = u'提取答主ID'
         self.regDict['answerAuthorLogo']    = r'(?<=<img src=")[^"]*'
         self.regTipDict['answerAuthorLogo'] = u'提取答主头像'
-        self.regDict['answerAuthorSign']    = r'(?<= class="zu-question-my-bio">)[^<]*(?=</strong>)'
+        self.regDict['answerAuthorSign']    = r'(?<=<strong title=").*(?=" class="zu-question-my-bio">)'
         self.regTipDict['answerAuthorSign'] = u'提取答主签名'#可能没有
         self.regTipDict['answerAuthorName'] = u'提取答主用户名'#需要在用户名基础上进行二次匹配,正则模板直接放在了函数里
 
