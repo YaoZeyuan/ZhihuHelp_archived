@@ -13,8 +13,8 @@ def baseTemplate(dataDict = {}):
             <!DOCTYPE html>
             <html lang="zh-CN">
                 <head>
-                    <link rel="stylesheet" type="text/css" href="./markdownStyle.css"/>
-                    <link rel="stylesheet" type="text/css" href="./userDefine.css"/>
+                    <link rel="stylesheet" type="text/css" href="../markdownStyle.css"/>
+                    <link rel="stylesheet" type="text/css" href="../userDefine.css"/>
                     <meta charset="utf-8" />
                     <title>%(PageTitle)s</title>
                 </head>

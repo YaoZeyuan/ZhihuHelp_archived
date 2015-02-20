@@ -27,7 +27,7 @@ class Zhihu2Epub():
         self.info2Title()
         self.initBasePath()
         self.trans2Tree()
-        #self.imgDownload()
+        self.imgDownload()
         self.epubCreator()
         return
     
@@ -232,26 +232,37 @@ class Zhihu2Epub():
         return imgHref.split('/')[-1]
 
     def imgDownload(self):
-        downloader = ImgDownloader(targetDir = self.baseImgPath, imgSet = self.imgSet)
-        downloader.leader()
+        downloader  = ImgDownloader(targetDir = self.baseImgPath, imgSet = self.imgSet)
+        self.imgSet = downloader.leader()
         return
     
     def epubCreator(self):
-        book = Book(self.fileTitle, '1111030224')
+        book = Book(self.fileTitle, '27149527')
         for contentDict in self.resultList:
             htmlSrc = '../../' + self.baseContentPath + str(contentDict['questionInfo']['questionID']) + '.html'
+            print htmlSrc
+            #test
             title   = contentDict['questionInfo']['questionTitle']
             book.addHtml(src = htmlSrc, title = title)
         for src in self.imgSet:
-            imgSrc = '../../' + self.baseImgPath + self.getFileName(src)
-            if self.getFileName(src) == '':
+            imgSrc = '../../' + self.baseImgPath + src
+            if src == '':
                 continue
             book.addImg(imgSrc)
+        #add property
+        book.addTitle(self.fileTitle)
+        book.addLanguage('zh-cn')
+        book.addCreator('ZhihuHelp1.7.0')
+        book.addDesc(u'该电子书由知乎助手生成，知乎助手是姚泽源为知友制作的仅供个人使用的简易电子书制作工具，源代码遵循WTFPL，希望大家能认真领会该协议的真谛，为我飞面事业做出自己的贡献')
+        book.addRight('WTFPL')
+        book.addPublisher('ZhihuHelp')
+        book.addCss('../../../知乎电子书制作资源库/markdownStyle.css')
+        book.addCss('../../../知乎电子书制作资源库/userDefine.css')
+
         book.buildingEpub()
         return
 
     def printCurrentDir(self):
-        import os
         print os.path.realpath('.')
         return
 

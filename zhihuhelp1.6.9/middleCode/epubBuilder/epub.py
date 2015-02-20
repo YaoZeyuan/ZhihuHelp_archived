@@ -10,7 +10,7 @@ class Metadata():
         self.content = ''
         self.coverImg= ''
         self.attr    = {}
-        self.metadateList = ['title', 'indentifier', 'language', 'creator', 'description', 'rights', 'publisher']
+        self.metadateList = ['title', 'identifier', 'language', 'creator', 'description', 'rights', 'publisher']
         return 
 
     def addTitle(self, title = ''):
@@ -52,7 +52,7 @@ class Metadata():
                 if key != 'identifier':
                     content += "<dc:{0}>{1}</dc:{0}>\n".format(key, self.attr[key])
                 else:
-                    content += "<dc:{0} id='{1}'>{1}</dc:{0}>\n".format(key, self.attr[key])
+                    content += "<dc:identifier id='{0}'>{0}</dc:identifier>\n".format(self.attr['identifier'])
         content += self.coverImg
         content += "</metadata>\n"
         return content
@@ -71,14 +71,14 @@ class Book():
         self.ncx         = Ncx()
         self.bookID      = bookID
         self.bookTitle   = bookTitle
-        self.indentifier = 1 #用于生成递增ID
+        self.identifier = 1 #用于生成递增ID
         self.index       = ''#用于生成目录 
 
         mkdir('./' + str(self.bookTitle))
         chdir('./' + str(self.bookTitle))
         self.__writeMimetype()
         self.addTitle(self.bookTitle)
-        self.addIdentifier(bookID)
+        self.addIdentifier(self.bookID)
 
         mkdir('./META-INF')
         chdir('./META-INF')
@@ -98,9 +98,8 @@ class Book():
         return
     
     def __writeContentXml(self):
-        f = open('mimetype', 'wb')
-        f.write(u'''
-                <?xml version="1.0"?>
+        f = open('container.xml', 'wb')
+        f.write(u'''<?xml version="1.0"?>
                 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
                   <rootfiles>
                     <rootfile full-path="OEBPS/content.opf" 
@@ -118,27 +117,27 @@ class Book():
         u'章节之间使用文件名区隔，而不是使用文件夹形式进行区隔，html文件夹中只有一层目录'
         shutil.copy(src, './html/')
         fileName = self.__getFileName(src)
-        self.indentifier += 1 
-        id = self.indentifier
+        self.identifier += 1 
+        id = self.identifier
         self.mainfest.addHtml(fileName, id)
         self.spine.addFile(id, linear=True)
         self.ncx.addFile(fileName, id, title)
-        self.index += '<li><a href="{0}">{1}</a></li>'.format('./html/' + fileName, title)#test此处尚欠考虑，待测试时再监测
+        self.index += '<li><a href="{0}">{1}</a></li>'.format(fileName, title)#test此处尚欠考虑，待测试时再监测
         return
 
     def addImg(self, src):
         shutil.copy(src, './images/')
         fileName = self.__getFileName(src)
-        self.indentifier += 1 
-        id = self.indentifier
+        self.identifier += 1 
+        id = self.identifier
         self.mainfest.addImg(fileName, id)
         return
 
     def addCss(self, src):
         shutil.copy(src, './')
         fileName = self.__getFileName(src)
-        self.indentifier += 1 
-        id = self.indentifier
+        self.identifier += 1 
+        id = self.identifier
         self.mainfest.addCss(fileName, id)
         return
 
@@ -148,8 +147,8 @@ class Book():
         """
         shutil.copy(src, './html')
         fileName = self.__getFileName(src)
-        self.indentifier += 1 
-        id = self.indentifier
+        self.identifier += 1 
+        id = self.identifier
         self.mainfest.addHtml(fileName, id)
         self.spine.addFile(id, linear=False)
         self.ncx.addFile(fileName, id, title)
@@ -163,8 +162,8 @@ class Book():
         """
         shutil.copy(src, './html')
         fileName = self.__getFileName(src)
-        self.indentifier += 1 
-        id = self.indentifier
+        self.identifier += 1 
+        id = self.identifier
         self.mainfest.addHtml(fileName, id)
         self.spine.addFile(id, linear=True)
         self.ncx.addFile(fileName, id, title)
@@ -175,8 +174,8 @@ class Book():
     def addCoverImg(self, src):
         shutil.copy(src, './images/')
         fileName = self.__getFileName(src)
-        self.indentifier += 1 
-        id = self.indentifier
+        self.identifier += 1 
+        id = self.identifier
         self.mainfest.addImg(fileName, id)
         self.metaData.addCoverImg(id)
         return
@@ -184,8 +183,8 @@ class Book():
     def createChapter(self, src, id, title):
         shutil.copy(src, './html')
         fileName = self.__getFileName(src)
-        self.indentifier += 1 
-        id = self.indentifier
+        self.identifier += 1 
+        id = self.identifier
         self.ncx.addChapter(fileName, id, title)
         self.index += '<li>{0}</li>'.format(title)
         self.index += '<ol>'
@@ -228,8 +227,7 @@ class Book():
         return
 
     def createIndex(self):
-        content = u"""
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        content = u"""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -257,37 +255,40 @@ class Book():
         f.close()
 
         fileName = self.__getFileName(src)
-        self.indentifier += 1 
-        id = self.indentifier
+        self.identifier += 1 
+        id = self.identifier
         self.mainfest.addHtml(fileName, id)
         self.spine.addFile(id, linear=False)
-        self.ncx.addFile(fileName, id, title)
+        self.ncx.addFile(fileName, id, fileName)
         return 
     
     def buildingEpub(self):
         opf = open('../OEBPS/content.opf', 'w')
-        opf.write(u"""
-                    <?xml version='1.0' encoding='utf-8'?>
-                      <package xmlns="http://www.idpf.org/2007/opf" 
-                        xmlns:dc="http://purl.org/dc/elements/1.1/" 
-                        unique-identifier="{0}" version="2.0">
-                        {1}
-                        {2}
-                        {3}
-                        {4}
-                    </package>
-                  """.format(self.bookID, self.metaData.getString(), self.mainfest.getString(), self.spine.getString(), self.guide.getString()))
+        opf.write(
+u"""<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" 
+xmlns:dc="http://purl.org/dc/elements/1.1/" 
+unique-identifier="{0}" version="2.0">
+{1}
+{2}
+{3}
+{4}
+</package>""".format(self.bookID, self.metaData.getString(), self.mainfest.getString(), self.spine.getString(), self.guide.getString())
+        )
         opf.close()
         ncx = open('../OEBPS/toc.ncx', 'w')
         ncx.write(self.ncx.getString())
         ncx.close()
+        self.createIndex()
         #应当再加上生成目录的功能
         
         #直接使用的旧版函数，应当予以更新
         #test
         chdir('../../')
         epub = zipfile.ZipFile(file = os.path.abspath(self.bookTitle) + '.epub', mode = 'w', compression = zipfile.ZIP_STORED, allowZip64=True)
-        epub.write(self.bookTitle + '/mimetype')
+        chdir('./' + self.bookTitle + '/')
+        epub.write('./mimetype')
+        #epub.write('./META-INF')
         targetFileName = self.bookTitle + '.epub'
         def Help_ZipToEpub(Dir='.'):
             for p in os.listdir(Dir):
@@ -304,6 +305,8 @@ class Book():
                     epub.write(filepath, compress_type=zipfile.ZIP_STORED)
         Help_ZipToEpub()
         epub.close()
+        #test
+        print u'第一本电子书制作完成，请清空路径后继续测试'
         return
 
 class Mainfest():
@@ -442,8 +445,7 @@ class Ncx():
         return
     
     def getString(self):
-        content = u"""
-        <?xml version='1.0' encoding='utf-8'?>
+        content = u"""<?xml version='1.0' encoding='utf-8'?>
         <!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" 
           "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
         <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
