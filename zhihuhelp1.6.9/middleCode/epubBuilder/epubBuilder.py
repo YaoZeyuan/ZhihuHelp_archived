@@ -2,6 +2,7 @@
 import os
 import re
 import time
+import shutil
 
 from htmlTemplate import *
 from imgDownloader import *
@@ -49,7 +50,8 @@ class Zhihu2Epub():
         self.chdir(basePath)
         self.baseImgPath = u'./知乎图片池/'
         self.mkdir(self.baseImgPath)
-        self.baseContentPath = u'./{}/'.format(int(time.time()))
+        self.baseContentPath = u'./{}/'.format(u'知乎网页内容缓存库')
+        self.rmdir(self.baseContentPath)
         self.mkdir(self.baseContentPath)
         return
 
@@ -200,22 +202,6 @@ class Zhihu2Epub():
         contentHtml = contentTemplate(contentDict)
         return contentHtml
 
-    def mkdir(self, path):
-        try:
-            os.mkdir(path)
-        except OSError:
-            print u'指定目录已存在'
-        return 
-    
-    def chdir(self, path):
-        try:
-            os.chdir(path)
-        except OSError:
-            print u'指定目录不存在，自动创建之'
-            mkdir(path)
-            os.chdir(path)
-        return
-
     def imgFix(self, content):
         for imgTag in re.findall(r'<img.*?>', content):
             src = re.search(r'(?<=src=").*?(?=")', imgTag)
@@ -264,3 +250,22 @@ class Zhihu2Epub():
         print os.path.realpath('.')
         return
 
+    def mkdir(self, path):
+        try:
+            os.mkdir(path)
+        except OSError:
+            print u'指定目录已存在'
+        return 
+    
+    def chdir(self, path):
+        try:
+            os.chdir(path)
+        except OSError:
+            print u'指定目录不存在，自动创建之'
+            mkdir(path)
+            os.chdir(path)
+        return
+
+    def rmdir(self, path):
+        shutil.rmtree(path = path, ignore_errors = True)
+        return

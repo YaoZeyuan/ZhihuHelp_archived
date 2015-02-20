@@ -26,6 +26,7 @@ class ZhihuHelp(object):
         self.cursor       = self.conn.cursor() 
         self.epubContent  = {}
         self.epubInfoList = []
+        self.baseDir      = os.path.realpath('.')
         return 
     
     def helperStart(self):
@@ -41,7 +42,7 @@ class ZhihuHelp(object):
         self.maxThread = 5
         print u'测试阶段，最大线程数自动定为{}，正式发布时请删除'.format(self.maxThread)
         #self.setting.guideOfPicQuality()
-        self.picQuality = 1
+        self.picQuality = 2
         print u'测试阶段，图片质量自动定为1，正式发布时请删除'
         
         #主程序开始运行
@@ -52,12 +53,13 @@ class ZhihuHelp(object):
                 urlInfo = self.getUrlInfo(rawUrl)
                 if urlInfo == {}:
                     continue
-                #self.manager(urlInfo)
+                self.manager(urlInfo)
                 self.addEpubChapter(urlInfo['filter'].getResult())
                 self.epubInfoList.append(urlInfo['filter'].getInfoDict())
             Zhihu2Epub(self.epubContent, self.epubInfoList)
             self.epubContent  = {}
             self.epubInfoList = []
+            self.resetDir()
             print u'test over'
         return
 
@@ -174,6 +176,25 @@ class ZhihuHelp(object):
         urlInfo['worker'].start()
         return
 
+    def mkdir(self, path):
+        try:
+            os.mkdir(path)
+        except OSError:
+            print u'指定目录已存在'
+        return 
+    
+    def chdir(self, path):
+        try:
+            os.chdir(path)
+        except OSError:
+            print u'指定目录不存在，自动创建之'
+            mkdir(path)
+            os.chdir(path)
+        return
+
+    def resetDir(self):
+        chdir(self.baseDir)
+        return
    # def setFilter(self):
    #     answerFilter   = {}
    #     questionFilter = {}
