@@ -89,6 +89,7 @@ class Book():
         mkdir('./OEBPS/html')
         mkdir('./OEBPS/images')
         chdir('./OEBPS')
+        self.createIndex()
         return
 
     def __writeMimetype(self):
@@ -262,6 +263,35 @@ class Book():
         self.ncx.addFile(fileName, id, fileName)
         return 
     
+    def writeIndex(self):
+        content = u"""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="provider" content="www.zhihu.com"/>
+    <meta name="builder" content="ZhihuHelpv1.7"/>
+    <meta name="right" content="该文档由ZhihuHelp_v1.7生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+    <title>目录</title>
+  </head>
+  <body>
+    <center>
+      <h1>目录</h1>
+    </center>
+    <hr/>
+    <br />
+    <ol>
+    {0}
+    </ol>
+  </body>
+  </html>
+    """.format(self.index)
+        src = './html/index.html'
+        f = open(src, 'w')
+        f.write(content)
+        f.close()
+        return
+
     def buildingEpub(self):
         opf = open('../OEBPS/content.opf', 'w')
         opf.write(
@@ -279,7 +309,7 @@ unique-identifier="{0}" version="2.0">
         ncx = open('../OEBPS/toc.ncx', 'w')
         ncx.write(self.ncx.getString())
         ncx.close()
-        self.createIndex()
+        self.writeIndex()
         #应当再加上生成目录的功能
         
         #直接使用的旧版函数，应当予以更新
@@ -318,7 +348,7 @@ class Mainfest():
         self.imgType = {'jepg' : 'jpg', 'png' : 'png', 'svg' : 'svg', 'gif' : 'gif'}
         return
 
-    def addImg(self, fileName = '', id = 1):
+    def addImg(self, fileName, id):
         u"图像文件只能是png,jpg,gif和svg四种类型"
         fileExt  =  os.path.splitext(fileName)[1][1:]
         fileType =  'image/' + self.imgType.get((fileExt[1:]).lower(), 'png')
@@ -326,12 +356,12 @@ class Mainfest():
         self.img += """<item id='{0}' href='{1}' media-type="{2}"/>\n""".format(str(id), href, fileType)
         return
 
-    def addHtml(self, fileName = '', id = 1):
+    def addHtml(self, fileName, id):
         href = 'html/' + fileName
         self.html += """<item id='{0}' href='{1}' media-type="application/xhtml+xml"/>\n""".format(str(id), href)
         return
 
-    def addCss(self, fileName = '', id = 1):
+    def addCss(self, fileName, id):
         self.css  += u"""<item id="{0}" href="{1}" media-type="text/css"/>\n""".format(str(id), fileName)
         return
     
@@ -343,14 +373,14 @@ class Mainfest():
           {2}
           </manifest>
         """.format(self.img, self.html, self.css)
-        return
+        return content
 
 class Spine():
     def __init__(self):
         self.spine = u''
         return
 
-    def addFile(self, id=1, linear=True):
+    def addFile(self, id, linear=True):
         if linear:
             linear = 'yes'
         else:
@@ -390,7 +420,7 @@ class Guide():
         </guide>
         """.format(self.guide)
         self.guide
-        return
+        return content
 
 class Ncx():
     def __init__(self):

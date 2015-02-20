@@ -240,8 +240,6 @@ class Zhihu2Epub():
         book = Book(self.fileTitle, '27149527')
         for contentDict in self.resultList:
             htmlSrc = '../../' + self.baseContentPath + str(contentDict['questionInfo']['questionID']) + '.html'
-            print htmlSrc
-            #test
             title   = contentDict['questionInfo']['questionTitle']
             book.addHtml(src = htmlSrc, title = title)
         for src in self.imgSet:
