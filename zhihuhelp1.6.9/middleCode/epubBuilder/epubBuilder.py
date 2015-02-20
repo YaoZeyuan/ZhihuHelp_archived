@@ -212,6 +212,8 @@ class Zhihu2Epub():
                 continue
             else:
                 src = src.group(0)
+                if src.replace(' ', '') == '':
+                    continue
             self.imgSet.add(src)
             fileName = self.getFileName(src)
             content  = content.replace(src, '../images/' + fileName)
