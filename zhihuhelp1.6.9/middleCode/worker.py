@@ -17,12 +17,12 @@ from helper import *
 
 
 class PageWorker(object):
-    def __init__(self, conn = None, maxThread = 1, urlInfo = {}):
+    def __init__(self, conn = None, urlInfo = {}):
         self.conn         = conn
         self.cursor       = conn.cursor()
         self.maxPage      = ''
-        self.maxThread    = maxThread
         self.urlInfo      = urlInfo
+        self.maxThread    = urlInfo['baseSetting']['maxThread']
         self.url          = urlInfo['baseUrl']
         self.suffix       = ''
         self.addProperty()
@@ -51,6 +51,7 @@ class PageWorker(object):
             self.workSchedule[i] = self.url + self.suffix + str(i + 1)
 
     def addProperty(self):
+        self.urlInfo      = urlInfo
         return
     
     #set cookieJar
@@ -362,7 +363,7 @@ class AuthorWorker(PageWorker):
 
     def addProperty(self):
         self.maxPage = 1
-        self.suffix  = '?order_by=vote_num&page='
+        self.suffix  = '/answers?order_by=vote_num&page='
         self.maxTry  = 1
         self.waitFor = 5
         return

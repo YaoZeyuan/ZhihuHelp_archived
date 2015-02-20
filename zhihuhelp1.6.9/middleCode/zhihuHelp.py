@@ -54,7 +54,7 @@ class ZhihuHelp(object):
                 if urlInfo == {}:
                     continue
                 self.manager(urlInfo)
-                self.addEpubChapter(urlInfo['filter'].getResult())
+                self.addEpubContent(urlInfo['filter'].getResult())
                 self.epubInfoList.append(urlInfo['filter'].getInfoDict())
             Zhihu2Epub(self.epubContent, self.epubInfoList)
             self.epubContent  = {}
@@ -63,7 +63,10 @@ class ZhihuHelp(object):
             print u'test over'
         return
 
-    def addEpubChapter(self, result = {}):
+    def addEpubContent(self, result = {}):
+        u'''
+        将分析到的数据添加至epubContent中去
+        '''
         for questionID in result:
             if questionID in self.epubContent:
                 self.epubContent[questionID]['questionInfo'] = result[questionID]['questionInfo']
@@ -108,8 +111,17 @@ class ZhihuHelp(object):
             *   用于生成过滤器，负责在数据库中提取答案，并将答案组织成便于生成电子书的结构
         *   urlInfo
             *   用于为Author/Topic/Table获取信息
+        *   baseSetting
+            *   基础的设置信息，比如图片质量，过滤标准
+            *   picQuality
+                *   图片质量
+            *   maxThread
+                *   最大线程数
         """
         urlInfo = {}
+        urlInfo['baseSetting'] = {}
+        urlInfo['baseSetting']['picQuality'] = self.picQuality
+        urlInfo['baseSetting']['maxThread']  = self.maxThread
         def detectUrl(rawUrl):
             targetPattern = {}
             targetPattern['answer']     = r'(?<=zhihu\.com/)question/\d{8}/answer/\d{8}'
@@ -135,31 +147,31 @@ class ZhihuHelp(object):
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['answerID']     = re.search(r'(?<=zhihu\.com/question/\d{8}/answer/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到答案地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = AnswerWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
+            urlInfo['worker']       = AnswerWorker(conn = self.conn, urlInfo = urlInfo)
             urlInfo['filter']       = AnswerFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = ''
         if kind == 'question':
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到问题地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = QuestionWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
+            urlInfo['worker']       = QuestionWorker(conn = self.conn, urlInfo = urlInfo)
             urlInfo['filter']       = QuestionFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = ''
         if kind == 'author':
             urlInfo['authorID']     = re.search(r'(?<=zhihu\.com/people/)[^/#]*', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到用户主页地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = AuthorWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
+            urlInfo['worker']       = AuthorWorker(conn = self.conn, urlInfo = urlInfo)
             urlInfo['filter']       = AuthorFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = urlInfo['baseUrl'] + '/about'
         if kind == 'collection':
             urlInfo['collectionID'] = re.search(r'(?<=zhihu\.com/collection/)\d*', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到收藏夹地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = CollectionWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
+            urlInfo['worker']       = CollectionWorker(conn = self.conn, urlInfo = urlInfo)
             urlInfo['filter']       = CollectionFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = urlInfo['baseUrl']
         if kind == 'topic':
             urlInfo['topicID']      = re.search(r'(?<=zhihu\.com/topic/)\d*', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到话题地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = TopicWorker(conn = self.conn, maxThread = self.maxThread, urlInfo = urlInfo)
+            urlInfo['worker']       = TopicWorker(conn = self.conn, urlInfo = urlInfo)
             urlInfo['filter']       = TopicFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = urlInfo['baseUrl']
         if kind == 'table':
@@ -195,92 +207,3 @@ class ZhihuHelp(object):
     def resetDir(self):
         chdir(self.baseDir)
         return
-   # def setFilter(self):
-   #     answerFilter   = {}
-   #     questionFilter = {}
-   #     authorFilter   = {}
-   #     #对答案的筛选
-   #     answerFilter['minAgree']              = 0
-   #     answerFilter['maxAgree']              = 100000
-   #     answerFilter['minLength']             = 100
-   #     answerFilter['maxLength']             = 100000
-   #     answerFilter['minAverageAgree']       = 10#平均每字赞同数
-   #     answerFilter['maxAverageAgree']       = 10#平均每字赞同数
-   #     answerFilter['minDate']               = '2000-01-01'
-   #     answerFilter['maxDate']               = '2099-12-30'
-   #     answerFilter['noRecord']              = 0
-   #     answerFilter['imgSize']               = 1#图片质量，0:无图，1:普通，2:高清
-   #     answerFilter['minAnswerCommentCount'] = 0
-   #     answerFilter['maxAnswerCommentCount'] = 1000000
-   #     #对问题的筛选
-   #     questionFilter['minComment']              = 0 
-   #     questionFilter['maxComment']              = 1000000 
-   #     questionFilter['minFollowCount']          = 0 
-   #     questionFilter['maxFollowCount']          = 1000000 
-   #     questionFilter['minAnswerCount']          = 0 
-   #     questionFilter['maxAnswerCount']          = 1000000 
-   #     questionFilter['minViewCount']            = 0 
-   #     questionFilter['maxViewCount']            = 1000000 
-   #     questionFilter['minCollapsedAnswerCount'] = 0 
-   #     questionFilter['maxCollapsedAnswerCount'] = 1000000 
-   #     #对人的筛选
-   #     authorFilter['minAgree']          = 0
-   #     authorFilter['maxAgree']          = 100000
-   #     authorFilter['minCollect']        = 0
-   #     authorFilter['maxCollect']        = 100000
-   #     authorFilter['minEdit']           = 0
-   #     authorFilter['maxEdit']           = 100000
-   #     authorFilter['minColumn']         = 0
-   #     authorFilter['maxColumn']         = 100000
-   #     authorFilter['minThanks']         = 0
-   #     authorFilter['maxThanks']         = 100000
-   #     authorFilter['minAnswer']         = 0
-   #     authorFilter['maxAnswer']         = 100000
-   #     authorFilter['minQuestion']       = 0
-   #     authorFilter['maxQuestion']       = 100000
-   #     authorFilter['minAnswerCount']    = 0
-   #     authorFilter['maxAnswerCount']    = 100000
-   #     authorFilter['minAverageAgree']   = 0#平均赞同数
-   #     authorFilter['maxAverageAgree']   = 100000
-   #     authorFilter['minAverageCollect'] = 0#平均收藏数
-   #     authorFilter['maxAverageCollect'] = 100000
-   #     return questionFilter, authorFilter 
-    
-#class EpubData(object):
-#    def __init__(self, cursor = None, urlInfo = {}):
-#        self.cursor  = cursor
-#        self.urlInfo = urlInfo
-#
-#    def createQuestionFilterSQL(self):
-#        self.answerQuery = "select * from AnswerContent where questionID = %s"
-#        
-#        sqlVarList = []
-#        
-#        sqlQuestionFilter['minAgree'] = 'answerAgreeCount > %s'
-#        sqlQuestionFilter['maxAgree'] = 'answerAgreeCount < %s'
-#        sqlQuestionFilter['minDate']  = 'updateDate > %s'
-#        sqlQuestionFilter['maxDate']  = 'updateDate < %s'
-#        sqlQuestionFilter['noRecord'] = 'noRecordFlag == %s'
-#        
-#        for key in self.urlInfo['filter']:
-#            self.answerQuery += ' and ' + sqlQuestionFilter[key]
-#            sqlVarList.append(self.urlInfo['filter'][key])
-#        allAnswer = self.cursor.execute(self.answerQuery%sqlVarList).fetchAll()
-#        
-#        return 
-#    
-#    def formatAnswerDict(self, allAnswer):
-#        itemList = ['authorID', 'authorSign', 'authorLogo', 'authorName', 'answerAgreeCount',  'answerContent',  'questionID',  'answerID',  'commitDate',  'updateDate',  'answerCommentCount',  'noRecordFlag',  'answerHref']
-#        self.answerDict = {}
-#        for line in range(allAnswer):
-#            self.answerDict[line] = {}
-#            for index in range(itemList):
-#                self.answerDict[line][itemList[index]] = allAnswer[line][index]
-#
-#    def imgProcess(self):
-#        return
-#
-#    def imgDownload(self):
-#        return
-#    
-#

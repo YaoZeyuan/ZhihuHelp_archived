@@ -115,6 +115,9 @@ class Zhihu2Epub():
         for info in self.infoList:
             title = title + u'&' + info['title'] + u'({})'.format(info['ID'])
             link  = link + u'、' + u'<a href="{}">{}</a>'.format(info['href'], info['title'])
+        if len(title) == 0:
+            title = u'&自选问题下'
+            link  = u'、自选问题下'
         self.fileTitle = title[1:] + u'的知乎回答集锦'
         self.guideLink = link[1:]  + u'的知乎回答集锦'
         return

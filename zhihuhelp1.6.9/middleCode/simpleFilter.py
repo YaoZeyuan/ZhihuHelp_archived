@@ -4,7 +4,6 @@ import re
 
 from helper import *#仅作测试使用，用完需删除
 
-
 class BaseFilter():
     '''
     先查出来所有的答案数据
@@ -17,6 +16,7 @@ class BaseFilter():
         self.imgBasePath = '../image/'
         self.cursor      = cursor
         self.urlInfo     = urlInfo
+        self.picQuality  = urlInfo['baseSetting']['picQuality']
         self.addProperty()
         return
 
@@ -25,14 +25,13 @@ class BaseFilter():
     
     def authorLogoFix(self, imgHref = ''):
         self.imgSet.add(imgHref)
-        #return self.imgBasePath + self.getFileName(imgHref)
-        return '<img src="{}"/>'.format(imgHref)
+        return u'<div class="duokan-image-single"><img src="{}" alt="知乎图片"/></div>'.format(imgHref)
 
     def contentImgFix(self, content = '', imgQuarty = 1):
         if imgQuarty == 0:
             content = self.removeTag(content, ['img', 'noscript'])
         else:
-            #将writedot.jpg替换为正常图片
+            #首先，将writedot.jpg替换为正常图片
             content = self.removeTag(content, ['noscript'])
             for imgTag in re.findall(r'<img.*?>', content):
                 try:
@@ -43,7 +42,8 @@ class BaseFilter():
                     content = content.replace(imgTag, imgContent) 
                 else:
                     content = content.replace(imgTag, '')
-                        
+
+            #然后根据设定对图片进行额外处理            
             if imgQuarty == 1:
                 for imgTag in re.findall(r'<img.*?>', content):
                     imgContent = imgTag[:-1] + u' class="answer-content-img" alt="知乎图片"/>'
@@ -62,11 +62,7 @@ class BaseFilter():
         return content
 
     def fixPic(self, imgTagContent = ''):
-        return imgTagContent
-        #for src in re.findall(r'(?<=src=")http://[/\w\.^"]*?zhimg.com[/\w^"]*?.jpg', imgTagContent):
-        #    imgTagContent = imgTagContent.replace(src, self.imgBasePath + self.getFileName(src))
-        #    self.imgSet.add(src)
-        #return '<div class="duokan-image-single">{}</div>'.format(imgTagContent)
+        return '<div class="duokan-image-single">{}</div>'.format(imgTagContent)
 
     def removeTagAttribute(self, tagContent = '', removeAttrList = []):
         for attr in removeAttrList:
@@ -85,17 +81,6 @@ class BaseFilter():
 
     def str2Date(self, date = ''):
         return datetime.datetime.strptime(date, '%Y-%m-%d') 
-
-    def printDict(data = {}, key = '', prefix = ''):
-        u'''
-        用于测试字典内容是否与要求一致
-        '''
-        if isinstance(data, dict):
-            for key in data.keys():
-                printDict(data[key], key, prefix + '   ')
-        else:
-            print prefix + str(key) + ' => ' + str(data)
-
 
 class QuestionFilter(BaseFilter):
     u'每运行一次filter就相当于生成了一本电子书，所以在这个里面也应当为之加上封面，最后输出时大不了再跳过封面输出就好了，电子书应当每个章节都有自己的封面，同时也要有一个总封面'
@@ -121,7 +106,7 @@ class QuestionFilter(BaseFilter):
         questionInfo['answerCount']   = bufDict[3]
         questionInfo['viewCount']     = bufDict[4]
         questionInfo['questionTitle'] = bufDict[5]
-        questionInfo['questionDesc']  = self.contentImgFix(bufDict[6])
+        questionInfo['questionDesc']  = self.contentImgFix(bufDict[6], self.picQuality)
         self.questionInfo = questionInfo
         return questionInfo
 
@@ -150,7 +135,7 @@ class QuestionFilter(BaseFilter):
             answerDict['authorLogo']         = self.authorLogoFix(answer[2])
             answerDict['authorName']         = answer[3]
             answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.contentImgFix(answer[5])
+            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
             answerDict['questionID']         = answer[6]
             answerDict['answerID']           = answer[7]
             answerDict['commitDate']         = self.str2Date(answer[8])
@@ -227,7 +212,7 @@ class AnswerFilter(QuestionFilter):
             answerDict['authorLogo']         = self.authorLogoFix(answer[2])
             answerDict['authorName']         = answer[3]
             answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.contentImgFix(answer[5])
+            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
             answerDict['questionID']         = answer[6]
             answerDict['answerID']           = answer[7]
             answerDict['commitDate']         = self.str2Date(answer[8])
@@ -263,7 +248,7 @@ class AuthorFilter(QuestionFilter):
         questionInfo['answerCount']   = bufDict[3]
         questionInfo['viewCount']     = bufDict[4]
         questionInfo['questionTitle'] = bufDict[5]
-        questionInfo['questionDesc']  = self.contentImgFix(bufDict[6])
+        questionInfo['questionDesc']  = self.contentImgFix(bufDict[6], self.picQuality)
         self.questionInfo = questionInfo
         return questionInfo
 
@@ -292,7 +277,7 @@ class AuthorFilter(QuestionFilter):
             answerDict['authorLogo']         = self.authorLogoFix(answer[2])
             answerDict['authorName']         = answer[3]
             answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.contentImgFix(answer[5])
+            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
             answerDict['questionID']         = answer[6]
             answerDict['answerID']           = answer[7]
             answerDict['commitDate']         = self.str2Date(answer[8])
@@ -374,7 +359,7 @@ class CollectionFilter(AuthorFilter):
             answerDict['authorLogo']         = self.authorLogoFix(answer[2])
             answerDict['authorName']         = answer[3]
             answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.contentImgFix(answer[5])
+            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
             answerDict['questionID']         = answer[6]
             answerDict['answerID']           = answer[7]
             answerDict['commitDate']         = self.str2Date(answer[8])

@@ -9,7 +9,24 @@ def baseTemplate(dataDict = {}):
         'Content'   : '',
     }
     '''
-    return u"""
+    if dataDict['Guide'] == '':
+        return u"""
+            <!DOCTYPE html>
+            <html lang="zh-CN">
+                <head>
+                    <link rel="stylesheet" type="text/css" href="../markdownStyle.css"/>
+                    <link rel="stylesheet" type="text/css" href="../userDefine.css"/>
+                    <meta charset="utf-8" />
+                    <title>%(PageTitle)s</title>
+                </head>
+                <body>
+                %(Index)s
+                %(Content)s
+                </body>
+            </html>
+            """ % dataDict
+    else:
+        return u"""
             <!DOCTYPE html>
             <html lang="zh-CN">
                 <head>
@@ -97,7 +114,15 @@ def questionContentTemplate(dataDict = {}):
         'comment' : '',
     }
     '''
-    return u'''
+    if dataDict['desc'] == '':
+        return u'''
+            <div class='question' id='%(index)s'>
+                <div class='question-title'>%(index)s.%(title)s</div>
+            </div>
+            ''' % dataDict
+
+    else:
+        return u'''
             <div class='question' id='%(index)s'>
                 <div class='question-title'>%(index)s.%(title)s</div>
                 <hr />
