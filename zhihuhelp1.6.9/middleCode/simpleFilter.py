@@ -43,26 +43,36 @@ class BaseFilter():
                 else:
                     content = content.replace(imgTag, '')
 
-            #然后根据设定对图片进行额外处理            
+            #然后,抽取它的src属性，直接手工新写一个img标签
             if imgQuarty == 1:
                 for imgTag in re.findall(r'<img.*?>', content):
-                    imgContent = imgTag[:-1] + u' class="answer-content-img" alt="知乎图片"/>'
+                    imgContent = self.trimImg(imgTag)
                     content = content.replace(imgTag, self.fixPic(imgContent))
             else:
                 for imgTag in re.findall(r'<img.*?>', content):
                     try :
                         imgTag.index('data-original')
-                    except  ValueError:
+                    except ValueError:
                         #所考虑的这种情况存在吗？存疑
-                        content = content.replace(imgTag, self.fixPic(imgTag[:-1] + u' class="answer-content-img" alt="知乎图片"/>'))
-                    else:
+                        content = content.replace(imgTag, self.fixPic(self.trimImg(imgTag)))
+                    else :
                         #将data-original替换为src即为原图
-                        content = content.replace(imgTag, self.fixPic(self.removeTagAttribute(imgTag, ['src']).replace('data-original', 'src')[:-1] + u' class="answer-content-img" alt="知乎图片"/>'))
-        
+                        imgContent = self.removeTagAttribute(imgTag, ['src']).replace('data-original', 'src')
+                        imgContent = self.trimImg(imgContent)
+                        content = content.replace(imgTag, self.fixPic(imgContent))
         return content
 
+    def trimImg(self, imgContent = ''):
+        src = re.search(r'(?<=src=").*?(?=" )', imgContent)
+        if src != None:
+            src = src.group(0)
+            if src.replace(' ', '') != '':
+                    return '<img src="{}" alt="知乎图片">'.format(src)
+        return ''
+
     def fixPic(self, imgTagContent = ''):
-        return '<div class="duokan-image-single">{}</div>'.format(imgTagContent)
+        #return imgTagContent
+        return '\n<div class="duokan-image-single">\n{}\n</div>\n'.format(imgTagContent)
 
     def removeTagAttribute(self, tagContent = '', removeAttrList = []):
         for attr in removeAttrList:

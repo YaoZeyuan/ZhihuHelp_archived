@@ -73,7 +73,8 @@ class Book():
         self.bookTitle   = bookTitle
         self.identifier = 1 #用于生成递增ID
         self.index       = ''#用于生成目录 
-
+        
+        rmdir('./' + str(self.bookTitle))
         mkdir('./' + str(self.bookTitle))
         chdir('./' + str(self.bookTitle))
         self.__writeMimetype()
@@ -506,5 +507,9 @@ def chdir(path):
         print u'指定目录不存在，自动创建之'
         mkdir(path)
         os.chdir(path)
+    return
+
+def rmdir(path):
+    shutil.rmtree(path = path, ignore_errors = True)
     return
 
