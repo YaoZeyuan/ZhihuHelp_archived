@@ -134,7 +134,7 @@ class Login(object):
         self.cookieJarInMemory.save(fileName)
         f = open(fileName, 'r')
         content = f.read()
-        f.close
+        f.close()
         os.remove(fileName)
         return content
     
