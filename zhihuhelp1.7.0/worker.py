@@ -230,10 +230,11 @@ class QuestionWorker(PageWorker):
 
 class AnswerWorker(PageWorker):
     def addProperty(self):
-        self.maxPage = ''
-        self.suffix  = ''
-        self.maxTry  = 1
-        self.waitFor = 5
+        self.maxPage        = ''
+        self.suffix         = ''
+        self.maxTry         = 1
+        self.waitFor        = 5
+        self.answerDictList = []
         return
 
     def start(self):
