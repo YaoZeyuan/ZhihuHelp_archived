@@ -74,9 +74,9 @@ class Book():
         self.identifier = 1 #用于生成递增ID
         self.index       = ''#用于生成目录 
         
-        rmdir('./' + str(self.bookTitle))
-        mkdir('./' + str(self.bookTitle))
-        chdir('./' + str(self.bookTitle))
+        rmdir(u'./' + str(self.bookTitle))
+        mkdir(u'./' + str(self.bookTitle))
+        chdir(u'./' + str(self.bookTitle))
         self.__writeMimetype()
         self.addTitle(self.bookTitle)
         self.addIdentifier(self.bookID)
@@ -296,10 +296,9 @@ unique-identifier="{0}" version="2.0">
         
         #直接使用的旧版函数，应当予以更新
         chdir('../../')
-        epub = zipfile.ZipFile(file = os.path.abspath('.') + u'/../助手生成的电子书/' + self.bookTitle + '.epub', mode = 'w', compression = zipfile.ZIP_STORED, allowZip64=True)
-        chdir('./' + self.bookTitle + '/')
+        epub = zipfile.ZipFile(file = os.path.abspath('.') + u'/../助手生成的电子书/' + self.bookTitle + u'.epub', mode = 'w', compression = zipfile.ZIP_STORED, allowZip64=True)
+        chdir(u'./' + self.bookTitle + u'/')
         epub.write('./mimetype')
-        #epub.write('./META-INF')
         targetFileName = self.bookTitle + '.epub'
         def Help_ZipToEpub(Dir='.'):
             for p in os.listdir(Dir):
