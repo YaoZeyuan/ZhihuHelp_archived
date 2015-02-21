@@ -21,6 +21,7 @@ class ZhihuHelp(object):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
+        self.checkUpdate()
         init = Init()
         self.conn         = init.getConn()
         self.cursor       = self.conn.cursor() 
@@ -78,7 +79,6 @@ class ZhihuHelp(object):
             self.epubContent  = {}
             self.epubInfoList = []
             self.resetDir()
-            print u'test over'
         return
 
     def addEpubContent(self, result = {}):
@@ -224,4 +224,33 @@ class ZhihuHelp(object):
 
     def resetDir(self):
         chdir(self.baseDir)
+        return
+    
+    def checkUpdate():#强制更新
+        u"""
+            *   功能
+                *   检测更新。
+                *   若在服务器端检测到新版本，自动打开浏览器进入新版下载页面
+                *   网页请求超时或者版本号正确都将自动跳过
+            *   输入
+                *   无
+            *   返回
+                *   无
+        """
+        print   u"检查更新。。。"
+        try:
+            updateTime = urllib2.urlopen(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt", timeout = 10)
+        except:
+            return
+        time = updateTime.readline().replace(u'\n','').replace(u'\r','')
+        url  = updateTime.readline().replace(u'\n','').replace(u'\r','')
+        updateComment = updateTime.read()#可行？
+        if time == "2015-01-18":
+            return
+        else:
+            print u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(updateComment, time)
+            print u'新版本下载地址:' + url
+            raw_input()
+            import  webbrowser
+            webbrowser.open_new_tab(url)
         return

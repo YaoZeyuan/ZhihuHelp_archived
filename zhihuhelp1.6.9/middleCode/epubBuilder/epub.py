@@ -318,7 +318,7 @@ unique-identifier="{0}" version="2.0">
         Help_ZipToEpub()
         epub.close()
         #test
-        print u'第一本电子书制作完成，请清空路径后继续测试'
+        print u'恭喜，电子书{}制作完成'.format(self.bookTitle)
         return
 
 class Mainfest():
