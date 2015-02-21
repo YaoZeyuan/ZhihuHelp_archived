@@ -296,7 +296,7 @@ unique-identifier="{0}" version="2.0">
         
         #直接使用的旧版函数，应当予以更新
         chdir('../../')
-        epub = zipfile.ZipFile(file = os.path.abspath('.') +'/../助手生成的电子书/' + self.bookTitle + '.epub', mode = 'w', compression = zipfile.ZIP_STORED, allowZip64=True)
+        epub = zipfile.ZipFile(file = os.path.abspath('.') + u'/../助手生成的电子书/' + self.bookTitle + '.epub', mode = 'w', compression = zipfile.ZIP_STORED, allowZip64=True)
         chdir('./' + self.bookTitle + '/')
         epub.write('./mimetype')
         #epub.write('./META-INF')
