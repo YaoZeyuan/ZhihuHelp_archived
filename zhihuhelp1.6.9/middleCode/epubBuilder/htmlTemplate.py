@@ -55,12 +55,12 @@ def guideTemplate(dataDict = {}):
     }
     '''
     return u'''
-            <center>
+            <div class="text-center">
                 <img  class="guide-img" src="../images/%(guideImg)s" />
                 <h1>%(title)s</h1>
                 <h3>%(author)s</h3>
                 <p>%(desc)s</p>
-            </center>
+            </div>
             ''' % dataDict
 
 def oneFileIndexTemplate(dataDict = {}):
@@ -191,7 +191,7 @@ def simpleIndexTemplate(indexContent = ''):
                     <title>目录</title>
                 </head>
                 <body>
-                <center>目录</center>
+                <p class="text-center">目录</p>
                 <br />
                 {}
                 </body>

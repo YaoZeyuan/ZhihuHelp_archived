@@ -51,7 +51,7 @@ a:visited   {text-decoration:none;      color:#259;}
 a:hover     {text-decoration:underline; color:#259;}
 a:active    {text-decoration:underline; color:#259;}
 
-.question-title   {text-align:center;}
+.question-title   {text-align:left;}
 .question-desc    {}
 .question-comment {float:right; color:#777;}
 
@@ -65,3 +65,4 @@ a:active    {text-decoration:underline; color:#259;}
 
 .answer-content-img {display:block;}
 
+.text-center {text-align:center}

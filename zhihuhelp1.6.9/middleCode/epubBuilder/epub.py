@@ -229,28 +229,7 @@ class Book():
         return
 
     def createIndex(self):
-        content = u"""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="provider" content="www.zhihu.com"/>
-    <meta name="builder" content="ZhihuHelpv1.7"/>
-    <meta name="right" content="该文档由ZhihuHelp_v1.7生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
-    <link rel="../stylesheet" type="text/css" href="../stylesheet.css"/>
-    <title>目录</title>
-  </head>
-  <body>
-    <center>
-      <h1>目录</h1>
-    </center>
-    <hr/>
-    <br />
-    <ol>
-    {0}
-    </ol>
-  </body>
-  </html>
-    """.format(self.index)
+        content = ''
         src = './html/index.html'
         f = open(src, 'w')
         f.write(content)
@@ -261,25 +240,26 @@ class Book():
         id = self.identifier
         self.mainfest.addHtml(fileName, id)
         self.spine.addFile(id, linear=False)
+        self.guide.addIndex(src, fileName)
         self.ncx.addFile(fileName, id, fileName)
         return 
     
     def writeIndex(self):
-        content = u"""
-<!DOCTYPE html>
+        content = u"""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="provider" content="www.zhihu.com"/>
     <meta name="builder" content="ZhihuHelpv1.7"/>
     <meta name="right" content="该文档由ZhihuHelp_v1.7生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
-    <link rel="../stylesheet" type="text/css" href="../stylesheet.css"/>
+    <link rel="markdownStyle.css" type="text/css" href="../markdownStyle.css"/>
+    <link rel="userDefine.css" type="text/css" href="../userDefine.css"/>
     <title>目录</title>
   </head>
   <body>
-    <center>
+    <div class="text-center">
       <h1>目录</h1>
-    </center>
+    </div>
     <hr/>
     <br />
     <ol>
@@ -487,6 +467,7 @@ class Ncx():
         <navMap>
         {2}
         </navMap>
+        </ncx>
         """.format(self.metaData, self.bookTitle, self.ncx)
         return content
 

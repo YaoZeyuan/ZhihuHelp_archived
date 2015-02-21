@@ -239,7 +239,6 @@ class Zhihu2Epub():
                 continue
             book.addImg(imgSrc)
         #add property
-        book.addTitle(self.fileTitle)
         book.addLanguage('zh-cn')
         book.addCreator('ZhihuHelp1.7.0')
         book.addDesc(u'该电子书由知乎助手生成，知乎助手是姚泽源为知友制作的仅供个人使用的简易电子书制作工具，源代码遵循WTFPL，希望大家能认真领会该协议的真谛，为我飞面事业做出自己的贡献')
