@@ -49,7 +49,7 @@ class ZhihuHelp(object):
 
 
         login = Login(self.conn)
-        if self.rememberAccount == '':
+        if self.rememberAccount == '0':
             login.login()
             self.maxThread  = int(self.setting.guideOfMaxThread())
             self.picQuality = int(self.setting.guideOfPicQuality())
