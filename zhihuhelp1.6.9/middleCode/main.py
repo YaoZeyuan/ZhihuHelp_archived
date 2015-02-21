@@ -226,7 +226,7 @@ class ZhihuHelp(object):
         chdir(self.baseDir)
         return
     
-    def checkUpdate():#强制更新
+    def checkUpdate(self):#强制更新
         u"""
             *   功能
                 *   检测更新。

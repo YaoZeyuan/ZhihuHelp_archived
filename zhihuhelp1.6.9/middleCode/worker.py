@@ -182,7 +182,6 @@ class QuestionWorker(PageWorker):
         threadsCount = len(threadPool)
         threadLiving = 2
         while (threadsCount > 0 or threadLiving > 1):
-            print 'threading.activeCount() = {}'.format(threadLiving)
             bufLength = self.maxThread - threadLiving
             if bufLength > 0 and threadsCount > 0:
                 while bufLength > 0 and threadsCount > 0:
@@ -310,7 +309,6 @@ class AuthorWorker(PageWorker):
         threadsCount = len(threadPool)
         threadLiving = 2
         while (threadsCount > 0 or threadLiving > 1):
-            print 'threading.activeCount() = {}'.format(threadLiving)
             bufLength = self.maxThread - threadLiving
             if bufLength > 0 and threadsCount > 0:
                 while bufLength > 0 and threadsCount > 0:

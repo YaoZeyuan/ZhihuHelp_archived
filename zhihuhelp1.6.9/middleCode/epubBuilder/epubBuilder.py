@@ -46,6 +46,8 @@ class Zhihu2Epub():
 
     def initBasePath(self):
         basePath = u'./知乎助手临时资源库/'
+        targetPath = u'./助手生成的电子书/'
+        self.mkdir(targetPath)
         self.mkdir(basePath)
         self.chdir(basePath)
         self.baseImgPath = u'./知乎图片池/'
