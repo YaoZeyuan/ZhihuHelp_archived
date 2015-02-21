@@ -245,7 +245,7 @@ class ZhihuHelp(object):
         time = updateTime.readline().replace(u'\n','').replace(u'\r','')
         url  = updateTime.readline().replace(u'\n','').replace(u'\r','')
         updateComment = updateTime.read()#可行？
-        if time == "2015-01-18":
+        if time == "2015-02-20":
             return
         else:
             print u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(updateComment, time)
