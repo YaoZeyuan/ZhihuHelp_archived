@@ -135,7 +135,7 @@ class QuestionFilter(BaseFilter):
                     answerCommentCount,
                     noRecordFlag,
                     answerHref
-                from AnswerContent where questionID = ? and noRecordFlag = 0'''
+                from AnswerContent where questionID = ? and noRecordFlag = 0 and answerAgreeCount > 5'''
         bufList = self.cursor.execute(sql, [self.questionID,]).fetchall()
         answerListDict = {}
         for answer in bufList:
