@@ -12,6 +12,10 @@ class Setting():
         *   用户名
     *   password
         *   密码
+    *   rememberAccount
+        *   是否保存账号密码
+            *   0
+            *   1
     *   maxThread
         *   最大线程数
     *   picQuality
@@ -40,19 +44,21 @@ class Setting():
     """
     def __init__(self):
         self.config      = ConfigParser.SafeConfigParser() 
-        self.settingList = ['account', 'password', 'maxThread', 'picQuality', 'contentLength', 'contentAgree', 'answerOrderBy', 'questionOrderBy']
+        self.settingList = ['account', 'password', 'rememberAccount', 'maxThread', 'picQuality', 'contentLength', 'contentAgree', 'answerOrderBy', 'questionOrderBy']
         self.setDict     = {
             'account'         : 'mengqingxue2014@qq.com',
             'password'        : '131724qingxue',
-            'maxThread'       : 20,
-            'picQuality'      : 0,
-            'contentLength'   : 0,
-            'contentAgree'    : 5,
+            'rememberAccount' : '0',
+            'maxThread'       : '20',
+            'picQuality'      : '0',
+            'contentLength'   : '0',
+            'contentAgree'    : '5',
             'answerOrderBy'   : 'agree',
             'questionOrderBy' : 'agreeCount',
         }
         self.initConfig()
         self.config.read('setting.ini')
+        self.getSetting(self.settingList)
 
     def initConfig(self):
         config = self.config
@@ -82,19 +88,22 @@ class Setting():
             config.add_section('ZhihuHelp') 
         for key in self.settingList:
             if key in setting:
-                config.set('ZhihuHelp', key, setting[key])
+                config.set('ZhihuHelp', key, str(setting[key]))
         config.write(open('setting.ini', 'w'))
         return
     
     def guide(self):
         print u'您好，欢迎使用知乎助手'
+        print u'当前大版本号:1.7.X'
+        print u'1.7版本系列将作为助手从命令行界面向图形界面过渡的中间版本，在这一系列中助手将不再能够保存知乎用户答案，涵请见谅：）'
+        print u'助手的全部代码都已经开源并托管到了github之上(https://github.com/YaoZeyuan/ZhihuHelp__Python)并附在了压缩包中，您可以随时查阅。'
         print u'由于某些用户设定了隐私保护选项，为了获取全部的答案内容，助手需要您在登陆后使用'
-        print u'请根据下面的提示输入您的知乎账号和密码，助手的全部代码都已经开源并托管到了github之上并附在了压缩包之中，您可以随时查阅。'
-        print u'如果您对账号安全不甚放心的话，您还可以直接一直回车跳过输入账号密码的阶段，助手将会使用内置的孟晴雪的账号密码进行登陆，使用内置账号您仍然可以正常将知乎内容转换为电子书，唯一的缺点就是您可能会在登录时需要补输验证码以及无法下载您的私人收藏夹，涵请见谅：）'
+        print u'当然，作者更推荐您使用内置的孟晴雪的账号密码进行登陆，这能更好的保护您的账号密码安全'
         print u'现在开始登陆流程，请根据提示输入您的账号密码'    
 
     def guideOfAccountAndPassword(self):
-        print u'请输入您的用户名(知乎注册邮箱)，回车确认，直接敲击回车则自动使用内置账号进行登陆'
+        print u'请输入您的用户名(知乎注册邮箱)，回车确认'
+        print u'直接敲击回车则使用内置账号进行登陆'
         account = raw_input()
         if len(account) == 0:
             account  = "mengqingxue2014@qq.com"

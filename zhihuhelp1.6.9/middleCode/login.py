@@ -77,11 +77,18 @@ class Login(object):
             if raw_input() == 'yes':
                 setting = {
                         'account' : account,
-                        'password' : password
+                        'password' : password,
+                        'rememberAccount' : 'yes',
                         }
                 self.setting.setSetting(setting)
                 print u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
             else:
+                setting = {
+                        'account' : '',
+                        'password' : '',
+                        'rememberAccount' : '',
+                        }
+                self.setting.setSetting(setting)
                 print u'跳过保存环节，进入下一流程'
             cookieJar2String = self.saveCookieJar()
             data = {}
@@ -102,7 +109,7 @@ class Login(object):
         f   = open(u'我是登陆知乎时的验证码.gif', 'wb')
         f.write(buf.read())
         f.close()
-        print u'请输入您所看到的验证码，验证码文件在助手所处的文件夹内,\n双击打开『我是登陆知乎时的验证码.gif』即可\n如果不需要输入验证码可以直接敲击回车跳过该步'
+        print u'请输入您所看到的验证码，验证码文件在助手所处的文件夹中,\n双击打开『我是登陆知乎时的验证码.gif』即可\n如果不需要输入验证码可以直接敲击回车跳过该步'
         captcha = raw_input()
         return captcha
     
@@ -111,8 +118,9 @@ class Login(object):
         account, password = self.setting.guideOfAccountAndPassword()
         captcha = ''
         while not self.sendMessage(account, password, captcha):
-            print u'请按照提示重新登陆'
-            print u'输入『yes』后按回车可以更换账号密码，点击回车直接重新发送登录请求'
+            print u'啊哦，登录失败了'
+            print u'请问是否需要更换登陆账号？输入『yes』后按回车可以更换账号密码'
+            print u'或者猛击回车进入获取验证码的流程'
             confirm = raw_input()
             if confirm == 'yes':
                 account,password = self.guideOfAccountAndPassword()

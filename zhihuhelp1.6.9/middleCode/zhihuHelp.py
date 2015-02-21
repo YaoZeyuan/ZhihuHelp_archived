@@ -27,23 +27,41 @@ class ZhihuHelp(object):
         self.epubContent  = {}
         self.epubInfoList = []
         self.baseDir      = os.path.realpath('.')
+        self.setting      = Setting()
         return 
     
     def helperStart(self):
         #登陆
+        settingDict = self.setting.getSetting(['rememberAccount', 'maxThread', 'picQuality'])
+        self.rememberAccount = settingDict['rememberAccount']
+        self.maxThread       = settingDict['maxThread']
+        self.picQuality      = settingDict['picQuality']
+        if self.maxThread == '':
+            self.maxThread = 5
+        else:
+            self.maxThread = int(self.maxThread)
+
+        if self.picQuality == '':
+            self.picQuality = 1
+        else:
+            self.picQuality = int(self.picQuality)
+
+
         login = Login(self.conn)
-        if 1 == 2:
+        if self.rememberAccount == '':
             login.login()
+            self.maxThread  = int(self.setting.guideOfMaxThread())
+            self.picQuality = int(self.setting.guideOfPicQuality())
         else:
             login.setCookie()
-        #设置运行参数
+
+        #储存设置
         self.setting = Setting()
-        #self.setting.guideOfMaxThread()
-        self.maxThread = 20
-        print u'测试阶段，最大线程数自动定为{}，正式发布时请删除'.format(self.maxThread)
-        #self.setting.guideOfPicQuality()
-        self.picQuality = 1
-        print u'测试阶段，图片质量自动定为1，正式发布时请删除'
+        settingDict = {
+                'maxThread'  : self.maxThread,
+                'picQuality' : self.picQuality,
+                }
+        self.setting.setSetting(settingDict)
         
         #主程序开始运行
         readList = open('./ReadList.txt', 'r')
@@ -53,7 +71,7 @@ class ZhihuHelp(object):
                 urlInfo = self.getUrlInfo(rawUrl)
                 if urlInfo == {}:
                     continue
-                #self.manager(urlInfo)
+                self.manager(urlInfo)
                 self.addEpubContent(urlInfo['filter'].getResult())
                 self.epubInfoList.append(urlInfo['filter'].getInfoDict())
             Zhihu2Epub(self.epubContent, self.epubInfoList)
