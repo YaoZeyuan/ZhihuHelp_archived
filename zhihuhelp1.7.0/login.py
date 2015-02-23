@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+from baseClass import *
+
 import cookielib
 import Cookie
+
 import urllib2
 import urllib#编码请求字串，用于处理验证码
 import socket#用于捕获超时错误
@@ -13,13 +16,11 @@ import datetime
 import re
 import os
 import pickle
-import StringIO#使用字符串模拟一个文件
 
 from httpLib import *
-from helper import *
 from setting import *
  
-class Login(object):
+class Login(BaseObject):
     def __init__(self, conn):
         self.setting           = Setting()
         self.conn              = conn
@@ -29,7 +30,7 @@ class Login(object):
         urllib2.install_opener(self.opener)
 
     def sendMessage(self, account, password, captcha = ''):
-        xsrf = getXsrf(self.getHttpContent('http://www.zhihu.com/login'))
+        xsrf = self.getXsrf(self.getHttpContent('http://www.zhihu.com/login'))
         if xsrf == '':
             print  u'知乎网页打开失败'
             print  u'请敲击回车重新发送登陆请求'
@@ -101,7 +102,7 @@ class Login(object):
             return True
         else:
             print u'登陆失败'
-            printDict(result)
+            self.printDict(result)
             return False 
     
     def getCaptcha(self):
@@ -224,3 +225,13 @@ class Login(object):
         else:
             return decodeGZip(rawPageData)
         return ''
+
+    def getXsrf(content=''):
+        u'''
+        提取xsrf信息
+        '''
+        xsrf = re.search(r'(?<=name="_xsrf" value=")[^"]*(?="/>)', content)
+        if xsrf == None:
+            return ''
+        else:
+            return '_xsrf=' + xsrf.group(0)
