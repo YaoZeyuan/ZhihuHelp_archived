@@ -17,7 +17,6 @@ import re
 import os
 import pickle
 
-from httpLib import *
 from setting import *
  
 class Login(BaseObject):
