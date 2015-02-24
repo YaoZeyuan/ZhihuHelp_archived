@@ -19,7 +19,7 @@ import pickle
 
 from setting import *
  
-class Login(BaseObject):
+class Login(BaseClass, HttpBaseClass):
     def __init__(self, conn):
         self.setting           = Setting()
         self.conn              = conn
@@ -182,48 +182,6 @@ class Login(BaseObject):
         for cookie in self.cookieJarInMemory:
             cookieStr += cookie.name + '=' + cookie.value + ';'
         return {'Cookie': cookieStr}
-
-    def getHttpContent(self, url='', extraHeader={} , data=None, timeout=5):
-        u"""获取网页内容
-     
-        获取网页内容, 打开网页超过设定的超时时间则报错
-        
-        参数:
-            url         一个字符串,待打开的网址
-            extraHeader 一个简单字典,需要添加的http头信息
-            data        需传输的数据,默认为空
-            timeout     int格式的秒数，打开网页超过这个时间将直接退出，停止等待
-        返回:
-            pageContent 打开成功时返回页面内容，字符串或二进制数据|失败则返回空字符串
-        报错:
-            IOError     当解压缩页面失败时报错
-        """
-        if data == None:
-            request = urllib2.Request(url = url)
-        else:
-            request = urllib2.Request(url = url, data = data)
-        for headerKey in extraHeader.keys():
-            request.add_header(headerKey, extraHeader[headerKey])
-        try: 
-            rawPageData = urllib2.urlopen(request, timeout = timeout)
-        except  urllib2.HTTPError as error:
-            print u'网页打开失败'
-            print u'错误页面:' + url
-            if hasattr(error, 'code'):
-                print u'失败代码:' + str(error.code)
-            if hasattr(error, 'reason'):
-                print u'错误原因:' + error.reason
-        except  urllib2.URLError as error:
-            print u'网络连接异常'
-            print u'错误页面:' + url
-            print u'错误原因:'
-            print error.reason
-        except  socket.timeout as error:
-            print u'打开网页超时'
-            print u'超时页面' + url
-        else:
-            return decodeGZip(rawPageData)
-        return ''
 
     def getXsrf(content=''):
         u'''

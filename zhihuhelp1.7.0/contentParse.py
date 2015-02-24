@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+from baseClass import *
+
 import re
 import HTMLParser #转换网页代码
 import datetime#简单处理时间
-class Parse(object):
+
+class Parse(BaseClass):
     def __init__(self, content):
         self.content = content.replace('\r', '').replace('\n', '')
         self.initRegex()

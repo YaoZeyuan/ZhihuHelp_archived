@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-import sys  
-reload(sys)  
-sys.setdefaultencoding('utf8') 
+from baseClass import *
 
 import re
 import ConfigParser
 import os
-class Setting():
+class Setting(BaseClass):
     u"""
     *   account
         *   用户名

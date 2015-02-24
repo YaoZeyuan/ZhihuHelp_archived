@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
+from baseClass import *
+
 import datetime
 import re
 
-from helper import *#仅作测试使用，用完需删除
-
-class BaseFilter():
+class BaseFilter(BaseClass):
     '''
     先查出来所有的答案数据
     然后根据种类去查对应的辅助数据(比如问题信息)

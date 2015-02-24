@@ -13,11 +13,12 @@ class Init(object):
         return self.cursor
 
     def initDataBase(self):
-        if os.path.isfile('./zhihuDB.db'):
-            self.conn              = sqlite3.connect("./zhihuDB.db")
+        databaseFile = r'./zhihuDB.db'
+        if os.path.isfile(databaseFile):
+            self.conn              = sqlite3.connect(databaseFile)
             self.conn.text_factory = str
         else:
-            self.conn              = sqlite3.connect("./zhihuDB.db")
+            self.conn              = sqlite3.connect(databaseFile)
             self.conn.text_factory = str
             cursor                 = self.conn.cursor()
             #没有数据库就新建一个出来

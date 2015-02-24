@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from baseClass import *
+
 import sqlite3
 import cookielib
 import Cookie
@@ -8,15 +10,13 @@ import json
 import re
 import os
 
-from httpLib      import *
-from helper       import *
 from worker       import *
 from init         import *
 from login        import *
 from simpleFilter import *
 from epubBuilder.epubBuilder import * 
 
-class ZhihuHelp(object):
+class ZhihuHelp(BaseClass):
     def __init__(self):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
@@ -38,7 +38,7 @@ class ZhihuHelp(object):
         self.maxThread       = settingDict['maxThread']
         self.picQuality      = settingDict['picQuality']
         if self.maxThread == '':
-            self.maxThread = 5
+            self.maxThread = 20
         else:
             self.maxThread = int(self.maxThread)
 
@@ -204,22 +204,6 @@ class ZhihuHelp(object):
     def manager(self, urlInfo = {}):
         print urlInfo['guide']
         urlInfo['worker'].start()
-        return
-
-    def mkdir(self, path):
-        try:
-            os.mkdir(path)
-        except OSError:
-            print u'指定目录已存在'
-        return 
-    
-    def chdir(self, path):
-        try:
-            os.chdir(path)
-        except OSError:
-            print u'指定目录不存在，自动创建之'
-            mkdir(path)
-            os.chdir(path)
         return
 
     def resetDir(self):
