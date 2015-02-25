@@ -17,6 +17,7 @@ class ImgDownloader():
         self.targetDir  = targetDir
         self.maxThread  = maxThread
         self.waitFor    = 5
+        self.maxTry     = maxTry
         self.extraHeader= {}
         self.threadPool = []
         self.imgSet     = imgSet
@@ -24,6 +25,14 @@ class ImgDownloader():
         self.getCacheSet()
     
     def leader(self):
+        times = 0
+        while times < self.maxTry and len(self.imgSet) > 0:
+            print u'开始第{}/{}遍图片下载'.format(times, self.maxTry)
+            self.downloader()
+            times += 1
+        return self.complete
+
+    def downloader(self):
         u'''
         返回下载成功的图片列表
         '''
@@ -50,7 +59,7 @@ class ImgDownloader():
                 time.sleep(1)
             threadLiving = threading.activeCount()
         print 'download complete'
-        return self.complete
+        return 
 
     def worker(self, link = ''):
         u"""

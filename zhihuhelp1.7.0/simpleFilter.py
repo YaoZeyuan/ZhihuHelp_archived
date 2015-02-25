@@ -63,7 +63,7 @@ class BaseFilter(BaseClass):
         return content
 
     def trimImg(self, imgContent = ''):
-        src = re.search(r'(?<=src=").*?(?=" )', imgContent)
+        src = re.search(r'(?<=src=").*?(?=")', imgContent)
         if src != None:
             src = src.group(0)
             if src.replace(' ', '') != '':

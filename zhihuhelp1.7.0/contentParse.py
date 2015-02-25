@@ -177,7 +177,7 @@ class Parse(BaseClass):
         else:
             answerDict['noRecordFlag'] = 1
         answerDict['answerHref']     = 'http://www.zhihu.com/question/{0}/answer/{1}'.format(answerDict['questionID'], answerDict['answerID']) 
-        answerDict['answerContent']  = HTMLParser.HTMLParser().unescape(answerDict['answerContent']).encode("utf-8")#对网页内容解码，可以进一步优化
+        answerDict['answerContent']  = HTMLParser.HTMLParser().unescape(answerDict['answerContent'])#对网页内容解码，可以进一步优化
         
         if answerDict['updateDate'] == '':
             answerDict['updateDate'] = answerDict['commitDate']
@@ -242,7 +242,7 @@ class ParseQuestion(Parse):
             questionInfoDict[key] = self.matchContent(key, titleContent)   
         for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:
             questionInfoDict[key] = self.matchContent(key, tailContent)   
-        questionInfoDict['questionDesc'] = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc']).encode("utf-8")#对网页内容解码，可以进一步优化
+        questionInfoDict['questionDesc'] = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc'])#对网页内容解码，可以进一步优化
         return questionInfoDict
 
 class ParseAnswer(ParseQuestion):
@@ -275,7 +275,7 @@ class ParseAnswer(ParseQuestion):
         for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:
             questionInfoDict[key] = self.matchContent(key, tailContent)   
         questionInfoDict['questionAnswerCount'] = int(questionInfoDict['questionAnswerCount']) + 1 #知乎显示的全部回答数是被js处理过的。。。需要手工加一。。。汗
-        questionInfoDict['questionDesc']  = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc']).encode("utf-8")#对网页内容解码，可以进一步优化
+        questionInfoDict['questionDesc']  = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc'])#对网页内容解码，可以进一步优化
         return questionInfoDict
 
 
@@ -334,7 +334,7 @@ class ParseAuthor(Parse):
         else:
             answerDict['noRecordFlag'] = 1
         answerDict['answerHref']     = 'http://www.zhihu.com/question/{0}/answer/{1}'.format(answerDict['questionID'], answerDict['answerID']) 
-        answerDict['answerContent']  = HTMLParser.HTMLParser().unescape(answerDict['answerContent']).encode("utf-8")#对网页内容解码，可以进一步优化
+        answerDict['answerContent']  = HTMLParser.HTMLParser().unescape(answerDict['answerContent'])#对网页内容解码，可以进一步优化
         
         if answerDict['updateDate'] == '':
             answerDict['updateDate'] = answerDict['commitDate']

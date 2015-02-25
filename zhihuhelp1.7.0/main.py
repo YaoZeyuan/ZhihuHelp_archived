@@ -21,6 +21,7 @@ class ZhihuHelp(BaseClass):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
+
         self.checkUpdate()
         init = Init()
         self.conn         = init.getConn()
@@ -70,12 +71,13 @@ class ZhihuHelp(BaseClass):
             #一行内容代表一本电子书
             for rawUrl in line.split('$'):
                 urlInfo = self.getUrlInfo(rawUrl)
-                if urlInfo == {}:
+                if not 'filter' in urlInfo:
                     continue
                 self.manager(urlInfo)
                 self.addEpubContent(urlInfo['filter'].getResult())
                 self.epubInfoList.append(urlInfo['filter'].getInfoDict())
-            Zhihu2Epub(self.epubContent, self.epubInfoList)
+            if self.epubContent != {}:
+                Zhihu2Epub(self.epubContent, self.epubInfoList)
             self.epubContent  = {}
             self.epubInfoList = []
             self.resetDir()
