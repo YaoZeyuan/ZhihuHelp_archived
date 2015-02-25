@@ -19,7 +19,7 @@ import pickle
 
 from setting import *
  
-class Login(BaseClass, HttpBaseClass):
+class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
     def __init__(self, conn):
         self.setting           = Setting()
         self.conn              = conn
@@ -36,7 +36,7 @@ class Login(BaseClass, HttpBaseClass):
             return False
         _xsrf = xsrf.split('=')[1]
         #add xsrf as cookie into cookieJar,
-        xsrfCookie = makeCookie(name = '_xsrf', value = _xsrf, domain='www.zhihu.com')
+        xsrfCookie = self.makeCookie(name = '_xsrf', value = _xsrf, domain='www.zhihu.com')
         self.cookieJarInMemory.set_cookie(xsrfCookie)
         if captcha == '':
             loginData = '{0}&email={1}&password={2}'.format(xsrf, account, password, ) + '&rememberme=y'
@@ -96,7 +96,7 @@ class Login(BaseClass, HttpBaseClass):
             data['password']   = password
             data['recordDate'] = datetime.date.today().isoformat()
             data['cookieStr']  = cookieJar2String
-            save2DB(cursor = self.cursor, data = data, primaryKey = 'account', tableName = 'LoginRecord')
+            self.save2DB(cursor = self.cursor, data = data, primaryKey = 'account', tableName = 'LoginRecord')
             self.conn.commit()
             return True
         else:
@@ -183,7 +183,7 @@ class Login(BaseClass, HttpBaseClass):
             cookieStr += cookie.name + '=' + cookie.value + ';'
         return {'Cookie': cookieStr}
 
-    def getXsrf(content=''):
+    def getXsrf(self, content=''):
         u'''
         提取xsrf信息
         '''
