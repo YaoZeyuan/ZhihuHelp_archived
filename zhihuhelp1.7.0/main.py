@@ -50,12 +50,19 @@ class ZhihuHelp(BaseClass):
 
 
         login = Login(self.conn)
-        if self.rememberAccount != 'yes':
+        if self.rememberAccount == 'yes':
+            print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
+            print   u'直接点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
+            if raw_input() == '':
+                login.setCookie()
+            else:
+                login.login()
+                self.maxThread  = int(self.setting.guideOfMaxThread())
+                self.picQuality = int(self.setting.guideOfPicQuality())
+        else:
             login.login()
             self.maxThread  = int(self.setting.guideOfMaxThread())
             self.picQuality = int(self.setting.guideOfPicQuality())
-        else:
-            login.setCookie()
 
         #储存设置
         self.setting = Setting()
