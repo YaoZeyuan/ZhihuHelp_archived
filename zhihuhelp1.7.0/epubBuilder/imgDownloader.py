@@ -30,6 +30,7 @@ class ImgDownloader():
             print u'开始第{}/{}遍图片下载'.format(times, self.maxTry)
             self.downloader()
             times += 1
+        print u'所有图片下载完毕'
         return self.complete
 
     def downloader(self):
@@ -58,7 +59,6 @@ class ImgDownloader():
                 print u'正在下载图片，还有{}张图片等待下载'.format(len(self.imgSet))
                 time.sleep(1)
             threadLiving = threading.activeCount()
-        print 'download complete'
         return 
 
     def worker(self, link = ''):

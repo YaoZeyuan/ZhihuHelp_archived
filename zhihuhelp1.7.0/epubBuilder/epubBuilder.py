@@ -243,12 +243,13 @@ class Zhihu2Epub():
         #add property
         book.addLanguage('zh-cn')
         book.addCreator('ZhihuHelp1.7.0')
-        book.addDesc(u'该电子书由知乎助手生成，知乎助手是姚泽源为知友制作的仅供个人使用的简易电子书制作工具，源代码遵循WTFPL，希望大家能认真领会该协议的真谛，为我飞面事业做出自己的贡献')
+        book.addDesc(u'该电子书由知乎助手生成，知乎助手是姚泽源为知友制作的仅供个人使用的简易电子书制作工具，源代码遵循WTFPL，希望大家能认真领会该协议的真谛，为飞面事业做出自己的贡献 XD')
         book.addRight('WTFPL')
         book.addPublisher('ZhihuHelp')
         book.addCss(u'../../../知乎电子书制作资源库/markdownStyle.css')
         book.addCss(u'../../../知乎电子书制作资源库/userDefine.css')
 
+        print u'开始制作电子书'
         book.buildingEpub()
         return
 
@@ -260,7 +261,7 @@ class Zhihu2Epub():
         try:
             os.mkdir(path)
         except OSError:
-            print u'指定目录已存在'
+            pass
         return 
     
     def chdir(self, path):
