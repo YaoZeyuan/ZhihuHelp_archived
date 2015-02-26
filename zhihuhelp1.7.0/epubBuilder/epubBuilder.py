@@ -246,8 +246,8 @@ class Zhihu2Epub():
         book.addDesc(u'该电子书由知乎助手生成，知乎助手是姚泽源为知友制作的仅供个人使用的简易电子书制作工具，源代码遵循WTFPL，希望大家能认真领会该协议的真谛，为飞面事业做出自己的贡献 XD')
         book.addRight('WTFPL')
         book.addPublisher('ZhihuHelp')
-        book.addCss(u'../../../知乎电子书制作资源库/markdownStyle.css')
-        book.addCss(u'../../../知乎电子书制作资源库/userDefine.css')
+        book.addCss(u'../../../epubResource/markdownStyle.css')
+        book.addCss(u'../../../epubResource/userDefine.css')
 
         print u'开始制作电子书'
         book.buildingEpub()

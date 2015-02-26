@@ -151,7 +151,7 @@ class QuestionWorker(PageWorker):
     def addProperty(self):
         self.maxPage = 1
         self.suffix  = '?sort=created&page='
-        self.maxTry  = 1
+        self.maxTry  = 5
         self.waitFor = 5
         return
 
@@ -159,7 +159,7 @@ class AnswerWorker(PageWorker):
     def addProperty(self):
         self.maxPage        = ''
         self.suffix         = ''
-        self.maxTry         = 1
+        self.maxTry         = 5
         self.waitFor        = 5
         self.answerDictList = []
         return
@@ -290,7 +290,7 @@ class AuthorWorker(PageWorker):
     def addProperty(self):
         self.maxPage = 1
         self.suffix  = '/answers?order_by=vote_num&page='
-        self.maxTry  = 1
+        self.maxTry  = 5
         self.waitFor = 5
         return
 
@@ -342,7 +342,7 @@ class TopicWorker(AuthorWorker):
     def addProperty(self):
         self.maxPage = 1
         self.suffix  = '/top-answers?page='
-        self.maxTry  = 1
+        self.maxTry  = 5
         self.waitFor = 5
         return
 
@@ -388,7 +388,7 @@ class CollectionWorker(AuthorWorker):
     def addProperty(self):
         self.maxPage = 1
         self.suffix  = '?page='
-        self.maxTry  = 1
+        self.maxTry  = 5
         self.waitFor = 5
         return
 """

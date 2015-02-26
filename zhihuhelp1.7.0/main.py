@@ -73,21 +73,31 @@ class ZhihuHelp(BaseClass):
         self.setting.setSetting(settingDict)
         
         #主程序开始运行
-        readList = open('./ReadList.txt', 'r')
+        readList  = open('./ReadList.txt', 'r')
+        bookCount = 1 
         for line in readList:
             #一行内容代表一本电子书
+            chapter = 1
             for rawUrl in line.split('$'):
+                print u'正在制作第{}本电子书的第{}节'.format(bookCount, chapter)
                 urlInfo = self.getUrlInfo(rawUrl)
                 if not 'filter' in urlInfo:
                     continue
                 self.manager(urlInfo)
-                self.addEpubContent(urlInfo['filter'].getResult())
-                self.epubInfoList.append(urlInfo['filter'].getInfoDict())
+                try:
+                    self.addEpubContent(urlInfo['filter'].getResult())
+                    self.epubInfoList.append(urlInfo['filter'].getInfoDict())
+                except TypeError as error:
+                    print u'没有收集到指定问题'
+                    print u'错误信息:'
+                    print error
+                chapter += 1
             if self.epubContent != {}:
                 Zhihu2Epub(self.epubContent, self.epubInfoList)
             self.epubContent  = {}
             self.epubInfoList = []
             self.resetDir()
+            bookCount += 1
         return
 
     def addEpubContent(self, result = {}):
@@ -238,7 +248,7 @@ class ZhihuHelp(BaseClass):
         time = updateTime.readline().replace(u'\n','').replace(u'\r','')
         url  = updateTime.readline().replace(u'\n','').replace(u'\r','')
         updateComment = updateTime.read()#可行？
-        if time == "2015-02-25":
+        if time == "2015-02-26":
             return
         else:
             print u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(updateComment, time)
