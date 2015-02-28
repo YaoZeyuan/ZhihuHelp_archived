@@ -391,6 +391,7 @@ class CollectionWorker(AuthorWorker):
         self.maxTry  = 5
         self.waitFor = 5
         return
-"""
-class JsonWorker:
-"""
+
+class PageWorker(BaseClass, HttpBaseClass, SqlClass):
+    def __init__():
+        return
