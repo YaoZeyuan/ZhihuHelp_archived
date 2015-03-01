@@ -29,6 +29,7 @@ class Init(object):
                     recordDate  date            default '2000-01-01', 
                     cookieStr   varchar(50000)  default '', 
                     primary key (account))""")
+            #核心:答案数据
             cursor.execute("""create table AnswerContent( 
                             authorID            varchar(255)    not Null    default '', 
                             authorSign          varchar(2000)   not Null    default '',
@@ -46,7 +47,7 @@ class Init(object):
                             
                             answerHref          varchar(255)    not Null    default '',
                             primary key(answerHref))""")
-            
+            #核心:问题信息数据
             cursor.execute("""create table QuestionInfo( 
                             questionIDinQuestionDesc     int(8)       not Null    default 0,
                             questionCommentCount         int(8)       not Null    default 0, 
@@ -58,6 +59,19 @@ class Init(object):
                             questionCollapsedAnswerCount int(8)       not Null    default 0,
 
                             primary key(questionIDinQuestionDesc))""")
+            #核心:专栏信息数据
+            cursor.execute("""create table ColumnInfo(
+                            creatorID           varchar(255)    not Null    default '', 
+                            creatorHashID       varchar(2000)   not Null    default '',
+                            creatorName         varchar(255)    not Null    default '',
+                            creatorSign         varchar(255)    not Null    default '',
+                            creatorLogo         varchar(255)    not Null    default '',
+                            
+                            columnID
+                            )
+
+                           """)
+            #核心:专栏文章数据
             #新数据表
             #收藏夹内容表
             cursor.execute("""
@@ -136,4 +150,10 @@ class Init(object):
                             commentCount        int             default 0,
                             tableID             varchar(50),
                             primary key (tableID))""")#负责保存圆桌信息
+            
+            #专栏内容
+            #用户关注问题表
+            #用户赞同回答表
+            #用户赞同专栏文章表
+
             self.conn.commit()
