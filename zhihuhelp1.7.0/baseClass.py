@@ -7,6 +7,10 @@ class BaseClass(object):
     u'''
     用于存放常用函数
     '''
+    #全局变量
+    testFlag = False
+    dataBaseFileName = u'./zhihuDB_171.db'
+
     def printDict(self, data = {}, key = '', prefix = ''):
         if isinstance(data, dict):
             for key in data.keys():

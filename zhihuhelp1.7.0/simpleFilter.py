@@ -412,3 +412,100 @@ class TopicFilter(CollectionFilter):
         infoDict['ID']    = topicID
         infoDict['href']  = 'http://www.zhihu.com/topic/' + topicID
         return infoDict
+
+class ColumnFilter(BaseFilter):
+    u'''
+    暂时套用的问题模板
+    '''
+    def addProperty(self):
+        self.columnID = self.urlInfo['columnID']
+        return
+    
+    def getQuestionInfoDict(self):
+        sql = '''select 
+                columnID       as questionID, 
+                followersCount as followCount,
+                articleCount   as answerCount,       
+                columnName     as questionTitle,
+                description    as questionDesc
+                from ColumnInfo where columnID = ?'''
+        bufDict = self.cursor.execute(sql, [self.columnID,]).fetchone()
+        columnInfo = {}
+        columnInfo['questionID']    = bufDict[0]
+        columnInfo['commentCount']  = 0
+        columnInfo['followCount']   = bufDict[1]
+        columnInfo['answerCount']   = bufDict[2]
+        columnInfo['viewCount']     = 0
+        columnInfo['questionTitle'] = bufDict[3]
+        columnInfo['questionDesc']  = self.contentImgFix(bufDict[4], self.picQuality)
+        self.columnInfo = columnInfo
+        return columnInfo
+
+    def getAnswerContentDictList(self):
+        sql = '''select 
+                    authorID,            
+                    authorSign,            
+                    authorLogo,            
+                    authorName,            
+                    likesCount,            
+                    articleContent,            
+                    columnID,            
+                    articleID,            
+                    publishedTime,            
+                    publishedTime,            
+                    commentsCount,            
+                    articleHref           
+                from ArticleContent where columnID = ?'''
+        bufList = self.cursor.execute(sql, [self.columnID,]).fetchall()
+        answerListDict = {}
+        for answer in bufList:
+            answerDict = {}
+            answerDict['authorID']           = answer[0]
+            answerDict['authorSign']         = answer[1]
+            answerDict['authorLogo']         = self.authorLogoFix(answer[2])
+            answerDict['authorName']         = answer[3]
+            answerDict['answerAgreeCount']   = int(answer[4])
+            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
+            answerDict['questionID']         = answer[6]
+            answerDict['answerID']           = answer[7]
+            answerDict['commitDate']         = self.str2Date(answer[8])
+            answerDict['updateDate']         = self.str2Date(answer[9])
+            answerDict['answerCommentCount'] = int(answer[10])
+            answerDict['noRecordFlag']       = False
+            answerDict['answerHref']         = answer[11]
+            answerListDict[answerDict['answerID']] = answerDict
+
+        self.answerListDict = answerListDict
+        return answerListDict
+
+    def getResult(self):
+        u'''
+        self.result格式
+        *   contentListDict
+            *   内容列表，其内为questionID => 答案内容的映射
+            *   数据结构
+                *   questionID
+                    *   核心key值
+                    *   questionInfo
+                        *   问题信息
+                    *   answerListDict
+                        *   答案列表,其内为 answerID => 答案内容 的映射   
+                        *   answerID
+                            *   核心key值
+                            *   其内为正常取出的答案
+        '''
+        self.getQuestionInfoDict()
+        self.getAnswerContentDictList()
+
+
+        self.result = {}
+        result = {
+                'questionInfo'   : self.columnInfo,
+                'answerListDict' : self.answerListDict
+                }
+        self.result[result['questionInfo']['questionID']] = result
+        return self.result
+
+    def getInfoDict(self):
+        infoDict = {}
+        return infoDict

@@ -21,8 +21,10 @@ class ZhihuHelp(BaseClass):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
-
-        self.checkUpdate()
+        if BaseClass.testFlag:
+            print u'测试期间，移除自动检查更新模块，测试完成后请删除'
+        else:
+            self.checkUpdate()
         init = Init()
         self.conn         = init.getConn()
         self.cursor       = self.conn.cursor() 
@@ -218,6 +220,10 @@ class ZhihuHelp(BaseClass):
             urlInfo['articleID']    = re.search(r'(?<=zhuanlan\.zhihu\.com/' + urlInfo['columnID'] + '/)' + '\d{8}', urlInfo['baseUrl']).group(0)
         if kind == 'column':
             urlInfo['columnID']     = re.search(r'(?<=zhuanlan\.zhihu\.com/)[^/]*', urlInfo['baseUrl']).group(0)
+            urlInfo['guide']        = u'成功匹配到专栏地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
+            urlInfo['worker']       = ColumnWorker(conn = self.conn, urlInfo = urlInfo)
+            urlInfo['filter']       = ColumnFilter(self.cursor, urlInfo)
+            urlInfo['infoUrl']      = urlInfo['baseUrl']
         return urlInfo
 
     def manager(self, urlInfo = {}):

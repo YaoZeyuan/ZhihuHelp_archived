@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sqlite3
+from   baseClass import * 
 class Init(object):
     def __init__(self):
         self.initDataBase()
@@ -13,7 +14,7 @@ class Init(object):
         return self.cursor
 
     def initDataBase(self):
-        databaseFile = r'./zhihuDB.db'
+        databaseFile = BaseClass.dataBaseFileName
         if os.path.isfile(databaseFile):
             self.conn              = sqlite3.connect(databaseFile)
             self.conn.text_factory = str
@@ -47,6 +48,9 @@ class Init(object):
                             
                             answerHref          varchar(255)    not Null    default '',
                             primary key(answerHref))""")
+
+            cursor.execute("""create index idx_AnswerContent on AnswerContent(authorID, questionID, answerID, answerHref);""")
+
             #核心:问题信息数据
             cursor.execute("""create table QuestionInfo( 
                             questionIDinQuestionDesc     int(8)       not Null    default 0,
@@ -59,19 +63,7 @@ class Init(object):
                             questionCollapsedAnswerCount int(8)       not Null    default 0,
 
                             primary key(questionIDinQuestionDesc))""")
-            #核心:专栏信息数据
-            cursor.execute("""create table ColumnInfo(
-                            creatorID           varchar(255)    not Null    default '', 
-                            creatorHashID       varchar(2000)   not Null    default '',
-                            creatorName         varchar(255)    not Null    default '',
-                            creatorSign         varchar(255)    not Null    default '',
-                            creatorLogo         varchar(255)    not Null    default '',
-                            
-                            columnID
-                            )
 
-                           """)
-            #核心:专栏文章数据
             #新数据表
             #收藏夹内容表
             cursor.execute("""
@@ -151,9 +143,63 @@ class Init(object):
                             tableID             varchar(50),
                             primary key (tableID))""")#负责保存圆桌信息
             
+            #专栏信息
+            cursor.execute("""create table ColumnInfo(
+                        creatorID       varchar(255)    not null    default '',  
+                        creatorHash     varchar(255)    not null    default '',
+                        creatorSign     varchar(2000)   not null    default '',
+                        creatorName     varchar(255)    not null    default '',
+                        creatorLogo     varchar(255)    not null    default '',
+
+                        columnID        varchar(255)    not null    default '',  
+                        columnName      varchar(255)    not null    default '',  
+                        columnLogo      varchar(255)    not null    default '',
+                        description     varchar(3000)   not null    default '',
+                        articleCount    int(20)         not null    default 0,
+                        followersCount  int(20)         not null    default 0,
+                        primary key(columnID))""")
+
             #专栏内容
-            #用户关注问题表
-            #用户赞同回答表
-            #用户赞同专栏文章表
+            cursor.execute("""create table ArticleContent(
+                        authorID        varchar(255)    not null    default '',  
+                        authorHash      varchar(255)    not null    default '',
+                        authorSign      varchar(2000)   not null    default '',
+                        authorName      varchar(255)    not null    default '',
+                        authorLogo      varchar(255)    not null    default '',
+
+                        columnID        varchar(255)    not null    default '',
+                        columnName      varchar(255)    not null    default '',
+                        articleID       varchar(255)    not null    default '',  
+                        articleHref     varchar(255)    not null    default '',  
+                        title           varchar(2000)   not null    default '',
+                        titleImage      varchar(255)    not null    default '',  
+                        articleContent  longtext        not Null    default '',
+                        commentsCount   int(20)         not null    default 0,
+                        likesCount      int(20)         not null    default 0, 
+                        publishedTime   date            not Null    default '2000-01-01',
+                        primary key(articleHref))""")
+
+            cursor.execute("""create index idx_ArticleContent on ArticleContent(columnID, articleID, authorID);""")
+
+            #用户活动表
+                #其中，赞同的答案/专栏文章，关注的收藏夹/专栏/话题按时间顺序混排
+                #只记录活动类型，活动目标(比如点赞的答案地址，关注的问题的答案地址)与活动时间和活动者。
+                #其他信息根据活动类型和目标去对应表中查
+                #本表只做记录,不录入内容
+                #avtiveType:关注/赞同
+                #activeTarget:目标网址,使用时自行提取内容
+                #TargetType:专栏/收藏夹/问题/专栏文章/答案
+            cursor.execute("""create table userActive(
+                        account         varchar(255)    not null    default '',  
+                        activeTarget    varchar(255)    not null    default '',   
+                        activeType      varchar(255)    not null    default '',  
+                        TargetType      vatchar(255)    not null    default '',  
+                        dateTime        int(20)         not null    default 0,   
+                        table_id        INTEGER PRIMARY KEY AUTOINCREMENT
+                        )""")
+
+            #我关注的问题表
+                #这个可以利用用户活动表实现，故不在单独列表
+
 
             self.conn.commit()
