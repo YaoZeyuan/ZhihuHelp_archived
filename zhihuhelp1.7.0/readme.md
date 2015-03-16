@@ -31,26 +31,26 @@
 
 
 1.  首先打开位于知乎助手文件夹内的ReadList.txt，将待下载的网址复制粘贴至ReadList中，然后保存并关闭
-    *   [!ReadList](http://pic2.http://pic2.zhimg.com/95cbba73c17c5ea162746fd4c3ebf649_b.jpgzhimg.com/95cbba73c17c5ea162746fd4c3ebf649_b.jpg)
+    *   ![ReadList](http://pic2.http://pic2.zhimg.com/95cbba73c17c5ea162746fd4c3ebf649_b.jpgzhimg.com/95cbba73c17c5ea162746fd4c3ebf649_b.jpg)
 
 2.  然后，Windows用户双击运行zhihuHelp.py，根据提示进行简单设定后开始自动进行抓取，生成的电子书在【助手生成的电子书】文件夹中，为Epub格式，可以在多看系列软件上流畅阅读
     *   Linux/Mac用户可以按如下方式运行zhihuHelper.py
         1.  首先，将知乎助手解压到桌面上
-            *   [!unzip](http://pic1.zhimg.com/6379696bebd4d2977aaefd0d06a5e034_b.jpg)
+            *  ![unzip](http://pic1.zhimg.com/6379696bebd4d2977aaefd0d06a5e034_b.jpg)
         2.  打开终端，输入对应命令，切换到知乎助手的文件夹下
-            ```shell
+            ```Shell
             cd Desktop
             或者 cd 桌面 (根据操作系统中桌面文件夹的命名方式而定)
             -----------------------
             cd 知乎助手1.7.0.2   （切换到知乎助手所在的文件夹中）
             ```
-            *   [!chdir](http://pic3.zhimg.com/fe54216ccd4e796f24944cfa504bc1ba_b.jpg)
+            *   ![chdir](http://pic3.zhimg.com/fe54216ccd4e796f24944cfa504bc1ba_b.jpg)
         3.  输入
-            ```shell
+            ```Shell
             python zhihuHelper.py
             ```
             运行知乎助手
-            *   [!running](http://pic1.zhimg.com/7ea404bc3b9362053737660f86d0f588_r.jpg)
+            *   ![running](http://pic1.zhimg.com/7ea404bc3b9362053737660f86d0f588_r.jpg)
 
 3.  补充说明:
     1.  ReadList.txt文件中每一行对应一本电子书，一行中可以添加多个网址，使用$符号分开即可
