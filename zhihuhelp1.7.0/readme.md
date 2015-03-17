@@ -26,13 +26,13 @@
 
 | 网址类型 | 描述 | 示例 |
 | -------- | ---- | ---- |
-| 问题 | 单个问题的网址，程序运行时除了下载答案还会顺带把问题描述一起下下来 | `http://www.zhihu.com/question/22921426`，`www.zhihu.com/question/27238186`，`http://www.zhihu.com/question/22719537/` |
-| 答案 | 知乎单个回答的网址,也会下载问题描述 | `http://www.zhihu.com/question/21423568/answer/29751744`, `www.zhihu.com/question/20894671/answer/16526661`, `http://www.zhihu.com/question/22719537/answer/22733181?group_id=560241405423984640`|
-| 话题 | 知乎话题的地址，保存话题信息和话题精华中的答案 | `http://www.zhihu.com/topic/19552430`, `http://www.zhihu.com/topic/19551147/top-answers`,`http://www.zhihu.com/topic/19554859` |
-| 公开收藏夹 | 知乎公开收藏夹的地址，保存收藏夹信息和收藏夹内的答案 | `http://www.zhihu.com/collection/26489045`, `http://www.zhihu.com/collection/19633165`, `http://www.zhihu.com/collection/19641505` |
-| 私人收藏夹 | 知乎私人收藏夹的地址，保存收藏夹信息和收藏夹内的答案，需要创建者用自己的ID登陆知乎助手 | `长得和正常收藏夹一样,主要是我的死人收藏夹放上了你们也打不开= =` |
-| 专栏 | 专栏的网址 | `http://zhuanlan.zhihu.com/yolfilm`, `http://zhuanlan.zhihu.com/epiccomposer`, `http://zhuanlan.zhihu.com/Wisdom` |
-| 专栏文章 | 单篇专栏文章的网址 | `http://zhuanlan.zhihu.com/Wisdom/19636626`, `http://zhuanlan.zhihu.com/zerolib/19972661`, `http://zhuanlan.zhihu.com/cogito/19968816` |
+| 问题 | 单个问题的网址，程序运行时除了下载答案还会顺带把问题描述一起下下来 | `http://www.zhihu.com/question/22921426`，<br />`www.zhihu.com/question/27238186`，<br />`http://www.zhihu.com/question/22719537/`<br /> |
+| 答案 | 知乎单个回答的网址,也会下载问题描述 | `http://www.zhihu.com/question/21423568/answer/29751744`,<br /> `www.zhihu.com/question/20894671/answer/16526661`,<br /> `http://www.zhihu.com/question/22719537/answer/22733181?group_id=560241405423984640`<br />|
+| 话题 | 知乎话题的地址，保存话题信息和话题精华中的答案 | `http://www.zhihu.com/topic/19552430`,<br /> `http://www.zhihu.com/topic/19551147/top-answers`,<br />`http://www.zhihu.com/topic/19554859` <br />|
+| 公开收藏夹 | 知乎公开收藏夹的地址，保存收藏夹信息和收藏夹内的答案 | `http://www.zhihu.com/collection/26489045`,<br /> `http://www.zhihu.com/collection/19633165`,<br /> `http://www.zhihu.com/collection/19641505`<br /> |
+| 私人收藏夹 | 知乎私人收藏夹的地址，保存收藏夹信息和收藏夹内的答案，需要创建者用自己的ID登陆知乎助手 | `长得和正常收藏夹一样`,<br />`主要是我的死人收藏夹放上了你们也打不开= =` |
+| 专栏 | 专栏的网址 | `http://zhuanlan.zhihu.com/yolfilm`, <br />`http://zhuanlan.zhihu.com/epiccomposer`,<br /> `http://zhuanlan.zhihu.com/Wisdom`<br /> |
+| 专栏文章 | 单篇专栏文章的网址 | `http://zhuanlan.zhihu.com/Wisdom/19636626`,<br /> `http://zhuanlan.zhihu.com/zerolib/19972661`, <br />`http://zhuanlan.zhihu.com/cogito/19968816` <br />|
 
 
 
