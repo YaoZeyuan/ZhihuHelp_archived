@@ -139,11 +139,26 @@ def contentBodyTemplate(dataDict = {}):
             {agreeCount}
         </div>
         <div class='comment-count'>
-            {commentsCount}
+            {commentCount}
         </div>
-        <div class='update-time'>
-            {updateTime}
+        <div class='update-date'>
+            {updateDate}
         </div>
     </div>
 </div>
 <hr />""".format(**dataDict)
+
+def infoPageTemplate(dataDict = {}):
+    return '''
+<div class='info-page'>
+  <div class='base-info'>
+    <div class='title'>{title}</div>
+    <div></div>
+  </div>
+  <div>
+    <div class='copy-right'>{copyRight}</div>
+    <div ></div>
+  </div>
+</div>
+    '''.format(**dataDict)
+

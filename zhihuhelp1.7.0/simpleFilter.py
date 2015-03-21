@@ -13,7 +13,6 @@ class BaseFilter(BaseClass):
     由其他中间件负责将保存下来的数据转换称HTML代码
     '''
     def __init__(self, cursor = None, urlInfo = {}):
-        self.imgSet      = set()
         self.imgBasePath = '../image/'
         self.cursor      = cursor
         self.urlInfo     = urlInfo
@@ -26,7 +25,6 @@ class BaseFilter(BaseClass):
         return
     
     def authorLogoFix(self, imgHref = ''):
-        self.imgSet.add(imgHref)
         return u'<div class="duokan-image-single"><img src="{}" alt="知乎图片"/></div>'.format(imgHref)
 
     def contentImgFix(self, content = '', imgQuarty = 1):
@@ -127,7 +125,7 @@ class QuestionFilter(BaseFilter):
         return package
 
     def addAnswerPackage(self, questionPackage, answerHref = ''):
-        questionID = questionPackage.getResult()['questionID']
+        questionID = questionPackage['questionID']
         baseSql    = '''select 
                             authorID,
                             authorSign,
@@ -337,12 +335,12 @@ class ColumnFilter(BaseFilter):
             contentInfo = {}
             contentInfo['authorID']     = result[0]  
             contentInfo['authorSign']   = result[1] 
-            contentInfo['authorLogo']   = result[2] 
+            contentInfo['authorLogo']   = self.authorLogoFix(result[2])
             contentInfo['authorName']   = result[3] 
             contentInfo['questionID']   = titleInfo['questionID']
             contentInfo['answerID']     = result[6] 
-            contentInfo['content']      = result[10] 
-            contentInfo['updateDate']   = result[13] 
+            contentInfo['content']      = self.contentImgFix(result[10], self.picQuality)
+            contentInfo['updateDate']   = self.str2Date(result[13])
             contentInfo['agreeCount']   = result[12] 
             contentInfo['commentCount'] = result[11] 
             contentPackage.setPackage(contentInfo)

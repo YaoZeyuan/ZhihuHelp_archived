@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import re
-import time
 import shutil
 
 from htmlTemplate import *
@@ -19,11 +18,6 @@ class Zhihu2Epub():
         self.indexList  = [] 
         self.indexNo    = 0 
         self.imgSet     = set()#用于储存图片地址，便于下载
-
-        self.infoList   = []
-        for info in infoList:
-            if info != {}:
-                self.infoList.append(info)
 
         self.info2Title()
         self.initBasePath()
@@ -151,19 +145,7 @@ class Zhihu2Epub():
 
     def contentDict2Html(self, contentDict = {}, treeFlag = True):
         u'''
-        将一个问题--答案字典转化为html代码
-        *   应该分两种情况讨论，一种是问题-答案格式，一种是标题-文章格式，应该让它们分开转换为html代码
-            *   内容列表，其内为questionID => 答案内容的映射
-            *   数据结构
-                *   questionID
-                    *   核心key值
-                    *   questionInfo
-                        *   问题信息
-                    *   answerListDict
-                        *   答案列表,其内为 answerID => 答案内容 的映射   
-                        *   answerID
-                            *   核心key值
-                            *   其内为正常取出的答案
+        
         '''
         questionInfo = contentDict['questionInfo']
         if treeFlag == True:
@@ -209,22 +191,6 @@ class Zhihu2Epub():
         contentHtml = contentTemplate(contentDict)
         return contentHtml
 
-    def imgFix(self, content):
-        for imgTag in re.findall(r'<img.*?>', content):
-            src = re.search(r'(?<=src=").*?(?=")', imgTag)
-            if src == None:
-                continue
-            else:
-                src = src.group(0)
-                if src.replace(' ', '') == '':
-                    continue
-            self.imgSet.add(src)
-            fileName = self.getFileName(src)
-            content  = content.replace(src, '../images/' + fileName)
-        return content
-    
-    def getFileName(self, imgHref = ''):
-        return imgHref.split('/')[-1]
 
     def imgDownload(self):
         downloader  = ImgDownloader(targetDir = self.baseImgPath, imgSet = self.imgSet)

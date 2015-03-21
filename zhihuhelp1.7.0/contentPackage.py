@@ -5,63 +5,7 @@ class Package(BaseClass):
     u'''
     package基础类
     用于保存Filer中取出的数据
-        *   extraInfo
-            *   creatorID
-            *   creatorSign
-            *   creatorName
-            *   creatorLogo
-            *   ID
-                *   专栏/话题/收藏夹的ID
-            *   kind
-                *   类别（专栏/话题/收藏夹/问题合集）
-            *   title
-            *   logo
-            *   description
-            *   followerCount
-            *   commentCount
-            *   contentCount
-                *   文章总数/答案总数/问题总数等
-            *   extraKey
-                *   留作日后扩展
-            *   questionDict
-                *   question作为extra的扩展属性
-                *   以questionID作为标记
-                *   [questionID]
-                    *   key值
-                *   Question
-                    *   questionID
-                    *   kind
-                        *   类别(专栏文章/知乎问题)
-                    *   title
-                    *   titleLogo
-                    *   description
-                    *   updateDate
-                    *   commentCount
-                    *   followerCount
-                    *   viewCount
-                    *   answerCount
-                    *   extraKey
-                        *   留作日后扩展
-                    *   answerDict
-                        *   Answer作为Question的扩展属性
-                        *   以answerID作为标记
-                        *   [answerID]
-                            *   key值
-                        *   Answer
-                            *   authorID
-                            *   authorSign
-                            *   authorLogo
-                            *   authorName
-                            *   questionID
-                            *   answerID
-                            *   content
-                            *   updateDate
-                            *   agreeCount
-                            *   commentCount
-                            *   collectCount
-                            *   extraKey
-                                *   留作日后扩展
-    在最外层，还可以再打一层包XD
+    PS:取出的数据还可以再打一层包XD
     '''
     def __init__(self):
         self.package = {}
@@ -78,6 +22,13 @@ class Package(BaseClass):
 
     def getResult(self):
         return self.package
+
+    #重载[]与[] =操作符
+    def __getitem__(self, key):
+        return self.package[key]
+
+    def __setitem__(self, key, val)
+        return self.package[key] = val
 
 class ContentPackage(Package):
     u'''
@@ -137,7 +88,10 @@ class ContentPackage(Package):
         没有意义
         最后发布前自己想一个填充上即可
         '''
-        self.package['kind'] = 'merge'
+        self.package['kind']  = 'merge'
+        newTitle = self.package['title'] + '_' + contentPackage['title'] 
+        if len(newTitle) < 200:
+            self.package['title'] = newTitle
         for key in contentPackage['questionDict']:
             self.addQuestion(contentPackage['questionDict']['key'])
         return
@@ -145,6 +99,40 @@ class ContentPackage(Package):
     def getResult(self):
         self.package['contentCount'] = len(self.questionDict)
         return self.package
+
+    def format_sortBy_agree_desc(self):
+        u'''
+        排序后输出结果List,按赞同数降序排列
+        '''
+        questionList = []
+        for key in self.questionDict
+            question = self.questionDict[key].getResult()
+            answerList = []
+            for key in question['answerDict']
+                answerList.append(question['answerDict'][key])
+            answerList = sorted(answerList, key=lambda content: content['agreeCount'], reverse=True)
+            question['answerList'] = answerList
+            questionList.append(question)
+        questionList = sorted(questionList, key=lambda content: content['agreeCount'], reverse=True)
+        return questionList
+
+    def format_sortBy_updateDate_asc(self):
+        u'''
+        排序后输出结果List,按更新日期升序排列
+        '''
+        questionList = []
+        for key in self.questionDict
+            question = self.questionDict[key].getResult()
+            answerList = []
+            for key in question['answerDict']
+                answerList.append(question['answerDict'][key])
+            answerList = sorted(answerList, key=lambda content: content['updateDate'], reverse=False)
+            question['answerList'] = answerList
+            #问题的最后更新日期为问题中答案的最后更新日期
+            question['updateDate'] = answerList[0]['updateDate']
+            questionList.append(question)
+        questionList = sorted(questionList, key=lambda content: content['updateDate'], reverse=False)
+        return questionList
 
 class QuestionPackage(Package):
     u'''
@@ -165,6 +153,8 @@ class QuestionPackage(Package):
         *   followerCount
         *   viewCount
         *   answerCount
+        *   agreeCount
+            *   赞同数总和，方便排序
         *   extraKey
             *   留作日后扩展
         *   answerDict
@@ -204,11 +194,14 @@ class QuestionPackage(Package):
 
         for key in questionPackage['answerDict']:
             self.addAnswer(questionPackage['answerDict'][key])
-
         return
 
     def getResult(self):
         self.package['answerCount'] = len(self.answerDict)
+        agreeCount = 0
+        for key in self.answerDict:
+            agreeCount += self.answerDict['agreeCount']
+        self.package['agreeCount'] = agreeCount
         return self.package
         
 class AnswerPackage(Package):

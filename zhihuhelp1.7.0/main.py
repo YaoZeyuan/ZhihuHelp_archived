@@ -28,8 +28,6 @@ class ZhihuHelp(BaseClass):
         init = Init()
         self.conn         = init.getConn()
         self.cursor       = self.conn.cursor() 
-        self.epubContent  = {}
-        self.epubInfoList = []
         self.baseDir      = os.path.realpath('.')
         self.setting      = Setting()
         return 
@@ -88,34 +86,27 @@ class ZhihuHelp(BaseClass):
                 self.manager(urlInfo)
                 try:
                     self.addEpubContent(urlInfo['filter'].getResult())
-                    self.epubInfoList.append(urlInfo['filter'].getInfoDict())
                 except TypeError as error:
                     print u'没有收集到指定问题'
                     print u'错误信息:'
                     print error
                 chapter += 1
-            if self.epubContent != {}:
-                Zhihu2Epub(self.epubContent, self.epubInfoList)
-            self.epubContent  = {}
-            self.epubInfoList = []
+            if not self.epubContent:
+                Zhihu2Epub(self.epubContent)
+            del self.epubContent
             self.resetDir()
             bookCount += 1
         return
 
-    def addEpubContent(self, result = {}):
+    def addEpubContent(self, result)
         u'''
-        将分析到的数据添加至epubContent中去
+        分析到的数据为自行制作的Package类型，
+        具有一定的内容分析能力
         '''
-        for questionID in result:
-            if questionID in self.epubContent:
-                self.epubContent[questionID]['questionInfo'] = result[questionID]['questionInfo']
-            else:
-                self.epubContent[questionID] = {}
-                self.epubContent[questionID]['questionInfo']   = result[questionID]['questionInfo']
-                self.epubContent[questionID]['answerListDict'] = {}
-            for answerID in result[questionID]['answerListDict']:
-                answerDict = result[questionID]['answerListDict'][answerID]
-                self.epubContent[questionID]['answerListDict'][answerID] = answerDict
+        try:
+            self.epubContent.merge(result)
+        except AttributeError:
+            self.epubContent = result
         return
 
     def getUrlInfo(self, rawUrl):
