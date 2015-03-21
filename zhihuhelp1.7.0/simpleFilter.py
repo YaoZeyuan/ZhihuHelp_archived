@@ -18,6 +18,7 @@ class BaseFilter(BaseClass):
         self.cursor      = cursor
         self.urlInfo     = urlInfo
         self.picQuality  = urlInfo['baseSetting']['picQuality']
+        self.package     = ContentPackage()
         self.addProperty()
         return
 
@@ -99,149 +100,7 @@ class QuestionFilter(BaseFilter):
         self.questionID = self.urlInfo['questionID']
         return
     
-    def getQuestionInfoDict(self):
-        sql = '''select 
-                questionIDinQuestionDesc         as questionID, 
-                questionCommentCount             as commentCount, 
-                questionFollowCount              as followCount,
-                questionAnswerCount              as answerCount,       
-                questionViewCount                as viewCount,
-                questionTitle                    as questionTitle,
-                questionDesc                     as questionDesc
-                from QuestionInfo where questionIDinQuestionDesc = ?'''
-        bufDict = self.cursor.execute(sql, [self.questionID,]).fetchone()
-        questionInfo = {}
-        questionInfo['questionID']    = bufDict[0]
-        questionInfo['commentCount']  = bufDict[1]
-        questionInfo['followCount']   = bufDict[2]
-        questionInfo['answerCount']   = bufDict[3]
-        questionInfo['viewCount']     = bufDict[4]
-        questionInfo['questionTitle'] = bufDict[5]
-        questionInfo['questionDesc']  = self.contentImgFix(bufDict[6], self.picQuality)
-        self.questionInfo = questionInfo
-        return questionInfo
-
-    def getAnswerContentDictList(self):
-        sql = '''select 
-                    authorID,
-                    authorSign,
-                    authorLogo,
-                    authorName,
-                    answerAgreeCount,
-                    answerContent,
-                    questionID,
-                    answerID,
-                    commitDate,
-                    updateDate,
-                    answerCommentCount,
-                    noRecordFlag,
-                    answerHref
-                from AnswerContent where questionID = ? and noRecordFlag = 0 and answerAgreeCount > 5'''
-        bufList = self.cursor.execute(sql, [self.questionID,]).fetchall()
-        answerListDict = {}
-        for answer in bufList:
-            answerDict = {}
-            answerDict['authorID']           = answer[0]
-            answerDict['authorSign']         = answer[1]
-            answerDict['authorLogo']         = self.authorLogoFix(answer[2])
-            answerDict['authorName']         = answer[3]
-            answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
-            answerDict['questionID']         = answer[6]
-            answerDict['answerID']           = answer[7]
-            answerDict['commitDate']         = self.str2Date(answer[8])
-            answerDict['updateDate']         = self.str2Date(answer[9])
-            answerDict['answerCommentCount'] = int(answer[10])
-            answerDict['noRecordFlag']       = bool(answer[11])
-            answerDict['answerHref']         = answer[12]
-            answerListDict[answerDict['answerID']] = answerDict
-
-        self.answerListDict = answerListDict
-        return answerListDict
-
-    def getResult(self):
-        u'''
-        self.result格式
-        *   contentListDict
-            *   内容列表，其内为questionID => 答案内容的映射
-            *   数据结构
-                *   questionID
-                    *   核心key值
-                    *   questionInfo
-                        *   问题信息
-                    *   answerListDict
-                        *   答案列表,其内为 answerID => 答案内容 的映射   
-                        *   answerID
-                            *   核心key值
-                            *   其内为正常取出的答案
-        '''
-        self.getQuestionInfoDict()
-        self.getAnswerContentDictList()
-
-
-        self.result = {}
-        result = {
-                'questionInfo'   : self.questionInfo,
-                'answerListDict' : self.answerListDict
-                }
-        self.result[result['questionInfo']['questionID']] = result
-        return self.result
-    
-    def getInfoDict(self):
-        infoDict = {}
-        return infoDict
-
-        
-class AnswerFilter(QuestionFilter):
-    def addProperty(self):
-        self.questionID = self.urlInfo['questionID']
-        self.answerID   = self.urlInfo['answerID']
-        return
-
-    def getAnswerContentDictList(self):
-        sql = '''select 
-                    authorID,
-                    authorSign,
-                    authorLogo,
-                    authorName,
-                    answerAgreeCount,
-                    answerContent,
-                    questionID,
-                    answerID,
-                    commitDate,
-                    updateDate,
-                    answerCommentCount,
-                    noRecordFlag,
-                    answerHref
-                from AnswerContent where questionID = ? and answerID = ? and noRecordFlag = 0'''
-        bufList = self.cursor.execute(sql, [self.questionID, self.answerID, ]).fetchall()
-        answerListDict = {}
-        for answer in bufList:
-            answerDict = {}
-            answerDict['authorID']           = answer[0]
-            answerDict['authorSign']         = answer[1]
-            answerDict['authorLogo']         = self.authorLogoFix(answer[2])
-            answerDict['authorName']         = answer[3]
-            answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
-            answerDict['questionID']         = answer[6]
-            answerDict['answerID']           = answer[7]
-            answerDict['commitDate']         = self.str2Date(answer[8])
-            answerDict['updateDate']         = self.str2Date(answer[9])
-            answerDict['answerCommentCount'] = int(answer[10])
-            answerDict['noRecordFlag']       = bool(answer[11])
-            answerDict['answerHref']         = answer[12]
-            answerListDict[answerDict['answerID']] = answerDict
-
-        self.answerListDict = answerListDict
-        return answerListDict
-
-class AuthorFilter(QuestionFilter):
-    def addProperty(self):
-        self.authorID   = self.urlInfo['authorID']
-        return
-
-    def getQuestionInfoDict(self, questionID = ''):
+    def initQuestionPackage(self, questionID = ''):
         sql = '''select 
                 questionIDinQuestionDesc         as questionID, 
                 questionCommentCount             as commentCount, 
@@ -252,78 +111,109 @@ class AuthorFilter(QuestionFilter):
                 questionDesc                     as questionDesc
                 from QuestionInfo where questionIDinQuestionDesc = ?'''
         bufDict = self.cursor.execute(sql, [questionID,]).fetchone()
+
         questionInfo = {}
+        questionInfo['kind']          = 'question'
         questionInfo['questionID']    = bufDict[0]
         questionInfo['commentCount']  = bufDict[1]
-        questionInfo['followCount']   = bufDict[2]
+        questionInfo['followerCount'] = bufDict[2]
         questionInfo['answerCount']   = bufDict[3]
         questionInfo['viewCount']     = bufDict[4]
-        questionInfo['questionTitle'] = bufDict[5]
-        questionInfo['questionDesc']  = self.contentImgFix(bufDict[6], self.picQuality)
-        self.questionInfo = questionInfo
-        return questionInfo
+        questionInfo['title']         = bufDict[5]
+        questionInfo['description']   = self.contentImgFix(bufDict[6], self.picQuality)
 
-    def getAnswerContentDictList(self):
-        sql = '''select 
-                    authorID,
-                    authorSign,
-                    authorLogo,
-                    authorName,
-                    answerAgreeCount,
-                    answerContent,
-                    questionID,
-                    answerID,
-                    commitDate,
-                    updateDate,
-                    answerCommentCount,
-                    noRecordFlag,
-                    answerHref
-                from AnswerContent where authorID = ? and noRecordFlag = 0'''
-        bufList = self.cursor.execute(sql, [self.authorID, ]).fetchall()
-        answerListDict = {}
+        package = QuestionPackage()
+        package.setPackage(questionInfo)
+        return package
+
+    def addAnswerPackage(self, questionPackage, answerHref = ''):
+        questionID = questionPackage.getResult()['questionID']
+        baseSql    = '''select 
+                            authorID,
+                            authorSign,
+                            authorLogo,
+                            authorName,
+                            answerAgreeCount,
+                            answerContent,
+                            questionID,
+                            answerID,
+                            commitDate,
+                            updateDate,
+                            answerCommentCount,
+                            noRecordFlag,
+                            answerHref
+                        from AnswerContent where noRecordFlag = 0'''
+        if answerHref :
+            sql = baseSql + '''and answerHref = ?'''
+            bufList = self.cursor.execute(sql, [answerHref]).fetchall()
+        else:
+            sql = baseSql + '''and questionID = ? and answerAgreeCount > 5'''
+            bufList = self.cursor.execute(sql, [questionID,]).fetchall()
+        
         for answer in bufList:
+            package = AnswerPackage()
             answerDict = {}
             answerDict['authorID']           = answer[0]
             answerDict['authorSign']         = answer[1]
             answerDict['authorLogo']         = self.authorLogoFix(answer[2])
             answerDict['authorName']         = answer[3]
-            answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
+            answerDict['agreeCount']         = int(answer[4])
+            answerDict['content']            = self.contentImgFix(answer[5], self.picQuality)
             answerDict['questionID']         = answer[6]
             answerDict['answerID']           = answer[7]
-            answerDict['commitDate']         = self.str2Date(answer[8])
             answerDict['updateDate']         = self.str2Date(answer[9])
-            answerDict['answerCommentCount'] = int(answer[10])
-            answerDict['noRecordFlag']       = bool(answer[11])
-            answerDict['answerHref']         = answer[12]
-            answerListDict[answerDict['answerID']] = answerDict
+            answerDict['commentCount']       = int(answer[10])
 
-        self.answerListDict = answerListDict
-        return answerListDict
+            package.setPackage(answerDict)
+            questionPackage.addAnswer(package)
+        
+        return questionPackage
 
     def getResult(self):
-        self.getAnswerContentDictList()
-        self.result = {}
-        for answerID in self.answerListDict:
-            answerDict = self.answerListDict[answerID]
-            if answerDict['questionID'] in self.result:
-                self.result[answerDict['questionID']]['answerListDict'][answerDict['answerID']] = answerDict
-            else:
-                self.result[answerDict['questionID']] = {}
-                self.result[answerDict['questionID']]['answerListDict'] = {}
-                self.result[answerDict['questionID']]['answerListDict'][answerDict['answerID']] = answerDict
-                self.result[answerDict['questionID']]['questionInfo'] = self.getQuestionInfoDict(answerDict['questionID'])
+        questionPackage = self.getQuestionInfoDict(self.questionID)
+        questionPackage = self.getAnswerContentDictList(questionPackage)
 
-        return self.result
+        self.package.addQuestion(questionPackage)
+        return self.package
+        
+class AnswerFilter(QuestionFilter):
+    def addProperty(self):
+        self.questionID = self.urlInfo['questionID']
+        self.answerID   = self.urlInfo['answerID']
+        return
+    
+    def createAnswerHref(self, questionID, answerID):
+        return 'http://www.zhihu.com/question/{0}/answer/{1}'.format(questionID, answerID)
 
-    def getInfoDict(self):
-        infoDict = {}
-        sql = 'select authorID, name from AuthorInfo where authorID = ?'
-        authorID, name = self.cursor.execute(sql, [self.authorID,]).fetchone()
-        infoDict['title'] = name
-        infoDict['ID']    = authorID
-        infoDict['href']  = 'http://www.zhihu.com/people/' + authorID
-        return infoDict
+    def getResult(self):
+        questionPackage = self.getQuestionInfoDict(self.questionID)
+        answerHref      = self.createAnswerHref(self.questionID, self.answerID)
+        questionPackage = self.getAnswerContentDictList(questionPackage, answerHref)
+
+        self.package.addQuestion(questionPackage)
+        return self.package
+
+class AuthorFilter(QuestionFilter):
+    def addProperty(self):
+        self.authorID   = self.urlInfo['authorID']
+        return
+
+    def getQuestionIDAndAnswerIDList(self):
+        sql = '''select questionID, answerID from AnswerContent where authorID = ? and noRecordFlag = 0'''
+        resultList = self.cursor.execute(sql, [self.authorID, ]).fetchall()
+        return resultList
+
+    def getResult(self):
+        resultList = self.getQuestionIDAndAnswerIDList()
+        for result in resultList:
+            (questionID, answerID) = result
+            questionPackage = self.getQuestionInfoDict(questionID)
+            answerHref      = self.createAnswerHref(questionID, answerID)
+            questionPackage = self.getAnswerContentDictList(questionPackage, answerHref)
+            self.package.addQuestion(questionPackage)
+
+        return self.package
+
 
 class CollectionFilter(AuthorFilter):
     def addProperty(self):
@@ -335,62 +225,42 @@ class CollectionFilter(AuthorFilter):
         indexTuple = self.cursor.execute(sql, [self.collectionID,]).fetchall()
         indexList  = []
         for index in indexTuple:
-            indexList.append(index[0])
+            answerHref = index[0]
+            questionID = answerHref.split('/')[-3]
+            indexList.append((questionID, answerHref))
         return indexList
 
-    def getAnswerContentDictList(self):
-        indexList = self.getIndexList()
-        sql = '''select 
-                    authorID,
-                    authorSign,
-                    authorLogo,
-                    authorName,
-                    answerAgreeCount,
-                    answerContent,
-                    questionID,
-                    answerID,
-                    commitDate,
-                    updateDate,
-                    answerCommentCount,
-                    noRecordFlag,
-                    answerHref
-                from AnswerContent where answerHref = ? and noRecordFlag = 0'''
-        bufList = []
-        for answerHref in indexList:
-            buf = self.cursor.execute(sql, [answerHref, ]).fetchone()
-            if buf == None :
-                #noRecordFlag == True
-                continue
-            bufList.append(buf)
-        answerListDict = {}
-        for answer in bufList:
-            answerDict = {}
-            answerDict['authorID']           = answer[0]
-            answerDict['authorSign']         = answer[1]
-            answerDict['authorLogo']         = self.authorLogoFix(answer[2])
-            answerDict['authorName']         = answer[3]
-            answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
-            answerDict['questionID']         = answer[6]
-            answerDict['answerID']           = answer[7]
-            answerDict['commitDate']         = self.str2Date(answer[8])
-            answerDict['updateDate']         = self.str2Date(answer[9])
-            answerDict['answerCommentCount'] = int(answer[10])
-            answerDict['noRecordFlag']       = bool(answer[11])
-            answerDict['answerHref']         = answer[12]
-            answerListDict[answerDict['answerID']] = answerDict
+    def getResult(self):
+        resultList = self.getIndexList()
+        for result in resultList:
+            (questionID, answerHref) = result
+            questionPackage = self.getQuestionInfoDict(questionID)
+            questionPackage = self.getAnswerContentDictList(questionPackage, answerHref)
+            self.package.addQuestion(questionPackage)
 
-        self.answerListDict = answerListDict
-        return answerListDict
+        self.addInfo()
+        return self.package
 
-    def getInfoDict(self):
+    def addInfo(self):
+        u'''
+        之前图省事，没抓取创建者的头像，以后要加上
+        今天时间比较紧张了已经，所以，就先不加新功能了
+        '''
+        sql = 'select authorID, authorName, authorSign, title, description, followerCount, commentCount  from CollectionInfo where collectionID = ?'
+        result = self.cursor.execute(sql, [self.collectionID,]).fetchone()
         infoDict = {}
-        sql = 'select collectionID, title from CollectionInfo where collectionID = ?'
-        collectionID, title = self.cursor.execute(sql, [self.collectionID,]).fetchone()
-        infoDict['title'] = u'收藏夹_' + title
-        infoDict['ID']    = collectionID
-        infoDict['href']  = 'http://www.zhihu.com/collection/' + collectionID
-        return infoDict
+        infoDict['creatorID']      = result[0]
+        infoDict['creatorName']    = result[1]
+        infoDict['creatorSign']    = result[2]
+        infoDict['ID']             = self.collectionID
+        infoDict['kind']           = 'collection'
+        infoDict['title']          = result[3]
+        infoDict['description']    = result[4]
+        infoDict['followersCount'] = result[5]
+        infoDict['commentCount']   = result[6]
+        
+        self.package.setPackage(infoDict)
+        return 
 
 class TopicFilter(CollectionFilter):
     def addProperty(self):

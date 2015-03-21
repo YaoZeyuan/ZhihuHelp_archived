@@ -33,7 +33,7 @@ class Package(BaseClass):
                     *   kind
                         *   类别(专栏文章/知乎问题)
                     *   title
-                    *   desc
+                    *   description
                     *   updateDate
                     *   commentCount
                     *   followerCount
@@ -56,6 +56,7 @@ class Package(BaseClass):
                             *   content
                             *   updateDate
                             *   agreeCount
+                            *   commentCount
                             *   collectCount
                             *   extraKey
                                 *   留作日后扩展
@@ -79,6 +80,27 @@ class Package(BaseClass):
 
 class ContentPackage(Package):
     u'''
+    字典结构
+    *   creatorID
+    *   creatorSign
+    *   creatorName
+    *   creatorLogo
+    *   ID
+        *   专栏/话题/收藏夹的ID
+    *   kind
+        *   类别（专栏/话题/收藏夹/问题合集）
+    *   title
+    *   logo
+    *   description
+    *   followerCount
+    *   commentCount
+    *   contentCount
+        *   文章总数/答案总数/问题总数等
+    *   extraKey
+        *   留作日后扩展
+    *   questionDict
+        *   用于存储问题内容/专栏文章内容
+        *   以[question_{questionID}或{columnID}_{articleID}]为key值
     '''
     def initPackage(self):
         self.package['creatorID']     = ''
@@ -136,7 +158,7 @@ class QuestionPackage(Package):
         *   kind
         *   title
         *   titleLogo
-        *   desc
+        *   description
         *   updateDate
         *   commentCount
         *   followerCount
@@ -152,7 +174,7 @@ class QuestionPackage(Package):
         self.package['kind']          = '' 
         self.package['title']         = '' 
         self.package['titleLogo']     = '' 
-        self.package['desc']          = '' 
+        self.package['description']   = '' 
         self.package['updateDate']    = '' 
         self.package['commentCount']  = 0  
         self.package['viewCount']     = 0 
@@ -175,7 +197,7 @@ class QuestionPackage(Package):
     def merge(self, questionPackage):
         if questionPackage['kind'] != self.package['kind']:
             return
-        for key in ['title', 'titleLogo', 'desc', 'updateDate']:
+        for key in ['title', 'titleLogo', 'description', 'updateDate']:
             if questionPackage[key] != '':
                 self.package[key] = questionPackage[key]
 
@@ -193,16 +215,16 @@ class AnswerPackage(Package):
     数据结构
     其中，对于Article而言，questionID即为columnID,answerID即为articleID
     *   Answer
-        *   author
-            *   authorID
-            *   authorSign
-            *   authorLogo
-            *   authorName
+        *   authorID
+        *   authorSign
+        *   authorLogo
+        *   authorName
         *   questionID
         *   answerID
         *   content
         *   updateDate
         *   agreeCount
+        *   commentCount
         *   collectCount
         *   extraKey
             *   留作日后扩展
@@ -217,6 +239,7 @@ class AnswerPackage(Package):
         self.package['content']      = '' 
         self.package['updateDate']   = '' 
         self.package['agreeCount']   = 0
+        self.package['commentCount'] = 0 
         self.package['collectCount'] = 0 
         self.package['extraKey']     = {} 
         return
