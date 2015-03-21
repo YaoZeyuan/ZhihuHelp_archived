@@ -272,17 +272,24 @@ class TopicFilter(CollectionFilter):
         indexTuple = self.cursor.execute(sql, [self.topicID, ]).fetchall()
         indexList  = []
         for index in indexTuple:
-            indexList.append(index[0])
+            answerHref = index[0]
+            questionID = answerHref.split('/')[-3]
+            indexList.append((questionID, answerHref))
         return indexList
+            
+    def addInfo(self):
+        sql = 'select title, logoAddress, description, followersCount from TopicInfo where topicID = ?'
+        result = self.cursor.execute(sql, [self.topicID,]).fetchone()
 
-    def getInfoDict(self):
         infoDict = {}
-        sql = 'select topicID, title from TopicInfo where topicID = ?'
-        topicID, title = self.cursor.execute(sql, [self.topicID,]).fetchone()
-        infoDict['title'] = '话题_' + title
-        infoDict['ID']    = topicID
-        infoDict['href']  = 'http://www.zhihu.com/topic/' + topicID
-        return infoDict
+        infoDict['ID']             = self.topicID
+        infoDict['kind']           = 'topic'
+        infoDict['title']          = result[0]
+        infoDict['logo']           = result[1]
+        infoDict['description']    = result[2]
+        infoDict['followersCount'] = result[3]
+        self.package.setPackage(infoDict)
+        return 
 
 class ColumnFilter(BaseFilter):
     u'''
@@ -292,91 +299,111 @@ class ColumnFilter(BaseFilter):
         self.columnID = self.urlInfo['columnID']
         return
     
-    def getQuestionInfoDict(self):
-        sql = '''select 
-                columnID       as questionID, 
-                followersCount as followCount,
-                articleCount   as answerCount,       
-                columnName     as questionTitle,
-                description    as questionDesc
-                from ColumnInfo where columnID = ?'''
-        bufDict = self.cursor.execute(sql, [self.columnID,]).fetchone()
-        columnInfo = {}
-        columnInfo['questionID']    = bufDict[0]
-        columnInfo['commentCount']  = 0
-        columnInfo['followCount']   = bufDict[1]
-        columnInfo['answerCount']   = bufDict[2]
-        columnInfo['viewCount']     = 0
-        columnInfo['questionTitle'] = bufDict[3]
-        columnInfo['questionDesc']  = self.contentImgFix(bufDict[4], self.picQuality)
-        self.columnInfo = columnInfo
-        return columnInfo
-
-    def getAnswerContentDictList(self):
-        sql = '''select 
-                    authorID,            
-                    authorSign,            
-                    authorLogo,            
-                    authorName,            
-                    likesCount,            
-                    articleContent,            
-                    columnID,            
-                    articleID,            
-                    publishedTime,            
-                    publishedTime,            
-                    commentCount,            
-                    articleHref           
-                from ArticleContent where columnID = ?'''
-        bufList = self.cursor.execute(sql, [self.columnID,]).fetchall()
-        answerListDict = {}
-        for answer in bufList:
-            answerDict = {}
-            answerDict['authorID']           = answer[0]
-            answerDict['authorSign']         = answer[1]
-            answerDict['authorLogo']         = self.authorLogoFix(answer[2])
-            answerDict['authorName']         = answer[3]
-            answerDict['answerAgreeCount']   = int(answer[4])
-            answerDict['answerContent']      = self.contentImgFix(answer[5], self.picQuality)
-            answerDict['questionID']         = answer[6]
-            answerDict['answerID']           = answer[7]
-            answerDict['commitDate']         = self.str2Date(answer[8])
-            answerDict['updateDate']         = self.str2Date(answer[9])
-            answerDict['answerCommentCount'] = int(answer[10])
-            answerDict['noRecordFlag']       = False
-            answerDict['answerHref']         = answer[11]
-            answerListDict[answerDict['answerID']] = answerDict
-
-        self.answerListDict = answerListDict
-        return answerListDict
-
-    def getResult(self):
-        u'''
-        self.result格式
-        *   contentListDict
-            *   内容列表，其内为questionID => 答案内容的映射
-            *   数据结构
-                *   questionID
-                    *   核心key值
-                    *   questionInfo
-                        *   问题信息
-                    *   answerListDict
-                        *   答案列表,其内为 answerID => 答案内容 的映射   
-                        *   answerID
-                            *   核心key值
-                            *   其内为正常取出的答案
+    def initArticlePackage(self, columnID = '', articleID = ''):
         '''
-        self.getQuestionInfoDict()
-        self.getAnswerContentDictList()
+        对问题信息和问题内容的收集可以一次解决
+                *   Question
+                    *   questionID
+                    *   kind
+                        *   类别(专栏文章/知乎问题)
+                    *   title
+                    *   description
+                    *   updateDate
+                    *   commentCount
+                    *   followerCount
+                    *   viewCount
+                    *   answerCount
+                    *   extraKey
+                        *   留作日后扩展
+                    *   answerDict
+                        *   Answer作为Question的扩展属性
+                        *   以answerID作为标记
+                        *   [answerID]
+                            *   key值
+                        *   Answer
+                            *   authorID
+                            *   authorSign
+                            *   authorLogo
+                            *   authorName
+                            *   questionID
+                            *   answerID
+                            *   content
+                            *   updateDate
+                            *   agreeCount
+                            *   commentCount
+                            *   collectCount
+                            *   extraKey
+                                *   留作日后扩展
+        '''
+        baseSql = '''select 0authorID        
+                            1,authorSign      
+                            2,authorLogo      
+                            3,authorName      
+
+                            4,columnID        
+                            5,columnName      
+                            6,articleID       
+                            7,articleHref     
+                            8,title           
+                            9,titleImage      
+                            10,articleContent  
+                            11,commentCount    
+                            12,likesCount      
+                            13,publishedTime
+                    from ArticleContent where '''
+        if articleID:
+            sql        = baseSql + 'columnID = ? and articleID = ?'
+            resultList = self.cursor.execute(sql, [columnID, articleID]).fetchall()
+        else:
+            sql        = baseSql + 'columnID = ?'
+            resultList = self.cursor.execute(sql, [columnID,]).fetchall()
+
+        for result in resultList:
+            titlePackage  = QuestionPackage() 
+            contentPackage = AnswerPackage()
+            titleInfo = {}
+            titleInfo['questionID'] = '{columnID}_{articleID}'.format(columnID:result[4], articleID:result[6]) 
+            titleInfo['kind']       = 'article' 
+            titleInfo['title']      = result[9] 
+            titleInfo['titleLogo']  = result[10]
+            titlePackage.setPackage(titleInfo)
+
+            contentInfo = {}
+            contentInfo['authorID']     = result[0]  
+            contentInfo['authorSign']   = result[1] 
+            contentInfo['authorLogo']   = result[2] 
+            contentInfo['authorName']   = result[3] 
+            contentInfo['questionID']   = titleInfo['questionID']
+            contentInfo['answerID']     = result[6] 
+            contentInfo['content']      = result[] 
+            contentInfo['updateDate']   = result[] 
+            contentInfo['agreeCount']   = result[] 
+            contentInfo['commentCount'] = result[] 
+            contentInfo['collectCount'] = result[] 
 
 
-        self.result = {}
-        result = {
-                'questionInfo'   : self.columnInfo,
-                'answerListDict' : self.answerListDict
-                }
-        self.result[result['questionInfo']['questionID']] = result
-        return self.result
 
-    def getInfoDict(self):
+
+
+
+
+            titlePackage.addAnswer(contentPackage)
+            self.package.addQuestion(titlePackage)
+        return
+
+    def addInfo(self):
+        sql = '''select creatorID, creatorSign, creatorName, creatorLogo, columnID, columnName, columnLogo, description, followersCount from ColumnInfo where columnID = ?'''
+        result = self.cursor.execute(sql, [self.columnID,]).fetchone()
         infoDict = {}
-        return infoDict
+        infoDict['creatorID']     = result[0]   
+        infoDict['creatorSign']   = result[1]   
+        infoDict['creatorName']   = result[2]   
+        infoDict['creatorLogo']   = result[3]   
+        infoDict['ID']            = self.columnID   
+        infoDict['kind']          = 'column'
+        infoDict['title']         = result[4]   
+        infoDict['logo']          = result[5]   
+        infoDict['description']   = result[6]   
+        infoDict['followerCount'] = result[7]
+        self.package.setPackage(infoDict)
+        return 

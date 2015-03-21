@@ -33,6 +33,7 @@ class Package(BaseClass):
                     *   kind
                         *   类别(专栏文章/知乎问题)
                     *   title
+                    *   titleLogo
                     *   description
                     *   updateDate
                     *   commentCount
