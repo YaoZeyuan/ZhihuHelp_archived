@@ -292,9 +292,7 @@ class TopicFilter(CollectionFilter):
         return 
 
 class ColumnFilter(BaseFilter):
-    u'''
-    暂时套用的问题模板
-    '''
+    u''' '''
     def addProperty(self):
         self.columnID = self.urlInfo['columnID']
         return
@@ -302,54 +300,22 @@ class ColumnFilter(BaseFilter):
     def initArticlePackage(self, columnID = '', articleID = ''):
         '''
         对问题信息和问题内容的收集可以一次解决
-                *   Question
-                    *   questionID
-                    *   kind
-                        *   类别(专栏文章/知乎问题)
-                    *   title
-                    *   description
-                    *   updateDate
-                    *   commentCount
-                    *   followerCount
-                    *   viewCount
-                    *   answerCount
-                    *   extraKey
-                        *   留作日后扩展
-                    *   answerDict
-                        *   Answer作为Question的扩展属性
-                        *   以answerID作为标记
-                        *   [answerID]
-                            *   key值
-                        *   Answer
-                            *   authorID
-                            *   authorSign
-                            *   authorLogo
-                            *   authorName
-                            *   questionID
-                            *   answerID
-                            *   content
-                            *   updateDate
-                            *   agreeCount
-                            *   commentCount
-                            *   collectCount
-                            *   extraKey
-                                *   留作日后扩展
         '''
-        baseSql = '''select 0authorID        
-                            1,authorSign      
-                            2,authorLogo      
-                            3,authorName      
+        baseSql = '''select authorID        
+                            ,authorSign      
+                            ,authorLogo      
+                            ,authorName      
 
-                            4,columnID        
-                            5,columnName      
-                            6,articleID       
-                            7,articleHref     
-                            8,title           
-                            9,titleImage      
-                            10,articleContent  
-                            11,commentCount    
-                            12,likesCount      
-                            13,publishedTime
+                            ,columnID        
+                            ,columnName      
+                            ,articleID       
+                            ,articleHref     
+                            ,title           
+                            ,titleImage      
+                            ,articleContent  
+                            ,commentCount    
+                            ,likesCount      
+                            ,publishedTime
                     from ArticleContent where '''
         if articleID:
             sql        = baseSql + 'columnID = ? and articleID = ?'
@@ -375,21 +341,20 @@ class ColumnFilter(BaseFilter):
             contentInfo['authorName']   = result[3] 
             contentInfo['questionID']   = titleInfo['questionID']
             contentInfo['answerID']     = result[6] 
-            contentInfo['content']      = result[] 
-            contentInfo['updateDate']   = result[] 
-            contentInfo['agreeCount']   = result[] 
-            contentInfo['commentCount'] = result[] 
-            contentInfo['collectCount'] = result[] 
-
-
-
-
-
-
+            contentInfo['content']      = result[10] 
+            contentInfo['updateDate']   = result[13] 
+            contentInfo['agreeCount']   = result[12] 
+            contentInfo['commentCount'] = result[11] 
+            contentPackage.setPackage(contentInfo)
 
             titlePackage.addAnswer(contentPackage)
             self.package.addQuestion(titlePackage)
         return
+
+    def getResult(self):
+        self.initArticlePackage(self.columnID)
+        self.addInfo()
+        return self.package
 
     def addInfo(self):
         sql = '''select creatorID, creatorSign, creatorName, creatorLogo, columnID, columnName, columnLogo, description, followersCount from ColumnInfo where columnID = ?'''
@@ -407,3 +372,14 @@ class ColumnFilter(BaseFilter):
         infoDict['followerCount'] = result[7]
         self.package.setPackage(infoDict)
         return 
+
+class ArticleFilter(ColumnFilter):
+    def addProperty(self):
+        self.columnID  = self.urlInfo['columnID']
+        self.articleID = self.urlInfo['articleID']
+        return
+
+    def getResult(self):
+        self.initArticlePackage(self.columnID, self.articleID)
+        self.addInfo()
+        return self.package

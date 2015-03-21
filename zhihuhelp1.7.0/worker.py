@@ -550,7 +550,7 @@ class ColumnWorker(JsonWorker):
             article['title']          = rawArticle['title']
             article['titleImage']     = rawArticle['titleImage']
             article['articleContent'] = rawArticle['content']    
-            article['commentsCount']  = rawArticle['commentsCount']   
+            article['commentCount']  = rawArticle['commentsCount']   
             article['likesCount']     = rawArticle['likesCount']
             article['publishedTime']  = self.formatPublishedTime(rawArticle['publishedTime'])   
             self.articleList.append(article)
