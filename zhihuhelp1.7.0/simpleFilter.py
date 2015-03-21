@@ -1,105 +1,16 @@
 # -*- coding: utf-8 -*-
 from baseClass import *
+from contentPackage import *
 
 import datetime
 import re
 
+
 class BaseFilter(BaseClass):
     '''
     Filter只负责查询出所有数据
-    查询出的数据分两类
-    一类是ExtraInfo-Question-Answer型数据(ExtraInfo == Collection/Topic/Table...)
-    一类是ExtraInfo-Title-Article型数据(ExtraInfo   == ColumnInfo)
-    由ContentFormat类对查询出的数据做进一步处理并在处理后转交EpubBuilder类生成电子书
-    字典结构
-        ExtraInfo-Question-Answer类
-            *   ExtraInfo
-                *   creator
-                    *   creatorID
-                    *   creatorSign
-                    *   creatorName
-                    *   creatorLogo
-                *   ID
-                    *   专栏/话题/收藏夹的ID
-                *   title
-                *   logo
-                *   description
-                *   followerCount
-                *   commentCount
-                *   contentCount
-                    *   文章总数/答案总数/问题总数等
-                *   extraKey
-                    *   留作日后扩展
-                *   QuestionDict
-                    *   Question作为Extra的扩展属性
-                    *   以QuestionID作为标记
-                    *   [questionID]
-                        *   key值
-                    *   Question
-                        *   questionID
-                        *   title
-                        *   desc
-                        *   updateTime
-                        *   commentCount
-                        *   followerCount
-                        *   viewCount
-                        *   answerCount
-                        *   extraKey
-                            *   留作日后扩展
-                        *   AnswerDict
-                            *   Answer作为Question的扩展属性
-                            *   以AnswerID作为标记
-                            *   [answerID]
-                                *   key值
-                            *   Answer
-                                *   author
-                                    *   authorID
-                                    *   authorSign
-                                    *   authorLogo
-                                    *   authorName
-                                *   questionID
-                                *   answerID
-                                *   content
-                                *   updateTime
-                                *   agreeCount
-                                *   collectCount
-                                *   extraKey
-                                    *   留作日后扩展
-
-        ExtraInfo-Title-Article类
-            *   ExtraInfo
-                *   数据结构同上
-                *   ArticleDict
-                *   [articleID]
-                    *   key值
-                *   以ArticleID作为标记
-                    *   Article
-                        *   columnID
-                        *   articleID
-                        *   title-logo
-                        *   title
-                        *   extraKey
-                            *   留作日后扩展
-                        *   ContentDict
-                            *   虽然Article与Content是一一对应的关系，但为了追求对称，还是加上吧
-                            *   以ArticleID作为标记
-                            *   [articleID]
-                                *   key值
-                            *   Content
-                                *   author
-                                    *   authorID
-                                    *   authorSign
-                                    *   authorLogo
-                                    *   authorName
-                                *   columnID
-                                *   articleID
-                                *   content
-                                *   updateTime
-                                *   agreeCount
-                                *   extraKey
-                                    *   留作日后扩展
-        在最外层，还可以再打一层包
-        以及，这么复杂的结构，应该由一个专门的类负责生成。
+    由Package负责数据保存
+    由其他中间件负责将保存下来的数据转换称HTML代码
     '''
     def __init__(self, cursor = None, urlInfo = {}):
         self.imgSet      = set()
