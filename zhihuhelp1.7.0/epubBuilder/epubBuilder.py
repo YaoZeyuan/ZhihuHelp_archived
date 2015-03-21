@@ -59,7 +59,8 @@ class Zhihu2Epub():
 
     def trans2OneFile(self):
         u'''
-        将电子书内容转换为一页html文件
+        *   将电子书内容转换为一页html文件
+        *   本功能暂时处于废弃状态
         '''
         indexHtml   = self.createIndexHtml(self.resultList)
         contentHtml = ''
@@ -151,6 +152,7 @@ class Zhihu2Epub():
     def contentDict2Html(self, contentDict = {}, treeFlag = True):
         u'''
         将一个问题--答案字典转化为html代码
+        *   应该分两种情况讨论，一种是问题-答案格式，一种是标题-文章格式，应该让它们分开转换为html代码
             *   内容列表，其内为questionID => 答案内容的映射
             *   数据结构
                 *   questionID

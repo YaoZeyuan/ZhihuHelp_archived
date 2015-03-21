@@ -174,7 +174,7 @@ class Init(object):
                         title           varchar(2000)   not null    default '',
                         titleImage      varchar(255)    not null    default '',  
                         articleContent  longtext        not Null    default '',
-                        commentsCount   int(20)         not null    default 0,
+                        commentCount   int(20)         not null    default 0,
                         likesCount      int(20)         not null    default 0, 
                         publishedTime   date            not Null    default '2000-01-01',
                         primary key(articleHref))""")

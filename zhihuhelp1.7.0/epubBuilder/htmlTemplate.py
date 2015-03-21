@@ -3,196 +3,147 @@ def baseTemplate(dataDict = {}):
     u'''
     *   stdStruct 
     {
-        'PageTitle' : '',
-        'Guide'     : '',
-        'Index'     : '',
-        'Content'   : '',
+        'Title'  : '',
+        'Header' : '',
+        'Body'   : '',
+        'Footer' : '',
     }
     '''
-    if dataDict['Guide'] == '':
-        return u"""
+    return u"""
             <!DOCTYPE html>
             <html lang="zh-CN">
                 <head>
+                    <meta charset="utf-8" />
                     <link rel="stylesheet" type="text/css" href="../markdownStyle.css"/>
                     <link rel="stylesheet" type="text/css" href="../userDefine.css"/>
-                    <meta charset="utf-8" />
-                    <title>%(PageTitle)s</title>
+                    <title>{Title}</title>
                 </head>
                 <body>
-                %(Index)s
-                %(Content)s
+                {Header}
+                {Body}
+                {Footer}
                 </body>
             </html>
-            """ % dataDict
-    else:
-        return u"""
-            <!DOCTYPE html>
-            <html lang="zh-CN">
-                <head>
-                    <link rel="stylesheet" type="text/css" href="../markdownStyle.css"/>
-                    <link rel="stylesheet" type="text/css" href="../userDefine.css"/>
-                    <meta charset="utf-8" />
-                    <title>%(PageTitle)s</title>
-                </head>
-                <body>
-                %(Guide)s
-                <hr />
-                %(Index)s
-                %(Content)s
-                </body>
-            </html>
-            """ % dataDict
+            """.format(**dataDict) 
 
-def guideTemplate(dataDict = {}):
+def structTemplate(dataDict={}):
     u'''
     *   stdStruct 
     {
-        'title'    : '',
-        'author'   : '',
-        'desc'     : '',
-        'guideImg' : '',
+        'leftColumn'   : '',
+        'middleColumn' : '',
+        'rightColumn'  : '',
     }
     '''
-    return u'''
-            <div class="text-center">
-                <img  class="guide-img" src="../images/%(guideImg)s" />
-                <h1>%(title)s</h1>
-                <h3>%(author)s</h3>
-                <p>%(desc)s</p>
-            </div>
-            ''' % dataDict
+    return u"""
+<div class='left-column'>
+{leftColumn}
+</div>
+<div class='middle-column'>
+{middleColumn}
+</div>
+<div class='right-column'>
+{rightColumn}
+</div>
+    """.format(**dataDict)
 
-def oneFileIndexTemplate(dataDict = {}):
-    u'''
-    *   stdStruct 
-    {
-        'title'    : '',
-        'index'    : '',
-    }
-    '''
-    return u'''
-            <a href='#%(index)s'>%(index)s . %(title)s</a>
-            <br />
-            ''' % dataDict
-
-def treeFileIndexTemplate(dataDict = {}):
-    u'''
-    *   stdStruct 
-    {
-        'title'    : '',
-        'index'    : '',
-        'href'     : '',
-    }
-    '''
-    return u'''
-            <a href='%(href)s'>%(index)s . %(title)s</a>
-            <br />
-            ''' % dataDict
 
 def contentTemplate(dataDict = {}):
     u'''
     *   stdStruct 
     {
-        'QuestionContent' : '',
-        'AnswerContent'   : '',
+        'contentHeader' : '',
+        'contentBody'   : '',
+        'contentFooter' : '',
     }
     '''
     return u"""
-            %(QuestionContent)s
-            <hr />
-            %(AnswerContent)s
-            """ % dataDict
+<div class='content'>
+  <div class='content-header'>
+    {contentHeader}
+  </div>
+  <div class='content-body'>
+    {contentBody}
+  </div>
+  <div class='content-body'>
+    {contentFooter}
+  </div>
+</div>
+            """.format(**dataDict)
 
-def questionContentTemplate(dataDict = {}):
+def contentHeaderTemplate(dataDict = {}):
     u'''
     *   stdStruct 
     {
-        'index'   : '',
-        'title'   : '',
-        'desc'    : '',
-        'comment' : '',
+        'titleImage'         : '',
+        'titleName'          : '',
+        'titleDesc'          : '',
+        'titleCommentsCount' : '',
     }
     '''
-    if dataDict['desc'] == '':
         return u'''
-            <div class='question' id='%(index)s'>
-                <div class='question-title'>%(index)s.%(title)s</div>
-            </div>
-            ''' % dataDict
+<div class='title'>
+    <div class='title-header'>
+        <div class='title-image'>
+            {titleImage}
+        </div>
+    </div>
+    <div class='title-body'>
+        <div class='title-name'>
+            {titleName}
+        </div>
+        <div class='title-desc'>
+            {titleDesc}
+        </div>
+    </div>
+    <div class='title-foot'>
+        <div class='title-comment-count'>
+            {titleCommentsCount}
+        </div>
+    </div>
+</div>'''.format(**dataDict)
 
-    else:
-        return u'''
-            <div class='question' id='%(index)s'>
-                <div class='question-title'>%(index)s.%(title)s</div>
-                <hr />
-                <div class='question-desc'>%(desc)s</div>
-                <div class='question-comment'>评论数:%(comment)s</div>
-            </div>
-            ''' % dataDict
-
-def answerContentTemplate(dataDict = {}):
+def contentBodyTemplate(dataDict = {}):
     u'''
     *   stdStruct 
     {
         'authorLogo'    : '',
-        'authorLink'    : '',
         'authorName'    : '',
         'authorSign'    : '',
-        'answerContent' : '',
-        'answerAgree'   : '',
-        'answerComment' : '',
-        'answerDate'    : '',
+        'content'       : '',
+        'agreeCount'    : '',
+        'commentsCount' : '',
+        'updateTime'    : '',
     }
     '''
     return u"""
-            <div class='answer'>
-                <div class='author-info'>
-                    <div class='author-logo'>
-                    %(authorLogo)s
-                    </div>
-                    <div class='author-name'>
-                    <a href='%(authorLink)s'>%(authorName)s</a>,
-                    </div>
-                    <div class='author-sign'>
-                    %(authorSign)s
-                    </div>
-                    <br >
-                </div>
-                <br >
-                <div class='answer-content'>
-                    %(answerContent)s
-                </div>
-                <br >
-                <div class='answer-info'>
-                    <div class='answer-agree'>
-                    赞同数:%(answerAgree)s
-                    </div>
-                    <div class='answer-comment'>
-                    评论数:%(answerComment)s
-                    </div>
-                    <div class='answer-date'>
-                    更新日期:%(answerDate)s
-                    </div>
-                </div>
+<div class='content'>
+    <div class='content-head'>
+        <div class='author-info'>
+            <div class='author-logo'>
+                {authorLogo}
             </div>
-            <br >
-            <hr />
-            """ % dataDict
-
-def simpleIndexTemplate(indexContent = ''):
-    return u'''
-            <!DOCTYPE html>
-            <html lang="zh-CN">
-                <head>
-                    <link rel="stylesheet" type="text/css" href="./markdownStyle.css"/>
-                    <link rel="stylesheet" type="text/css" href="./userDefine.css"/>
-                    <meta charset="utf-8" />
-                    <title>目录</title>
-                </head>
-                <body>
-                <p class="text-center">目录</p>
-                <br />
-                {}
-                </body>
-            </html>'''.format(indexContent)
+            <div class='author-name'>
+                {authorName}
+            </div>
+            <div class='author-sign'>
+                {authorSign}
+            </div>
+        </div>
+    </div>
+    <div class='content-body'>
+        {content}
+    </div>
+    <div class='content-foot'>
+        <div class='agree-count'>
+            {agreeCount}
+        </div>
+        <div class='comment-count'>
+            {commentsCount}
+        </div>
+        <div class='update-time'>
+            {updateTime}
+        </div>
+    </div>
+</div>
+<hr />""".format(**dataDict)
