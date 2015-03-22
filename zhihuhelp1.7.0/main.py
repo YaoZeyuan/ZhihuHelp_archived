@@ -209,7 +209,11 @@ class ZhihuHelp(BaseClass):
         if kind == 'article':
             urlInfo['columnID']     = re.search(r'(?<=zhuanlan\.zhihu\.com/)[^/]*', urlInfo['baseUrl']).group(0)
             urlInfo['articleID']    = re.search(r'(?<=zhuanlan\.zhihu\.com/' + urlInfo['columnID'] + '/)' + '\d{8}', urlInfo['baseUrl']).group(0)
+            urlInfo['worker']       = ColumnWorker(conn = self.conn, urlInfo = urlInfo)
+            urlInfo['filter']       = ArticleFilter(self.cursor, urlInfo)
+            urlInfo['infoUrl']      = urlInfo['baseUrl']
         if kind == 'column':
+            #专栏文章的总量并不多，所以获取单篇文章可以和获取全部文章一块完成
             urlInfo['columnID']     = re.search(r'(?<=zhuanlan\.zhihu\.com/)[^/]*', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到专栏地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
             urlInfo['worker']       = ColumnWorker(conn = self.conn, urlInfo = urlInfo)

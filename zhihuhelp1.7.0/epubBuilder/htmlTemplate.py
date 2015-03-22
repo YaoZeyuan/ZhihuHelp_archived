@@ -98,7 +98,7 @@ def contentHeaderTemplate(dataDict = {}):
     </div>
     <div class='title-foot'>
         <div class='title-comment-count'>
-            {titleCommentsCount}
+            {titleCommentCount}
         </div>
     </div>
 </div>'''.format(**dataDict)

@@ -363,7 +363,7 @@ class ColumnFilter(BaseFilter):
         infoDict['creatorName']   = result[2]   
         infoDict['creatorLogo']   = result[3]   
         infoDict['ID']            = self.columnID   
-        infoDict['kind']          = 'column'
+        infoDict['kind']          = 'article'
         infoDict['title']         = result[4]   
         infoDict['logo']          = result[5]   
         infoDict['description']   = result[6]   
