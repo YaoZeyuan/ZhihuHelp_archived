@@ -92,6 +92,11 @@ class Setting(BaseClass):
     
     def guide(self):
         print u'您好，欢迎使用知乎助手'
+        print u''
+        print u'以及，'
+        print u''
+        print u'请让我们以热烈的掌声，欢迎@青葭 老师回归知乎!'
+        print u''
         print u'当前大版本号:1.7.X'
         print u'1.7版本系列将作为助手从命令行界面向图形界面过渡的中间版本，在这一系列中助手将不再能够保存知乎用户答案，涵请见谅：）'
         print u'助手的全部代码都已经开源并托管到了github之上(https://github.com/YaoZeyuan/ZhihuHelp__Python)并附在了压缩包中，您可以随时查阅。'

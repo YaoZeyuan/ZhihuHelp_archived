@@ -232,7 +232,7 @@ class AuthorWorker(PageWorker):
     def leader(self):
         #clear index cache
         self.getIndexID()
-        self.clearIndex()
+        #self.clearIndex()
 
         self.catchFrontInfo()
         threadPool = []
