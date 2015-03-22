@@ -17,11 +17,25 @@ class Zhihu2Epub():
         self.package = contentPackage
         self.imgSet  = set()#用于储存图片地址，便于下载
         self.trans   = dict2Html(contentPackage)
+
+        self.kindDict = {
+                'question'   : u'问题',
+                'answer'     : u'问答',
+                'topic'      : u'话题',
+                'collection' : u'收藏夹',
+                'table'      : u'圆桌',
+                'author'     : u'作者',
+                'column'     : u'专栏',
+                'article'    : u'文章',
+                'merge'      : u'合并',
+                } 
+
         self.initBasePath()
         self.info2Title()
         self.trans2Tree()
         self.imgDownload()
         self.epubCreator()
+
         return
     
     def initBasePath(self):
@@ -43,7 +57,6 @@ class Zhihu2Epub():
         '''
         self.contentList = self.trans.getResult()
         self.imgSet      = self.trans.getImgSet()
-
         for content in self.contentList:
             fileIndex = self.baseContentPath + content['fileName'] + '.html'
             htmlFile  = open(fileIndex, 'wb')
@@ -52,7 +65,7 @@ class Zhihu2Epub():
         return
 
     def info2Title(self):
-        self.fileTitle = self.package['title'] + u'的知乎回答集锦'
+        self.fileTitle = u'{kind}_{title}({ID})_知乎回答集锦'.format(kind=self.kindDict[self.package['kind']], title=self.package['title'], ID=self.package['ID'])
         return
 
     def imgDownload(self):

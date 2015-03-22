@@ -157,7 +157,7 @@ class Init(object):
                         columnLogo      varchar(255)    not null    default '',
                         description     varchar(3000)   not null    default '',
                         articleCount    int(20)         not null    default 0,
-                        followersCount  int(20)         not null    default 0,
+                        followerCount  int(20)         not null    default 0,
                         primary key(columnID))""")
 
             #专栏内容
@@ -176,7 +176,7 @@ class Init(object):
                         titleImage      varchar(255)    not null    default '',  
                         articleContent  longtext        not Null    default '',
                         commentCount    int(20)         not null    default 0,
-                        likesCount      int(20)         not null    default 0, 
+                        likeCount      int(20)         not null    default 0, 
                         publishedTime   date            not Null    default '2000-01-01',
                         primary key(articleHref))""")
 

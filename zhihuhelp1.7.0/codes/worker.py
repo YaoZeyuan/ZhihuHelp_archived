@@ -460,7 +460,7 @@ class ColumnWorker(JsonWorker):
         self.columnInfo['columnName']     = rawInfo['name']
         self.columnInfo['columnLogo']     = rawInfo['creator']['avatar']['template'].replace('{id}', rawInfo['avatar']['id']).replace('_{size}', '_r')
         self.columnInfo['articleCount']   = rawInfo['postsCount']
-        self.columnInfo['followersCount'] = rawInfo['followersCount'] 
+        self.columnInfo['followerCount']  = rawInfo['followersCount'] 
         self.columnInfo['description']    = rawInfo['description']
         return True
 
@@ -476,7 +476,7 @@ class ColumnWorker(JsonWorker):
         else:
             print u'获取专栏信息成功'
         self.workSchedule = {}
-        detectUrl = 'http://zhuanlan.zhihu.com/api/columns/{}/posts?offset=10&limit='.format(self.urlInfo['columnID'])
+        detectUrl = 'http://zhuanlan.zhihu.com/api/columns/{}/posts?limit=0&offset='.format(self.urlInfo['columnID'])
         for i in range(self.columnInfo['articleCount']/10 + 1):
             self.workSchedule[i] = detectUrl + str(i * 10)
         #将专栏信息储存至数据库中
@@ -513,6 +513,7 @@ class ColumnWorker(JsonWorker):
                 print u'正在读取专栏页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule))
                 time.sleep(1)
             threadLiving = threading.activeCount()
+
         for article in self.articleList:
             self.save2DB(self.cursor, article, 'articleHref', 'ArticleContent')
         self.conn.commit()
@@ -527,7 +528,9 @@ class ColumnWorker(JsonWorker):
         """
         if workNo in self.complete:
             return
+
         content = self.getJsonContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
+
         if not content:
             return
         self.formatJsonArticleData(content)
@@ -550,8 +553,8 @@ class ColumnWorker(JsonWorker):
             article['title']          = rawArticle['title']
             article['titleImage']     = rawArticle['titleImage']
             article['articleContent'] = rawArticle['content']    
-            article['commentCount']  = rawArticle['commentsCount']   
-            article['likesCount']     = rawArticle['likesCount']
+            article['commentCount']   = rawArticle['commentsCount']   
+            article['likeCount']      = rawArticle['likesCount']
             article['publishedTime']  = self.formatPublishedTime(rawArticle['publishedTime'])   
             self.articleList.append(article)
         return 

@@ -89,9 +89,12 @@ class ContentPackage(Package):
         最后发布前自己想一个填充上即可
         '''
         self.package['kind']  = 'merge'
-        newTitle = self.package['title'] + '_' + contentPackage['title'] 
-        if len(newTitle) < 200:
-            self.package['title'] = newTitle
+        self.package['title'] = u'自定义'
+        self.package['ID']    = 'merge'
+        self.package['logo']  = ''
+
+        self.package['description'] = '{0}+{1}'.format(self.package['description'], self.package['title'])
+
         for key in contentPackage['questionDict']:
             self.addQuestion(contentPackage['questionDict']['key'])
         return

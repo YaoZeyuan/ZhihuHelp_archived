@@ -26,7 +26,9 @@ class BaseFilter(BaseClass):
     
     def authorLogoFix(self, imgHref = ''):
         #头像一律使用大图
-        imgHref = re.sub(r'_..jpg', '', imgHref, 1) + '_b.jpg'
+        imgHref = re.sub(r'_..jpg', '', imgHref, 1) 
+        if imgHref:
+            imgHref += '_b.jpg'
         return u'<div class="duokan-image-single"><img src="{}" alt="知乎图片"/></div>'.format(imgHref)
 
     def contentImgFix(self, content = '', imgQuarty = 1):
@@ -169,11 +171,37 @@ class QuestionFilter(BaseFilter):
         
         return questionPackage
 
+    def addInfo(self):
+        u'''
+        问题信息
+        '''
+        sql = '''select 
+                questionIDinQuestionDesc as questionID, 
+                questionCommentCount     as commentCount, 
+                questionFollowCount      as followCount,
+                questionAnswerCount      as answerCount,       
+                questionViewCount        as viewCount,
+                questionTitle            as questionTitle,
+                questionDesc             as questionDesc
+                from QuestionInfo where questionIDinQuestionDesc = ? '''
+        result   = self.cursor.execute(sql, [self.questionID,]).fetchone()
+        infoDict = {}
+        infoDict['ID']             = self.questionID
+        infoDict['kind']           = 'question'
+        infoDict['title']          = result[5]
+        infoDict['description']    = result[6]
+        infoDict['followerCount'] = result[2]
+        infoDict['commentCount']   = result[1]
+        
+        self.package.setPackage(infoDict)
+        return 
+
     def getResult(self):
         questionPackage = self.initQuestionPackage(self.questionID)
         questionPackage = self.addAnswerTo(questionPackage)
 
         self.package.addQuestion(questionPackage)
+        self.addInfo()
         return self.package
         
 class AnswerFilter(QuestionFilter):
@@ -191,6 +219,7 @@ class AnswerFilter(QuestionFilter):
         questionPackage = self.addAnswerTo(questionPackage, answerHref)
 
         self.package.addQuestion(questionPackage)
+        self.addInfo()
         return self.package
 
 class AuthorFilter(AnswerFilter):
@@ -206,6 +235,34 @@ class AuthorFilter(AnswerFilter):
             indexList.append((questionID, self.createAnswerHref(questionID, answerID)))
         return indexList
 
+    def addInfo(self):
+        u'''
+            添加用户信息
+        '''
+        sql = '''select authorID          
+                        ,sign              
+                        ,name              
+                        ,authorLogoAddress 
+                        ,desc              
+                        ,follower          
+                        ,answer            
+                from AuthorInfo where authorID = ? '''
+        result   = self.cursor.execute(sql, [self.authorID,]).fetchone()
+        infoDict = {}
+        infoDict['creatorID']     = result[0] 
+        infoDict['creatorSign']   = result[1]   
+        infoDict['creatorName']   = result[2]   
+        infoDict['creatorLogo']   = result[3]   
+        infoDict['ID']            = result[0]
+        infoDict['kind']          = 'author'
+        infoDict['title']         = result[2]
+        infoDict['logo']          = result[3]
+        infoDict['description']   = result[4]   
+        infoDict['followerCount'] = result[5]     
+        
+        self.package.setPackage(infoDict)
+        return 
+
     def getResult(self):
         resultList = self.getIndexList()
         for result in resultList:
@@ -214,6 +271,7 @@ class AuthorFilter(AnswerFilter):
             questionPackage = self.addAnswerTo(questionPackage, answerHref)
             self.package.addQuestion(questionPackage)
 
+        self.addInfo()
         return self.package
 
 
@@ -232,17 +290,6 @@ class CollectionFilter(AuthorFilter):
             indexList.append((questionID, answerHref))
         return indexList
 
-    def getResult(self):
-        resultList = self.getIndexList()
-        for result in resultList:
-            (questionID, answerHref) = result
-            questionPackage = self.initQuestionPackage(questionID)
-            questionPackage = self.addAnswerTo(questionPackage, answerHref)
-            self.package.addQuestion(questionPackage)
-
-        self.addInfo()
-        return self.package
-
     def addInfo(self):
         u'''
         之前图省事，没抓取创建者的头像，以后要加上
@@ -258,11 +305,22 @@ class CollectionFilter(AuthorFilter):
         infoDict['kind']           = 'collection'
         infoDict['title']          = result[3]
         infoDict['description']    = result[4]
-        infoDict['followersCount'] = result[5]
+        infoDict['followerCount'] = result[5]
         infoDict['commentCount']   = result[6]
         
         self.package.setPackage(infoDict)
         return 
+
+    def getResult(self):
+        resultList = self.getIndexList()
+        for result in resultList:
+            (questionID, answerHref) = result
+            questionPackage = self.initQuestionPackage(questionID)
+            questionPackage = self.addAnswerTo(questionPackage, answerHref)
+            self.package.addQuestion(questionPackage)
+
+        self.addInfo()
+        return self.package
 
 class TopicFilter(CollectionFilter):
     def addProperty(self):
@@ -280,16 +338,16 @@ class TopicFilter(CollectionFilter):
         return indexList
             
     def addInfo(self):
-        sql = 'select title, logoAddress, description, followersCount from TopicInfo where topicID = ? '
+        sql = 'select title, logoAddress, description, followerCount from TopicInfo where topicID = ? '
         result = self.cursor.execute(sql, [self.topicID,]).fetchone()
 
         infoDict = {}
-        infoDict['ID']             = self.topicID
-        infoDict['kind']           = 'topic'
-        infoDict['title']          = result[0]
-        infoDict['logo']           = result[1]
-        infoDict['description']    = result[2]
-        infoDict['followersCount'] = result[3]
+        infoDict['ID']            = self.topicID
+        infoDict['kind']          = 'topic'
+        infoDict['title']         = result[0]
+        infoDict['logo']          = result[1]
+        infoDict['description']   = result[2]
+        infoDict['followerCount'] = result[3]
         self.package.setPackage(infoDict)
         return 
 
@@ -316,7 +374,7 @@ class ColumnFilter(BaseFilter):
                             ,titleImage      
                             ,articleContent  
                             ,commentCount    
-                            ,likesCount      
+                            ,likeCount      
                             ,publishedTime
                     from ArticleContent where '''
         if articleID:
@@ -332,8 +390,8 @@ class ColumnFilter(BaseFilter):
             titleInfo = {}
             titleInfo['questionID'] = '{columnID}_{articleID}'.format(columnID=result[4], articleID=result[6]) 
             titleInfo['kind']       = 'article' 
-            titleInfo['title']      = result[9] 
-            titleInfo['titleLogo']  = result[10]
+            titleInfo['title']      = result[8] 
+            titleInfo['titleLogo']  = result[9]
             titlePackage.setPackage(titleInfo)
 
             contentInfo = {}
@@ -359,7 +417,7 @@ class ColumnFilter(BaseFilter):
         return self.package
 
     def addInfo(self):
-        sql = '''select creatorID, creatorSign, creatorName, creatorLogo, columnID, columnName, columnLogo, description, followersCount from ColumnInfo where columnID = ? '''
+        sql = '''select creatorID, creatorSign, creatorName, creatorLogo, columnName, columnLogo, description, followerCount from ColumnInfo where columnID = ? '''
         result = self.cursor.execute(sql, [self.columnID,]).fetchone()
         infoDict = {}
         infoDict['creatorID']     = result[0]   

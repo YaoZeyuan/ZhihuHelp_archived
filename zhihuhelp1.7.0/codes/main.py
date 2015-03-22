@@ -83,10 +83,12 @@ class ZhihuHelp(BaseClass):
                 urlInfo = self.getUrlInfo(rawUrl)
                 if not 'filter' in urlInfo:
                     continue
+
                 if BaseClass.test_catchAnswerData_flag:
                     print u'测试期间，跳过对网页的抓取'
                 else:
                     self.manager(urlInfo)
+
                 try:
                     self.addEpubContent(urlInfo['filter'].getResult())
                 except TypeError as error:
@@ -94,9 +96,14 @@ class ZhihuHelp(BaseClass):
                     print u'错误信息:'
                     print error
                 chapter += 1
-            if self.epubContent:
-                Zhihu2Epub(self.epubContent)
-            del self.epubContent
+
+            try:
+                if self.epubContent:
+                    Zhihu2Epub(self.epubContent)
+                del self.epubContent
+            except AttributeError:
+                pass
+
             self.resetDir()
             bookCount += 1
         return

@@ -2,6 +2,7 @@
 import re
 
 from htmlTemplate import *
+from baseClass import *
 
 class dict2Html():
     def __init__(self, contentPackage):
@@ -17,7 +18,7 @@ class dict2Html():
     def getImgSet(self):
         return self.trans.getImgSet()
 
-class Transfer():
+class Transfer(BaseClass):
     u'''
     基本的转换类，提供通用的字典转Html方法
     '''
@@ -58,13 +59,12 @@ class Transfer():
             for key in ['titleImage','titleName', 'titleDesc', 'titleCommentCount']:
                 contentHeader[key] = ''
 
-            contentHeader['titleName']  = question['title']
+            contentHeader['titleName'] = question['title']
             if question['kind'] != 'article':
                 contentHeader['titleImage'] = question['titleLogo']
             else:
                 contentHeader['titleDesc']         = question['description']
                 contentHeader['titleCommentCount'] = question['commentCount']
-
             
             content                  = {}
             content['contentHeader'] = contentHeaderTemplate(contentHeader)
@@ -74,7 +74,7 @@ class Transfer():
             for answer in question['answerList']: 
                 contentBody = {}
 
-                for key in ['authorLogo', 'authorName', 'authorSign', 'content', 'agreeCount', 'commentsCount', 'updateTime']:
+                for key in ['authorLogo', 'authorName', 'authorSign', 'content', 'agreeCount', 'commentCount', 'updateDate']:
                     contentHeader[key] = ''
 
                 contentBody['authorLogo']   = self.imgFix(answer['authorLogo'])
@@ -83,7 +83,7 @@ class Transfer():
                 contentBody['content']      = self.imgFix(answer['content'])
                 contentBody['agreeCount']   = answer['agreeCount']
                 contentBody['commentCount'] = answer['commentCount']
-                contentBody['updateDate']   = answer['updateDate'].isoformat()
+                contentBody['updateDate']   = answer['updateDate'].strftime('%Y-%m-%d')
                 
                 content['contentBody']      += contentBodyTemplate(contentBody)
             
@@ -108,7 +108,7 @@ class Transfer():
         '''
         content = {}
         content['title']     = self.package['title']
-        content['copyRight'] = u'此处应有版权声明。。。但作者实在想不出该写点啥了。。。今天已经连续写了十五个小时，作者表示下个版本再加版权声明。。。见谅则个XD'
+        content['copyRight'] = u'此处应有版权声明'
         htmlContent = infoPageTemplate(content)
         htmlContent = structTemplate({'leftColumn' : '', 'middleColumn' : htmlContent, 'rightColumn' : ''})     
         htmlContent = baseTemplate({
@@ -117,7 +117,7 @@ class Transfer():
                           'Body'   : htmlContent,
                           'Footer' : '',
                       })
-        buf = {'fileName' : 'infoPage', 'contentName' : self.package['title'],'fileContent' : htmlContent}
+        buf = {'fileName' : 'infoPage', 'contentName' : self.package['title'], 'fileContent' : htmlContent}
         self.contentList.insert(0, buf)
         return self.contentList
 

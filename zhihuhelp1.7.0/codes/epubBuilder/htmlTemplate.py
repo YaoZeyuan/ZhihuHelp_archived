@@ -78,7 +78,7 @@ def contentHeaderTemplate(dataDict = {}):
         'titleImage'         : '',
         'titleName'          : '',
         'titleDesc'          : '',
-        'titleCommentsCount' : '',
+        'titleCommentCount' : '',
     }
     '''
     return u'''
@@ -107,13 +107,13 @@ def contentBodyTemplate(dataDict = {}):
     u'''
     *   stdStruct 
     {
-        'authorLogo'    : '',
-        'authorName'    : '',
-        'authorSign'    : '',
-        'content'       : '',
-        'agreeCount'    : '',
+        'authorLogo'   : '',
+        'authorName'   : '',
+        'authorSign'   : '',
+        'content'      : '',
+        'agreeCount'   : '',
         'commentCount' : '',
-        'updateTime'    : '',
+        'updateDate'   : '',
     }
     '''
     return u"""
