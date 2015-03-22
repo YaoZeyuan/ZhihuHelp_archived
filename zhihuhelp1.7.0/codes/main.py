@@ -21,7 +21,7 @@ class ZhihuHelp(BaseClass):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
-        if BaseClass.testFlag:
+        if BaseClass.test_catchAnswerData_flag:
             print u'测试期间，移除自动检查更新模块，测试完成后请删除'
         else:
             self.checkUpdate()
@@ -83,7 +83,10 @@ class ZhihuHelp(BaseClass):
                 urlInfo = self.getUrlInfo(rawUrl)
                 if not 'filter' in urlInfo:
                     continue
-                self.manager(urlInfo)
+                if BaseClass.test_catchAnswerData_flag:
+                    print u'测试期间，跳过对网页的抓取'
+                else:
+                    self.manager(urlInfo)
                 try:
                     self.addEpubContent(urlInfo['filter'].getResult())
                 except TypeError as error:

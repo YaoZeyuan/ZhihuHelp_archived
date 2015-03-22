@@ -118,6 +118,7 @@ class Init(object):
                             description         varchar(1000),
                             authorName          varchar(255),
                             authorID            varchar(255),
+                            authorLogo          varchar(255),
                             authorSign          varchar(255),
                             followerCount       int(20)         not Null    default 0,
                             commentCount        int(20)         not Null    default 0,

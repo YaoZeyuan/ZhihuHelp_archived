@@ -107,7 +107,7 @@ class QuestionFilter(BaseFilter):
                 questionViewCount                as viewCount,
                 questionTitle                    as questionTitle,
                 questionDesc                     as questionDesc
-                from QuestionInfo where questionIDinQuestionDesc = ?'''
+                from QuestionInfo where questionIDinQuestionDesc = ? '''
         bufDict = self.cursor.execute(sql, [questionID,]).fetchone()
 
         questionInfo = {}
@@ -124,7 +124,7 @@ class QuestionFilter(BaseFilter):
         package.setPackage(questionInfo)
         return package
 
-    def addAnswerPackage(self, questionPackage, answerHref = ''):
+    def addAnswerTo(self, questionPackage, answerHref = ''):
         questionID = questionPackage['questionID']
         baseSql    = '''select 
                             authorID,
@@ -140,7 +140,7 @@ class QuestionFilter(BaseFilter):
                             answerCommentCount,
                             noRecordFlag,
                             answerHref
-                        from AnswerContent where noRecordFlag = 0'''
+                        from AnswerContent where noRecordFlag = 0 '''
         if answerHref :
             sql = baseSql + '''and answerHref = ?'''
             bufList = self.cursor.execute(sql, [answerHref]).fetchall()
@@ -168,8 +168,8 @@ class QuestionFilter(BaseFilter):
         return questionPackage
 
     def getResult(self):
-        questionPackage = self.getQuestionInfoDict(self.questionID)
-        questionPackage = self.getAnswerContentDictList(questionPackage)
+        questionPackage = self.initQuestionPackage(self.questionID)
+        questionPackage = self.addAnswerTo(questionPackage)
 
         self.package.addQuestion(questionPackage)
         return self.package
@@ -184,30 +184,32 @@ class AnswerFilter(QuestionFilter):
         return 'http://www.zhihu.com/question/{0}/answer/{1}'.format(questionID, answerID)
 
     def getResult(self):
-        questionPackage = self.getQuestionInfoDict(self.questionID)
+        questionPackage = self.initQuestionPackage(self.questionID)
         answerHref      = self.createAnswerHref(self.questionID, self.answerID)
-        questionPackage = self.getAnswerContentDictList(questionPackage, answerHref)
+        questionPackage = self.addAnswerTo(questionPackage, answerHref)
 
         self.package.addQuestion(questionPackage)
         return self.package
 
-class AuthorFilter(QuestionFilter):
+class AuthorFilter(AnswerFilter):
     def addProperty(self):
         self.authorID   = self.urlInfo['authorID']
         return
 
-    def getQuestionIDAndAnswerIDList(self):
-        sql = '''select questionID, answerID from AnswerContent where authorID = ? and noRecordFlag = 0'''
+    def getIndexList(self):
+        sql = '''select questionID, answerID from AnswerContent where authorID = ? and noRecordFlag = 0 '''
         resultList = self.cursor.execute(sql, [self.authorID, ]).fetchall()
-        return resultList
+        indexList  = []
+        for questionID, answerID in resultList:
+            indexList.append((questionID, self.createAnswerHref(questionID, answerID)))
+        return indexList
 
     def getResult(self):
-        resultList = self.getQuestionIDAndAnswerIDList()
+        resultList = self.getIndexList()
         for result in resultList:
-            (questionID, answerID) = result
-            questionPackage = self.getQuestionInfoDict(questionID)
-            answerHref      = self.createAnswerHref(questionID, answerID)
-            questionPackage = self.getAnswerContentDictList(questionPackage, answerHref)
+            (questionID, answerHref) = result
+            questionPackage = self.initQuestionPackage(questionID)
+            questionPackage = self.addAnswerTo(questionPackage, answerHref)
             self.package.addQuestion(questionPackage)
 
         return self.package
@@ -219,7 +221,7 @@ class CollectionFilter(AuthorFilter):
         return
 
     def getIndexList(self):
-        sql = 'select answerHref from CollectionIndex where collectionID = ?'
+        sql = 'select answerHref from CollectionIndex where collectionID = ? '
         indexTuple = self.cursor.execute(sql, [self.collectionID,]).fetchall()
         indexList  = []
         for index in indexTuple:
@@ -232,8 +234,8 @@ class CollectionFilter(AuthorFilter):
         resultList = self.getIndexList()
         for result in resultList:
             (questionID, answerHref) = result
-            questionPackage = self.getQuestionInfoDict(questionID)
-            questionPackage = self.getAnswerContentDictList(questionPackage, answerHref)
+            questionPackage = self.initQuestionPackage(questionID)
+            questionPackage = self.addAnswerTo(questionPackage, answerHref)
             self.package.addQuestion(questionPackage)
 
         self.addInfo()
@@ -244,7 +246,7 @@ class CollectionFilter(AuthorFilter):
         之前图省事，没抓取创建者的头像，以后要加上
         今天时间比较紧张了已经，所以，就先不加新功能了
         '''
-        sql = 'select authorID, authorName, authorSign, title, description, followerCount, commentCount  from CollectionInfo where collectionID = ?'
+        sql = 'select authorID, authorName, authorSign, title, description, followerCount, commentCount  from CollectionInfo where collectionID = ? '
         result = self.cursor.execute(sql, [self.collectionID,]).fetchone()
         infoDict = {}
         infoDict['creatorID']      = result[0]
@@ -266,7 +268,7 @@ class TopicFilter(CollectionFilter):
         return
 
     def getIndexList(self):
-        sql = 'select answerHref from TopicIndex where topicID = ?'
+        sql = 'select answerHref from TopicIndex where topicID = ? '
         indexTuple = self.cursor.execute(sql, [self.topicID, ]).fetchall()
         indexList  = []
         for index in indexTuple:
@@ -276,7 +278,7 @@ class TopicFilter(CollectionFilter):
         return indexList
             
     def addInfo(self):
-        sql = 'select title, logoAddress, description, followersCount from TopicInfo where topicID = ?'
+        sql = 'select title, logoAddress, description, followersCount from TopicInfo where topicID = ? '
         result = self.cursor.execute(sql, [self.topicID,]).fetchone()
 
         infoDict = {}
@@ -355,7 +357,7 @@ class ColumnFilter(BaseFilter):
         return self.package
 
     def addInfo(self):
-        sql = '''select creatorID, creatorSign, creatorName, creatorLogo, columnID, columnName, columnLogo, description, followersCount from ColumnInfo where columnID = ?'''
+        sql = '''select creatorID, creatorSign, creatorName, creatorLogo, columnID, columnName, columnLogo, description, followersCount from ColumnInfo where columnID = ? '''
         result = self.cursor.execute(sql, [self.columnID,]).fetchone()
         infoDict = {}
         infoDict['creatorID']     = result[0]   

@@ -8,7 +8,10 @@ class BaseClass(object):
     用于存放常用函数
     '''
     #全局变量
-    testFlag = False
+    test_chekcUpdate_flag     = True
+    test_catchAnswerData_flag = True
+    #test_chekcUpdate_flag = False
+    #test_chekcUpdate_flag = False
     dataBaseFileName = u'./zhihuDB_171.db'
 
     def printDict(self, data = {}, key = '', prefix = ''):
