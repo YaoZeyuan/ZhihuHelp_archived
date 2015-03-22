@@ -94,7 +94,7 @@ class ZhihuHelp(BaseClass):
                     print u'错误信息:'
                     print error
                 chapter += 1
-            if not self.epubContent:
+            if self.epubContent:
                 Zhihu2Epub(self.epubContent)
             del self.epubContent
             self.resetDir()

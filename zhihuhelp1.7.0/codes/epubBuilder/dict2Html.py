@@ -22,9 +22,10 @@ class Transfer():
     基本的转换类，提供通用的字典转Html方法
     '''
     def __init__(self, contentPackage):
-        self.package  = contentPackage
-        self.imgSet   = set()
-        self.htmlList = []
+        self.package     = contentPackage
+        self.imgSet      = set()
+        self.htmlList    = []
+        self.contentList = []
         return
 
     def imgFix(self, content):
@@ -51,9 +52,12 @@ class Transfer():
         return self.imgSet
 
     def contentTrans(self):
-        self.contentList  = []
         for question in self.questionList:
             contentHeader = {}
+
+            for key in ['titleImage','titleName', 'titleDesc', 'titleCommentCount']:
+                contentHeader[key] = ''
+
             contentHeader['titleName']  = question['title']
             if question['kind'] != 'article':
                 contentHeader['titleImage'] = question['titleLogo']
@@ -69,8 +73,12 @@ class Transfer():
 
             for answer in question['answerList']: 
                 contentBody = {}
+
+                for key in ['authorLogo', 'authorName', 'authorSign', 'content', 'agreeCount', 'commentsCount', 'updateTime']:
+                    contentHeader[key] = ''
+
                 contentBody['authorLogo']   = self.imgFix(answer['authorLogo'])
-                contentBody['authorName']   = self.authorLink(author['name'], answer['authorID'] )
+                contentBody['authorName']   = self.authorLink(answer['authorName'], answer['authorID'] )
                 contentBody['authorSign']   = answer['authorSign']
                 contentBody['content']      = self.imgFix(answer['content'])
                 contentBody['agreeCount']   = answer['agreeCount']
@@ -90,7 +98,7 @@ class Transfer():
             #文件字典，想不出来名字了
                 # fileName 
                 # fileContent
-            buf = {'fileName' : question['questionID'], 'contentName' : question['title'], 'fileContent' : htmlContent}
+            buf = {'fileName' : str(question['questionID']), 'contentName' : question['title'], 'fileContent' : htmlContent}
             self.contentList.append(buf)
         return self.contentList
 
@@ -110,7 +118,7 @@ class Transfer():
                           'Footer' : '',
                       })
         buf = {'fileName' : 'infoPage', 'contentName' : self.package['title'],'fileContent' : htmlContent}
-        self.contentList.insert(0, htmlContent)
+        self.contentList.insert(0, buf)
         return self.contentList
 
     def getResult(self):

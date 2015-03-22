@@ -200,7 +200,7 @@ class QuestionPackage(Package):
         self.package['answerCount'] = len(self.answerDict)
         agreeCount = 0
         for key in self.answerDict:
-            agreeCount += self.answerDict['agreeCount']
+            agreeCount += self.answerDict[key]['agreeCount']
         self.package['agreeCount'] = agreeCount
         return self.package
         

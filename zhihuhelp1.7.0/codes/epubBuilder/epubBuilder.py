@@ -17,8 +17,9 @@ class Zhihu2Epub():
         self.package = contentPackage
         self.imgSet  = set()#用于储存图片地址，便于下载
         self.trans   = dict2Html(contentPackage)
-        self.info2Title()
         self.initBasePath()
+        self.info2Title()
+        self.trans2Tree()
         self.imgDownload()
         self.epubCreator()
         return
@@ -40,13 +41,13 @@ class Zhihu2Epub():
         u'''
         将电子书内容转换为一系列文件夹+html网页
         '''
-        self.questionList = self.trans.getResult()
-        self.imgSet       = self.trans.getImgSet()
+        self.contentList = self.trans.getResult()
+        self.imgSet      = self.trans.getImgSet()
 
-        for question in self.questionList:
-            fileIndex = self.baseContentPath + question['fileName'] + '.html'
+        for content in self.contentList:
+            fileIndex = self.baseContentPath + content['fileName'] + '.html'
             htmlFile  = open(fileIndex, 'wb')
-            htmlFile.write(question['fileContent'])
+            htmlFile.write(content['fileContent'])
             htmlFile.close()
         return
 
@@ -61,9 +62,9 @@ class Zhihu2Epub():
     
     def epubCreator(self):
         book = Book(self.fileTitle, '27149527')
-        for question in self.questionList:
-            htmlSrc = '../../' + self.baseContentPath + question['fileName'] + '.html'
-            title   = question['contentName']
+        for content in self.contentList:
+            htmlSrc = '../../' + self.baseContentPath + content['fileName'] + '.html'
+            title   = content['contentName']
             book.addHtml(src = htmlSrc, title = title)
         for src in self.downloadedImgSet:
             imgSrc = '../../' + self.baseImgPath + src

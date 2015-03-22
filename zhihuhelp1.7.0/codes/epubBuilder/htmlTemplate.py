@@ -112,7 +112,7 @@ def contentBodyTemplate(dataDict = {}):
         'authorSign'    : '',
         'content'       : '',
         'agreeCount'    : '',
-        'commentsCount' : '',
+        'commentCount' : '',
         'updateTime'    : '',
     }
     '''
