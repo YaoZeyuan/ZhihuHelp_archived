@@ -29,7 +29,7 @@ class BaseFilter(BaseClass):
         imgHref = re.sub(r'_..jpg', '', imgHref, 1) 
         if imgHref:
             imgHref += '_b.jpg'
-        return u'<div class="duokan-image-single"><img src="{}" alt="知乎图片"/></div>'.format(imgHref)
+        return u'<div class="duokan-image-single"><img src="{}" alt=""/></div>'.format(imgHref)
 
     def contentImgFix(self, content = '', imgQuarty = 1):
         if imgQuarty == 0:
@@ -71,7 +71,7 @@ class BaseFilter(BaseClass):
         if src != None:
             src = src.group(0)
             if src.replace(' ', '') != '':
-                    return '<img src="{}" alt="知乎图片">'.format(src)
+                    return '<img src="{}" alt="">'.format(src)
         return ''
 
     def fixPic(self, imgTagContent = ''):

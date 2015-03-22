@@ -2,7 +2,6 @@
 import re
 
 from htmlTemplate import *
-from baseClass import *
 
 class dict2Html():
     def __init__(self, contentPackage):
@@ -18,7 +17,7 @@ class dict2Html():
     def getImgSet(self):
         return self.trans.getImgSet()
 
-class Transfer(BaseClass):
+class Transfer():
     u'''
     基本的转换类，提供通用的字典转Html方法
     '''
@@ -64,7 +63,7 @@ class Transfer(BaseClass):
                 contentHeader['titleImage'] = question['titleLogo']
             else:
                 contentHeader['titleDesc']         = question['description']
-                contentHeader['titleCommentCount'] = question['commentCount']
+                contentHeader['titleCommentCount'] = '评论数:{}'.format(question['commentCount'])
             
             content                  = {}
             content['contentHeader'] = contentHeaderTemplate(contentHeader)
@@ -81,9 +80,9 @@ class Transfer(BaseClass):
                 contentBody['authorName']   = self.authorLink(answer['authorName'], answer['authorID'] )
                 contentBody['authorSign']   = answer['authorSign']
                 contentBody['content']      = self.imgFix(answer['content'])
-                contentBody['agreeCount']   = answer['agreeCount']
-                contentBody['commentCount'] = answer['commentCount']
-                contentBody['updateDate']   = answer['updateDate'].strftime('%Y-%m-%d')
+                contentBody['agreeCount']   = '赞同数:{}'.format(answer['agreeCount'])
+                contentBody['commentCount'] = '评论数:{}'.format(answer['commentCount'])
+                contentBody['updateDate']   = '更新日期:{}'.format(answer['updateDate'].strftime('%Y-%m-%d'))
                 
                 content['contentBody']      += contentBodyTemplate(contentBody)
             

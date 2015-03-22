@@ -85,23 +85,27 @@ def contentHeaderTemplate(dataDict = {}):
 <div class='title'>
     <div class='title-header'>
         <div class='title-image'>
+          <div class='text-center'>
             {titleImage}
+          </div>
         </div>
     </div>
     <div class='title-body'>
         <div class='title-name'>
+          <h1>
             {titleName}
+          </h1>
         </div>
         <div class='title-desc'>
             {titleDesc}
         </div>
     </div>
-    <div class='title-foot'>
+    <div class='title-footer'>
         <div class='title-comment-count'>
             {titleCommentCount}
         </div>
     </div>
-</div>'''.format(**dataDict)
+</div><br />'''.format(**dataDict)
 
 def contentBodyTemplate(dataDict = {}):
     u'''
@@ -118,7 +122,7 @@ def contentBodyTemplate(dataDict = {}):
     '''
     return u"""
 <div class='content'>
-    <div class='content-head'>
+    <div class='content-header'>
         <div class='author-info'>
             <div class='author-logo'>
                 {authorLogo}
@@ -131,10 +135,11 @@ def contentBodyTemplate(dataDict = {}):
             </div>
         </div>
     </div>
+    <br />
     <div class='content-body'>
         {content}
     </div>
-    <div class='content-foot'>
+    <div class='content-footer'>
         <div class='agree-count'>
             {agreeCount}
         </div>
@@ -155,6 +160,7 @@ def infoPageTemplate(dataDict = {}):
     <div class='title'>{title}</div>
     <div></div>
   </div>
+  <br />
   <div>
     <div class='copy-right'>{copyRight}</div>
     <div ></div>
