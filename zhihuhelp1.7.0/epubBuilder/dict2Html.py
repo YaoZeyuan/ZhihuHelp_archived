@@ -14,6 +14,9 @@ class dict2Html():
 
     def getResult(self):
         return self.trans.getResult()
+    
+    def getImgSet(self):
+        return self.trans.getImgSet()
 
 class Transfer():
     u'''
@@ -21,7 +24,7 @@ class Transfer():
     '''
     def __init__(self, contentPackage):
         self.package  = contentPackage
-        self.ingSet   = set()
+        self.imgSet   = set()
         self.htmlList = []
         return
 
@@ -44,6 +47,9 @@ class Transfer():
 
     def authorLink(self, authorName, authorID):
         return "<a href='http://www.zhihu.com/people/{0}'>{1}</a>".format(authorID, authorName)
+
+    def getImgSet(self):
+        return self.imgSet
 
 class updateDateTransfer(Transfer):
     def initQuestionList(self):
@@ -87,7 +93,11 @@ class updateDateTransfer(Transfer):
                               'Body'   : htmlContent,
                               'Footer' : '',
                           })
-            self.contentList.append(htmlContent)
+            #文件字典，想不出来名字了
+                # fileName 
+                # fileContent
+            buf = {'fileName' : question['questionID'], 'contentName' : question['title'], 'fileContent' : htmlContent}
+            self.contentList.append(buf)
         return self.contentList
 
     def infoPageTrans(self):
@@ -105,6 +115,7 @@ class updateDateTransfer(Transfer):
                           'Body'   : htmlContent,
                           'Footer' : '',
                       })
+        buf = {'fileName' : 'infoPage', 'contentName' : self.package['title'],'fileContent' : htmlContent}
         self.contentList.insert(0, htmlContent)
         return self.contentList
 
