@@ -96,7 +96,7 @@ class ContentPackage(Package):
         self.package['description'] = '{0}+{1}'.format(self.package['description'], self.package['title'])
 
         for key in contentPackage['questionDict']:
-            self.addQuestion(contentPackage['questionDict']['key'])
+            self.addQuestion(contentPackage['questionDict'][key])
         return
 
     def getResult(self):
