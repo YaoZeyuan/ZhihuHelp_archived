@@ -1,6 +1,7 @@
 #1.7.1版更新说明
 1.  感谢知友张佳硕，陈松的捐赠！
 2.  感谢知友@[fun-gun](http://www.zhihu.com/people/fun-gun)反馈的bug,助手无法将话题保存为电子书的bug已修复
+3.  感谢知友@[罗晨](http://www.zhihu.com/people/luo-chen-26)的建议，将code文件夹改为了codes
 3.  热烈欢迎@[青葭](http://www.zhihu.com/people/qing-jia-57)回归知乎，撒花~
 4.  增加专栏助手功能，而且,专栏按时间顺序逆序排列！这个功能终于实现了，再次撒花～
 5.  大幅度调整代码，简化了代码结构
