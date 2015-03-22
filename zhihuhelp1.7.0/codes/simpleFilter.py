@@ -326,7 +326,7 @@ class ColumnFilter(BaseFilter):
             titlePackage  = QuestionPackage() 
             contentPackage = AnswerPackage()
             titleInfo = {}
-            titleInfo['questionID'] = '{columnID}_{articleID}'.format(columnID:result[4], articleID:result[6]) 
+            titleInfo['questionID'] = '{columnID}_{articleID}'.format(columnID=result[4], articleID=result[6]) 
             titleInfo['kind']       = 'article' 
             titleInfo['title']      = result[9] 
             titleInfo['titleLogo']  = result[10]

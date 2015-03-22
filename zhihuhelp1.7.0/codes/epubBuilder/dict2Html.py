@@ -5,9 +5,8 @@ from htmlTemplate import *
 
 class dict2Html():
     def __init__(self, contentPackage):
-        self.trans = 
         if contentPackage['kind'] == 'column':
-            self.trans = updateDateTransfer(contentPackage)
+            self.trans = UpdateDateTransfer(contentPackage)
         else:
             self.trans = AgreeCountTransfer(contentPackage)
         return
@@ -50,11 +49,6 @@ class Transfer():
 
     def getImgSet(self):
         return self.imgSet
-
-class updateDateTransfer(Transfer):
-    def initQuestionList(self):
-        self.questionList = self.package.format_sortBy_updateDate_asc()
-        return
 
     def contentTrans(self):
         self.contentList  = []
@@ -125,7 +119,13 @@ class updateDateTransfer(Transfer):
         self.contentTrans()
         return self.contentList
 
-class AgreeCountTransfer(columnTrans):
+class UpdateDateTransfer(Transfer):
+    def initQuestionList(self):
+        self.questionList = self.package.format_sortBy_updateDate_asc()
+        return
+
+
+class AgreeCountTransfer(Transfer):
     def initQuestionList(self):
         self.questionList = self.package.format_sortBy_agree_desc()
     

@@ -81,7 +81,7 @@ def contentHeaderTemplate(dataDict = {}):
         'titleCommentsCount' : '',
     }
     '''
-        return u'''
+    return u'''
 <div class='title'>
     <div class='title-header'>
         <div class='title-image'>

@@ -27,8 +27,8 @@ class Package(BaseClass):
     def __getitem__(self, key):
         return self.package[key]
 
-    def __setitem__(self, key, val)
-        return self.package[key] = val
+    def __setitem__(self, key, val):
+        return self.package.__setitem__(key, val)
 
 class ContentPackage(Package):
     u'''
@@ -105,10 +105,10 @@ class ContentPackage(Package):
         排序后输出结果List,按赞同数降序排列
         '''
         questionList = []
-        for key in self.questionDict
+        for key in self.questionDict:
             question = self.questionDict[key].getResult()
             answerList = []
-            for key in question['answerDict']
+            for key in question['answerDict']:
                 answerList.append(question['answerDict'][key])
             answerList = sorted(answerList, key=lambda content: content['agreeCount'], reverse=True)
             question['answerList'] = answerList
@@ -121,10 +121,10 @@ class ContentPackage(Package):
         排序后输出结果List,按更新日期升序排列
         '''
         questionList = []
-        for key in self.questionDict
+        for key in self.questionDict:
             question = self.questionDict[key].getResult()
             answerList = []
-            for key in question['answerDict']
+            for key in question['answerDict']:
                 answerList.append(question['answerDict'][key])
             answerList = sorted(answerList, key=lambda content: content['updateDate'], reverse=False)
             question['answerList'] = answerList

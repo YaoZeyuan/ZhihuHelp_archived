@@ -98,7 +98,7 @@ class ZhihuHelp(BaseClass):
             bookCount += 1
         return
 
-    def addEpubContent(self, result)
+    def addEpubContent(self, result):
         u'''
         分析到的数据为自行制作的Package类型，
         具有一定的内容分析能力
