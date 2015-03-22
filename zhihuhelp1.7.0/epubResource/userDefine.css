@@ -80,10 +80,10 @@ a:active    {text-decoration:underline; color:#259;}
 .content-header > .title > .title-body > .title-name {text-align:center;font-weight:bold;font-size:18px;}
 .content-header > .title > .title-footer > .title-comment-count {text-align:right;font-weight:lighter;font-size:12px;} 
 /* 内容页答案*/
-.content-header > .author-info {float:left;display:block;clear:both;}
-.content-header > .author-info > .author-logo {float:right}
-.content-header > .author-info > .author-name {font-weight:bold; }
-.content-header > .author-info > .author-sign {font-weight:bold; left:25px;}
+.content-header > .author-info {display:block;clear:both;}
+.content-header > .author-info > .author-logo {text-align:right;float:right;width:25px}
+.content-header > .author-info > .author-name {text-align:left;font-weight:bold; }
+.content-header > .author-info > .author-sign {text-align:left;font-weight:bold; left:25px;}
 
 .content-footer > .agree-count    {float:left;clear:left;}
 .content-footer > .comment-count  {float:left;clear:right;}
