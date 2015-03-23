@@ -1,3 +1,8 @@
+#1.7.1.2版更新说明
+1.  修复了专栏文章未按发布日期排列的bug
+2.  同样感谢知友@[沸羊羊的夏天](http://www.zhihu.com/people/fei-yang-yang-de-xia-tian)、@[Oliver Xia](http://www.zhihu.com/people/oliver2870)、@[毛轶彬](http://www.zhihu.com/people/mao-yi-bin)反馈的bug，昨天晚上写代码写的精神恍惚，忘记致谢了。。。Sorry。。。
+再次感谢！
+
 #1.7.1.1版更新说明
 1.  紧急修复了一处css的bug
 
