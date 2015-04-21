@@ -1,3 +1,11 @@
+#1.7.1.3版更新说明
+0.  感谢知友@[梨花雨凉](http://www.zhihu.com/people/li-hua-yu-liang-19)、@[Popeye](http://www.zhihu.com/people/lijiumixin)和@[圈圈](http://www.zhihu.com/people/wei-juan-juan)的捐赠！
+1.  感谢知友@[程峰](http://www.zhihu.com/people/cheng-feng-7)的建议，对开始运行时的导语做了一定的调整
+2.  感谢知友@[废柴大叔](http://www.zhihu.com/people/feichai_dashu)的反馈，修复了一处由于问题标题中含有非法字符导致创建文件夹失败的bug
+3.  感谢知友@[派先生](http://www.zhihu.com/people/li-yi-3-42)的反馈，修复了一处由于未添加cookie导致的私人收藏夹下载失败的bug
+4.  感谢众多知友的反馈，专栏下载功能修好了已经XD
+5.  修复了一处由于if判断写反了导致的专栏题图丢失的bug
+
 #1.7.1.2版更新说明
 1.  修复了专栏文章未按发布日期排列的bug
 2.  同样感谢知友@[沸羊羊的夏天](http://www.zhihu.com/people/fei-yang-yang-de-xia-tian)、@[Oliver Xia](http://www.zhihu.com/people/oliver2870)、@[毛轶彬](http://www.zhihu.com/people/mao-yi-bin)反馈的bug，昨天晚上写代码写的精神恍惚，忘记致谢了。。。Sorry。。。

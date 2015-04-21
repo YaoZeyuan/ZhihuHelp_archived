@@ -42,11 +42,15 @@ class PageWorker(BaseClass, HttpBaseClass, SqlClass):
         except:
             print u"答案列表共计1页"
             return 1
-    
+
     def setWorkSchedule(self):
+        u"""
+        获取私人收藏夹时需要携cookie登陆
+        但专栏不需要，所以专栏处又重载了一回
+        """
         self.workSchedule = {}
         detectUrl = self.url + self.suffix + str(self.maxPage)
-        content      = self.getHttpContent(detectUrl)
+        content      = self.getHttpContent(url = detectUrl, extraHeader = self.extraHeader)
         self.maxPage = self.getMaxPage(content)
         for i in range(self.maxPage):
             self.workSchedule[i] = self.url + self.suffix + str(i + 1)
@@ -476,7 +480,7 @@ class ColumnWorker(JsonWorker):
         else:
             print u'获取专栏信息成功'
         self.workSchedule = {}
-        detectUrl = 'http://zhuanlan.zhihu.com/api/columns/{}/posts?limit=0&offset='.format(self.urlInfo['columnID'])
+        detectUrl = 'http://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(self.urlInfo['columnID'])
         for i in range(self.columnInfo['articleCount']/10 + 1):
             self.workSchedule[i] = detectUrl + str(i * 10)
         #将专栏信息储存至数据库中

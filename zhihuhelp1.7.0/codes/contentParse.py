@@ -558,6 +558,7 @@ class CollectionInfoParse(Parse):
     def getInfoDict(self):
         infoDict = {}
         infoDict['title']        = self.matchContent('collectionTitle', self.content)
+        infoDict['title']        = infoDict['title'].replace(u'<i data-tip="s$t$私密收藏夹" class="icon icon-lock"></i>', '')
         infoDict['description']  = self.matchContent('collectionDesc', self.content)
         infoDict['collectionID'] = self.matchContent('collectionID', self.content)
 

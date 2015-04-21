@@ -59,8 +59,8 @@ class Transfer():
                 contentHeader[key] = ''
 
             contentHeader['titleName'] = question['title']
-            if question['kind'] != 'article':
-                contentHeader['titleImage'] = question['titleLogo']
+            if question['kind'] == 'article':
+                contentHeader['titleImage'] = '<div class="duokan-image-single"><img src="{}" alt=""/></div>'.format(question['titleLogo'])
             else:
                 contentHeader['titleDesc']         = question['description']
                 contentHeader['titleCommentCount'] = '评论数:{}'.format(question['commentCount'])
@@ -78,7 +78,7 @@ class Transfer():
 
                 contentBody['authorLogo']   = self.imgFix(answer['authorLogo'])
                 contentBody['authorName']   = self.authorLink(answer['authorName'], answer['authorID'] )
-                contentBody['authorSign']   = answer['authorSign']
+                contentBody['authorSign']   = '&nbsp;&nbsp;&nbsp;' + answer['authorSign']
                 contentBody['content']      = self.imgFix(answer['content'])
                 contentBody['agreeCount']   = '赞同数:{}'.format(answer['agreeCount'])
                 contentBody['commentCount'] = '评论数:{}'.format(answer['commentCount'])

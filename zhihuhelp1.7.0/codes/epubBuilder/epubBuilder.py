@@ -66,6 +66,9 @@ class Zhihu2Epub():
 
     def info2Title(self):
         self.fileTitle = u'{kind}_{title}({ID})_知乎回答集锦'.format(kind=self.kindDict[self.package['kind']], title=self.package['title'], ID=self.package['ID'])
+        illegalCharList = ['\\', '/', ':', '*', '?', '<', '>', '|', '"']
+        for illegalChar in illegalCharList:
+            self.fileTitle = self.fileTitle.replace(illegalChar, '')
         return
 
     def imgDownload(self):

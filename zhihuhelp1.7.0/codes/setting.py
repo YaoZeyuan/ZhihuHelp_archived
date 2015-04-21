@@ -93,20 +93,21 @@ class Setting(BaseClass):
     def guide(self):
         print u'您好，欢迎使用知乎助手'
         print u''
-        print u'以及，'
         print u''
-        print u'请让我们以热烈的掌声，欢迎@青葭 老师回归知乎!'
+        print u'本版内置了公共账号『孟晴雪』，默认使用内置账号进行登陆'
         print u''
-        print u'当前大版本号:1.7.X'
-        print u'1.7版本系列将作为助手从命令行界面向图形界面过渡的中间版本，在这一系列中助手将不再能够保存知乎用户答案，涵请见谅：）'
-        print u'助手的全部代码都已经开源并托管到了github之上(https://github.com/YaoZeyuan/ZhihuHelp__Python)并附在了压缩包中，您可以随时查阅。'
-        print u'由于某些用户设定了隐私保护选项，为了获取全部的答案内容，助手需要您在登陆后使用'
-        print u'当然，作者更推荐您使用内置的孟晴雪的账号密码进行登陆，这能更好的保护您的账号密码安全'
+        print u''
+        print u'全部代码均已开源，github地址:https://github.com/YaoZeyuan/ZhihuHelp__Python'
+        print u'Tips：只有在获取私人收藏夹的内容时，助手才需要使用您的账号登陆，日常使用时直接用内置账号登陆即可'
         print u'现在开始登陆流程，请根据提示输入您的账号密码'    
+        print u''
+        print u''
 
     def guideOfAccountAndPassword(self):
         print u'请输入您的用户名(知乎注册邮箱)，回车确认'
-        print u'直接敲击回车则使用内置账号进行登陆'
+        print u'####################################'
+        print u'#直接敲击回车则使用内置账号进行登陆#'
+        print u'####################################'
         account = raw_input()
         if len(account) == 0:
             account  = "mengqingxue2014@qq.com"
