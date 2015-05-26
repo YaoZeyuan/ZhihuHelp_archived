@@ -105,7 +105,8 @@ class QuestionWorker(PageWorker):
     def start(self):
         self.complete = set()
         maxTry = self.maxTry
-        while maxTry > 0 and len(self.workSchedule) > 0:
+        while maxTry > 0 and len(self.workSchedule) > len(self.complete):
+            #只要完成数等于workSchedule即可宣告完成
             self.leader()
             maxTry -= 1
         return 
@@ -176,7 +177,8 @@ class AnswerWorker(PageWorker):
 
     def start(self):
         maxTry = self.maxTry
-        while maxTry > 0 and not self.answerDictList:
+        while maxTry > 0 and len(self.answerDictList) != 0:
+            #Answer只需要收集一个答案，所以只要answerDict不为空，收集即已完成
             self.leader()
             maxTry -= 1
         return 
@@ -210,7 +212,7 @@ class AuthorWorker(PageWorker):
     def start(self):
         self.complete = set()
         maxTry = self.maxTry
-        while maxTry > 0 and len(self.workSchedule) > 0:
+        while maxTry > 0 and len(self.workSchedule) > len(self.complete):
             self.leader()
             maxTry -= 1
         return 
@@ -493,7 +495,7 @@ class ColumnWorker(JsonWorker):
         if not self.columnInfo:
             return
         maxTry = self.maxTry
-        while maxTry > 0 and len(self.workSchedule) > 0:
+        while maxTry > 0 and len(self.workSchedule) > len(self.complete):
             self.leader()
             maxTry -= 1
         return 

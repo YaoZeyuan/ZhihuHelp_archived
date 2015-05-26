@@ -29,6 +29,7 @@
 | 问题 | 单个问题的网址，<br />程序运行时除了下载答案,<br />还会顺带把问题描述一起下下来 | `http://www.zhihu.com/question/22921426`，<br />`www.zhihu.com/question/27238186`，<br />`http://www.zhihu.com/question/22719537/`<br /> |
 | 答案 | 知乎单个回答的网址,<br />也会下载问题描述 | `http://www.zhihu.com/question/21423568/answer/29751744`,<br /> `www.zhihu.com/question/20894671/answer/16526661`,<br /> `http://www.zhihu.com/question/22719537/answer/22733181`<br />|
 | 话题 | 知乎话题的地址，<br />保存话题信息和话题精华中的答案 | `http://www.zhihu.com/topic/19552430`,<br /> `http://www.zhihu.com/topic/19551147/top-answers`,<br />`http://www.zhihu.com/topic/19554859` <br />|
+| 指定知乎用户的全部回答 | 用户的个人主页 | `http://www.zhihu.com/people/yolfilm`,<br /> `http://www.zhihu.com/people/ying-ye-78/answers`,<br />`http://www.zhihu.com/people/bo-cai-28-7/logs` <br />|
 | 公开收藏夹 | 知乎公开收藏夹的地址，<br />保存收藏夹信息和收藏夹内的答案 | `http://www.zhihu.com/collection/26489045`,<br /> `http://www.zhihu.com/collection/19633165`,<br /> `http://www.zhihu.com/collection/19641505`<br /> |
 | 私人收藏夹 | 知乎私人收藏夹的地址，<br />保存收藏夹信息和收藏夹内的答案，<br />需要创建者用自己的ID登陆知乎助手 | `长得和正常收藏夹一样`,<br />`主要是我的私人收藏夹放上了你们也打不开= =` |
 | 专栏 | 专栏的网址 | `http://zhuanlan.zhihu.com/yolfilm`, <br />`http://zhuanlan.zhihu.com/epiccomposer`,<br /> `http://zhuanlan.zhihu.com/Wisdom`<br /> |
