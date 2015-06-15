@@ -39,6 +39,10 @@ class MyTestCase(unittest.TestCase):
                     correctValue=correctValue, errorValue=self.questionInfoDict[testedKey])
         return tipString
 
+    def test_questionAnswerCount(self):
+        self.assertEqual(self.questionInfoDict['questionAnswerCount'],
+                         u"525".encode("utf-8"),
+                         u"questionAnswerCount parse error")
 
     def test_questionCommentCount(self):
         self.assertEqual(self.questionInfoDict['questionCommentCount'],
@@ -46,27 +50,10 @@ class MyTestCase(unittest.TestCase):
                          self.failedTips("questionCommentCount", u"33")
                         )
 
-    def test_questionTitle(self):
-        self.assertEqual(self.questionInfoDict['questionTitle'],
-                         u"你的家传祖业，有什么精彩的内行故事吗？ ".encode("utf-8"),
-                         self.failedTips(u"questionTitle", u"你的家传祖业，有什么精彩的内行故事吗？ ")
-                         )
-
     def test_questionDesc(self):
         self.assertEqual(self.questionInfoDict['questionDesc'],
                          u"""源自《找死的兔子》，看不懂这一张，求解释。""".encode("utf-8"),
                          self.failedTips(u"questionDesc", u"源自《找死的兔子》，看不懂这一张，求解释。")
-                         )
-
-    def test_questionAnswerCount(self):
-        self.assertEqual(self.questionInfoDict['questionAnswerCount'],
-                         u"525".encode("utf-8"),
-                         u"questionAnswerCount parse error")
-
-    def test_questionIDinQuestionDesc(self):
-        self.assertEqual(self.questionInfoDict['questionIDinQuestionDesc'],
-                         u"22480996".encode("utf-8"),
-                         self.failedTips(u"questionIDinQuestionDesc", u"22480996")
                          )
 
     def test_questionFollowCount(self):
@@ -75,12 +62,23 @@ class MyTestCase(unittest.TestCase):
                          self.failedTips(u"questionFollowCount", u"22069")
                          )
 
+    def test_questionIDinQuestionDesc(self):
+        self.assertEqual(self.questionInfoDict['questionIDinQuestionDesc'],
+                         u"22480996".encode("utf-8"),
+                         self.failedTips(u"questionIDinQuestionDesc", u"22480996")
+                         )
+
+    def test_questionTitle(self):
+        self.assertEqual(self.questionInfoDict['questionTitle'],
+                         u"你的家传祖业，有什么精彩的内行故事吗？ ".encode("utf-8"),
+                         self.failedTips(u"questionTitle", u"你的家传祖业，有什么精彩的内行故事吗？ ")
+                         )
+
     def test_questionViewCount(self):
         self.assertEqual(self.questionInfoDict['questionViewCount'],
                          u"4350568".encode("utf-8"),
                          self.failedTips(u"questionViewCount", u"4350568")
                          )
-
 
 if __name__ == '__main__':
     unittest.main()
