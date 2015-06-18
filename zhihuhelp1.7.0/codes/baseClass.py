@@ -10,7 +10,7 @@ class BaseClass(object):
     #全局变量
     test_chekcUpdate_flag     = False
     test_catchAnswerData_flag = False
-    test_buffer_flag          = False 
+    test_buffer_flag          = False
     #test_chekcUpdate_flag = False
     #test_chekcUpdate_flag = False
     dataBaseFileName = u'./zhihuDB_171.db'
@@ -147,15 +147,15 @@ class HttpBaseClass(object):
         if rawPageData.info().get(u"Content-Encoding") == "gzip":
             try:
                 pageContent = zlib.decompress(rawPageData.read(), 16 + zlib.MAX_WBITS)
-            except zlib.error as ziperror:
+            except zlib.error as zlibError:
                 print u'解压出错'
                 print u'出错解压页面:' + rawPageData.geturl()
                 print u'错误信息：'
-                print zliberror
+                print zlibError
                 return ''
         else:
             pageContent = rawPageData.read()
-            return pageContent
+        return pageContent
 
 import cookielib
 import time
