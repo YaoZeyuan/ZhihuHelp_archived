@@ -1,3 +1,9 @@
+#1.7.1.4版更新说明
+0.  感谢知友@[Philip Matthew](http://www.zhihu.com/people/matthewphilip)、@[鱼藻君](http://www.zhihu.com/people/yuzaojun)的捐赠
+1.  修复了一处在制作大体积电子书时出现的http错误
+2.  修正了一处由于代码编写失误导致当知乎全站页面切换到gzip格式后引起的程序崩溃
+3.  开始着手添加单元测试，为进一步的发展做准备
+
 #1.7.1.3版更新说明
 0.  感谢知友@[梨花雨凉](http://www.zhihu.com/people/li-hua-yu-liang-19)、@[Popeye](http://www.zhihu.com/people/lijiumixin)和@[圈圈](http://www.zhihu.com/people/wei-juan-juan)的捐赠！
 1.  感谢知友@[程峰](http://www.zhihu.com/people/cheng-feng-7)的建议，对开始运行时的导语做了一定的调整
