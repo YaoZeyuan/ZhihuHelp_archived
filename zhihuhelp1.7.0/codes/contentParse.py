@@ -39,8 +39,9 @@ class Parse(BaseClass):
         self.regDict['answerContent']    = r'(?<=<div class=" zm-editable-content clearfix">).*?(?=</div></div><a class="zg-anchor-hidden ac")'
         self.regTipDict['answerContent'] = r'提取答案内容'
         
-        self.regDict['answerInfo']      = r'(?<=class="zm-meta-panel").*?(?=<a href="#" name="report" class="meta-item zu-autohide">)'
-        self.regTipDict['answerInfo']   = r'提取答案信息'
+        self.regDict['answerInfo']      = r'(?<=class="zm-meta-panel">).*?(?=name="report" class="meta-item zu-autohide)'
+        self.regTipDict['answerInfo']   = r'提取答案信息'  # 提取以下信息 ：
+        # 'questionID', 'answerID', 'answerCommentCount', 'updateDate', 'commitDate', 'noRecordFlag'
         self.regDict['noRecordFlag']    = r'<span class="copyright zu-autohide"><span class="zg-bull">'
         self.regTipDict['noRecordFlag'] = r'检查是否禁止转载'
         self.regDict['questionID']      = r'(?<= target="_blank" href="/question/)\d*' 
