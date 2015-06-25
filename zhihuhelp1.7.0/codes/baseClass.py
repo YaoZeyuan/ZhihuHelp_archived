@@ -129,7 +129,14 @@ class HttpBaseClass(object):
             print u'打开网页超时'
             print u'超时页面' + url
         else:
-            return self.decodeGZip(rawPageData)
+            try:
+                return self.decodeGZip(rawPageData)
+            except socket.timeout as error:
+                print u'打开网页超时'
+                print u'超时页面' + url
+                print u'错误信息'
+                print error
+                return ''
         return ''
 
     def decodeGZip(self, rawPageData):

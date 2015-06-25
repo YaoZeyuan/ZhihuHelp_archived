@@ -240,7 +240,7 @@ class ParseQuestion(Parse):
     def getQusetionInfoDict(self, titleContent, tailContent):
         questionInfoDict = {}
         for key in ['questionCommentCount', 'questionTitle', 'questionDesc', 'questionAnswerCount']:
-            questionInfoDict[key] = self.matchContent(key, titleContent)   
+            questionInfoDict[key] = self.matchContent(key, titleContent)
         for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:
             questionInfoDict[key] = self.matchContent(key, tailContent)   
         questionInfoDict['questionDesc'] = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc'])#对网页内容解码，可以进一步优化
@@ -272,10 +272,13 @@ class ParseAnswer(ParseQuestion):
     def getQusetionInfoDict(self, titleContent, tailContent):
         questionInfoDict = {}
         for key in ['questionCommentCount', 'questionTitle', 'questionDesc', 'questionAnswerCount']:
-            questionInfoDict[key] = self.matchContent(key, titleContent)   
+            questionInfoDict[key] = self.matchContent(key, titleContent)
         for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:
-            questionInfoDict[key] = self.matchContent(key, tailContent)   
-        questionInfoDict['questionAnswerCount'] = int(questionInfoDict['questionAnswerCount']) + 1 #知乎显示的全部回答数是被js处理过的。。。需要手工加一。。。汗
+            questionInfoDict[key] = self.matchContent(key, tailContent)
+        try:
+            questionInfoDict['questionAnswerCount'] = int(questionInfoDict['questionAnswerCount']) + 1 #知乎显示的全部回答数是被js处理过的。。。需要手工加一。。。汗
+        except ValueError:
+            questionInfoDict['questionAnswerCount'] = 1
         questionInfoDict['questionDesc']  = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc'])#对网页内容解码，可以进一步优化
         return questionInfoDict
 
@@ -568,8 +571,11 @@ class CollectionInfoParse(Parse):
         if len(infoDict['commentCount']) == 0:
             infoDict['commentCount'] = 0
         else:
-            infoDict['commentCount'] = int(infoDict['commentCount'])
-        
+            try:
+                infoDict['commentCount'] = int(infoDict['commentCount'])
+            except ValueError:
+                print u'commentCount为空，自动赋值为0'
+                infoDict['commentCount'] = 0
         watchContent = self.matchContent('collectionWatchCountContent', self.content)
         infoDict['followerCount'] = self.matchContent('collectionWatchCount', watchContent)
         
