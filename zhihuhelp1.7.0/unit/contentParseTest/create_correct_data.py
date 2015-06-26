@@ -21,9 +21,9 @@ def createCorrectData():
     u"""
     使用该函数，生成json格式的正确数据，利用json解析功能可直接转换为标准python数据代码
     """
-    targetFile = "../htmlFile/{target}Content/{target}1.html".format(target = "collection")
+    targetFile = "../htmlFile/{target}Content/{target}1.html".format(target = "author")
     content = open(targetFile, "r").read()
-    parseResult = contentParse.ParseCollection(content)
+    parseResult = contentParse.ParseAuthor(content)
     questionInfoDictList, answerDictList = parseResult.getInfoDict()
     import json
 
