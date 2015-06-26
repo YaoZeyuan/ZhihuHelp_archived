@@ -17,7 +17,6 @@ if __name__ == '__main__':
 
     from codes import contentParse   #  可以利用这个方法导入上级目录中的库
 
-
 def createCorrectData():
     u"""
     使用该函数，生成json格式的正确数据，利用json解析功能可直接转换为标准python数据代码
