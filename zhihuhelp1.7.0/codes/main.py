@@ -21,70 +21,124 @@ class ZhihuHelp(BaseClass):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
-        if BaseClass.test_catchAnswerData_flag:
-            print u'测试期间，移除自动检查更新模块，测试完成后请删除'
+        if TestClass.test_catchAnswerData_flag:
+            print u'测试期间，移除检查更新模块，测试完成后请删除'
         else:
             self.checkUpdate()
         init = Init()
-        self.conn         = init.getConn()
-        self.cursor       = self.conn.cursor() 
-        self.baseDir      = os.path.realpath('.')
-        self.setting      = Setting()
-        return 
-    
-    def helperStart(self):
-        #登陆
-        settingDict = self.setting.getSetting(['rememberAccount', 'maxThread', 'picQuality'])
-        self.rememberAccount = settingDict['rememberAccount']
-        self.maxThread       = settingDict['maxThread']
-        self.picQuality      = settingDict['picQuality']
-        if self.maxThread == '':
-            self.maxThread = 20
-        else:
-            self.maxThread = int(self.maxThread)
+        self.conn    = init.getConn()
+        self.cursor  = self.conn.cursor()
+        self.baseDir = os.path.realpath('.')
+        self.config  = Setting()
 
-        if self.picQuality == '':
-            self.picQuality = 1
-        else:
-            self.picQuality = int(self.picQuality)
+        # 初始化网址检测模板
+        self.initBaseResource()
+        return
+
+    def initBaseResource(self):
+        self.urlKind    = ['answer', 'question', 'author', 'collection', 'table', 'topic', 'article', 'column']
+
+        self.urlPattern = {}
+        self.urlPattern['answer']     = r'(?<=zhihu\.com/)question/\d{8}/answer/\d{8}'
+        self.urlPattern['question']   = r'(?<=zhihu\.com/)question/\d{8}'
+
+        # 使用#作为备注起始标识符，所以在正则中要去掉#
+        self.urlPattern['author']     = r'(?<=zhihu\.com/)people/[^/#\n\r]*'
+        self.urlPattern['collection'] = r'(?<=zhihu\.com/)collection/\d*'
+        self.urlPattern['table']      = r'(?<=zhihu\.com/)roundtable/[^/#\n\r]*'
+        self.urlPattern['topic']      = r'(?<=zhihu\.com/)topic/\d*'
+
+        # 先检测专栏，再检测文章，文章比专栏网址更长，类似问题与答案的关系，取信息可以用split('/')的方式获取
+        self.urlPattern['article']    = r'(?<=zhuanlan\.zhihu\.com/)[^/]*/\d{8}'
+        self.urlPattern['column']     = r'(?<=zhuanlan\.zhihu\.com/)[^/#\n\r]*'
+        return
+
+    def helperStart(self):
+        # 登陆
+        settingDict = self.config.getSetting(['rememberAccount', 'maxThread', 'picQuality'])
+        rememberAccount = settingDict['rememberAccount']
+
 
 
         login = Login(self.conn)
-        if self.rememberAccount == 'yes':
+        if rememberAccount == 'yes':
             print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
             print   u'直接点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
             if raw_input() == '':
                 login.setCookie()
+                SettingClass.MAXTHREAD  = settingDict['maxThread']
+                SettingClass.PICQUALITY = settingDict['picQuality']
+                if SettingClass.MAXTHREAD == '':
+                    SettingClass.MAXTHREAD = 20
+                else:
+                    SettingClass.MAXTHREAD = int(SettingClass.MAXTHREAD)
+
+                if SettingClass.PICQUALITY == '':
+                    SettingClass.PICQUALITY = 1
+                else:
+                    SettingClass.PICQUALITY = int(SettingClass.PICQUALITY)
             else:
                 login.login()
-                self.maxThread  = int(self.setting.guideOfMaxThread())
-                self.picQuality = int(self.setting.guideOfPicQuality())
+                SettingClass.MAXTHREAD  = int(self.config.guideOfMaxThread())
+                SettingClass.PICQUALITY = int(self.config.guideOfPicQuality())
         else:
             login.login()
-            self.maxThread  = int(self.setting.guideOfMaxThread())
-            self.picQuality = int(self.setting.guideOfPicQuality())
+            SettingClass.MAXTHREAD  = int(self.config.guideOfMaxThread())
+            SettingClass.PICQUALITY = int(self.config.guideOfPicQuality())
 
         #储存设置
-        self.setting = Setting()
+        self.config = Setting()
         settingDict = {
-                'maxThread'  : self.maxThread,
-                'picQuality' : self.picQuality,
+                'maxThread'  : SettingClass.MAXTHREAD,
+                'picQuality' : SettingClass.PICQUALITY,
                 }
-        self.setting.setSetting(settingDict)
+        self.config.setSetting(settingDict)
+        self.config.saveToGlobalClass()
         
         #主程序开始运行
         readList  = open('./ReadList.txt', 'r')
         bookCount = 1 
         for line in readList:
-            #一行内容代表一本电子书
+            # 一行内容代表一本电子书
             chapter = 1
+
+            # 先将栏目进行分类，以便并行执行，加快速度
+            taskQueen = {}
+            taskQueen['questionQueen'] = []
+            taskQueen['answerQueen']   = []
+            taskQueen['articleQueen']  = [] # 专栏文章队列
+            taskQueen['otherQueen']    = [] # 其他队列，主要是用户、收藏夹、话题、专栏等无法并行执行的队列
+            # 预处理部分开始
             for rawUrl in line.split('$'):
-                print u'正在制作第{}本电子书的第{}节'.format(bookCount, chapter)
+                urlInfo = self.detectUrl(rawUrl)
+                if not 'kind' in urlInfo:
+                    continue
+                if urlInfo['kind'] == 'question':
+                    taskQueen['questionQueen'].append(urlInfo)
+                    continue
+                if urlInfo['kind'] == 'answer':
+                    taskQueen['answerQueen'].append(urlInfo)
+                    continue
+                if urlInfo['kind'] == 'article':
+                    taskQueen['articleQueen'].append(urlInfo)
+                    continue
+                taskQueen['otherQueen'].append(urlInfo)
+
+
+
+
+            for rawUrl in line.split('$'):
+                # todo
+                # 可以使用队列对待抓取页面进行分类整理，加快抓取速度
+                # 每个种类各一个队列
+                # 就算是非线性抓取也没关系，增强报错记录功能就行了，先把速度提上去
+                # 主要是对单个问题和单个答案的抓取，暂时不考虑单篇专栏文章的问题
+                print u'正在制作第{bookNo}本电子书的第{chapterNo}节'.format(bookNo = bookCount, chapterNo = chapter)
                 urlInfo = self.getUrlInfo(rawUrl)
                 if not 'filter' in urlInfo:
                     continue
 
-                if BaseClass.test_catchAnswerData_flag:
+                if TestClass.test_catchAnswerData_flag:
                     print u'测试期间，跳过对网页的抓取'
                 else:
                     self.manager(urlInfo)
@@ -118,6 +172,24 @@ class ZhihuHelp(BaseClass):
         except AttributeError:
             self.epubContent = result
         return
+
+
+
+    def detectUrl(self, rawUrl):
+        u"""
+        检测Url类型并返回对应值
+        """
+        urlInfo = {}
+        for key in self.urlKind:
+            urlInfo['url'] = re.search(self.urlPattern[key], rawUrl)
+            if urlInfo['url'] != None:
+                urlInfo['kind'] = key
+                if key != 'article' and key != 'column':
+                    urlInfo['baseUrl']  = 'http://www.zhihu.com/' + urlInfo['url'].group(0)
+                else:
+                    urlInfo['baseUrl']  = 'http://zhuanlan.zhihu.com/' + urlInfo['url'].group(0)
+                return urlInfo
+            return urlInfo
 
     def getUrlInfo(self, rawUrl):
         u"""
@@ -162,27 +234,8 @@ class ZhihuHelp(BaseClass):
         urlInfo['baseSetting'] = {}
         urlInfo['baseSetting']['picQuality'] = self.picQuality
         urlInfo['baseSetting']['maxThread']  = self.maxThread
-        def detectUrl(rawUrl):
-            targetPattern = {}
-            targetPattern['answer']     = r'(?<=zhihu\.com/)question/\d{8}/answer/\d{8}'
-            targetPattern['question']   = r'(?<=zhihu\.com/)question/\d{8}'
-            targetPattern['author']     = r'(?<=zhihu\.com/)people/[^/#\n\r]*'#使用#作为备注起始标识符，所以在正则中要去掉#
-            targetPattern['collection'] = r'(?<=zhihu\.com/)collection/\d*'
-            targetPattern['table']      = r'(?<=zhihu\.com/)roundtable/[^/#\n\r]*'
-            targetPattern['topic']      = r'(?<=zhihu\.com/)topic/\d*'
-            targetPattern['article']    = r'(?<=zhuanlan\.zhihu\.com/)[^/]*/\d{8}'#先检测专栏，再检测文章，文章比专栏网址更长，类似问题与答案的关系，取信息可以用split('/')的方式获取
-            targetPattern['column']     = r'(?<=zhuanlan\.zhihu\.com/)[^/#\n\r]*'
-            for key in ['answer', 'question', 'author', 'collection', 'table', 'topic', 'article', 'column']:
-                urlInfo['url'] = re.search(targetPattern[key], rawUrl)
-                if urlInfo['url'] != None:
-                    urlInfo['kind'] = key
-                    if key != 'article' and key != 'column':
-                        urlInfo['baseUrl']  = 'http://www.zhihu.com/' + urlInfo['url'].group(0) 
-                    else:
-                        urlInfo['baseUrl']  = 'http://zhuanlan.zhihu.com/' + urlInfo['url'].group(0) 
-                    return key
-            return ''   
-        kind = detectUrl(rawUrl)
+
+        kind = self.detectUrl(rawUrl)
         if kind == 'answer':
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['answerID']     = re.search(r'(?<=zhihu\.com/question/\d{8}/answer/)\d{8}', urlInfo['baseUrl']).group(0)

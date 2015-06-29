@@ -14,7 +14,7 @@ class Init(object):
         return self.cursor
 
     def initDataBase(self):
-        databaseFile = BaseClass.dataBaseFileName
+        databaseFile = SettingClass.dataBaseFileName
         if os.path.isfile(databaseFile):
             self.conn              = sqlite3.connect(databaseFile)
             self.conn.text_factory = str

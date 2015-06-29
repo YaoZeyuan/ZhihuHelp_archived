@@ -10,7 +10,7 @@ class BaseFilter(BaseClass):
     '''
     Filter只负责查询出所有数据
     由Package负责数据保存
-    由其他中间件负责将保存下来的数据转换称HTML代码
+    由其他中间件负责将保存下来的数据转换成HTML代码
     '''
     def __init__(self, cursor = None, urlInfo = {}):
         self.imgBasePath = '../image/'

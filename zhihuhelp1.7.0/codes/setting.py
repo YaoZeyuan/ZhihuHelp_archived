@@ -51,6 +51,8 @@ class Setting(BaseClass):
             'picQuality'      : '0',
             'contentLength'   : '0',
             'contentAgree'    : '5',
+            'maxQuestion'     : '100',       # 每本电子书中最多可以有多少个问题
+            'maxTry'          : '5',
             'answerOrderBy'   : 'agree',
             'questionOrderBy' : 'agreeCount',
         }
@@ -89,7 +91,16 @@ class Setting(BaseClass):
                 config.set('ZhihuHelp', key, str(setting[key]))
         config.write(open('setting.ini', 'w'))
         return
-    
+
+    def saveToGlobalClass(self):
+        SettingClass.MAXTHREAD       = int(self.setDict.get('maxThread', 20))
+        SettingClass.PICQUALITY      = int(self.setDict.get('picQuality', 1))
+        SettingClass.MAXQUESTION     = int(self.setDict.get('maxQuestion', 100))
+        SettingClass.MAXTRY          = int(self.setDict.get('maxTry', 5))
+        SettingClass.ANSWERORDERBY   = self.setDict.get('answerOrderBy', 'agree')
+        SettingClass.QUESTIONORDERBY = self.setDict.get('questionOrderBy', 'agreeCount')
+        return
+
     def guide(self):
         print u'您好，欢迎使用知乎助手'
         print u''

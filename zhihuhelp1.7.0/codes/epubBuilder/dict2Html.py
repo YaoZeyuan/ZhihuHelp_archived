@@ -46,7 +46,8 @@ class Transfer():
         return imgHref.split('/')[-1]
 
     def authorLink(self, authorName, authorID):
-        return "<a href='http://www.zhihu.com/people/{0}'>{1}</a>".format(authorID, authorName)
+        return "<a href='http://www.zhihu.com/people/{authorID}'>{authorName}</a>".format(authorID = authorID,
+                                                                                          authorName = authorName)
 
     def getImgSet(self):
         return self.imgSet
@@ -94,9 +95,9 @@ class Transfer():
                               'Body'   : htmlContent,
                               'Footer' : '',
                           })
-            #文件字典，想不出来名字了
-                # fileName 
-                # fileContent
+            # 文件字典，想不出来名字了
+            # fileName
+            # fileContent
             buf = {'fileName' : str(question['questionID']), 'contentName' : question['title'], 'fileContent' : htmlContent}
             self.contentList.append(buf)
         return self.contentList

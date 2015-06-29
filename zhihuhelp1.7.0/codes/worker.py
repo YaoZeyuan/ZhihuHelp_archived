@@ -56,7 +56,6 @@ class PageWorker(BaseClass, HttpBaseClass, SqlClass):
             self.workSchedule[i] = self.url + self.suffix + str(i + 1)
 
     def addProperty(self):
-        self.urlInfo      = urlInfo
         return
  
     def commitSuccess(self):
@@ -94,17 +93,71 @@ class PageWorker(BaseClass, HttpBaseClass, SqlClass):
                 'Connection': 'keep-alive',
                 'Cache-Control':  'max-age=0',
                 'Accept-Language':    'zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3',
-                #'Accept-Encoding':    'gzip, deflate',mao si bu neng yong
+                # 'Accept-Encoding':    'gzip, deflate', 貌似没用
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         }
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJarInMemory))
         urllib2.install_opener(self.opener)
         return 
 
-class QuestionWorker(PageWorker):
+class QuestionQueenWorker(PageWorker):
+    u"""
+    对问题队列进行处理
+    对于页面跳转问题，可以以这个问题作为测试用例
+    http://www.zhihu.com/question/21230473?sort=created&nr=1&page=2
+    """
+    def __init__(self, conn = None, taskQueen = []):
+        self.conn         = conn
+        self.cursor       = conn.cursor()
+        self.taskQueen    = taskQueen
+        self.suffix       = ''  # 由addProperty负责重载
+        self.addProperty()
+        self.setCookie()
+        self.setWorkSchedule()
+
+    def setWorkSchedule(self):
+        u"""
+        需要携cookie读取网页内容
+        初始化待收集页面列表
+        """
+        self.workSchedule = {}
+        workerNo = 0
+        completeFlag = False
+        while not completeFlag:
+            completeFlag = True #放置于前，避免taskQueen为空
+            for urlInfo in self.taskQueen:
+                if 'maxPage' in urlInfo:
+                    continue
+                else:
+                    completeFlag = False
+                    t = threading.Thread(target = self.detectMaxPage, kwargs = {'urlInfo' : urlInfo})
+                    t.start()
+                    ThreadClass.waitForThreadRunningCompleted()
+
+        for urlInfo in self.taskQueen:
+            for i in range(urlInfo['maxPage']):
+                self.workSchedule[workerNo] = urlInfo['baseUrl'] + self.suffix + str(i + 1)
+                workerNo += 1
+
+    def detectMaxPage(self, urlInfo):
+        # 通过全球唯一的uuid来实现对线程数的控制
+        threadID = ThreadClass.getUUID()
+        while not ThreadClass.acquireThreadPoolPassport(threadID):
+            time.sleep(0.1)
+        detectUrl = urlInfo['baseUrl'] + self.suffix + str(self.maxPage)# 检测问题的最大页数, 使用maxPage, 为扩展留出空间
+        content   = self.getHttpContent(url = detectUrl, extraHeader = self.extraHeader)
+        if len(content) != 0:
+            urlInfo['maxPage'] = self.getMaxPage(content)
+        else:
+            urlInfo['tryCount'] = urlInfo.get('tryCount', 0) + 1
+            if urlInfo['tryCount'] >= ThreadClass.MAXTRY:
+                urlInfo['maxPage'] = 1
+        ThreadClass.releaseThreadPoolPassport(threadID)
+        return
+
     def start(self):
         self.complete = set()
-        maxTry = self.maxTry
+        maxTry = SettingClass.MAXTRY
         while maxTry > 0 and len(self.workSchedule) > len(self.complete):
             #只要完成数等于workSchedule即可宣告完成
             self.leader()
@@ -112,25 +165,16 @@ class QuestionWorker(PageWorker):
         return 
     
     def leader(self):
-        threadPool = []
         self.questionInfoDictList = []
         self.answerDictList       = []
+        index = 0
+        workScheduleLength = len(self.workSchedule)
         for key in self.workSchedule:
-            threadPool.append(threading.Thread(target = self.worker, kwargs = {'workNo' : key}))
-        threadsCount = len(threadPool)
-        threadLiving = 2
-        while (threadsCount > 0 or threadLiving > 1):
-            bufLength = self.maxThread - threadLiving
-            if bufLength > 0 and threadsCount > 0:
-                while bufLength > 0 and threadsCount > 0:
-                    threadPool[threadsCount - 1].start()
-                    bufLength -= 1
-                    threadsCount -= 1
-                    time.sleep(0.1)
-            else:
-                print u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule))
-                time.sleep(1)
-            threadLiving = threading.activeCount()
+            index += 1
+            t = threading.Thread(target = self.worker, kwargs = {'workNo' : key})
+            t.start()
+            BaseClass.printInOneLine(u'正在读取答案页面，还有{}/{}张页面等待读取'.format(workScheduleLength - index, workScheduleLength))
+            ThreadClass.waitForThreadRunningCompleted()
         for questionInfoDict in self.questionInfoDictList:
             self.save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
         for answerDict in self.answerDictList:
@@ -141,77 +185,77 @@ class QuestionWorker(PageWorker):
 
     def worker(self, workNo = 0):
         u"""
+        完成线程控制工作，实际工作由realWork完成
+        """
+        if workNo in self.complete:
+            return
+        threadID = ThreadClass.getUUID()
+        while not ThreadClass.acquireThreadPoolPassport(threadID):
+            time.sleep(0.1)
+        result = self.realWorker(workNo)
+        if result :
+            self.complete.add(workNo)
+        ThreadClass.releaseThreadPoolPassport()
+        return
+
+    def realWorker(self, workNo = 0):
+        u"""
         worker只执行一次，待全部worker执行完毕后由调用函数决定哪些worker需要再次运行
         重复的次数由self.maxTry指定
         这样可以给知乎服务器留出生成页面缓存的时间
         """
-        if workNo in self.complete:
-            return
         content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
         if content == '':
-            return
+            return False
         parse = ParseQuestion(content)
         questionInfoDictList, answerDictList = parse.getInfoDict()
         for questionInfoDict in questionInfoDictList:
             self.questionInfoDictList.append(questionInfoDict)
         for answerDict in answerDictList:
             self.answerDictList.append(answerDict)
-        self.complete.add(workNo)
-        return 
+        return True
 
     def addProperty(self):
         self.maxPage = 1
-        self.suffix  = '?sort=created&page='
+        self.suffix  = '?nr=1&sort=created&page='  # 按时间对答案排序，同时屏蔽跳转
         self.maxTry  = 5
         self.waitFor = 5
         return
 
-class AnswerWorker(PageWorker):
+class AnswerQueenWorker(QuestionQueenWorker):
     def addProperty(self):
         self.maxPage        = ''
         self.suffix         = ''
-        self.maxTry         = 5
-        self.waitFor        = 5
         self.answerDictList = []
         return
 
-    def start(self):
-        maxTry = self.maxTry
-        while maxTry > 0 and len(self.answerDictList) != 0:
-            #Answer只需要收集一个答案，所以只要answerDict不为空，收集即已完成
-            self.leader()
-            maxTry -= 1
-        return 
+    def setWorkSchedule(self):
+        u"""
+        需要携cookie读取网页内容
+        初始化待收集页面列表
+        """
+        self.workSchedule = {}
+        workerNo = 0
+        for urlInfo in self.taskQueen:
+            self.workSchedule[workerNo] = urlInfo['baseUrl']
+            workerNo += 1
 
-    def leader(self):
-        self.questionInfoDictList = []
-        self.answerDictList       = []
-        self.worker()
-        for questionInfoDict in self.questionInfoDictList:
-            self.save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
-        for answerDict in self.answerDictList:
-            self.save2DB(self.cursor, answerDict, 'answerHref', 'AnswerContent')
-        self.conn.commit()
-        self.commitSuccess()
-        return
-
-    def worker(self):
-        content = self.getHttpContent(url = self.url, extraHeader = self.extraHeader, timeout = self.waitFor)
+    def realWorker(self, workNo = 0):
+        content = self.getHttpContent(url = self.url, extraHeader = self.extraHeader)
         if content == '':
-            return
+            return False
         parse = ParseAnswer(content)
         questionInfoDictList, answerDictList = parse.getInfoDict()
         for questionInfoDict in questionInfoDictList:
             self.questionInfoDictList.append(questionInfoDict)
         for answerDict in answerDictList:
             self.answerDictList.append(answerDict)
-        return
-
+        return True
 
 class AuthorWorker(PageWorker):
     def start(self):
         self.complete = set()
-        maxTry = self.maxTry
+        maxTry = SettingClass.MAXTRY
         while maxTry > 0 and len(self.workSchedule) > len(self.complete):
             self.leader()
             maxTry -= 1
@@ -241,25 +285,13 @@ class AuthorWorker(PageWorker):
         #self.clearIndex()
 
         self.catchFrontInfo()
-        threadPool = []
         self.questionInfoDictList = []
         self.answerDictList       = []
         for key in self.workSchedule:
-            threadPool.append(threading.Thread(target = self.worker, kwargs = {'workNo' : key}))
-        threadsCount = len(threadPool)
-        threadLiving = 2
-        while (threadsCount > 0 or threadLiving > 1):
-            bufLength = self.maxThread - threadLiving
-            if bufLength > 0 and threadsCount > 0:
-                while bufLength > 0 and threadsCount > 0:
-                    threadPool[threadsCount - 1].start()
-                    bufLength -= 1
-                    threadsCount -= 1
-                    time.sleep(0.1)
-            else:
-                print u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule))
-                time.sleep(1)
-            threadLiving = threading.activeCount()
+            t = threading.Thread(target = self.worker, kwargs = {'workNo' : key})
+            t.start()
+            ThreadClass.waitForThreadRunningCompleted()
+            BaseClass.printInOneLine(u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule)))
         for questionInfoDict in self.questionInfoDictList:
             self.save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
         for answerDict in self.answerDictList:
@@ -278,32 +310,48 @@ class AuthorWorker(PageWorker):
         self.save2DB(self.cursor, infoDict, 'authorID', 'AuthorInfo')
         return 
 
-
     def worker(self, workNo = 0):
         u"""
-        worker只执行一次，待全部worker执行完毕后由调用函数决定哪些worker需要再次运行
-        重复的次数由self.maxTry指定
-        这样可以给知乎服务器留出生成页面缓存的时间
+        完成线程控制工作，实际工作由realWorker完成
         """
         if workNo in self.complete:
             return
+        threadID = 0  # 初始化threadID值
+        try:
+            threadID = ThreadClass.getUUID()
+            while not ThreadClass.acquireThreadPoolPassport(threadID):
+                time.sleep(0.1)
+            result = self.realWorker(workNo)
+            if result:
+                self.complete.add(workNo)
+        except Exception as e:
+            print e #  输出异常信息
+        finally:
+            #无论发生什么，都必须执行该函数
+            ThreadClass.releaseThreadPoolPassport(threadID)
+        return
+
+    def realWorker(self, workNo = 0):
+        u"""
+        realWorker只执行一次，待全部worker执行完毕后由调用函数决定哪些worker需要再次运行
+        重复的次数由self.maxTry指定
+        这样可以给知乎服务器留出生成页面缓存的时间
+        """
         content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
         if content == '':
-            return
+            return False
         parse = ParseAuthor(content)
         questionInfoDictList, answerDictList = parse.getInfoDict()
         for questionInfoDict in questionInfoDictList:
             self.questionInfoDictList.append(questionInfoDict)
         for answerDict in answerDictList:
             self.answerDictList.append(answerDict)
-        self.complete.add(workNo)
-        return 
+        return True
 
     def addProperty(self):
         self.maxPage = 1
         self.suffix  = '/answers?order_by=vote_num&page='
-        self.maxTry  = 5
-        self.waitFor = 5
+        self.maxTry  = SettingClass.MAXTRY
         return
 
 class TopicWorker(AuthorWorker):
@@ -328,7 +376,7 @@ class TopicWorker(AuthorWorker):
         return
 
     def catchFrontInfo(self):
-        content = self.getHttpContent(url = self.urlInfo['infoUrl'], extraHeader = self.extraHeader, timeout = self.waitFor)
+        content = self.getHttpContent(url = self.urlInfo['infoUrl'], extraHeader = self.extraHeader)
         if content == '':
             return
         parse    = TopicInfoParse(content)
@@ -336,20 +384,17 @@ class TopicWorker(AuthorWorker):
         self.save2DB(self.cursor, infoDict, 'topicID', 'TopicInfo')
         return 
 
-    def worker(self, workNo = 0):
-        if workNo in self.complete:
-            return
-        content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
+    def realWorker(self, workNo = 0):
+        content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader)
         if content == '':
-            return
+            return False
         parse = ParseTopic(content)
         questionInfoDictList, answerDictList = parse.getInfoDict()
         for questionInfoDict in questionInfoDictList:
             self.questionInfoDictList.append(questionInfoDict)
         for answerDict in answerDictList:
             self.answerDictList.append(answerDict)
-        self.complete.add(workNo)
-        return 
+        return True
 
     def addProperty(self):
         self.maxPage = 1
@@ -382,19 +427,16 @@ class CollectionWorker(AuthorWorker):
         self.save2DB(self.cursor, infoDict, 'collectionID', 'CollectionInfo')
         return 
 
-    def worker(self, workNo = 0):
-        if workNo in self.complete:
-            return
+    def realWorker(self, workNo = 0):
         content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
         if content == '':
-            return
+            return False
         parse = ParseCollection(content)
         questionInfoDictList, answerDictList = parse.getInfoDict()
         for questionInfoDict in questionInfoDictList:
             self.questionInfoDictList.append(questionInfoDict)
         for answerDict in answerDictList:
             self.answerDictList.append(answerDict)
-        self.complete.add(workNo)
         return 
 
     def addProperty(self):

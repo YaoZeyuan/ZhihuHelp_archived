@@ -1,19 +1,34 @@
 # -*- coding: utf-8 -*-
-import re
-import ConfigParser
 import os
+import sys
+import threading
+import uuid  # 生成线程唯一ID，用于控制线程数
+
 
 class BaseClass(object):
     u'''
     用于存放常用函数
     '''
-    #全局变量
-    test_chekcUpdate_flag     = False
-    test_catchAnswerData_flag = False
-    test_buffer_flag          = False
-    #test_chekcUpdate_flag = False
-    #test_chekcUpdate_flag = False
-    dataBaseFileName = u'./zhihuDB_171.db'
+
+    # 辅助函数
+    def printInOneLine(text = ''):#Pass
+        u"""
+            *   功能
+                *   反复在一行内输出内容
+                *   输出前会先将光标移至行首，输出完毕后不换行
+            *   输入
+                *   待输出字符
+            *   返回
+                *  无
+         """
+        try:
+            sys.stdout.write("\r"+" "*60+'\r')
+            sys.stdout.flush()
+            sys.stdout.write(text)
+            sys.stdout.flush()
+        except:
+            pass
+        return
 
     def printDict(self, data = {}, key = '', prefix = ''):
         if isinstance(data, dict):
@@ -39,10 +54,83 @@ class BaseClass(object):
             os.chdir(path)
         except OSError:
             print u'指定目录不存在，自动创建之'
-            mkdir(path)
+            BaseClass.mkdir(path)
             os.chdir(path)
         return
 
+class SettingClass(object):
+    u"""
+    用于储存、获取设置值、全局变量值
+    """
+    # 全局变量
+
+    # 默认数据库名称
+    dataBaseFileName = u'./zhihuDB_171.db'
+
+    MAXTHREAD       = 20           # 最大线程数
+    PICQUALITY      = 1            # 图片质量（0/1/2，无图/标清/原图）
+    MAXQUESTION     = 100          # 每本电子书中最多可以放多少本书
+    MAXTRY          = 5            # 最大尝试次数
+    ANSWERORDERBY   = 'agree'      # 答案排序原则
+    QUESTIONORDERBY = 'agreeCount' # 问题排序原则
+
+class TestClass(object):
+    u"""
+    用于存放测试用变量
+    """
+    # 测试变量
+    test_chekcUpdate_flag     = False
+    test_catchAnswerData_flag = False
+    test_buffer_flag          = False
+    #test_chekcUpdate_flag = False
+    #test_chekcUpdate_flag = False
+
+class ThreadClass(object):
+    u"""
+    用于添加常用的线程控制函数
+    """
+    # 线程相关
+    # 线程ID池(用于控制线程数)
+    threadIDPool = set()
+
+    mutex = threading.Lock()
+
+    def getUUID(self):
+        u'''
+        获取由python官方库生成的，永不重复的128位int型ID
+        '''
+        return uuid.uuid1().__int__()
+
+    def getThreadCount(self):
+        return len(ThreadClass.threadIDPool)
+
+    def acquireThreadPoolPassport(self, threadID):
+        ThreadClass.mutex.acquire()
+        # 每次只允许向队列中添加一个线程ID，以此来控制当前运行线程数
+        if ThreadClass.getThreadCount() < ThreadClass.MAXTHREAD:
+            ThreadClass.threadIDPool.add(threadID)
+            ThreadClass.mutex.release()
+            return True
+        else:
+            ThreadClass.mutex.release()
+            return False
+
+    def releaseThreadPoolPassport(self, threadID):
+        ThreadClass.mutex.acquire()
+        ThreadClass.threadIDPool.discard(threadID)
+        ThreadClass.mutex.release()
+
+    def threadWorker(self, function):
+        u"""
+        实现线程池功能，传入待工作的函数，自动完成线程数量控制
+        """
+        return
+
+    def waitForThreadRunningCompleted(self):
+        # 等待所有线程执行完毕, 用于启动线程时控制线程数量
+        while ThreadClass.getThreadCount() > ThreadClass.MAXTHREAD:
+            time.sleep(0.1)
+        return
     
 class SqlClass(object):
     u'''
