@@ -29,7 +29,7 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
         urllib2.install_opener(self.opener)
 
     def sendMessage(self, account, password, captcha = ''):
-        xsrf = self.getXsrf(self.getHttpContent('http://www.zhihu.com/login'))
+        xsrf = self.getXsrf(self.getHttpContent('http://www.zhihu.com/'))
         if xsrf == '':
             print  u'知乎网页打开失败'
             print  u'请敲击回车重新发送登陆请求'
@@ -39,10 +39,12 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
         xsrfCookie = self.makeCookie(name = '_xsrf', value = _xsrf, domain='www.zhihu.com')
         self.cookieJarInMemory.set_cookie(xsrfCookie)
         if captcha == '':
-            loginData = '{0}&email={1}&password={2}'.format(xsrf, account, password, ) + '&rememberme=y'
+            loginData={'_xsrf':_xsrf,'email':account,'password':password,'remember_me':True}
         else:
-            loginData = '{0}&email={1}&password={2}&captcha={3}'.format(xsrf, account, password, captcha) + '&rememberme=y'
-        loginData = urllib.quote(loginData, safe = '=&')
+            loginData={'_xsrf':_xsrf,'email':account,'password':password,'remember_me':True,'captcha':captcha}
+
+        loginData = urllib.urlencode(loginData) 
+
         header = {
                    'Accept'          : '*/*',
                    'Accept-Encoding' : 'gzip,deflate', #主要属性，只要有此项知乎即认为来源非脚本
@@ -57,7 +59,7 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
         header['Referer'] = 'http://www.zhihu.com/'
         
         #登陆时需要手工写urlopen，否则无法获取返回的信息
-        request = urllib2.Request(url = 'http://www.zhihu.com/login', data = loginData)
+        request = urllib2.Request(r'http://www.zhihu.com/login/email',loginData)
         
         for headerKey in header.keys():
             request.add_header(headerKey, header[headerKey])
