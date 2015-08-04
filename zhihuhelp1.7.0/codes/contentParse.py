@@ -4,145 +4,22 @@ from baseClass import *
 import re
 import HTMLParser #转换网页代码
 import datetime#简单处理时间
+from bs4 import BeautifulSoup
 
 class Parse(BaseClass):
     def __init__(self, content):
-        self.content = content.replace('\r', '').replace('\n', '')
+        self.content = BeautifulSoup(content)
+        self.rawContent = content
         self.initRegex()
         self.addRegex()
 
     def initRegex(self):
-        self.regDict = {}
-        self.regTipDict = {}
-        self.regDict['splitContent']    = r'<div tabindex="-1" class="zm-item-answer "'#关键表达式，用于切分答案
-        self.regTipDict['splitContent'] = u'内容分割'
-        
-        #提取答主信息
-        self.regDict['answerAuthorInfo']    = r'(?<=<h3 class="zm-item-answer-author-wrap">).*?(?=</h3>)'
-        self.regTipDict['answerAuthorInfo'] = u'提取答主信息块'#若为匿名用户，则收集到的内容只有【匿名用户】四个字
-        self.regDict['answerAuthorID']      = r'(?<=href="/people/)[^"]*'
-        self.regTipDict['answerAuthorID']   = u'提取答主ID'
-        self.regDict['answerAuthorLogo']    = r'(?<=<img src=")[^"]*'
-        self.regTipDict['answerAuthorLogo'] = u'提取答主头像'
-        self.regDict['answerAuthorSign']    = r'(?<=<strong title=").*(?=" class="zu-question-my-bio">)'
-        self.regTipDict['answerAuthorSign'] = u'提取答主签名'#可能没有
-        self.regTipDict['answerAuthorName'] = u'提取答主用户名'#需要在用户名基础上进行二次匹配,正则模板直接放在了函数里
-
-        #提取答案信息
-        self.regDict['answerAgreeCount']      = r'(?<=<div class="zm-item-vote-info " data-votecount=")[^"]*'#可能存在问题，当前测试样本中没有赞同数为0的情况，回去检查下
-        self.regTipDict['answerAgreeCount']   = u'提取答案被赞同数'
-        self.regDict['answerCommentCount']    = r'\d*(?= 条评论)'#为None
-        self.regTipDict['answerCommentCount'] = u'提取答案被评论数'
-        self.regDict['answerCollectCount']    = r''
-        self.regTipDict['answerCollectCount'] = u'提取答案被收藏数'#只有在指定答案时才能用到
-        
-        self.regDict['answerContent']    = r'(?<=<div class=" zm-editable-content clearfix">).*?(?=</div></div><a class="zg-anchor-hidden ac")'
-        self.regTipDict['answerContent'] = r'提取答案内容'
-        
-        self.regDict['answerInfo']      = r'(?<=class="zm-meta-panel">).*?(?=name="report" class="meta-item zu-autohide)'
-        self.regTipDict['answerInfo']   = r'提取答案信息'  # 提取以下信息 ：
-        # 'questionID', 'answerID', 'answerCommentCount', 'updateDate', 'commitDate', 'noRecordFlag'
-        self.regDict['noRecordFlag']    = r'<span class="copyright zu-autohide"><span class="zg-bull">'
-        self.regTipDict['noRecordFlag'] = r'检查是否禁止转载'
-        self.regDict['questionID']      = r'(?<= target="_blank" href="/question/)\d*' 
-        self.regTipDict['questionID']   = u'提取问题ID'
-        self.regDict['answerID']        = r'(?<= target="_blank" href="/question/\d{8}/answer/)\d*'
-        self.regTipDict['answerID']     = u'提取答案ID'
-        self.regDict['updateDate']      = r'(?<=>编辑于 )[-:\d]*'#没有考虑到只显示时间和昨天今天的问题
-        self.regTipDict['updateDate']   = u'提取最后更新日期'
-        self.regDict['commitDate']      = r'(?<=发布于 )[-:\d]*'#没有考虑到只显示时间和昨天今天的问题
-        self.regTipDict['commitDate']   = u'提取回答发布日期'
-        
-        
-        ##以下正则交由子类自定义之 
-        #用戶首页信息提取
-        self.regDict['id']      = r''
-        self.regDict['name']    = r''
-        self.regDict['sign']    = r''
-        self.regTipDict['id']   = u'提取用户ID'
-        self.regTipDict['name'] = u'提取用户名'
-        self.regTipDict['sign'] = u'提取用户签名'
-        
-        self.regDict['followerCount']    = r''
-        self.regDict['followCount']      = r''
-        self.regTipDict['followerCount'] = u'提取被关注数'
-        self.regTipDict['followCount']   = u'提取关注数'
-        
-        self.regDict['answerCount']        = r''
-        self.regDict['questionCount']      = r''
-        self.regDict['columnCount']        = r''
-        self.regDict['editCount']          = r''
-        self.regDict['collectionCount']    = r''
-        self.regTipDict['answerCount']     = u'提取回答总数'
-        self.regTipDict['questionCount']   = u'提取提问总数'
-        self.regTipDict['columnCount']     = u'提取专栏文章数'
-        self.regTipDict['editCount']       = u'提取公共编辑次数'
-        self.regTipDict['collectionCount'] = u'提取所创建的收藏夹数'
-        
-        self.regDict['agreeCount']        = r''
-        self.regDict['thanksCount']       = r''
-        self.regDict['collectedCount']    = r''
-        self.regTipDict['agreeCount']     = u'提取总赞同数'
-        self.regTipDict['thanksCount']    = u'提取总感谢数'
-        self.regTipDict['collectedCount'] = u'提取总收藏数'
-        
-        #其它信息
-        self.regDict['collectionID']             = r''
-        self.regDict['collectionDesc']           = r''
-        self.regDict['collectionFollower']       = r''
-        self.regDict['collectionTitle']          = r''
-        self.regDict['collectionComment']        = r''
-        self.regDict['collectionCreaterID']      = r''
-        self.regDict['collectionCreaterName']    = r''
-        self.regDict['collectionCreaterSign']    = r''
-        self.regTipDict['collectionID']          = u'提取收藏夹ID'
-        self.regTipDict['collectionDesc']        = u'提取收藏夹描述'
-        self.regTipDict['collectionFollower']    = u'提取收藏夹被关注数'
-        self.regTipDict['collectionTitle']       = u'提取收藏夹标题'
-        self.regTipDict['collectionComment']     = u'提取收藏夹被评论数'
-        self.regTipDict['collectionCreaterID']   = u'提取收藏夹创建者ID'
-        self.regTipDict['collectionCreaterName'] = u'提取收藏夹创建者用户名'
-        self.regTipDict['collectionCreaterSign'] = u'提取收藏夹创建者签名'
-
-        self.regDict['topicID']          = r''
-        self.regDict['topicTitle']       = r''
-        self.regDict['topicDesc']        = r''
-        self.regDict['topicFollower']    = r''
-        self.regTipDict['topicID']       = u'提取话题ID'
-        self.regTipDict['topicTitle']    = u'提取话题名'
-        self.regTipDict['topicDesc']     = u'提取话题描述'
-        self.regTipDict['topicFollower'] = u'提取话题关注者人数'
-
-        self.regDict['roundTableID']          = r''
-        self.regDict['roundTableTitle']       = r''
-        self.regDict['roundTableDesc']        = r''
-        self.regDict['roundTableFollower']    = r''
-        self.regTipDict['roundTableID']       = u'提取圆桌ID'
-        self.regTipDict['roundTableTitle']    = u'提取圆桌标题'
-        self.regTipDict['roundTableDesc']     = u'提取圆桌描述'
-        self.regTipDict['roundTableFollower'] = u'提取圆桌关注者人数'
-
         return 
     
     def addRegex(self):
         return
 
-    def getSplitContent(self):
-        return re.split(self.regDict['splitContent'], self.content)
-
-    def matchContent(self, key, content):
-        targetObject = re.search(self.regDict[key], content)
-        if targetObject == None:
-            #print self.regTipDict[key] + u'失败'
-            #print u'匹配失败的内容为'
-            #print content
-            #exit()
-            return ''
-        else:
-            #print self.regTipDict[key] + u'成功'
-            return targetObject.group(0)
-    
-    def getAnswerAuthorInfoDict(self, content):
+    def getAnswerAuthorInfoDict(self):
         personInfo = {}
         authorInfo = self.matchContent('answerAuthorInfo', content)
         if authorInfo == u'匿名用户':
@@ -239,6 +116,7 @@ class ParseQuestion(Parse):
     
     def getQusetionInfoDict(self, titleContent, tailContent):
         questionInfoDict = {}
+        questionInfoDict['questionCommentCount'] = self.content#todo from it
         for key in ['questionCommentCount', 'questionTitle', 'questionDesc', 'questionAnswerCount']:
             questionInfoDict[key] = self.matchContent(key, titleContent)
         for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:

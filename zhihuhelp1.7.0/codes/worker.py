@@ -105,6 +105,7 @@ class QuestionQueenWorker(PageWorker):
     对问题队列进行处理
     对于页面跳转问题，可以以这个问题作为测试用例
     http://www.zhihu.com/question/21230473?sort=created&nr=1&page=2
+    taskQueen里是一系列的urlInfo
     """
     def __init__(self, conn = None, taskQueen = []):
         self.conn         = conn

@@ -5,6 +5,8 @@ import re
 import ConfigParser
 import os
 class Setting(BaseClass):
+    # todo : 转为使用json格式存储设置值
+    # todo : 修改设置值之后实时写入到配置文件中去
     u"""
     *   account
         *   用户名

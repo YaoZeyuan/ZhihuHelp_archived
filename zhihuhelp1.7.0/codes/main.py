@@ -36,7 +36,7 @@ class ZhihuHelp(BaseClass):
         return
 
     def initBaseResource(self):
-        self.urlKind    = ['answer', 'question', 'author', 'collection', 'table', 'topic', 'article', 'column']
+        self.urlKindList    = ['answer', 'question', 'author', 'collection', 'table', 'topic', 'article', 'column']
 
         self.urlPattern = {}
         self.urlPattern['answer']     = r'(?<=zhihu\.com/)question/\d{8}/answer/\d{8}'
@@ -57,8 +57,6 @@ class ZhihuHelp(BaseClass):
         # 登陆
         settingDict = self.config.getSetting(['rememberAccount', 'maxThread', 'picQuality'])
         rememberAccount = settingDict['rememberAccount']
-
-
 
         login = Login(self.conn)
         if rememberAccount == 'yes':
@@ -104,62 +102,61 @@ class ZhihuHelp(BaseClass):
 
             # 先将栏目进行分类，以便并行执行，加快速度
             taskQueen = {}
-            taskQueen['questionQueen'] = []
-            taskQueen['answerQueen']   = []
-            taskQueen['articleQueen']  = [] # 专栏文章队列
-            taskQueen['otherQueen']    = [] # 其他队列，主要是用户、收藏夹、话题、专栏等无法并行执行的队列
-            # 预处理部分开始
+            taskCollection = []
             for rawUrl in line.split('$'):
                 urlInfo = self.detectUrl(rawUrl)
                 if not 'kind' in urlInfo:
                     continue
-                if urlInfo['kind'] == 'question':
-                    taskQueen['questionQueen'].append(urlInfo)
-                    continue
-                if urlInfo['kind'] == 'answer':
-                    taskQueen['answerQueen'].append(urlInfo)
-                    continue
-                if urlInfo['kind'] == 'article':
-                    taskQueen['articleQueen'].append(urlInfo)
-                    continue
-                taskQueen['otherQueen'].append(urlInfo)
+                taskQueen[urlInfo['kind'] + 'Queen'].append(urlInfo)#  按网址类别分列表处理
+                taskCollection.append(urlInfo) #将任务信息汇总至此，统一进行查询
+
+                #  answer、question、article、column这四个类别可以额外进行多线程并行处理
+                for urlKind in self.urlKindList:
+                    taskList = taskQueen[urlKind + 'Queen']
+                    if urlKind == "Question":
+                        questionQueenWorker = QuestionQueenWorker(self.conn, taskList)
+                        questionQueenWorker.start()  #  只需要执行，不需要返回结果，最后统一进行查询
+                    if urlKind == "Answer":
+                        answerQueenWorker = AnswerQueenWorker(self.conn, taskList)
+                        answerQueenWorker.start()
+                    if urlKind == "author":
+                        for urlInfo in taskList:
+                            authorWorker = AuthorWorker(self.conn, urlInfo)
+                            authorWorker.start()
+                    if urlKind == "collection":
+                        for urlInfo in taskList:
+                            collectionWorker = CollectionWorker(self.conn, urlInfo)
+                            collectionWorker.start()
+                    if urlKind == "topic":
+                        for urlInfo in taskList:
+                            topicWorker = TopicWorker(self.conn, urlInfo)
+                            topicWorker.start()
+                    if urlKind == "article":
+                        for urlInfo in taskList:
+                            articleWorker = ColumnWorker(self.conn, urlInfo)
+                            articleWorker.start()
+                    if urlKind == "column":
+                        for urlInfo in taskList:
+                            columnWorker = ColumnWorker(self.conn, urlInfo)
+                            columnWorker.start()
 
 
-
-
-            for rawUrl in line.split('$'):
-                # todo
-                # 可以使用队列对待抓取页面进行分类整理，加快抓取速度
-                # 每个种类各一个队列
-                # 就算是非线性抓取也没关系，增强报错记录功能就行了，先把速度提上去
-                # 主要是对单个问题和单个答案的抓取，暂时不考虑单篇专栏文章的问题
-                print u'正在制作第{bookNo}本电子书的第{chapterNo}节'.format(bookNo = bookCount, chapterNo = chapter)
-                urlInfo = self.getUrlInfo(rawUrl)
-                if not 'filter' in urlInfo:
-                    continue
-
-                if TestClass.test_catchAnswerData_flag:
-                    print u'测试期间，跳过对网页的抓取'
-                else:
-                    self.manager(urlInfo)
-
+                for urlInfo in taskCollection:
+                    try:
+                        self.addEpubContent(urlInfo['filter'].getResult())
+                    except TypeError as error:
+                        print u'没有收集到指定问题'
+                        print u'错误信息:'
+                        print error
                 try:
-                    self.addEpubContent(urlInfo['filter'].getResult())
-                except TypeError as error:
-                    print u'没有收集到指定问题'
-                    print u'错误信息:'
-                    print error
-                chapter += 1
+                    if self.epubContent:
+                        Zhihu2Epub(self.epubContent)
+                    del self.epubContent
+                except AttributeError:
+                    pass
 
-            try:
-                if self.epubContent:
-                    Zhihu2Epub(self.epubContent)
-                del self.epubContent
-            except AttributeError:
-                pass
-
-            self.resetDir()
-            bookCount += 1
+                self.resetDir()
+                bookCount += 1
         return
 
     def addEpubContent(self, result):
@@ -180,7 +177,7 @@ class ZhihuHelp(BaseClass):
         检测Url类型并返回对应值
         """
         urlInfo = {}
-        for key in self.urlKind:
+        for key in self.urlKindList:
             urlInfo['url'] = re.search(self.urlPattern[key], rawUrl)
             if urlInfo['url'] != None:
                 urlInfo['kind'] = key
@@ -283,11 +280,6 @@ class ZhihuHelp(BaseClass):
             urlInfo['filter']       = ColumnFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = urlInfo['baseUrl']
         return urlInfo
-
-    def manager(self, urlInfo = {}):
-        print urlInfo['guide']
-        urlInfo['worker'].start()
-        return
 
     def resetDir(self):
         chdir(self.baseDir)
