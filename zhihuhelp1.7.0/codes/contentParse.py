@@ -224,7 +224,7 @@ class ParseTable:
 #ParseFrontPageInfo
 class AuthorInfoParse(Parse):
     u'标准网页：/about'
-    
+
     def getInfoDict(self):
         infoDict = {}
 
@@ -266,94 +266,26 @@ class AuthorInfoParse(Parse):
 
 class TopicInfoParse(Parse):
     u'标准网页:正常值'
-    def addRegex(self):
-        self.regDict = {}
-        self.regDict['topicTitle']    = r'(?<=<title>).*?(?= - )'
-        self.regTipDict['topicTitle'] = u'话题标题'
-        self.regDict['topicID']    = r'(?<=zhihu://topics/)\d{8}(?="><meta name="description")'
-        self.regTipDict['topicID'] = u'话题ID'
-
-        self.regDict['watchCountInfoContent']    = r'(?<=<div class="zm-topic-side-followers-info">).*?(?=</div>)'
-        self.regTipDict['watchCountInfoContent'] = u'关注人数信息'
-        self.regDict['watchCount']    = r'(?<=<strong>)\d*(?=</strong>)'
-        self.regTipDict['watchCount'] = u'关注人数'
-
-        self.regDict['topicDesc']    = r'(?<=<div class="zm-editable-content" data-editable-maxlength="130" >).*?(?=</div>)'
-        self.regTipDict['topicDesc'] = u'问题描述'
-
-        self.regDict['topicLogoContent']    = r'(?<=<a class="zm-entry-head-avatar-link" ).*?(?=</div>)'
-        self.regTipDict['topicLogoContent'] = u'话题题图信息'
-        self.regDict['topicLogo']    = r'(?<=src=").*?(?=")'
-        self.regTipDict['topicLogo'] = u'话题题图'
-        return
-
     def getInfoDict(self):
         infoDict = {}
-        infoDict['title'] = self.matchContent('topicTitle', self.content) 
-        infoDict['description'] = self.matchContent('topicDesc', self.content) 
-        infoDict['topicID'] = self.matchContent('topicID', self.content) 
-
-        topicLogoContent = self.matchContent('topicLogoContent', self.content) 
-        infoDict['logoAddress'] = self.matchContent('topicLogo', topicLogoContent) 
-
-        watchCountInfoContent = self.matchContent('watchCountInfoContent', self.content)
-        infoDict['followerCount'] = self.matchContent('watchCount', watchCountInfoContent)
+        infoDict['title'] = self.content.find('h1', {'class' : 'zm-editable-content'}).get_text()
+        infoDict['description'] = self.getTagContent(self.content.find('div', {'class' : 'zh-topic-desc'}).find('div', 'zm-editable-content'))
+        infoDict['topicID'] = self.matchInt(self.getContentAttr(self.content.find('a', {'id' : 'zh-avartar-edit-form'}), 'href'))
+        infoDict['logoAddress'] = self.getContentAttr(self.content.find('img', {'class' : 'zm-avatar-editor-preview'}), 'src')
+        infoDict['logoAddress'] = self.matchInt(self.getTagContent(self.content.find('div', {'class' : 'zm-topic-side-followers-info'})))
         return infoDict
 
 class CollectionInfoParse(Parse):
     u'标准网页:正常值'
-    def addRegex(self):
-        self.regDict['collectionTitle'] = r'(?<=<h2 class="zm-item-title zm-editable-content" id="zh-fav-head-title">).*?(?=</h2>)'
-        self.regTipDict['collectionTitle']  = u'收藏夹标题'
-        self.regDict['collectionDesc'] = r'(?<=<div class="zm-editable-content" id="zh-fav-head-description">).*?(?=</div>)'
-        self.regTipDict['collectionDesc']  = u'收藏夹描述'
-        self.regDict['collectionID']    = r'(?<=<a href="/collection/)\d{8}(?=/log)'
-        self.regTipDict['collectionID'] = u'收藏夹ID'
-        
-        self.regDict['collectionCommentCountContent'] = r'(?<=<div class="zm-item-meta zm-item-comment-el" id="zh-list-meta-wrap">).*?(?=</div>)'
-        self.regTipDict['collectionCommentCountContent']  = u'收藏夹评论数内容'
-        self.regDict['collectionCommentCount']    = r'(?<=<i class="z-icon-comment"></i>)\d*'
-        self.regTipDict['collectionCommentCount'] = u'收藏夹评论数'
-
-        self.regDict['collectionWatchCountContent'] = r'(?<=<div id="zh-favlist-webshare-container" class="zh-question-webshare-links clearfix">).*?(?=<div id="zh-favlist-followers" class="zu-small-avatar-list">)'
-        self.regTipDict['collectionWatchCountContent']  = u'收藏夹关注数内容'
-        self.regDict['collectionWatchCount'] = r'(?<=<div class="zg-gray-normal"><a href="/collection/\d{8}/followers">)\d*(?=</a>)'
-        self.regTipDict['collectionWatchCount']  = u'收藏夹关注数内容'
-
-        self.regDict['creatorInfoContent']     = r'(?<=<div class="zm-list-content-medium" id="zh-single-answer-author-info">).*?(?=</div>)'
-        self.regTipDict['creatorInfoContent']  = u'创建者信息内容'
-        self.regDict['authorID']    = r'(?<=<a href="/people/).*?(?=")'
-        self.regTipDict['authorID'] = u'用户ID'
-        self.regDict['authorSign']    = r'(?<=<div class="zg-gray-normal">).*'
-        self.regTipDict['authorSign'] = u'用户签名'
-        self.regDict['authorName']    = r''#需要用户ID的支持
-        self.regTipDict['authorName'] = u'用户名'
-
     def getInfoDict(self):
         infoDict = {}
-        infoDict['title']        = self.matchContent('collectionTitle', self.content)
-        infoDict['title']        = infoDict['title'].replace(u'<i data-tip="s$t$私密收藏夹" class="icon icon-lock"></i>', '')
-        infoDict['description']  = self.matchContent('collectionDesc', self.content)
-        infoDict['collectionID'] = self.matchContent('collectionID', self.content)
+        infoDict['title'] = self.getTagContent(self.content.find('h2', {'id' : 'zh-fav-head-title'}))
+        infoDict['description'] = self.getTagContent(self.content.find('div', {'id' : 'zh-fav-head-description'}))
+        infoDict['collectionID'] = self.matchInt(self.getContentAttr(self.content.find('div', {'id' : 'zh-list-meta-wrap'}).find_all('a')[1], 'href'))
+        infoDict['commentCount'] = self.matchInt(self.getTagContent(self.content.find('div', {'id' : 'zh-list-meta-wrap'}).find('a', {'name' : 'addcomment'})))
+        infoDict['followerCount'] = self.matchInt(self.content.find_all('div', {'class' : 'zm-side-section'})[2].find_all('div', {'class' : 'zg-gray-normal'})[1].a.get_text())
 
-        commentCountContent = self.matchContent('collectionCommentCountContent', self.content)
-        infoDict['commentCount'] = self.matchContent('collectionCommentCount', commentCountContent)
-        if len(infoDict['commentCount']) == 0:
-            infoDict['commentCount'] = 0
-        else:
-            try:
-                infoDict['commentCount'] = int(infoDict['commentCount'])
-            except ValueError:
-                print u'commentCount为空，自动赋值为0'
-                infoDict['commentCount'] = 0
-        watchContent = self.matchContent('collectionWatchCountContent', self.content)
-        infoDict['followerCount'] = self.matchContent('collectionWatchCount', watchContent)
-        
-        creatorInfoContent = self.matchContent('creatorInfoContent', self.content)
-        for key in ['authorID', 'authorSign']:
-            infoDict[key] = self.matchContent(key, creatorInfoContent)
-        
-        self.regDict['authorName'] = r'(?<={}">).*?(?=</a></h2>)'.format(infoDict['authorID'])
-        infoDict['authorName']     = self.matchContent('authorName', creatorInfoContent)
-
+        infoDict['authorID'] = self.matchAuthorID(self.getContentAttr(self.content.find('a', {'class' : 'zm-list-avatar-link'}), 'href'))
+        infoDict['authorSign'] = self.content.find('div', {'id' : 'zh-single-answer-author-info'}).find('div', 'zg-gray-normal').get_text()
+        infoDict['authorName'] = self.content.find('div', {'id' : 'zh-single-answer-author-info'}).a.get_text()
         return infoDict
