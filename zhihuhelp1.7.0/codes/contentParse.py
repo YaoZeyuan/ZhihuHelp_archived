@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 class Parse(BaseClass):
     def __init__(self, content):
-        self.content = BeautifulSoup(content)
+        self.content = BeautifulSoup(content, "html.parser")
         self.rawContent = content
         self.initRegex()
         self.addRegex()
@@ -19,37 +19,53 @@ class Parse(BaseClass):
     def addRegex(self):
         return
 
-    def getAnswerAuthorInfoDict(self):
+    def getAnswerAuthorInfoDict(self, content):
         personInfo = {}
-        authorInfo = self.matchContent('answerAuthorInfo', content)
-        if authorInfo == u'匿名用户':
-            personInfo['authorID']   = u"coder'sGirlFriend~" 
-            personInfo['authorSign'] = u'' 
-            personInfo['authorLogo'] = u'' 
-            personInfo['authorName'] = u'匿名用户' 
+        if(content.find('h3', {'class':'zm-item-answer-author-wrap'}).img == None):
+            # 匿名用户
+            personInfo['authorID']   = u"coder'sGirlFriend~"
+            personInfo['authorSign'] = u''
+            personInfo['authorLogo'] = content.find('h3', {'class':'zm-item-answer-author-wrap'}).img['data-source']
+            personInfo['authorName'] = u'匿名用户'
         else:
-            personInfo['authorID']           = self.matchContent('answerAuthorID', authorInfo)
-            personInfo['authorSign']         = self.matchContent('answerAuthorSign', authorInfo)
-            personInfo['authorLogo']         = self.matchContent('answerAuthorLogo', authorInfo)
-            self.regDict['answerAuthorName'] = r'(?<=<a data-tip="p\$t\$' + personInfo['authorID'] + r'" href="/people/' + personInfo['authorID'] + r'">).*?(?=</a>)'
-            personInfo['authorName']         = self.matchContent('answerAuthorName', authorInfo)
-        
+            #可能为空
+            personInfo['authorID']   = self.getContentAttr(content.find('h3', {'class':'zm-item-answer-author-wrap'}).find('a', {'class':'zm-item-link-avatar'}), 'href')
+            personInfo['authorSign'] = self.getContentAttr(content.find('h3', {'class':'zm-item-answer-author-wrap'}).find('strong', {'class':'zu-question-my-bio'}), 'title')
+            personInfo['authorLogo'] = self.getContentAttr(content.find('h3', {'class':'zm-item-answer-author-wrap'}).img, 'data-source')
+            personInfo['authorName'] = self.getContentAttr(content.find('h3', {'class':'zm-item-answer-author-wrap'}).find_all('a'), 1).text
         return personInfo
 
+    def getAnswerContentList(self):
+        u"""
+        取得答案列表
+        需重载
+        """
+        return self.content.find_all('div')
+
     def getAnswerDict(self, content):
+        u"""
+        content作为已经切分好了的答案bs_tag对象传入
+        不要乱传参
+        """
         answerDict = {}
         authorInfo = self.getAnswerAuthorInfoDict(content)
         for key in authorInfo:
             answerDict[key] = authorInfo[key]
-        answerDict['answerAgreeCount'] = self.matchContent('answerAgreeCount', content)
-        answerDict['answerContent']    = self.matchContent('answerContent', content)
-        answerInfo = self.matchContent('answerInfo', content)
-        for key in ['questionID', 'answerID', 'answerCommentCount', 'updateDate', 'commitDate', 'noRecordFlag']:
-            answerDict[key] = self.matchContent(key, answerInfo)
+        # 需要移除<noscript>中的内容
+        # 需要考虑对『违反当前法律法规，暂不予以显示』内容的处理
+        answerDict['answerAgreeCount'] = content.find("div", {"class":"zm-votebar"}).find("button", {"class":"up"}).find('span', {"class":"count"}).text
+        answerDict['answerContent']    = self.getTagContent(content.find("div", {"class" : "zm-item-rich-text", "data-action": "/answer/content"}).find("div",{"class", "zm-editable-content"}))
+
+        answerLink = self.getContentAttr(content.find("a", {"class":"answer-date-link"}), "href")
+        answerDict["questionID"] = self.matchQuestionID(answerLink)
+        answerDict["answerID"] = self.matchAnswerID(answerLink)
+        answerDict["answerCommentCount"] = self.matchInt(content.find("a", {"name":"addcomment"}).text)
+        answerDict["updateDate"] = content.find("span", {"class":"answer-date-link-wrap"}).text
+        answerDict["commitDate"] = self.getContentAttr(content.find("span", {"class":"answer-date-link-wrap"}).a, "data-tip")
+        answerDict["noRecordFlag"] = self.getContentAttr(content.find("div", {"class":"zm-meta-panel"}).find("a", {"class":"copyright"}), "data-author-avatar")
+
         if answerDict['answerAgreeCount'] == '':
             answerDict['answerAgreeCount'] = 0
-        if answerDict['answerCommentCount'] == '':
-            answerDict['answerCommentCount'] = 0
         if answerDict['noRecordFlag'] == '':
             answerDict['noRecordFlag'] = 0
         else:
@@ -57,8 +73,8 @@ class Parse(BaseClass):
         answerDict['answerHref']     = 'http://www.zhihu.com/question/{0}/answer/{1}'.format(answerDict['questionID'], answerDict['answerID']) 
         answerDict['answerContent']  = HTMLParser.HTMLParser().unescape(answerDict['answerContent'])#对网页内容解码，可以进一步优化
         
-        if answerDict['updateDate'] == '':
-            answerDict['updateDate'] = answerDict['commitDate']
+        if answerDict['commitDate'] == '':
+            answerDict['commitDate'] = answerDict['updateDate']
         for key in ['updateDate', 'commitDate']:#此处的时间格式转换还可以进一步改进
             if len(answerDict[key]) != 10:        
                 if len(answerDict[key]) == 0:
@@ -73,92 +89,79 @@ class Parse(BaseClass):
         yesterday=today-oneday  
         return yesterday
 
+    def matchContent(self, partten, content, defaultValue = ""):
+        result = re.search(partten, content)
+        if result == None:
+            return defaultValue
+        return result.group(0)
+
+    def matchInt(self, content):
+        u"""
+        返回文本形式的文字中最长的数字串，若没有则返回'0'
+        """
+        return self.matchContent("\d*", content, "0")
+
+    def matchQuestionID(self, rawLink):
+        return self.matchContent("(?<=question/)\d{8}", rawLink)
+
+    def matchAnswerID(self, rawLink):
+        return self.matchContent("(?<=answer/)\d{8}", rawLink)
+
+    def matchAuthorID(self, rawLink):
+        return self.matchContent("""(?<=people/)[^/'"]*""", rawLink)
+
+    def getTagContent(self, tag):
+        u'''
+        只用于提取bs中tag.contents的内容，不要乱传参
+        '''
+        content = ''
+        for t in tag:
+            content += str(t)
+        return content
+
+    def getContentAttr(self, content, attr, defaultValue=""):
+        u"""
+        获取bs中tag.content的指定属性
+        若content为空或者没有指定属性则返回默认值
+        """
+        if content == None:
+            return defaultValue
+        return  content.get(attr, defaultValue)
+
 class ParseQuestion(Parse):
     u'''
     输入网页内容，返回两个dict，一个是问题信息dict，一个是答案dict列表
     '''
+    def getAnswerContentList(self):
+        return self.content.find_all("div", {"class" : "zm-item-answer "})
 
-    def addRegex(self):
-        #实例化Regex
-        #为Regex添加合适的项目
-        self.regDict['questionIDinQuestionDesc']     = r'(?<=<a href="/question/)\d{8}(?=/followers"><strong>)' 
-        self.regTipDict['questionIDinQuestionDesc']  = u'提取问题ID'
-        self.regDict['questionFollowCount']          = r'(?<=<a href="/question/\d{8}/followers"><strong>).*(?=</strong></a>人关注该问题)' 
-        self.regTipDict['questionFollowCount']       = u'提取问题关注人数'
-        self.regDict['questionCommentCount']         = r'(?<=<i class="z-icon-comment"></i>).*?(?= 条评论</a>)'#该模式对答案中的评论也有效，需要小心处理
-        self.regTipDict['questionCommentCount']      = u'提取问题评论数'
-        
-        self.regDict['questionTitle']    = r'(?<=<title>)[^-]*?(?=-)'
-        self.regTipDict['questionTitle'] = u'提取问题标题'
-        self.regDict['questionDesc']     = r'(?<=<div class="zm-editable-content">).*?(?=</div>)'#取到的数据是html编码过的数据，需要逆处理一次才能存入数据库里
-        self.regTipDict['questionDesc']  = u'提取问题描述'
-
-        self.regDict['questionAnswerCount']          = r'(?<=id="zh-question-answer-num">)\d*'
-        self.regTipDict['questionAnswerCount']       = u'问题下回答数'
-        self.regDict['questionCollapsedAnswerCount'] = r'(?<=<span id="zh-question-collapsed-num">)\d*(?=</span>)'
-        self.regDict['questionCollapsedAnswerCount'] = u'问题下回答折叠数'
-        self.regDict['questionViewCount']            = r'(?<=<div class="zg-gray-normal">被浏览 <strong>)\d*(?=</strong>)'
-        self.regTipDict['questionViewCount']         = u'问题浏览数'
-    
     def getInfoDict(self):
         "列表长度有可能为0(没有回答),1(1个回答),2(2个回答)...,需要分情况处理"
-        contentList = self.getSplitContent() 
-        contentLength = len(contentList)
+        contentList = self.getAnswerContentList()
         questionInfoDictList = []
         answerDictList       = []
-        if contentList == 0:
-            questionInfoDictList.append(self.getQusetionInfoDict(contentList[0], contentList[0]))
-        else:
-            questionInfoDictList.append(self.getQusetionInfoDict(contentList[0], contentList[contentLength - 1]))
-            for i in range(1, contentLength):
-                answerDictList.append(self.getAnswerDict(contentList[i]))
+        questionInfoDictList.append(self.getQuestionInfoDict())
+        if len(contentList) != 0:
+            for content in contentList:
+                answerDictList.append(self.getAnswerDict(content))
         return questionInfoDictList, answerDictList
     
-    def getQusetionInfoDict(self, titleContent, tailContent):
+    def getQuestionInfoDict(self):
         questionInfoDict = {}
-        questionInfoDict['questionCommentCount'] = self.content#todo from it
-        for key in ['questionCommentCount', 'questionTitle', 'questionDesc', 'questionAnswerCount']:
-            questionInfoDict[key] = self.matchContent(key, titleContent)
-        for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:
-            questionInfoDict[key] = self.matchContent(key, tailContent)   
-        questionInfoDict['questionDesc'] = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc'])#对网页内容解码，可以进一步优化
+        questionInfoDict['questionTitle'] = self.content.find("div", {"id":"zh-question-title"}).get_text()
+        questionInfoDict['questionCommentCount'] = self.matchInt(self.content.find("a", {"name":"addcomment"}).get_text())
+        questionInfoDict['questionDesc'] = self.getTagContent(self.content.find("div", {"id":"zh-question-detail"}).find('div').contents)
+        questionInfoDict['questionAnswerCount'] = self.matchInt(self.content.find("h3", {"id":"zh-question-answer-num"})['data-num'])
+
+        questionInfoDict['questionFollowCount'] = self.matchInt(self.content.find("div", {"id":"zh-question-side-header-wrap"}).find("div", {"class": "zg-gray-normal"}).a.strong.text)
+        questionInfoDict['questionViewCount'] = self.matchInt(self.content.find("div", {"id":"zh-question-side-header-wrap"}).find("div", {"class": "zg-gray-normal"}).a.strong.text)
+        questionInfoDict['questionViewCount'] = self.content.find("div", {"class" : "zu-main-sidebar"}).find_all("div", {"class" : "zm-side-section"})[3].find_all("div", {"class" : "zg-gray-normal"})[1].find("strong").text # 问题浏览量这个数据不太好拿，暂先记为0
         return questionInfoDict
 
 class ParseAnswer(ParseQuestion):
-    def addRegex(self):
-        #实例化Regex
-        #为Regex添加合适的项目
-        self.regDict['questionIDinQuestionDesc']    = r'(?<=<a href="/question/)\d{8}(?=/followers"><strong>)' 
-        self.regTipDict['questionIDinQuestionDesc'] = u'提取问题ID'
-        self.regDict['questionFollowCount']         = r'(?<=<a href="/question/\d{8}/followers"><strong>).*(?=</strong></a>人关注该问题)' 
-        self.regTipDict['questionFollowCount']      = u'提取问题关注人数'
-        self.regDict['questionCommentCount']        = r'(?<=<i class="z-icon-comment"></i>).*?(?= 条评论</a>)'#该模式对答案中的评论也有效，需要小心处理
-        self.regTipDict['questionCommentCount']     = u'提取问题评论数'
-        
-        self.regDict['questionTitle']    = r'(?<=<title>)[^-]*?(?=-)'
-        self.regTipDict['questionTitle'] = u'提取问题标题'
-        self.regDict['questionDesc']     = r'(?<=<div class="zm-editable-content">).*?(?=</div>)'#取到的数据是html编码过的数据，需要逆处理一次才能存入数据库里
-        self.regTipDict['questionDesc']  = u'提取问题描述'
+    def getAnswerContentList(self):
+        return self.content.find_all("div", {"id" : "zh-question-answer-wrap"})
 
-        self.regDict['questionAnswerCount']          = r'(?<=查看全部 )\d*(?= 个回答)'
-        self.regTipDict['questionAnswerCount']       = u'问题下回答数'
-        self.regDict['questionCollapsedAnswerCount'] = r'(?<=<span id="zh-question-collapsed-num">)\d*(?=</span>)'
-        self.regDict['questionCollapsedAnswerCount'] = u'问题下回答折叠数'
-        self.regDict['questionViewCount']            = r'(?<=<p>所属问题被浏览 <strong>)\d*(?=</strong>)'
-        self.regTipDict['questionViewCount']         = u'问题浏览数'
-    
-    def getQusetionInfoDict(self, titleContent, tailContent):
-        questionInfoDict = {}
-        for key in ['questionCommentCount', 'questionTitle', 'questionDesc', 'questionAnswerCount']:
-            questionInfoDict[key] = self.matchContent(key, titleContent)
-        for key in ['questionIDinQuestionDesc', 'questionFollowCount', 'questionViewCount']:
-            questionInfoDict[key] = self.matchContent(key, tailContent)
-        try:
-            questionInfoDict['questionAnswerCount'] = int(questionInfoDict['questionAnswerCount']) + 1 #知乎显示的全部回答数是被js处理过的。。。需要手工加一。。。汗
-        except ValueError:
-            questionInfoDict['questionAnswerCount'] = 1
-        questionInfoDict['questionDesc']  = HTMLParser.HTMLParser().unescape(questionInfoDict['questionDesc'])#对网页内容解码，可以进一步优化
-        return questionInfoDict
 
 
 class ParseAuthor(Parse):
@@ -166,108 +169,51 @@ class ParseAuthor(Parse):
     输入网页内容，返回一个dict，答案dict列表
     '''
 
-    def addRegex(self):
-        #实例化Regex
-        #为Regex添加合适的项目
-        self.regDict['splitContent']    = r'div class="zm-item" id="mi'#关键表达式，用于切分答案
-        self.regDict['answerContent']   = r'(?<=<textarea class="content hidden">).*(?=<span class="answer-date-link-wrap">)'
-        self.regDict['answerInfo']      = r'(?<=<div class="zm-meta-panel">).*?(?=<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold">)'
-        self.regDict['updateInfo']      = r'(?<=<span class="answer-date-link-wrap">).*?(?=</span>)'
-        self.regTipDict['updateInfo']   = u'提取答案更新日期信息'
-
-        self.regDict['questionInfo']             = r'(?<=<h2><a class="question_link").*?(?=</a></h2>)'
-        self.regTipDict['questionInfo']          = u'提取问题相关信息'
-        self.regDict['questionIDinQuestionDesc'] = r'(?<=href="/question/)\d{8}'
-        self.regDict['questionTitle']            = r'(?<=>).*'
+    def getAnswerContentList(self):
+        return self.content.find("div", {"id" : "zh-profile-answer-list"}).find_all("div", {"class" : "zm-item"})
 
     def getInfoDict(self):
-        contentList = self.getSplitContent() 
+        contentList = self.getAnswerContentList()
         answerDictList       = []
         questionInfoDictList = []
         for content in contentList:
             answerDict = self.getAnswerDict(content)
-            #切割时会把最开始的个人介绍内容也切出来，在那里提取不到答案内容，会导致程序故障，需要跳过
             if len(answerDict['answerID']) == 0:
                 continue
             answerDictList.append(answerDict)
-            questionInfoDictList.append(self.getQusetionInfoDict(content))
+            questionInfoDictList.append(self.getQuestionInfoDict(content))
         return questionInfoDictList, answerDictList
 
-    def getAnswerDict(self, content):
-        answerDict = {}
-        authorInfo = self.getAnswerAuthorInfoDict(content)
-        for key in authorInfo:
-            answerDict[key] = authorInfo[key]
-        answerDict['answerAgreeCount'] = self.matchContent('answerAgreeCount', content)
-        answerDict['answerContent']    = self.matchContent('answerContent', content)
-        answerInfo = self.matchContent('answerInfo', content)
-        updateInfo = self.matchContent('updateInfo', content)
-        for key in ['questionID', 'answerID', 'updateDate', 'commitDate']:
-            answerDict[key] = self.matchContent(key, updateInfo)
-        for key in ['answerCommentCount','noRecordFlag']:
-            answerDict[key] = self.matchContent(key, answerInfo)
-
-        if answerDict['answerAgreeCount']   == '':
-            answerDict['answerAgreeCount']   = 0
-        if answerDict['answerCommentCount'] == '':
-            answerDict['answerCommentCount'] = 0
-        if answerDict['noRecordFlag']       == '':
-            answerDict['noRecordFlag']       = 0
-        else:
-            answerDict['noRecordFlag'] = 1
-        answerDict['answerHref']     = 'http://www.zhihu.com/question/{0}/answer/{1}'.format(answerDict['questionID'], answerDict['answerID']) 
-        answerDict['answerContent']  = HTMLParser.HTMLParser().unescape(answerDict['answerContent'])#对网页内容解码，可以进一步优化
-        
-        if answerDict['updateDate'] == '':
-            answerDict['updateDate'] = answerDict['commitDate']
-        for key in ['updateDate', 'commitDate']:#此处的时间格式转换还可以进一步改进
-            if len(answerDict[key]) != 10:        
-                if len(answerDict[key]) == 0:
-                    answerDict[key] = self.getYesterday().isoformat()
-                else:
-                    answerDict[key] = datetime.date.today().isoformat()
-        return answerDict
-
-    def getQusetionInfoDict(self, content):
+    def getQuestionInfoDict(self, content):
         questionInfoDict = {}
-        questionInfo = self.matchContent('questionInfo', content)
-        for key in ['questionTitle', 'questionIDinQuestionDesc']:
-            questionInfoDict[key] = self.matchContent(key, questionInfo)   
+        questionInfoDict['questionTitle'] = content.find("a", {'class' : "question_link"}).get_text()
+        rawLink = self.getContentAttr(content.find("a", {'class' : "question_link"}), 'href')
+        questionInfoDict['questionIDinQuestionDesc'] = self.matchQuestionID(rawLink)
         return questionInfoDict
 
 class ParseCollection(ParseAuthor):
     u"""
     直接继承即可
     """
-    def addRegex(self):
-        #实例化Regex
-        #为Regex添加合适的项目
-        self.regDict['splitContent']    = r'div class="zm-item"'#关键表达式，用于切分答案
-        self.regDict['answerContent']   = r'(?<=<textarea class="content hidden">).*(?=<span class="answer-date-link-wrap">)'
-        self.regDict['answerInfo']      = r'(?<=<div class="zm-meta-panel">).*?(?=<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold">)'
-        self.regDict['updateInfo']      = r'(?<=<span class="answer-date-link-wrap">).*?(?=</span>)'
-        self.regTipDict['updateInfo']   = u'提取答案更新日期信息'
-
-        self.regDict['questionInfo']             = r'(?<=<h2 class="zm-item-title"><a target="_blank" ).*?(?=</a></h2>)'
-        self.regTipDict['questionInfo']          = u'提取问题相关信息'
-        self.regDict['questionIDinQuestionDesc'] = r'(?<=href="/question/)\d{8}'
-        self.regDict['questionTitle']            = r'(?<=>).*'
+    def getAnswerContentList(self):
+        return self.content.find_all("div", {"class" : "zm-item"})
 
 class ParseTopic(ParseAuthor):
-    def addRegex(self):
-        #实例化Regex
-        #为Regex添加合适的项目
-        self.regDict['splitContent']     = r'<div class="feed-main">'#关键表达式，用于切分答案
-        self.regDict['answerContent']    = r'(?<=<textarea class="content hidden">).*(?=<span class="answer-date-link-wrap">)'
-        self.regDict['answerInfo']       = r'(?<=<div class="zm-meta-panel">).*?(?=<a href="#" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold">)'
-        self.regDict['updateInfo']       = r'(?<=<span class="answer-date-link-wrap">).*?(?=</span>)'
-        self.regTipDict['updateInfo']    = u'提取答案更新日期信息'
-        self.regDict['answerAuthorSign'] = r'(?<=<strong title=")[^<]*(?=" class="zu-question-my-bio">)'
+    def getAnswerContentList(self):
+        return self.content.find("div", {"id" : "zh-topic-top-page-list"}).find_all("div", {"itemprop" : "question"})
 
-        self.regDict['questionInfo']             = r'(?<=<h2><a class="question_link").*?(?=</a></h2>)'
-        self.regTipDict['questionInfo']          = u'提取问题相关信息'
-        self.regDict['questionIDinQuestionDesc'] = r'(?<=href="/question/)\d{8}'
-        self.regDict['questionTitle']            = r'(?<=>).*'
+    def getInfoDict(self):
+        contentList = self.getAnswerContentList()
+        answerDictList       = []
+        questionInfoDictList = []
+        for content in contentList:
+            answerDict = self.getAnswerDict(content)
+            if len(answerDict['answerID']) == 0:
+                continue
+            answerDictList.append(answerDict)
+            questionInfoDictList.append(self.getQuestionInfoDict(content))
+        return questionInfoDictList, answerDictList
+
 '''   
 class ParseColumn:
 class ParseTable:
@@ -277,99 +223,45 @@ class ParseTable:
 
 #ParseFrontPageInfo
 class AuthorInfoParse(Parse):
-    u'规范:所有获取信息块的内容，均以Content结尾，只有直接获取对应数据的表达式才能以对应名词命名'
     u'标准网页：/about'
-    def addRegex(self):
-        self.regDict = {}
-        self.regDict['weiboContent']    = r'(?<=<div class=\'weibo-wrap\'>).*?(?=</div>)'
-        self.regTipDict['weiboContent'] = u'微博内容'
-        self.regDict['weiboAddress']    = r'(?<=href=").*?(?=")'
-        self.regTipDict['weiboAddress'] = u'微博地址'
-
-        self.regDict['nameInfoContent'] = r'(?<=<div class="title-section ellipsis">).*?(?=</div>)'
-        self.regTipDict['nameInfoContent'] = u'用户名&ID&签名内容'
-        self.regDict['authorID'] = r'(?<=href="/people/).*?(?=")'
-        self.regTipDict['authorID'] = u'用户ID'
-        self.regDict['sign'] = r'(?<=<span class="bio" title=").*?(?=")'#不必担心引号问题，引号会在html中被自动转义
-        self.regTipDict['sign'] = u'用户签名'
-        self.regDict['name'] = r'(?<=">).*?(?=</a>)'
-        self.regTipDict['name'] = u'用户名'
-        
-
-        self.regDict['userDesc'] = r'(?<=<span class="description unfold-item"><span class="content">).*?(?=</span><a href="javascript:;" class="unfold")'
-        self.regTipDict['userDesc']  = u'用户描述'
-        
-        self.regDict['userActiveInfoContent'] = r'(?<=<div class="profile-navbar clearfix">).*?(?=<div class="zm-profile-section-wrap zm-profile-details-wrap">)'
-        self.regTipDict['userActiveInfoContent']  = u'用户提问/回答/专栏/收藏夹数/公共编辑数'
-
-        self.regDict['userHonourInfoContent'] = r'(?<=<div class="zm-profile-module-desc">).*?(?=<div class="zm-profile-module zg-clear">)'
-        self.regTipDict['userHonourInfoContent']  = u'用户赞同数/感谢数/收藏数/分享数'
-
-        self.regDict['userFollowInfoContent'] = r'(?<=<div class="zm-profile-side-following zg-clear">).*?(?=</div>)'
-        self.regTipDict['userFollowInfoContent']  = u'用户关注数&被关注数'
-
-        self.regDict['columnCountInfoContent'] = r'(?<=<div class="zm-profile-side-section-title">).*?(?=</div>)'
-        self.regTipDict['columnCountInfoContent']  = u'关注的专栏数信息'
-
-        self.regDict['topicCountInfoContent'] = r'(?<=<div class="zm-profile-side-section-title">).*?(?=</div>)'
-        self.regTipDict['topicCountInfoContent']  = u'关注的话题数信息'
-        
-        self.regDict['userViewContent'] = r'(?<=<div class="zm-profile-side-section"><div class="zm-side-section-inner"><span class="zg-gray-normal">).*?(?=</div>)'
-        self.regTipDict['userViewContent']  = u'用户浏览数信息'
-        self.regDict['watched']    = r'(?<=<strong>)\d*(?=</strong>)'
-        self.regTipDict['watched'] = u'用户浏览数'
-        
-        self.regDict['authorLogoContent']    = r'(?<=<div class="zm-profile-header-avatar-container ">).*?(?="class="zm-profile-header-img zg-avatar-big zm-avatar-editor-preview"/>)'
-        self.regTipDict['authorLogoContent'] = u'用户头像内容'
-        self.regDict['authorLogoAddress']    = r'(?<=src=").*'
-        self.regTipDict['authorLogoAddress'] = u'用户头像'
-        
-        self.regDict['dataID']    = r'(?<=data-id=").*?(?=")'
-        self.regTipDict['dataID'] = u'dataID'
     
     def getInfoDict(self):
         infoDict = {}
 
-        infoDict['dataID'] = self.matchContent('dataID', self.content)
-
-        authorLogoContent = self.matchContent('authorLogoContent', self.content)
-        infoDict['authorLogoAddress'] = self.matchContent('authorLogoAddress', authorLogoContent)
-
-        weiboContent = self.matchContent('weiboContent', self.content)
-        infoDict['weiboAddress'] = self.matchContent('weiboAddress', weiboContent)
-
-        userViewContent     = self.matchContent('userViewContent', self.content)
-        infoDict['watched'] = self.matchContent('watched', userViewContent)
-
-        nameInfoContent = self.matchContent('nameInfoContent', self.content)
-        for key in ['authorID', 'name', 'sign']:
-            infoDict[key] = self.matchContent(key, nameInfoContent)
-        infoDict['desc'] = self.matchContent('userDesc', self.content)
+        infoDict['dataID'] = self.getContentAttr(self.content.find("button", {'class' : 'zm-rich-follow-btn'}), 'data-id')
+        infoDict['authorLogoAddress'] = self.getContentAttr(self.content.find('img', {'class' : 'avatar-l'}), 'src')
+        infoDict['weiboAddress'] = self.getContentAttr(self.content.find('a', {'class' : 'zm-profile-header-user-weibo'}), 'href')
+        infoDict['watched'] = self.matchInt(self.content.find_all('div', {'class' : 'zm-side-section-inner'})[3].span.strong.get_text())
+        infoDict['authorID'] = self.matchAuthorID(self.getContentAttr(self.content.find('div', {'class' : 'title-section'}).a, 'href'))
+        infoDict['name'] = self.content.find('div', {'class' : 'title-section'}).find(attrs = {'class' : 'name'}).get_text()
+        infoDict['sign'] = self.getContentAttr(self.content.find('div', {'class' : 'title-section'}).find(attrs = {'class' : 'bio'}), 'title')
 
         try:
-            userActiveInfoContent = self.matchContent('userActiveInfoContent', self.content)
-            infoDict['ask'], infoDict['answer'], infoDict['post'], infoDict['collect'], infoDict['edit'] = re.findall(r'(?<=<span class="num">)\d*(?=</span></a>)', userActiveInfoContent)
-        except ValueError as error:
-            print u'匹配用户提问数/回答数/专栏数/收藏夹数/公共编辑数失败'
-            print u'错误内容:'
-            print error
+            infoDict['desc'] = self.content.find('div', {'class' : 'zm-profile-header-description'}).find('span', {'class' : 'fold-item'}).get_text()
+        except AttributeError:
+            infoDict['desc'] = ''
 
-        try:
-            userFollowInfoContent = self.matchContent('userFollowInfoContent', self.content)
-            infoDict['followee'], infoDict['follower'] = re.findall(r'(?<=<strong>)\d*(?=</strong><label>)', userFollowInfoContent)
-        except ValueError as error:
-            print u'匹配用户关注数/被关注数失败'
-            print u'错误内容:'
-            print error
-        
-        try:
-            userHonourInfoContent = self.matchContent('userHonourInfoContent', self.content)
-            infoDict['agree'], infoDict['thanks'], infoDict['collected'], infoDict['shared'] = re.findall(r'(?<=<span><strong>)\d*(?=</strong>)', userHonourInfoContent)
-        except ValueError as error:
-            print u'匹配用户赞同数/感谢数/被收藏数/被分享数失败'
-            print u'错误内容:'
-            print error
+        infoList = self.content.find('div', {'class' : 'profile-navbar'}).find_all('span', {'class' : 'num'})
+        kindList = ['ask', 'answer', 'post', 'collect', 'edit']
+        i = 0
+        for kind in kindList:
+            infoDict[kind] = self.matchInt(self.getTagContent(infoList[i]))
+            i += 1
 
+        infoList = self.content.find('div', {'class' : 'zm-profile-side-following'}).find_all('a', {'class' : 'zg-gray-normal'})
+        infoDict['followee'] = self.matchInt(self.getTagContent(infoList[0]))
+        infoDict['follower'] = self.matchInt(self.getTagContent(infoList[1]))
+
+        infoList = self.content.find('div', {'class' : 'zm-profile-side-following'}).find_all('a', {'class' : 'zg-gray-normal'})
+        infoDict['followee'] = self.matchInt(self.getTagContent(infoList[0]))
+        infoDict['follower'] = self.matchInt(self.getTagContent(infoList[1]))
+
+        infoList = self.content.find('div', {'class' : 'zm-profile-details-reputation'}).find_all('i', {'class' : 'zm-profile-icon'})
+        kindList = ['agree', 'thanks', 'collected', 'shared']
+        i = 0
+        for kind in kindList:
+            infoDict[kind] = self.matchInt(self.getTagContent(infoList[i]))
+            i += 1
         return infoDict
 
 class TopicInfoParse(Parse):
