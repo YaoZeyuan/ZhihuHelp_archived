@@ -8,16 +8,8 @@ from bs4 import BeautifulSoup
 
 class Parse(BaseClass):
     def __init__(self, content):
-        self.content = BeautifulSoup(content, "html.parser")
+        self.content = BeautifulSoup(content, 'html.parser')
         self.rawContent = content
-        self.initRegex()
-        self.addRegex()
-
-    def initRegex(self):
-        return 
-    
-    def addRegex(self):
-        return
 
     def getAnswerAuthorInfoDict(self, content):
         personInfo = {}
@@ -161,8 +153,6 @@ class ParseQuestion(Parse):
 class ParseAnswer(ParseQuestion):
     def getAnswerContentList(self):
         return self.content.find_all("div", {"id" : "zh-question-answer-wrap"})
-
-
 
 class ParseAuthor(Parse):
     u'''

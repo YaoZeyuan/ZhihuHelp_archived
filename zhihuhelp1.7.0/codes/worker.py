@@ -23,7 +23,7 @@ class PageWorker(BaseClass, HttpBaseClass, SqlClass):
         self.cursor       = conn.cursor()
         self.maxPage      = ''
         self.urlInfo      = urlInfo
-        self.maxThread    = urlInfo['baseSetting']['maxThread']
+        self.maxThread    = SettingClass.MAXTHREAD
         self.url          = urlInfo['baseUrl']
         self.suffix       = ''
         self.addProperty()
@@ -353,6 +353,7 @@ class AuthorWorker(PageWorker):
         self.maxPage = 1
         self.suffix  = '/answers?order_by=vote_num&page='
         self.maxTry  = SettingClass.MAXTRY
+        self.waitFor = 5
         return
 
 class TopicWorker(AuthorWorker):

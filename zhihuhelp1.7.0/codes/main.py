@@ -103,9 +103,11 @@ class ZhihuHelp(BaseClass):
             # 先将栏目进行分类，以便并行执行，加快速度
             taskQueen = {}
             taskCollection = []
+            for kind in self.urlKindList:
+                taskQueen[kind + 'Queen'] = []
             for rawUrl in line.split('$'):
-                urlInfo = self.detectUrl(rawUrl)
-                if not 'kind' in urlInfo:
+                urlInfo = self.getUrlInfo(rawUrl)
+                if urlInfo['kind'] == '':
                     continue
                 taskQueen[urlInfo['kind'] + 'Queen'].append(urlInfo)#  按网址类别分列表处理
                 taskCollection.append(urlInfo) #将任务信息汇总至此，统一进行查询
@@ -113,10 +115,10 @@ class ZhihuHelp(BaseClass):
                 #  answer、question、article、column这四个类别可以额外进行多线程并行处理
                 for urlKind in self.urlKindList:
                     taskList = taskQueen[urlKind + 'Queen']
-                    if urlKind == "Question":
+                    if urlKind == "question":
                         questionQueenWorker = QuestionQueenWorker(self.conn, taskList)
                         questionQueenWorker.start()  #  只需要执行，不需要返回结果，最后统一进行查询
-                    if urlKind == "Answer":
+                    if urlKind == "answer":
                         answerQueenWorker = AnswerQueenWorker(self.conn, taskList)
                         answerQueenWorker.start()
                     if urlKind == "author":
@@ -186,7 +188,7 @@ class ZhihuHelp(BaseClass):
                 else:
                     urlInfo['baseUrl']  = 'http://zhuanlan.zhihu.com/' + urlInfo['url'].group(0)
                 return urlInfo
-            return urlInfo
+        return urlInfo
 
     def getUrlInfo(self, rawUrl):
         u"""
@@ -227,23 +229,23 @@ class ZhihuHelp(BaseClass):
             *   maxThread
                 *   最大线程数
         """
-        urlInfo = {}
+        urlInfo = self.detectUrl(rawUrl)
         urlInfo['baseSetting'] = {}
-        urlInfo['baseSetting']['picQuality'] = self.picQuality
-        urlInfo['baseSetting']['maxThread']  = self.maxThread
+        urlInfo['baseSetting']['picQuality'] = SettingClass.PICQUALITY
+        urlInfo['baseSetting']['maxThread']  = SettingClass.MAXTHREAD
 
-        kind = self.detectUrl(rawUrl)
+        kind = urlInfo['kind']
         if kind == 'answer':
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['answerID']     = re.search(r'(?<=zhihu\.com/question/\d{8}/answer/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到答案地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = AnswerWorker(conn = self.conn, urlInfo = urlInfo)
+            urlInfo['worker']       = ''
             urlInfo['filter']       = AnswerFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = ''
         if kind == 'question':
             urlInfo['questionID']   = re.search(r'(?<=zhihu\.com/question/)\d{8}', urlInfo['baseUrl']).group(0)
             urlInfo['guide']        = u'成功匹配到问题地址{}，开始执行抓取任务'.format(urlInfo['baseUrl'])
-            urlInfo['worker']       = QuestionWorker(conn = self.conn, urlInfo = urlInfo)
+            urlInfo['worker']       = ''
             urlInfo['filter']       = QuestionFilter(self.cursor, urlInfo)
             urlInfo['infoUrl']      = ''
         if kind == 'author':
