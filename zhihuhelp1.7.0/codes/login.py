@@ -49,7 +49,6 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
                    'Accept'          : '*/*',
                    'Accept-Encoding' : 'gzip,deflate', #主要属性，只要有此项知乎即认为来源非脚本
                    'Accept-Language' : 'zh,zh-CN;q=0.8,en-GB;q=0.6,en;q=0.4',
-                   'Connection'      : 'keep-alive',
                    'Host'            : 'www.zhihu.com',
                    'Content-Type'    : 'application/x-www-form-urlencoded; charset=UTF-8',
                    'User-Agent'      : 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36(KHTML, like Gecko)Chrome/34.0.1847.116 Safari/537.36',

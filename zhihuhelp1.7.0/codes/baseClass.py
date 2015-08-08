@@ -3,12 +3,24 @@ import os
 import sys
 import threading
 import uuid  # 生成线程唯一ID，用于控制线程数
-
+import logging
+import logging.handlers
 
 class BaseClass(object):
     u'''
     用于存放常用函数
     '''
+    LOG_FILE = 'tst.log'
+
+    handler = logging.StreamHandler() # 实例化handler
+    fmt = '%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'
+
+    formatter = logging.Formatter(fmt)   # 实例化formatter
+    handler.setFormatter(formatter)      # 为handler添加formatter
+
+    logger = logging.getLogger('main')    # 获取名为main的logger
+    logger.addHandler(handler)           # 为logger添加handler
+    logger.setLevel(logging.DEBUG)
 
     # 辅助函数
     def printInOneLine(text = ''):#Pass
@@ -57,6 +69,8 @@ class BaseClass(object):
             BaseClass.mkdir(path)
             os.chdir(path)
         return
+
+
 
 class SettingClass(object):
     u"""
@@ -107,7 +121,7 @@ class ThreadClass(object):
     def acquireThreadPoolPassport(self, threadID):
         ThreadClass.mutex.acquire()
         # 每次只允许向队列中添加一个线程ID，以此来控制当前运行线程数
-        if ThreadClass.getThreadCount() < ThreadClass.MAXTHREAD:
+        if self.getThreadCount() < SettingClass.MAXTHREAD:
             ThreadClass.threadIDPool.add(threadID)
             ThreadClass.mutex.release()
             return True
@@ -128,7 +142,7 @@ class ThreadClass(object):
 
     def waitForThreadRunningCompleted(self):
         # 等待所有线程执行完毕, 用于启动线程时控制线程数量
-        while ThreadClass.getThreadCount() > ThreadClass.MAXTHREAD:
+        while self.getThreadCount() > SettingClass.MAXTHREAD:
             time.sleep(0.1)
         return
     

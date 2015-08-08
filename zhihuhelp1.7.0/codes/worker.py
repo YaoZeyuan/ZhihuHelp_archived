@@ -90,7 +90,6 @@ class PageWorker(BaseClass, HttpBaseClass, SqlClass):
                 'Referer':    'www.zhihu.com/',
                 'Host':   'www.zhihu.com',
                 'DNT':    '1',
-                'Connection': 'keep-alive',
                 'Cache-Control':  'max-age=0',
                 'Accept-Language':    'zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3',
                 # 'Accept-Encoding':    'gzip, deflate', 貌似没用
@@ -133,7 +132,7 @@ class QuestionQueenWorker(PageWorker):
                     completeFlag = False
                     t = threading.Thread(target = self.detectMaxPage, kwargs = {'urlInfo' : urlInfo})
                     t.start()
-                    ThreadClass.waitForThreadRunningCompleted()
+                    self.threadClass.waitForThreadRunningCompleted()
 
         for urlInfo in self.taskQueen:
             for i in range(urlInfo['maxPage']):
@@ -142,8 +141,8 @@ class QuestionQueenWorker(PageWorker):
 
     def detectMaxPage(self, urlInfo):
         # 通过全球唯一的uuid来实现对线程数的控制
-        threadID = ThreadClass.getUUID()
-        while not ThreadClass.acquireThreadPoolPassport(threadID):
+        threadID = self.threadClass.getUUID()
+        while not self.threadClass.acquireThreadPoolPassport(threadID):
             time.sleep(0.1)
         detectUrl = urlInfo['baseUrl'] + self.suffix + str(self.maxPage)# 检测问题的最大页数, 使用maxPage, 为扩展留出空间
         content   = self.getHttpContent(url = detectUrl, extraHeader = self.extraHeader)
@@ -151,9 +150,9 @@ class QuestionQueenWorker(PageWorker):
             urlInfo['maxPage'] = self.getMaxPage(content)
         else:
             urlInfo['tryCount'] = urlInfo.get('tryCount', 0) + 1
-            if urlInfo['tryCount'] >= ThreadClass.MAXTRY:
+            if urlInfo['tryCount'] >= SettingClass.MAXTRY:
                 urlInfo['maxPage'] = 1
-        ThreadClass.releaseThreadPoolPassport(threadID)
+        self.threadClass.releaseThreadPoolPassport(threadID)
         return
 
     def start(self):
@@ -175,7 +174,7 @@ class QuestionQueenWorker(PageWorker):
             t = threading.Thread(target = self.worker, kwargs = {'workNo' : key})
             t.start()
             BaseClass.printInOneLine(u'正在读取答案页面，还有{}/{}张页面等待读取'.format(workScheduleLength - index, workScheduleLength))
-            ThreadClass.waitForThreadRunningCompleted()
+            self.threadClass.waitForThreadRunningCompleted()
         for questionInfoDict in self.questionInfoDictList:
             self.save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
         for answerDict in self.answerDictList:
@@ -190,13 +189,13 @@ class QuestionQueenWorker(PageWorker):
         """
         if workNo in self.complete:
             return
-        threadID = ThreadClass.getUUID()
-        while not ThreadClass.acquireThreadPoolPassport(threadID):
+        threadID = self.threadClass.getUUID()
+        while not self.threadClass.acquireThreadPoolPassport(threadID):
             time.sleep(0.1)
         result = self.realWorker(workNo)
         if result :
             self.complete.add(workNo)
-        ThreadClass.releaseThreadPoolPassport()
+        self.threadClass.releaseThreadPoolPassport()
         return
 
     def realWorker(self, workNo = 0):
@@ -221,6 +220,7 @@ class QuestionQueenWorker(PageWorker):
         self.suffix  = '?nr=1&sort=created&page='  # 按时间对答案排序，同时屏蔽跳转
         self.maxTry  = 5
         self.waitFor = 5
+        self.threadClass = ThreadClass()
         return
 
 class AnswerQueenWorker(QuestionQueenWorker):
