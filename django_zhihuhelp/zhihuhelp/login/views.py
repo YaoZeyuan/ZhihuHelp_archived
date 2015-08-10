@@ -62,6 +62,7 @@ def login(request):
                        'Host'            : 'www.zhihu.com',
                        'Content-Type'    : 'application/x-www-form-urlencoded; charset=UTF-8',
                        'User-Agent'      : 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36(KHTML, like Gecko)Chrome/34.0.1847.116 Safari/537.36',
+                       'Connection'      : 'keep-alive',
                        'X-Requested-With': 'XMLHttpRequest',
                      }
             header['Origin']  = 'http://www.zhihu.com'

@@ -411,6 +411,7 @@ def Login(cursor=None,UserID='mengqingxue2014@qq.com',UserPassword='131724qingxu
                     ,'Host'    :'www.zhihu.com'
                     ,'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
                     ,'DNT':'1'
+                    ,'Connection':'keep-alive'
                     ,'User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36\
                      (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36'
                     ,'X-Requested-With':'XMLHttpRequest'
@@ -576,6 +577,7 @@ def OldPostHeader(cursor=None):#可以加一个网络更新cookie的功能#Pass
                     ,'Accept-Encoding'   :'gzip,deflate,sdch'
                     ,'Accept-Language'    :'zh,zh-CN;q=0.8,en-GB;q=0.6,en;q=0.4'
                     ,'Host'    :'www.zhihu.com'
+                    ,'Connection':'keep-alive'
                     ,'User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) \
                       AppleWebKit/537.36 (KHTML, like Gecko)\
                       Chrome/34.0.1847.116 Safari/537.36'

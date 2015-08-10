@@ -2,6 +2,7 @@
 import os
 import sys
 import threading
+import traceback
 import uuid  # 生成线程唯一ID，用于控制线程数
 import logging
 import logging.handlers
@@ -23,6 +24,7 @@ class BaseClass(object):
     logger.setLevel(logging.DEBUG)
 
     # 辅助函数
+    @staticmethod
     def printInOneLine(text = ''):#Pass
         u"""
             *   功能
@@ -34,7 +36,7 @@ class BaseClass(object):
                 *  无
          """
         try:
-            sys.stdout.write("\r"+" "*60+'\r')
+            sys.stdout.write("\r" + " "*60 + '\r')
             sys.stdout.flush()
             sys.stdout.write(text)
             sys.stdout.flush()
@@ -42,26 +44,30 @@ class BaseClass(object):
             pass
         return
 
-    def printDict(self, data = {}, key = '', prefix = ''):
+    @staticmethod
+    def printDict(data = {}, key = '', prefix = ''):
         if isinstance(data, dict):
             for key in data.keys():
-                self.printDict(data[key], key, prefix + '   ')
+                BaseClass.printDict(data[key], key, prefix + '   ')
         else:
             print prefix + str(key) + ' => ' + str(data)
         return
 
-    def printCurrentDir(self):
+    @staticmethod
+    def printCurrentDir():
         print os.path.realpath('.')
         return
 
-    def mkdir(self, path):
+    @staticmethod
+    def mkdir(path):
         try:
             os.mkdir(path)
         except OSError:
             print u'指定目录已存在'
         return 
-    
-    def chdir(self, path):
+
+    @staticmethod
+    def chdir(path):
         try:
             os.chdir(path)
         except OSError:
@@ -109,19 +115,22 @@ class ThreadClass(object):
 
     mutex = threading.Lock()
 
-    def getUUID(self):
+    @staticmethod
+    def getUUID():
         u'''
         获取由python官方库生成的，永不重复的128位int型ID
         '''
         return uuid.uuid1().__int__()
 
-    def getThreadCount(self):
+    @staticmethod
+    def getThreadCount():
         return len(ThreadClass.threadIDPool)
 
-    def acquireThreadPoolPassport(self, threadID):
+    @staticmethod
+    def acquireThreadPoolPassport(threadID):
         ThreadClass.mutex.acquire()
         # 每次只允许向队列中添加一个线程ID，以此来控制当前运行线程数
-        if self.getThreadCount() < SettingClass.MAXTHREAD:
+        if ThreadClass.getThreadCount() < SettingClass.MAXTHREAD:
             ThreadClass.threadIDPool.add(threadID)
             ThreadClass.mutex.release()
             return True
@@ -129,20 +138,33 @@ class ThreadClass(object):
             ThreadClass.mutex.release()
             return False
 
-    def releaseThreadPoolPassport(self, threadID):
+    @staticmethod
+    def releaseThreadPoolPassport(threadID):
         ThreadClass.mutex.acquire()
         ThreadClass.threadIDPool.discard(threadID)
         ThreadClass.mutex.release()
 
-    def threadWorker(self, function):
+    @staticmethod
+    def threadWorker(function):
         u"""
         实现线程池功能，传入待工作的函数，自动完成线程数量控制
         """
         return
 
-    def waitForThreadRunningCompleted(self):
+    @staticmethod
+    def waitForSecond(second):
+        u"休眠n秒"
+        time.sleep(second)
+        return
+
+    @staticmethod
+    def waitForThreadRunningCompleted(maxThread = -1):
         # 等待所有线程执行完毕, 用于启动线程时控制线程数量
-        while self.getThreadCount() > SettingClass.MAXTHREAD:
+        ThreadClass.waitForSecond(0.1) # 先睡0.1秒，给其他线程留出在threadPool里注册的时间
+        threadLock = maxThread
+        if threadLock == -1:
+            threadLock = SettingClass.MAXTHREAD
+        while ThreadClass.getThreadCount() > threadLock:
             time.sleep(0.1)
         return
     
@@ -191,7 +213,6 @@ class HttpBaseClass(object):
     u'''
     用于存放常用Http函数
     '''
-
     def getHttpContent(self, url = '', extraHeader = {} , data = None, timeout = 5):
         u"""获取网页内容
      
@@ -230,6 +251,11 @@ class HttpBaseClass(object):
         except  socket.timeout as error:
             print u'打开网页超时'
             print u'超时页面' + url
+        except :
+            print u'未知错误'
+            print u'错误堆栈信息:'
+            print traceback.format_exc()
+            print u'错误页面' + url
         else:
             try:
                 return self.decodeGZip(rawPageData)
