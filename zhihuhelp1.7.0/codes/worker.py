@@ -124,20 +124,22 @@ class QuestionQueenWorker(PageWorker):
         self.workSchedule = {}
         workerNo = 0
         completeFlag = False
-        BaseClass.logger.info(u"开始获取最大页数")
         while not completeFlag:
+            BaseClass.logger.info(u'开始启动线程')
             completeFlag = True #放置于前，避免taskQueen为空
             for urlInfo in self.taskQueen:
-                BaseClass.logger.info(u'开始获取网址: ' + urlInfo['baseUrl'] + u' 的最大页数')
                 if 'maxPage' in urlInfo:
                     continue
                 else:
+                    BaseClass.logger.info(u'开始获取网址: ' + urlInfo['baseUrl'] + u' 的最大页数')
                     completeFlag = False
                     t = threading.Thread(target = self.detectMaxPage, kwargs = {'urlInfo' : urlInfo})
+                    ThreadClass.startRegisterThread()
                     t.start()
                     ThreadClass.waitForThreadRunningCompleted()
-
+            BaseClass.logger.info(u'所有线程启动完毕，等待线程运行结束')
             ThreadClass.waitForThreadRunningCompleted(0) # 确保所有线程运行完毕 # 但在开始等待前，线程可能还没在threadClass里成功注册上
+            BaseClass.logger.info(u'线程运行结束')
 
         for urlInfo in self.taskQueen:
             for i in range(urlInfo['maxPage']):
@@ -147,8 +149,7 @@ class QuestionQueenWorker(PageWorker):
     def detectMaxPage(self, urlInfo):
         # 通过全球唯一的uuid来实现对线程数的控制
         threadID = ThreadClass.getUUID()
-        BaseClass.logger.info(u'开始获取最大页数')
-        BaseClass.logger.info(u'等待放行， threadID = ' + str(threadID))
+        BaseClass.logger.info(u'detectMaxPage开始等待执行， threadID = ' + str(threadID))
         while not ThreadClass.acquireThreadPoolPassport(threadID):
             time.sleep(0.1)
         BaseClass.logger.info(u"开始检测 " + urlInfo['baseUrl'] + u' 的页数')
@@ -180,6 +181,7 @@ class QuestionQueenWorker(PageWorker):
         for key in self.workSchedule:
             index += 1
             t = threading.Thread(target = self.worker, kwargs = {'workNo' : key})
+            ThreadClass.startRegisterThread()
             t.start()
             BaseClass.printInOneLine(u'正在读取答案页面，还有{}/{}张页面等待读取'.format(workScheduleLength - index, workScheduleLength))
             ThreadClass.waitForThreadRunningCompleted()
@@ -206,7 +208,7 @@ class QuestionQueenWorker(PageWorker):
         result = self.realWorker(workNo)
         if result :
             self.complete.add(workNo)
-        ThreadClass.releaseThreadPoolPassport()
+        ThreadClass.releaseThreadPoolPassport(threadID)
         return
 
     def realWorker(self, workNo = 0):
@@ -301,6 +303,7 @@ class AuthorWorker(PageWorker):
         self.answerDictList       = []
         for key in self.workSchedule:
             t = threading.Thread(target = self.worker, kwargs = {'workNo' : key})
+            ThreadClass.startRegisterThread()
             t.start()
             ThreadClass.waitForThreadRunningCompleted()
             BaseClass.printInOneLine(u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule)))
@@ -570,6 +573,7 @@ class ColumnWorker(JsonWorker):
             bufLength = self.maxThread - threadLiving
             if bufLength > 0 and threadsCount > 0:
                 while bufLength > 0 and threadsCount > 0:
+                    # todo : 还没有在这里做线程控制体系，记得回来添上
                     threadPool[threadsCount - 1].start()
                     bufLength -= 1
                     threadsCount -= 1

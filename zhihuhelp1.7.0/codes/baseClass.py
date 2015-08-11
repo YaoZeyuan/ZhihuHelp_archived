@@ -114,6 +114,7 @@ class ThreadClass(object):
     threadIDPool = set()
 
     mutex = threading.Lock()
+    threadRegisterLock = threading.Lock()
 
     @staticmethod
     def getUUID():
@@ -133,10 +134,23 @@ class ThreadClass(object):
         if ThreadClass.getThreadCount() < SettingClass.MAXTHREAD:
             ThreadClass.threadIDPool.add(threadID)
             ThreadClass.mutex.release()
+            ThreadClass.registerThreadCompleted()
             return True
         else:
             ThreadClass.mutex.release()
             return False
+
+    @staticmethod
+    def startRegisterThread():
+        BaseClass.logger.info(u"开始注册新线程")
+        BaseClass.logger.info(u'当前已注册线程数:' + str(ThreadClass.getThreadCount()))
+        return ThreadClass.threadRegisterLock.acquire()
+
+    @staticmethod
+    def registerThreadCompleted():
+        BaseClass.logger.info(u"新线程注册完毕")
+        BaseClass.logger.info(u'当前活跃线程数:' + str(ThreadClass.getThreadCount()))
+        return ThreadClass.threadRegisterLock.release()
 
     @staticmethod
     def releaseThreadPoolPassport(threadID):
@@ -160,12 +174,16 @@ class ThreadClass(object):
     @staticmethod
     def waitForThreadRunningCompleted(maxThread = -1):
         # 等待所有线程执行完毕, 用于启动线程时控制线程数量
-        ThreadClass.waitForSecond(0.1) # 先睡0.1秒，给其他线程留出在threadPool里注册的时间
-        threadLock = maxThread
-        if threadLock == -1:
-            threadLock = SettingClass.MAXTHREAD
-        while ThreadClass.getThreadCount() > threadLock:
+        threadLockCount = maxThread
+        if threadLockCount == -1:
+            threadLockCount = SettingClass.MAXTHREAD
+        BaseClass.logger.info(u'等待所有线程运行完毕')
+        BaseClass.logger.info(u'当前运行线程数:' + str(ThreadClass.getThreadCount()))
+        BaseClass.logger.info(u'允许的最大线程数:' + str(threadLockCount))
+        while ThreadClass.getThreadCount() > threadLockCount:
             time.sleep(0.1)
+        BaseClass.logger.info(u'线程数已符合允许的最大线程数的要求，允许的线程数为：' + str(threadLockCount)
+                              + u' 当前运行的线程数为：' + str(ThreadClass.getThreadCount()))
         return
     
 class SqlClass(object):

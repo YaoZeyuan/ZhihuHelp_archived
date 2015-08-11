@@ -62,23 +62,23 @@ class ZhihuHelp(BaseClass):
         if rememberAccount == 'yes':
             print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
             print   u'直接点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
-            if raw_input() == '':
-                login.setCookie()
-                SettingClass.MAXTHREAD  = settingDict['maxThread']
-                SettingClass.PICQUALITY = settingDict['picQuality']
-                if SettingClass.MAXTHREAD == '':
-                    SettingClass.MAXTHREAD = 20
-                else:
-                    SettingClass.MAXTHREAD = int(SettingClass.MAXTHREAD)
-
-                if SettingClass.PICQUALITY == '':
-                    SettingClass.PICQUALITY = 1
-                else:
-                    SettingClass.PICQUALITY = int(SettingClass.PICQUALITY)
+            #if raw_input() == '':
+            login.setCookie()
+            SettingClass.MAXTHREAD  = settingDict['maxThread']
+            SettingClass.PICQUALITY = settingDict['picQuality']
+            if SettingClass.MAXTHREAD == '':
+                SettingClass.MAXTHREAD = 20
             else:
-                login.login()
-                SettingClass.MAXTHREAD  = int(self.config.guideOfMaxThread())
-                SettingClass.PICQUALITY = int(self.config.guideOfPicQuality())
+                SettingClass.MAXTHREAD = int(SettingClass.MAXTHREAD)
+
+            if SettingClass.PICQUALITY == '':
+                SettingClass.PICQUALITY = 1
+            else:
+                SettingClass.PICQUALITY = int(SettingClass.PICQUALITY)
+            #else:
+            #    login.login()
+            #    SettingClass.MAXTHREAD  = int(self.config.guideOfMaxThread())
+            #    SettingClass.PICQUALITY = int(self.config.guideOfPicQuality())
         else:
             login.login()
             SettingClass.MAXTHREAD  = int(self.config.guideOfMaxThread())
@@ -143,26 +143,26 @@ class ZhihuHelp(BaseClass):
                     for urlInfo in taskList:
                         columnWorker = ColumnWorker(self.conn, urlInfo)
                         columnWorker.start()
-
-            BaseClass.logger.info(u"网页信息抓取完毕，开始自数据库中生成电子书数据")
-            for urlInfo in taskCollection:
-                try:
-                    self.addEpubContent(urlInfo['filter'].getResult())
-                except TypeError as error:
-                    print u'没有收集到指定问题'
-                    print u'错误信息:'
-                    print error
-
-            BaseClass.logger.info(u"电子书数据生成完毕，开始生成电子书")
-            try:
-                if self.epubContent:
-                    Zhihu2Epub(self.epubContent)
-                del self.epubContent
-            except AttributeError:
-                pass
-            BaseClass.logger.info(u"第 {0} 本电子书生成完毕".format(bookCount))
-            self.resetDir()
-            bookCount += 1
+#
+#            BaseClass.logger.info(u"网页信息抓取完毕，开始自数据库中生成电子书数据")
+#            for urlInfo in taskCollection:
+#                try:
+#                    self.addEpubContent(urlInfo['filter'].getResult())
+#                except TypeError as error:
+#                    print u'没有收集到指定问题'
+#                    print u'错误信息:'
+#                    print error
+#
+#            BaseClass.logger.info(u"电子书数据生成完毕，开始生成电子书")
+#            try:
+#                if self.epubContent:
+#                    Zhihu2Epub(self.epubContent)
+#                del self.epubContent
+#            except AttributeError:
+#                pass
+#            BaseClass.logger.info(u"第 {0} 本电子书生成完毕".format(bookCount))
+#            self.resetDir()
+#            bookCount += 1
         return
 
     def addEpubContent(self, result):
