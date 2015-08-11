@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 class Parse(BaseClass):
     def __init__(self, content):
         BaseClass.logger.info(u"开始解析网页")
-        self.content = BeautifulSoup(content)
+        self.content = BeautifulSoup(content, 'html.parser')
         self.rawContent = content
 
     def getAnswerAuthorInfoDict(self, content):

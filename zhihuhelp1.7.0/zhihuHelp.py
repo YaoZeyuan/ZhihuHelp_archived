@@ -3,6 +3,7 @@
 import sys  # 修改默认编码
 reload(sys)
 sys.setdefaultencoding('utf-8')
+import bs4
 # 将./codes添加至库目录中
 extendLibPath = r"./codes"
 sys.path.append(extendLibPath)

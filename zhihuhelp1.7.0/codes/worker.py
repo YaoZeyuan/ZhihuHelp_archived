@@ -134,6 +134,7 @@ class QuestionQueenWorker(PageWorker):
                 else:
                     completeFlag = False
                     t = threading.Thread(target = self.detectMaxPage, kwargs = {'urlInfo' : urlInfo})
+                    ThreadClass.startRegisterThread()
                     t.start()
                     ThreadClass.waitForThreadRunningCompleted()
 
@@ -180,6 +181,7 @@ class QuestionQueenWorker(PageWorker):
         for key in self.workSchedule:
             index += 1
             t = threading.Thread(target = self.worker, kwargs = {'workNo' : key})
+            ThreadClass.startRegisterThread()
             t.start()
             BaseClass.printInOneLine(u'正在读取答案页面，还有{}/{}张页面等待读取'.format(workScheduleLength - index, workScheduleLength))
             ThreadClass.waitForThreadRunningCompleted()
@@ -206,7 +208,7 @@ class QuestionQueenWorker(PageWorker):
         result = self.realWorker(workNo)
         if result :
             self.complete.add(workNo)
-        ThreadClass.releaseThreadPoolPassport()
+        ThreadClass.releaseThreadPoolPassport(threadID)
         return
 
     def realWorker(self, workNo = 0):
@@ -301,6 +303,7 @@ class AuthorWorker(PageWorker):
         self.answerDictList       = []
         for key in self.workSchedule:
             t = threading.Thread(target = self.worker, kwargs = {'workNo' : key})
+            ThreadClass.startRegisterThread()
             t.start()
             ThreadClass.waitForThreadRunningCompleted()
             BaseClass.printInOneLine(u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule)))
@@ -570,6 +573,7 @@ class ColumnWorker(JsonWorker):
             bufLength = self.maxThread - threadLiving
             if bufLength > 0 and threadsCount > 0:
                 while bufLength > 0 and threadsCount > 0:
+                    # todo : 还没有在这里做线程控制体系，记得回来添上
                     threadPool[threadsCount - 1].start()
                     bufLength -= 1
                     threadsCount -= 1
