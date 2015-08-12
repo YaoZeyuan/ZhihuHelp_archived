@@ -5,23 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4db8989-2244-4a27-9560-d362e52b86eb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/question.html" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\authorInfoContent1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\collectionInfoContent1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\json_AuthorActive1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\json_AuthorActive2.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\questionContent1.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\questionContent2.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\simpleAnswerContent1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\simpleAuthorContent1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\simpleAuthorInfoContent1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\simpleCollectionContent1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\simpleQuestionContent1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\simpleTopicContent1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\topicInfoContent1.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\htmlFile\topicInfoContent2.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/contentParse.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/contentParse.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/unit/contentParseTest.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/unit/contentParseTest.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ZhihuHelp__Python.iws" />
@@ -549,7 +532,13 @@
       <option name="project" value="LOCAL" />
       <updated>1439307346694</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="*    添加了测试模块，之前没法运行bs4库应该是因为没有把bs4的路径添加到环境变量里去&#10;*    明天继续检修bug">
+      <created>1439392304188</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1439392304188</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -595,7 +584,8 @@
     <MESSAGE value="线程部分还有点bug&#10;但总归可以运行了&#10;另外beautifulsoup一直运行不了，很奇怪- -" />
     <MESSAGE value="*   beautifulsou库好像没法在包里引入，只能在外部加入&#10;*   现在可以跑了，今天把多线程问题处理完" />
     <MESSAGE value="*    Question获取页码部分已经没问题了&#10;*    明天继续" />
-    <option name="LAST_COMMIT_MESSAGE" value="*    Question获取页码部分已经没问题了&#10;*    明天继续" />
+    <MESSAGE value="*    添加了测试模块，之前没法运行bs4库应该是因为没有把bs4的路径添加到环境变量里去&#10;*    明天继续检修bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="*    添加了测试模块，之前没法运行bs4库应该是因为没有把bs4的路径添加到环境变量里去&#10;*    明天继续检修bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -673,7 +663,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="36" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="36" />
           <folding>
-            <element signature="e#24#33#0" expanded="true" />
+            <element signature="e#24#33#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1027,7 +1017,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
           <folding>
-            <element signature="e#24#33#0" expanded="true" />
+            <element signature="e#24#33#0" expanded="false" />
           </folding>
         </state>
       </provider>
