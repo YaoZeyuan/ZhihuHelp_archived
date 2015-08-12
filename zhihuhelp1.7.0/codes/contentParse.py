@@ -14,18 +14,20 @@ class Parse(BaseClass):
 
     def getAnswerAuthorInfoDict(self, content):
         personInfo = {}
-        if(content.find('h3', {'class':'zm-item-answer-author-wrap'}).img == None):
+        if content.find('h3', {'class':'zm-item-answer-author-wrap'}).img is None :
             # 匿名用户
             personInfo['authorID']   = u"coder'sGirlFriend~"
             personInfo['authorSign'] = u''
-            personInfo['authorLogo'] = content.find('h3', {'class':'zm-item-answer-author-wrap'}).img['data-source']
+            personInfo['authorLogo'] = u'http://pic1.zhimg.com/da8e974dc_s.jpg'
             personInfo['authorName'] = u'匿名用户'
         else:
             #可能为空
             personInfo['authorID']   = self.getContentAttr(content.find('h3', {'class':'zm-item-answer-author-wrap'}).find('a', {'class':'zm-item-link-avatar'}), 'href')
             personInfo['authorSign'] = self.getContentAttr(content.find('h3', {'class':'zm-item-answer-author-wrap'}).find('strong', {'class':'zu-question-my-bio'}), 'title')
             personInfo['authorLogo'] = self.getContentAttr(content.find('h3', {'class':'zm-item-answer-author-wrap'}).img, 'data-source')
-            personInfo['authorName'] = self.getContentAttr(content.find('h3', {'class':'zm-item-answer-author-wrap'}).find_all('a'), 1).text
+            personInfo['authorName'] = content.find('h3', {'class':'zm-item-answer-author-wrap'}).find_all('a')[1].text
+            for key in personInfo:
+                personInfo[key] = str(personInfo[key])
         return personInfo
 
     def getAnswerContentList(self):
@@ -83,7 +85,7 @@ class Parse(BaseClass):
         return yesterday
 
     def matchContent(self, partten, content, defaultValue = ""):
-        result = re.search(partten, content)
+        result = re.search(partten, str(content))
         if result == None:
             return defaultValue
         return result.group(0)
@@ -92,7 +94,7 @@ class Parse(BaseClass):
         u"""
         返回文本形式的文字中最长的数字串，若没有则返回'0'
         """
-        return self.matchContent("\d*", content, "0")
+        return self.matchContent("\d+", content, "0")
 
     def matchQuestionID(self, rawLink):
         return self.matchContent("(?<=question/)\d{8}", rawLink)
@@ -101,7 +103,7 @@ class Parse(BaseClass):
         return self.matchContent("(?<=answer/)\d{8}", rawLink)
 
     def matchAuthorID(self, rawLink):
-        return self.matchContent("""(?<=people/)[^/'"]*""", rawLink)
+        return self.matchContent("""(?<=people/)[^/'"]+""", rawLink)
 
     def getTagContent(self, tag):
         u'''
@@ -119,7 +121,7 @@ class Parse(BaseClass):
         """
         if content == None:
             return defaultValue
-        return  content.get(attr, defaultValue)
+        return content.get(attr, defaultValue)
 
 class ParseQuestion(Parse):
     u'''
@@ -141,14 +143,22 @@ class ParseQuestion(Parse):
     
     def getQuestionInfoDict(self):
         questionInfoDict = {}
-        questionInfoDict['questionTitle'] = self.content.find("div", {"id":"zh-question-title"}).get_text()
-        questionInfoDict['questionCommentCount'] = self.matchInt(self.content.find("a", {"name":"addcomment"}).get_text())
-        questionInfoDict['questionDesc'] = self.getTagContent(self.content.find("div", {"id":"zh-question-detail"}).find('div').contents)
-        questionInfoDict['questionAnswerCount'] = self.matchInt(self.content.find("h3", {"id":"zh-question-answer-num"})['data-num'])
+        bufString = ''
 
-        questionInfoDict['questionFollowCount'] = self.matchInt(self.content.find("div", {"id":"zh-question-side-header-wrap"}).find("div", {"class": "zg-gray-normal"}).a.strong.text)
-        questionInfoDict['questionViewCount'] = self.matchInt(self.content.find("div", {"id":"zh-question-side-header-wrap"}).find("div", {"class": "zg-gray-normal"}).a.strong.text)
-        questionInfoDict['questionViewCount'] = self.content.find("div", {"class" : "zu-main-sidebar"}).find_all("div", {"class" : "zm-side-section"})[3].find_all("div", {"class" : "zg-gray-normal"})[1].find("strong").text # 问题浏览量这个数据不太好拿，暂先记为0
+        bufString = self.content.find("div", {"id":"zh-question-title"}).get_text()
+        questionInfoDict['questionTitle'] = str(bufString)
+        bufString = self.content.find("a", {"name":"addcomment"}).get_text()
+        questionInfoDict['questionCommentCount'] = self.matchInt(str(bufString))
+        questionInfoDict['questionDesc'] = self.getTagContent(self.content.find("div", {"id":"zh-question-detail"}).find('div').contents)
+        bufString = self.content.find("h3", {"id":"zh-question-answer-num"})['data-num']
+        questionInfoDict['questionAnswerCount'] = self.matchInt(str(bufString))
+
+        bufString = self.content.find("div", {"id":"zh-question-side-header-wrap"}).find("div", {"class": "zg-gray-normal"}).a.strong.text
+        questionInfoDict['questionFollowCount'] = self.matchInt(str(bufString))
+        bufString = self.content.find("div", {"id":"zh-question-side-header-wrap"}).find("div", {"class": "zg-gray-normal"}).a.strong.text
+        questionInfoDict['questionViewCount'] = self.matchInt(str(bufString))
+        bufString = self.content.find("div", {"class" : "zu-main-sidebar"}).find_all("div", {"class" : "zm-side-section"})[-1].find_all("div", {"class" : "zg-gray-normal"})[1].find("strong").text
+        questionInfoDict['questionViewCount'] = str(bufString)# 问题浏览量这个数据不太好拿，暂先记为0
         return questionInfoDict
 
 class ParseAnswer(ParseQuestion):
