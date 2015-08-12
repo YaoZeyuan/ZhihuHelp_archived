@@ -9,17 +9,23 @@ currentPath = sys.path[0]
 currentPath = currentPath.replace('unit', '')
 print currentPath
 sys.path.append(currentPath)
+sys.setrecursionlimit(1000000) #为了适应知乎上的长答案，需要专门设下递归深度限制。。。
 print sys.path
 
 from codes.baseClass import *
 from codes.contentParse import *
 
 
-questionFile = open('./unit_html/question.html', 'r').read()
+questionFile = open('./unit_html/error_html.html', 'r').read()
 parse = ParseQuestion(questionFile)
 
 
 questionInfoDictList, answerDictList = parse.getInfoDict()
-BaseClass.printDict(questionInfoDictList)
+
+for question in questionInfoDictList:
+    BaseClass.printDict(question)
+
 print '=========================='
-BaseClass.printDict(answerDictList)
+
+for answer in answerDictList:
+    BaseClass.printDict(answer)

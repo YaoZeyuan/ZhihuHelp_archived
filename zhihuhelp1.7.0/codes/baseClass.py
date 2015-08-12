@@ -6,6 +6,7 @@ import traceback
 import uuid  # 生成线程唯一ID，用于控制线程数
 import logging
 import logging.handlers
+import pprint
 
 class BaseClass(object):
     u'''
@@ -46,11 +47,19 @@ class BaseClass(object):
 
     @staticmethod
     def printDict(data = {}, key = '', prefix = ''):
-        if isinstance(data, dict):
-            for key in data.keys():
-                BaseClass.printDict(data[key], key, prefix + '   ')
-        else:
-            print prefix + str(key) + ' => ' + str(data)
+        try:
+            if isinstance(data, dict):
+                for key in data.keys():
+                    BaseClass.printDict(data[key], key, prefix + '   ')
+            else:
+                if isinstance(data, basestring):
+                    print prefix + unicode(key) + ' => ' + data
+                else:
+                    print prefix + unicode(key) + ' => ' + unicode(data)
+        except UnicodeEncodeError as error:
+            BaseClass.logger.info(u'printDict中编码异常')
+            BaseClass.logger.info(u'系统默认编码为：' + sys.getdefaultencoding())
+            raise error
         return
 
     @staticmethod
@@ -93,6 +102,7 @@ class SettingClass(object):
     MAXTRY          = 5            # 最大尝试次数
     ANSWERORDERBY   = 'agree'      # 答案排序原则
     QUESTIONORDERBY = 'agreeCount' # 问题排序原则
+    THREADMODE      = False         # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
 
 class TestClass(object):
     u"""
@@ -150,7 +160,16 @@ class ThreadClass(object):
     def registerThreadCompleted():
         BaseClass.logger.info(u"新线程注册完毕")
         BaseClass.logger.info(u'当前活跃线程数:' + str(ThreadClass.getThreadCount()))
-        return ThreadClass.threadRegisterLock.release()
+        try:
+            ThreadClass.threadRegisterLock.release()
+        except threading.ThreadError as error:
+            if SettingClass.THREADMODE:
+                BaseClass.logger.info(u"错误：释放了一个未被锁定的线程锁")
+                BaseClass.logger.info(u"ThreadClass.threadRegisterLock出现问题，请及时修复")
+                raise error
+            else:
+                pass
+        return
 
     @staticmethod
     def releaseThreadPoolPassport(threadID):

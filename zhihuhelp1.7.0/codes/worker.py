@@ -133,10 +133,13 @@ class QuestionQueenWorker(PageWorker):
                 else:
                     BaseClass.logger.info(u'开始获取网址: ' + urlInfo['baseUrl'] + u' 的最大页数')
                     completeFlag = False
-                    t = threading.Thread(target = self.detectMaxPage, kwargs = {'urlInfo' : urlInfo})
-                    ThreadClass.startRegisterThread()
-                    t.start()
-                    ThreadClass.waitForThreadRunningCompleted()
+                    if SettingClass.THREADMODE:
+                        t = threading.Thread(target = self.detectMaxPage, kwargs = {'urlInfo' : urlInfo})
+                        ThreadClass.startRegisterThread()
+                        t.start()
+                        ThreadClass.waitForThreadRunningCompleted()
+                    else:
+                        self.detectMaxPage(urlInfo)
             BaseClass.logger.info(u'所有线程启动完毕，等待线程运行结束')
             ThreadClass.waitForThreadRunningCompleted(0) # 确保所有线程运行完毕 # 但在开始等待前，线程可能还没在threadClass里成功注册上
             BaseClass.logger.info(u'线程运行结束')
@@ -180,9 +183,12 @@ class QuestionQueenWorker(PageWorker):
         workScheduleLength = len(self.workSchedule)
         for key in self.workSchedule:
             index += 1
-            t = threading.Thread(target = self.worker, kwargs = {'workNo' : key})
-            ThreadClass.startRegisterThread()
-            t.start()
+            if SettingClass.THREADMODE:
+                t = threading.Thread(target = self.worker, kwargs = {'workNo' : key})
+                ThreadClass.startRegisterThread()
+                t.start()
+            else:
+                self.worker(key)
             BaseClass.printInOneLine(u'正在读取答案页面，还有{}/{}张页面等待读取'.format(workScheduleLength - index, workScheduleLength))
             ThreadClass.waitForThreadRunningCompleted()
 
@@ -220,7 +226,7 @@ class QuestionQueenWorker(PageWorker):
         content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader, timeout = self.waitFor)
         if content == '':
             return False
-        BaseClass.logger.info(u'开始使用ParseQuestion分析网页内容')
+        BaseClass.logger.info(u'开始使用ParseQuestion分析网页{}内容'.format(self.workSchedule[workNo]))
         parse = ParseQuestion(content)
         questionInfoDictList, answerDictList = parse.getInfoDict()
         for questionInfoDict in questionInfoDictList:
