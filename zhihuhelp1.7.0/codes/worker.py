@@ -124,7 +124,9 @@ class QuestionQueenWorker(PageWorker):
         self.workSchedule = {}
         workerNo = 0
         completeFlag = False
+        taskTimer = 0
         while not completeFlag:
+            taskTimer += 1
             BaseClass.logger.info(u'开始启动线程')
             completeFlag = True #放置于前，避免taskQueen为空
             for urlInfo in self.taskQueen:
@@ -140,9 +142,9 @@ class QuestionQueenWorker(PageWorker):
                         ThreadClass.waitForThreadRunningCompleted()
                     else:
                         self.detectMaxPage(urlInfo)
-            BaseClass.logger.info(u'所有线程启动完毕，等待线程运行结束')
+            BaseClass.logger.info(u'第{}轮所有线程启动完毕，等待线程运行结束'.format(taskTimer))
             ThreadClass.waitForThreadRunningCompleted(0) # 确保所有线程运行完毕 # 但在开始等待前，线程可能还没在threadClass里成功注册上
-            BaseClass.logger.info(u'线程运行结束')
+            BaseClass.logger.info(u'第{}轮任务所有线程运行结束，准备执行第{}轮任务'.format(taskTimer, taskTimer + 1))
 
         for urlInfo in self.taskQueen:
             for i in range(urlInfo['maxPage']):
@@ -207,6 +209,7 @@ class QuestionQueenWorker(PageWorker):
         完成线程控制工作，实际工作由realWork完成
         """
         if workNo in self.complete:
+            ThreadClass.registerThreadCompleted()
             return
         threadID = ThreadClass.getUUID()
         while not ThreadClass.acquireThreadPoolPassport(threadID):
@@ -340,6 +343,7 @@ class AuthorWorker(PageWorker):
         完成线程控制工作，实际工作由realWorker完成
         """
         if workNo in self.complete:
+            ThreadClass.registerThreadCompleted()
             return
         threadID = 0  # 初始化threadID值
         try:
