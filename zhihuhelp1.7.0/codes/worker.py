@@ -261,7 +261,7 @@ class AnswerQueenWorker(QuestionQueenWorker):
             workerNo += 1
 
     def realWorker(self, workNo = 0):
-        content = self.getHttpContent(url = self.url, extraHeader = self.extraHeader)
+        content = self.getHttpContent(url = self.workSchedule[workNo], extraHeader = self.extraHeader)
         if content == '':
             return False
         parse = ParseAnswer(content)

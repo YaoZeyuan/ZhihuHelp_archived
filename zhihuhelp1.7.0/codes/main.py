@@ -143,25 +143,25 @@ class ZhihuHelp(BaseClass):
                         columnWorker = ColumnWorker(self.conn, urlInfo)
                         columnWorker.start()
 #
-#            BaseClass.logger.info(u"网页信息抓取完毕，开始自数据库中生成电子书数据")
-#            for urlInfo in taskCollection:
-#                try:
-#                    self.addEpubContent(urlInfo['filter'].getResult())
-#                except TypeError as error:
-#                    print u'没有收集到指定问题'
-#                    print u'错误信息:'
-#                    print error
+#           BaseClass.logger.info(u"网页信息抓取完毕，开始自数据库中生成电子书数据")
+#           for urlInfo in taskCollection:
+#               try:
+#                   self.addEpubContent(urlInfo['filter'].getResult())
+#               except TypeError as error:
+#                   print u'没有收集到指定问题'
+#                   print u'错误信息:'
+#                   print error
 #
-#            BaseClass.logger.info(u"电子书数据生成完毕，开始生成电子书")
-#            try:
-#                if self.epubContent:
-#                    Zhihu2Epub(self.epubContent)
-#                del self.epubContent
-#            except AttributeError:
-#                pass
-#            BaseClass.logger.info(u"第 {0} 本电子书生成完毕".format(bookCount))
-#            self.resetDir()
-#            bookCount += 1
+#           BaseClass.logger.info(u"电子书数据生成完毕，开始生成电子书")
+#           try:
+#               if self.epubContent:
+#                   Zhihu2Epub(self.epubContent)
+#               del self.epubContent
+#           except AttributeError:
+#               pass
+#           BaseClass.logger.info(u"第 {0} 本电子书生成完毕".format(bookCount))
+#           self.resetDir()
+#           bookCount += 1
         return
 
     def addEpubContent(self, result):
@@ -234,7 +234,7 @@ class ZhihuHelp(BaseClass):
         """
         urlInfo = self.detectUrl(rawUrl)
         if not 'kind' in urlInfo:
-            # 卫语句
+            # 卫语
             urlInfo['kind'] = ''
             return urlInfo
         urlInfo['baseSetting'] = {}

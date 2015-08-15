@@ -50,14 +50,23 @@ class Parse(BaseClass):
         # 需要移除<noscript>中的内容
         # 需要考虑对『违反当前法律法规，暂不予以显示』内容的处理
         answerDict['answerAgreeCount'] = content.find("div", {"class":"zm-votebar"}).find("button", {"class":"up"}).find('span', {"class":"count"}).text
-        answerDict['answerContent']    = self.getTagContent(content.find("div", {"class" : "zm-item-rich-text", "data-action": "/answer/content"}).find("div",{"class", "zm-editable-content"}))
+        if content.find('div', {'id' : 'answer-status'}) != None:
+            answerDict['answerContent'] = u'<p>回答被建议修改：包含少儿不宜的内容</p>'
+            answerDict["updateDate"] = '1970-01-01'
+            answerDict["commitDate"] = '1970-01-01'
+            answerDict["noRecordFlag"] = 0
+            answerDict["answerCommentCount"] = 0
+        else:
+            bufferString = content.find("div", {"class" : "zm-item-rich-text", "data-action": "/answer/content"}).find("textarea",{"class", "content"})
+            answerDict['answerContent'] = self.getTagContent(bufferString)
+            answerDict["updateDate"] = content.find("span", {"class":"answer-date-link-wrap"}).text
+            answerDict["commitDate"] = self.getContentAttr(content.find("span", {"class":"answer-date-link-wrap"}).a, "data-tip")
+            answerDict["noRecordFlag"] = self.getContentAttr(content.find("div", {"class":"zm-meta-panel"}).find("a", {"class":"copyright"}), "data-author-avatar")
+            answerDict["answerCommentCount"] = self.matchInt(content.find("a", {"name":"addcomment"}).text)
+
         answerLink = self.getContentAttr(content.find("a", {"class":"answer-date-link"}), "href")
         answerDict["questionID"] = self.matchQuestionID(answerLink)
         answerDict["answerID"] = self.matchAnswerID(answerLink)
-        answerDict["answerCommentCount"] = self.matchInt(content.find("a", {"name":"addcomment"}).text)
-        answerDict["updateDate"] = content.find("span", {"class":"answer-date-link-wrap"}).text
-        answerDict["commitDate"] = self.getContentAttr(content.find("span", {"class":"answer-date-link-wrap"}).a, "data-tip")
-        answerDict["noRecordFlag"] = self.getContentAttr(content.find("div", {"class":"zm-meta-panel"}).find("a", {"class":"copyright"}), "data-author-avatar")
 
         if answerDict['answerAgreeCount'] == '':
             answerDict['answerAgreeCount'] = 0
@@ -161,6 +170,24 @@ class ParseQuestion(Parse):
         return questionInfoDict
 
 class ParseAnswer(ParseQuestion):
+    def getQuestionInfoDict(self):
+        questionInfoDict = {}
+        bufString = self.content.find("div", {"id":"zh-question-title"}).get_text()
+        questionInfoDict['questionTitle'] = bufString
+        bufString = self.content.find("a", {"name":"addcomment"}).get_text()
+        questionInfoDict['questionCommentCount'] = self.matchInt(bufString)
+        questionInfoDict['questionDesc'] = self.getTagContent(self.content.find("div", {"id":"zh-question-detail"}).find('div'))
+        bufString = self.content.find("div", {"class":"zh-answers-title"}).find('a', {'class' : 'zg-link-litblue'}).get_text()
+        questionInfoDict['questionAnswerCount'] = self.matchInt(bufString)
+
+        bufString = self.content.find("div", {"id":"zh-question-side-header-wrap"}).find("div", {"class": "zg-gray-normal"}).a.strong.text
+        questionInfoDict['questionFollowCount'] = self.matchInt(bufString)
+        bufString = self.content.find("div", {"id":"zh-question-side-header-wrap"}).find("div", {"class": "zg-gray-normal"}).a.strong.text
+        questionInfoDict['questionViewCount'] = self.matchInt(bufString)
+        bufString = self.content.find("div", {"class" : "zu-main-sidebar"}).find("div", {"class" : "zm-side-section"}).find("div", {"class" : "zg-gray-normal"}).find("strong").text
+        questionInfoDict['questionViewCount'] = bufString
+        return questionInfoDict
+
     def getAnswerContentList(self):
         return self.content.find_all("div", {"id" : "zh-question-answer-wrap"})
 
@@ -181,12 +208,18 @@ class ParseAuthor(Parse):
             if len(answerDict['answerID']) == 0:
                 continue
             answerDictList.append(answerDict)
-            questionInfoDictList.append(self.getQuestionInfoDict(content))
+            lastQuestionInfoDict = {}
+            if len(questionInfoDictList) > 0:
+                lastQuestionInfoDict = questionInfoDictList[-1]  # 在话题和收藏夹里，同一问题下的答案会被归并到一起，造成questionDict信息丢失，所以需要额外传入问题信息数据
+            questionInfoDictList.append(self.getQuestionInfoDict(content, lastQuestionInfoDict))
         return questionInfoDictList, answerDictList
 
-    def getQuestionInfoDict(self, content):
+    def getQuestionInfoDict(self, content, lastQuestionInfoDict = {}):
         questionInfoDict = {}
-        questionInfoDict['questionTitle'] = content.find("a", {'class' : "question_link"}).get_text()
+        questionTitle = content.find("a", {'class' : "question_link"})
+        if questionTitle is None:
+            return lastQuestionInfoDict
+        questionInfoDict['questionTitle'] = questionTitle.get_text()
         rawLink = self.getContentAttr(content.find("a", {'class' : "question_link"}), 'href')
         questionInfoDict['questionIDinQuestionDesc'] = self.matchQuestionID(rawLink)
         return questionInfoDict
@@ -198,21 +231,19 @@ class ParseCollection(ParseAuthor):
     def getAnswerContentList(self):
         return self.content.find_all("div", {"class" : "zm-item"})
 
+    def getQuestionInfoDict(self, content, lastQuestionInfoDict = {}):
+        questionInfoDict = {}
+        questionTitle = content.find('h2', {'class' : 'zm-item-title'})
+        if questionTitle is None:
+            return lastQuestionInfoDict
+        questionInfoDict['questionTitle'] = content.find('h2', {'class' : 'zm-item-title'}).get_text()
+        rawLink = self.getContentAttr(content.find('h2', {'class' : 'zm-item-title'}).a, 'href')
+        questionInfoDict['questionIDinQuestionDesc'] = self.matchQuestionID(rawLink)
+        return questionInfoDict
+
 class ParseTopic(ParseAuthor):
     def getAnswerContentList(self):
         return self.content.find("div", {"id" : "zh-topic-top-page-list"}).find_all("div", {"itemprop" : "question"})
-
-    def getInfoDict(self):
-        contentList = self.getAnswerContentList()
-        answerDictList       = []
-        questionInfoDictList = []
-        for content in contentList:
-            answerDict = self.getAnswerDict(content)
-            if len(answerDict['answerID']) == 0:
-                continue
-            answerDictList.append(answerDict)
-            questionInfoDictList.append(self.getQuestionInfoDict(content))
-        return questionInfoDictList, answerDictList
 
 '''   
 class ParseColumn:
@@ -248,13 +279,9 @@ class AuthorInfoParse(Parse):
             infoDict[kind] = self.matchInt(self.getTagContent(infoList[i]))
             i += 1
 
-        infoList = self.content.find('div', {'class' : 'zm-profile-side-following'}).find_all('a', {'class' : 'zg-gray-normal'})
-        infoDict['followee'] = self.matchInt(self.getTagContent(infoList[0]))
-        infoDict['follower'] = self.matchInt(self.getTagContent(infoList[1]))
-
-        infoList = self.content.find('div', {'class' : 'zm-profile-side-following'}).find_all('a', {'class' : 'zg-gray-normal'})
-        infoDict['followee'] = self.matchInt(self.getTagContent(infoList[0]))
-        infoDict['follower'] = self.matchInt(self.getTagContent(infoList[1]))
+        infoList = self.content.find('div', {'class' : 'zm-profile-side-following'}).find_all('a', {'class' : 'item'})
+        infoDict['followee'] = self.matchInt(infoList[0].get_text())
+        infoDict['follower'] = self.matchInt(infoList[1].get_text())
 
         infoList = self.content.find('div', {'class' : 'zm-profile-details-reputation'}).find_all('i', {'class' : 'zm-profile-icon'})
         kindList = ['agree', 'thanks', 'collected', 'shared']
@@ -269,7 +296,7 @@ class TopicInfoParse(Parse):
     def getInfoDict(self):
         infoDict = {}
         infoDict['title'] = self.content.find('h1', {'class' : 'zm-editable-content'}).get_text()
-        infoDict['description'] = self.getTagContent(self.content.find('div', {'class' : 'zh-topic-desc'}).find('div', 'zm-editable-content'))
+        infoDict['description'] = self.getTagContent(self.content.find('div', {'id' : 'zh-topic-desc'}).find('div', 'zm-editable-content'))
         infoDict['topicID'] = self.matchInt(self.getContentAttr(self.content.find('a', {'id' : 'zh-avartar-edit-form'}), 'href'))
         infoDict['logoAddress'] = self.getContentAttr(self.content.find('img', {'class' : 'zm-avatar-editor-preview'}), 'src')
         infoDict['logoAddress'] = self.matchInt(self.getTagContent(self.content.find('div', {'class' : 'zm-topic-side-followers-info'})))

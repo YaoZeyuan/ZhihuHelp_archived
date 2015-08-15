@@ -15,9 +15,12 @@ from codes.baseClass import *
 from codes.contentParse import *
 
 
-questionFile = open('./unit_html/error_html.html', 'r').read()
-parse = ParseQuestion(questionFile)
+htmlContent = open('./unit_html/topic.html', 'r').read()
+parse = TopicInfoParse(htmlContent)
 
+infoDict = parse.getInfoDict()
+BaseClass.printDict(infoDict)
+exit()
 
 questionInfoDictList, answerDictList = parse.getInfoDict()
 

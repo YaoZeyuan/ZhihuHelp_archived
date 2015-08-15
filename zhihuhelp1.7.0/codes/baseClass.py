@@ -102,7 +102,7 @@ class SettingClass(object):
     MAXTRY          = 5            # 最大尝试次数
     ANSWERORDERBY   = 'agree'      # 答案排序原则
     QUESTIONORDERBY = 'agreeCount' # 问题排序原则
-    THREADMODE      = True         # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
+    THREADMODE      = False         # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
 
 class TestClass(object):
     u"""
