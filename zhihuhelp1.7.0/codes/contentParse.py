@@ -47,8 +47,6 @@ class Parse(BaseClass):
         authorInfo = self.getAnswerAuthorInfoDict(content)
         for key in authorInfo:
             answerDict[key] = authorInfo[key]
-        if authorInfo['authorID'] == 'e-mo-de-nai-ba':
-            print 'error'
         # 需要移除<noscript>中的内容
         # 需要考虑对『违反当前法律法规，暂不予以显示』内容的处理
         answerDict['answerAgreeCount'] = content.find("div", {"class":"zm-votebar"}).find("button", {"class":"up"}).find('span', {"class":"count"}).text
@@ -146,8 +144,6 @@ class ParseQuestion(Parse):
     
     def getQuestionInfoDict(self):
         questionInfoDict = {}
-        bufString = ''
-
         bufString = self.content.find("div", {"id":"zh-question-title"}).get_text()
         questionInfoDict['questionTitle'] = bufString
         bufString = self.content.find("a", {"name":"addcomment"}).get_text()
