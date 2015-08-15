@@ -102,7 +102,7 @@ class SettingClass(object):
     MAXTRY          = 5            # 最大尝试次数
     ANSWERORDERBY   = 'agree'      # 答案排序原则
     QUESTIONORDERBY = 'agreeCount' # 问题排序原则
-    THREADMODE      = False         # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
+    THREADMODE      = True         # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
 
 class TestClass(object):
     u"""
@@ -196,12 +196,13 @@ class ThreadClass(object):
         threadLockCount = maxThread
         if threadLockCount == -1:
             threadLockCount = SettingClass.MAXTHREAD
-        BaseClass.logger.info(u'等待所有线程运行完毕')
-        BaseClass.logger.info(u'当前运行线程数:' + str(ThreadClass.getThreadCount()))
-        BaseClass.logger.info(u'允许的最大线程数:' + str(threadLockCount))
+        BaseClass.logger.info(u'进入waitForThreadRunningCompleted，等待所有线程运行完毕\n'
+                              + u'当前运行线程数 : ' + str(ThreadClass.getThreadCount()) + u'\t允许的最大线程数:' + str(threadLockCount) + '\n'
+                              + u'开始检测线程数是否符合要求'
+                              )
         while ThreadClass.getThreadCount() > threadLockCount:
             time.sleep(0.1)
-        BaseClass.logger.info(u'线程数已符合允许的最大线程数的要求，允许的线程数为：' + str(threadLockCount)
+        BaseClass.logger.info(u'线程数已符合允许的最大线程数的要求，允许的最大线程数为：' + str(threadLockCount)
                               + u' 当前运行的线程数为：' + str(ThreadClass.getThreadCount()))
         return
     

@@ -43,13 +43,14 @@ class Setting(BaseClass):
         *   答案长度
     """
     def __init__(self):
+        #todo 设置项不起作用，发布之前必须把设置项修好，使用json+公共类的方式进行记录
         self.config      = ConfigParser.SafeConfigParser() 
         self.settingList = ['account', 'password', 'rememberAccount', 'maxThread', 'picQuality', 'contentLength', 'contentAgree', 'answerOrderBy', 'questionOrderBy']
         self.setDict     = {
             'account'         : 'mengqingxue2014@qq.com',
             'password'        : '131724qingxue',
             'rememberAccount' : '0',
-            'maxThread'       : '20',
+            'maxThread'       : '5',
             'picQuality'      : '0',
             'contentLength'   : '0',
             'contentAgree'    : '5',

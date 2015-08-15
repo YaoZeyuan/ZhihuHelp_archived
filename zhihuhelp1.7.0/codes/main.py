@@ -92,7 +92,6 @@ class ZhihuHelp(BaseClass):
                 }
         self.config.setSetting(settingDict)
         self.config.saveToGlobalClass()
-        
         #主程序开始运行
         BaseClass.logger.info(u"开始读取ReadList.txt设置信息")
         readList  = open('./ReadList.txt', 'r')
@@ -234,6 +233,10 @@ class ZhihuHelp(BaseClass):
                 *   最大线程数
         """
         urlInfo = self.detectUrl(rawUrl)
+        if not 'kind' in urlInfo:
+            # 卫语句
+            urlInfo['kind'] = ''
+            return urlInfo
         urlInfo['baseSetting'] = {}
         urlInfo['baseSetting']['picQuality'] = SettingClass.PICQUALITY
         urlInfo['baseSetting']['maxThread']  = SettingClass.MAXTHREAD
