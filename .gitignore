@@ -216,5 +216,6 @@ pip-log.txt
 
 #Mine
 ReadList.txt
+misc.xml
 *.db
 *.ini
