@@ -49,7 +49,11 @@ class Parse(BaseClass):
             answerDict[key] = authorInfo[key]
         # 需要移除<noscript>中的内容
         # 需要考虑对『违反当前法律法规，暂不予以显示』内容的处理
-        answerDict['answerAgreeCount'] = content.find("div", {"class":"zm-votebar"}).find("button", {"class":"up"}).find('span', {"class":"count"}).text
+        bufferString = content.find("div", {"class":"zm-item-vote"})
+        if bufferString is None:
+            answerDict['answerAgreeCount'] = self.getContentAttr(content.find("div", {"class":"zm-item-vote-info"}), 'data-votecount', 0)
+        else:
+            answerDict['answerAgreeCount'] = self.getContentAttr(bufferString.find("a", {"class":"zm-item-vote-count"}), 'data-votecount', 0)
         if content.find('div', {'id' : 'answer-status'}) != None:
             answerDict['answerContent'] = u'<p>回答被建议修改：包含少儿不宜的内容</p>'
             answerDict["updateDate"] = '1970-01-01'
@@ -57,8 +61,12 @@ class Parse(BaseClass):
             answerDict["noRecordFlag"] = 0
             answerDict["answerCommentCount"] = 0
         else:
-            bufferString = content.find("div", {"class" : "zm-item-rich-text", "data-action": "/answer/content"}).find("textarea",{"class", "content"})
-            answerDict['answerContent'] = self.getTagContent(bufferString)
+            bufferString = content.find("div", {"class" : "zm-item-rich-text", "data-action": "/answer/content"})
+            if bufferString.find("textarea",{"class", "content"}) is None:
+                # 单个问题&答案
+                answerDict['answerContent'] = self.getTagContent(bufferString.find("div",{"class", "zm-editable-content"}))
+            else:
+                answerDict['answerContent'] = self.getTagContent(bufferString.find("textarea",{"class", "content"}))
             answerDict["updateDate"] = content.find("span", {"class":"answer-date-link-wrap"}).text
             answerDict["commitDate"] = self.getContentAttr(content.find("span", {"class":"answer-date-link-wrap"}).a, "data-tip")
             answerDict["noRecordFlag"] = self.getContentAttr(content.find("div", {"class":"zm-meta-panel"}).find("a", {"class":"copyright"}), "data-author-avatar")
@@ -262,7 +270,7 @@ class AuthorInfoParse(Parse):
         infoDict['dataID'] = self.getContentAttr(self.content.find("button", {'class' : 'zm-rich-follow-btn'}), 'data-id')
         infoDict['authorLogoAddress'] = self.getContentAttr(self.content.find('img', {'class' : 'avatar-l'}), 'src')
         infoDict['weiboAddress'] = self.getContentAttr(self.content.find('a', {'class' : 'zm-profile-header-user-weibo'}), 'href')
-        infoDict['watched'] = self.matchInt(self.content.find_all('div', {'class' : 'zm-side-section-inner'})[3].span.strong.get_text())
+        infoDict['watched'] = self.matchInt(self.content.find_all('div', {'class' : 'zm-side-section-inner'})[-1].span.strong.get_text())
         infoDict['authorID'] = self.matchAuthorID(self.getContentAttr(self.content.find('div', {'class' : 'title-section'}).a, 'href'))
         infoDict['name'] = self.content.find('div', {'class' : 'title-section'}).find(attrs = {'class' : 'name'}).get_text()
         infoDict['sign'] = self.getContentAttr(self.content.find('div', {'class' : 'title-section'}).find(attrs = {'class' : 'bio'}), 'title')
