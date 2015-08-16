@@ -1,29 +1,29 @@
 # -*- coding: utf-8 -*-
 import time
 import threading
-import cookielib
 import urllib2
-import urllib#编码请求字串，用于处理验证码
-import socket#用于捕获超时错误
+import socket  # 用于捕获超时错误
 import zlib
 
 import os
+
 
 class ImgDownloader():
     u'''
      负责下载图片到指定文件夹内 
     '''
-    def __init__(self, targetDir = '', imgSet = set(), maxThread = 20, maxTry = 5):
-        self.targetDir  = targetDir
-        self.maxThread  = maxThread
-        self.waitFor    = 5
-        self.maxTry     = maxTry
-        self.extraHeader= {}
+
+    def __init__(self, targetDir='', imgSet=set(), maxThread=20, maxTry=5):
+        self.targetDir = targetDir
+        self.maxThread = maxThread
+        self.waitFor = 5
+        self.maxTry = maxTry
+        self.extraHeader = {}
         self.threadPool = []
-        self.imgSet     = imgSet
-        self.complete   = set()
+        self.imgSet = imgSet
+        self.complete = set()
         self.getCacheSet()
-    
+
     def leader(self):
         times = 0
         while times < self.maxTry and len(self.imgSet) > 0:
@@ -44,7 +44,7 @@ class ImgDownloader():
                 self.imgSet.discard(img)
                 self.complete.add(fileName)
                 continue
-            threadPool.append(threading.Thread(target = self.worker, kwargs = {'link' : img}))
+            threadPool.append(threading.Thread(target=self.worker, kwargs={'link': img}))
         threadsCount = len(threadPool)
         threadLiving = 2
         while (threadsCount > 0 or threadLiving > 1):
@@ -52,16 +52,16 @@ class ImgDownloader():
             if bufLength > 0 and threadsCount > 0:
                 while bufLength > 0 and threadsCount > 0:
                     threadPool[threadsCount - 1].start()
-                    bufLength    -= 1
+                    bufLength -= 1
                     threadsCount -= 1
                     time.sleep(0.1)
             else:
                 print u'正在下载图片，还有{}张图片等待下载'.format(len(self.imgSet))
                 time.sleep(1)
             threadLiving = threading.activeCount()
-        return 
+        return
 
-    def worker(self, link = ''):
+    def worker(self, link=''):
         u"""
         worker只执行一次，待全部worker执行完毕后由调用函数决定哪些worker需要再次运行
         重复的次数由self.maxTry指定
@@ -70,17 +70,17 @@ class ImgDownloader():
         fileName = self.getFileName(link)
         if fileName in self.complete:
             return
-        content = self.getHttpContent(url = link, timeout = self.waitFor)
+        content = self.getHttpContent(url=link, timeout=self.waitFor)
         if content == '':
             return
-        imgFile  = open(self.targetDir + fileName, 'wb')
+        imgFile = open(self.targetDir + fileName, 'wb')
         imgFile.write(content)
         imgFile.close()
         self.imgSet.discard(link)
         self.complete.add(fileName)
-        return 
+        return
 
-    def getHttpContent(self, url='', extraHeader = {} , data=None, timeout=5):
+    def getHttpContent(self, url='', extraHeader={}, data=None, timeout=5):
         u"""获取网页内容
      
         获取网页内容, 打开网页超过设定的超时时间则报错
@@ -96,17 +96,17 @@ class ImgDownloader():
             IOError     当解压缩页面失败时报错
         """
         if data == None:
-            request = urllib2.Request(url = url)
+            request = urllib2.Request(url=url)
         else:
-            request = urllib2.Request(url = url, data = data)
-        #add default extra header
+            request = urllib2.Request(url=url, data=data)
+        # add default extra header
         for headerKey in self.extraHeader.keys():
             request.add_header(headerKey, self.extraHeader[headerKey])
-        #add userDefined header
+        # add userDefined header
         for headerKey in extraHeader.keys():
             request.add_header(headerKey, extraHeader[headerKey])
-        try: 
-            rawPageData = urllib2.urlopen(request, timeout = timeout)
+        try:
+            rawPageData = urllib2.urlopen(request, timeout=timeout)
         except  urllib2.HTTPError as error:
             print u'网页打开失败'
             print u'错误页面:' + url
@@ -155,5 +155,5 @@ class ImgDownloader():
             pageContent = rawPageData.read()
             return pageContent
 
-    def getFileName(self, imgHref = ''):
+    def getFileName(self, imgHref=''):
         return imgHref.split('/')[-1]

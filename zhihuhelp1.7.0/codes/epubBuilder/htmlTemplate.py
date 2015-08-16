@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-def baseTemplate(dataDict = {}):
+def baseTemplate(dataDict={}):
     u'''
     *   stdStruct 
     {
@@ -24,7 +24,8 @@ def baseTemplate(dataDict = {}):
                 {Footer}
                 </body>
             </html>
-            """.format(**dataDict) 
+            """.format(**dataDict)
+
 
 def structTemplate(dataDict={}):
     u'''
@@ -48,7 +49,7 @@ def structTemplate(dataDict={}):
     """.format(**dataDict)
 
 
-def contentTemplate(dataDict = {}):
+def contentTemplate(dataDict={}):
     u'''
     *   stdStruct 
     {
@@ -71,7 +72,8 @@ def contentTemplate(dataDict = {}):
 </div>
             """.format(**dataDict)
 
-def contentHeaderTemplate(dataDict = {}):
+
+def contentHeaderTemplate(dataDict={}):
     u'''
     *   stdStruct 
     {
@@ -107,7 +109,8 @@ def contentHeaderTemplate(dataDict = {}):
     </div>
 </div><br />'''.format(**dataDict)
 
-def contentBodyTemplate(dataDict = {}):
+
+def contentBodyTemplate(dataDict={}):
     u'''
     *   stdStruct 
     {
@@ -153,7 +156,8 @@ def contentBodyTemplate(dataDict = {}):
 </div>
 <hr />""".format(**dataDict)
 
-def infoPageTemplate(dataDict = {}):
+
+def infoPageTemplate(dataDict={}):
     return '''
 <div class='info-page'>
   <div class='base-info'>
@@ -167,4 +171,3 @@ def infoPageTemplate(dataDict = {}):
   </div>
 </div>
     '''.format(**dataDict)
-

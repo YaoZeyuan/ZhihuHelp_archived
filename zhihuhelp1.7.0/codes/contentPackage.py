@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from baseClass import *
 
+
 class Package(BaseClass):
     u'''
     package基础类
     用于保存Filer中取出的数据
     PS:取出的数据还可以再打一层包XD
     '''
+
     def __init__(self):
         self.package = {}
         self.initPackage()
@@ -23,12 +25,13 @@ class Package(BaseClass):
     def getResult(self):
         return self.package
 
-    #重载[]与[] =操作符
+    # 重载[]与[] =操作符
     def __getitem__(self, key):
         return self.package[key]
 
     def __setitem__(self, key, val):
         return self.package.__setitem__(key, val)
+
 
 class ContentPackage(Package):
     u'''
@@ -54,31 +57,32 @@ class ContentPackage(Package):
         *   用于存储问题内容/专栏文章内容
         *   以[question_{questionID}或{columnID}_{articleID}]为key值
     '''
+
     def initPackage(self):
-        self.package['creatorID']     = ''
-        self.package['creatorSign']   = ''
-        self.package['creatorName']   = ''
-        self.package['creatorLogo']   = ''
-        self.package['ID']            = ''
-        self.package['kind']          = ''
-        self.package['title']         = ''
-        self.package['logo']          = ''
-        self.package['description']   = ''
+        self.package['creatorID'] = ''
+        self.package['creatorSign'] = ''
+        self.package['creatorName'] = ''
+        self.package['creatorLogo'] = ''
+        self.package['ID'] = ''
+        self.package['kind'] = ''
+        self.package['title'] = ''
+        self.package['logo'] = ''
+        self.package['description'] = ''
         self.package['followerCount'] = 0
-        self.package['commentCount']  = 0
+        self.package['commentCount'] = 0
         self.package['followerCount'] = 0
-        self.package['contentCount']  = 0
-        self.package['extraKey']      = {}
-        self.package['questionDict']  = {}
+        self.package['contentCount'] = 0
+        self.package['extraKey'] = {}
+        self.package['questionDict'] = {}
 
         self.questionDict = self.package['questionDict']
-    
+
     def addQuestion(self, questionPackage):
         questionID = questionPackage['questionID']
         if questionID in self.questionDict:
             self.questionDict[questionID].merge(questionPackage)
         else:
-            self.questionDict[questionID]  = questionPackage
+            self.questionDict[questionID] = questionPackage
         return
 
     def merge(self, contentPackage):
@@ -88,10 +92,10 @@ class ContentPackage(Package):
         没有意义
         最后发布前自己想一个填充上即可
         '''
-        self.package['kind']  = 'merge'
+        self.package['kind'] = 'merge'
         self.package['title'] = u'自定义'
-        self.package['ID']    = 'merge'
-        self.package['logo']  = ''
+        self.package['ID'] = 'merge'
+        self.package['logo'] = ''
 
         self.package['description'] = '{0}+{1}'.format(self.package['description'], self.package['title'])
 
@@ -131,11 +135,12 @@ class ContentPackage(Package):
                 answerList.append(question['answerDict'][key])
             answerList = sorted(answerList, key=lambda content: content['updateDate'], reverse=False)
             question['answerList'] = answerList
-            #问题的最后更新日期为问题中答案的最后更新日期
+            # 问题的最后更新日期为问题中答案的最后更新日期
             question['updateDate'] = answerList[0]['updateDate']
             questionList.append(question)
         questionList = sorted(questionList, key=lambda content: content['updateDate'], reverse=False)
         return questionList
+
 
 class QuestionPackage(Package):
     u'''
@@ -163,19 +168,20 @@ class QuestionPackage(Package):
         *   answerDict
             *   存储答案内容，使用answerID/articleID做key
     '''
+
     def initPackage(self):
-        self.package['questionID']    = '' 
-        self.package['kind']          = '' 
-        self.package['title']         = '' 
-        self.package['titleLogo']     = '' 
-        self.package['description']   = '' 
-        self.package['updateDate']    = '' 
-        self.package['commentCount']  = 0  
-        self.package['viewCount']     = 0 
-        self.package['answerCount']   = 0 
+        self.package['questionID'] = ''
+        self.package['kind'] = ''
+        self.package['title'] = ''
+        self.package['titleLogo'] = ''
+        self.package['description'] = ''
+        self.package['updateDate'] = ''
+        self.package['commentCount'] = 0
+        self.package['viewCount'] = 0
+        self.package['answerCount'] = 0
         self.package['followerCount'] = 0
-        self.package['extraKey']      = {}
-        self.package['answerDict']    = {}
+        self.package['extraKey'] = {}
+        self.package['answerDict'] = {}
 
         self.answerDict = self.package['answerDict']
 
@@ -187,7 +193,7 @@ class QuestionPackage(Package):
         if not answerID in self.answerDict:
             self.answerDict[answerID] = answerPackage
         return
-    
+
     def merge(self, questionPackage):
         if questionPackage['kind'] != self.package['kind']:
             return
@@ -206,7 +212,8 @@ class QuestionPackage(Package):
             agreeCount += self.answerDict[key]['agreeCount']
         self.package['agreeCount'] = agreeCount
         return self.package
-        
+
+
 class AnswerPackage(Package):
     u'''
     数据结构
@@ -226,17 +233,18 @@ class AnswerPackage(Package):
         *   extraKey
             *   留作日后扩展
     '''
+
     def initPackage(self):
-        self.package['authorID']     = ''
-        self.package['authorSign']   = ''
-        self.package['authorLogo']   = ''
-        self.package['authorName']   = ''
-        self.package['questionID']   = '' 
-        self.package['answerID']     = '' 
-        self.package['content']      = '' 
-        self.package['updateDate']   = '' 
-        self.package['agreeCount']   = 0
-        self.package['commentCount'] = 0 
-        self.package['collectCount'] = 0 
-        self.package['extraKey']     = {} 
+        self.package['authorID'] = ''
+        self.package['authorSign'] = ''
+        self.package['authorLogo'] = ''
+        self.package['authorName'] = ''
+        self.package['questionID'] = ''
+        self.package['answerID'] = ''
+        self.package['content'] = ''
+        self.package['updateDate'] = ''
+        self.package['agreeCount'] = 0
+        self.package['commentCount'] = 0
+        self.package['collectCount'] = 0
+        self.package['extraKey'] = {}
         return
