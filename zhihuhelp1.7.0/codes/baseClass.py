@@ -112,7 +112,7 @@ class TestClass(object):
     """
     # 测试变量
     test_chekcUpdate_flag = False
-    test_catchAnswerData_flag = True
+    test_catchAnswerData_flag = False
     test_buffer_flag = False
     # test_chekcUpdate_flag = False
     # test_chekcUpdate_flag = False

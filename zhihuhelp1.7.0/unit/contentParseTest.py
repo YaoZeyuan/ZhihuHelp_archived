@@ -17,9 +17,9 @@ from codes.contentParse import *
 
 htmlContent = open('./unit_html/error.html', 'r').read()
 parse = ParseQuestion(htmlContent)
-
-#infoDict = parse.getInfoDict()
-#BaseClass.printDict(infoDict)
+# import pprint
+# infoDictList = parse.getInfoDict()
+# pprint.pprint(infoDictList)
 #exit()
 
 questionInfoDictList, answerDictList = parse.getInfoDict()
@@ -29,5 +29,5 @@ for question in questionInfoDictList:
 
 print '=========================='
 
-for answer in answerDictList:
-    BaseClass.printDict(answer)
+# for answer in answerDictList:
+#    BaseClass.printDict(answer)

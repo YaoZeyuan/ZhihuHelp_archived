@@ -195,6 +195,8 @@ class ParseQuestion(Parse):
             self.content.find("div", {"class": "zu-main-sidebar"}).find_all("div", {"class": "zm-side-section"})[
                 -1].find_all("div", {"class": "zg-gray-normal"})[1].find("strong").text
         questionInfoDict['questionViewCount'] = bufString
+        questionInfoDict['questionIDinQuestionDesc'] = self.getContentAttr(
+            self.content.find("div", {'id': 'zh-single-question-page'}), 'data-urltoken')
         return questionInfoDict
 
 
@@ -221,6 +223,8 @@ class ParseAnswer(ParseQuestion):
                                                                                 {"class": "zm-side-section"}).find(
             "div", {"class": "zg-gray-normal"}).find("strong").text
         questionInfoDict['questionViewCount'] = bufString
+        rawLink = self.getContentAttr(self.content.find("link", {'rel': 'canonical'}), 'href')
+        questionInfoDict['questionIDinQuestionDesc'] = self.matchQuestionID(rawLink)
         return questionInfoDict
 
     def getAnswerContentList(self):
