@@ -22,8 +22,8 @@ class BaseClass(object):
 
     logger = logging.getLogger('main')  # 获取名为main的logger
     logger.addHandler(handler)  # 为logger添加handler
-    #logger.setLevel(logging.CRITICAL)  # 发布时关闭log输出
-    logger.setLevel(logging.DEBUG)  # 发布时关闭log输出
+    #logger.setLevel(logging.INFO)  # 发布时关闭log输出
+    logger.setLevel(logging.DEBUG)  # debug模式
     # 辅助函数
     @staticmethod
     def printInOneLine(text=''):  # Pass
@@ -112,7 +112,7 @@ class TestClass(object):
     """
     # 测试变量
     test_chekcUpdate_flag = False
-    test_catchAnswerData_flag = False
+    test_catchAnswerData_flag = True
     test_buffer_flag = False
     # test_chekcUpdate_flag = False
     # test_chekcUpdate_flag = False
@@ -155,20 +155,20 @@ class ThreadClass(object):
 
     @staticmethod
     def startRegisterThread():
-        BaseClass.logger.info(u"开始注册新线程")
-        BaseClass.logger.info(u'当前已注册线程数:' + str(ThreadClass.getThreadCount()))
+        BaseClass.logger.debug(u"开始注册新线程")
+        BaseClass.logger.debug(u'当前已注册线程数:' + str(ThreadClass.getThreadCount()))
         return ThreadClass.threadRegisterLock.acquire()
 
     @staticmethod
     def registerThreadCompleted():
-        BaseClass.logger.info(u"新线程注册完毕")
-        BaseClass.logger.info(u'当前活跃线程数:' + str(ThreadClass.getThreadCount()))
+        BaseClass.logger.debug(u"新线程注册完毕")
+        BaseClass.logger.debug(u'当前活跃线程数:' + str(ThreadClass.getThreadCount()))
         try:
             ThreadClass.threadRegisterLock.release()
         except threading.ThreadError as error:
             if SettingClass.THREADMODE:
-                BaseClass.logger.info(u"错误：释放了一个未被锁定的线程锁")
-                BaseClass.logger.info(u"ThreadClass.threadRegisterLock出现问题，请及时修复")
+                BaseClass.logger.debug(u"错误：释放了一个未被锁定的线程锁")
+                BaseClass.logger.debug(u"ThreadClass.threadRegisterLock出现问题，请及时修复")
                 raise error
             else:
                 pass
@@ -199,14 +199,14 @@ class ThreadClass(object):
         threadLockCount = maxThread
         if threadLockCount == -1:
             threadLockCount = SettingClass.MAXTHREAD
-        BaseClass.logger.info(u'进入waitForThreadRunningCompleted，等待所有线程运行完毕\n'
+        BaseClass.logger.debug(u'进入waitForThreadRunningCompleted，等待所有线程运行完毕\n'
                               + u'当前运行线程数 : ' + str(ThreadClass.getThreadCount()) + u'\t允许的最大线程数:' + str(
             threadLockCount) + '\n'
                               + u'开始检测线程数是否符合要求'
                               )
         while ThreadClass.getThreadCount() > threadLockCount:
             time.sleep(0.1)
-        BaseClass.logger.info(u'线程数已符合允许的最大线程数的要求，允许的最大线程数为：' + str(threadLockCount)
+        BaseClass.logger.debug(u'线程数已符合允许的最大线程数的要求，允许的最大线程数为：' + str(threadLockCount)
                               + u' 当前运行的线程数为：' + str(ThreadClass.getThreadCount()))
         return
 
