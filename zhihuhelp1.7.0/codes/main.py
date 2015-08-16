@@ -26,10 +26,10 @@ class ZhihuHelp(BaseClass):
         else:
             self.checkUpdate()
         init = Init()
-        self.conn    = init.getConn()
-        self.cursor  = self.conn.cursor()
+        self.conn = init.getConn()
+        self.cursor = self.conn.cursor()
         self.baseDir = os.path.realpath('.')
-        self.config  = Setting()
+        self.config = Setting()
 
         # 初始化网址检测模板
         self.initBaseResource()
@@ -55,43 +55,25 @@ class ZhihuHelp(BaseClass):
 
     def helperStart(self):
         # 登陆
-        settingDict = self.config.getSetting(['rememberAccount', 'maxThread', 'picQuality'])
-        rememberAccount = settingDict['rememberAccount']
+        rememberAccount = SettingClass.REMEMBERACCOUNT
 
         login = Login(self.conn)
         if rememberAccount == 'yes':
             print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
             print   u'直接点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
-            #if raw_input() == '':
-            login.setCookie()
-            SettingClass.MAXTHREAD  = settingDict['maxThread']
-            SettingClass.PICQUALITY = settingDict['picQuality']
-            if SettingClass.MAXTHREAD == '':
-                SettingClass.MAXTHREAD = 20
+            if raw_input() == '':
+                login.setCookie()
             else:
-                SettingClass.MAXTHREAD = int(SettingClass.MAXTHREAD)
-
-            if SettingClass.PICQUALITY == '':
-                SettingClass.PICQUALITY = 1
-            else:
-                SettingClass.PICQUALITY = int(SettingClass.PICQUALITY)
-            #else:
-            #    login.login()
-            #    SettingClass.MAXTHREAD  = int(self.config.guideOfMaxThread())
-            #    SettingClass.PICQUALITY = int(self.config.guideOfPicQuality())
+                login.login()
+                SettingClass.MAXTHREAD  = self.config.guideOfMaxThread()
+                SettingClass.PICQUALITY = self.config.guideOfPicQuality()
         else:
             login.login()
-            SettingClass.MAXTHREAD  = int(self.config.guideOfMaxThread())
-            SettingClass.PICQUALITY = int(self.config.guideOfPicQuality())
+            SettingClass.MAXTHREAD  = self.config.guideOfMaxThread()
+            SettingClass.PICQUALITY = self.config.guideOfPicQuality()
 
         #储存设置
-        self.config = Setting()
-        settingDict = {
-                'maxThread'  : SettingClass.MAXTHREAD,
-                'picQuality' : SettingClass.PICQUALITY,
-                }
-        self.config.setSetting(settingDict)
-        self.config.saveToGlobalClass()
+        self.config.save()
         #主程序开始运行
         BaseClass.logger.info(u"开始读取ReadList.txt设置信息")
         readList  = open('./ReadList.txt', 'r')

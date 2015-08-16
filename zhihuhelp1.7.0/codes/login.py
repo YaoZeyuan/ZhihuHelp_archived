@@ -77,20 +77,16 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
             print u'登陆账号:', account
             print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
             if raw_input() == 'yes':
-                setting = {
-                        'account' : account,
-                        'password' : password,
-                        'rememberAccount' : 'yes',
-                        }
-                self.setting.setSetting(setting)
+                SettingClass.ACCOUNT = account
+                SettingClass.PASSWORD = password
+                SettingClass.REMEMBERACCOUNT = True
+                self.setting.save()
                 print u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
             else:
-                setting = {
-                        'account' : '',
-                        'password' : '',
-                        'rememberAccount' : '',
-                        }
-                self.setting.setSetting(setting)
+                SettingClass.ACCOUNT = ''
+                SettingClass.PASSWORD = ''
+                SettingClass.REMEMBERACCOUNT = False
+                self.setting.save()
                 print u'跳过保存环节，进入下一流程'
             cookieJar2String = self.saveCookieJar()
             data = {}
@@ -125,7 +121,7 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
             print u'或者猛击回车进入获取验证码的流程'
             confirm = raw_input()
             if confirm == 'yes':
-                account,password = self.guideOfAccountAndPassword()
+                account, password = self.setting.guideOfAccountAndPassword()
             captcha = self.getCaptcha()
         return
 

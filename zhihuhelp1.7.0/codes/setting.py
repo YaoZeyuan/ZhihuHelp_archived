@@ -44,64 +44,38 @@ class Setting(BaseClass):
     """
     def __init__(self):
         #todo 设置项不起作用，发布之前必须把设置项修好，使用json+公共类的方式进行记录
-        self.config      = ConfigParser.SafeConfigParser() 
-        self.settingList = ['account', 'password', 'rememberAccount', 'maxThread', 'picQuality', 'contentLength', 'contentAgree', 'answerOrderBy', 'questionOrderBy']
-        self.setDict     = {
-            'account'         : 'mengqingxue2014@qq.com',
-            'password'        : '131724qingxue',
-            'rememberAccount' : '0',
-            'maxThread'       : '5',
-            'picQuality'      : '0',
-            'contentLength'   : '0',
-            'contentAgree'    : '5',
-            'maxQuestion'     : '100',       # 每本电子书中最多可以有多少个问题
-            'maxTry'          : '5',
-            'answerOrderBy'   : 'agree',
-            'questionOrderBy' : 'agreeCount',
-        }
-        self.initConfig()
-        self.config.read('setting.ini')
-        self.getSetting(self.settingList)
+        self.initSettingDict()
+        self.loadSetting()
 
-    def initConfig(self):
-        config = self.config
+    def initSettingDict(self):
+        self.setDict = {}
+        self.sync()
+
+    def encodeSetting(self):
+        self.sync()
+        return json.dumps(self.setDict, indent=4)
+
+    def sync(self):
+        for attr in dir(SettingClass):
+            if attr.find("__") != 0:
+                self.setDict[attr] = getattr(SettingClass,attr)
+        return
+
+    def save(self):
+        f = open('setting.ini', 'w')
+        f.write(self.encodeSetting())
+        f.close()
+        return
+
+    def loadSetting(self):
         if not os.path.isfile('setting.ini'):
             f = open('setting.ini', 'w')
+            f.write(self.encodeSetting())
             f.close()
-            config.add_section('ZhihuHelp') 
-            for key in self.setDict:
-                config.set('ZhihuHelp', key, self.setDict[key])
-            config.write(open('setting.ini','w'))
-        return
-
-    def getSetting(self, setting=[]):
-        config = self.config
-        data   = {}
-        if config.has_section('ZhihuHelp'): 
-            for key in setting:
-                if config.has_option('ZhihuHelp', key):
-                    data[key] = config.get('ZhihuHelp', key, raw=True)
-                else:
-                    data[key] = '';
-        return data
-    
-    def setSetting(self, setting={}):  
-        config = self.config
-        if not config.has_section('ZhihuHelp'): 
-            config.add_section('ZhihuHelp') 
-        for key in self.settingList:
-            if key in setting:
-                config.set('ZhihuHelp', key, str(setting[key]))
-        config.write(open('setting.ini', 'w'))
-        return
-
-    def saveToGlobalClass(self):
-        SettingClass.MAXTHREAD       = int(self.setDict.get('maxThread', 20))
-        SettingClass.PICQUALITY      = int(self.setDict.get('picQuality', 1))
-        SettingClass.MAXQUESTION     = int(self.setDict.get('maxQuestion', 100))
-        SettingClass.MAXTRY          = int(self.setDict.get('maxTry', 5))
-        SettingClass.ANSWERORDERBY   = self.setDict.get('answerOrderBy', 'agree')
-        SettingClass.QUESTIONORDERBY = self.setDict.get('questionOrderBy', 'agreeCount')
+        f = open('setting.ini', 'r')
+        self.setDict = json.load(f)
+        for key in self.setDict:
+            setattr(SettingClass, key, self.setDict[key])
         return
 
     def guide(self):
@@ -124,8 +98,8 @@ class Setting(BaseClass):
         print u'####################################'
         account = raw_input()
         if len(account) == 0:
-            account  = "mengqingxue2014@qq.com"
-            password = "131724qingxue"
+            account  = SettingClass.ACCOUNT
+            password = SettingClass.PASSWORD
         else:
             while re.search(r'\w+@[\w\.]{3,}', account) == None:
                 print u'抱歉，输入的账号不规范...\n请输入正确的知乎登录邮箱\n'
@@ -143,22 +117,22 @@ class Setting(BaseClass):
         return account, password
         
     def guideOfMaxThread(self):
-        print u'开始设置最大同时打开的网页数量，数值越大下载网页的速度越快，丢失答案的概率也越高，推荐值为5~50之间，在这一范围内助手可以很好的解决遗漏答案的问题，默认值为20'
+        print u'开始设置最大同时打开的网页数量，数值越大下载网页的速度越快，丢失答案的概率也越高，推荐值为5~20之间，在这一范围内助手可以很好的解决遗漏答案的问题，默认值为20'
         print u'请输入最大同时打开的网页数(1~199)，回车确认'
         try:
             maxThread = int(raw_input())
         except ValueError as error:
             print error
-            print u'嗯，数字转换错误。。。最大线程数重置为20，点击回车继续'
-            maxThread = 20
+            print u'嗯，数字转换错误。。。最大线程数重置为{}，点击回车继续'.format(SettingClass.MAXTHREAD)
+            maxThread = SettingClass.MAXTHREAD
             raw_input()
         if maxThread > 200 or maxThread < 1:
             if maxThread > 200:
                 print u'最大线程数溢出'
             else:
                 print u'最大线程数非法，该值不能小于零'
-            print u'最大线程数重置为20'
-            maxThread = 20
+            print u'最大线程数重置为{}'.format(SettingClass.MAXTHREAD)
+            maxThread = SettingClass.MAXTHREAD
             print u'点击回车继续~'      
             raw_input()
         return maxThread

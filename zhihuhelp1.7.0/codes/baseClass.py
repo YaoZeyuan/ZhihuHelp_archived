@@ -96,13 +96,16 @@ class SettingClass(object):
     # 默认数据库名称
     dataBaseFileName = u'./zhihuDB_171.db'
 
-    MAXTHREAD       = 20           # 最大线程数
-    PICQUALITY      = 1            # 图片质量（0/1/2，无图/标清/原图）
-    MAXQUESTION     = 100          # 每本电子书中最多可以放多少本书
-    MAXTRY          = 5            # 最大尝试次数
-    ANSWERORDERBY   = 'agree'      # 答案排序原则
-    QUESTIONORDERBY = 'agreeCount' # 问题排序原则
-    THREADMODE      = False         # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
+    ACCOUNT ='mengqingxue2014@qq.com'   # 默认账号密码
+    PASSWORD = '131724qingxue'          #
+    REMEMBERACCOUNT = False             # 是否使用已有密码
+    MAXTHREAD       = 20                # 最大线程数
+    PICQUALITY      = 1                 # 图片质量（0/1/2，无图/标清/原图）
+    MAXQUESTION     = 100               # 每本电子书中最多可以放多少个问题
+    MAXTRY          = 5                 # 最大尝试次数
+    ANSWERORDERBY   = 'agree'           # 答案排序原则
+    QUESTIONORDERBY = 'agreeCount'      # 问题排序原则
+    THREADMODE      = False             # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
 
 class TestClass(object):
     u"""
