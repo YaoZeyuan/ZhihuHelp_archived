@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+import re
+import os
+
 from baseClass import *
 
-import re
-import ConfigParser
-import os
+
 class Setting(BaseClass):
     # todo : 转为使用json格式存储设置值
     # todo : 修改设置值之后实时写入到配置文件中去
@@ -42,8 +43,9 @@ class Setting(BaseClass):
     *   contentLength
         *   答案长度
     """
+
     def __init__(self):
-        #todo 设置项不起作用，发布之前必须把设置项修好，使用json+公共类的方式进行记录
+        # todo 设置项不起作用，发布之前必须把设置项修好，使用json+公共类的方式进行记录
         self.initSettingDict()
         self.loadSetting()
 
@@ -58,7 +60,7 @@ class Setting(BaseClass):
     def sync(self):
         for attr in dir(SettingClass):
             if attr.find("__") != 0:
-                self.setDict[attr] = getattr(SettingClass,attr)
+                self.setDict[attr] = getattr(SettingClass, attr)
         return
 
     def save(self):
@@ -78,6 +80,13 @@ class Setting(BaseClass):
             setattr(SettingClass, key, self.setDict[key])
         return
 
+    def printSetting(self):
+        u'''
+        测试设置值是否正确
+        '''
+        self.sync()
+        BaseClass.printDict(self.setDict)
+
     def guide(self):
         print u'您好，欢迎使用知乎助手'
         print u''
@@ -87,7 +96,7 @@ class Setting(BaseClass):
         print u''
         print u'全部代码均已开源，github地址:https://github.com/YaoZeyuan/ZhihuHelp__Python'
         print u'Tips：只有在获取私人收藏夹的内容时，助手才需要使用您的账号登陆，日常使用时直接用内置账号登陆即可'
-        print u'现在开始登陆流程，请根据提示输入您的账号密码'    
+        print u'现在开始登陆流程，请根据提示输入您的账号密码'
         print u''
         print u''
 
@@ -98,7 +107,7 @@ class Setting(BaseClass):
         print u'####################################'
         account = raw_input()
         if len(account) == 0:
-            account  = SettingClass.ACCOUNT
+            account = SettingClass.ACCOUNT
             password = SettingClass.PASSWORD
         else:
             while re.search(r'\w+@[\w\.]{3,}', account) == None:
@@ -115,7 +124,7 @@ class Setting(BaseClass):
                 print u'请重新输入密码，回车确认'
                 password = raw_input()
         return account, password
-        
+
     def guideOfMaxThread(self):
         print u'开始设置最大同时打开的网页数量，数值越大下载网页的速度越快，丢失答案的概率也越高，推荐值为5~20之间，在这一范围内助手可以很好的解决遗漏答案的问题，默认值为20'
         print u'请输入最大同时打开的网页数(1~199)，回车确认'
@@ -133,7 +142,7 @@ class Setting(BaseClass):
                 print u'最大线程数非法，该值不能小于零'
             print u'最大线程数重置为{}'.format(SettingClass.MAXTHREAD)
             maxThread = SettingClass.MAXTHREAD
-            print u'点击回车继续~'      
+            print u'点击回车继续~'
             raw_input()
         return maxThread
 

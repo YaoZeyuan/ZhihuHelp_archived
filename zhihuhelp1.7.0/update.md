@@ -1,3 +1,13 @@
+#1.7.1.5版更新说明
+0.  这一版里对代码的改动较大，所以出bug之后拖了一个月才发布出去。。。Sorry
+1.  setting.ini文件改为使用json格式进行记录
+2.  contentParse模块放弃正则表达式，改为使用Beautiful Soup4库对网页内容进行解析（目前解析速度比较慢，还需要进一步的优化）
+3.  启动部分改为使用线程池模式，自己实现了一个简单的线程控制系统，以加速对question和answer型电子书的生成速度
+4.  日志输出部分转为使用python自带的logger模块进行输出，可以在BaseClass里进行设置
+5.  将基础函数划分到了几个全局类中，使用SettingClass储存设置信息，使用BaseClass承载常用的几个工具函数，使用ThreadClass控制线程
+6.  删除了旧版的单元测试，目前暂时使用contentParseTest.py对网页解析功能进行测试
+7.  暂时移除zui，一个python项目因为引入了zui就被识别成了一个js项目。。。太诡异了- -
+
 #1.7.1.4版更新说明
 0.  感谢知友@[Philip Matthew](http://www.zhihu.com/people/matthewphilip)、@[鱼藻君](http://www.zhihu.com/people/yuzaojun)的捐赠
 1.  修复了一处在制作大体积电子书时出现的http错误

@@ -1,24 +1,12 @@
 # -*- coding: utf-8 -*-
-from baseClass import *
 
-import cookielib
-import Cookie
-
-import urllib2
 import urllib#编码请求字串，用于处理验证码
-import socket#用于捕获超时错误
-import zlib
 import json
-
-import time
 import datetime
 
-import re
-import os
-import pickle
-
 from setting import *
- 
+
+
 class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
     def __init__(self, conn):
         self.setting           = Setting()
@@ -80,14 +68,13 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
                 SettingClass.ACCOUNT = account
                 SettingClass.PASSWORD = password
                 SettingClass.REMEMBERACCOUNT = True
-                self.setting.save()
                 print u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
             else:
                 SettingClass.ACCOUNT = ''
                 SettingClass.PASSWORD = ''
                 SettingClass.REMEMBERACCOUNT = False
-                self.setting.save()
                 print u'跳过保存环节，进入下一流程'
+            self.setting.save()
             cookieJar2String = self.saveCookieJar()
             data = {}
             data['account']    = account

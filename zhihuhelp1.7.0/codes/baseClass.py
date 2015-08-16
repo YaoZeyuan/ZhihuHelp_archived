@@ -6,27 +6,27 @@ import traceback
 import uuid  # 生成线程唯一ID，用于控制线程数
 import logging
 import logging.handlers
-import pprint
+
 
 class BaseClass(object):
     u'''
     用于存放常用函数
     '''
-    LOG_FILE = 'tst.log'
+    LOG_FILE = 'test.log'
 
-    handler = logging.StreamHandler() # 实例化handler
+    handler = logging.StreamHandler()  # 实例化handler
     fmt = '%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'
 
-    formatter = logging.Formatter(fmt)   # 实例化formatter
-    handler.setFormatter(formatter)      # 为handler添加formatter
+    formatter = logging.Formatter(fmt)  # 实例化formatter
+    handler.setFormatter(formatter)  # 为handler添加formatter
 
-    logger = logging.getLogger('main')    # 获取名为main的logger
-    logger.addHandler(handler)           # 为logger添加handler
-    logger.setLevel(logging.DEBUG)
+    logger = logging.getLogger('main')  # 获取名为main的logger
+    logger.addHandler(handler)  # 为logger添加handler
+    logger.setLevel(logging.CRITICAL)  # 发布时关闭log输出
 
     # 辅助函数
     @staticmethod
-    def printInOneLine(text = ''):#Pass
+    def printInOneLine(text=''):  # Pass
         u"""
             *   功能
                 *   反复在一行内输出内容
@@ -37,7 +37,7 @@ class BaseClass(object):
                 *  无
          """
         try:
-            sys.stdout.write("\r" + " "*60 + '\r')
+            sys.stdout.write("\r" + " " * 60 + '\r')
             sys.stdout.flush()
             sys.stdout.write(text)
             sys.stdout.flush()
@@ -46,7 +46,7 @@ class BaseClass(object):
         return
 
     @staticmethod
-    def printDict(data = {}, key = '', prefix = ''):
+    def printDict(data={}, key='', prefix=''):
         try:
             if isinstance(data, dict):
                 for key in data.keys():
@@ -65,7 +65,6 @@ class BaseClass(object):
     @staticmethod
     def printCurrentDir():
         print os.path.realpath('.')
-        return
 
     @staticmethod
     def mkdir(path):
@@ -73,7 +72,7 @@ class BaseClass(object):
             os.mkdir(path)
         except OSError:
             print u'指定目录已存在'
-        return 
+        return
 
     @staticmethod
     def chdir(path):
@@ -86,7 +85,6 @@ class BaseClass(object):
         return
 
 
-
 class SettingClass(object):
     u"""
     用于储存、获取设置值、全局变量值
@@ -96,27 +94,29 @@ class SettingClass(object):
     # 默认数据库名称
     dataBaseFileName = u'./zhihuDB_171.db'
 
-    ACCOUNT ='mengqingxue2014@qq.com'   # 默认账号密码
-    PASSWORD = '131724qingxue'          #
-    REMEMBERACCOUNT = False             # 是否使用已有密码
-    MAXTHREAD       = 20                # 最大线程数
-    PICQUALITY      = 1                 # 图片质量（0/1/2，无图/标清/原图）
-    MAXQUESTION     = 100               # 每本电子书中最多可以放多少个问题
-    MAXTRY          = 5                 # 最大尝试次数
-    ANSWERORDERBY   = 'agree'           # 答案排序原则
-    QUESTIONORDERBY = 'agreeCount'      # 问题排序原则
-    THREADMODE      = False             # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
+    ACCOUNT = 'mengqingxue2014@qq.com'  # 默认账号密码
+    PASSWORD = '131724qingxue'  #
+    REMEMBERACCOUNT = False  # 是否使用已有密码
+    MAXTHREAD = 20  # 最大线程数
+    PICQUALITY = 1  # 图片质量（0/1/2，无图/标清/原图）
+    MAXQUESTION = 100  # 每本电子书中最多可以放多少个问题
+    MAXTRY = 5  # 最大尝试次数
+    ANSWERORDERBY = 'agree'  # 答案排序原则
+    QUESTIONORDERBY = 'agreeCount'  # 问题排序原则
+    THREADMODE = False  # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
+
 
 class TestClass(object):
     u"""
     用于存放测试用变量
     """
     # 测试变量
-    test_chekcUpdate_flag     = False
-    test_catchAnswerData_flag = True
-    test_buffer_flag          = False
-    #test_chekcUpdate_flag = False
-    #test_chekcUpdate_flag = False
+    test_chekcUpdate_flag = False
+    test_catchAnswerData_flag = False
+    test_buffer_flag = False
+    # test_chekcUpdate_flag = False
+    # test_chekcUpdate_flag = False
+
 
 class ThreadClass(object):
     u"""
@@ -194,13 +194,14 @@ class ThreadClass(object):
         return
 
     @staticmethod
-    def waitForThreadRunningCompleted(maxThread = -1):
+    def waitForThreadRunningCompleted(maxThread=-1):
         # 等待所有线程执行完毕, 用于启动线程时控制线程数量
         threadLockCount = maxThread
         if threadLockCount == -1:
             threadLockCount = SettingClass.MAXTHREAD
         BaseClass.logger.info(u'进入waitForThreadRunningCompleted，等待所有线程运行完毕\n'
-                              + u'当前运行线程数 : ' + str(ThreadClass.getThreadCount()) + u'\t允许的最大线程数:' + str(threadLockCount) + '\n'
+                              + u'当前运行线程数 : ' + str(ThreadClass.getThreadCount()) + u'\t允许的最大线程数:' + str(
+            threadLockCount) + '\n'
                               + u'开始检测线程数是否符合要求'
                               )
         while ThreadClass.getThreadCount() > threadLockCount:
@@ -208,11 +209,13 @@ class ThreadClass(object):
         BaseClass.logger.info(u'线程数已符合允许的最大线程数的要求，允许的最大线程数为：' + str(threadLockCount)
                               + u' 当前运行的线程数为：' + str(ThreadClass.getThreadCount()))
         return
-    
+
+
 class SqlClass(object):
     u'''
     用于存放常用的sql代码
     '''
+
     def save2DB(self, cursor, data={}, primaryKey='', tableName=''):
         u"""
             *   功能
@@ -233,28 +236,29 @@ class SqlClass(object):
             *   返回
                  *   无
          """
-        replaceSql   = 'replace into '+ tableName +' ('
+        replaceSql = 'replace into ' + tableName + ' ('
         placeholder = ') values ('
         varTuple = []
         for columnKey in data:
-            replaceSql  += columnKey + ','
+            replaceSql += columnKey + ','
             placeholder += '?,'
             varTuple.append(data[columnKey])
-    
+
         cursor.execute(replaceSql[:-1] + placeholder[:-1] + ')', tuple(varTuple))
         return
 
+
 import urllib2
-import urllib#编码请求字串，用于处理验证码
-import socket#用于捕获超时错误
+import socket  # 用于捕获超时错误
 import zlib
-import json
-        
+
+
 class HttpBaseClass(object):
     u'''
     用于存放常用Http函数
     '''
-    def getHttpContent(self, url = '', extraHeader = {} , data = None, timeout = 5):
+
+    def getHttpContent(self, url='', extraHeader={}, data=None, timeout=5):
         u"""获取网页内容
      
         获取网页内容, 打开网页超过设定的超时时间则报错
@@ -270,13 +274,13 @@ class HttpBaseClass(object):
             IOError     当解压缩页面失败时报错
         """
         if data == None:
-            request = urllib2.Request(url = url)
+            request = urllib2.Request(url=url)
         else:
-            request = urllib2.Request(url = url, data = data)
+            request = urllib2.Request(url=url, data=data)
         for headerKey in extraHeader.keys():
             request.add_header(headerKey, extraHeader[headerKey])
-        try: 
-            rawPageData = urllib2.urlopen(request, timeout = timeout)
+        try:
+            rawPageData = urllib2.urlopen(request, timeout=timeout)
         except  urllib2.HTTPError as error:
             print u'网页打开失败'
             print u'错误页面:' + url
@@ -292,7 +296,7 @@ class HttpBaseClass(object):
         except  socket.timeout as error:
             print u'打开网页超时'
             print u'超时页面' + url
-        except :
+        except:
             print u'未知错误'
             print u'错误堆栈信息:'
             print traceback.format_exc()
@@ -333,31 +337,33 @@ class HttpBaseClass(object):
             pageContent = rawPageData.read()
         return pageContent
 
+
 import cookielib
 import time
+
 
 class CookieBaseClass(object):
     u'''
     本类负责处理与cookie相关事宜
     '''
+
     def makeCookie(self, name, value, domain):
         cookie = cookielib.Cookie(
-                version=0,
-                name=name,
-                value=value,
-                port=None,
-                port_specified=False,
-                domain=domain,
-                domain_specified=True,
-                domain_initial_dot=False,
-                path="/",
-                path_specified=True,
-                secure=False,
-                expires=time.time() + 300000000,
-                discard=False,
-                comment=None,
-                comment_url=None,
-                rest={}
-                )
+            version=0,
+            name=name,
+            value=value,
+            port=None,
+            port_specified=False,
+            domain=domain,
+            domain_specified=True,
+            domain_initial_dot=False,
+            path="/",
+            path_specified=True,
+            secure=False,
+            expires=time.time() + 300000000,
+            discard=False,
+            comment=None,
+            comment_url=None,
+            rest={}
+        )
         return cookie
-    
