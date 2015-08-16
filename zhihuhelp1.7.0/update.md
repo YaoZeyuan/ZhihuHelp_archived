@@ -8,6 +8,9 @@
 6.  删除了旧版的单元测试，目前暂时使用contentParseTest.py对网页解析功能进行测试
 7.  暂时移除zui，一个python项目因为引入了zui就被识别成了一个js项目。。。太诡异了- -
 
+#1.7.1.5 版更新说明
+0.  感谢@[金兀术](https://github.com/binbin)同学的pullRequest，更正了登陆地址：）
+
 #1.7.1.4版更新说明
 0.  感谢知友@[Philip Matthew](http://www.zhihu.com/people/matthewphilip)、@[鱼藻君](http://www.zhihu.com/people/yuzaojun)的捐赠
 1.  修复了一处在制作大体积电子书时出现的http错误
