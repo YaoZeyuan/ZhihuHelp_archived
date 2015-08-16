@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 import re
+import json
 
 from baseClass import *
 
 
 class Setting(BaseClass):
-    # todo : 转为使用json格式存储设置值
-    # todo : 修改设置值之后实时写入到配置文件中去
     u"""
     *   account
         *   用户名
@@ -44,7 +43,6 @@ class Setting(BaseClass):
     """
 
     def __init__(self):
-        # todo 设置项不起作用，发布之前必须把设置项修好，使用json+公共类的方式进行记录
         self.initSettingDict()
         self.loadSetting()
 
@@ -77,6 +75,7 @@ class Setting(BaseClass):
         self.setDict = json.load(f)
         for key in self.setDict:
             setattr(SettingClass, key, self.setDict[key])
+        f.close()
         return
 
     def printSetting(self):
