@@ -120,7 +120,7 @@ class QuestionQueenWorker(PageWorker):
         taskTimer = 0
         while not completeFlag:
             taskTimer += 1
-            BaseClass.logger.info(u'开始启动线程')
+            BaseClass.logger.debug(u'开始启动线程')
             completeFlag = True  # 放置于前，避免taskQueen为空
             for urlInfo in self.taskQueen:
                 if 'maxPage' in urlInfo:
@@ -147,7 +147,7 @@ class QuestionQueenWorker(PageWorker):
     def detectMaxPage(self, urlInfo):
         # 通过全球唯一的uuid来实现对线程数的控制
         threadID = ThreadClass.getUUID()
-        BaseClass.logger.info(u'detectMaxPage开始等待执行， threadID = ' + str(threadID))
+        BaseClass.logger.debug(u'detectMaxPage开始等待执行， threadID = ' + str(threadID))
         while not ThreadClass.acquireThreadPoolPassport(threadID):
             time.sleep(0.1)
         BaseClass.logger.info(u"开始检测 " + urlInfo['baseUrl'] + u' 的页数')
@@ -226,7 +226,7 @@ class QuestionQueenWorker(PageWorker):
         content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader, timeout=self.waitFor)
         if content == '':
             return False
-        BaseClass.logger.info(u'开始使用ParseQuestion分析网页{}内容'.format(self.workSchedule[workNo]))
+        BaseClass.logger.debug(u'开始使用ParseQuestion分析网页{}内容'.format(self.workSchedule[workNo]))
         parse = ParseQuestion(content)
         questionInfoDictList, answerDictList = parse.getInfoDict()
         for questionInfoDict in questionInfoDictList:

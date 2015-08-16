@@ -22,8 +22,8 @@ class BaseClass(object):
 
     logger = logging.getLogger('main')  # 获取名为main的logger
     logger.addHandler(handler)  # 为logger添加handler
-    #logger.setLevel(logging.INFO)  # 发布时关闭log输出
-    logger.setLevel(logging.DEBUG)  # debug模式
+    logger.setLevel(logging.INFO)  # 发布时关闭log输出
+    # logger.setLevel(logging.DEBUG)  # debug模式
     # 辅助函数
     @staticmethod
     def printInOneLine(text=''):  # Pass
