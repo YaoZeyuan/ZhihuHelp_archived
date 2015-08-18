@@ -94,6 +94,8 @@ class SettingClass(object):
     # 默认数据库名称
     dataBaseFileName = u'./zhihuDB_171.db'
 
+    UPDATETIME = '2015-08-16'  # 更新日期
+
     ACCOUNT = 'mengqingxue2014@qq.com'  # 默认账号密码
     PASSWORD = '131724qingxue'  #
     REMEMBERACCOUNT = False  # 是否使用已有密码
