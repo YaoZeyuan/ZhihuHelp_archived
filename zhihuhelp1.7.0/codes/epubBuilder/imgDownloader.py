@@ -67,8 +67,8 @@ class ImgDownloader():
         重复的次数由self.maxTry指定
         这样可以给知乎服务器留出生成页面缓存的时间
         """
-        if(link[0:3] != 'htt'):
-            link = 'http:' + link # 临时修复抓取不到图片的bug，正式版中需要移除掉，换为更稳定的方式
+        if link[0:3] != 'htt':
+            link = 'http:' + link # todo 临时修复抓取不到图片的bug，正式版中需要移除掉，换为更稳定的方式
         fileName = self.getFileName(link)
         if fileName in self.complete:
             return
