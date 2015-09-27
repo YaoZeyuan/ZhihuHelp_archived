@@ -55,7 +55,11 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
 
         try:
             result = urllib2.urlopen(request)
-            jsonData = zlib.decompress(result.read(), 16 + zlib.MAX_WBITS)
+            jsonData = ''
+            if result.info().get('content-encoding') == 'gzip':
+                jsonData = zlib.decompress(result.read(), 16 + zlib.MAX_WBITS)
+            else:
+                jsonData = result.read()
             result = json.loads(jsonData)
         except Exception as error:
             print error
