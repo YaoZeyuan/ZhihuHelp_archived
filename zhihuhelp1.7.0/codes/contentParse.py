@@ -366,15 +366,22 @@ class CollectionInfoParse(Parse):
     def getInfoDict(self):
         infoDict = {}
         infoDict['title'] = self.getTagContent(self.content.find('h2', {'id': 'zh-fav-head-title'}))
+        # todo 为适应私人收藏夹临时修改，正式版中必须改正
+        iTag = re.search(r'<i.*>.*?</i>', infoDict['title'])
+        if not(iTag is None):
+            infoDict['title'] = infoDict['title'].replace(iTag.group(0), '')
         infoDict['description'] = self.getTagContent(self.content.find('div', {'id': 'zh-fav-head-description'}))
         infoDict['collectionID'] = self.matchInt(
             self.getContentAttr(self.content.find('div', {'id': 'zh-list-meta-wrap'}).find_all('a')[1], 'href'))
         infoDict['commentCount'] = self.matchInt(
             self.getTagContent(self.content.find('div', {'id': 'zh-list-meta-wrap'}).find('a', {'name': 'addcomment'})))
-        infoDict['followerCount'] = self.matchInt(
+        # todo 为适应私人收藏夹临时修改，正式版中必须改正
+        try:
+            infoDict['followerCount'] = self.matchInt(
             self.content.find_all('div', {'class': 'zm-side-section'})[2].find_all('div', {'class': 'zg-gray-normal'})[
                 1].a.get_text())
-
+        except:
+            infoDict['followerCount'] = 0
         infoDict['authorID'] = self.matchAuthorID(
             self.getContentAttr(self.content.find('a', {'class': 'zm-list-avatar-link'}), 'href'))
         infoDict['authorSign'] = self.content.find('div', {'id': 'zh-single-answer-author-info'}).find('div',
