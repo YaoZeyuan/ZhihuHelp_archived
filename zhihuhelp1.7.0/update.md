@@ -1,3 +1,8 @@
+#1.7.1.8版更新说明
+0.  感谢@[宁采臣](http://www.zhihu.com/people/zhu-cai-chen-49)的捐赠
+1.  感谢@[林止语](http://www.zhihu.com/people/linzhiyu)的帮助，成功重现到了无法登陆的bug
+2.  修复了无法登陆的bug
+
 #1.7.1.7版更新说明
 0.  感谢@[詹博文](http://www.zhihu.com/people/zhan-bo-wen-42)、@[飞元]()的捐赠
 1.  临时修复了不能下载私人收藏夹和无法下载图片的问题
