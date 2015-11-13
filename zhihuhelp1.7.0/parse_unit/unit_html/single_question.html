@@ -1,0 +1,772 @@
+﻿
+<!DOCTYPE html>
+<html lang="zh-CN" dropEffect="none" class="no-js">
+<head>
+<meta charset="utf-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+
+<title>
+
+怎样才能实现在Epub版的电子书中点击图片图片自动浮出的效果？ - 知乎
+
+</title>
+
+<meta name="apple-itunes-app" content="app-id=432274380, app-argument=zhihu://questions/23935371">
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="mobile-agent" content="format=html5;url=http://www.zhihu.com/question/23935371">
+<meta id="znonce" name="znonce" content="f240ac278ab54ebdb522a5a85ab24575">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(57px).png" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(72px).png" sizes="72x72" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(76px).png" sizes="76x76" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(114px).png" sizes="114x114" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(120px).png" sizes="120x120" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(152px).png" sizes="152x152" />
+
+
+<link rel="shortcut icon" href="http://static.zhihu.com/static/favicon.ico" type="image/x-icon">
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://static.zhihu.com/static/search.xml" title="知乎" />
+<link rel="stylesheet" href="http://static.zhihu.com/static/revved/css/-/z.99062a6d.css">
+
+
+
+<!--[if lt IE 9]>
+<script src="http://static.zhihu.com/static/components/respond/dest/respond.min.js"></script>
+<link href="http://static.zhihu.com/static/components/respond/cross-domain/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+<link href="/static/components/respond/cross-domain/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" />
+<script src="/static/components/respond/cross-domain/respond.proxy.js"></script>
+<![endif]-->
+
+<script src="http://static.zhihu.com/static/revved/js/-/instant.min.881eced7.js"></script>
+
+
+
+
+</head>
+
+<body class="zhi">
+
+
+
+<div role="navigation" class="zu-top">
+<div class="zg-wrap modal-shifting clearfix" id="zh-top-inner">
+<a href="/" class="zu-top-link-logo" id="zh-top-link-logo">知乎</a>
+
+<div class="top-nav-profile">
+<a href="/people/404-Page-Not-found" class="zu-top-nav-userinfo ">
+<span class="name">姚泽源</span>
+<img class="avatar avatar-s" alt="姚泽源" src="https://pic3.zhimg.com/dce9dde98c91a4d1e3cb86e627ecca86_s.jpg" srcset="https://pic3.zhimg.com/dce9dde98c91a4d1e3cb86e627ecca86_xs.jpg 2x" />
+<span id="zh-top-nav-new-pm" class="zg-noti-number zu-top-nav-pm-count"
+style="visibility:hidden" data-count="0">
+
+</span>
+</a>
+<ul class="top-nav-dropdown" id="top-nav-profile-dropdown">
+<li>
+<a href="/people/404-Page-Not-found">
+<i class="zg-icon zg-icon-dd-home"></i>我的主页
+</a>
+</li>
+
+<li>
+<a href="/inbox">
+<i class="zg-icon zg-icon-dd-pm"></i>私信
+<span id="zh-top-nav-pm-count" class="zu-top-nav-pm-count zg-noti-number"
+style="visibility:hidden" data-count="0">
+
+</span>
+</a>
+</li>
+<li>
+<a href="/settings">
+<i class="zg-icon zg-icon-dd-settings"></i>设置
+</a>
+</li>
+<li>
+<a href="/logout">
+<i class="zg-icon zg-icon-dd-logout"></i>退出
+</a>
+</li>
+</ul>
+
+</div>
+
+
+
+<button class="zu-top-add-question" id="zu-top-add-question">提问</button>
+
+
+<div role="search" id="zh-top-search" class="zu-top-search">
+<form method="GET" action="/search" id="zh-top-search-form" class="zu-top-search-form">
+
+
+
+<input type="hidden" name="type" value="question">
+<label for="q" class="hide-text">知乎搜索</label><input type="text" class="zu-top-search-input" id="q" name="q" autocomplete="off" value="" placeholder="搜索问题、话题或人">
+<button type="submit" class="zu-top-search-button"><span class="hide-text">搜索</span><span class="sprite-global-icon-magnifier-dark"></span></button>
+</form>
+</div>
+
+
+
+<div id="zg-top-nav" class="zu-top-nav">
+<ul class="zu-top-nav-ul zg-clear">
+
+<li class="zu-top-nav-li " id="zh-top-nav-home">
+<a class="zu-top-nav-link" href="/" id="zh-top-link-home">首页</a>
+</li>
+<li class="top-nav-topic-selector zu-top-nav-li " id="zh-top-nav-topic">
+<a class="zu-top-nav-link" href="/topic" id="top-nav-dd-topic">话题</a>
+
+</li>
+<li class="zu-top-nav-li " id="zh-top-nav-explore">
+<a class="zu-top-nav-link" href="/explore">发现</a>
+</li>
+
+<li class="top-nav-noti zu-top-nav-li ">
+<a class="zu-top-nav-link" href="javascript:;" id="zh-top-nav-count-wrap" role="button"><span class="mobi-arrow"></span>消息</a>
+</li>
+
+
+
+</ul>
+<div class="zu-top-nav-live zu-noti7-popup zg-r5px no-hovercard" id="zh-top-nav-live-new" role="popup" tabindex="0">
+<div class="zu-top-nav-live-inner zg-r5px">
+<div class="zu-top-live-icon">&nbsp;</div>
+<div class="zu-home-noti-inner" id="zh-top-nav-live-new-inner">
+<div class="zm-noti7-popup-tab-container clearfix" tabindex="0">
+<button class="zm-noti7-popup-tab-item message">
+<span class="icon">消息</span>
+</button>
+<button class="zm-noti7-popup-tab-item user">
+<span class="icon">用户</span>
+</button>
+<button class="zm-noti7-popup-tab-item thanks">
+<span class="icon">赞同和感谢</span>
+</button>
+</div>
+</div>
+<div class="zm-noti7-frame-border top"></div>
+<div class="zm-noti7-frame">
+<div class="zm-noti7-content">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-frame-border bottom"></div>
+<div class="zm-noti7-popup-footer">
+<a href="/notifications" class="zm-noti7-popup-footer-all zg-right">查看全部 &raquo;</a>
+<a href="/settings/notification" class="zm-noti7-popup-footer-set" title="通知设置" ><i class="zg-icon zg-icon-settings"></i></a>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="zu-global-notify" id="zh-global-message" style="display:none">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<a class="zu-global-notify-close" href="javascript:;" title="关闭" name="close">x</a>
+<span class="zu-global-notify-icon"></span>
+<span class="zu-global-notify-msg"></span>
+</div>
+</div>
+</div>
+
+
+
+<div class="zu-global-notify zu-global-notify-info" id="zh-question-redirect-info" style="display:none"></div>
+
+
+<div class="zu-global-notify zu-global-notify-info" id="zh-question-notification-summary" style="display:none;">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<span class="zu-global-notify-icon"></span>
+<ul class="zu-question-notify-wrap">
+</ul>
+</div>
+</div>
+</div>
+<div class="zg-wrap zu-main question-page" itemscope itemtype="http://schema.org/Question" id="zh-single-question-page"
+data-urltoken="23935371">
+<meta itemprop="isTopQuestion" content="false" />
+<meta itemprop="visitsCount" content="498" />
+<div class="zu-main-content">
+<div class="zu-main-content-inner with-indention-votebar">
+
+
+
+
+<div class="zm-tag-editor zg-section">
+<div class="zm-tag-editor-labels zg-clear">
+
+<a class="zm-item-tag"
+href="/topic/19552449"
+data-tip="t$b$19552449" data-token="19552449" data-topicid="746">
+电子书
+</a>
+
+<a class="zm-item-tag"
+href="/topic/19554613"
+data-tip="t$b$19554613" data-token="19554613" data-topicid="1465">
+ePub
+</a>
+
+</div>
+</div>
+<div id="zh-question-title" data-editable="true">
+
+<h2 class="zm-item-title zm-editable-content">
+
+怎样才能实现在Epub版的电子书中点击图片图片自动浮出的效果？
+
+</h2>
+</div>
+<div id="zh-question-detail" class="zm-item-rich-text" data-resourceid="1755921" data-action="/question/detail">
+
+<div class="zm-editable-content">在多看上阅读知乎周刊和miui周刊的Epub版时，点击图片图片就会自动浮出为全屏，但是用普通的&lt;img&gt;标签却没有用，请问知乎是怎么做到这种效果的呢？</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el clearfix" id="zh-question-meta-wrap">
+<div class="zm-meta-panel">
+
+<a href="#" name="report-question" class="report zg-right">
+<i class="z-icon-no-help"></i>举报</a>
+
+<a href="#" name="addcomment" class="toggle-comment meta-item">
+<i class="z-icon-comment"></i>添加评论
+</a>
+<a href="#" name="share" class="share meta-item">
+<i class="z-icon-share"></i>分享
+</a>
+
+
+<span class="zg-bull">&bull;</span>
+<a href="#" name="invite" class="meta-item">邀请回答</a>
+
+
+
+
+</div>
+<div class="panel-container">
+
+</div>
+</div>
+
+<div class="zh-answers-title clearfix">
+
+<div id="zh-answers-filter" class="answers-sorter">
+
+<span class="lbl">按投票排序</span>
+<a class="lbl" href="/question/23935371?sort=created">按时间排序</a>
+
+<i class="zg-icon zg-icon-double-arrow"></i>
+</div>
+
+<h3 data-num="2" id="zh-question-answer-num">2 个回答</h3>
+</div>
+<div class="zh-question-answer-summary-wrap zm-item-rich-text" id="zh-question-answer-summary-wrap" style="display:none;">
+<h3>
+<a href="http://www.zhihu.com/question/20014415" target="_blank" class="zg-right zg-link-litblue" style="font-weight:normal">什么是答案总结？</a>
+答案总结</h3>
+<div id="zh-question-answer-summary" class="zg-section"
+data-resourceid="1755921" data-action="/question/summary">
+
+<div class="zm-editable-content"></div>
+
+</div>
+</div>
+
+<div id="zh-question-answer-wrap" data-pagesize="50" class="zh-question-answer-wrapper" data-widget="navigable" data-navigable-options="{&quot;items&quot;: &quot;&gt;.zm-item-answer&quot;}" data-init="{&quot;params&quot;: {&quot;url_token&quot;: 23935371, &quot;pagesize&quot;: 50, &quot;offset&quot;: 0}, &quot;nodename&quot;: &quot;QuestionAnswerListV2&quot;}">
+
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemprop="topAnswer"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="5758601"
+data-atoken="26131823"
+data-collapsed="0"
+data-created="1401207201"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-5758601"></a>
+
+
+<div class="zm-votebar">
+<button class="up pressed">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">3</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link" href="/people/san-qing-97" data-tip="p$t$san-qing-97">
+<img src="https://pic4.zhimg.com/287e8a4e3_s.jpg" class="zm-list-avatar avatar">
+</a>
+
+<a class="author-link" data-tip="p$t$san-qing-97" href="/people/san-qing-97">三清</a><span class="sep">，</span><span title="唯有彻底的认真，才能解决生命的困境。" class="bio">唯有彻底的认真，才能解决生命的困境。</span>
+</div>
+<div class="zm-item-vote-info " data-votecount="3">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$shuaijunxiao" href="http://www.zhihu.com/people/shuaijunxiao" class="zg-link" title="王笑">王笑</a>、</span><span class="user-block"><a data-tip="p$t$ymk222" href="http://www.zhihu.com/people/ymk222" class="zg-link" title="苏朗">苏朗</a>、</span><span class="user-block"><a data-tip="p$t$404-Page-Not-found" href="http://www.zhihu.com/people/404-Page-Not-found" class="zg-link" title="姚泽源">姚泽源</a></span>
+</span>
+
+
+<span>赞同</span>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="1755921" data-action="/answer/content" data-author-name="三清" data-entry-url="/question/23935371/answer/26131823">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+<a href="http://bbs.xiaomi.cn/thread-7879823-1-1.html" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">bbs.xiaomi.cn/thread-78</span><span class="invisible">79823-1-1.html</span><span class="ellipsis"></span><i class="icon-external"></i></a>希望有帮助
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+<a href="http://bbs.xiaomi.cn/thread-7879823-1-1.html" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">bbs.xiaomi.cn/thread-78</span><span class="invisible">79823-1-1.html</span><span class="ellipsis"></span><i class="icon-external"></i></a><br>希望有帮助
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="5758601-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/23935371/answer/26131823">发布于 2014-05-28</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>4 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="true"><i class="z-icon-thank"></i>取消感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="zm-item-answer  zm-item-expanded"
+
+itemscope itemtype="http://schema.org/Answer"
+data-aid="21427093"
+data-atoken="65027964"
+data-collapsed="0"
+data-created="1443084434"
+data-deleted="0"
+data-helpful="1"
+data-isowner="0"
+data-copyable="1"
+
+
+>
+<a class="zg-anchor-hidden" name="answer-21427093"></a>
+
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">0</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link" href="/people/liuhaofeng" data-tip="p$t$liuhaofeng">
+<img src="https://pic2.zhimg.com/80f261a1e00f2492f81a0c9ea4aa62b1_s.jpg" class="zm-list-avatar avatar">
+</a>
+
+<a class="author-link" data-tip="p$t$liuhaofeng" href="/people/liuhaofeng">刘好锋</a><span class="sep">，</span><span title="读书分享" class="bio">读书分享</span>
+</div>
+<div class="zm-item-vote-info empty" data-votecount="0">
+
+
+
+</div>
+</div>
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="1755921" data-action="/answer/content" data-author-name="刘好锋" data-entry-url="/question/23935371/answer/65027964">
+
+
+<div class="zh-summary summary clearfix" style="display:none;">
+
+多看私有代码，参见：<a href="http://www.miui.com/thread-1960799-1-1.html" class=" wrap external" target="_blank" rel="nofollow noreferrer">多看电子书规范扩展开放计划（20140819第四弹）<i class="icon-external"></i></a>
+
+</div>
+
+
+<div class="zm-editable-content clearfix">
+多看私有代码，参见：<a href="http://www.miui.com/thread-1960799-1-1.html" class=" wrap external" target="_blank" rel="nofollow noreferrer">多看电子书规范扩展开放计划（20140819第四弹）<i class="icon-external"></i></a>
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="21427093-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/23935371/answer/65027964">发布于 2015-09-24</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="true"><i class="z-icon-thank"></i>取消感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+
+</div>
+</div>
+</div>
+
+
+</div>
+
+
+<div id="zh-question-collapsed-link" class="zu-question-collap-title" style="display:none" >
+<a href="javascript:;" name="expand" class="zg-link-gray" id="zh-question-collapsed-switcher">
+<span id="zh-question-collapsed-num">0</span> 个回答被折叠
+</a>
+（<a target="_blank" href="http://www.zhihu.com/question/20120168" class="zg-link-gray">为什么？</a>）
+</div>
+<div id="zh-question-collapsed-wrap" class="zh-question-answer-wrapper" style="display:none"></div>
+<a name="draft"></a>
+<div id="zh-question-answer-form-wrap" class="zh-question-answer-form-wrap">
+<div class="zm-editable-tip"></div>
+<div class="zm-editable-content"></div>
+</div>
+<div class="shameimaru-placeholder" data-class="QuestionBottomShameimaruV2" data-params='{&quot;token&quot;:23935371}'></div>
+<!-- end of content -->
+</div>
+</div>
+<div class="zu-main-sidebar">
+
+
+
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner" id="zh-question-side-header-wrap">
+<button data-follow="q:m:button" class="follow-button zg-unfollow zg-btn-white" data-id="1755921">取消关注</button>
+
+<div class="zg-btn-white" id="zh-question-operation-menu"
+>
+<i class="zg-icon-dropdown-menu zg-icon"></i><b class="hide-text">设置</b>
+</div>
+
+<div class="zh-question-followers-sidebar">
+<div class="zg-gray-normal">
+
+<a href="/question/23935371/followers"><strong>9</strong></a>
+人关注该问题
+
+</div>
+
+<div class="list zu-small-avatar-list zg-clear">
+
+<a title="姚泽源"
+data-tip="p$t$404-Page-Not-found"
+class="zm-item-link-avatar"
+href="/people/404-Page-Not-found">
+<img src="https://pic3.zhimg.com/dce9dde98c91a4d1e3cb86e627ecca86_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="何振东"
+data-tip="p$t$makeLaugh"
+class="zm-item-link-avatar"
+href="/people/makeLaugh">
+<img src="https://pic1.zhimg.com/481ab143c_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="little bit"
+data-tip="p$t$little-bit"
+class="zm-item-link-avatar"
+href="/people/little-bit">
+<img src="https://pic2.zhimg.com/cd386db0d7855cc2d56e75295dd30eb1_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="李太云"
+data-tip="p$t$vipvae"
+class="zm-item-link-avatar"
+href="/people/vipvae">
+<img src="https://pic2.zhimg.com/84f35fb082efc3fd6cba60e43ebeccfd_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="贺敏杰"
+data-tip="p$t$heminjie"
+class="zm-item-link-avatar"
+href="/people/heminjie">
+<img src="https://pic3.zhimg.com/d0b5ebbeae5ba160a3c35530a481c01a_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="he zh"
+data-tip="p$t$he-zh-58"
+class="zm-item-link-avatar"
+href="/people/he-zh-58">
+<img src="https://pic1.zhimg.com/da8e974dc_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="rc always"
+data-tip="p$t$rc-always"
+class="zm-item-link-avatar"
+href="/people/rc-always">
+<img src="https://pic1.zhimg.com/da8e974dc_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="张仝"
+data-tip="p$t$zhang-tong-53"
+class="zm-item-link-avatar"
+href="/people/zhang-tong-53">
+<img src="https://pic2.zhimg.com/7bf0fc599_s.jpg" class="zm-item-img-avatar">
+</a>
+
+<a title="任静波"
+data-tip="p$t$ren-jing-bo"
+class="zm-item-link-avatar"
+href="/people/ren-jing-bo">
+<img src="https://pic1.zhimg.com/da8e974dc_s.jpg" class="zm-item-img-avatar">
+</a>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="shameimaru-placeholder" data-class="QuestionUpShameimaruV2" data-params='{&quot;token&quot;:23935371}'></div>
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<div id="zh-question-related-questions" class="zh-question-related-questions clearfix">
+
+<h3>相关问题</h3>
+<ul itemprop="relatedQuestion" itemscope itemtype="http://schema.org/ItemList">
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/19793107">Kindle 安装多看系统后能把 epub 格式的电子书自动调整成6寸屏幕大小的字体吗？</a> <span class="num">3 个回答</span><meta itemprop="followerCount" content="24" /></li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/19823087">Mac 上有什么好的 epub 格式电子书阅读软件？</a> <span class="num">10 个回答</span><meta itemprop="followerCount" content="53" /></li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/20148128">电子书格式 ePub 在移动设备上有什么优势？</a> <span class="num">3 个回答</span><meta itemprop="followerCount" content="33" /></li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/21194049">epub电子书哪里比较全？</a> <span class="num">7 个回答</span><meta itemprop="followerCount" content="121" /></li>
+
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/Question"><a class="question_link" href="/question/19616022">请问 Epub 的电子书在哪里下载比较方便？是否有 Google 的自定义搜索？</a> <span class="num">7 个回答</span><meta itemprop="followerCount" content="169" /></li>
+
+</ul>
+</div>
+</div>
+</div>
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<h3>问题状态</h3>
+<div class="zg-gray-normal">
+最近活动于 <span class="time">2015-09-29</span>
+<span class="zg-bull">&bull;</span>
+<a href="/question/23935371/log">查看问题日志</a>
+</div>
+<div class="zg-gray-normal">
+被浏览 <strong>498</strong> 次，相关话题关注者 <strong>21345</strong> 人
+</div>
+</div>
+</div>
+<div class="shameimaru-placeholder" data-class="QuestionDownShameimaruV2" data-params='{&quot;token&quot;:23935371}'></div>
+</div>
+<div class="zg-clear"></div>
+<!-- 版权演示 -->
+
+<script type="text/x-template" id="copyright-demo-template">
+<article>
+
+<section>
+<p class="copyright-demo-title"> 这是你的回答正文 </p>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+</section>
+
+<section>
+<p class="copyright-demo-title"> 当其他人想复制你的一段回答 </p>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region1">
+<span class="copyright-ico-indicator" id="copyright-demo-indicator"></span>
+</div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region2"></div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region3"></div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region4"></div>
+<div class="copyright-demo-region"></div>
+</section>
+
+<section id="copyright-demo-frame3">
+<p class="copyright-demo-title"> 复制将受限，同时会弹出提醒 </p>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region"></div>
+<span class="copyright-ico-pointer copyright-demo-pointer"></span>
+</section>
+</article>
+</script>
+
+
+</div>
+
+<div id="zh-footer" class="zh-footer">
+<div class="content zg-wrap clearfix">
+<ul>
+
+<li><a href="https://liukanshan.zhihu.com" target="_blank">刘看山</a></li>
+
+<li><a href="/question/19581624" target="_blank">知乎指南</a></li>
+<li><a href="javascript:;" id="js-feedback-button">建议反馈</a></li>
+
+<li><a href="/app" target="_blank">移动应用</a></li>
+<li><a href="/careers">加入知乎</a></li>
+<li><a href="/terms" target="_blank">知乎协议</a></li>
+<li><a href="mailto:bd@zhihu.com">商务合作</a></li>
+
+</ul>
+
+<span class="copy">&copy; 2015 知乎</span>
+
+</div>
+</div>
+
+<script type="text/json" class="json-inline" data-name="guiders2">{}</script>
+<script type="text/json" class="json-inline" data-name="current_user">["\u59da\u6cfd\u6e90","404-Page-Not-found","https:\/\/pic3.zhimg.com\/dce9dde98c91a4d1e3cb86e627ecca86_s.jpg","57842aac37ccd0de3965f9b6e17cb555","\u5168\u804c\u5f00\u53d1\u77e5\u4e4e\u52a9\u624bing",0,0,1,"547320073@qq.com","http:\/\/mail.qq.com",0,false,true,false,"27865550684160"]</script>
+<script type="text/json" class="json-inline" data-name="env">["zhihu.com","comet.zhihu.com",false,null]</script>
+<script type="text/json" class="json-inline" data-name="permissions">[]</script>
+
+
+<script type="text/json" class="json-inline" data-name="ga_vars">{"user_created":1337032972000,"now":1447401778000,"abtest_mask":"---------1--------------------","user_attr":[1,0,0,"-",1],"user_hash":"57842aac37ccd0de3965f9b6e17cb555"}</script>
+
+<script type="text/json" class="json-inline" data-name="current_question">{"status":"normal","isLocked":0,"detailEditReasonRequired":true,"editPermission":true,"isAnon":0,"qid":1755921,"urlToken":23935371,"showInvitePanel":true,"askAboutMember":0}</script>
+<script type="text/json" class="json-inline" data-name="current_question_owner">true</script>
+<script type="text/json" class="json-inline" data-name="draft">[]</script>
+<script type="text/json" class="json-inline" data-name="my_answer">{}</script>
+
+<script type="text/json" class="json-inline" data-name="redirect_to">""</script>
+
+
+
+<script src="http://static.zhihu.com/static/revved/js/-/vendor.min.5a2082ff.js"></script>
+<script src="http://static.zhihu.com/static/revved/js/-/closure/app_core.8199c054.js"></script>
+<script src="http://static.zhihu.com/static/revved/js/-/closure/sign.738d8ca0.js"></script>
+<script src="http://static.zhihu.com/static/revved/js/-/closure/app.1861b162.js"></script>
+<script src="http://static.zhihu.com/static/revved/js/-/closure/rich_text_editor.6d63ae05.js"></script>
+
+<script type="text/zscript" znonce="f240ac278ab54ebdb522a5a85ab24575">
+ZH.entrySQ();
+</script>
+
+<input type="hidden" name="_xsrf" value="db222c06c21f3402733fe6cbcd4472eb"/>
+</body>
+</html>
