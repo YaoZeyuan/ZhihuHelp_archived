@@ -71,7 +71,7 @@ class ParserTools(BaseClass):
         return ParserTools.match_content(r'\d{4}-\d{2}-\d{2}', date, date)  # 一三五七八十腊，三十一天永不差！
 
 
-class AuthorInfo(ParserTools):
+class Author(ParserTools):
     """
     实践一把《代码整洁之道》的做法，以后函数尽量控制在5行之内
     """
@@ -95,39 +95,45 @@ class AuthorInfo(ParserTools):
             self.create_anonymous_info()
         else:
             self.parse_author_info()
-        return
+        return self.info
 
     def parse_author_info(self):
-        self.create_anonymous_info()
-        self.create_anonymous_info()
-        self.create_anonymous_info()
-        self.create_anonymous_info()
+        self.parse_author_id()
+        self.parse_author_sign()
+        self.parse_author_logo()
+        self.parse_author_name()
         return
 
     def create_anonymous_info(self):
-        self.info['authorID'] = u"coder'sGirlFriend~"
-        self.info['authorSign'] = u''
-        self.info['authorLogo'] = u'http://pic1.zhimg.com/da8e974dc_s.jpg'
-        self.info['authorName'] = u'匿名用户'
+        self.info['author_id'] = u"coder'sGirlFriend~"
+        self.info['author_sign'] = u''
+        self.info['author_logo'] = u'http://pic1.zhimg.com/da8e974dc_s.jpg'
+        self.info['author_name'] = u'匿名用户'
         return
 
     def parse_author_id(self):
         author = self.dom.find('a', class_='zm-item-link-avatar')
+        if not author:
+            BaseClass.logger.debug(u'用户ID未找到')
+            return
         link = self.get_attr(author, 'href')
-        self.info['authorID'] = self.match_answer_id(link)
+        self.info['author_id'] = self.match_answer_id(link)
         return
 
     def parse_author_sign(self):
         sign = self.dom.find('strong', class_='zu-question-my-bio')
-        self.info['authorSign'] = self.get_attr(sign, 'title')
+        if not sign:
+            BaseClass.logger.debug(u'用户签名未找到')
+            return
+        self.info['author_sign'] = self.get_attr(sign, 'title')
         return
 
     def parse_author_logo(self):
-        self.info['authorLogo'] = self.get_attr(self.dom.find('img'), 'src')
+        self.info['author_logo'] = self.get_attr(self.dom.find('img'), 'src')
         return
 
     def parse_author_name(self):
-        self.info['authorName'] = self.dom.find('a')[-1].text
+        self.info['author_name'] = self.dom.find('a')[-1].text
         return
 
 
@@ -239,6 +245,7 @@ class Answer(ParserTools):
 
     def __init__(self, dom=None):
         self.set_dom(dom)
+        self.author_parser = Author(dom)
         return
 
     def set_dom(self, dom):
@@ -250,14 +257,15 @@ class Answer(ParserTools):
         return
 
     def get_info(self):
-        self.parse_info()
-        return self.info
+        answer_info = self.parse_info()
+        author_info = self.author_parser.get_info()
+        return dict(answer_info, **author_info)
 
     def parse_info(self):
         self.parse_header_info()
         self.parse_answer_content()
         self.parse_footer_info()
-        return
+        return self.info
 
     def parse_header_info(self):
         self.parse_vote_count()
@@ -271,32 +279,42 @@ class Answer(ParserTools):
         return
 
     def parse_vote_count(self):
-        self.info['answerAgreeCount'] = self.get_attr(self.header, 'data-votecount')
-        return self.info['answerAgreeCount']
+        self.info['agree'] = self.get_attr(self.header, 'data-votecount')
+        return
 
     def parse_answer_content(self):
-        self.info['answerContent'] = self.body.text()
+        self.info['content'] = self.body.text()
         return
 
     def parse_date_info(self):
         data_block = self.footer.find('a', class_='answer-date-link')
         commit_date = self.get_attr(data_block, 'data-tip')
-        if commit_date == '':
-            commit_date = data_block.text()
-            self.info['editDate'] = self.info['commitDate'] = self.parse_date(commit_date)
-        else:
+        if not data_block:
+            BaseClass.logger.debug(u'答案更新日期未找到')
+            return
+
+        if commit_date:
             update_date = data_block.text()
-            self.info['editDate'] = self.parse_date(update_date)
-            self.info['commitDate'] = self.parse_date(commit_date)
+            self.info['edit_date'] = self.parse_date(update_date)
+            self.info['commit_date'] = self.parse_date(commit_date)
+        else:
+            commit_date = data_block.text()
+            self.info['edit_date'] = self.info['commit_date'] = self.parse_date(commit_date)
 
     def parse_comment_count(self):
-        comment = self.footer.find('a', name='addcomment').text()
-        self.info['answerCommentCount'] = self.match_int(comment)
+        comment = self.footer.find('a', name='addcomment')
+        if comment:
+            self.info['comment'] = self.match_int(comment.text())
+        else:
+            BaseClass.logger.debug(u'评论数未找到')
         return
 
     def parse_no_record_flag(self):
-        no_record_flag = self.footer.find('a', class_='copyright').text()
-        self.info['noRecordFlag'] = int(u'禁止转载' in no_record_flag)
+        no_record_flag = self.footer.find('a', class_='copyright')
+        if no_record_flag:
+            self.info['noRecordFlag'] = int(u'禁止转载' in no_record_flag.text())
+        else:
+            BaseClass.logger.debug(u'禁止转载标志未找到')
         return
 
     def parse_href_info(self):
@@ -304,15 +322,15 @@ class Answer(ParserTools):
         href = self.get_attr(href_tag, 'href')
         self.parse_question_id(href)
         self.parse_answer_id(href)
-        self.info['answerHref'] = "http://www.zhihu.com/question/{questionID}/answer/{answerID}".format(**self.info)
+        self.info['href'] = "http://www.zhihu.com/question/{question_id}/answer/{answer_id}".format(**self.info)
         return
 
     def parse_question_id(self, href):
-        self.info['questionID'] = self.matchQuestionID(href)
+        self.info['question_id'] = self.match_question_id(href)
         return
 
     def parse_answer_id(self, href):
-        self.info['answerID'] = self.match_answer_id(href)
+        self.info['answer_id'] = self.match_answer_id(href)
         return
 
 
@@ -339,7 +357,7 @@ class QuestionInfo(ParserTools):
     def parse_info(self):
         self.parse_base_info()
         self.parse_status_info()
-        return
+        return self.info
 
     def parse_base_info(self):
         self.parse_question_id()
@@ -350,37 +368,41 @@ class QuestionInfo(ParserTools):
 
     def parse_question_id(self):
         meta = self.dom.select("meta[http-equiv='mobile-agent']")
-        content = self.get_attr(meta, 'content', 0)
+        if not meta:
+            return
+        content = self.get_attr(meta[0], 'content', 0)
         self.info['question_id'] = self.match_question_id(content)
         return
 
     def parse_title(self):
         title = self.dom.select('#zh-question-title h2')
+        if not title:
+            return
         self.info['title'] = title[0].string
         return
 
     def parse_desc(self):
-        desc = self.dom.find(id='zh-question-detail')
-        self.info['desc'] = desc.find('div', _class='zm-editable-content').string
+        desc = self.dom.select('#zh-question-detail div.zm-editable-content')
+        if not desc:
+            return
+        self.info['desc'] = desc[0].string
         return
 
     def parse_comment_count(self):
-        div = self.dom.find(id='zh-question-meta-wrap')
-        comment = div.find('i', name='z-icon-comment')
-        self.info['comment'] = self.match_int(comment.string)
+        comment = self.dom.select('#zh-question-meta-wrap i[name="z-icon-comment"]')
+        if not comment:
+            self.info['comment'] = self.match_int(comment[0].string)
         return
 
     def parse_status_info(self):
         self.parse_views()
+        self.parse_followers_count()
         return
 
     def parse_followers_count(self):
-        div = self.side_dom.find('div', _class='zh-question-followers-sidebar')
-        div = div.find('div', _class='zg-gray-normal')
-        strong = div.find('strong')
-        self.info['followers'] = 0
-        if not strong is None:
-            self.info['followers'] = self.match_int(strong.string)
+        followers_count = self.side_dom.select('div.zh-question-followers-sidebar div.zg-gray-normal strong')
+        if followers_count:
+            self.info['followers'] = self.match_int(followers_count[0].string)
         return
 
     def parse_views(self):
@@ -392,9 +414,18 @@ class QuestionInfo(ParserTools):
     def parse_answer_count(self):
         self.info['answers'] = 0  # 默认为0
         count = self.dom.select('#zh-answers-title a.zg-link-litblue, #zh-question-answer-num')
-        if len(count) != 0:
-            self.info['answers'] = self.match_int(count.string)
+        if count:
+            self.info['answers'] = self.match_int(count[0].string)
         return
+
+
+class AuthorInfo(ParserTools):
+
+class TopicInfo(ParserTools):
+
+class CollectionInfo(ParserTools):
+
+class TableInfo(ParserTools):
 
 
 class BaseParser(ParserTools):
