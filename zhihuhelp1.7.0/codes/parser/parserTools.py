@@ -346,6 +346,41 @@ class Answer(ParserTools):
         return
 
 
+class SimpleQuestion(ParserTools):
+    def __init__(self, dom=None):
+        self.set_dom(dom)
+        return
+
+    def set_dom(self, dom):
+        self.info = {}
+        if dom:
+            self.dom = dom
+        return
+
+    def get_info(self):
+        self.parse_info()
+        return self.info
+
+    def parse_info(self):
+        self.parse_header_info()
+        return self.info
+
+    def parse_question_id(self):
+        question = self.dom.select('h2 a.question_link, h2.zm-item-title a[target="_blank"]')  # 在收藏夹中需要使用后一个选择器
+        if not question:
+            BaseClass.logger.debug(u'问题信息_id未找到')
+        href = self.get_attr(question[0], 'href')
+        self.info['question_id'] = self.match_question_id(href)
+        return
+
+    def parse_title(self):
+        question = self.dom.select('h2 a.question_link')
+        if not question:
+            BaseClass.logger.debug(u'问题信息_title未找到')
+        self.info['title'] = question.get_text()
+        return
+
+
 class QuestionInfo(ParserTools):
     """
         特指single_question 和 single_answer中的内容
@@ -359,7 +394,7 @@ class QuestionInfo(ParserTools):
         self.info = {}
         if dom:
             self.dom = dom
-            self.side_dom = dom.find('div', _class='zu-main-sidebar')
+            self.side_dom = dom.find('div', class_='zu-main-sidebar')
         return
 
     def get_info(self):
@@ -418,7 +453,7 @@ class QuestionInfo(ParserTools):
         return
 
     def parse_views(self):
-        div = self.side_dom.find_all('div', _class='zm-side-section')[-1]
+        div = self.side_dom.find_all('div', class_='zm-side-section')[-1]
         views = div.find('strong')  # 在最后一个side-section中的第一个strong是问题浏览次数
         self.info['views'] = self.match_int(views.string)
         return
@@ -435,6 +470,7 @@ class AuthorInfo(ParserTools):
     u"""
     使用详情页面进行解析
     """
+
     def __init__(self, dom=None):
         self.set_dom(dom)
         return
@@ -523,21 +559,21 @@ class AuthorInfo(ParserTools):
         if not hash:
             BaseClass.logger.debug(u'用户hash未找到')
             return
-        hash = hash[0].get_text().split(',')[-1] #取出hash所在字符串
-        self.info['hash'] =hash.split('"')[1] # 取出hash值
+        hash = hash[0].get_text().split(',')[-1]  # 取出hash所在字符串
+        self.info['hash'] = hash.split('"')[1]  # 取出hash值
         return
 
     def parse_profile_count(self):
-        def parse_items(root = None, kind = 'asks'):
+        def parse_items(root=None, kind='asks'):
             node = root.select('a[href*="{} span.num"]'.format(kind))
-            if not node :
+            if not node:
                 BaseClass.logger.debug(u'{}未找到'.format(kind))
             self.info[kind] = node[0].get_text()
             return
 
-        item_list = [ 'asks', 'answers', 'posts', 'collections', 'logs']
+        item_list = ['asks', 'answers', 'posts', 'collections', 'logs']
         div = self.header_dom.select('div.profile-navbar')
-        if not div :
+        if not div:
             BaseClass.logger.debug(u'用户提问-回答-专栏数未找到')
             return
         for item in item_list:
@@ -556,7 +592,7 @@ class AuthorInfo(ParserTools):
 
     def parse_desc(self):
         desc = self.header_dom.select('.description span.content')
-        if not desc :
+        if not desc:
             BaseClass.logger.debug(u'用户详情未找到')
             return
         self.info['desc'] = self.get_tag_content(desc[0])
@@ -671,12 +707,11 @@ class TopicInfo(ParserTools):
         return
 
 
-
-
 class CollectionInfo(ParserTools):
     u"""
     只解析收藏夹相关信息，暂时不解析创建者相关的信息
     """
+
     def __init__(self, dom=None):
         self.set_dom(dom)
         return
@@ -714,7 +749,8 @@ class CollectionInfo(ParserTools):
         return
 
     def parse_follower(self):
-        follower = self.dom.select('div.zm-side-section div.zm-side-section-inner div.zg-gray-normal a[href*="followers"]')
+        follower = self.dom.select(
+            'div.zm-side-section div.zm-side-section-inner div.zg-gray-normal a[href*="followers"]')
         if not follower:
             BaseClass.logger.debug(u'话题关注人数未找到')
         self.info['follower'] = follower[0].get_text()
@@ -726,6 +762,7 @@ class CollectionInfo(ParserTools):
             BaseClass.logger.debug(u'话题描述未找到')
         self.info['desc'] = self.get_tag_content(desc[0])
         return
+
 
 class BaseParser(ParserTools):
     def __init__(self, content):
@@ -746,3 +783,49 @@ class BaseParser(ParserTools):
         需重载
         """
         return
+
+
+class QuestionParser(BaseParser):
+    def get_answer_dom_list(self):
+        return self.dom.select('.zm-item-answer')
+
+    def get_answer_list(self):
+        answer_list = []
+        for dom in self.get_answer_dom_list():
+            self.answer_parser.set_dom(dom)
+            answer_list.append(self.answer_parser.get_info())
+        return answer_list
+
+    def get_question_info_list(self):
+        parser = QuestionInfo()
+        parser.set_dom(self.dom)
+        return [parser.get_info()]
+
+
+class AuthorParser(QuestionParser):
+    def get_question_dom_list(self):
+        return self.dom.select('div.zm-item')
+
+    def get_question_info_list(self):
+        question_info_list = []
+        parser = SimpleQuestion()
+        for dom in self.get_question_dom_list():
+            parser.set_dom(self.dom)
+            question_info_list.append(parser.get_info())
+        return question_info_list
+
+
+class TopicParser(AuthorParser):
+    def get_question_dom_list(self):
+        return self.dom.select('div.content')
+
+    def get_answer_dom_list(self):
+        return self.dom.select('div.content')
+
+
+class CollectionParser(AuthorParser):
+    def get_question_dom_list(self):
+        return self.dom.select('div.zm-item')
+
+    def get_answer_dom_list(self):
+        return self.dom.select('div.zm-item')
