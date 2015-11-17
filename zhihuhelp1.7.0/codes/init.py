@@ -33,119 +33,114 @@ class Init(object):
                     cookieStr   VARCHAR(50000)  DEFAULT '',
                     PRIMARY KEY (account))""")
             # 核心:答案数据
-            cursor.execute("""CREATE TABLE AnswerContent(
-                            authorID            VARCHAR(255)    NOT NULL    DEFAULT '',
-                            authorSign          VARCHAR(2000)   NOT NULL    DEFAULT '',
-                            authorLogo          VARCHAR(255)    NOT NULL    DEFAULT '',
-                            authorName          VARCHAR(255)    NOT NULL    DEFAULT '',
-        
-                            answerAgreeCount    INT(8)          NOT NULL    DEFAULT 0,
-                            answerContent       longtext        NOT NULL    DEFAULT '',
-                            questionID          INT(8)          NOT NULL    DEFAULT 0,
-                            answerID            INT(8)          NOT NULL    DEFAULT 0,
-                            commitDate          DATE            NOT NULL    DEFAULT '2000-01-01',
-                            updateDate          DATE            NOT NULL    DEFAULT '2000-01-01',
-                            answerCommentCount  INT(8)          NOT NULL    DEFAULT 0,
-                            noRecordFlag        INT(1)          NOT NULL    DEFAULT 0,
-                            
-                            answerHref          VARCHAR(255)    NOT NULL    DEFAULT '',
-                            PRIMARY KEY(answerHref))""")
+            cursor.execute("""CREATE TABLE Answer(
+                            author_id           VARCHAR(255)    NOT NULL    DEFAULT '',
+                            author_sign         VARCHAR(2000)   NOT NULL    DEFAULT '',
+                            author_logo         VARCHAR(255)    NOT NULL    DEFAULT '',
+                            author_name         VARCHAR(255)    NOT NULL    DEFAULT '',
 
-            cursor.execute(
-                """CREATE INDEX idx_AnswerContent ON AnswerContent(authorID, questionID, answerID, answerHref);""")
+                            agree               INT(8)          NOT NULL    DEFAULT 0,
+                            content             longtext        NOT NULL    DEFAULT '',
+                            question_id         INT(8)          NOT NULL    DEFAULT 0,
+                            answer_id           INT(8)          NOT NULL    DEFAULT 0,
+                            commit_date         DATE            NOT NULL    DEFAULT '2000-01-01',
+                            edit_date           DATE            NOT NULL    DEFAULT '2000-01-01',
+                            comment             INT(8)          NOT NULL    DEFAULT 0,
+                            no_record_flag      INT(1)          NOT NULL    DEFAULT 0,
+
+                            href                VARCHAR(255)    NOT NULL    DEFAULT '',
+                            PRIMARY KEY(href))""")
 
             # 核心:问题信息数据
-            cursor.execute("""CREATE TABLE QuestionInfo(
-                            questionIDinQuestionDesc     INT(8)       NOT NULL    DEFAULT 0,
-                            questionCommentCount         INT(8)       NOT NULL    DEFAULT 0,
-                            questionFollowCount          INT(8)       NOT NULL    DEFAULT 0,
-                            questionAnswerCount          INT(8)       NOT NULL    DEFAULT 0,
-                            questionViewCount            INT(8)       NOT NULL    DEFAULT 0,
-                            questionTitle                VARCHAR(200) NOT NULL    DEFAULT '',
-                            questionDesc                 longtext     NOT NULL    DEFAULT '',
-                            questionCollapsedAnswerCount INT(8)       NOT NULL    DEFAULT 0,
+            cursor.execute("""CREATE TABLE Question(
+                            question_id     INT(8)       NOT NULL    DEFAULT 0,
+                            comment         INT(8)       NOT NULL    DEFAULT 0,
+                            views           INT(8)       NOT NULL    DEFAULT 0,
+                            answers         INT(8)       NOT NULL    DEFAULT 0,
+                            followers       INT(8)       NOT NULL    DEFAULT 0,
+                            title           VARCHAR(200) NOT NULL    DEFAULT '',
+                            description     longtext     NOT NULL    DEFAULT '',
 
-                            PRIMARY KEY(questionIDinQuestionDesc))""")
+                            PRIMARY KEY(question_id))""")
 
             # 新数据表
             # 收藏夹内容表
             cursor.execute("""
                             CREATE  TABLE       CollectionIndex(
-                            collectionID        VARCHAR(50)     NOT NULL,
-                            answerHref          VARCHAR(255)    NOT NULL,
+                            collection_id       VARCHAR(50)     NOT NULL,
+                            href                VARCHAR(255)    NOT NULL,
                             PRIMARY KEY(collectionID, answerHref))""")  # 负责永久保存收藏夹链接，防止丢收藏
 
             # 话题内容表
             cursor.execute("""
                             CREATE  TABLE       TopicIndex(
-                            topicID             VARCHAR(50)     NOT NULL,
-                            answerHref          VARCHAR(255)    NOT NULL,
+                            topic_id      VARCHAR(50)     NOT NULL,
+                            href          VARCHAR(255)    NOT NULL,
                             PRIMARY KEY(topicID, answerHref))""")  # 负责保存话题链接，每次获取话题内容时都要重新更新之
 
             # 圆桌内容表
             cursor.execute("""
                             CREATE  TABLE       TableIndex(
-                            tableID             VARCHAR(50)     NOT NULL,
-                            answerHref          VARCHAR(255)    NOT NULL,
+                            table_id      VARCHAR(50)     NOT NULL,
+                            href          VARCHAR(255)    NOT NULL,
                             PRIMARY KEY(tableID, answerHref))""")  # 负责保存圆桌内的答案链接，每次获取圆桌内容时都要重新更新之
 
             # 用户信息表
             cursor.execute("""
                             CREATE TABLE AuthorInfo (
-                            authorLogoAddress   VARCHAR(255)    DEFAULT "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
-                            authorID            VARCHAR(255)    NOT NULL DEFAULT 'null',
-                            dataID              VARCHAR(255)    DEFAULT '',
-                            sign                VARCHAR(255)    DEFAULT '',
-                            desc                VARCHAR(10000)  DEFAULT '',
-                            name                VARCHAR(255)    DEFAULT '',
-                            ask                 VARCHAR(255)    DEFAULT '',
-                            answer              INT             DEFAULT 0,
-                            post                INT             DEFAULT 0,
-                            collect             INT             DEFAULT 0,
-                            edit                INT             DEFAULT 0,
-                            agree               INT             DEFAULT 0,
-                            thanks              INT             DEFAULT 0,
-                            collected           INT             DEFAULT 0,
-                            shared              INT             DEFAULT 0,
-                            followee            INT             DEFAULT 0,
-                            follower            INT             DEFAULT 0,
-                            watched             INT             DEFAULT 0,
-                            weiboAddress        VARCHAR(255)    DEFAULT '',
-                            PRIMARY KEY(authorID))""")  # 负责保存ID信息
+                            logo              VARCHAR(255)    DEFAULT "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
+                            author_id         VARCHAR(255)    NOT NULL DEFAULT 'null',
+                            hash              VARCHAR(255)    DEFAULT '',
+                            sign              VARCHAR(255)    DEFAULT '',
+                            description       VARCHAR(10000)  DEFAULT '',
+                            name              VARCHAR(255)    DEFAULT '',
+                            asks              VARCHAR(255)    DEFAULT '',
+                            answers           INT             DEFAULT 0,
+                            posts             INT             DEFAULT 0,
+                            collections       INT             DEFAULT 0,
+                            logs              INT             DEFAULT 0,
+                            agree             INT             DEFAULT 0,
+                            thanks            INT             DEFAULT 0,
+                            collected         INT             DEFAULT 0,
+                            shared            INT             DEFAULT 0,
+                            followee          INT             DEFAULT 0,
+                            follower          INT             DEFAULT 0,
+                            followed_column   INT             DEFAULT 0,
+                            followed_topic    INT             DEFAULT 0,
+                            viewed            INT             DEFAULT 0,
+                            gender            VARCHAR(255)    DEFAULT '',
+                            weibo             VARCHAR(255)    DEFAULT '',
+                            PRIMARY KEY(author_id))""")  # 负责保存ID信息
 
             # 收藏夹信息表
             cursor.execute("""
                             CREATE TABLE CollectionInfo(
-                            collectionID        VARCHAR(50)     NOT NULL,
+                            collection_id       VARCHAR(50)     NOT NULL,
                             title               VARCHAR(255),
                             description         VARCHAR(1000),
-                            authorName          VARCHAR(255),
-                            authorID            VARCHAR(255),
-                            authorLogo          VARCHAR(255),
-                            authorSign          VARCHAR(255),
-                            followerCount       INT(20)         NOT NULL    DEFAULT 0,
-                            commentCount        INT(20)         NOT NULL    DEFAULT 0,
-                            PRIMARY KEY(collectionID))""")  # 负责保存收藏夹信息
+                            follower            INT(20)         NOT NULL    DEFAULT 0,
+                            comment             INT(20)         NOT NULL    DEFAULT 0,
+                            PRIMARY KEY(collection_id))""")  # 负责保存收藏夹信息
 
             # 话题信息表
             cursor.execute("""CREATE TABLE TopicInfo (
                             title               VARCHAR(255),
-                            logoAddress         VARCHAR(255),
+                            logo                VARCHAR(255),
                             description         VARCHAR(3000),
-                            topicID             VARCHAR(50),
-                            followerCount       INT(20)         DEFAULT 0,
-                            PRIMARY KEY (topicID))""")  # 负责保存话题信息
+                            topic_id            VARCHAR(50),
+                            follower            INT(20)         DEFAULT 0,
+                            PRIMARY KEY (topic_id))""")  # 负责保存话题信息
 
             # 圆桌信息表
             cursor.execute("""CREATE TABLE TableInfo (
                             title               VARCHAR(255),
-                            logoAddress         VARCHAR(255),
+                            logo                VARCHAR(255),
                             description         VARCHAR(3000),
-                            activeCount         INT             DEFAULT 0,
-                            questionCount       INT             DEFAULT 0,
-                            commentCount        INT             DEFAULT 0,
-                            tableID             VARCHAR(50),
-                            PRIMARY KEY (tableID))""")  # 负责保存圆桌信息
+                            active              INT             DEFAULT 0,
+                            question            INT             DEFAULT 0,
+                            comment             INT             DEFAULT 0,
+                            table_id             VARCHAR(50),
+                            PRIMARY KEY (table_id))""")  # 负责保存圆桌信息
 
             # 专栏信息
             cursor.execute("""CREATE TABLE ColumnInfo(

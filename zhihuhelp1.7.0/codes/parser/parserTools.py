@@ -324,7 +324,7 @@ class Answer(ParserTools):
     def parse_no_record_flag(self):
         no_record_flag = self.footer.find('a', class_='copyright')
         if no_record_flag:
-            self.info['noRecordFlag'] = int(u'禁止转载' in no_record_flag.get_text())
+            self.info['no_record_flag'] = int(u'禁止转载' in no_record_flag.get_text())
         else:
             BaseClass.logger.debug(u'禁止转载标志未找到')
         return
@@ -409,7 +409,7 @@ class QuestionInfo(ParserTools):
     def parse_base_info(self):
         self.parse_question_id()
         self.parse_title()
-        self.parse_desc()
+        self.parse_description()
         self.parse_comment_count()
         return
 
@@ -428,17 +428,17 @@ class QuestionInfo(ParserTools):
         self.info['title'] = title[0].string
         return
 
-    def parse_desc(self):
-        desc = self.dom.select('#zh-question-detail div.zm-editable-content')
-        if not desc:
+    def parse_description(self):
+        description = self.dom.select('#zh-question-detail div.zm-editable-content')
+        if not description:
             return
-        self.info['desc'] = desc[0].string
+        self.info['description'] = description[0].string
         return
 
     def parse_comment_count(self):
-        comment = self.dom.select('#zh-question-meta-wrap i[name="z-icon-comment"]')
+        comment = self.dom.select('#zh-question-meta-wrap a[name="addcomment"]')
         if not comment:
-            self.info['comment'] = self.match_int(comment[0].string)
+            self.info['comment'] = self.match_int(comment[0].get_text())
         return
 
     def parse_status_info(self):
@@ -500,7 +500,7 @@ class AuthorInfo(ParserTools):
         self.parse_name()
         self.parse_sign()
         self.parse_logo()
-        self.parse_desc()
+        self.parse_description()
         self.parse_weibo()
         self.parse_gender()
         return
@@ -551,7 +551,7 @@ class AuthorInfo(ParserTools):
             BaseClass.logger.debug(u'用户id未找到')
             return
         href = self.get_attr(item[0], 'href')
-        self.info['id'] = self.match_author_id(href)
+        self.info['author_id'] = self.match_author_id(href)
         return
 
     def parse_author_hash(self):
@@ -590,12 +590,12 @@ class AuthorInfo(ParserTools):
             self.info[detail_items[i]] = detail[i]
         return
 
-    def parse_desc(self):
-        desc = self.header_dom.select('.description span.content')
-        if not desc:
+    def parse_description(self):
+        description = self.header_dom.select('.description span.content')
+        if not description:
             BaseClass.logger.debug(u'用户详情未找到')
             return
-        self.info['desc'] = self.get_tag_content(desc[0])
+        self.info['description'] = self.get_tag_content(description[0])
         return
 
     def parse_extra_info(self):
@@ -667,7 +667,7 @@ class TopicInfo(ParserTools):
         self.parse_topic_id()
         self.parse_logo()
         self.parse_follower()
-        self.parse_desc()
+        self.parse_description()
         return self.info
 
     def parse_title(self):
@@ -699,11 +699,11 @@ class TopicInfo(ParserTools):
         self.info['follower'] = follower[0].get_text()
         return
 
-    def parse_desc(self):
-        desc = self.dom.select('#zh-topic-desc div.zm-editable-content')
-        if not desc:
+    def parse_description(self):
+        description = self.dom.select('#zh-topic-desc div.zm-editable-content')
+        if not description:
             BaseClass.logger.debug(u'话题描述未找到')
-        self.info['desc'] = self.get_tag_content(desc[0])
+        self.info['description'] = self.get_tag_content(description[0])
         return
 
 
@@ -730,7 +730,8 @@ class CollectionInfo(ParserTools):
         self.parse_title()
         self.parse_collection_id()
         self.parse_follower()
-        self.parse_desc()
+        self.parse_description()
+        self.parse_comment_count()
         return self.info
 
     def parse_title(self):
@@ -756,11 +757,17 @@ class CollectionInfo(ParserTools):
         self.info['follower'] = follower[0].get_text()
         return
 
-    def parse_desc(self):
-        desc = self.dom.select('#zh-fav-head-description-source')
-        if not desc:
+    def parse_description(self):
+        description = self.dom.select('#zh-fav-head-description-source')
+        if not description:
             BaseClass.logger.debug(u'话题描述未找到')
-        self.info['desc'] = self.get_tag_content(desc[0])
+        self.info['description'] = self.get_tag_content(description[0])
+        return
+
+    def parse_comment_count(self):
+        comment = self.dom.select('#zh-list-meta-wrap  a[name="addcomment"]')
+        if not comment:
+            self.info['comment'] = self.match_int(comment[0].get_text())
         return
 
 
