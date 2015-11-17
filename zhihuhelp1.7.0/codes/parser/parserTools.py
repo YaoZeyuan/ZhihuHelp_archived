@@ -784,9 +784,16 @@ class BaseParser(ParserTools):
         """
         return
 
-    def get_extro_info(self):
+    def get_question_info_list(self):
         """
-        扩展功能：获取额外信息
+        基础功能：获取问题信息
+        需重载
+        """
+        return
+
+    def get_extra_info(self):
+        """
+        扩展功能：获取扩展信息
         需重载
         """
         return
@@ -821,6 +828,10 @@ class AuthorParser(QuestionParser):
             question_info_list.append(parser.get_info())
         return question_info_list
 
+    def get_extra_info(self):
+        author = AuthorInfo(self.dom)
+        return author.get_info()
+
 
 class TopicParser(AuthorParser):
     def get_question_dom_list(self):
@@ -829,6 +840,11 @@ class TopicParser(AuthorParser):
     def get_answer_dom_list(self):
         return self.dom.select('div.content')
 
+    def get_extra_info(self):
+        topic = TopicInfo(self.dom)
+        return topic.get_info()
+
+
 
 class CollectionParser(AuthorParser):
     def get_question_dom_list(self):
@@ -836,3 +852,7 @@ class CollectionParser(AuthorParser):
 
     def get_answer_dom_list(self):
         return self.dom.select('div.zm-item')
+
+    def get_extra_info(self):
+        collection = CollectionInfo(self.dom)
+        return collection.get_info()

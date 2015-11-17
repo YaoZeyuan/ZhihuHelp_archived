@@ -105,15 +105,7 @@ class QuestionFilter(BaseFilter):
         return
 
     def initQuestionPackage(self, questionID=''):
-        sql = '''select 
-                questionIDinQuestionDesc         as questionID, 
-                questionCommentCount             as commentCount, 
-                questionFollowCount              as followCount,
-                questionAnswerCount              as answerCount,       
-                questionViewCount                as viewCount,
-                questionTitle                    as questionTitle,
-                questionDesc                     as questionDesc
-                from QuestionInfo where questionIDinQuestionDesc = ? '''
+        sql = '''select question_id,comment,followers,answers,views,title,description from Question where question_id = ? '''
         bufDict = self.cursor.execute(sql, [questionID, ]).fetchone()
 
         questionInfo = {}
@@ -133,20 +125,20 @@ class QuestionFilter(BaseFilter):
     def addAnswerTo(self, questionPackage, answerHref=''):
         questionID = questionPackage['questionID']
         baseSql = '''select
-                            authorID,
-                            authorSign,
-                            authorLogo,
-                            authorName,
-                            answerAgreeCount,
-                            answerContent,
-                            questionID,
-                            answerID,
-                            commitDate,
-                            updateDate,
-                            answerCommentCount,
-                            noRecordFlag,
-                            answerHref
-                        from AnswerContent where noRecordFlag = 0 '''
+                            author_id,
+                            author_sign,
+                            author_logo,
+                            author_name,
+                            agree,
+                            content,
+                            question_id,
+                            answer_id,
+                            commit,
+                            update,
+                            comment,
+                            no_record_flag,
+                            href
+                        from Answer where no_record_flag = 0 '''
         if answerHref:
             sql = baseSql + '''and answerHref = ?'''
             bufList = self.cursor.execute(sql, [answerHref]).fetchall()
@@ -178,14 +170,14 @@ class QuestionFilter(BaseFilter):
         问题信息
         '''
         sql = '''select 
-                questionIDinQuestionDesc as questionID, 
-                questionCommentCount     as commentCount, 
-                questionFollowCount      as followCount,
-                questionAnswerCount      as answerCount,       
-                questionViewCount        as viewCount,
-                questionTitle            as questionTitle,
-                questionDesc             as questionDesc
-                from QuestionInfo where questionIDinQuestionDesc = ? '''
+                question_id,
+                comment,
+                followers,
+                answers,
+                views,
+                title,
+                description,
+                from Question where question_id = ? '''
         result = self.cursor.execute(sql, [self.questionID, ]).fetchone()
         infoDict = {}
         infoDict['ID'] = self.questionID
@@ -243,14 +235,14 @@ class AuthorFilter(AnswerFilter):
         u'''
             添加用户信息
         '''
-        sql = '''select authorID          
-                        ,sign              
-                        ,name              
-                        ,authorLogoAddress 
-                        ,desc              
-                        ,follower          
-                        ,answer            
-                from AuthorInfo where authorID = ? '''
+        sql = '''select author_id,
+                        sign,
+                        name,
+                        logo,
+                        description,
+                        follower,
+                        answers,
+                from AuthorInfo where author_id = ? '''
         result = self.cursor.execute(sql, [self.authorID, ]).fetchone()
         infoDict = {}
         infoDict['creatorID'] = result[0]
@@ -285,7 +277,7 @@ class CollectionFilter(AuthorFilter):
         return
 
     def getIndexList(self):
-        sql = 'select answerHref from CollectionIndex where collectionID = ? '
+        sql = 'select href from CollectionIndex where collection_id = ? '
         indexTuple = self.cursor.execute(sql, [self.collectionID, ]).fetchall()
         indexList = []
         for index in indexTuple:
@@ -299,7 +291,7 @@ class CollectionFilter(AuthorFilter):
         之前图省事，没抓取创建者的头像，以后要加上
         今天时间比较紧张了已经，所以，就先不加新功能了
         '''
-        sql = 'select authorID, authorName, authorSign, title, description, followerCount, commentCount  from CollectionInfo where collectionID = ? '
+        sql = 'select "", "", "", title, description, follower, comment  from CollectionInfo where collection_id = ? '
         result = self.cursor.execute(sql, [self.collectionID, ]).fetchone()
         infoDict = {}
         infoDict['creatorID'] = result[0]
@@ -333,7 +325,7 @@ class TopicFilter(CollectionFilter):
         return
 
     def getIndexList(self):
-        sql = 'select answerHref from TopicIndex where topicID = ? '
+        sql = 'select href from TopicIndex where topic_id = ? '
         indexTuple = self.cursor.execute(sql, [self.topicID, ]).fetchall()
         indexList = []
         for index in indexTuple:
@@ -343,7 +335,7 @@ class TopicFilter(CollectionFilter):
         return indexList
 
     def addInfo(self):
-        sql = 'select title, logoAddress, description, followerCount from TopicInfo where topicID = ? '
+        sql = 'select title, logo, description, follower from TopicInfo where topic_id = ? '
         result = self.cursor.execute(sql, [self.topicID, ]).fetchone()
 
         infoDict = {}

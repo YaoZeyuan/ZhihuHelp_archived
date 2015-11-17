@@ -6,10 +6,10 @@ sys.setdefaultencoding('utf-8')
 sys.setrecursionlimit(100000) #为了适应知乎上的长答案，需要专门设下递归深度限制。。。
 
 # 将./codes添加至库目录中
-extendLibPath = r"./codes"
-sys.path.append(extendLibPath)
+extend_lib_path = r"./codes"
+sys.path.append(extend_lib_path)
 
 from codes.main import *
 
-mainClass = ZhihuHelp()
-mainClass.helperStart()
+helper = ZhihuHelp()
+helper.start()

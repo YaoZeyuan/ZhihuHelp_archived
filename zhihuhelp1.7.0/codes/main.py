@@ -44,7 +44,7 @@ class ZhihuHelp(BaseClass):
         self.urlPattern['column'] = r'(?<=zhuanlan\.zhihu\.com/)[^/#\n\r]*'
         return
 
-    def helperStart(self):
+    def start(self):
         # 登陆
         login = Login(self.conn)
         if SettingClass.REMEMBERACCOUNT:

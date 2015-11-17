@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json  # 用于JsonWorker
-
-from contentParse import *
+from parser.parserTools import *
 
 
 class PageWorker(BaseClass, HttpBaseClass, SqlClass):
@@ -189,10 +188,10 @@ class QuestionQueenWorker(PageWorker):
 
         ThreadClass.waitForThreadRunningCompleted(0)  # 确保所有线程都已经执行完毕
 
-        for questionInfoDict in self.questionInfoDictList:
-            self.save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
-        for answerDict in self.answerDictList:
-            self.save2DB(self.cursor, answerDict, 'answerHref', 'AnswerContent')
+        for info in self.questionInfoDictList:
+            self.save2DB(self.cursor, info, 'Question')
+        for answer in self.answerDictList:
+            self.save2DB(self.cursor, answer, 'Answer')
         self.conn.commit()
         self.commitSuccess()
         return
@@ -224,15 +223,12 @@ class QuestionQueenWorker(PageWorker):
         这样可以给知乎服务器留出生成页面缓存的时间
         """
         content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader, timeout=self.waitFor)
-        if content == '':
+        if not content:
             return False
         BaseClass.logger.debug(u'开始使用ParseQuestion分析网页{}内容'.format(self.workSchedule[workNo]))
-        parse = ParseQuestion(content)
-        questionInfoDictList, answerDictList = parse.getInfoDict()
-        for questionInfoDict in questionInfoDictList:
-            self.questionInfoDictList.append(questionInfoDict)
-        for answerDict in answerDictList:
-            self.answerDictList.append(answerDict)
+        parse = QuestionParser(content)
+        self.questionInfoDictList += parse.get_question_info_list()
+        self.answerDictList += parse.get_answer_list()
         return True
 
     def addProperty(self):
@@ -260,18 +256,7 @@ class AnswerQueenWorker(QuestionQueenWorker):
         for urlInfo in self.taskQueen:
             self.workSchedule[workerNo] = urlInfo['baseUrl']
             workerNo += 1
-
-    def realWorker(self, workNo=0):
-        content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader)
-        if content == '':
-            return False
-        parse = ParseAnswer(content)
-        questionInfoDictList, answerDictList = parse.getInfoDict()
-        for questionInfoDict in questionInfoDictList:
-            self.questionInfoDictList.append(questionInfoDict)
-        for answerDict in answerDictList:
-            self.answerDictList.append(answerDict)
-        return True
+        return
 
 
 class AuthorWorker(PageWorker):
@@ -320,22 +305,22 @@ class AuthorWorker(PageWorker):
         ThreadClass.waitForSecond(0.1)
         ThreadClass.waitForThreadRunningCompleted(0)  # 确保所有线程都已执行完毕
 
-        for questionInfoDict in self.questionInfoDictList:
-            self.save2DB(self.cursor, questionInfoDict, 'questionIDinQuestionDesc', 'QuestionInfo')
-        for answerDict in self.answerDictList:
-            self.save2DB(self.cursor, answerDict, 'answerHref', 'AnswerContent')
-            self.addIndex(answerDict['answerHref'])
+        for info in self.questionInfoDictList:
+            self.save2DB(self.cursor, info, 'Question')
+        for answer in self.answerDictList:
+            self.save2DB(self.cursor, answer, 'Answer')
+            self.addIndex(answer['href'])
         self.conn.commit()
         self.commitSuccess()
         return
 
     def catchFrontInfo(self):
         content = self.getHttpContent(url=self.urlInfo['infoUrl'], extraHeader=self.extraHeader, timeout=self.waitFor)
-        if content == '':
+        if not content:
             return
-        parse = AuthorInfoParse(content)
-        infoDict = parse.getInfoDict()
-        self.save2DB(self.cursor, infoDict, 'authorID', 'AuthorInfo')
+        parse = AuthorParser(content)
+        info = parse.get_extro_info()
+        self.save2DB(self.cursor, info, 'AuthorInfo')
         return
 
     def worker(self, workNo=0):
@@ -373,12 +358,9 @@ class AuthorWorker(PageWorker):
         content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader, timeout=self.waitFor)
         if content == '':
             return False
-        parse = ParseAuthor(content)
-        questionInfoDictList, answerDictList = parse.getInfoDict()
-        for questionInfoDict in questionInfoDictList:
-            self.questionInfoDictList.append(questionInfoDict)
-        for answerDict in answerDictList:
-            self.answerDictList.append(answerDict)
+        parse = AuthorParser(content)
+        self.questionInfoDictList += parse.get_question_info_list()
+        self.answerDictList += parse.get_answer_list()
         return True
 
     def addProperty(self):
@@ -392,7 +374,7 @@ class AuthorWorker(PageWorker):
 class TopicWorker(AuthorWorker):
     def getIndexID(self):
         topicMatch = re.search(r'(?<=www.zhihu.com/topic/)\d{8}', self.url)
-        if topicMatch == None:
+        if not topicMatch:
             print u'抱歉，没能在网址中匹配到话题ID'
             print u'输入的话题网址为：{}'.format(self.url)
             print u'程序无法继续运行，请检查网址是否正确后重试'
@@ -402,33 +384,30 @@ class TopicWorker(AuthorWorker):
 
     def clearIndex(self):
         self.getIndexID()
-        self.cursor.execute('delete from TopicIndex where topicID = ?', [self.topicID, ])
+        self.cursor.execute('delete from TopicIndex where topic_id = ?', [self.topicID, ])
         self.conn.commit()
         return
 
     def addIndex(self, answerHref):
-        self.cursor.execute('replace into TopicIndex (answerHref, topicID) values (?, ?)', [answerHref, self.topicID])
+        self.cursor.execute('replace into TopicIndex (href, topic_id) values (?, ?)', [answerHref, self.topicID])
         return
 
     def catchFrontInfo(self):
         content = self.getHttpContent(url=self.urlInfo['infoUrl'], extraHeader=self.extraHeader)
-        if content == '':
+        if not content:
             return
-        parse = TopicInfoParse(content)
-        infoDict = parse.getInfoDict()
-        self.save2DB(self.cursor, infoDict, 'topicID', 'TopicInfo')
+        parse = TopicParser(content)
+        info = parse.get_extra_info()
+        self.save2DB(self.cursor, info, 'TopicInfo')
         return
 
     def realWorker(self, workNo=0):
         content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader)
         if content == '':
             return False
-        parse = ParseTopic(content)
-        questionInfoDictList, answerDictList = parse.getInfoDict()
-        for questionInfoDict in questionInfoDictList:
-            self.questionInfoDictList.append(questionInfoDict)
-        for answerDict in answerDictList:
-            self.answerDictList.append(answerDict)
+        parse = TopicParser(content)
+        self.questionInfoDictList += parse.get_question_info_list()
+        self.answerDictList += parse.get_answer_list()
         return True
 
     def addProperty(self):
@@ -442,7 +421,7 @@ class TopicWorker(AuthorWorker):
 class CollectionWorker(AuthorWorker):
     def getIndexID(self):
         collectionMatch = re.search(r'(?<=www.zhihu.com/collection/)\d{8}', self.url)
-        if collectionMatch == None:
+        if not collectionMatch:
             print u'抱歉，没能在网址中匹配到收藏夹ID'
             print u'输入的收藏夹网址为：{}'.format(self.url)
             print u'程序无法继续运行，请检查网址是否正确后重试'
@@ -451,29 +430,26 @@ class CollectionWorker(AuthorWorker):
         return self.collectionID
 
     def addIndex(self, answerHref):
-        self.cursor.execute('replace into CollectionIndex (answerHref, collectionID) values (?, ?)',
+        self.cursor.execute('replace into CollectionIndex (href, collection_id) values (?, ?)',
                             [answerHref, self.collectionID])
         return
 
     def catchFrontInfo(self):
         content = self.getHttpContent(url=self.urlInfo['infoUrl'], extraHeader=self.extraHeader, timeout=self.waitFor)
-        if content == '':
+        if not content:
             return
-        parse = CollectionInfoParse(content)
-        infoDict = parse.getInfoDict()
-        self.save2DB(self.cursor, infoDict, 'collectionID', 'CollectionInfo')
+        parse = CollectionParser(content)
+        info = parse.get_extra_info()
+        self.save2DB(self.cursor, info, 'CollectionInfo')
         return
 
     def realWorker(self, workNo=0):
         content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader, timeout=self.waitFor)
         if content == '':
             return False
-        parse = ParseCollection(content)
-        questionInfoDictList, answerDictList = parse.getInfoDict()
-        for questionInfoDict in questionInfoDictList:
-            self.questionInfoDictList.append(questionInfoDict)
-        for answerDict in answerDictList:
-            self.answerDictList.append(answerDict)
+        parse = CollectionParser(content)
+        self.questionInfoDictList += parse.get_question_info_list()
+        self.answerDictList += parse.get_answer_list()
         return True
 
     def addProperty(self):
@@ -573,7 +549,7 @@ class ColumnWorker(JsonWorker):
         for i in range(self.columnInfo['articleCount'] / 10 + 1):
             self.workSchedule[i] = detectUrl + str(i * 10)
         # 将专栏信息储存至数据库中
-        self.save2DB(self.cursor, self.columnInfo, 'columnID', 'ColumnInfo')
+        self.save2DB(self.cursor, self.columnInfo, 'ColumnInfo')
         self.conn.commit()
         return
 
@@ -610,7 +586,7 @@ class ColumnWorker(JsonWorker):
             threadLiving = threading.activeCount()
 
         for article in self.articleList:
-            self.save2DB(self.cursor, article, 'articleHref', 'ArticleContent')
+            self.save2DB(self.cursor, article, 'ArticleContent')
         self.conn.commit()
         self.commitSuccess()
         return
