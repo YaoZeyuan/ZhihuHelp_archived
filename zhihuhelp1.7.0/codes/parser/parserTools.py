@@ -257,15 +257,16 @@ class Answer(ParserTools):
 
     def __init__(self, dom=None):
         self.set_dom(dom)
-        self.author_parser = Author(dom)
+        self.author_parser = Author()
         return
 
     def set_dom(self, dom):
         self.info = {}
         if dom:
             self.header = dom.find('div', class_='zm-item-vote-info')
-            self.body = dom.find('div', class_='zm-editable-content')
+            self.body   = dom.find('div', class_='zm-editable-content')
             self.footer = dom.find('div', class_='zm-meta-panel')
+            self.author_parser.set_dom(dom)
         return
 
     def get_info(self):
@@ -291,10 +292,16 @@ class Answer(ParserTools):
         return
 
     def parse_vote_count(self):
+        if not self.header:
+            BaseClass.logger.debug(u'答案赞同数未找到')
+            return
         self.info['agree'] = self.get_attr(self.header, 'data-votecount')
         return
 
     def parse_answer_content(self):
+        if not self.body:
+            BaseClass.logger.debug(u'答案内容未找到')
+            return
         self.info['content'] = self.get_tag_content(self.body)
         return
 
@@ -315,22 +322,25 @@ class Answer(ParserTools):
 
     def parse_comment_count(self):
         comment = self.footer.select("a[name='addcomment']")
-        if comment:
-            self.info['comment'] = self.match_int(comment[0].get_text())
-        else:
+        if not comment:
             BaseClass.logger.debug(u'评论数未找到')
+            return
+        self.info['comment'] = self.match_int(comment[0].get_text())
         return
 
     def parse_no_record_flag(self):
         no_record_flag = self.footer.find('a', class_='copyright')
-        if no_record_flag:
-            self.info['no_record_flag'] = int(u'禁止转载' in no_record_flag.get_text())
-        else:
+        if not no_record_flag:
             BaseClass.logger.debug(u'禁止转载标志未找到')
+            return
+        self.info['no_record_flag'] = int(u'禁止转载' in no_record_flag.get_text())
         return
 
     def parse_href_info(self):
         href_tag = self.footer.find('a', class_='answer-date-link')
+        if not href_tag:
+            BaseClass.logger.debug(u'问题id，答案id未找到')
+            return
         href = self.get_attr(href_tag, 'href')
         self.parse_question_id(href)
         self.parse_answer_id(href)
@@ -507,11 +517,11 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_name(self):
-        name = self.dom.select('div.title-section span.name')
+        name = self.dom.select('div.title-section a.name')
         if not name:
             BaseClass.logger.debug(u'用户名未找到')
             return
-        self.info['name'] = name.get_text()
+        self.info['name'] = name[0].get_text()
         return
 
     def parse_weibo(self):
@@ -523,7 +533,7 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_sign(self):
-        sign = self.dom.select('div.title-section span.title')
+        sign = self.dom.select('div.title-section span[title]')
         if not sign:
             BaseClass.logger.debug(u'用户签名未找到')
             return
@@ -543,7 +553,7 @@ class AuthorInfo(ParserTools):
         if not gender:
             BaseClass.logger.debug(u'用户性别未找到')
             return
-        self.info['gender'] = self.get_attr(gender[0], 'class')
+        self.info['gender'] = self.get_attr(gender[0], 'class')[0] #class为多值属性，返回数据为一个列表，所以需要进行特殊处理
         return
 
     def parse_author_id(self):
@@ -569,7 +579,7 @@ class AuthorInfo(ParserTools):
             node = root.select('a[href*="{} span.num"]'.format(kind))
             if not node:
                 BaseClass.logger.debug(u'{}未找到'.format(kind))
-            self.info[kind] = node[0].get_text()
+            self.info[kind] = self.match_int(node[0].get_text())
             return
 
         item_list = ['asks', 'answers', 'posts', 'collections', 'logs']
@@ -588,7 +598,7 @@ class AuthorInfo(ParserTools):
             BaseClass.logger.debug(u'用户赞同-感谢-被收藏数未找到')
             return
         for i in range(len(detail)):
-            self.info[detail_items[i]] = detail[i]
+            self.info[detail_items[i]] = self.match_int(detail[i])
         return
 
     def parse_description(self):
@@ -628,7 +638,7 @@ class AuthorInfo(ParserTools):
         if not column:
             BaseClass.logger.debug(u'用户关注专栏数未找到')
             return
-        self.info['followed_column'] = column[0].get_text()
+        self.info['followed_column'] = self.match_int(column[0].get_text())
         return
 
     def parse_followed_topic(self):
@@ -636,7 +646,7 @@ class AuthorInfo(ParserTools):
         if not topic:
             BaseClass.logger.debug(u'用户关注话题数未找到')
             return
-        self.info['followed_topic'] = topic[0].get_text()
+        self.info['followed_topic'] = self.match_int(topic[0].get_text())
         return
 
     def parser_views(self):
