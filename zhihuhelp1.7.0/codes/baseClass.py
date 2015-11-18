@@ -22,8 +22,8 @@ class BaseClass(object):
 
     logger = logging.getLogger('main')  # 获取名为main的logger
     logger.addHandler(handler)  # 为logger添加handler
-    logger.setLevel(logging.INFO)  # 发布时关闭log输出
-    # logger.setLevel(logging.DEBUG)  # debug模式
+    #logger.setLevel(logging.INFO)  # 发布时关闭log输出
+    logger.setLevel(logging.DEBUG)  # debug模式
     # 辅助函数
     @staticmethod
     def printInOneLine(text=''):  # Pass
@@ -99,7 +99,7 @@ class SettingClass(object):
     ACCOUNT = 'mengqingxue2014@qq.com'  # 默认账号密码
     PASSWORD = '131724qingxue'  #
     REMEMBERACCOUNT = False  # 是否使用已有密码
-    MAXTHREAD = 20  # 最大线程数
+    MAXTHREAD = 10  # 最大线程数
     PICQUALITY = 1  # 图片质量（0/1/2，无图/标清/原图）
     MAXQUESTION = 100  # 每本电子书中最多可以放多少个问题
     MAXTRY = 5  # 最大尝试次数
@@ -219,9 +219,10 @@ class SqlClass(object):
     '''
     @staticmethod
     def save2DB(cursor, data={}, table_name=''):
-        sql = "replace into {table_name} ({columns}) values ({items})".format(table_name,
-                                                                              "".join(data.keys(), ','),
-                                                                              (',?' * len(data.keys()))[1:])
+        sql = "replace into {table_name} ({columns}) values ({items})".format(table_name=table_name,
+                                                                              columns=','.join(data.keys()),
+                                                                              items=(',?' * len(data.keys()))[1:])
+        BaseClass.logger.debug(sql)
         cursor.execute(sql, tuple(data.values()))
         return
 

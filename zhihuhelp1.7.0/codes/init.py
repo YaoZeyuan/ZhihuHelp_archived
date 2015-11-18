@@ -69,21 +69,21 @@ class Init(object):
                             CREATE  TABLE       CollectionIndex(
                             collection_id       VARCHAR(50)     NOT NULL,
                             href                VARCHAR(255)    NOT NULL,
-                            PRIMARY KEY(collectionID, answerHref))""")  # 负责永久保存收藏夹链接，防止丢收藏
+                            PRIMARY KEY(collection_id, href))""")  # 负责永久保存收藏夹链接，防止丢收藏
 
             # 话题内容表
             cursor.execute("""
                             CREATE  TABLE       TopicIndex(
                             topic_id      VARCHAR(50)     NOT NULL,
                             href          VARCHAR(255)    NOT NULL,
-                            PRIMARY KEY(topicID, answerHref))""")  # 负责保存话题链接，每次获取话题内容时都要重新更新之
+                            PRIMARY KEY(topic_id, href))""")  # 负责保存话题链接，每次获取话题内容时都要重新更新之
 
             # 圆桌内容表
             cursor.execute("""
                             CREATE  TABLE       TableIndex(
                             table_id      VARCHAR(50)     NOT NULL,
                             href          VARCHAR(255)    NOT NULL,
-                            PRIMARY KEY(tableID, answerHref))""")  # 负责保存圆桌内的答案链接，每次获取圆桌内容时都要重新更新之
+                            PRIMARY KEY(table_id, href))""")  # 负责保存圆桌内的答案链接，每次获取圆桌内容时都要重新更新之
 
             # 用户信息表
             cursor.execute("""

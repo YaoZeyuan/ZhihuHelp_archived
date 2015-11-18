@@ -362,7 +362,8 @@ class SimpleQuestion(ParserTools):
         return self.info
 
     def parse_info(self):
-        self.parse_header_info()
+        self.parse_question_id()
+        self.parse_title()
         return self.info
 
     def parse_question_id(self):
@@ -538,11 +539,11 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_gender(self):
-        gender = self.header_dom.select('span.edit-wrap input:checked')
+        gender = self.header_dom.select('span.edit-wrap input[checked="checked"]')
         if not gender:
             BaseClass.logger.debug(u'用户性别未找到')
             return
-        self.info['gender'] = self.get_attr(gender, 'class')
+        self.info['gender'] = self.get_attr(gender[0], 'class')
         return
 
     def parse_author_id(self):
@@ -586,7 +587,7 @@ class AuthorInfo(ParserTools):
         if not detail:
             BaseClass.logger.debug(u'用户赞同-感谢-被收藏数未找到')
             return
-        for i in len(detail):
+        for i in range(len(detail)):
             self.info[detail_items[i]] = detail[i]
         return
 
@@ -611,7 +612,7 @@ class AuthorInfo(ParserTools):
         if not followee:
             BaseClass.logger.debug(u'用户关注数未找到')
             return
-        self.info['followee'] = followee.get_text()
+        self.info['followee'] = followee[0].get_text()
         return
 
     def parse_follower(self):
@@ -619,7 +620,7 @@ class AuthorInfo(ParserTools):
         if not follower:
             BaseClass.logger.debug(u'用户粉丝数未找到')
             return
-        self.info['follower'] = follower.get_text()
+        self.info['follower'] = follower[0].get_text()
         return
 
     def parse_followed_column(self):
@@ -627,7 +628,7 @@ class AuthorInfo(ParserTools):
         if not column:
             BaseClass.logger.debug(u'用户关注专栏数未找到')
             return
-        self.info['followed_column'] = column.get_text()
+        self.info['followed_column'] = column[0].get_text()
         return
 
     def parse_followed_topic(self):
@@ -635,7 +636,7 @@ class AuthorInfo(ParserTools):
         if not topic:
             BaseClass.logger.debug(u'用户关注话题数未找到')
             return
-        self.info['followed_topic'] = topic.get_text()
+        self.info['followed_topic'] = topic[0].get_text()
         return
 
     def parser_views(self):
@@ -643,7 +644,7 @@ class AuthorInfo(ParserTools):
         if not views:
             BaseClass.logger.debug(u'用户被浏览数未找到')
             return
-        self.info['viewed'] = views.get_text()
+        self.info['viewed'] = views[0].get_text()
         return
 
 

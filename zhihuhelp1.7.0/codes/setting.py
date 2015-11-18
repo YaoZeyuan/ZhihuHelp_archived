@@ -124,25 +124,7 @@ class Setting(BaseClass):
         return account, password
 
     def guideOfMaxThread(self):
-        print u'开始设置最大同时打开的网页数量，数值越大下载网页的速度越快，丢失答案的概率也越高，推荐值为5~20之间，在这一范围内助手可以很好的解决遗漏答案的问题，默认值为20'
-        print u'请输入最大同时打开的网页数(1~199)，回车确认'
-        try:
-            maxThread = int(raw_input())
-        except ValueError as error:
-            print error
-            print u'嗯，数字转换错误。。。最大线程数重置为{}，点击回车继续'.format(SettingClass.MAXTHREAD)
-            maxThread = SettingClass.MAXTHREAD
-            raw_input()
-        if maxThread > 200 or maxThread < 1:
-            if maxThread > 200:
-                print u'最大线程数溢出'
-            else:
-                print u'最大线程数非法，该值不能小于零'
-            print u'最大线程数重置为{}'.format(SettingClass.MAXTHREAD)
-            maxThread = SettingClass.MAXTHREAD
-            print u'点击回车继续~'
-            raw_input()
-        return maxThread
+        return 10
 
     def guideOfPicQuality(self):
         print u'请选择电子书内的图片质量'

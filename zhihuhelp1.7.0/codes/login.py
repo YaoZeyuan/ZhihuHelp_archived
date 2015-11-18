@@ -86,7 +86,7 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
             data['password'] = password
             data['recordDate'] = datetime.date.today().isoformat()
             data['cookieStr'] = cookieJar2String
-            self.save2DB(cursor=self.cursor, data=data, primaryKey='account', tableName='LoginRecord')
+            self.save2DB(self.cursor, data, 'LoginRecord')
             self.conn.commit()
             return True
         else:

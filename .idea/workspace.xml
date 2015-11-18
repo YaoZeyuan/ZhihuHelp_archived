@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/simpleFilter.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/simpleFilter.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/zhihuHelp.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/zhihuHelp.py" />
     </list>
     <ignored path="ZhihuHelp__Python.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -20,6 +22,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/ZhihuHelp__Python$zhihuHelp.coverage" NAME="zhihuHelp Coverage Results" MODIFIED="1447858447023" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhihuhelp1.7.0" />
+  </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
@@ -28,7 +33,143 @@
     <favorites_list name="ZhihuHelp__Python" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="zhihuHelp.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/zhihuHelp.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.43850267">
+              <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="init.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+              <folding>
+                <element signature="e#24#38#0" expanded="true" />
+                <marker date="1447857406326" expanded="true" signature="707:789" placeholder="CREATE TABLE..VarPickle..." />
+                <marker date="1447857406326" expanded="true" signature="824:1142" placeholder="CREATE TABLE..LoginRecord..." />
+                <marker date="1447857406326" expanded="true" signature="1199:2427" placeholder="CREATE TABLE..Answer..." />
+                <marker date="1447857406326" expanded="true" signature="2487:3126" placeholder="CREATE TABLE..Question..." />
+                <marker date="1447857406326" expanded="true" signature="3231:3477" placeholder="CREATE TABLE..CollectionIndex..." />
+                <marker date="1447857406326" expanded="true" signature="3583:3807" placeholder="CREATE TABLE..TopicIndex..." />
+                <marker date="1447857406326" expanded="true" signature="3921:4145" placeholder="CREATE TABLE..TableIndex..." />
+                <marker date="1447857406326" expanded="true" signature="4263:6009" placeholder="CREATE TABLE..AuthorInfo..." />
+                <marker date="1447857406326" expanded="true" signature="6107:6564" placeholder="CREATE TABLE..CollectionInfo..." />
+                <marker date="1447857406326" expanded="true" signature="6633:7032" placeholder="CREATE TABLE..TopicInfo..." />
+                <marker date="1447857406326" expanded="true" signature="7100:7650" placeholder="CREATE TABLE..TableInfo..." />
+                <marker date="1447857406326" expanded="true" signature="7717:8666" placeholder="CREATE TABLE..ColumnInfo..." />
+                <marker date="1447857406326" expanded="true" signature="8721:10007" placeholder="CREATE TABLE..ArticleContent..." />
+                <marker date="1447857406326" expanded="true" signature="10043:10123" placeholder="CREATE INDEX..idx_ArticleContent..." />
+                <marker date="1447857406326" expanded="true" signature="10464:10987" placeholder="CREATE TABLE..userActive..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="102" column="23" selection-start-line="102" selection-start-column="23" selection-end-line="102" selection-end-column="23" />
+              <folding>
+                <marker date="1447857589570" expanded="true" signature="5295:5335" placeholder="select count..LoginRecord..." />
+                <marker date="1447857589570" expanded="true" signature="5446:5516" placeholder="select cooki..LoginRecord..." />
+                <marker date="1447857589570" expanded="true" signature="6054:6115" placeholder="select count..LoginRecord..." />
+                <marker date="1447857589570" expanded="true" signature="6242:6333" placeholder="select cooki..LoginRecord..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="worker.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.5">
+              <caret line="358" column="25" selection-start-line="358" selection-start-column="25" selection-end-line="358" selection-end-column="25" />
+              <folding>
+                <element signature="e#25#52#0" expanded="true" />
+                <marker date="1447858147964" expanded="true" signature="1998:2068" placeholder="select cooki..LoginRecord..." />
+                <marker date="1447858147964" expanded="true" signature="2152:2243" placeholder="select cooki..LoginRecord..." />
+                <marker date="1447858147964" expanded="true" signature="13446:13487" placeholder="delete from ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="element.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/bs4/element.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1418" column="0" selection-start-line="1418" selection-start-column="0" selection-end-line="1418" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parserTools.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-47.866665">
+              <caret line="646" column="38" selection-start-line="646" selection-start-column="38" selection-end-line="646" selection-end-column="38" />
+              <folding>
+                <element signature="e#25#34#0" expanded="true" />
+                <element signature="e#22456#24301#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReadMe.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1.6.9_zhihuhelp/ReadMe.md">
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.0">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="baseClass.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="229" column="14" selection-start-line="229" selection-start-column="14" selection-end-line="229" selection-end-column="14" />
+              <folding>
+                <element signature="e#24#33#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setting.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="125" column="21" selection-start-line="125" selection-start-column="21" selection-end-line="125" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -74,13 +215,15 @@
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/single_question.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/author.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/single_answer.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/zhihuHelp.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/simpleFilter.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py" />
       </list>
     </option>
   </component>
@@ -92,9 +235,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="width" value="1373" />
-    <option name="height" value="745" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="754" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -132,6 +276,9 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+      </pane>
+      <pane id="Scratches">
+        <subPane />
       </pane>
       <pane id="ProjectPane">
         <subPane>
@@ -183,32 +330,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZhihuHelp__Python" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZhihuHelp__Python" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="zhihuhelp1.7.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
-      </pane>
-      <pane id="Scratches">
-        <subPane />
       </pane>
     </panes>
   </component>
@@ -219,6 +341,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="recentsLimit" value="5" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -226,7 +349,25 @@
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\codes\Parser" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.zhihuHelp">
+    <configuration default="false" name="zhihuHelp" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/zhihuhelp1.7.0" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="ZhihuHelp__Python" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/zhihuhelp1.7.0/zhihuHelp.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -415,6 +556,14 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Python.zhihuHelp" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.zhihuHelp" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -499,7 +648,13 @@
       <option name="project" value="LOCAL" />
       <updated>1447761434071</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="*   应该可以用了- -&#10;*   现在的代码质量真是冰火两重天啊。。。">
+      <created>1447772870211</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1447772870211</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -512,28 +667,28 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1373" height="745" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5025792" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25055268" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3226891" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25036928" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24981578" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32676518" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24963072" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496329" sideWeight="0.50855744" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32676518" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -584,7 +739,8 @@
     <MESSAGE value="*   添加collection_parser和topic_parser" />
     <MESSAGE value="+  添加对各个种类答案的Parser&#10;*   还差最后一步：将parser整合到代码里去" />
     <MESSAGE value="*   改正sql" />
-    <option name="LAST_COMMIT_MESSAGE" value="*   改正sql" />
+    <MESSAGE value="*   应该可以用了- -&#10;*   现在的代码质量真是冰火两重天啊。。。" />
+    <option name="LAST_COMMIT_MESSAGE" value="*   应该可以用了- -&#10;*   现在的代码质量真是冰火两重天啊。。。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -597,7 +753,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="6" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -607,8 +762,6 @@
           <caret line="212" column="14" selection-start-line="212" selection-start-column="14" selection-end-line="212" selection-end-column="14" />
           <folding>
             <element signature="e#24#33#0" expanded="true" />
-            <element signature="e#181#2276#0" expanded="false" />
-            <element signature="e#2311#2855#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -620,7 +773,7 @@
           <folding>
             <element signature="e#25#34#0" expanded="true" />
             <element signature="e#158#2150#0" expanded="false" />
-            <element signature="e#22393#24238#0" expanded="false" />
+            <element signature="e#22456#24301#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -636,7 +789,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -647,7 +799,7 @@
           <folding>
             <element signature="e#25#34#0" expanded="true" />
             <element signature="e#158#2150#0" expanded="false" />
-            <element signature="e#22393#24238#0" expanded="false" />
+            <element signature="e#22456#24301#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -658,8 +810,6 @@
           <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
           <folding>
             <element signature="e#24#33#0" expanded="true" />
-            <element signature="e#181#2276#0" expanded="false" />
-            <element signature="e#2311#2855#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -675,7 +825,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -686,7 +835,7 @@
           <folding>
             <element signature="e#25#34#0" expanded="true" />
             <element signature="e#158#2150#0" expanded="false" />
-            <element signature="e#22393#24238#0" expanded="false" />
+            <element signature="e#22456#24301#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -702,7 +851,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -713,7 +861,7 @@
           <folding>
             <element signature="e#25#34#0" expanded="true" />
             <element signature="e#158#2150#0" expanded="false" />
-            <element signature="e#22393#24238#0" expanded="false" />
+            <element signature="e#22456#24301#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -729,7 +877,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -740,7 +887,7 @@
           <folding>
             <element signature="e#25#34#0" expanded="true" />
             <element signature="e#158#2150#0" expanded="false" />
-            <element signature="e#22393#24238#0" expanded="false" />
+            <element signature="e#22456#24301#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -756,7 +903,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -771,13 +917,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
-      </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/parse_unit/unit_html/author.html">
@@ -826,53 +972,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/zhihuHelp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-          <folding>
-            <marker date="1447330971285" expanded="true" signature="-1:-1" placeholder="select count..LoginRecord..." />
-            <marker date="1447330971285" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
-            <marker date="1447330971285" expanded="true" signature="-1:-1" placeholder="select count..LoginRecord..." />
-            <marker date="1447330971285" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="640" column="0" selection-start-line="640" selection-start-column="0" selection-end-line="640" selection-end-column="0" />
-          <folding>
-            <element signature="e#25#52#0" expanded="true" />
-            <marker date="1447771055107" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
-            <marker date="1447771055107" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
-            <marker date="1447771055107" expanded="true" signature="-1:-1" placeholder="delete from ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.933332">
-          <caret line="858" column="0" selection-start-line="858" selection-start-column="0" selection-end-line="858" selection-end-column="0" />
-          <folding>
-            <element signature="e#25#34#0" expanded="true" />
-            <element signature="e#158#2150#0" expanded="false" />
-            <element signature="e#22393#24238#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -880,7 +979,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="165" column="4" selection-start-line="165" selection-start-column="4" selection-end-line="165" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -888,71 +986,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="106" column="36" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="36" />
-          <folding>
-            <element signature="e#24#38#0" expanded="true" />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..VarPickle..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..LoginRecord..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..AnswerContent..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..QuestionInfo..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..CollectionIndex..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TopicIndex..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TableIndex..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..AuthorInfo..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..CollectionInfo..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TopicInfo..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TableInfo..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..ColumnInfo..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..ArticleContent..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE INDEX..idx_ArticleContent..." />
-            <marker date="1447686728225" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..userActive..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="294" column="14" selection-start-line="294" selection-start-column="14" selection-end-line="294" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/simpleFilter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7827586">
-          <caret line="445" column="0" selection-start-line="445" selection-start-column="0" selection-end-line="445" selection-end-column="0" />
-          <folding>
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select * fro..QuestionInfo..." />
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select quest..QuestionInfo..." />
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select quest..AnswerContent..." />
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select autho..." />
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select answe..CollectionIndex..." />
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select autho..CollectionInfo..." />
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select answe..TopicIndex..." />
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select title..TopicInfo..." />
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select autho..ArticleContent..." />
-            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select creat..ColumnInfo..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.0637932">
-          <caret line="151" column="29" selection-start-line="151" selection-start-column="29" selection-end-line="151" selection-end-column="29" />
-          <folding>
-            <element signature="e#24#33#0" expanded="true" />
-            <element signature="e#181#2276#0" expanded="false" />
-            <element signature="e#2311#2855#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -960,6 +993,147 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10862069">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="6" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/simpleFilter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="99" column="6" selection-start-line="99" selection-start-column="6" selection-end-line="99" selection-end-column="6" />
+          <folding>
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select quest..Question..." />
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select quest..Question..." />
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select quest..AnswerContent..." />
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select autho..AuthorInfo..." />
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select href ..CollectionIndex..." />
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select &quot;&quot;, &quot;..CollectionInfo..." />
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select href ..TopicIndex..." />
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select title..TopicInfo..." />
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select autho..ArticleContent..." />
+            <marker date="1447772822427" expanded="true" signature="-1:-1" placeholder="select creat..ColumnInfo..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm40/system/python_stubs/-762174762/__builtin__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2522" column="8" selection-start-line="2522" selection-start-column="8" selection-end-line="2522" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1.6.9_zhihuhelp/ReadMe.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.0">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="229" column="14" selection-start-line="229" selection-start-column="14" selection-end-line="229" selection-end-column="14" />
+          <folding>
+            <element signature="e#24#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="125" column="21" selection-start-line="125" selection-start-column="21" selection-end-line="125" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/bs4/element.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1418" column="0" selection-start-line="1418" selection-start-column="0" selection-end-line="1418" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.5">
+          <caret line="358" column="25" selection-start-line="358" selection-start-column="25" selection-end-line="358" selection-end-column="25" />
+          <folding>
+            <element signature="e#25#52#0" expanded="true" />
+            <marker date="1447858147964" expanded="true" signature="1998:2068" placeholder="select cooki..LoginRecord..." />
+            <marker date="1447858147964" expanded="true" signature="2152:2243" placeholder="select cooki..LoginRecord..." />
+            <marker date="1447858147964" expanded="true" signature="13446:13487" placeholder="delete from ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="23" selection-start-line="102" selection-start-column="23" selection-end-line="102" selection-end-column="23" />
+          <folding>
+            <marker date="1447857589570" expanded="true" signature="5295:5335" placeholder="select count..LoginRecord..." />
+            <marker date="1447857589570" expanded="true" signature="5446:5516" placeholder="select cooki..LoginRecord..." />
+            <marker date="1447857589570" expanded="true" signature="6054:6115" placeholder="select count..LoginRecord..." />
+            <marker date="1447857589570" expanded="true" signature="6242:6333" placeholder="select cooki..LoginRecord..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+          <folding>
+            <element signature="e#24#38#0" expanded="true" />
+            <marker date="1447857406326" expanded="true" signature="707:789" placeholder="CREATE TABLE..VarPickle..." />
+            <marker date="1447857406326" expanded="true" signature="824:1142" placeholder="CREATE TABLE..LoginRecord..." />
+            <marker date="1447857406326" expanded="true" signature="1199:2427" placeholder="CREATE TABLE..Answer..." />
+            <marker date="1447857406326" expanded="true" signature="2487:3126" placeholder="CREATE TABLE..Question..." />
+            <marker date="1447857406326" expanded="true" signature="3231:3477" placeholder="CREATE TABLE..CollectionIndex..." />
+            <marker date="1447857406326" expanded="true" signature="3583:3807" placeholder="CREATE TABLE..TopicIndex..." />
+            <marker date="1447857406326" expanded="true" signature="3921:4145" placeholder="CREATE TABLE..TableIndex..." />
+            <marker date="1447857406326" expanded="true" signature="4263:6009" placeholder="CREATE TABLE..AuthorInfo..." />
+            <marker date="1447857406326" expanded="true" signature="6107:6564" placeholder="CREATE TABLE..CollectionInfo..." />
+            <marker date="1447857406326" expanded="true" signature="6633:7032" placeholder="CREATE TABLE..TopicInfo..." />
+            <marker date="1447857406326" expanded="true" signature="7100:7650" placeholder="CREATE TABLE..TableInfo..." />
+            <marker date="1447857406326" expanded="true" signature="7717:8666" placeholder="CREATE TABLE..ColumnInfo..." />
+            <marker date="1447857406326" expanded="true" signature="8721:10007" placeholder="CREATE TABLE..ArticleContent..." />
+            <marker date="1447857406326" expanded="true" signature="10043:10123" placeholder="CREATE INDEX..idx_ArticleContent..." />
+            <marker date="1447857406326" expanded="true" signature="10464:10987" placeholder="CREATE TABLE..userActive..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-47.866665">
+          <caret line="646" column="38" selection-start-line="646" selection-start-column="38" selection-end-line="646" selection-end-column="38" />
+          <folding>
+            <element signature="e#25#34#0" expanded="true" />
+            <element signature="e#22456#24301#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/zhihuHelp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43850267">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
           <folding />
         </state>
       </provider>

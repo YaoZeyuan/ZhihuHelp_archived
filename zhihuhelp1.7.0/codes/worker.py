@@ -319,7 +319,7 @@ class AuthorWorker(PageWorker):
         if not content:
             return
         parse = AuthorParser(content)
-        info = parse.get_extro_info()
+        info = parse.get_extra_info()
         self.save2DB(self.cursor, info, 'AuthorInfo')
         return
 

@@ -54,11 +54,9 @@ class ZhihuHelp(BaseClass):
                 login.setCookie()
             else:
                 login.login()
-                SettingClass.MAXTHREAD = self.config.guideOfMaxThread()
                 SettingClass.PICQUALITY = self.config.guideOfPicQuality()
         else:
             login.login()
-            SettingClass.MAXTHREAD = self.config.guideOfMaxThread()
             SettingClass.PICQUALITY = self.config.guideOfPicQuality()
 
         # 储存设置
