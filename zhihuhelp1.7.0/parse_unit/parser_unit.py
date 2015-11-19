@@ -15,8 +15,8 @@ sys.setrecursionlimit(1000000)  # 为了适应知乎上的长答案，需要专�
 from baseClass import *
 from parserTools import *
 
-is_info = False
-kind = 'author'
+is_info = 0
+kind = 'collection'
 unit ={
     'question':{
         'src_answer':'./unit_html/single_answer.html',
