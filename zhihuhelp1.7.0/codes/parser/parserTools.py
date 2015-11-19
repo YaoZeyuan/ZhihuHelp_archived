@@ -253,6 +253,109 @@ class Answer(ParserTools):
         self.info['answer_id'] = self.match_answer_id(href)
         return
 
+class SimpleAnswer(ParserTools):
+    def __init__(self, dom=None):
+        self.set_dom(dom)
+        self.author_parser = Author()
+        return
+
+    def set_dom(self, dom):
+        self.info = {}
+        if dom:
+            self.header = dom.find('div', class_='zm-item-vote-info')
+            self.body   = dom.find('div', class_='zm-editable-content')
+            self.footer = dom.find('div', class_='zm-meta-panel')
+            self.author_parser.set_dom(dom)
+        return
+
+    def get_info(self):
+        answer_info = self.parse_info()
+        author_info = self.author_parser.get_info()
+        return dict(answer_info, **author_info)
+
+    def parse_info(self):
+        self.parse_header_info()
+        self.parse_answer_content()
+        self.parse_footer_info()
+        return self.info
+
+    def parse_header_info(self):
+        self.parse_vote_count()
+        return
+
+    def parse_footer_info(self):
+        self.parse_date_info()
+        self.parse_comment_count()
+        self.parse_no_record_flag()
+        self.parse_href_info()
+        return
+
+    def parse_vote_count(self):
+        if not self.header:
+            BaseClass.logger.debug(u'答案赞同数未找到')
+            return
+        self.info['agree'] = self.get_attr(self.header, 'data-votecount')
+        return
+
+    def parse_answer_content(self):
+        if not self.body:
+            BaseClass.logger.debug(u'答案内容未找到')
+            return
+        self.info['content'] = self.get_tag_content(self.body)
+        return
+
+    def parse_date_info(self):
+        data_block = self.footer.find('a', class_='answer-date-link')
+        commit_date = self.get_attr(data_block, 'data-tip')
+        if not data_block:
+            BaseClass.logger.debug(u'答案更新日期未找到')
+            return
+
+        if commit_date:
+            update_date = data_block.get_text()
+            self.info['edit_date'] = self.parse_date(update_date)
+            self.info['commit_date'] = self.parse_date(commit_date)
+        else:
+            commit_date = data_block.get_text()
+            self.info['edit_date'] = self.info['commit_date'] = self.parse_date(commit_date)
+
+    def parse_comment_count(self):
+        # BS的属性选择器语法区分“和’！！！
+        # 还好知乎所有的属性都是双引号- -
+        # 看看人家这软件工程做的！
+        comment = self.footer.select('a[name="addcomment"]')
+        if not comment:
+            BaseClass.logger.debug(u'评论数未找到')
+            return
+        self.info['comment'] = self.match_int(comment[0].get_text())
+        return
+
+    def parse_no_record_flag(self):
+        no_record_flag = self.footer.find('a', class_='copyright')
+        if not no_record_flag:
+            BaseClass.logger.debug(u'禁止转载标志未找到')
+            return
+        self.info['no_record_flag'] = int(u'禁止转载' in no_record_flag.get_text())
+        return
+
+    def parse_href_info(self):
+        href_tag = self.footer.find('a', class_='answer-date-link')
+        if not href_tag:
+            BaseClass.logger.debug(u'问题id，答案id未找到')
+            return
+        href = self.get_attr(href_tag, 'href')
+        self.parse_question_id(href)
+        self.parse_answer_id(href)
+        self.info['href'] = "http://www.zhihu.com/question/{question_id}/answer/{answer_id}".format(**self.info)
+        return
+
+    def parse_question_id(self, href):
+        self.info['question_id'] = self.match_question_id(href)
+        return
+
+    def parse_answer_id(self, href):
+        self.info['answer_id'] = self.match_answer_id(href)
+        return
 
 class SimpleQuestion(ParserTools):
     def __init__(self, dom=None):
@@ -278,6 +381,7 @@ class SimpleQuestion(ParserTools):
         question = self.dom.select('h2 a.question_link, h2.zm-item-title a[target="_blank"]')  # 在收藏夹中需要使用后一个选择器
         if not question:
             BaseClass.logger.debug(u'问题信息_id未找到')
+            return
         href = self.get_attr(question[0], 'href')
         self.info['question_id'] = self.match_question_id(href)
         return
@@ -286,7 +390,8 @@ class SimpleQuestion(ParserTools):
         question = self.dom.select('h2 a.question_link')
         if not question:
             BaseClass.logger.debug(u'问题信息_title未找到')
-        self.info['title'] = question.get_text()
+            return
+        self.info['title'] = question[0].get_text()
         return
 
 
@@ -687,9 +792,11 @@ class CollectionInfo(ParserTools):
 
 class BaseParser(ParserTools):
     def __init__(self, content):
-        #BaseClass.logger.debug(u"开始解析网页")
         self.dom = BeautifulSoup(content, 'html.parser')
-        self.answer_parser = Answer()
+        self.answer_parser = SimpleAnswer()
+
+    def get_answer_dom_list(self):
+        return self.dom.select('.zm-item-answer')
 
     def get_answer_list(self):
         u"""
@@ -697,6 +804,9 @@ class BaseParser(ParserTools):
         需重载
         """
         return
+
+    def get_question_dom_list(self):
+        return self.dom.select('div.zm-item')
 
     def get_question_info_list(self):
         """
@@ -712,28 +822,7 @@ class BaseParser(ParserTools):
         """
         return
 
-
-class QuestionParser(BaseParser):
-    def get_answer_dom_list(self):
-        return self.dom.select('.zm-item-answer')
-
-    def get_answer_list(self):
-        answer_list = []
-        for dom in self.get_answer_dom_list():
-            self.answer_parser.set_dom(dom)
-            answer_list.append(self.answer_parser.get_info())
-        return answer_list
-
-    def get_question_info_list(self):
-        parser = QuestionInfo()
-        parser.set_dom(self.dom)
-        return [parser.get_info()]
-
-
-class AuthorParser(QuestionParser):
-    def get_question_dom_list(self):
-        return self.dom.select('div.zm-item')
-
+class AuthorParser(BaseParser):
     def get_question_info_list(self):
         question_info_list = []
         parser = SimpleQuestion()
@@ -758,15 +847,27 @@ class TopicParser(AuthorParser):
         topic = TopicInfo(self.dom)
         return topic.get_info()
 
-
-
 class CollectionParser(AuthorParser):
-    def get_question_dom_list(self):
-        return self.dom.select('div.zm-item')
-
     def get_answer_dom_list(self):
         return self.dom.select('div.zm-item')
 
     def get_extra_info(self):
         collection = CollectionInfo(self.dom)
         return collection.get_info()
+
+class QuestionParser(BaseParser):
+    def __init__(self, content):
+        self.dom = BeautifulSoup(content, 'html.parser')
+        self.answer_parser = Answer()
+
+    def get_answer_list(self):
+        answer_list = []
+        for dom in self.get_answer_dom_list():
+            self.answer_parser.set_dom(dom)
+            answer_list.append(self.answer_parser.get_info())
+        return answer_list
+
+    def get_question_info_list(self):
+        parser = QuestionInfo()
+        parser.set_dom(self.dom)
+        return [parser.get_info()]

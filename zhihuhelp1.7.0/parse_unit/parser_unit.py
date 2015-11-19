@@ -29,14 +29,14 @@ unit ={
         'parser':AuthorParser,
     },
     'topic':{
-        'src_answer':'./unit_html/single_answer.html',
-        'src_info':'./unit_html/single_answer.html',
-        'parser':QuestionParser,
+        'src_answer':'./unit_html/topic.html',
+        'src_info':'./unit_html/topic.html',
+        'parser':TopicParser,
     },
     'collection':{
-        'src_answer':'./unit_html/single_answer.html',
-        'src_info':'./unit_html/single_answer.html',
-        'parser':QuestionParser,
+        'src_answer':'./unit_html/collection.html',
+        'src_info':'./unit_html/collection.html',
+        'parser':CollectionParser,
     },
 }
 if is_info:
