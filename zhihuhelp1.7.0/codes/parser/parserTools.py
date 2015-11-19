@@ -150,111 +150,6 @@ class Author(ParserTools):
 
 
 class Answer(ParserTools):
-    """
-    示例代码
-    <div tabindex="-1" class="zm-item-answer  zm-item-expanded" itemscope="" itemtype="http://schema.org/Answer" data-aid="23458712" data-atoken="70095598" data-collapsed="0" data-created="1446209879" data-deleted="0" data-helpful="1" data-isowner="0" data-copyable="1">
-<a class="zg-anchor-hidden" name="answer-23458712"></a>
-
-
-<div class="zm-votebar">
-<button class="up" aria-pressed="false" title="赞同">
-<i class="icon vote-arrow"></i>
-<span class="label">赞同</span>
-<span class="count">7</span>
-</button>
-<button class="down" aria-pressed="false" title="反对，不会显示你的姓名">
-<i class="icon vote-arrow"></i>
-<span class="label">反对，不会显示你的姓名</span>
-</button>
-</div>
-
-
-<div class="answer-head">
-<div class="zm-item-answer-author-info">
-<h3 class="zm-item-answer-author-wrap">
-
-
-<a data-tip="p$t$abandonstone" class="zm-item-link-avatar" href="/people/abandonstone">
-<img src="https://pic2.zhimg.com/9379d0b856df5796b3a21694cee452b5_s.jpg" class="zm-list-avatar" data-source="https://pic2.zhimg.com/9379d0b856df5796b3a21694cee452b5_s.jpg">
-</a>
-
-
-
-<a data-tip="p$t$abandonstone" href="/people/abandonstone">噶愛成神</a>，<strong title="INFP 彎而正直 中等偏下" class="zu-question-my-bio">INFP 彎而正直 中等偏下</strong>
-
-</h3>
-</div>
-<div class="zm-item-vote-info " data-votecount="7">
-
-<span class="voters">
-<span class="user-block"><a data-tip="p$t$wei-yi-jing-58" href="http://www.zhihu.com/people/wei-yi-jing-58" class="zg-link" title="妖都妖子">妖都妖子</a>、</span><span class="user-block"><a data-tip="p$t$da-shuai-bi-77" href="http://www.zhihu.com/people/da-shuai-bi-77" class="zg-link" title="Freya Zheng">Freya Zheng</a>、</span><span class="user-block"><a data-tip="p$t$weng-weng-46-17" href="http://www.zhihu.com/people/weng-weng-46-17" class="zg-link" title="wEnG WeNg">wEnG WeNg</a></span>
-</span>
-
-
-<a href="javascript:;" class="more"> 等人赞同</a>
-
-
-</div>
-</div>
-<div class="zm-item-rich-text js-collapse-body" data-resourceid="7011484" data-action="/answer/content" data-author-name="噶愛成神" data-entry-url="/question/37011291/answer/70095598">
-
-
-<div class="zh-summary summary clearfix" style="display:none;">
-
-老子不和男的結婚:）
-
-</div>
-
-
-<div class="zm-editable-content clearfix">
-老子不和男的結婚:）
-
-</div>
-
-</div>
-<a class="zg-anchor-hidden ac" name="23458712-comment"></a>
-<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
-<div class="zm-meta-panel">
-
-<span class="answer-date-link-wrap">
-<a class="answer-date-link meta-item" target="_blank" href="/question/37011291/answer/70095598">发布于 昨天 20:57</a>
-</span>
-
-<a href="#" name="addcomment" class=" meta-item toggle-comment">
-<i class="z-icon-comment"></i>3 条评论</a>
-
-
-<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
-
-
-
-<a href="#" class="meta-item zu-autohide goog-inline-block goog-menu-button" name="share" role="button" aria-expanded="false" style="-webkit-user-select: none;" tabindex="0" aria-haspopup="true"><div class="goog-inline-block goog-menu-button-outer-box"><div class="goog-inline-block goog-menu-button-inner-box"><div class="goog-inline-block goog-menu-button-caption"><i class="z-icon-share"></i>分享</div><div class="goog-inline-block goog-menu-button-dropdown">&nbsp;</div></div></div></a>
-<a href="#" class="meta-item zu-autohide" name="favo">
-<i class="z-icon-collect"></i>收藏</a>
-
-
-
-
-<span class="zg-bull zu-autohide">?</span>
-
-<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
-
-<span class="zg-bull zu-autohide">?</span>
-<a href="#" name="report" class="meta-item zu-autohide goog-inline-block goog-menu-button" role="button" aria-expanded="false" style="-webkit-user-select: none;" tabindex="0" aria-haspopup="true"><div class="goog-inline-block goog-menu-button-outer-box"><div class="goog-inline-block goog-menu-button-inner-box"><div class="goog-inline-block goog-menu-button-caption">举报</div><div class="goog-inline-block goog-menu-button-dropdown">&nbsp;</div></div></div></a>
-
-
-
-<span class="zg-bull">?</span>
-
-<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
-
-
-
-</div>
-</div>
-</div>
-    """
-
     def __init__(self, dom=None):
         self.set_dom(dom)
         self.author_parser = Author()
@@ -321,7 +216,10 @@ class Answer(ParserTools):
             self.info['edit_date'] = self.info['commit_date'] = self.parse_date(commit_date)
 
     def parse_comment_count(self):
-        comment = self.footer.select("a[name='addcomment']")
+        # BS的属性选择器语法区分“和’！！！
+        # 还好知乎所有的属性都是双引号- -
+        # 看看人家这软件工程做的！
+        comment = self.footer.select('a[name="addcomment"]')
         if not comment:
             BaseClass.logger.debug(u'评论数未找到')
             return
@@ -425,8 +323,9 @@ class QuestionInfo(ParserTools):
         return
 
     def parse_question_id(self):
-        meta = self.dom.select("meta[http-equiv='mobile-agent']")
+        meta = self.dom.select('meta[http-equiv="mobile-agent"]')
         if not meta:
+            BaseClass.logger.debug(u'问题ID未找到')
             return
         content = self.get_attr(meta[0], 'content', 0)
         self.info['question_id'] = self.match_question_id(content)
@@ -435,21 +334,25 @@ class QuestionInfo(ParserTools):
     def parse_title(self):
         title = self.dom.select('#zh-question-title h2')
         if not title:
+            BaseClass.logger.debug(u'问题标题未找到')
             return
-        self.info['title'] = title[0].string
+        self.info['title'] = title[0].get_text()
         return
 
     def parse_description(self):
         description = self.dom.select('#zh-question-detail div.zm-editable-content')
         if not description:
+            BaseClass.logger.debug(u'问题描述未找到')
             return
-        self.info['description'] = description[0].string
+        self.info['description'] = self.get_tag_content(description[0])
         return
 
     def parse_comment_count(self):
         comment = self.dom.select('#zh-question-meta-wrap a[name="addcomment"]')
         if not comment:
-            self.info['comment'] = self.match_int(comment[0].get_text())
+            BaseClass.logger.debug(u'问题评论数未找到')
+            return
+        self.info['comment'] = self.match_int(comment[0].get_text())
         return
 
     def parse_status_info(self):
@@ -460,20 +363,20 @@ class QuestionInfo(ParserTools):
     def parse_followers_count(self):
         followers_count = self.side_dom.select('div.zh-question-followers-sidebar div.zg-gray-normal strong')
         if followers_count:
-            self.info['followers'] = self.match_int(followers_count[0].string)
+            self.info['followers'] = self.match_int(followers_count[0].get_text())
         return
 
     def parse_views(self):
         div = self.side_dom.find_all('div', class_='zm-side-section')[-1]
         views = div.find('strong')  # 在最后一个side-section中的第一个strong是问题浏览次数
-        self.info['views'] = self.match_int(views.string)
+        self.info['views'] = self.match_int(views.get_text())
         return
 
     def parse_answer_count(self):
         self.info['answers'] = 0  # 默认为0
         count = self.dom.select('#zh-answers-title a.zg-link-litblue, #zh-question-answer-num')
         if count:
-            self.info['answers'] = self.match_int(count[0].string)
+            self.info['answers'] = self.match_int(count[0].get_text())
         return
 
 
