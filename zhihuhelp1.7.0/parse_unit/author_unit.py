@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-__author__ = 'yao'
-
 import sys
 
 reload(sys)
 sys.setdefaultencoding('utf8')
-import json
 
 # 添加库路径
 currentPath = sys.path[0].replace('parse_unit', '')
@@ -19,23 +15,50 @@ sys.setrecursionlimit(1000000)  # 为了适应知乎上的长答案，需要专�
 from baseClass import *
 from parserTools import *
 
-is_info = True
 
-content = open('./unit_html/author_info.html', 'r').read()
-parser = AuthorParser(content)
+is_info = False
+kind = 'question'
+unit ={
+    'question':{
+        'src_answer':'./unit_html/single_answer.html',
+        'src_info':'./unit_html/single_answer.html',
+        'parser':QuestionParser,
+    },
+    'author':{
+        'src_answer':'./unit_html/author.html',
+        'src_info':'./unit_html/author_info.html',
+        'parser':AuthorParser,
+    },
+    'topic':{
+        'src_answer':'./unit_html/single_answer.html',
+        'src_info':'./unit_html/single_answer.html',
+        'parser':QuestionParser,
+    },
+    'collection':{
+        'src_answer':'./unit_html/single_answer.html',
+        'src_info':'./unit_html/single_answer.html',
+        'parser':QuestionParser,
+    },
+}
+if is_info:
+    src = unit[kind]['src_info']
+else:
+    src = unit[kind]['src_answer']
+
+content = open(src, 'r').read()
+parser = unit[kind]['parser'](content)
+
 
 if is_info:
     BaseClass.printDict(parser.get_extra_info())
     print '----------------------'
     print '=========================='
 else:
-
-
     for answer in parser.get_answer_list():
         BaseClass.printDict(answer)
         print '----------------------'
     print '=========================='
 
-    for question in parser.get_question_list():
+    for question in parser.get_question_info_list():
         BaseClass.printDict(question)
         print '----------------------'

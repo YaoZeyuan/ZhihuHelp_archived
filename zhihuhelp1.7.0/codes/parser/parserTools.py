@@ -784,7 +784,7 @@ class CollectionInfo(ParserTools):
 
 class BaseParser(ParserTools):
     def __init__(self, content):
-        BaseClass.logger.debug(u"开始解析网页")
+        #BaseClass.logger.debug(u"开始解析网页")
         self.dom = BeautifulSoup(content, 'html.parser')
         self.answer_parser = Answer()
 
