@@ -16,7 +16,7 @@ from baseClass import *
 from parserTools import *
 
 is_info = False
-kind = 'question'
+kind = 'author'
 unit ={
     'question':{
         'src_answer':'./unit_html/single_answer.html',

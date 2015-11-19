@@ -5,7 +5,7 @@ import datetime  # 简单处理时间
 
 from codes.baseClass import *
 from bs4 import BeautifulSoup
-
+import copy #用于复制对象（仅用了一次）
 
 class ParserTools(BaseClass):
     @staticmethod
@@ -125,7 +125,7 @@ class Author(ParserTools):
             BaseClass.logger.debug(u'用户ID未找到')
             return
         link = self.get_attr(author, 'href')
-        self.info['author_id'] = self.match_answer_id(link)
+        self.info['author_id'] = self.match_author_id(link)
         return
 
     def parse_author_sign(self):
@@ -263,8 +263,10 @@ class SimpleAnswer(ParserTools):
         self.info = {}
         if dom:
             self.header = dom.find('div', class_='zm-item-vote-info')
-            self.body   = dom.find('div', class_='zm-editable-content')
+            self.body   = dom.find('textarea', class_='content')
             self.footer = dom.find('div', class_='zm-meta-panel')
+            if self.body:
+                self.content = BeautifulSoup(self.get_tag_content(self.body), 'html.parser')
             self.author_parser.set_dom(dom)
         return
 
@@ -298,19 +300,28 @@ class SimpleAnswer(ParserTools):
         return
 
     def parse_answer_content(self):
-        if not self.body:
+        #移除无用的span元素
+        if not self.content:
             BaseClass.logger.debug(u'答案内容未找到')
             return
-        self.info['content'] = self.get_tag_content(self.body)
+        content = copy.deepcopy(self.content)
+        span = content.find('span', class_='answer-date-link-wrap')
+        if not span:
+            BaseClass.logger.debug(u'答案内容未找到')
+            return
+        span.extract()
+        self.info['content'] = self.get_tag_content(content)
         return
 
     def parse_date_info(self):
-        data_block = self.footer.find('a', class_='answer-date-link')
-        commit_date = self.get_attr(data_block, 'data-tip')
+        if not self.content:
+            BaseClass.logger.debug(u'答案更新日期未找到')
+            return
+        data_block = self.content.find('a', class_='answer-date-link')
         if not data_block:
             BaseClass.logger.debug(u'答案更新日期未找到')
             return
-
+        commit_date = self.get_attr(data_block, 'data-tip')
         if commit_date:
             update_date = data_block.get_text()
             self.info['edit_date'] = self.parse_date(update_date)
@@ -339,7 +350,10 @@ class SimpleAnswer(ParserTools):
         return
 
     def parse_href_info(self):
-        href_tag = self.footer.find('a', class_='answer-date-link')
+        if not self.content:
+            BaseClass.logger.debug(u'答案更新日期未找到')
+            return
+        href_tag = self.content.find('a', class_='answer-date-link')
         if not href_tag:
             BaseClass.logger.debug(u'问题id，答案id未找到')
             return
@@ -378,7 +392,9 @@ class SimpleQuestion(ParserTools):
         return self.info
 
     def parse_question_id(self):
-        question = self.dom.select('h2 a.question_link, h2.zm-item-title a[target="_blank"]')  # 在收藏夹中需要使用后一个选择器
+        question = self.dom.select('h2 a.question_link')
+        if not question:
+            question = self.dom.select('h2.zm-item-title a[target="_blank"]')# 在收藏夹中需要使用这种选择器
         if not question:
             BaseClass.logger.debug(u'问题信息_id未找到')
             return
@@ -799,21 +815,22 @@ class BaseParser(ParserTools):
         return self.dom.select('.zm-item-answer')
 
     def get_answer_list(self):
-        u"""
-        基础功能：获取答案列表
-        需重载
-        """
-        return
+        answer_list = []
+        for dom in self.get_answer_dom_list():
+            self.answer_parser.set_dom(dom)
+            answer_list.append(self.answer_parser.get_info())
+        return answer_list
 
     def get_question_dom_list(self):
         return self.dom.select('div.zm-item')
 
     def get_question_info_list(self):
-        """
-        基础功能：获取问题信息
-        需重载
-        """
-        return
+        question_info_list = []
+        parser = SimpleQuestion()
+        for dom in self.get_question_dom_list():
+            parser.set_dom(dom)
+            question_info_list.append(parser.get_info())
+        return question_info_list
 
     def get_extra_info(self):
         """
@@ -823,18 +840,9 @@ class BaseParser(ParserTools):
         return
 
 class AuthorParser(BaseParser):
-    def get_question_info_list(self):
-        question_info_list = []
-        parser = SimpleQuestion()
-        for dom in self.get_question_dom_list():
-            parser.set_dom(self.dom)
-            question_info_list.append(parser.get_info())
-        return question_info_list
-
     def get_extra_info(self):
         author = AuthorInfo(self.dom)
         return author.get_info()
-
 
 class TopicParser(AuthorParser):
     def get_question_dom_list(self):
@@ -859,13 +867,6 @@ class QuestionParser(BaseParser):
     def __init__(self, content):
         self.dom = BeautifulSoup(content, 'html.parser')
         self.answer_parser = Answer()
-
-    def get_answer_list(self):
-        answer_list = []
-        for dom in self.get_answer_dom_list():
-            self.answer_parser.set_dom(dom)
-            answer_list.append(self.answer_parser.get_info())
-        return answer_list
 
     def get_question_info_list(self):
         parser = QuestionInfo()
