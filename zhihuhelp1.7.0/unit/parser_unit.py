@@ -16,11 +16,16 @@ from baseClass import *
 from parserTools import *
 
 is_info = 0
-kind = 'topic' #直接在这里替换类别即可完成测试。可供测试的类别见字典键值
+kind = 'question' #直接在这里替换类别即可完成测试。可供测试的类别见字典键值
 unit ={
-    'question':{
+    'answer':{
         'src_answer':'./unit_html/single_answer.html',
         'src_info':'./unit_html/single_answer.html',
+        'parser':QuestionParser,
+    },
+    'question':{
+        'src_answer':'./unit_html/single_question.html',
+        'src_info':'./unit_html/single_question.html',
         'parser':QuestionParser,
     },
     'author':{

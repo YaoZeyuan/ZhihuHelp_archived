@@ -26,9 +26,7 @@ class BaseFilter(BaseClass):
 
     def authorLogoFix(self, imgHref=''):
         # 头像一律使用大图
-        imgHref = re.sub(r'_..jpg', '', imgHref, 1)
-        if imgHref:
-            imgHref += '_b.jpg'
+        imgHref = re.sub(r'_.(?=\.\w{3}$)', '', imgHref, 1)
         return u'<div class="duokan-image-single"><img src="{}" alt=""/></div>'.format(imgHref)
 
     def contentImgFix(self, content='', imgQuarty=1):

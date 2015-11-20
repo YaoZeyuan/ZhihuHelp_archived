@@ -57,7 +57,7 @@ class Transfer():
             filename = md_5(filename) + '.jpg'
             img = (filename, src_download)
             self.imgSet.add(img)
-            content = content.replace(src, '../images/' + filename)
+            content = content.replace('"{}"'.format(src), '"{}"'.format('../images/' + filename))
         return content
 
     def getFileName(self, imgHref=''):
