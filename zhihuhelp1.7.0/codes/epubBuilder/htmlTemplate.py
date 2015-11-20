@@ -9,9 +9,9 @@ def baseTemplate(dataDict={}):
         'Footer' : '',
     }
     '''
-    return u"""
+    template = u"""
             <!DOCTYPE html>
-            <html lang="zh-CN">
+            <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" >
                 <head>
                     <meta charset="utf-8" />
                     <link rel="stylesheet" type="text/css" href="../markdownStyle.css"/>
@@ -25,6 +25,14 @@ def baseTemplate(dataDict={}):
                 </body>
             </html>
             """.format(**dataDict)
+    fix_dict = {
+        '</br>':'',
+        '</img>':'',
+        '&nbsp;':' ',
+    }
+    for key in fix_dict:
+        template = template.replace(key, fix_dict[key])
+    return template
 
 
 def structTemplate(dataDict={}):

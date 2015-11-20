@@ -3,6 +3,7 @@
 1.  重写了爬虫模块，修复了之前的各种解析bug
 2.  移除了线程数的设置，默认为10
 3.  默认显示禁止转载的答案，未来会将这个功能放在设置项中
+4.  感谢@[鲶鱼](http://www.zhihu.com/people/nian-yu-7)的指点，修复了几处epub模板中的bug
 #1.7.1.8版更新说明
 0.  感谢@[宁采臣](http://www.zhihu.com/people/zhu-cai-chen-49)的捐赠
 1.  感谢@[林止语](http://www.zhihu.com/people/linzhiyu)的帮助，成功重现到了无法登陆的bug
