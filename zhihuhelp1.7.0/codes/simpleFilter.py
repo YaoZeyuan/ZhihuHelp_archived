@@ -181,7 +181,7 @@ class QuestionFilter(BaseFilter):
                 answers,
                 views,
                 title,
-                description,
+                description
                 from Question where question_id = ? '''
         result = self.cursor.execute(sql, [self.questionID, ]).fetchone()
         infoDict = {}
