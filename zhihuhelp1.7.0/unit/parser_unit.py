@@ -15,8 +15,8 @@ sys.setrecursionlimit(1000000)  # 为了适应知乎上的长答案，需要专�
 from baseClass import *
 from parserTools import *
 
-is_info = 0
-kind = 'question' #直接在这里替换类别即可完成测试。可供测试的类别见字典键值
+is_info = 1
+kind = 'collection' #直接在这里替换类别即可完成测试。可供测试的类别见字典键值
 unit ={
     'answer':{
         'src_answer':'./unit_html/single_answer.html',
@@ -39,8 +39,8 @@ unit ={
         'parser':TopicParser,
     },
     'collection':{
-        'src_answer':'./unit_html/collection.html',
-        'src_info':'./unit_html/collection.html',
+        'src_answer':'./unit_html/private_collection.html',
+        'src_info':'./unit_html/private_collection.html',
         'parser':CollectionParser,
     },
 }

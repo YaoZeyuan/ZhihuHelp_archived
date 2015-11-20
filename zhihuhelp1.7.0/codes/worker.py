@@ -244,6 +244,7 @@ class AnswerQueenWorker(QuestionQueenWorker):
         self.maxPage = ''
         self.suffix = ''
         self.answerDictList = []
+        self.waitFor = 5
         return
 
     def setWorkSchedule(self):

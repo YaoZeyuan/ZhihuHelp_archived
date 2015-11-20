@@ -99,7 +99,7 @@ class Author(ParserTools):
         return self.info
 
     def parse_info(self):
-        if self.dom.find('img') is None:
+        if (not self.dom.find('img')) and (not self.dom.find('a', class_='author-link')):
             self.create_anonymous_info()
         else:
             self.parse_author_info()
@@ -121,6 +121,8 @@ class Author(ParserTools):
 
     def parse_author_id(self):
         author = self.dom.find('a', class_='zm-item-link-avatar')
+        if not author:
+           author = self.dom.find('a', class_='author-link') # for collection
         if not author:
             BaseClass.logger.debug(u'用户ID未找到')
             return
@@ -547,6 +549,7 @@ class AuthorInfo(ParserTools):
             node = root.select('a[href*="{} span.num"]'.format(kind))
             if not node:
                 BaseClass.logger.debug(u'{}未找到'.format(kind))
+                return
             self.info[kind] = self.match_int(node[0].get_text())
             return
 
@@ -653,6 +656,7 @@ class TopicInfo(ParserTools):
         title = self.dom.select('#zh-topic-title h1.zm-editable-content')
         if not title:
             BaseClass.logger.debug(u'话题标题未找到')
+            return
         self.info['title'] = title[0].get_text()
         return
 
@@ -660,6 +664,7 @@ class TopicInfo(ParserTools):
         topic = self.dom.select('link[rel="canonical"]')
         if not topic:
             BaseClass.logger.debug(u'话题id未找到')
+            return
         href = self.get_attr(topic[0], 'href')
         self.info['topic_id'] = self.match_topic_id(href)
         return
@@ -668,6 +673,7 @@ class TopicInfo(ParserTools):
         logo = self.dom.select('img.zm-avatar-editor-preview')
         if not logo:
             BaseClass.logger.debug(u'话题图标未找到')
+            return
         self.info['logo'] = self.get_attr(logo[0], 'src')
         return
 
@@ -675,6 +681,7 @@ class TopicInfo(ParserTools):
         follower = self.dom.select('div.zm-topic-side-followers-info a strong')
         if not follower:
             BaseClass.logger.debug(u'话题关注人数未找到')
+            return
         self.info['follower'] = follower[0].get_text()
         return
 
@@ -682,6 +689,7 @@ class TopicInfo(ParserTools):
         description = self.dom.select('#zh-topic-desc div.zm-editable-content')
         if not description:
             BaseClass.logger.debug(u'话题描述未找到')
+            return
         self.info['description'] = self.get_tag_content(description[0])
         return
 
@@ -717,13 +725,15 @@ class CollectionInfo(ParserTools):
         title = self.dom.select('h2#zh-fav-head-title')
         if not title:
             BaseClass.logger.debug(u'收藏夹标题未找到')
+            return
         self.info['title'] = title[0].get_text()
         return
 
     def parse_collection_id(self):
         topic = self.dom.select('meta[http-equiv="mobile-agent"]')
         if not topic:
-            BaseClass.logger.debug(u'话题id未找到')
+            BaseClass.logger.debug(u'收藏夹id未找到')
+            return
         href = self.get_attr(topic[0], 'content')
         self.info['collection_id'] = self.match_collection_id(href)
         return
@@ -732,21 +742,25 @@ class CollectionInfo(ParserTools):
         follower = self.dom.select(
             'div.zm-side-section div.zm-side-section-inner div.zg-gray-normal a[href*="followers"]')
         if not follower:
-            BaseClass.logger.debug(u'话题关注人数未找到')
+            BaseClass.logger.debug(u'收藏夹关注人数未找到')
+            return
         self.info['follower'] = follower[0].get_text()
         return
 
     def parse_description(self):
         description = self.dom.select('#zh-fav-head-description-source')
         if not description:
-            BaseClass.logger.debug(u'话题描述未找到')
+            BaseClass.logger.debug(u'收藏夹描述未找到')
+            return
         self.info['description'] = self.get_tag_content(description[0])
         return
 
     def parse_comment_count(self):
         comment = self.dom.select('#zh-list-meta-wrap  a[name="addcomment"]')
         if not comment:
-            self.info['comment'] = self.match_int(comment[0].get_text())
+            BaseClass.logger.debug(u'收藏夹评论数未找到')
+            return
+        self.info['comment'] = self.match_int(comment[0].get_text())
         return
 
 
