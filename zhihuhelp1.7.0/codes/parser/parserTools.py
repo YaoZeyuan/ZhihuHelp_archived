@@ -131,6 +131,8 @@ class Author(ParserTools):
     def parse_author_sign(self):
         sign = self.dom.find('strong', class_='zu-question-my-bio')
         if not sign:
+            sign = self.dom.find('span', class_='bio')
+        if not sign:
             BaseClass.logger.debug(u'用户签名未找到')
             return
         self.info['author_sign'] = self.get_attr(sign, 'title')
