@@ -5,7 +5,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 # 添加库路径
-currentPath = sys.path[0].replace('parse_unit', '')
+currentPath = sys.path[0].replace('unit', '')
 sys.path.append(currentPath)
 sys.path.append(currentPath + r'codes')
 sys.path.append(currentPath + r'codes\parser')
@@ -16,7 +16,7 @@ from baseClass import *
 from parserTools import *
 
 is_info = 0
-kind = 'collection'
+kind = 'topic' #直接在这里替换类别即可完成测试。可供测试的类别见字典键值
 unit ={
     'question':{
         'src_answer':'./unit_html/single_answer.html',

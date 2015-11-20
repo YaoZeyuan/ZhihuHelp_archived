@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 import re
+import md5
 
 from htmlTemplate import *
 
+def md_5(i):
+    u'''
+    临时使用，1.7.3版中移除掉
+    '''
+    return md5.new(str(i)).hexdigest()
 
 class dict2Html():
     def __init__(self, contentPackage):
@@ -34,15 +40,17 @@ class Transfer():
     def imgFix(self, content):
         for imgTag in re.findall(r'<img.*?>', content):
             src = re.search(r'(?<=src=").*?(?=")', imgTag)
-            if src == None:
+            if not src:
                 continue
             else:
                 src = src.group(0)
                 if src.replace(' ', '') == '':
                     continue
-            self.imgSet.add(src)
-            fileName = self.getFileName(src)
-            content = content.replace(src, '../images/' + fileName)
+            filename = self.getFileName(src)
+            filename = md_5(filename) + '.jpg'
+            img = (filename, src)
+            self.imgSet.add(img)
+            content = content.replace(src, '../images/' + filename)
         return content
 
     def getFileName(self, imgHref=''):

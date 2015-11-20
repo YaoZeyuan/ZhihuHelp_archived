@@ -39,12 +39,12 @@ class ImgDownloader():
         '''
         threadPool = []
         for img in list(self.imgSet):
-            fileName = self.getFileName(img)
-            if fileName in self.cacheSet:
+            filename = img[0]
+            if filename in self.cacheSet:
                 self.imgSet.discard(img)
-                self.complete.add(fileName)
+                self.complete.add(filename)
                 continue
-            threadPool.append(threading.Thread(target=self.worker, kwargs={'link': img}))
+            threadPool.append(threading.Thread(target=self.worker, kwargs={'img': img}))
         threadsCount = len(threadPool)
         threadLiving = 2
         while (threadsCount > 0 or threadLiving > 1):
@@ -61,25 +61,24 @@ class ImgDownloader():
             threadLiving = threading.activeCount()
         return
 
-    def worker(self, link=''):
+    def worker(self, img=()):
         u"""
         worker只执行一次，待全部worker执行完毕后由调用函数决定哪些worker需要再次运行
         重复的次数由self.maxTry指定
         这样可以给知乎服务器留出生成页面缓存的时间
         """
-        if link[0:3] != 'htt':
-            link = 'http:' + link # todo 临时修复抓取不到图片的bug，正式版中需要移除掉，换为更稳定的方式
-        fileName = self.getFileName(link)
-        if fileName in self.complete:
+        filename = img[0]
+        src = img[1]
+        if filename in self.complete:
             return
-        content = self.getHttpContent(url=link, timeout=self.waitFor)
+        content = self.getHttpContent(url=src, timeout=self.waitFor)
         if content == '':
             return
-        imgFile = open(self.targetDir + fileName, 'wb')
+        imgFile = open(self.targetDir + filename, 'wb')
         imgFile.write(content)
         imgFile.close()
-        self.imgSet.discard(link)
-        self.complete.add(fileName)
+        self.imgSet.discard(img)
+        self.complete.add(filename)
         return
 
     def getHttpContent(self, url='', extraHeader={}, data=None, timeout=5):
@@ -147,11 +146,11 @@ class ImgDownloader():
         if rawPageData.info().get(u"Content-Encoding") == "gzip":
             try:
                 pageContent = zlib.decompress(rawPageData.read(), 16 + zlib.MAX_WBITS)
-            except zlib.error as ziperror:
+            except zlib.error as error:
                 print u'解压出错'
                 print u'出错解压页面:' + rawPageData.geturl()
                 print u'错误信息：'
-                print zliberror
+                print error
                 return ''
         else:
             pageContent = rawPageData.read()

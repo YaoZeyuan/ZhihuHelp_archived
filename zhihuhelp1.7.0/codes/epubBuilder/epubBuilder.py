@@ -93,9 +93,9 @@ class Zhihu2Epub():
             htmlSrc = '../../' + self.baseContentPath + content['fileName'] + '.html'
             title = content['contentName']
             book.addHtml(src=htmlSrc, title=title)
-        for src in self.downloadedImgSet:
-            imgSrc = '../../' + self.baseImgPath + src
-            if src == '':
+        for filename in self.downloadedImgSet:
+            imgSrc = '../../' + self.baseImgPath + filename
+            if filename == '':
                 continue
             book.addImg(imgSrc)
         # add property

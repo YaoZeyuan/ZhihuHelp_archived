@@ -368,8 +368,7 @@ class ColumnFilter(BaseFilter):
         baseSql = '''select authorID        
                             ,authorSign      
                             ,authorLogo      
-                            ,authorName      
-
+                            ,authorName
                             ,columnID        
                             ,columnName      
                             ,articleID       
