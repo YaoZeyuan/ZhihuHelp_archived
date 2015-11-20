@@ -106,6 +106,7 @@ class SettingClass(object):
     ANSWERORDERBY = 'agree'  # 答案排序原则
     QUESTIONORDERBY = 'agreeCount'  # 问题排序原则
     THREADMODE = False  # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
+    PRIVATE = True
 
 
 class TestClass(object):

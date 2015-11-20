@@ -133,18 +133,23 @@ class QuestionFilter(BaseFilter):
                             content,
                             question_id,
                             answer_id,
-                            commit,
-                            update,
+                            commit_date,
+                            edit_date,
                             comment,
                             no_record_flag,
                             href
-                        from Answer where no_record_flag = 0 '''
+                        from Answer where '''
+
+        if SettingClass.PRIVATE:
+            baseSql += ''' no_record_flag = 0 and '''
+
         if answerHref:
-            sql = baseSql + '''and answerHref = ?'''
+            sql = baseSql + ''' href = ? '''
             bufList = self.cursor.execute(sql, [answerHref]).fetchall()
         else:
-            sql = baseSql + '''and questionID = ? and answerAgreeCount > 5'''
+            sql = baseSql + ''' question_id = ? and agree > 5 '''
             bufList = self.cursor.execute(sql, [questionID, ]).fetchall()
+
 
         for answer in bufList:
             package = AnswerPackage()
@@ -224,7 +229,7 @@ class AuthorFilter(AnswerFilter):
         return
 
     def getIndexList(self):
-        sql = '''select questionID, answerID from AnswerContent where authorID = ? and noRecordFlag = 0 '''
+        sql = '''select question_id, answer_id from Answer where author_id = ? and no_record_flag = 0 '''
         resultList = self.cursor.execute(sql, [self.authorID, ]).fetchall()
         indexList = []
         for questionID, answerID in resultList:
@@ -241,7 +246,7 @@ class AuthorFilter(AnswerFilter):
                         logo,
                         description,
                         follower,
-                        answers,
+                        answers
                 from AuthorInfo where author_id = ? '''
         result = self.cursor.execute(sql, [self.authorID, ]).fetchone()
         infoDict = {}
@@ -291,18 +296,18 @@ class CollectionFilter(AuthorFilter):
         之前图省事，没抓取创建者的头像，以后要加上
         今天时间比较紧张了已经，所以，就先不加新功能了
         '''
-        sql = 'select "", "", "", title, description, follower, comment  from CollectionInfo where collection_id = ? '
+        sql = 'select  title, description, follower, comment  from CollectionInfo where collection_id = ? '
         result = self.cursor.execute(sql, [self.collectionID, ]).fetchone()
         infoDict = {}
-        infoDict['creatorID'] = result[0]
-        infoDict['creatorName'] = result[1]
-        infoDict['creatorSign'] = result[2]
+        infoDict['creatorID'] = ''
+        infoDict['creatorName'] = ''
+        infoDict['creatorSign'] = ''
         infoDict['ID'] = self.collectionID
         infoDict['kind'] = 'collection'
-        infoDict['title'] = result[3]
-        infoDict['description'] = result[4]
-        infoDict['followerCount'] = result[5]
-        infoDict['commentCount'] = result[6]
+        infoDict['title'] = result[0]
+        infoDict['description'] = result[1]
+        infoDict['followerCount'] = result[2]
+        infoDict['commentCount'] = result[3]
 
         self.package.setPackage(infoDict)
         return
