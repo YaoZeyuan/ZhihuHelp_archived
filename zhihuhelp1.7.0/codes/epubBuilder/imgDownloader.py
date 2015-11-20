@@ -16,7 +16,7 @@ class ImgDownloader():
     def __init__(self, targetDir='', imgSet=set(), maxThread=20, maxTry=5):
         self.targetDir = targetDir
         self.maxThread = maxThread
-        self.waitFor = 5
+        self.waitFor = 10  # 下载图片的等待时间可以长一些
         self.maxTry = maxTry
         self.extraHeader = {}
         self.threadPool = []

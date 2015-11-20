@@ -46,9 +46,16 @@ class Transfer():
                 src = src.group(0)
                 if src.replace(' ', '') == '':
                     continue
-            filename = self.getFileName(src)
+            src_download = src
+            if 'https' in src_download[:5]:
+                src_download = 'http' + src_download[5:]#去除图片中的https
+            if 'zhihu.com/equation?tex=' in src_download:
+                filename = src_download
+                src_download = 'http://www.' + src_download[2:]
+            else:
+                filename = self.getFileName(src_download)
             filename = md_5(filename) + '.jpg'
-            img = (filename, src)
+            img = (filename, src_download)
             self.imgSet.add(img)
             content = content.replace(src, '../images/' + filename)
         return content
