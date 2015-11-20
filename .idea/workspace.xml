@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/htmlTemplate.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/htmlTemplate.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/update.md" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/update.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -43,10 +41,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="baseClass.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="baseClass.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44414893">
+            <state vertical-scroll-proportion="0.0">
               <caret line="110" column="0" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
               <folding />
             </state>
@@ -119,14 +117,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="update.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="update.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/update.md">
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.5">
-              <caret line="5" column="70" selection-start-line="5" selection-start-column="70" selection-end-line="5" selection-end-column="70" />
+            <state vertical-scroll-proportion="0.36416185">
+              <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -226,8 +224,8 @@
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/parser_unit.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/htmlTemplate.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/update.md" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/update.md" />
       </list>
     </option>
   </component>
@@ -839,7 +837,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448038535522</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="*  修复网页模板中的bug&#10;*  正式发布！">
+      <created>1448039381071</created>
+      <option name="number" value="00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1448039381071</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TodoView">
@@ -911,7 +915,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="*   简单修改代码" />
     <MESSAGE value="*   将parse组织成包，以方便未来扩展为插件" />
     <MESSAGE value="*   最后一次提交，转入知乎助手1.7.3版开发" />
     <MESSAGE value="*   清空代码。重新开始编写程序" />
@@ -936,7 +939,8 @@
     <MESSAGE value="*  问题里还有个bug - -&#10;*  其实已经可以发布了！" />
     <MESSAGE value="*  修复一个找不到sign的bug" />
     <MESSAGE value="*  修复一个数组越界的bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="*  修复一个数组越界的bug" />
+    <MESSAGE value="*  修复网页模板中的bug&#10;*  正式发布！" />
+    <option name="LAST_COMMIT_MESSAGE" value="*  修复网页模板中的bug&#10;*  正式发布！" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1442,17 +1446,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/update.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.5">
-          <caret line="5" column="70" selection-start-line="5" selection-start-column="70" selection-end-line="5" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1471,8 +1464,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44414893">
+        <state vertical-scroll-proportion="0.0">
           <caret line="110" column="0" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/update.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36416185">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
           <folding />
         </state>
       </provider>
