@@ -12,8 +12,6 @@ class BaseClass(object):
     u'''
     用于存放常用函数
     '''
-    LOG_FILE = 'test.log'
-
     handler = logging.StreamHandler()  # 实例化handler
     fmt = '%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'
 

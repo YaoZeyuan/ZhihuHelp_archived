@@ -12,10 +12,7 @@ class ZhihuHelp(BaseClass):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
-        if TestClass.test_catchAnswerData_flag:
-            print u'测试期间，移除检查更新模块，测试完成后请删除'
-        else:
-            self.checkUpdate()
+        self.checkUpdate()
         init = Init()
         self.conn = init.getConn()
         self.cursor = self.conn.cursor()
