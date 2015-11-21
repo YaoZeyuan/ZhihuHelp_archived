@@ -107,6 +107,8 @@ class SettingClass(object):
     QUESTIONORDERBY = 'agreeCount'  # 问题排序原则
     THREADMODE = False  # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
     PRIVATE = True
+    WAITFOR_PIC = 10
+    WAITFOR_HTML = 5
 
 
 class TestClass(object):
@@ -202,15 +204,12 @@ class ThreadClass(object):
         threadLockCount = maxThread
         if threadLockCount == -1:
             threadLockCount = SettingClass.MAXTHREAD
-        BaseClass.logger.debug(u'进入waitForThreadRunningCompleted，等待所有线程运行完毕\n'
-                              + u'当前运行线程数 : ' + str(ThreadClass.getThreadCount()) + u'\t允许的最大线程数:' + str(
-            threadLockCount) + '\n'
-                              + u'开始检测线程数是否符合要求'
-                              )
+        BaseClass.logger.debug(u'进入waitForThreadRunningCompleted，等待所有线程运行完毕\n' + u'当前运行线程数 : ' + str(
+            ThreadClass.getThreadCount()) + u'\t允许的最大线程数:' + str(threadLockCount) + '\n' + u'开始检测线程数是否符合要求')
         while ThreadClass.getThreadCount() > threadLockCount:
             time.sleep(0.1)
-        BaseClass.logger.debug(u'线程数已符合允许的最大线程数的要求，允许的最大线程数为：' + str(threadLockCount)
-                              + u' 当前运行的线程数为：' + str(ThreadClass.getThreadCount()))
+        BaseClass.logger.debug(
+            u'线程数已符合允许的最大线程数的要求，允许的最大线程数为：' + str(threadLockCount) + u' 当前运行的线程数为：' + str(ThreadClass.getThreadCount()))
         return
 
 
@@ -218,6 +217,7 @@ class SqlClass(object):
     u'''
     用于存放常用的sql代码
     '''
+
     @staticmethod
     def save2DB(cursor, data={}, table_name=''):
         sql = "replace into {table_name} ({columns}) values ({items})".format(table_name=table_name,
@@ -253,97 +253,66 @@ class HttpBaseClass(object):
         报错:
             IOError     当解压缩页面失败时报错
         """
-        if data == None:
-            request = urllib2.Request(url=url)
-        else:
-            request = urllib2.Request(url=url, data=data)
+        request = urllib2.Request(url=url, data=data)
         for headerKey in extraHeader.keys():
             request.add_header(headerKey, extraHeader[headerKey])
+
         try:
-            rawPageData = urllib2.urlopen(request, timeout=timeout)
-        except  urllib2.HTTPError as error:
-            print u'网页打开失败'
-            print u'错误页面:' + url
-            if hasattr(error, 'code'):
-                print u'失败代码:' + str(error.code)
-            if hasattr(error, 'reason'):
-                print u'错误原因:' + error.reason
-        except  urllib2.URLError as error:
-            print u'网络连接异常'
-            print u'错误页面:' + url
-            print u'错误原因:'
-            print error.reason
-        except  socket.timeout as error:
-            print u'打开网页超时'
-            print u'超时页面' + url
+            response = urllib2.urlopen(request, timeout=timeout)
+        except urllib2.HTTPError as error:
+            BaseClass.logger.info(u'网页打开失败')
+            BaseClass.logger.info(u'错误页面:{}'.format(url))
+            BaseClass.logger.info(u'失败代码:{}'.format(error.code))
+            BaseClass.logger.info(u'错误原因:{}'.format(error.reason))
+        except urllib2.URLError as error:
+            BaseClass.logger.info(u'网络连接异常')
+            BaseClass.logger.info(u'错误页面:{}'.format(url))
+            BaseClass.logger.info(u'错误原因:{}'.format(error.reason))
+        except socket.timeout as error:
+            BaseClass.logger.info(u'打开网页超时')
+            BaseClass.logger.info(u'超时页面:{}'.format(url))
         except:
-            print u'未知错误'
-            print u'错误堆栈信息:'
-            print traceback.format_exc()
-            print u'错误页面' + url
-        else:
-            try:
-                return self.decodeGZip(rawPageData)
-            except socket.timeout as error:
-                print u'打开网页超时'
-                print u'超时页面' + url
-                print u'错误信息'
-                print error
-                return ''
-        return ''
+            BaseClass.logger.info(u'未知错误')
+            BaseClass.logger.info(u'错误页面:{}'.format(url))
+            BaseClass.logger.info(u'错误堆栈信息:{}'.format(traceback.format_exc()))
+        return self.unpack_response(response)
 
-    def decodeGZip(self, rawPageData):
-        u"""返回处理后的正常网页内容
-     
-        判断网页内容是否被压缩，无则直接返回，若被压缩则使用zlip解压后返回
-        
-        参数:
-            rawPageData   urlopen()传回的fileLike object
-        返回:
-            pageContent   页面内容，字符串或二进制数据|解压缩失败时则返回空字符串
-        报错:
-            无
-        """
-        if rawPageData.info().get(u"Content-Encoding") == "gzip":
-            try:
-                pageContent = zlib.decompress(rawPageData.read(), 16 + zlib.MAX_WBITS)
-            except zlib.error as zlibError:
-                print u'解压出错'
-                print u'出错解压页面:' + rawPageData.geturl()
-                print u'错误信息：'
-                print zlibError
-                return ''
-        else:
-            pageContent = rawPageData.read()
-        return pageContent
+    def unpack_response(self, response):
+        try:
+            content = response.read()
+        except socket.timeout as error:
+            BaseClass.logger.info(u'打开网页超时')
+            BaseClass.logger.info(u'超时页面:{}'.format())
+            return ''
 
+        decode = response.info().get(u"Content-Encoding")
+        if u"gzip" in decode:
+            content = HttpBaseClass.ungzip(content)
+        return content
+
+    @staticmethod
+    def ungzip(content):
+        try:
+            content = zlib.decompress(content, 16 + zlib.MAX_WBITS)
+        except zlib.error as error:
+            BaseClass.logger.info(u'解压出错')
+            BaseClass.logger.info(u'错误信息:{}'.format(error))
+            return ''
+        return content
 
 import cookielib
 import time
 
 
-class CookieBaseClass(object):
+class BaseCookie(object):
     u'''
     本类负责处理与cookie相关事宜
     '''
 
-    def makeCookie(self, name, value, domain):
-        cookie = cookielib.Cookie(
-            version=0,
-            name=name,
-            value=value,
-            port=None,
-            port_specified=False,
-            domain=domain,
-            domain_specified=True,
-            domain_initial_dot=False,
-            path="/",
-            path_specified=True,
-            secure=False,
-            expires=time.time() + 300000000,
-            discard=False,
-            comment=None,
-            comment_url=None,
-            rest={}
-        )
+    @staticmethod
+    def makeCookie(name, value, domain):
+        cookie = cookielib.Cookie(version=0, name=name, value=value, port=None, port_specified=False, domain=domain,
+                                  domain_specified=True, domain_initial_dot=False, path="/", path_specified=True,
+                                  secure=False, expires=time.time() + 300000000, discard=False, comment=None,
+                                  comment_url=None, rest={})
         return cookie
