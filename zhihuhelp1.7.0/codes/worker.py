@@ -3,6 +3,12 @@
 import json  # 用于JsonWorker
 from parser.parserTools import *
 
+class WorkerFactry():
+    u"""
+    基础类，Worker工厂
+    接受task做为参数，用于启动对应的worker
+    """
+
 
 class PageWorker(BaseClass, HttpBaseClass, SqlClass):
     def __init__(self, conn=None, urlInfo={}):

@@ -5,6 +5,7 @@ from init import *
 from login import *
 from simpleFilter import *
 from epubBuilder.epubBuilder import *
+from read_list_parser import ReadListParser
 
 
 class ZhihuHelp(BaseClass):
@@ -67,47 +68,8 @@ class ZhihuHelp(BaseClass):
             chapter = 1
             BaseClass.logger.info(u"正在制作第 {0} 本电子书".format(bookCount))
             BaseClass.logger.info(u"对第 {0} 行的记录 {1} 进行分析".format(chapter, line))
-            # 先将栏目进行分类，以便并行执行，加快速度
-            taskQueen = {}
-            taskCollection = []
-            for kind in self.urlKindList:
-                taskQueen[kind + 'Queen'] = []
-            for rawUrl in line.split('$'):
-                urlInfo = self.getUrlInfo(rawUrl)
-                if urlInfo['kind'] == '':
-                    continue
-                taskQueen[urlInfo['kind'] + 'Queen'].append(urlInfo)  # 按网址类别分列表处理
-                taskCollection.append(urlInfo)  # 将任务信息汇总至此，统一进行查询
-            BaseClass.logger.info(u"网址分类完毕，开始按类别执行数据抓取工作")
+            task = ReadListParser.parse_command(line)
 
-            for urlKind in self.urlKindList:
-                taskList = taskQueen[urlKind + 'Queen']
-                if urlKind == "question":
-                    questionQueenWorker = QuestionQueenWorker(self.conn, taskList)  # todo ：执行到这里之后就报错推出了
-                    questionQueenWorker.start()  # 只需要执行，不需要返回结果，最后统一进行查询
-                if urlKind == "answer":
-                    answerQueenWorker = AnswerQueenWorker(self.conn, taskList)
-                    answerQueenWorker.start()
-                if urlKind == "author":
-                    for urlInfo in taskList:
-                        authorWorker = AuthorWorker(self.conn, urlInfo)
-                        authorWorker.start()
-                if urlKind == "collection":
-                    for urlInfo in taskList:
-                        collectionWorker = CollectionWorker(self.conn, urlInfo)
-                        collectionWorker.start()
-                if urlKind == "topic":
-                    for urlInfo in taskList:
-                        topicWorker = TopicWorker(self.conn, urlInfo)
-                        topicWorker.start()
-                if urlKind == "article":
-                    for urlInfo in taskList:
-                        articleWorker = ColumnWorker(self.conn, urlInfo)
-                        articleWorker.start()
-                if urlKind == "column":
-                    for urlInfo in taskList:
-                        columnWorker = ColumnWorker(self.conn, urlInfo)
-                        columnWorker.start()
 
             BaseClass.logger.info(u"网页信息抓取完毕，开始自数据库中生成电子书数据")
             for urlInfo in taskCollection:
