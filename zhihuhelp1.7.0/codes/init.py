@@ -144,41 +144,39 @@ class Init(object):
 
             # 专栏信息
             cursor.execute("""CREATE TABLE ColumnInfo(
-                        creatorID       VARCHAR(255)    NOT NULL    DEFAULT '',
-                        creatorHash     VARCHAR(255)    NOT NULL    DEFAULT '',
-                        creatorSign     VARCHAR(2000)   NOT NULL    DEFAULT '',
-                        creatorName     VARCHAR(255)    NOT NULL    DEFAULT '',
-                        creatorLogo     VARCHAR(255)    NOT NULL    DEFAULT '',
+                        creator_id       VARCHAR(255)    NOT NULL    DEFAULT '',
+                        creator_hash     VARCHAR(255)    NOT NULL    DEFAULT '',
+                        creator_sign     VARCHAR(2000)   NOT NULL    DEFAULT '',
+                        creator_name     VARCHAR(255)    NOT NULL    DEFAULT '',
+                        creator_logo     VARCHAR(255)    NOT NULL    DEFAULT '',
 
-                        columnID        VARCHAR(255)    NOT NULL    DEFAULT '',
-                        columnName      VARCHAR(255)    NOT NULL    DEFAULT '',
-                        columnLogo      VARCHAR(255)    NOT NULL    DEFAULT '',
+                        column_id        VARCHAR(255)    NOT NULL    DEFAULT '',
+                        name      VARCHAR(255)    NOT NULL    DEFAULT '',
+                        logo      VARCHAR(255)    NOT NULL    DEFAULT '',
                         description     VARCHAR(3000)   NOT NULL    DEFAULT '',
-                        articleCount    INT(20)         NOT NULL    DEFAULT 0,
-                        followerCount  INT(20)         NOT NULL    DEFAULT 0,
-                        PRIMARY KEY(columnID))""")
+                        article    INT(20)         NOT NULL    DEFAULT 0,
+                        follower  INT(20)         NOT NULL    DEFAULT 0,
+                        PRIMARY KEY(column_id))""")
 
             # 专栏内容
-            cursor.execute("""CREATE TABLE ArticleContent(
-                        authorID        VARCHAR(255)    NOT NULL    DEFAULT '',
-                        authorHash      VARCHAR(255)    NOT NULL    DEFAULT '',
-                        authorSign      VARCHAR(2000)   NOT NULL    DEFAULT '',
-                        authorName      VARCHAR(255)    NOT NULL    DEFAULT '',
-                        authorLogo      VARCHAR(255)    NOT NULL    DEFAULT '',
+            cursor.execute("""CREATE TABLE Article(
+                        author_id        VARCHAR(255)    NOT NULL    DEFAULT '',
+                        author_hash      VARCHAR(255)    NOT NULL    DEFAULT '',
+                        author_sign      VARCHAR(2000)   NOT NULL    DEFAULT '',
+                        author_name      VARCHAR(255)    NOT NULL    DEFAULT '',
+                        author_logo      VARCHAR(255)    NOT NULL    DEFAULT '',
 
-                        columnID        VARCHAR(255)    NOT NULL    DEFAULT '',
-                        columnName      VARCHAR(255)    NOT NULL    DEFAULT '',
-                        articleID       VARCHAR(255)    NOT NULL    DEFAULT '',
-                        articleHref     VARCHAR(255)    NOT NULL    DEFAULT '',
-                        title           VARCHAR(2000)   NOT NULL    DEFAULT '',
-                        titleImage      VARCHAR(255)    NOT NULL    DEFAULT '',
-                        articleContent  longtext        NOT NULL    DEFAULT '',
-                        commentCount    INT(20)         NOT NULL    DEFAULT 0,
-                        likeCount      INT(20)         NOT NULL    DEFAULT 0,
-                        publishedTime   DATE            NOT NULL    DEFAULT '2000-01-01',
-                        PRIMARY KEY(articleHref))""")
-
-            cursor.execute("""CREATE INDEX idx_ArticleContent ON ArticleContent(columnID, articleID, authorID);""")
+                        column_id        VARCHAR(255)    NOT NULL    DEFAULT '',
+                        name             VARCHAR(255)    NOT NULL    DEFAULT '',
+                        article_id       VARCHAR(255)    NOT NULL    DEFAULT '',
+                        href             VARCHAR(255)    NOT NULL    DEFAULT '',
+                        title            VARCHAR(2000)   NOT NULL    DEFAULT '',
+                        title_image      VARCHAR(255)    NOT NULL    DEFAULT '',
+                        content          longtext        NOT NULL    DEFAULT '',
+                        comment          INT(20)         NOT NULL    DEFAULT 0,
+                        agree            INT(20)         NOT NULL    DEFAULT 0,
+                        publish_date     DATE            NOT NULL    DEFAULT '2000-01-01',
+                        PRIMARY KEY(href))""")
 
             # 用户活动表
             # 其中，赞同的答案/专栏文章，关注的收藏夹/专栏/话题按时间顺序混排

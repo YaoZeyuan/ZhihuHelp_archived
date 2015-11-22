@@ -69,7 +69,8 @@ class ZhihuHelp(BaseClass):
             BaseClass.logger.info(u"对第 {0} 行的记录 {1} 进行分析".format(chapter, line))
             task = ReadListParser.parse_command(line) #分析命令
             worker_factory(task) #执行抓取程序
-
+            exit()
+            '''
             BaseClass.logger.info(u"网页信息抓取完毕，开始自数据库中生成电子书数据")
             for urlInfo in taskCollection:
                 try:
@@ -89,6 +90,7 @@ class ZhihuHelp(BaseClass):
             BaseClass.logger.info(u"第 {0} 本电子书生成完毕".format(bookCount))
             self.resetDir()
             bookCount += 1
+            '''
         return
 
     def addEpubContent(self, result):

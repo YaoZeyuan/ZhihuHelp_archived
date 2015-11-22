@@ -158,7 +158,7 @@ class ReadListParser():
             task['spider'] = {}
             task['spider']['href'] = 'http://www.zhihu.com/people/{}'.format(author_id)
             task['condition'] = {}
-            task['condition']['info'] = author_id
+            task['condition']['info'] = 'select * from AuthorInfo where author_id = {}'.format(author_id)
             task['condition'][
                 'question'] = 'question_id in (select question_id from Answer where author_id = {})'.format(author_id)
             task['condition']['answer'] = 'author_id = {}'.format(author_id)
@@ -172,7 +172,7 @@ class ReadListParser():
             task['spider'] = {}
             task['spider']['href'] = 'http://www.zhihu.com/collection/{}'.format(collection_id)
             task['condition'] = {}
-            task['condition']['info'] = collection_id
+            task['condition']['info'] = 'select * from CollectionInfo where collection_id = {}'.format(collection_id)
             task['condition'][
                 'question'] = 'question_id in (select question_id from Answer where href in (select href in CollectionIndex where collection_id = {}))'.format(
                 collection_id)
@@ -188,7 +188,7 @@ class ReadListParser():
             task['spider'] = {}
             task['spider']['href'] = 'http://www.zhihu.com/topic/{}'.format(topic_id)
             task['condition'] = {}
-            task['condition']['info'] = topic_id
+            task['condition']['info'] = 'select * from TopicInfo where topic_id = {}'.format(topic_id)
             task['condition'][
                 'question'] = 'question_id in (select question_id from Answer where href in (select href in TopicIndex where topic_id = {}))'.format(
                 topic_id)
@@ -204,9 +204,9 @@ class ReadListParser():
             task['spider'] = {}
             task['spider']['href'] = 'http://zhuanlan.zhihu.com/{}/{}'.format(column_id, article_id)
             task['condition'] = {}
-            task['condition']['info'] = column_id
-            task['condition']['question'] = 'columnID = {} and articleID = {}'.format(column_id, article_id)
-            task['condition']['answer'] = 'columnID = {} and articleID = {}'.format(column_id, article_id)
+            task['condition']['info'] = 'select * from ColumnInfo where column_id = {}'.format(column_id)
+            task['condition']['question'] = 'column_id = {} and article_id = {}'.format(column_id, article_id)
+            task['condition']['answer'] = 'column_id = {} and article_id = {}'.format(column_id, article_id)
             return task
 
         def parse_column(command):

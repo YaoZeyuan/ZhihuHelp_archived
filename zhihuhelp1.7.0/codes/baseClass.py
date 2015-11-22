@@ -90,7 +90,7 @@ class SettingClass(object):
     # 全局变量
 
     # 默认数据库名称
-    dataBaseFileName = u'./zhihuDB_172.db'
+    dataBaseFileName = u'./zhihuDB_173.db'
 
     UPDATETIME = '2015-11-21'  # 更新日期
 
