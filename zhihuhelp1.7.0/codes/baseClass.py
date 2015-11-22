@@ -238,6 +238,7 @@ class SqlClass(object):
         return
 
 import urllib2
+import urllib
 import socket  # 用于捕获超时错误
 import zlib
 
@@ -250,7 +251,8 @@ class HttpBaseClass(object):
     用于存放常用Http函数
     '''
 
-    def get_http_content(self, url='', data=None, timeout=5, extra_header={}):
+    @staticmethod
+    def get_http_content(url='', data=None, timeout=5, extra_header={}):
         u"""获取网页内容
      
         获取网页内容, 打开网页超过设定的超时时间则报错
@@ -265,6 +267,8 @@ class HttpBaseClass(object):
         报错:
             IOError     当解压缩页面失败时报错
         """
+        if data:
+            data = urllib.urlencode(data)
         request = urllib2.Request(url=url, data=data)
         for key in extra_header.keys():
             request.add_header(key, extra_header[key])
@@ -289,7 +293,7 @@ class HttpBaseClass(object):
             BaseClass.logger.info(u'错误页面:{}'.format(url))
             BaseClass.logger.info(u'错误堆栈信息:{}'.format(traceback.format_exc()))
 
-        return self.unpack_response(response)
+        return HttpBaseClass.unpack_response(response)
 
     @staticmethod
     def unpack_response(response):
@@ -304,7 +308,7 @@ class HttpBaseClass(object):
             return ''
 
         decode = response.info().get(u"Content-Encoding")
-        if u"gzip" in decode:
+        if decode and u"gzip" in decode:
             content = HttpBaseClass.ungzip(content)
         return content
 
@@ -344,7 +348,7 @@ class HttpBaseClass(object):
         return
 
     @staticmethod
-    def makeCookie(name, value, domain):
+    def make_cookie(name, value, domain):
         cookie = cookielib.Cookie(version=0, name=name, value=value, port=None, port_specified=False, domain=domain,
                                   domain_specified=True, domain_initial_dot=False, path="/", path_specified=True,
                                   secure=False, expires=time.time() + 300000000, discard=False, comment=None,

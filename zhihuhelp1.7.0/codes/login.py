@@ -2,6 +2,7 @@
 
 import urllib  # 编码请求字串，用于处理验证码
 import json
+import pickle
 import datetime
 
 from setting import *
@@ -10,27 +11,26 @@ from setting import *
 class Login():
     def __init__(self):
         self.setting = Setting()
-        self.cookieJarInMemory = cookielib.LWPCookieJar()
-        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJarInMemory))
+        self.cookieJar = cookielib.LWPCookieJar()
+        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))
         urllib2.install_opener(self.opener)
 
     def sendMessage(self, account, password, captcha=''):
-        xsrf = self.getXsrf(self.getHttpContent('http://www.zhihu.com/'))
-        if xsrf == '':
-            print  u'知乎网页打开失败'
-            print  u'请敲击回车重新发送登陆请求'
+        content = HttpBaseClass.get_http_content('http://www.zhihu.com/')
+        xsrf = self.get_xsrf(content)
+        if not xsrf:
+            BaseClass.logger.info(u'知乎网页打开失败')
+            BaseClass.logger.info(u'请敲击回车重新发送登陆请求')
             return False
-        _xsrf = xsrf.split('=')[1]
+        xsrf = xsrf.split('=')[1]
         # add xsrf as cookie into cookieJar,
-        xsrfCookie = self.makeCookie(name='_xsrf', value=_xsrf, domain='www.zhihu.com')
-        self.cookieJarInMemory.set_cookie(xsrfCookie)
-        if captcha == '':
-            loginData = {'_xsrf': _xsrf, 'email': account, 'password': password, 'remember_me': True}
-        else:
-            loginData = {'_xsrf': _xsrf, 'email': account, 'password': password, 'remember_me': True,
+        cookie = HttpBaseClass.make_cookie(name='_xsrf', value=xsrf, domain='www.zhihu.com')
+        self.cookieJar.set_cookie(cookie)
+        if captcha:
+            post_data = {'_xsrf': xsrf, 'email': account, 'password': password, 'remember_me': True,
                          'captcha': captcha}
-
-        loginData = urllib.urlencode(loginData)
+        else:
+            post_data = {'_xsrf': xsrf, 'email': account, 'password': password, 'remember_me': True}
 
         header = {
             'Accept': '*/*',
@@ -41,29 +41,16 @@ class Login():
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36(KHTML, like Gecko)Chrome/34.0.1847.116 Safari/537.36',
             'Connection': 'keep-alive',
             'X-Requested-With': 'XMLHttpRequest',
+            'Origin':'http://www.zhihu.com',
+            'Referer':'http://www.zhihu.com/',
         }
-        header['Origin'] = 'http://www.zhihu.com'
-        header['Referer'] = 'http://www.zhihu.com/'
-
-        # 登陆时需要手工写urlopen，否则无法获取返回的信息
-        request = urllib2.Request(r'http://www.zhihu.com/login/email', loginData)
-
-        for headerKey in header.keys():
-            request.add_header(headerKey, header[headerKey])
-
-        try:
-            result = urllib2.urlopen(request)
-            jsonData = ''
-            if result.info().get('content-encoding') == 'gzip':
-                jsonData = zlib.decompress(result.read(), 16 + zlib.MAX_WBITS)
-            else:
-                jsonData = result.read()
-            result = json.loads(jsonData)
-        except Exception as error:
-            print error
+        result = HttpBaseClass.get_http_content(url = r'http://www.zhihu.com/login/email',data=post_data,extra_header=header)
+        if not result:
+            BaseClass.logger.info(u'登陆失败，请敲击回车重新登陆')
             return False
+        response = json.loads(result)
 
-        if result['r'] == 0:
+        if response['r'] == 0:
             print u'登陆成功！'
             print u'登陆账号:', account
             print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
@@ -78,32 +65,32 @@ class Login():
                 SettingClass.REMEMBERACCOUNT = False
                 print u'跳过保存环节，进入下一流程'
             self.setting.save()
-            cookieJar2String = self.saveCookieJar()
+            cookie = self.saveCookieJar()
             data = {}
             data['account'] = account
             data['password'] = password
             data['recordDate'] = datetime.date.today().isoformat()
-            data['cookieStr'] = cookieJar2String
-            self.save2DB(self.cursor, data, 'LoginRecord')
-            self.conn.commit()
+            data['cookieStr'] = cookie
+            SqlClass.save2DB(data, 'LoginRecord')
+            SqlClass.commit()
             return True
         else:
             print u'登陆失败'
-            self.printDict(result)
+            BaseClass.printDict(response)
             return False
 
     def getCaptcha(self):
-        buf = urllib2.urlopen(u'http://www.zhihu.com/captcha.gif')  # 开始拉取验证码
+        content = HttpBaseClass.get_http_content('http://www.zhihu.com/captcha.gif')  # 开始拉取验证码
         f = open(u'我是登陆知乎时的验证码.gif', 'wb')
-        f.write(buf.read())
+        f.write(content)
         f.close()
-        print u'请输入您所看到的验证码，验证码文件在助手所处的文件夹中,\n双击打开『我是登陆知乎时的验证码.gif』即可\n如果不需要输入验证码可以直接敲击回车跳过该步'
+        print u'请输入您所看到的验证码，验证码在助手所处的文件夹中,\n双击打开『我是登陆知乎时的验证码.gif』即可\n如果不需要输入验证码可以敲击回车跳过此步'
         captcha = raw_input()
         return captcha
 
     def login(self):
         self.setting.guide()
-        account, password = self.setting.guideOfAccountAndPassword()
+        account, password = self.setting.login_guide()
         captcha = ''
         while not self.sendMessage(account, password, captcha):
             print u'啊哦，登录失败了'
@@ -111,7 +98,7 @@ class Login():
             print u'或者猛击回车进入获取验证码的流程'
             confirm = raw_input()
             if confirm == 'yes':
-                account, password = self.setting.guideOfAccountAndPassword()
+                account, password = self.setting.login_guide()
             captcha = self.getCaptcha()
         return
 
@@ -119,69 +106,18 @@ class Login():
         fileName = u'./theFileNameIsSoLongThatYouWontKnowWhatIsThat.txt'
         f = open(fileName, 'w')
         f.close()
-        self.cookieJarInMemory.save(fileName)
+        self.cookieJar.save(fileName)
         f = open(fileName, 'r')
         content = f.read()
         f.close()
         os.remove(fileName)
         return content
 
-    def load_cook_jar(self, content=''):
-        fileName = u'./theFileNameIsSoLongThatYouWontKnowWhatIsThat.txt'
-        f = open(fileName, 'w')
-        f.write(content)
-        f.close()
-        self.cookieJarInMemory.load(fileName)
-        os.remove(fileName)
-        return
-
-        # 这个函数暂时没有用到
-
-    def setCookie(self, account=''):
-        if account == '':
-            rowcount = self.cursor.execute('select count(cookieStr) from LoginRecord').fetchone()[0]
-            if rowcount != 0:
-                Var = self.cursor.execute(
-                    "select cookieStr, recordDate from LoginRecord order by recordDate desc").fetchone()
-                cookieStr = Var[0]
-                recordDate = Var[1]
-                recordDate = datetime.datetime.strptime(recordDate, '%Y-%m-%d').date()  # 日期函数可以进一步修改
-                today = datetime.date.today()
-                diff = 20 - (today - recordDate).days
-                if diff > 0:
-                    print u'使用储存于' + str(recordDate) + u'的记录进行登陆。'
-                    self.load_cook_jar(cookieStr)
-                    return True
-        else:
-            rowcount = self.cursor.execute(
-                'select count(cookieStr) from LoginRecord where account = `{}`'.format(account)).fetchone()[0]
-            if rowcount != 0:
-                Var = self.cursor.execute(
-                    "select cookieStr, recordDate from LoginRecord order by recordDate desc where account = `{}`".format(
-                        account)).fetchone()
-                cookieStr = Var[0]
-                recordDate = Var[1]
-                recordDate = datetime.datetime.strptime(recordDate, '%Y-%m-%d').date()  # 日期函数可以进一步修改
-                today = datetime.date.today()
-                diff = 20 - (today - recordDate).days
-                if diff > 0:
-                    print u'使用储存于' + str(recordDate) + u'的记录进行登陆。'
-                    self.load_cook_jar(cookieStr)
-                    return True
-        return False
-
-    def getCookieHeader(self):
-        cookieStr = ''
-        for cookie in self.cookieJarInMemory:
-            cookieStr += cookie.name + '=' + cookie.value + ';'
-        return {'Cookie': cookieStr}
-
-    def getXsrf(self, content=''):
+    def get_xsrf(self, content=''):
         u'''
         提取xsrf信息
         '''
         xsrf = re.search(r'(?<=name="_xsrf" value=")[^"]*(?="/>)', content)
-        if xsrf == None:
-            return ''
-        else:
+        if xsrf:
             return '_xsrf=' + xsrf.group(0)
+        return ''

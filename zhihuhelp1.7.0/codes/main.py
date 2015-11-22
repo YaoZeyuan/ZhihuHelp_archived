@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from worker import worker_factory
-from init import *
+from init import Init
 from login import *
 from simpleFilter import *
 from epubBuilder.epubBuilder import *
@@ -17,33 +17,11 @@ class ZhihuHelp(BaseClass):
         init = Init()
         SqlClass.set_conn(init.getConn())
         self.baseDir = os.path.realpath('.')
-        self.config = Setting()
-
-        # 初始化网址检测模板
-        self.initBaseResource()
-        return
-
-    def initBaseResource(self):
-        self.urlKindList = ['answer', 'question', 'author', 'collection', 'table', 'topic', 'article', 'column']
-
-        self.urlPattern = {}
-        self.urlPattern['answer'] = r'(?<=zhihu\.com/)question/\d{8}/answer/\d{8}'
-        self.urlPattern['question'] = r'(?<=zhihu\.com/)question/\d{8}'
-
-        # 使用#作为备注起始标识符，所以在正则中要去掉#
-        self.urlPattern['author'] = r'(?<=zhihu\.com/)people/[^/#\n\r]*'
-        self.urlPattern['collection'] = r'(?<=zhihu\.com/)collection/\d*'
-        self.urlPattern['table'] = r'(?<=zhihu\.com/)roundtable/[^/#\n\r]*'
-        self.urlPattern['topic'] = r'(?<=zhihu\.com/)topic/\d*'
-
-        # 先检测专栏，再检测文章，文章比专栏网址更长，类似问题与答案的关系，取信息可以用split('/')的方式获取
-        self.urlPattern['article'] = r'(?<=zhuanlan\.zhihu\.com/)[^/]*/\d{8}'
-        self.urlPattern['column'] = r'(?<=zhuanlan\.zhihu\.com/)[^/#\n\r]*'
         return
 
     def start(self):
         # 登陆
-        login = Login(self.conn) #todo conn已转移至SqlClass内作为全局变量处理了，此处待修改
+        login = Login()
         if SettingClass.REMEMBERACCOUNT:
             print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
             print   u'直接点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'

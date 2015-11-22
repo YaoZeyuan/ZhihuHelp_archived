@@ -5,7 +5,7 @@ import json
 from baseClass import *
 
 
-class Setting(BaseClass):
+class Setting():
     u"""
     *   account
         *   用户名
@@ -43,47 +43,40 @@ class Setting(BaseClass):
     """
 
     def __init__(self):
-        self.initSettingDict()
-        self.loadSetting()
+        self.init()
+        self.load()
 
-    def initSettingDict(self):
-        self.setDict = {}
+    def init(self):
+        self.setting = {}
         self.sync()
 
-    def encodeSetting(self):
+    def encode(self):
         self.sync()
-        return json.dumps(self.setDict, indent=4)
+        return json.dumps(self.setting, indent=4)
 
     def sync(self):
         for attr in dir(SettingClass):
-            if attr.find("__") != 0:
-                self.setDict[attr] = getattr(SettingClass, attr)
+            if not ("__" in attr):
+                self.setting[attr] = getattr(SettingClass, attr)
         return
 
     def save(self):
         f = open('setting.ini', 'w')
-        f.write(self.encodeSetting())
+        f.write(self.encode())
         f.close()
         return
 
-    def loadSetting(self):
+    def load(self):
         if not os.path.isfile('setting.ini'):
             f = open('setting.ini', 'w')
-            f.write(self.encodeSetting())
+            f.write(self.encode())
             f.close()
         f = open('setting.ini', 'r')
-        self.setDict = json.load(f)
-        for key in self.setDict:
-            setattr(SettingClass, key, self.setDict[key])
+        self.setting = json.load(f)
+        for key in self.setting:
+            setattr(SettingClass, key, self.setting[key])
         f.close()
         return
-
-    def printSetting(self):
-        u'''
-        测试设置值是否正确
-        '''
-        self.sync()
-        BaseClass.printDict(self.setDict)
 
     def guide(self):
         print u'您好，欢迎使用知乎助手'
@@ -98,17 +91,17 @@ class Setting(BaseClass):
         print u''
         print u''
 
-    def guideOfAccountAndPassword(self):
+    def login_guide(self):
         print u'请输入您的用户名(知乎注册邮箱)，回车确认'
         print u'####################################'
         print u'#直接敲击回车则使用内置账号进行登陆#'
         print u'####################################'
         account = raw_input()
-        if len(account) == 0:
+        if not account:
             account = SettingClass.ACCOUNT
             password = SettingClass.PASSWORD
         else:
-            while re.search(r'\w+@[\w\.]{3,}', account) == None:
+            while not re.search(r'\w+@[\w\.]{3,}', account):
                 print u'抱歉，输入的账号不规范...\n请输入正确的知乎登录邮箱\n'
                 print u'账号要求：1.必须是正确格式的邮箱\n2.邮箱用户名只能由数字、字母和下划线_构成\n3.@后面必须要有.而且长度至少为3位'
                 print u'范例：mengqingxue2014@qq.com\n5719abc@sina.cn'
@@ -117,32 +110,28 @@ class Setting(BaseClass):
             print u'OK,验证通过\n请输入密码，回车确认'
             password = raw_input()
             while len(password) < 6:
-                print u'密码长度不科学，密码至少6位起~'
-                print u'范例：helloworldvia27149,51zhihu'
+                print u'密码长度不科学，密码至少6位'
                 print u'请重新输入密码，回车确认'
                 password = raw_input()
         return account, password
 
-    def guideOfMaxThread(self):
-        return 10
-
-    def guideOfPicQuality(self):
+    def set_picture_quality_guide(self):
         print u'请选择电子书内的图片质量'
-        print u'输入0为无图模式，所生成的电子书最小'
-        print u'输入1为标准模式，电子书内带图片，图片清晰度能满足绝大多数答案的需要，电子书内的答案小于1000条时推荐使用'
-        print u'输入2为高清模式，电子书内带为知乎原图，清晰度最高，但电子书体积是标准模式的4倍，只有答案条目小于100条时才可以考虑使用'
+        print u'输入0为无图模式，生成电子书体积最小'
+        print u'输入1为标准模式，图片清晰度能满足绝大多数答案的需要'
+        print u'输入2为高清模式，图片为知乎原图，清晰度最高，但电子书体积是标准模式的4倍，只有答案条目小于100条时才可以考虑使用'
         print u'请输入图片模式(0、1或2)，回车确认'
         try:
-            picQuality = int(raw_input())
+            quality = int(raw_input())
         except ValueError as error:
             print error
-            print u'嗯，数字转换错误。。。'
+            print u'数字转换错误。。。'
             print u'图片模式重置为标准模式，点击回车继续'
-            picQuality = 1
+            quality = 1
             raw_input()
-        if picQuality != 0 and picQuality != 1 and picQuality != 2:
+        if not (quality in [0,1,2]):
             print u'输入数值非法'
             print u'图片模式重置为标准模式，点击回车继续'
-            picQuality = 1
+            quality = 1
             raw_input()
-        return picQuality
+        return quality
