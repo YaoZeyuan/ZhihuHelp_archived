@@ -1,647 +1,303 @@
 # -*- coding: utf-8 -*-
 
 import json  # 用于JsonWorker
-from parser.parserTools import *
+from parser.parserTools import AuthorParser,CollectionParser,TopicParser,QuestionParser
+from baseClass import BaseClass,HttpBaseClass,SqlClass,SettingClass
+from multiprocessing.dummy import Pool as ThreadPool #多线程并行库
 
-class WorkerFactry():
-    u"""
-    基础类，Worker工厂
-    接受task做为参数，用于启动对应的worker
-    """
+class PageWorker(object):
+    def __init__(self, task_list):
+        self.task_set = set(task_list)
+        self.work_set = set() # 待抓取网址池
+        self.answer_list = []
+        self.question_list = []
+        self.thread_pool = ThreadPool(SettingClass.MAXTHREAD)
 
+        self.info_list = []
+        self.extra_index_list = []
+        self.info_url_set = self.task_set.copy()
 
-class PageWorker(BaseClass, HttpBaseClass, SqlClass):
-    def __init__(self, conn=None, urlInfo={}):
-        self.conn = conn
-        self.cursor = conn.cursor()
-        self.maxPage = ''
-        self.urlInfo = urlInfo
-        self.maxThread = SettingClass.MAXTHREAD
-        self.url = urlInfo['baseUrl']
-        self.suffix = ''
-        self.addProperty()
-        self.setCookie()
-        self.setWorkSchedule()
+        self.add_property() # 添加扩展属性
+        HttpBaseClass.set_cookie()
 
-    def getMaxPage(self, content):
-        u"Don't finding unicode char in normal string"
+    def add_property(self):
+
+        return
+
+    @staticmethod
+    def parse_max_page(content):
+        max_page = 1
         try:
-            pos = content.index('">下一页</a></span>')
-            rightPos = content.rfind("</a>", 0, pos)
-            leftPos = content.rfind(">", 0, rightPos)
-            maxPage = int(content[leftPos + 1:rightPos])
-            print u"答案列表共计{}页".format(maxPage)
-            return maxPage
+            floor = content.index('">下一页</a></span>')
+            floor = content.rfind('</a>', 0, floor)
+            cell = content.rfind('>', 0, floor)
+            max_page = int(content[cell + 1:floor])
+            BaseClass.logger.info(u'答案列表共计{}页'.format(max_page))
         except:
-            print u"答案列表共计1页"
-            return 1
+            BaseClass.logger.info(u'答案列表共计1页')
+        finally:
+            return max_page
 
-    def setWorkSchedule(self):
-        u"""
-        获取私人收藏夹时需要携cookie登陆
-        但专栏不需要，所以专栏处又重载了一回
-        """
-        self.workSchedule = {}
-        detectUrl = self.url + self.suffix + str(self.maxPage)
-        content = self.getHttpContent(url=detectUrl, extraHeader=self.extraHeader)
-        self.maxPage = self.getMaxPage(content)
-        for i in range(self.maxPage):
-            self.workSchedule[i] = self.url + self.suffix + str(i + 1)
-
-    def addProperty(self):
+    @staticmethod
+    def control_center(func, argv, test_flag):
+        max_try = SettingClass.MAXTRY
+        for time in range(max_try):
+            if test_flag:
+                func(**argv)
         return
 
-    def commitSuccess(self):
-        print u'答案录入数据库成功'
-        return
-
-    # set cookieJar
-    def loadCookJar(self, content=''):
-        fileName = u'./theFileNameIsSoLongThatYouWontKnowWhatIsThat.txt'
-        f = open(fileName, 'w')
-        f.write(content)
-        f.close()
-        self.cookieJarInMemory.load(fileName)
-        os.remove(fileName)
-        return
-
-    def setCookie(self, account=''):
-        self.cookieJarInMemory = cookielib.LWPCookieJar()
-        if account == '':
-            Var = self.cursor.execute(
-                "select cookieStr, recordDate from LoginRecord order by recordDate desc").fetchone()
-        else:
-            Var = self.cursor.execute(
-                "select cookieStr, recordDate from LoginRecord order by recordDate desc where account = `{}`".format(
-                    account)).fetchone()
-
-        cookieStr = Var[0]
-        self.loadCookJar(cookieStr)
-
-        cookieStr = ''
-        for cookie in self.cookieJarInMemory:
-            cookieStr += cookie.name + '=' + cookie.value + ';'
-        self.extraHeader = {
-            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:34.0) Gecko/20100101 Firefox/34.0',
-            'Referer': 'www.zhihu.com/',
-            'Host': 'www.zhihu.com',
-            'DNT': '1',
-            'Connection': 'keep-alive',
-            'Cache-Control': 'max-age=0',
-            'Accept-Language': 'zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3',
-            # 'Accept-Encoding':    'gzip, deflate', 貌似没用
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    def create_save_config(self):
+        config = {
+            'Answer' : self.answer_list,
+            'Question': self.question_list,
         }
-        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJarInMemory))
-        urllib2.install_opener(self.opener)
+        return config
+
+    def clear_index(self):
+        u"""
+        用于在collection/topic中清除原有缓存
+        """
         return
 
-
-class QuestionQueenWorker(PageWorker):
-    u"""
-    对问题队列进行处理
-    对于页面跳转问题，可以以这个问题作为测试用例
-    http://www.zhihu.com/question/21230473?sort=created&nr=1&page=2
-    taskQueen里是一系列的urlInfo
-    """
-
-    def __init__(self, conn=None, taskQueen=[]):
-        self.conn = conn
-        self.cursor = conn.cursor()
-        self.taskQueen = taskQueen
-        self.suffix = ''  # 由addProperty负责重载
-        self.addProperty()
-        self.setCookie()
-        self.setWorkSchedule()
-
-    def setWorkSchedule(self):
-        u"""
-        需要携cookie读取网页内容
-        初始化待收集页面列表
-        """
-        self.workSchedule = {}
-        workerNo = 0
-        completeFlag = False
-        taskTimer = 0
-        while not completeFlag:
-            taskTimer += 1
-            BaseClass.logger.debug(u'开始启动线程')
-            completeFlag = True  # 放置于前，避免taskQueen为空
-            for urlInfo in self.taskQueen:
-                if 'maxPage' in urlInfo:
-                    continue
-                else:
-                    BaseClass.logger.info(u'开始获取网址: ' + urlInfo['baseUrl'] + u' 的最大页数')
-                    completeFlag = False
-                    if SettingClass.THREADMODE:
-                        t = threading.Thread(target=self.detectMaxPage, kwargs={'urlInfo': urlInfo})
-                        ThreadClass.startRegisterThread()
-                        t.start()
-                        ThreadClass.waitForThreadRunningCompleted()
-                    else:
-                        self.detectMaxPage(urlInfo)
-            BaseClass.logger.info(u'第{}轮所有线程启动完毕，等待线程运行结束'.format(taskTimer))
-            ThreadClass.waitForThreadRunningCompleted(0)  # 确保所有线程运行完毕 # 但在开始等待前，线程可能还没在threadClass里成功注册上
-            BaseClass.logger.info(u'第{}轮任务所有线程运行结束，准备执行第{}轮任务'.format(taskTimer, taskTimer + 1))
-
-        for urlInfo in self.taskQueen:
-            for i in range(urlInfo['maxPage']):
-                self.workSchedule[workerNo] = urlInfo['baseUrl'] + self.suffix + str(i + 1)
-                workerNo += 1
-
-    def detectMaxPage(self, urlInfo):
-        # 通过全球唯一的uuid来实现对线程数的控制
-        threadID = ThreadClass.getUUID()
-        BaseClass.logger.debug(u'detectMaxPage开始等待执行， threadID = ' + str(threadID))
-        while not ThreadClass.acquireThreadPoolPassport(threadID):
-            time.sleep(0.1)
-        BaseClass.logger.info(u"开始检测 " + urlInfo['baseUrl'] + u' 的页数')
-        detectUrl = urlInfo['baseUrl'] + self.suffix + str(self.maxPage)  # 检测问题的最大页数, 使用maxPage, 为扩展留出空间
-        content = self.getHttpContent(url=detectUrl, extraHeader=self.extraHeader)
-        if len(content) != 0:
-            urlInfo['maxPage'] = self.getMaxPage(content)
-        else:
-            urlInfo['tryCount'] = urlInfo.get('tryCount', 0) + 1
-            if urlInfo['tryCount'] >= SettingClass.MAXTRY:
-                urlInfo['maxPage'] = 1
-        ThreadClass.releaseThreadPoolPassport(threadID)
+    def save(self):
+        self.clear_index()
+        save_config = self.create_save_config()
+        for key in save_config.keys():
+            for item in save_config[key]:
+                SqlClass.save2DB(item, key)
+        SqlClass.commit()
         return
 
     def start(self):
-        self.complete = set()
-        maxTry = SettingClass.MAXTRY
-        while maxTry > 0 and len(self.workSchedule) > len(self.complete):
-            # 只要完成数等于workSchedule即可宣告完成
-            self.leader()
-            maxTry -= 1
+        self.start_catch_info()
+        self.start_create_work_list()
+        self.start_worker()
+        self.save()
         return
 
-    def leader(self):
-        self.questionInfoDictList = []
-        self.answerDictList = []
-        index = 0
-        workScheduleLength = len(self.workSchedule)
-        for key in self.workSchedule:
-            index += 1
-            if SettingClass.THREADMODE:
-                t = threading.Thread(target=self.worker, kwargs={'workNo': key})
-                ThreadClass.startRegisterThread()
-                t.start()
-            else:
-                self.worker(key)
-            BaseClass.printInOneLine(u'正在读取答案页面，还有{}/{}张页面等待读取'.format(workScheduleLength - index, workScheduleLength))
-            ThreadClass.waitForThreadRunningCompleted()
-
-        ThreadClass.waitForThreadRunningCompleted(0)  # 确保所有线程都已经执行完毕
-
-        for info in self.questionInfoDictList:
-            self.save2DB(self.cursor, info, 'Question')
-        for answer in self.answerDictList:
-            self.save2DB(self.cursor, answer, 'Answer')
-        self.conn.commit()
-        self.commitSuccess()
-        return
-
-    def worker(self, workNo=0):
-        u"""
-        完成线程控制工作，实际工作由realWork完成
-        """
-        if workNo in self.complete:
-            ThreadClass.registerThreadCompleted()
-            return
-        BaseClass.logger.info(u'准备执行对网页：{} 的抓取任务'.format(self.workSchedule[workNo]))
-        threadID = ThreadClass.getUUID()
-        while not ThreadClass.acquireThreadPoolPassport(threadID):
-            time.sleep(0.1)
-        result = self.realWorker(workNo)
-        if result:
-            self.complete.add(workNo)
-            BaseClass.logger.info(u'网页：{} 抓取成功'.format(self.workSchedule[workNo]))
-        else:
-            BaseClass.logger.info(u'网页：{} 抓取失败'.format(self.workSchedule[workNo]))
-        ThreadClass.releaseThreadPoolPassport(threadID)
-        return
-
-    def realWorker(self, workNo=0):
-        u"""
-        worker只执行一次，待全部worker执行完毕后由调用函数决定哪些worker需要再次运行
-        重复的次数由self.maxTry指定
-        这样可以给知乎服务器留出生成页面缓存的时间
-        """
-        content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader, timeout=self.waitFor)
+    def create_work_set(self, target_url):
+        content = HttpBaseClass.get_http_content(target_url, timeout=SettingClass.WAITFOR_HTML)
         if not content:
-            return False
-        BaseClass.logger.debug(u'开始使用ParseQuestion分析网页{}内容'.format(self.workSchedule[workNo]))
-        parse = QuestionParser(content)
-        self.questionInfoDictList += parse.get_question_info_list()
-        self.answerDictList += parse.get_answer_list()
-        return True
+            return
+        self.task_set.discard(target_url)
+        max_page = self.parse_max_page(content)
+        for page in range(max_page):
+            url = '{}?nr=1&sort=created&page={}'.format(target_url, page)
+            self.work_set.add(url)
+        return
 
-    def addProperty(self):
-        self.maxPage = 1
-        self.suffix = '?nr=1&sort=created&page='  # 按时间对答案排序，同时屏蔽跳转
-        self.maxTry = 5
-        self.waitFor = 5
+    def clear_work_set(self):
+        self.work_set = set()
+        return
+
+    def start_create_work_list(self):
+        self.clear_work_set()
+        argv = {
+            'func':self.create_work_set,
+            'iterable':self.task_set,
+        }
+        self.control_center(self.thread_pool.map, argv, self.task_set)
+        return
+
+    def worker(self, target_url):
+        content = HttpBaseClass.get_http_content(target_url, timeout=SettingClass.WAITFOR_HTML)
+        if not content:
+            return
+        self.work_set.discard(target_url)
+        self.parse_content(content)
+        return
+
+    def parse_content(self,content):
+        parser = QuestionParser(content)
+        self.question_list += parser.get_question_info_list()
+        self.answer_list += parser.get_answer_list()
+        return
+
+    def start_worker(self):
+        argv = {
+            'func':self.worker, #所有待存入数据库中的数据都应当是list
+            'iterable':self.work_set,
+        }
+        self.control_center(self.thread_pool.map, argv, self.work_set)
+        return
+
+    def catch_info(self, target_url):
+        return
+
+    def start_catch_info(self):
+        argv = {
+            'func':self.catch_info,
+            'iterable':self.info_url_set,
+        }
+        self.control_center(self.thread_pool.map, argv, self.info_url_set)
         return
 
 
-class AnswerQueenWorker(QuestionQueenWorker):
-    def addProperty(self):
-        self.maxPage = ''
-        self.suffix = ''
-        self.answerDictList = []
-        self.waitFor = 5
+class QuestionWorker(PageWorker):
+    def parse_content(self,content):
+        parser = QuestionParser(content)
+        self.question_list += parser.get_question_info_list()
+        self.answer_list += parser.get_answer_list()
         return
-
-    def setWorkSchedule(self):
-        u"""
-        需要携cookie读取网页内容
-        初始化待收集页面列表
-        """
-        self.workSchedule = {}
-        workerNo = 0
-        for urlInfo in self.taskQueen:
-            self.workSchedule[workerNo] = urlInfo['baseUrl']
-            workerNo += 1
-        return
-
 
 class AuthorWorker(PageWorker):
-    def start(self):
-        self.complete = set()
-        maxTry = SettingClass.MAXTRY
-        while maxTry > 0 and len(self.workSchedule) > len(self.complete):
-            self.leader()
-            maxTry -= 1
+    def parse_content(self,content):
+        parser = AuthorParser(content)
+        self.question_list += parser.get_question_info_list()
+        self.answer_list += parser.get_answer_list()
         return
 
-    def getIndexID(self):
-        u'''
-        用于为Topic，collection，userAgree添加Index
-        '''
-        return
-
-    def clearIndex(self):
-        u'''
-        用于在插入Index之前先清空Index表
-        '''
-        return
-
-    def addIndex(self, answerHref):
-        u'''
-        用于插入Index
-        '''
-        return
-
-    def leader(self):
-        # clear index cache
-        self.getIndexID()
-        # self.clearIndex()
-
-        self.catchFrontInfo()
-        self.questionInfoDictList = []
-        self.answerDictList = []
-        for key in self.workSchedule:
-            t = threading.Thread(target=self.worker, kwargs={'workNo': key})
-            ThreadClass.startRegisterThread()
-            t.start()
-            ThreadClass.waitForThreadRunningCompleted()
-            BaseClass.printInOneLine(
-                u'正在读取答案页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete), len(self.workSchedule)))
-
-        ThreadClass.waitForSecond(0.1)
-        ThreadClass.waitForThreadRunningCompleted(0)  # 确保所有线程都已执行完毕
-
-        for info in self.questionInfoDictList:
-            self.save2DB(self.cursor, info, 'Question')
-        for answer in self.answerDictList:
-            self.save2DB(self.cursor, answer, 'Answer')
-            self.addIndex(answer['href'])
-        self.conn.commit()
-        self.commitSuccess()
-        return
-
-    def catchFrontInfo(self):
-        content = self.getHttpContent(url=self.urlInfo['infoUrl'], extraHeader=self.extraHeader, timeout=self.waitFor)
+    def create_work_set(self, target_url):
+        content = HttpBaseClass.get_http_content(target_url + '/answers?order_by=vote_num', timeout=SettingClass.WAITFOR_HTML)
         if not content:
             return
-        parse = AuthorParser(content)
-        info = parse.get_extra_info()
-        self.save2DB(self.cursor, info, 'AuthorInfo')
+        self.task_set.discard(target_url)
+        max_page = self.parse_max_page(content)
+        for page in range(max_page):
+            url = '{}/answers?order_by=vote_num&page={}'.format(target_url, page)
+            self.work_set.add(url)
         return
 
-    def worker(self, workNo=0):
-        u"""
-        完成线程控制工作，实际工作由realWorker完成
-        """
-        if workNo in self.complete:
-            ThreadClass.registerThreadCompleted()
-            return
-        BaseClass.logger.info(u'准备执行对网页：{} 的抓取任务'.format(self.workSchedule[workNo]))
-        threadID = 0  # 初始化threadID值
-        try:
-            threadID = ThreadClass.getUUID()
-            while not ThreadClass.acquireThreadPoolPassport(threadID):
-                time.sleep(0.1)
-            result = self.realWorker(workNo)
-            if result:
-                self.complete.add(workNo)
-                BaseClass.logger.info(u'网页：{} 抓取成功'.format(self.workSchedule[workNo]))
-            else:
-                BaseClass.logger.info(u'网页：{} 抓取失败'.format(self.workSchedule[workNo]))
-        except Exception as e:
-            print e  # 输出异常信息
-        finally:
-            # 无论发生什么，都必须执行该函数
-            ThreadClass.releaseThreadPoolPassport(threadID)
-        return
-
-    def realWorker(self, workNo=0):
-        u"""
-        realWorker只执行一次，待全部worker执行完毕后由调用函数决定哪些worker需要再次运行
-        重复的次数由self.maxTry指定
-        这样可以给知乎服务器留出生成页面缓存的时间
-        """
-        content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader, timeout=self.waitFor)
-        if content == '':
-            return False
-        parse = AuthorParser(content)
-        self.questionInfoDictList += parse.get_question_info_list()
-        self.answerDictList += parse.get_answer_list()
-        return True
-
-    def addProperty(self):
-        self.maxPage = 1
-        self.suffix = '/answers?order_by=vote_num&page='
-        self.maxTry = SettingClass.MAXTRY
-        self.waitFor = 5
-        return
-
-
-class TopicWorker(AuthorWorker):
-    def getIndexID(self):
-        topicMatch = re.search(r'(?<=www.zhihu.com/topic/)\d{8}', self.url)
-        if not topicMatch:
-            print u'抱歉，没能在网址中匹配到话题ID'
-            print u'输入的话题网址为：{}'.format(self.url)
-            print u'程序无法继续运行，请检查网址是否正确后重试'
-            exit()
-        self.topicID = topicMatch.group(0)
-        return self.topicID
-
-    def clearIndex(self):
-        self.getIndexID()
-        self.cursor.execute('delete from TopicIndex where topic_id = ?', [self.topicID, ])
-        self.conn.commit()
-        return
-
-    def addIndex(self, answerHref):
-        self.cursor.execute('replace into TopicIndex (href, topic_id) values (?, ?)', [answerHref, self.topicID])
-        return
-
-    def catchFrontInfo(self):
-        content = self.getHttpContent(url=self.urlInfo['infoUrl'], extraHeader=self.extraHeader)
+    def catch_info(self, target_url):
+        content = HttpBaseClass.get_http_content(target_url + '/about', timeout=SettingClass.WAITFOR_HTML)
         if not content:
             return
-        parse = TopicParser(content)
-        info = parse.get_extra_info()
-        self.save2DB(self.cursor, info, 'TopicInfo')
+        self.info_url_set.discard(target_url)
+        parser = AuthorParser(content)
+        self.info_list.append(parser.get_extra_info())
         return
 
-    def realWorker(self, workNo=0):
-        content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader)
-        if content == '':
-            return False
-        parse = TopicParser(content)
-        self.questionInfoDictList += parse.get_question_info_list()
-        self.answerDictList += parse.get_answer_list()
-        return True
+    def create_save_config(self):
+        config = {
+            'Answer' : self.answer_list,
+            'Question': self.question_list,
+            'AuthorInfo':self.info_list,
+        }
+        return config
 
-    def addProperty(self):
-        self.maxPage = 1
-        self.suffix = '/top-answers?page='
-        self.maxTry = 5
-        self.waitFor = 5
+
+class CollectionWorker(PageWorker):
+    def add_property(self):
+        self.collection_index_list = []
         return
 
-
-class CollectionWorker(AuthorWorker):
-    def getIndexID(self):
-        collectionMatch = re.search(r'(?<=www.zhihu.com/collection/)\d{8}', self.url)
-        if not collectionMatch:
-            print u'抱歉，没能在网址中匹配到收藏夹ID'
-            print u'输入的收藏夹网址为：{}'.format(self.url)
-            print u'程序无法继续运行，请检查网址是否正确后重试'
-            exit()
-        self.collectionID = collectionMatch.group(0)
-        return self.collectionID
-
-    def addIndex(self, answerHref):
-        self.cursor.execute('replace into CollectionIndex (href, collection_id) values (?, ?)',
-                            [answerHref, self.collectionID])
-        return
-
-    def catchFrontInfo(self):
-        content = self.getHttpContent(url=self.urlInfo['infoUrl'], extraHeader=self.extraHeader, timeout=self.waitFor)
+    def create_work_set(self, target_url):
+        content = HttpBaseClass.get_http_content(target_url, timeout=SettingClass.WAITFOR_HTML)
         if not content:
             return
-        parse = CollectionParser(content)
-        info = parse.get_extra_info()
-        self.save2DB(self.cursor, info, 'CollectionInfo')
+        self.task_set.discard(target_url)
+        max_page = self.parse_max_page(content)
+        for page in range(max_page):
+            url = '{}?page={}'.format(target_url, page)
+            self.work_set.add(url)
         return
 
-    def realWorker(self, workNo=0):
-        content = self.getHttpContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader, timeout=self.waitFor)
-        if content == '':
-            return False
-        parse = CollectionParser(content)
-        self.questionInfoDictList += parse.get_question_info_list()
-        self.answerDictList += parse.get_answer_list()
-        return True
-
-    def addProperty(self):
-        self.maxPage = 1
-        self.suffix = '?page='
-        self.maxTry = 5
-        self.waitFor = 5
-        return
-
-
-class JsonWorker(PageWorker):
-    u'''
-    用于获取返回值为Json格式的网页内容
-    '''
-
-    def __init__(self, conn=None, urlInfo={}):
-        self.conn = conn
-        self.cursor = conn.cursor()
-        self.maxPage = ''
-        self.urlInfo = urlInfo
-        self.maxThread = urlInfo['baseSetting']['maxThread']
-        self.url = urlInfo['baseUrl']
-        self.suffix = ''
-        self.addProperty()
-        self.setCookie()
-        self.setWorkSchedule()
-        return
-
-    def getJsonContent(self, url='', extraHeader={}, data=None, timeout=5):
-        u'''
-        对获取json内容进行的封装，打开成功时返回解析后的字典，打开失败则返回空字典
-        '''
-        content = self.getHttpContent(url=url, extraHeader=extraHeader, data=data, timeout=timeout)
-        if content == '':
-            return {}
-        else:
-            return json.loads(content)
-
-
-class ColumnWorker(JsonWorker):
-    def setCookie(self):
-        u'''
-        专栏不需要登陆
-        '''
-        self.extraHeader = {}
-        return
-
-    def commitSuccess(self):
-        print u'专栏文章录入数据库成功'
-        return
-
-    def addProperty(self):
-        self.maxPage = 1
-        self.suffix = ''
-        self.maxTry = 5
-        self.waitFor = 5
-
-        self.columnInfo = {}
-        return
-
-    def getColumnInfo(self):
-        rawInfo = self.getJsonContent(url='http://zhuanlan.zhihu.com/api/columns/' + self.urlInfo['columnID'])
-        if not rawInfo:
-            return False
-
-        self.columnInfo['creatorID'] = rawInfo['creator']['slug']
-        self.columnInfo['creatorHash'] = rawInfo['creator']['hash']
-        self.columnInfo['creatorSign'] = rawInfo['creator']['bio']
-        self.columnInfo['creatorName'] = rawInfo['creator']['name']
-        self.columnInfo['creatorLogo'] = rawInfo['creator']['avatar']['template'].replace('{id}',
-                                                                                          rawInfo['creator']['avatar'][
-                                                                                              'id']).replace('_{size}',
-                                                                                                             '_r')
-
-        self.columnInfo['columnID'] = rawInfo['slug']
-        self.columnInfo['columnName'] = rawInfo['name']
-        self.columnInfo['columnLogo'] = rawInfo['creator']['avatar']['template'].replace('{id}', rawInfo['avatar'][
-            'id']).replace('_{size}', '_r')
-        self.columnInfo['articleCount'] = rawInfo['postsCount']
-        self.columnInfo['followerCount'] = rawInfo['followersCount']
-        self.columnInfo['description'] = rawInfo['description']
-        return True
-
-    def setWorkSchedule(self):
-        print u'开始获取专栏信息'
-        maxTry = self.maxTry
-        while maxTry > 0 and not self.getColumnInfo():
-            maxTry -= 1
-            print u'第{}次尝试获取专栏信息失败'.format(self.maxTry - maxTry)
-        if not self.columnInfo:
-            print u'获取专栏信息失败，请检查专栏地址是否正确后重试。打开失败的专栏地址为:{}'.format(self.url)
-            return
-        else:
-            print u'获取专栏信息成功'
-        self.workSchedule = {}
-        detectUrl = 'http://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(self.urlInfo['columnID'])
-        for i in range(self.columnInfo['articleCount'] / 10 + 1):
-            self.workSchedule[i] = detectUrl + str(i * 10)
-        # 将专栏信息储存至数据库中
-        self.save2DB(self.cursor, self.columnInfo, 'ColumnInfo')
-        self.conn.commit()
-        return
-
-    def start(self):
-        self.complete = set()
-        if not self.columnInfo:
-            return
-        maxTry = self.maxTry
-        while maxTry > 0 and len(self.workSchedule) > len(self.complete):
-            self.leader()
-            maxTry -= 1
-        return
-
-    def leader(self):
-        threadPool = []
-        self.articleList = []
-        for key in self.workSchedule:
-            threadPool.append(threading.Thread(target=self.worker, kwargs={'workNo': key}))
-        threadsCount = len(threadPool)
-        threadLiving = 2
-        while (threadsCount > 0 or threadLiving > 1):
-            bufLength = self.maxThread - threadLiving
-            if bufLength > 0 and threadsCount > 0:
-                while bufLength > 0 and threadsCount > 0:
-                    # todo : 还没有在这里做线程控制体系，记得回来添上
-                    threadPool[threadsCount - 1].start()
-                    bufLength -= 1
-                    threadsCount -= 1
-                    time.sleep(0.1)
-            else:
-                print u'正在读取专栏页面，还有{}/{}张页面等待读取'.format(len(self.workSchedule) - len(self.complete),
-                                                        len(self.workSchedule))
-                time.sleep(1)
-            threadLiving = threading.activeCount()
-
-        for article in self.articleList:
-            self.save2DB(self.cursor, article, 'ArticleContent')
-        self.conn.commit()
-        self.commitSuccess()
-        return
-
-    def worker(self, workNo=0):
-        u"""
-        worker只执行一次，待全部worker执行完毕后由调用函数决定哪些worker需要再次运行
-        重复的次数由self.maxTry指定
-        这样可以给知乎服务器留出生成页面缓存的时间
-        """
-        if workNo in self.complete:
-            return
-
-        content = self.getJsonContent(url=self.workSchedule[workNo], extraHeader=self.extraHeader, timeout=self.waitFor)
-
+    def catch_info(self, target_url):
+        content = HttpBaseClass.get_http_content(target_url, timeout=SettingClass.WAITFOR_HTML)
         if not content:
             return
-        self.formatJsonArticleData(content)
-        self.complete.add(workNo)
+        self.info_url_set.discard(target_url)
+        parser = CollectionParser(content)
+        self.info_list.append(parser.get_extra_info())
         return
 
-    def formatJsonArticleData(self, rawArticleList=[]):
-        for rawArticle in rawArticleList:
-            article = {}
-            article['authorID'] = rawArticle['author']['slug']
-            article['authorHash'] = rawArticle['author']['hash']
-            article['authorSign'] = rawArticle['author']['bio']
-            article['authorName'] = rawArticle['author']['name']
-            article['authorLogo'] = rawArticle['author']['avatar']['template'].replace('{id}',
-                                                                                       rawArticle['author']['avatar'][
-                                                                                           'id']).replace('_{size}',
-                                                                                                          '_r')
+    def parse_content(self,content):
+        parser = CollectionParser(content)
+        self.question_list += parser.get_question_info_list()
+        self.answer_list += parser.get_answer_list()
 
-            article['columnID'] = rawArticle['column']['slug']
-            article['columnName'] = rawArticle['column']['name']
-            article['articleID'] = rawArticle['slug']
-            article['articleHref'] = u'http://zhuanlan.zhihu.com/{columnID}/{articleID}'.format(**article)
-            article['title'] = rawArticle['title']
-            article['titleImage'] = rawArticle['titleImage']
-            article['articleContent'] = rawArticle['content']
-            article['commentCount'] = rawArticle['commentsCount']
-            article['likeCount'] = rawArticle['likesCount']
-            article['publishedTime'] = self.formatPublishedTime(rawArticle['publishedTime'])
-            self.articleList.append(article)
+        collection_info = parser.get_extra_info()
+        self.add_collection_index(collection_info['collection_id'], parser.get_answer_list())
+
         return
 
-    def formatPublishedTime(self, publishedTime=''):
-        if not publishedTime:
-            return datetime.date.today().isoformat()
-        else:
-            return datetime.datetime.strptime(publishedTime, '%Y-%m-%dT%H:%M:%S+08:00').strftime('%Y-%m-%d')
+    def add_collection_index(self, collection_id, answer_list):
+        for answer in answer_list:
+            data = {
+                'href' : answer['href'],
+                'collection_id':collection_id,
+            }
+            self.collection_index_list.append(data)
+        return
+
+    def create_save_config(self):
+        config = {
+            'Answer' : self.answer_list,
+            'Question': self.question_list,
+            'CollectionInfo':self.info_list,
+            'CollectionIndex':self.collection_index_list,
+        }
+        return config
+
+class TopicWorker(PageWorker):
+    def add_property(self):
+        self.topic_index_list = []
+        return
+
+    def create_work_set(self, target_url):
+        content = HttpBaseClass.get_http_content(target_url + '/top-answers', timeout=SettingClass.WAITFOR_HTML)
+        if not content:
+            return
+        self.task_set.discard(target_url)
+        max_page = self.parse_max_page(content)
+        for page in range(max_page):
+            url = '{}/top-answers?page={}'.format(target_url, page)
+            self.work_set.add(url)
+        return
+
+    def catch_info(self, target_url):
+        content = HttpBaseClass.get_http_content(target_url + '/top-answers', timeout=SettingClass.WAITFOR_HTML)
+        if not content:
+            return
+        self.info_url_set.discard(target_url)
+        parser = TopicParser(content)
+        self.info_list.append(parser.get_extra_info())
+        return
+
+    def parse_content(self,content):
+        parser = TopicParser(content)
+        self.question_list += parser.get_question_info_list()
+        self.answer_list += parser.get_answer_list()
+
+        topic_info = parser.get_extra_info()
+        self.add_topic_index(topic_info['topic_id'], parser.get_answer_list())
+
+        return
+
+    def add_topic_index(self, topic_id, answer_list):
+        for answer in answer_list:
+            data = {
+                'href' : answer['href'],
+                'topic_id':topic_id,
+            }
+            self.topic_index_list.append(data)
+        return
+
+    def create_save_config(self):
+        config = {
+            'Answer' : self.answer_list,
+            'Question': self.question_list,
+            'TopicInfo':self.info_list,
+            'TopicIndex':self.topic_index_list,
+        }
+        return config
+
+    def clear_index(self):
+        topic_id_tuple = tuple(set(x['topic_id'] for x in self.topic_index_list))
+        sql = 'DELETE * from TopicIndex where topic_id in ({})'.format((' ?,' * len(topic_id_tuple))[:-1])
+        SqlClass.cursor.execute(sql, topic_id_tuple)
+        SqlClass.commit()
+        return
+
+def worker_factory(task):
+    type_list ={
+        'answer': QuestionWorker,
+        'question':QuestionWorker,
+        'author':AuthorWorker,
+        'collection':CollectionWorker,
+        'topic':TopicWorker,
+    }
+    for key in task['work_list']:
+        worker = type_list[key](task['work_list'][key])
+        worker.start()
+    return

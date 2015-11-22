@@ -7,11 +7,9 @@ import datetime
 from setting import *
 
 
-class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
-    def __init__(self, conn):
+class Login():
+    def __init__(self):
         self.setting = Setting()
-        self.conn = conn
-        self.cursor = conn.cursor()
         self.cookieJarInMemory = cookielib.LWPCookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJarInMemory))
         urllib2.install_opener(self.opener)
@@ -128,7 +126,7 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
         os.remove(fileName)
         return content
 
-    def loadCookJar(self, content=''):
+    def load_cook_jar(self, content=''):
         fileName = u'./theFileNameIsSoLongThatYouWontKnowWhatIsThat.txt'
         f = open(fileName, 'w')
         f.write(content)
@@ -152,7 +150,7 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
                 diff = 20 - (today - recordDate).days
                 if diff > 0:
                     print u'使用储存于' + str(recordDate) + u'的记录进行登陆。'
-                    self.loadCookJar(cookieStr)
+                    self.load_cook_jar(cookieStr)
                     return True
         else:
             rowcount = self.cursor.execute(
@@ -168,7 +166,7 @@ class Login(BaseClass, HttpBaseClass, SqlClass, CookieBaseClass):
                 diff = 20 - (today - recordDate).days
                 if diff > 0:
                     print u'使用储存于' + str(recordDate) + u'的记录进行登陆。'
-                    self.loadCookJar(cookieStr)
+                    self.load_cook_jar(cookieStr)
                     return True
         return False
 

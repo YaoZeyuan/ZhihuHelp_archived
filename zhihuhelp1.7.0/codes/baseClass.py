@@ -215,20 +215,34 @@ class SqlClass(object):
     u'''
     用于存放常用的sql代码
     '''
+    cursor = None
+    conn = None
 
     @staticmethod
-    def save2DB(cursor, data={}, table_name=''):
+    def set_conn(conn):
+        SqlClass.conn = conn
+        SqlClass.cursor = conn.cursor()
+        return
+
+    @staticmethod
+    def save2DB(data={}, table_name=''):
         sql = "replace into {table_name} ({columns}) values ({items})".format(table_name=table_name,
                                                                               columns=','.join(data.keys()),
                                                                               items=(',?' * len(data.keys()))[1:])
-        BaseClass.logger.debug(sql)
-        cursor.execute(sql, tuple(data.values()))
+        SqlClass.cursor.execute(sql, tuple(data.values()))
         return
 
+    @staticmethod
+    def commit():
+        SqlClass.conn.commit()
+        return
 
 import urllib2
 import socket  # 用于捕获超时错误
 import zlib
+
+import cookielib #用于生成cookie
+import time
 
 
 class HttpBaseClass(object):
@@ -236,7 +250,7 @@ class HttpBaseClass(object):
     用于存放常用Http函数
     '''
 
-    def getHttpContent(self, url='', extraHeader={}, data=None, timeout=5):
+    def get_http_content(self, url='', data=None, timeout=5, extra_header={}):
         u"""获取网页内容
      
         获取网页内容, 打开网页超过设定的超时时间则报错
@@ -252,9 +266,10 @@ class HttpBaseClass(object):
             IOError     当解压缩页面失败时报错
         """
         request = urllib2.Request(url=url, data=data)
-        for headerKey in extraHeader.keys():
-            request.add_header(headerKey, extraHeader[headerKey])
+        for key in extra_header.keys():
+            request.add_header(key, extra_header[key])
 
+        response = None
         try:
             response = urllib2.urlopen(request, timeout=timeout)
         except urllib2.HTTPError as error:
@@ -273,9 +288,14 @@ class HttpBaseClass(object):
             BaseClass.logger.info(u'未知错误')
             BaseClass.logger.info(u'错误页面:{}'.format(url))
             BaseClass.logger.info(u'错误堆栈信息:{}'.format(traceback.format_exc()))
+
         return self.unpack_response(response)
 
-    def unpack_response(self, response):
+    @staticmethod
+    def unpack_response(response):
+        if not response:
+            return ''
+
         try:
             content = response.read()
         except socket.timeout as error:
@@ -298,14 +318,30 @@ class HttpBaseClass(object):
             return ''
         return content
 
-import cookielib
-import time
+    @staticmethod
+    def set_cookie(account=''):
+        def load_cookie(cookieJar, cookie):
+            filename = u'./theFileNameIsSoLongThatYouWontKnowWhatIsThat.txt'
+            f = open(filename, 'w')
+            f.write(cookie)
+            f.close()
+            cookieJar.load(filename)
+            os.remove(filename)
+            return
 
-
-class BaseCookie(object):
-    u'''
-    本类负责处理与cookie相关事宜
-    '''
+        jar = cookielib.LWPCookieJar()
+        if account:
+            result = SqlClass.cursor.execute(
+                "select cookieStr, recordDate from LoginRecord order by recordDate desc where account = `{}`".format(
+                    account)).fetchone()
+        else:
+            result = SqlClass.cursor.execute(
+                "select cookieStr, recordDate from LoginRecord order by recordDate desc").fetchone()
+        cookie = result[0]
+        load_cookie(jar, cookie)
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(jar))
+        urllib2.install_opener(opener)
+        return
 
     @staticmethod
     def makeCookie(name, value, domain):
@@ -314,3 +350,5 @@ class BaseCookie(object):
                                   secure=False, expires=time.time() + 300000000, discard=False, comment=None,
                                   comment_url=None, rest={})
         return cookie
+
+
