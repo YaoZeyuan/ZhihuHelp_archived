@@ -64,7 +64,8 @@ class PageWorker(object):
         save_config = self.create_save_config()
         for key in save_config.keys():
             for item in save_config[key]:
-                SqlClass.save2DB(item, key)
+                if item:
+                    SqlClass.save2DB(item, key)
         SqlClass.commit()
         return
 
@@ -284,7 +285,7 @@ class TopicWorker(PageWorker):
 
     def clear_index(self):
         topic_id_tuple = tuple(set(x['topic_id'] for x in self.topic_index_list))
-        sql = 'DELETE * from TopicIndex where topic_id in ({})'.format((' ?,' * len(topic_id_tuple))[:-1])
+        sql = 'DELETE  from TopicIndex where topic_id in ({})'.format((' ?,' * len(topic_id_tuple))[:-1])
         SqlClass.cursor.execute(sql, topic_id_tuple)
         SqlClass.commit()
         return
@@ -296,6 +297,8 @@ def worker_factory(task):
         'author':AuthorWorker,
         'collection':CollectionWorker,
         'topic':TopicWorker,
+        'column':TopicWorker,
+        'article':TopicWorker,
     }
     for key in task['work_list']:
         worker = type_list[key](task['work_list'][key])

@@ -92,7 +92,7 @@ class SettingClass(object):
     # 默认数据库名称
     dataBaseFileName = u'./zhihuDB_173.db'
 
-    UPDATETIME = '2015-11-21'  # 更新日期
+    UPDATETIME = '2015-11-20'  # 更新日期
 
     ACCOUNT = 'mengqingxue2014@qq.com'  # 默认账号密码
     PASSWORD = '131724qingxue'  #
@@ -229,6 +229,7 @@ class SqlClass(object):
         sql = "replace into {table_name} ({columns}) values ({items})".format(table_name=table_name,
                                                                               columns=','.join(data.keys()),
                                                                               items=(',?' * len(data.keys()))[1:])
+        # BaseClass.logger.debug(sql)
         SqlClass.cursor.execute(sql, tuple(data.values()))
         return
 
@@ -337,10 +338,12 @@ class HttpBaseClass(object):
         if account:
             result = SqlClass.cursor.execute(
                 "select cookieStr, recordDate from LoginRecord order by recordDate desc where account = `{}`".format(
-                    account)).fetchone()
+                    account))
         else:
             result = SqlClass.cursor.execute(
-                "select cookieStr, recordDate from LoginRecord order by recordDate desc").fetchone()
+                "select cookieStr, recordDate from LoginRecord order by recordDate desc")
+
+        result = result.fetchone()
         cookie = result[0]
         load_cookie(jar, cookie)
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(jar))

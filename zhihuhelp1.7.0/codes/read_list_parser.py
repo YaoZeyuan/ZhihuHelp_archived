@@ -66,7 +66,7 @@ class ReadListParser():
         command_list = split_command(command)
         task_list = []
         for command in command_list:
-            task = ReadListParser.parse_command(command)
+            task = ReadListParser.parse(command)
             if task:
                 task_list.append(task)
         task = ReadListParser.merge_task_list(task_list)
@@ -77,8 +77,8 @@ class ReadListParser():
         u"""
         初始化最终任务列表
         """
-        package = {'work_list': {}, 'question': {'info': [], 'question': '', 'answer': '', },
-                   'article': {'info': [], 'question': '', 'answer': '', }}
+        package = {'work_list': {}, 'question': {'info': [], 'question': [], 'answer': [], },
+                   'article': {'info': [], 'question': [], 'answer': [], }}
         for task_type in ReadListParser.supported_type_list:
             package['work_list'][task_type] = []
         return package
@@ -111,7 +111,7 @@ class ReadListParser():
         return task_package
 
     @staticmethod
-    def parse_command(raw_command=''):
+    def parse(raw_command=''):
         u"""
         分析单条命令并返回待完成的task
         """

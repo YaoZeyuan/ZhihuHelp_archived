@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" line="23" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" line="24" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/login_unit.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\login_unit.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/unit/login_unit.py" />
     </list>
     <ignored path="ZhihuHelp__Python.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,7 +26,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/ZhihuHelp__Python$single_answer_unit.coverage" NAME="single_answer_unit Coverage Results" MODIFIED="1447937658396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhihuhelp1.7.0/parse_unit" />
     <SUITE FILE_PATH="coverage/ZhihuHelp__Python$login_unit__1_.coverage" NAME="login_unit (1) Coverage Results" MODIFIED="1448192591039" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhihuhelp1.7.0/codes" />
-    <SUITE FILE_PATH="coverage/ZhihuHelp__Python$zhihuHelp.coverage" NAME="zhihuHelp Coverage Results" MODIFIED="1448039109403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhihuhelp1.7.0" />
+    <SUITE FILE_PATH="coverage/ZhihuHelp__Python$zhihuHelp.coverage" NAME="zhihuHelp Coverage Results" MODIFIED="1448194753001" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhihuhelp1.7.0" />
     <SUITE FILE_PATH="coverage/ZhihuHelp__Python$author_unit.coverage" NAME="author_unit Coverage Results" MODIFIED="1447949745778" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhihuhelp1.7.0/parse_unit" />
     <SUITE FILE_PATH="coverage/ZhihuHelp__Python$parser_unit.coverage" NAME="parser_unit Coverage Results" MODIFIED="1448038065144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhihuhelp1.7.0/unit" />
     <SUITE FILE_PATH="coverage/ZhihuHelp__Python$login_unit.coverage" NAME="login_unit Coverage Results" MODIFIED="1448189497118" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhihuhelp1.7.0/unit" />
@@ -39,40 +39,7 @@
     <favorites_list name="ZhihuHelp__Python" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="login.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.7925532">
-              <caret line="86" column="88" selection-start-line="86" selection-start-column="88" selection-end-line="86" selection-end-column="88" />
-              <folding>
-                <element signature="e#25#56#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login_unit.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/login_unit.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="setting.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="133" column="38" selection-start-line="133" selection-start-column="38" selection-end-line="133" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -133,22 +100,22 @@
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/dict2Html.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/single_question.html" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/collection.html" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/ReadList.txt" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/private_collection.html" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/parser_unit.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/htmlTemplate.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/update.md" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/readListParser.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/login_unit.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.ini" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/ReadList.txt" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/parser_unit.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
       </list>
     </option>
   </component>
@@ -292,11 +259,12 @@
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\parse_unit" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\codes\Parser" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.login_unit (1)">
+  <component name="RunManager" selected="Python.zhihuHelp">
     <configuration default="false" name="zhihuHelp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -364,7 +332,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="ZhihuHelp__Python" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\login_unit.py" />
+      <option name="SCRIPT_NAME" value="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\login_unit.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -382,7 +350,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="ZhihuHelp__Python" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/login_unit.py" />
+      <option name="SCRIPT_NAME" value="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\login_unit.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -603,9 +571,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.login_unit (1)" />
-        <item index="1" class="java.lang.String" itemvalue="Python.login_unit" />
-        <item index="2" class="java.lang.String" itemvalue="Python.zhihuHelp" />
+        <item index="0" class="java.lang.String" itemvalue="Python.zhihuHelp" />
+        <item index="1" class="java.lang.String" itemvalue="Python.login_unit (1)" />
+        <item index="2" class="java.lang.String" itemvalue="Python.login_unit" />
         <item index="3" class="java.lang.String" itemvalue="Python.author_unit" />
         <item index="4" class="java.lang.String" itemvalue="Python.single_answer_unit" />
       </list>
@@ -814,7 +782,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448181341789</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="*    login模块改写完毕">
+      <created>1448192724147</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1448192724147</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TodoView">
@@ -828,7 +802,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
@@ -836,7 +810,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32436976" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31932774" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31932774" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2549168" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -886,7 +860,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="*   整理Parser" />
     <MESSAGE value="*   添加author_parser" />
     <MESSAGE value="*   添加collection_parser和topic_parser" />
     <MESSAGE value="+  添加对各个种类答案的Parser&#10;*   还差最后一步：将parser整合到代码里去" />
@@ -911,32 +884,16 @@
     <MESSAGE value="*   添加CommandParser模块，今天睡觉前把对应的Worker部分搞定" />
     <MESSAGE value="*    完成worker模块，准备对Filter模块进行调整" />
     <MESSAGE value="*    准备改写filter" />
-    <option name="LAST_COMMIT_MESSAGE" value="*    准备改写filter" />
+    <MESSAGE value="*    login模块改写完毕" />
+    <option name="LAST_COMMIT_MESSAGE" value="*    login模块改写完毕" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="24" />
+      <option name="time" value="30" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="316" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
-          <folding>
-            <element signature="e#25#34#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/unit/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -995,13 +952,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/zhihuHelp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43850267">
-          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/author_info.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29608938">
@@ -1034,13 +984,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/setting.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -1114,13 +1057,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/ReadList.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="40" selection-start-line="0" selection-start-column="40" selection-end-line="0" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/private_collection.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1178,16 +1114,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51766783">
-          <caret line="291" column="25" selection-start-line="291" selection-start-column="25" selection-end-line="291" selection-end-column="25" />
-          <folding>
-            <element signature="e#25#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/parser/parserTools.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.4452296">
@@ -1223,69 +1149,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.933333">
-          <caret line="205" column="3" selection-start-line="205" selection-start-column="3" selection-end-line="205" selection-end-column="3" />
-          <folding>
-            <marker date="1448180999344" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
-            <marker date="1448180999344" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
-            <marker date="1448180999344" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
-            <marker date="1448180999344" expanded="true" signature="-1:-1" placeholder="select * fro..ArticleContent..." />
-            <marker date="1448180999344" expanded="true" signature="-1:-1" placeholder="select * fro..AuthorInfo..." />
-            <marker date="1448180999344" expanded="true" signature="-1:-1" placeholder="select * fro..CollectionInfo..." />
-            <marker date="1448180999344" expanded="true" signature="-1:-1" placeholder="select * fro..TopicInfo..." />
-            <marker date="1448180999344" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/unit/parser_unit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="15" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="18" selection-end-column="44" />
-          <folding>
-            <element signature="e#25#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/unit/setting.ini">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5731707">
-          <caret line="26" column="26" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
-          <folding>
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..VarPickle..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..LoginRecord..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Answer..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Question..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..CollectionIndex..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TopicIndex..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TableIndex..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..AuthorInfo..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..CollectionInfo..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TopicInfo..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TableInfo..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..ColumnInfo..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Article..." />
-            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..userActive..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1321,38 +1189,109 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py">
+    <entry file="file://$USER_HOME$/.PyCharm40/system/python_stubs/-762174762/_sqlite3.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="296" column="8" selection-start-line="296" selection-start-column="8" selection-end-line="296" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons/sqlite3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.652439">
+          <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.7743902">
           <caret line="133" column="38" selection-start-line="133" selection-start-column="38" selection-end-line="133" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/init.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="282" column="46" selection-start-line="282" selection-start-column="46" selection-end-line="282" selection-end-column="46" />
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
-            <marker date="1448190684649" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
-            <marker date="1448190684649" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..VarPickle..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..LoginRecord..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Answer..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Question..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..CollectionIndex..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TopicIndex..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TableIndex..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..AuthorInfo..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..CollectionInfo..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TopicInfo..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TableInfo..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..ColumnInfo..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Article..." />
+            <marker date="1448181308667" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..userActive..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/login_unit.py">
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/ReadList.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="40" selection-start-line="0" selection-start-column="40" selection-end-line="0" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/unit/parser_unit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7819149">
+          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.6223404">
+          <caret line="80" column="71" selection-start-line="80" selection-start-column="71" selection-end-line="80" selection-end-column="71" />
+          <folding>
+            <marker date="1448194008966" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448194008966" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448194008966" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448194008966" expanded="true" signature="-1:-1" placeholder="select * fro..ArticleContent..." />
+            <marker date="1448194008966" expanded="true" signature="-1:-1" placeholder="select * fro..AuthorInfo..." />
+            <marker date="1448194008966" expanded="true" signature="-1:-1" placeholder="select * fro..CollectionInfo..." />
+            <marker date="1448194008966" expanded="true" signature="-1:-1" placeholder="select * fro..TopicInfo..." />
+            <marker date="1448194008966" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/unit/login_unit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1170213">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.ini">
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/zhihuHelp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.72606385">
-          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.6090425">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3324468">
+          <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
+          <folding>
+            <element signature="e#25#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1362,6 +1301,28 @@
           <caret line="86" column="88" selection-start-line="86" selection-start-column="88" selection-end-line="86" selection-end-column="88" />
           <folding>
             <element signature="e#25#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.845745">
+          <caret line="68" column="25" selection-start-line="68" selection-start-column="25" selection-end-line="68" selection-end-column="25" />
+          <folding>
+            <element signature="e#25#52#0" expanded="true" />
+            <marker date="1448194749269" expanded="true" signature="-1:-1" placeholder="DELETE from ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27659574">
+          <caret line="231" column="10" selection-start-line="231" selection-start-column="10" selection-end-line="231" selection-end-column="10" />
+          <folding>
+            <marker date="1448194772774" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448194772774" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
           </folding>
         </state>
       </provider>

@@ -17,6 +17,7 @@ class ZhihuHelp(BaseClass):
         init = Init()
         SqlClass.set_conn(init.getConn())
         self.baseDir = os.path.realpath('.')
+        self.config = Setting()
         return
 
     def start(self):
@@ -25,14 +26,14 @@ class ZhihuHelp(BaseClass):
         if SettingClass.REMEMBERACCOUNT:
             print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
             print   u'直接点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
-            if raw_input() == '':
-                login.setCookie()
-            else:
+            if raw_input():
                 login.login()
-                SettingClass.PICQUALITY = self.config.guideOfPicQuality()
+                SettingClass.PICQUALITY = self.config.set_picture_quality_guide()
+            else:
+                HttpBaseClass.set_cookie()
         else:
             login.login()
-            SettingClass.PICQUALITY = self.config.guideOfPicQuality()
+            SettingClass.PICQUALITY = self.config.set_picture_quality_guide()
 
         # 储存设置
         self.config.save()
