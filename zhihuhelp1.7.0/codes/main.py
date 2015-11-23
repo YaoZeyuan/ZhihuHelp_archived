@@ -47,17 +47,11 @@ class ZhihuHelp(BaseClass):
             BaseClass.logger.info(u"正在制作第 {0} 本电子书".format(bookCount))
             BaseClass.logger.info(u"对第 {0} 行的记录 {1} 进行分析".format(chapter, line))
             task = ReadListParser.parse_command(line) #分析命令
-            worker_factory(task) #执行抓取程序
-            exit()
-            '''
+            worker_factory(task['work_list']) #执行抓取程序
+
             BaseClass.logger.info(u"网页信息抓取完毕，开始自数据库中生成电子书数据")
-            for urlInfo in taskCollection:
-                try:
-                    self.addEpubContent(urlInfo['filter'].getResult())
-                except TypeError as error:
-                    print u'没有收集到指定问题'
-                    print u'错误信息:'
-                    print error
+            content = extract_data(task)
+            create_epub(content)
 
             BaseClass.logger.info(u"电子书数据生成完毕，开始生成电子书")
             try:
@@ -69,7 +63,6 @@ class ZhihuHelp(BaseClass):
             BaseClass.logger.info(u"第 {0} 本电子书生成完毕".format(bookCount))
             self.resetDir()
             bookCount += 1
-            '''
         return
 
     def addEpubContent(self, result):

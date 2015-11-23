@@ -39,7 +39,8 @@ class ReadListParser():
     """
     # 先检测专栏，再检测文章，文章比专栏网址更长，类似问题与答案的关系，取信息可以用split('/')的方式获取
     supported_type_list = ['answer', 'question', 'author', 'collection', 'topic', 'article', 'column']
-
+    question_type_list = ['answer', 'question', 'author', 'collection', 'topic']
+    article_type_list = ['article', 'column']
     # url模式
     type_pattern = {}
     type_pattern['answer'] = r'(?<=zhihu\.com/)question/(?P<question_id>\d{8})/answer/(?P<answer_id>\d{8})'
@@ -77,37 +78,50 @@ class ReadListParser():
         u"""
         初始化最终任务列表
         """
-        package = {'work_list': {}, 'question': {'info': [], 'question': [], 'answer': [], },
-                   'article': {'info': [], 'question': [], 'answer': [], }}
+        package = {'work_list': {}, 'book': {}}
         for task_type in ReadListParser.supported_type_list:
             package['work_list'][task_type] = []
+            package['book'][task_type] = []  # answer : 单个的问题 ， question : 独立的回答
         return package
 
     @staticmethod
     def merge_task_list(task_list):
         u"""
-        将urlList按类别合并在一起
+        将task_list按类别合并在一起
         """
+
+        def merge_question_book(kind, book_list):
+            book = {}
+            question = []
+            answer = []
+            for book in book_list:
+                question.append(book['question'])
+                answer.append(book['answer'])
+            book['kind'] = kind
+            book['question'] = 'select * from Question where ({})'.format(' or '.join(question))
+            book['answer'] = 'select * from Answer where ({})'.format(' or '.join(answer))
+            return book
+
+        def merge_article_book(book_list):
+            book = {}
+            question = []
+            answer = []
+            for book in book_list:
+                question.append(book['question'])
+                answer.append(book['answer'])
+            book['kind'] = kind
+            book['question'] = 'select * from ColumnInfo where ({})'.format(' or '.join(question))
+            book['answer'] = 'select * from Article where ({})'.format(' or '.join(answer))
+            return book
+
         task_package = ReadListParser.init_task_package()
         for task in task_list:
             kind = task['kind']
             task_package['work_list'][kind].append(task['spider']['href'])
-            if kind == 'article' or kind == 'column':
-                task_type = 'article'
-            else:
-                task_type = 'question'
-            task_package[task_type]['info'].append(task['condition']['info'])
-            task_package[task_type]['question'].append(' ({}) '.format(task['condition']['question']))
-            task_package[task_type]['answer'].append(' ({}) '.format(task['condition']['answer']))
-
-        task_package['question']['question'] = 'select * from Question where ' + ' or '.join(
-            task_package['question']['question'])
-        task_package['question']['answer'] = 'select * from Answer where ' + ' or '.join(
-            task_package['question']['answer'])
-        task_package['article']['question'] = 'select * from ColumnInfo where ' + ' or '.join(
-            task_package['article']['question'])
-        task_package['article']['answer'] = 'select * from ArticleContent where ' + ' or '.join(
-            task_package['article']['answer'])
+            task_package['book_list'][kind].append(task['book'])
+        for kind in ['question', 'answer']:
+            task_package['book_list'][kind] = [merge_question_book(kind, task_package['book_list'][kind])]
+        task_package['book_list']['article'] = [merge_article_book(task_package['book_list']['article'])]
         return task_package
 
     @staticmethod

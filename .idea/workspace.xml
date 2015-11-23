@@ -4,106 +4,11 @@
     <bookmark url="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" line="24" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\ReadMe.md" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\code\MarkDownCssStyle.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\code\SoloQuestion.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\code\ZhihuEpub.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\code\ZhihuHelp.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\code\ZhihuLib.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\code\ZhuanlanHelper.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\code\tags" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\descript\更新说明.md" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\88x31.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\cover.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\stylesheet.css" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\说明.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\ico格式，开发用\知乎专栏ico.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\ico格式，开发用\知乎主站ico.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\ico格式，开发用\知乎周刊ico.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\ico格式，开发用\知乎日报ico.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\知乎专栏.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\知乎专栏副本.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\知乎主站.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\知乎周刊.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\知乎指南.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\知乎日报.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\知乎日报副本.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\知识青年.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\otherFile\电子书制作资源文件夹\附：知乎大图\继新君的原头像.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\py2exe\HelperSetup.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\py2exe\ZhuanlanSetup.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\py2exe\helper.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\py2exe\zhuanlan.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\ReadList.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\ReadMe.md" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\更新说明.md" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\88x31.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\BookCover.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\cover.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\cover.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\stylesheet.css" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\说明.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\ico格式，开发用\知乎专栏ico.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\ico格式，开发用\知乎主站ico.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\ico格式，开发用\知乎周刊ico.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\ico格式，开发用\知乎日报ico.ico" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\知乎专栏.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\知乎专栏副本.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\知乎主站.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\知乎周刊.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\知乎指南.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\知乎日报.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\知乎日报副本.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\知识青年.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\stdRelease\电子书制作资源文件夹\附：知乎大图\继新君的原头像.jpg" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\base_test_function.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_answer_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_answer_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_author_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_author_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_collection_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_collection_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_question_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_question_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_topic_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\correct_topic_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\create_correct_data.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_answer_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_answer_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_author_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_author_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_collection_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_collection_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_question_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_question_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_topic_answerList.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\contentParseTest\test_topic_questionInfo.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\1.6.9_zhihuhelp\unitTest\单元测试目标.md" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\manage.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\lib\__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\lib\helper.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\lib\httpLib.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\lib\login.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\login\__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\login\models.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\login\templates\login.css.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\login\templates\login.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\login\templates\login.js.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\login\tests.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\login\urls.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\login\views.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\settings.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\static\captcha.gif" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\static\images\logo\zhihuhelpLogo.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\staticcaptcha.gif" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\templates\base.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\urls.py" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\django_zhihuhelp\zhihuhelp\wsgi.py" afterPath="" />
+    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    format code and remove useless code">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/filter.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/imgDownloader.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/imgDownloader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" afterPath="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -135,12 +40,71 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/bs4/__init__.py">
+      <file leaf-file-name="worker.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="132" column="25" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="25" />
+              <caret line="305" column="10" selection-start-line="305" selection-start-column="10" selection-end-line="305" selection-end-column="10" />
+              <folding>
+                <element signature="e#25#52#0" expanded="true" />
+                <marker date="1448285328524" expanded="true" signature="9108:9154" placeholder="DELETE from ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="imgDownloader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/imgDownloader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="52" column="34" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="34" />
+              <folding>
+                <element signature="e#25#58#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="filter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/filter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="read_list_parser.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.11130742">
+              <caret line="96" column="34" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
+              <folding>
+                <element signature="e#43#52#0" expanded="true" />
+                <marker date="1448293601336" expanded="true" signature="3137:3166" placeholder="select * fro..Question..." />
+                <marker date="1448293601336" expanded="true" signature="3137:3170" placeholder="select * fro..Question..." />
+                <marker date="1448293601336" expanded="true" signature="3232:3259" placeholder="select * fro..Answer..." />
+                <marker date="1448293601336" expanded="true" signature="3232:3263" placeholder="select * fro..Answer..." />
+                <marker date="1448293601336" expanded="true" signature="3628:3663" placeholder="select * fro..ColumnInfo..." />
+                <marker date="1448293601336" expanded="true" signature="3628:3676" placeholder="select * fro..ColumnInfo..." />
+                <marker date="1448293601336" expanded="true" signature="3725:3757" placeholder="select * fro..Article..." />
+                <marker date="1448293601336" expanded="true" signature="3725:3770" placeholder="select * fro..Article..." />
+                <marker date="1448293601336" expanded="true" signature="6499:6544" placeholder="select * fro..AuthorInfo..." />
+                <marker date="1448293601336" expanded="true" signature="7262:7315" placeholder="select * fro..CollectionInfo..." />
+                <marker date="1448293601336" expanded="true" signature="8146:8189" placeholder="select * fro..TopicInfo..." />
+                <marker date="1448293601336" expanded="true" signature="9043:9088" placeholder="select * fro..ColumnInfo..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -149,34 +113,11 @@
         <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="273" column="31" selection-start-line="273" selection-start-column="31" selection-end-line="273" selection-end-column="31" />
+              <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
               <folding>
-                <marker date="1448285049826" expanded="true" signature="9810:9901" placeholder="select cooki..LoginRecord..." />
-                <marker date="1448285049826" expanded="true" signature="10018:10088" placeholder="select cooki..LoginRecord..." />
+                <marker date="1448289185936" expanded="true" signature="7027:7118" placeholder="select cooki..LoginRecord..." />
+                <marker date="1448289185936" expanded="true" signature="7235:7305" placeholder="select cooki..LoginRecord..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="worker.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="64" column="30" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
-              <folding>
-                <element signature="e#25#52#0" expanded="true" />
-                <marker date="1448285049793" expanded="true" signature="9108:9154" placeholder="DELETE from ..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="imgDownloader.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/imgDownloader.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27733332">
-              <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -207,7 +148,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/codes/Parser/singleAnswerParser.py" />
         <option value="$PROJECT_DIR$/codes/Parser/contentParse.py" />
         <option value="$PROJECT_DIR$/codes/Parser/unit.py" />
         <option value="$PROJECT_DIR$/codes/baseClass.py" />
@@ -251,13 +191,14 @@
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/setting.ini" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/ReadList.txt" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/parser_unit.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/imgDownloader.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/filter.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
+        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" />
       </list>
     </option>
   </component>
@@ -343,6 +284,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="zhihuhelp1.7.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZhihuHelp__Python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZhihuHelp__Python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zhihuhelp1.7.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="codes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -908,7 +867,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448192724147</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="*    format code and remove useless code">
+      <created>1448285076992</created>
+      <option name="number" value="00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1448285076992</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TodoView">
@@ -924,26 +889,26 @@
     <frame x="-8" y="-8" width="1378" height="754" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26251897" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5025792" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32214764" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32436976" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25037822" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31932774" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26251897" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3226891" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25037822" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496329" sideWeight="0.50855744" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31932774" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -980,7 +945,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="*   添加author_parser" />
     <MESSAGE value="*   添加collection_parser和topic_parser" />
     <MESSAGE value="+  添加对各个种类答案的Parser&#10;*   还差最后一步：将parser整合到代码里去" />
     <MESSAGE value="*   改正sql" />
@@ -1005,7 +969,8 @@
     <MESSAGE value="*    完成worker模块，准备对Filter模块进行调整" />
     <MESSAGE value="*    准备改写filter" />
     <MESSAGE value="*    login模块改写完毕" />
-    <option name="LAST_COMMIT_MESSAGE" value="*    login模块改写完毕" />
+    <MESSAGE value="*    format code and remove useless code" />
+    <option name="LAST_COMMIT_MESSAGE" value="*    format code and remove useless code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1018,6 +983,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1205,6 +1171,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.4452296">
           <caret line="813" column="27" selection-start-line="813" selection-start-column="27" selection-end-line="813" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1219,6 +1186,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="443" column="24" selection-start-line="443" selection-start-column="24" selection-end-line="443" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1269,6 +1237,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="3.7743902">
           <caret line="133" column="38" selection-start-line="133" selection-start-column="38" selection-end-line="133" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1293,13 +1262,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.6223404">
-          <caret line="80" column="71" selection-start-line="80" selection-start-column="71" selection-end-line="80" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/unit/login_unit.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1170213">
@@ -1314,58 +1276,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3324468">
-          <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
-          <folding>
-            <element signature="e#25#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/login.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.7925532">
           <caret line="86" column="88" selection-start-line="86" selection-start-column="88" selection-end-line="86" selection-end-column="88" />
+          <folding>
+            <element signature="e#25#56#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/bs4/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.22084805">
           <caret line="132" column="25" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/filter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="273" column="31" selection-start-line="273" selection-start-column="31" selection-end-line="273" selection-end-column="31" />
-          <folding>
-            <marker date="1448285049826" expanded="true" signature="9810:9901" placeholder="select cooki..LoginRecord..." />
-            <marker date="1448285049826" expanded="true" signature="10018:10088" placeholder="select cooki..LoginRecord..." />
-          </folding>
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/imgDownloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/worker.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="30" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
+          <caret line="305" column="10" selection-start-line="305" selection-start-column="10" selection-end-line="305" selection-end-column="10" />
           <folding>
             <element signature="e#25#52#0" expanded="true" />
-            <marker date="1448285049793" expanded="true" signature="9108:9154" placeholder="DELETE from ..." />
+            <marker date="1448285328524" expanded="true" signature="9108:9154" placeholder="DELETE from ..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/imgDownloader.py">
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27733332">
-          <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="34" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="34" />
+          <folding>
+            <element signature="e#25#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
+          <folding>
+            <marker date="1448289185936" expanded="true" signature="7027:7118" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448289185936" expanded="true" signature="7235:7305" placeholder="select cooki..LoginRecord..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11130742">
+          <caret line="96" column="34" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
+          <folding>
+            <element signature="e#43#52#0" expanded="true" />
+            <marker date="1448293601336" expanded="true" signature="3137:3166" placeholder="select * fro..Question..." />
+            <marker date="1448293601336" expanded="true" signature="3137:3170" placeholder="select * fro..Question..." />
+            <marker date="1448293601336" expanded="true" signature="3232:3259" placeholder="select * fro..Answer..." />
+            <marker date="1448293601336" expanded="true" signature="3232:3263" placeholder="select * fro..Answer..." />
+            <marker date="1448293601336" expanded="true" signature="3628:3663" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448293601336" expanded="true" signature="3628:3676" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448293601336" expanded="true" signature="3725:3757" placeholder="select * fro..Article..." />
+            <marker date="1448293601336" expanded="true" signature="3725:3770" placeholder="select * fro..Article..." />
+            <marker date="1448293601336" expanded="true" signature="6499:6544" placeholder="select * fro..AuthorInfo..." />
+            <marker date="1448293601336" expanded="true" signature="7262:7315" placeholder="select * fro..CollectionInfo..." />
+            <marker date="1448293601336" expanded="true" signature="8146:8189" placeholder="select * fro..TopicInfo..." />
+            <marker date="1448293601336" expanded="true" signature="9043:9088" placeholder="select * fro..ColumnInfo..." />
+          </folding>
         </state>
       </provider>
     </entry>

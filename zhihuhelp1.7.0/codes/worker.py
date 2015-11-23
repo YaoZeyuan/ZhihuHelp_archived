@@ -300,7 +300,7 @@ def worker_factory(task):
         'column':TopicWorker,
         'article':TopicWorker,
     }
-    for key in task['work_list']:
-        worker = type_list[key](task['work_list'][key])
+    for key in task:
+        worker = type_list[key](task[key])
         worker.start()
     return
