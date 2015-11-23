@@ -4,73 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/codes/main.py" line="24" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="">
+    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    rename">
       <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\README.md" afterPath="" />
-      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\__init__.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\__init__.py" afterPath="$PROJECT_DIR$/codes/__init__.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\__init__.py" afterPath="$PROJECT_DIR$/bs4/__init__.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\builder\__init__.py" afterPath="$PROJECT_DIR$/bs4/builder/__init__.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\builder\_html5lib.py" afterPath="$PROJECT_DIR$/bs4/builder/_html5lib.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\builder\_htmlparser.py" afterPath="$PROJECT_DIR$/bs4/builder/_htmlparser.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\builder\_lxml.py" afterPath="$PROJECT_DIR$/bs4/builder/_lxml.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\dammit.py" afterPath="$PROJECT_DIR$/bs4/dammit.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\diagnose.py" afterPath="$PROJECT_DIR$/bs4/diagnose.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\element.py" afterPath="$PROJECT_DIR$/bs4/element.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\testing.py" afterPath="$PROJECT_DIR$/bs4/testing.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\tests\__init__.py" afterPath="$PROJECT_DIR$/bs4/tests/__init__.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\tests\test_builder_registry.py" afterPath="$PROJECT_DIR$/bs4/tests/test_builder_registry.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\tests\test_docs.py" afterPath="$PROJECT_DIR$/bs4/tests/test_docs.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\tests\test_html5lib.py" afterPath="$PROJECT_DIR$/bs4/tests/test_html5lib.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\tests\test_htmlparser.py" afterPath="$PROJECT_DIR$/bs4/tests/test_htmlparser.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\tests\test_lxml.py" afterPath="$PROJECT_DIR$/bs4/tests/test_lxml.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\tests\test_soup.py" afterPath="$PROJECT_DIR$/bs4/tests/test_soup.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\bs4\tests\test_tree.py" afterPath="$PROJECT_DIR$/bs4/tests/test_tree.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\__init__.py" afterPath="$PROJECT_DIR$/codes/parser/__init__.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\baseClass.py" afterPath="$PROJECT_DIR$/codes/baseClass.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\contentPackage.py" afterPath="$PROJECT_DIR$/codes/contentPackage.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\epubBuilder\__init__.py" afterPath="$PROJECT_DIR$/codes/epubBuilder/__init__.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\epubBuilder\dict2Html.py" afterPath="$PROJECT_DIR$/codes/epubBuilder/dict2Html.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\epubBuilder\epub.py" afterPath="$PROJECT_DIR$/codes/epubBuilder/epub.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\epubBuilder\epubBuilder.py" afterPath="$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\epubBuilder\htmlTemplate.py" afterPath="$PROJECT_DIR$/codes/epubBuilder/htmlTemplate.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\epubBuilder\imgDownloader.py" afterPath="$PROJECT_DIR$/codes/epubBuilder/imgDownloader.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\filter.py" afterPath="$PROJECT_DIR$/codes/filter.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\init.py" afterPath="$PROJECT_DIR$/codes/init.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\login.py" afterPath="$PROJECT_DIR$/codes/login.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\main.py" afterPath="$PROJECT_DIR$/codes/main.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\parser\__init__.py" afterPath="$PROJECT_DIR$/unit/__init__.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\parser\parserTools.py" afterPath="$PROJECT_DIR$/codes/parser/parserTools.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\read_list_parser.py" afterPath="$PROJECT_DIR$/codes/read_list_parser.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\setting.py" afterPath="$PROJECT_DIR$/codes/setting.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\simpleFilter.py" afterPath="$PROJECT_DIR$/codes/simpleFilter.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes\worker.py" afterPath="$PROJECT_DIR$/codes/worker.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\epubResource\markdownStyle.css" afterPath="$PROJECT_DIR$/epubResource/markdownStyle.css" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\epubResource\userDefine.css" afterPath="$PROJECT_DIR$/epubResource/userDefine.css" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\readme.md" afterPath="$PROJECT_DIR$/readme.md" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\addressFile\address_All" afterPath="$PROJECT_DIR$/unit/addressFile/address_All" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\addressFile\answer" afterPath="$PROJECT_DIR$/unit/addressFile/answer" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\addressFile\article" afterPath="$PROJECT_DIR$/unit/addressFile/article" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\addressFile\collection" afterPath="$PROJECT_DIR$/unit/addressFile/collection" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\addressFile\column" afterPath="$PROJECT_DIR$/unit/addressFile/column" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\addressFile\people" afterPath="$PROJECT_DIR$/unit/addressFile/people" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\addressFile\question" afterPath="$PROJECT_DIR$/unit/addressFile/question" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\addressFile\table" afterPath="$PROJECT_DIR$/unit/addressFile/table" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\addressFile\topic" afterPath="$PROJECT_DIR$/unit/addressFile/topic" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\login_unit.py" afterPath="$PROJECT_DIR$/unit/login_unit.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\parser_unit.py" afterPath="$PROJECT_DIR$/unit/parser_unit.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\unit_html\author.html" afterPath="$PROJECT_DIR$/unit/unit_html/author.html" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\unit_html\author_info.html" afterPath="$PROJECT_DIR$/unit/unit_html/author_info.html" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\unit_html\collection.html" afterPath="$PROJECT_DIR$/unit/unit_html/collection.html" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\unit_html\error.html" afterPath="$PROJECT_DIR$/unit/unit_html/error.html" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\unit_html\private_collection.html" afterPath="$PROJECT_DIR$/unit/unit_html/private_collection.html" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\unit_html\single_answer.html" afterPath="$PROJECT_DIR$/unit/unit_html/single_answer.html" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\unit_html\single_question.html" afterPath="$PROJECT_DIR$/unit/unit_html/single_question.html" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\unit_html\topic.html" afterPath="$PROJECT_DIR$/unit/unit_html/topic.html" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit\unit_html\topic_info.html" afterPath="$PROJECT_DIR$/unit/unit_html/topic_info.html" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\update.md" afterPath="$PROJECT_DIR$/update.md" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\zhihuHelp.py" afterPath="$PROJECT_DIR$/zhihuHelp.py" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\知乎助手实现思路.md" afterPath="$PROJECT_DIR$/知乎助手实现思路.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="ZhihuHelp__Python.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -100,84 +36,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="worker.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codes/worker.py">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="305" column="10" selection-start-line="305" selection-start-column="10" selection-end-line="305" selection-end-column="10" />
-              <folding>
-                <element signature="e#25#52#0" expanded="true" />
-                <marker date="1448285328524" expanded="true" signature="9108:9154" placeholder="DELETE from ..." />
-              </folding>
+            <state vertical-scroll-proportion="-4.9">
+              <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+              <folding />
             </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="imgDownloader.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/imgDownloader.py">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.56891495">
+              <caret line="222" column="19" selection-start-line="222" selection-start-column="19" selection-end-line="222" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codes/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="52" column="34" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="34" />
-              <folding>
-                <element signature="e#25#58#0" expanded="true" />
-              </folding>
-            </state>
+      <file leaf-file-name=".gitattributes" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitattributes">
+          <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+            <state />
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="filter.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codes/filter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="7" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="read_list_parser.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/codes/read_list_parser.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="96" column="34" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
-              <folding>
-                <element signature="e#43#52#0" expanded="true" />
-                <marker date="1448293601336" expanded="true" signature="3137:3166" placeholder="select * fro..Question..." />
-                <marker date="1448293601336" expanded="true" signature="3137:3170" placeholder="select * fro..Question..." />
-                <marker date="1448293601336" expanded="true" signature="3232:3259" placeholder="select * fro..Answer..." />
-                <marker date="1448293601336" expanded="true" signature="3232:3263" placeholder="select * fro..Answer..." />
-                <marker date="1448293601336" expanded="true" signature="3628:3663" placeholder="select * fro..ColumnInfo..." />
-                <marker date="1448293601336" expanded="true" signature="3628:3676" placeholder="select * fro..ColumnInfo..." />
-                <marker date="1448293601336" expanded="true" signature="3725:3757" placeholder="select * fro..Article..." />
-                <marker date="1448293601336" expanded="true" signature="3725:3770" placeholder="select * fro..Article..." />
-                <marker date="1448293601336" expanded="true" signature="6499:6544" placeholder="select * fro..AuthorInfo..." />
-                <marker date="1448293601336" expanded="true" signature="7262:7315" placeholder="select * fro..CollectionInfo..." />
-                <marker date="1448293601336" expanded="true" signature="8146:8189" placeholder="select * fro..TopicInfo..." />
-                <marker date="1448293601336" expanded="true" signature="9043:9088" placeholder="select * fro..ColumnInfo..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="baseClass.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codes/baseClass.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
-              <folding>
-                <marker date="1448289185936" expanded="true" signature="7027:7118" placeholder="select cooki..LoginRecord..." />
-                <marker date="1448289185936" expanded="true" signature="7235:7305" placeholder="select cooki..LoginRecord..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -208,7 +98,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/codes/Parser/contentParse.py" />
         <option value="$PROJECT_DIR$/codes/Parser/unit.py" />
         <option value="$PROJECT_DIR$/codes/baseClass.py" />
         <option value="$PROJECT_DIR$/zhihuHelp.py" />
@@ -259,6 +148,7 @@
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/filter.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/baseClass.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -893,7 +783,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448293665003</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="*    调整项目结构">
+      <created>1448293933483</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1448293933483</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TodoView">
@@ -909,20 +805,20 @@
     <frame x="-8" y="0" width="1378" height="754" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2663126" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3277311" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5025792" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32436976" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31932774" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25037822" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2663126" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25037822" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496329" sideWeight="0.50855744" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -965,8 +861,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="+  添加对各个种类答案的Parser&#10;*   还差最后一步：将parser整合到代码里去" />
-    <MESSAGE value="*   改正sql" />
     <MESSAGE value="*   应该可以用了- -&#10;*   现在的代码质量真是冰火两重天啊。。。" />
     <MESSAGE value="*   fix bug" />
     <MESSAGE value="*   更新单元测试，今天争取发布" />
@@ -990,7 +884,10 @@
     <MESSAGE value="*    login模块改写完毕" />
     <MESSAGE value="*    format code and remove useless code" />
     <MESSAGE value="*    记一下新的filter提取思路" />
-    <option name="LAST_COMMIT_MESSAGE" value="*    记一下新的filter提取思路" />
+    <MESSAGE value="*    调整项目结构" />
+    <MESSAGE value="*    rename" />
+    <option name="LAST_COMMIT_MESSAGE" value="*    rename" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1013,18 +910,18 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#43#52#0" expanded="true" />
-            <marker date="1448293601336" expanded="true" signature="3137:3166" placeholder="select * fro..Question..." />
-            <marker date="1448293601336" expanded="true" signature="3137:3170" placeholder="select * fro..Question..." />
-            <marker date="1448293601336" expanded="true" signature="3232:3259" placeholder="select * fro..Answer..." />
-            <marker date="1448293601336" expanded="true" signature="3232:3263" placeholder="select * fro..Answer..." />
-            <marker date="1448293601336" expanded="true" signature="3628:3663" placeholder="select * fro..ColumnInfo..." />
-            <marker date="1448293601336" expanded="true" signature="3628:3676" placeholder="select * fro..ColumnInfo..." />
-            <marker date="1448293601336" expanded="true" signature="3725:3757" placeholder="select * fro..Article..." />
-            <marker date="1448293601336" expanded="true" signature="3725:3770" placeholder="select * fro..Article..." />
-            <marker date="1448293601336" expanded="true" signature="6499:6544" placeholder="select * fro..AuthorInfo..." />
-            <marker date="1448293601336" expanded="true" signature="7262:7315" placeholder="select * fro..CollectionInfo..." />
-            <marker date="1448293601336" expanded="true" signature="8146:8189" placeholder="select * fro..TopicInfo..." />
-            <marker date="1448293601336" expanded="true" signature="9043:9088" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Article..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Article..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..AuthorInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..CollectionInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..TopicInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
           </folding>
         </state>
       </provider>
@@ -1034,8 +931,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
           <folding>
-            <marker date="1448289185936" expanded="true" signature="7027:7118" placeholder="select cooki..LoginRecord..." />
-            <marker date="1448289185936" expanded="true" signature="7235:7305" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448289185936" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448289185936" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
           </folding>
         </state>
       </provider>
@@ -1044,6 +941,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1051,13 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="30.3">
           <caret line="222" column="16" selection-start-line="222" selection-start-column="16" selection-end-line="222" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1173,26 +1064,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitattributes">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="7" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/readme.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/update.md">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1214,6 +1085,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.4452296">
           <caret line="813" column="27" selection-start-line="813" selection-start-column="27" selection-end-line="813" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1228,6 +1100,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="443" column="24" selection-start-line="443" selection-start-column="24" selection-end-line="443" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1249,6 +1122,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="225" column="8" selection-start-line="225" selection-start-column="8" selection-end-line="225" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1277,6 +1151,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="3.7743902">
           <caret line="133" column="38" selection-start-line="133" selection-start-column="38" selection-end-line="133" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1319,6 +1194,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.7925532">
           <caret line="86" column="88" selection-start-line="86" selection-start-column="88" selection-end-line="86" selection-end-column="88" />
+          <folding>
+            <element signature="e#25#56#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1326,13 +1204,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22084805">
           <caret line="132" column="25" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/filter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1345,14 +1216,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/worker.py">
+    <entry file="file://$PROJECT_DIR$/codes/baseClass.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="305" column="10" selection-start-line="305" selection-start-column="10" selection-end-line="305" selection-end-column="10" />
+          <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
           <folding>
-            <element signature="e#25#52#0" expanded="true" />
-            <marker date="1448285328524" expanded="true" signature="9108:9154" placeholder="DELETE from ..." />
+            <marker date="1448289185936" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448289185936" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/read_list_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59363955">
+          <caret line="112" column="29" selection-start-line="112" selection-start-column="29" selection-end-line="112" selection-end-column="29" />
+          <folding>
+            <element signature="e#43#52#0" expanded="true" />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Article..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..Article..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..AuthorInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..CollectionInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..TopicInfo..." />
+            <marker date="1448293601336" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/filter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37102473">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1366,36 +1267,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/baseClass.py">
+    <entry file="file://$PROJECT_DIR$/codes/worker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.7773852">
+          <caret line="305" column="10" selection-start-line="305" selection-start-column="10" selection-end-line="305" selection-end-column="10" />
           <folding>
-            <marker date="1448289185936" expanded="true" signature="7027:7118" placeholder="select cooki..LoginRecord..." />
-            <marker date="1448289185936" expanded="true" signature="7235:7305" placeholder="select cooki..LoginRecord..." />
+            <element signature="e#25#52#0" expanded="true" />
+            <marker date="1448285328524" expanded="true" signature="-1:-1" placeholder="DELETE from ..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/read_list_parser.py">
+    <entry file="file://$PROJECT_DIR$/.gitattributes">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="96" column="34" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
-          <folding>
-            <element signature="e#43#52#0" expanded="true" />
-            <marker date="1448293601336" expanded="true" signature="3137:3166" placeholder="select * fro..Question..." />
-            <marker date="1448293601336" expanded="true" signature="3137:3170" placeholder="select * fro..Question..." />
-            <marker date="1448293601336" expanded="true" signature="3232:3259" placeholder="select * fro..Answer..." />
-            <marker date="1448293601336" expanded="true" signature="3232:3263" placeholder="select * fro..Answer..." />
-            <marker date="1448293601336" expanded="true" signature="3628:3663" placeholder="select * fro..ColumnInfo..." />
-            <marker date="1448293601336" expanded="true" signature="3628:3676" placeholder="select * fro..ColumnInfo..." />
-            <marker date="1448293601336" expanded="true" signature="3725:3757" placeholder="select * fro..Article..." />
-            <marker date="1448293601336" expanded="true" signature="3725:3770" placeholder="select * fro..Article..." />
-            <marker date="1448293601336" expanded="true" signature="6499:6544" placeholder="select * fro..AuthorInfo..." />
-            <marker date="1448293601336" expanded="true" signature="7262:7315" placeholder="select * fro..CollectionInfo..." />
-            <marker date="1448293601336" expanded="true" signature="8146:8189" placeholder="select * fro..TopicInfo..." />
-            <marker date="1448293601336" expanded="true" signature="9043:9088" placeholder="select * fro..ColumnInfo..." />
-          </folding>
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="7" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.9">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.56891495">
+          <caret line="222" column="19" selection-start-line="222" selection-start-column="19" selection-end-line="222" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
