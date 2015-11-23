@@ -101,10 +101,10 @@ class ImgDownloader():
         else:
             request = urllib2.Request(url=url, data=data)
         # add default extra header
-        for headerKey in self.extraHeader.keys():
+        for headerKey in self.extraHeader:
             request.add_header(headerKey, self.extraHeader[headerKey])
         # add userDefined header
-        for headerKey in extraHeader.keys():
+        for headerKey in extraHeader:
             request.add_header(headerKey, extraHeader[headerKey])
         try:
             rawPageData = urllib2.urlopen(request, timeout=timeout)

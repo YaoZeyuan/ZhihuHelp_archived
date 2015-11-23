@@ -47,7 +47,7 @@ class BaseClass(object):
     def printDict(data={}, key='', prefix=''):
         try:
             if isinstance(data, dict):
-                for key in data.keys():
+                for key in data:
                     BaseClass.printDict(data[key], key, prefix + '   ')
             else:
                 if isinstance(data, basestring):
@@ -271,7 +271,7 @@ class HttpBaseClass(object):
         if data:
             data = urllib.urlencode(data)
         request = urllib2.Request(url=url, data=data)
-        for key in extra_header.keys():
+        for key in extra_header:
             request.add_header(key, extra_header[key])
 
         response = None

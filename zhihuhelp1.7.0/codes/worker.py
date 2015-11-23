@@ -62,7 +62,7 @@ class PageWorker(object):
     def save(self):
         self.clear_index()
         save_config = self.create_save_config()
-        for key in save_config.keys():
+        for key in save_config:
             for item in save_config[key]:
                 if item:
                     SqlClass.save2DB(item, key)
