@@ -4,9 +4,11 @@
     <bookmark url="file://$PROJECT_DIR$/codes/main.py" line="24" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    rename">
+    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    修正CommandParser">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/codes/epubBuilder/image_container.py" />
       <change type="MODIFICATION" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/read_list_parser.py" afterPath="$PROJECT_DIR$/codes/read_list_parser.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/filter.py" afterPath="$PROJECT_DIR$/codes/filter.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ZhihuHelp__Python.iws" />
@@ -37,11 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.19589552">
+              <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -50,34 +52,67 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="read_list_parser.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/codes/read_list_parser.py">
+      <file leaf-file-name="epub_creator.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub_creator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.074074075">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="image_container.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/image_container.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
               <folding>
-                <marker date="1448364117002" expanded="true" signature="3148:3181" placeholder="select * fro..Question..." />
-                <marker date="1448364117002" expanded="true" signature="3243:3274" placeholder="select * fro..Answer..." />
-                <marker date="1448364117002" expanded="true" signature="6432:6477" placeholder="select * fro..AuthorInfo..." />
-                <marker date="1448364117002" expanded="true" signature="6554:6651" placeholder="select * fro..Questionquestion_id..." />
-                <marker date="1448364117002" expanded="true" signature="6599:6647" placeholder="select quest..Answer..." />
-                <marker date="1448364117002" expanded="true" signature="6726:6767" placeholder="select * fro..Answer..." />
-                <marker date="1448364117002" expanded="true" signature="7296:7349" placeholder="select * fro..CollectionInfo..." />
-                <marker date="1448364117002" expanded="true" signature="7430:7578" placeholder="select * fro..Question..." />
-                <marker date="1448364117002" expanded="true" signature="7475:7577" placeholder="select quest..Answer..." />
-                <marker date="1448364117002" expanded="true" signature="7521:7551" placeholder="select href ..." />
-                <marker date="1448364117002" expanded="true" signature="7674:7766" placeholder="select * fro..Answer..." />
-                <marker date="1448364117002" expanded="true" signature="7710:7740" placeholder="select href ..." />
-                <marker date="1448364117002" expanded="true" signature="8276:8319" placeholder="select * fro..TopicInfo..." />
-                <marker date="1448364117002" expanded="true" signature="8395:8533" placeholder="select * fro..Question..." />
-                <marker date="1448364117002" expanded="true" signature="8440:8532" placeholder="select quest..Answer..." />
-                <marker date="1448364117002" expanded="true" signature="8486:8511" placeholder="select href ..." />
-                <marker date="1448364117002" expanded="true" signature="8624:8706" placeholder="select * fro..Answer..." />
-                <marker date="1448364117002" expanded="true" signature="8660:8685" placeholder="select href ..." />
-                <marker date="1448364117002" expanded="true" signature="9288:9333" placeholder="select * fro..ColumnInfo..." />
-                <marker date="1448364117002" expanded="true" signature="9434:9496" placeholder="select * fro..Article..." />
-                <marker date="1448364117002" expanded="true" signature="10219:10255" placeholder="select * fro..Article..." />
+                <element signature="e#24#38#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="worker.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/worker.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="61" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="61" />
+              <folding>
+                <element signature="e#25#52#0" expanded="true" />
+                <marker date="1448285328524" expanded="true" signature="9108:9154" placeholder="DELETE from ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="imgDownloader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/imgDownloader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="epubBuilder.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="101" column="21" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dict2Html.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/dict2Html.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="50" column="7" selection-start-line="50" selection-start-column="7" selection-end-line="50" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -108,9 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/codes/baseClass.py" />
-        <option value="$PROJECT_DIR$/zhihuHelp.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/Parser/parserTools.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/Parser/answer.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/question.html" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/single_answer.html" />
@@ -159,6 +191,9 @@
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/read_list_parser.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/codes/read_list_parser.py" />
+        <option value="$PROJECT_DIR$/codes/filter.py" />
+        <option value="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" />
+        <option value="$PROJECT_DIR$/codes/epubBuilder/image_container.py" />
       </list>
     </option>
   </component>
@@ -230,6 +265,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="codes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZhihuHelp__Python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZhihuHelp__Python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="codes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="epubBuilder" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -820,7 +873,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448294076764</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="*    修正CommandParser">
+      <created>1448364178020</created>
+      <option name="number" value="00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1448364178020</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView">
@@ -836,26 +895,26 @@
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26928896" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5025792" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32436976" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25037822" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31932774" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26928896" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25037822" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496329" sideWeight="0.50855744" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31932774" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3226891" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -892,7 +951,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="*   应该可以用了- -&#10;*   现在的代码质量真是冰火两重天啊。。。" />
     <MESSAGE value="*   fix bug" />
     <MESSAGE value="*   更新单元测试，今天争取发布" />
     <MESSAGE value="*   更新单元测试" />
@@ -917,7 +975,8 @@
     <MESSAGE value="*    记一下新的filter提取思路" />
     <MESSAGE value="*    调整项目结构" />
     <MESSAGE value="*    rename" />
-    <option name="LAST_COMMIT_MESSAGE" value="*    rename" />
+    <MESSAGE value="*    修正CommandParser" />
+    <option name="LAST_COMMIT_MESSAGE" value="*    修正CommandParser" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -927,58 +986,33 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="219" column="4" selection-start-line="219" selection-start-column="4" selection-end-line="219" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitattributes">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="7" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/filter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/codes/read_list_parser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1448364117002" expanded="true" signature="3148:3181" placeholder="select * fro..Question..." />
-            <marker date="1448364117002" expanded="true" signature="3243:3274" placeholder="select * fro..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="6432:6477" placeholder="select * fro..AuthorInfo..." />
-            <marker date="1448364117002" expanded="true" signature="6554:6651" placeholder="select * fro..Questionquestion_id..." />
-            <marker date="1448364117002" expanded="true" signature="6599:6647" placeholder="select quest..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="6726:6767" placeholder="select * fro..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="7296:7349" placeholder="select * fro..CollectionInfo..." />
-            <marker date="1448364117002" expanded="true" signature="7430:7578" placeholder="select * fro..Question..." />
-            <marker date="1448364117002" expanded="true" signature="7475:7577" placeholder="select quest..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="7521:7551" placeholder="select href ..." />
-            <marker date="1448364117002" expanded="true" signature="7674:7766" placeholder="select * fro..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="7710:7740" placeholder="select href ..." />
-            <marker date="1448364117002" expanded="true" signature="8276:8319" placeholder="select * fro..TopicInfo..." />
-            <marker date="1448364117002" expanded="true" signature="8395:8533" placeholder="select * fro..Question..." />
-            <marker date="1448364117002" expanded="true" signature="8440:8532" placeholder="select quest..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="8486:8511" placeholder="select href ..." />
-            <marker date="1448364117002" expanded="true" signature="8624:8706" placeholder="select * fro..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="8660:8685" placeholder="select href ..." />
-            <marker date="1448364117002" expanded="true" signature="9288:9333" placeholder="select * fro..ColumnInfo..." />
-            <marker date="1448364117002" expanded="true" signature="9434:9496" placeholder="select * fro..Article..." />
-            <marker date="1448364117002" expanded="true" signature="10219:10255" placeholder="select * fro..Article..." />
+            <element signature="e#24#33#0" expanded="true" />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..AuthorInfo..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Questionquestion_id..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select quest..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..CollectionInfo..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select quest..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select href ..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select href ..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..TopicInfo..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select quest..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select href ..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select href ..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Article..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Article..." />
           </folding>
         </state>
       </provider>
@@ -1082,20 +1116,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.617391">
-          <caret line="101" column="21" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/dict2Html.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="7" selection-start-line="50" selection-start-column="7" selection-end-line="50" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/unit/unit_html/collection.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8786127">
@@ -1173,6 +1193,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="225" column="8" selection-start-line="225" selection-start-column="8" selection-end-line="225" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1201,6 +1222,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="3.7743902">
           <caret line="133" column="38" selection-start-line="133" selection-start-column="38" selection-end-line="133" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1253,25 +1275,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/imgDownloader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/codes/baseClass.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/filter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37102473">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1282,13 +1290,6 @@
           <folding>
             <element signature="e#25#58#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/worker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7773852">
-          <caret line="305" column="10" selection-start-line="305" selection-start-column="10" selection-end-line="305" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -1311,45 +1312,115 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/dict2Html.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="7" selection-start-line="50" selection-start-column="7" selection-end-line="50" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/hashlib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="101" column="21" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/imgDownloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/worker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="61" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="61" />
+          <folding>
+            <element signature="e#25#52#0" expanded="true" />
+            <marker date="1448285328524" expanded="true" signature="9108:9154" placeholder="DELETE from ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/image_container.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+          <folding>
+            <element signature="e#24#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub_creator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/filter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29681978">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/read_list_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.7084806">
+          <caret line="17" column="41" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
+          <folding>
+            <element signature="e#24#33#0" expanded="true" />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..AuthorInfo..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Questionquestion_id..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select quest..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..CollectionInfo..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select quest..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select href ..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select href ..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..TopicInfo..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Question..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select quest..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select href ..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Answer..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select href ..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Article..." />
+            <marker date="1448364117002" expanded="true" signature="-1:-1" placeholder="select * fro..Article..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.19589552">
+          <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
           <folding />
         </state>
       </provider>
       <provider editor-type-id="MarkdownPreviewEditor">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/read_list_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.074074075">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding>
-            <marker date="1448364117002" expanded="true" signature="3148:3181" placeholder="select * fro..Question..." />
-            <marker date="1448364117002" expanded="true" signature="3243:3274" placeholder="select * fro..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="6432:6477" placeholder="select * fro..AuthorInfo..." />
-            <marker date="1448364117002" expanded="true" signature="6554:6651" placeholder="select * fro..Questionquestion_id..." />
-            <marker date="1448364117002" expanded="true" signature="6599:6647" placeholder="select quest..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="6726:6767" placeholder="select * fro..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="7296:7349" placeholder="select * fro..CollectionInfo..." />
-            <marker date="1448364117002" expanded="true" signature="7430:7578" placeholder="select * fro..Question..." />
-            <marker date="1448364117002" expanded="true" signature="7475:7577" placeholder="select quest..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="7521:7551" placeholder="select href ..." />
-            <marker date="1448364117002" expanded="true" signature="7674:7766" placeholder="select * fro..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="7710:7740" placeholder="select href ..." />
-            <marker date="1448364117002" expanded="true" signature="8276:8319" placeholder="select * fro..TopicInfo..." />
-            <marker date="1448364117002" expanded="true" signature="8395:8533" placeholder="select * fro..Question..." />
-            <marker date="1448364117002" expanded="true" signature="8440:8532" placeholder="select quest..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="8486:8511" placeholder="select href ..." />
-            <marker date="1448364117002" expanded="true" signature="8624:8706" placeholder="select * fro..Answer..." />
-            <marker date="1448364117002" expanded="true" signature="8660:8685" placeholder="select href ..." />
-            <marker date="1448364117002" expanded="true" signature="9288:9333" placeholder="select * fro..ColumnInfo..." />
-            <marker date="1448364117002" expanded="true" signature="9434:9496" placeholder="select * fro..Article..." />
-            <marker date="1448364117002" expanded="true" signature="10219:10255" placeholder="select * fro..Article..." />
-          </folding>
-        </state>
       </provider>
     </entry>
   </component>
