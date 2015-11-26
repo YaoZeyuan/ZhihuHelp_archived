@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import hashlib
 from multiprocessing.dummy import Pool as ThreadPool  # 多线程并行库
-
+from baseClass import SettingClass, HttpBaseClass
+from worker import PageWorker  # 引入控制台
 
 class ImageContainer(object):
-    def __init__(self, save_path):
+    def __init__(self, save_path=''):
         self.save_path = save_path
         self.container = {}
         self.md5 = hashlib.md5()

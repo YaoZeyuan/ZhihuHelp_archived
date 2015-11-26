@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-import threading
 import traceback
-import uuid  # 生成线程唯一ID，用于控制线程数
 import logging
 import logging.handlers
 
@@ -82,6 +80,9 @@ class BaseClass(object):
             os.chdir(path)
         return
 
+    @staticmethod
+    def get_time():
+        return time.time()
 
 class SettingClass(object):
     u"""
@@ -100,6 +101,7 @@ class SettingClass(object):
     MAXTHREAD = 10  # 最大线程数
     PICQUALITY = 1  # 图片质量（0/1/2，无图/标清/原图）
     MAXQUESTION = 100  # 每本电子书中最多可以放多少个问题
+    MAXANSWER = 600  # 每本电子书中最多可以放多少个回答
     MAXTRY = 5  # 最大尝试次数
     ANSWERORDERBY = 'agree'  # 答案排序原则
     QUESTIONORDERBY = 'agreeCount'  # 问题排序原则
@@ -147,6 +149,27 @@ class SqlClass(object):
     def commit():
         SqlClass.conn.commit()
         return
+
+    @staticmethod
+    def wrap(kind, result=()):
+        u"""
+        将s筛选出的列表按SQL名组装为字典对象
+        """
+        template = {'answer': (
+        'author_id', 'author_sign', 'author_logo', 'author_name', 'agree', 'content', 'question_id', 'answer_id',
+        'commit_date', 'edit_date', 'comment', 'no_record_flag', 'href',),
+            'question': ('question_id', 'comment', 'views', 'answers', 'followers', 'title', 'description',),
+            'collection_index': ('collection_id', 'href',), 'topic_index': ('topic_id', 'href',), 'author_info': (
+            'logo', 'author_id', 'hash', 'sign', 'description', 'name', 'asks', 'answers', 'posts', 'collections',
+            'logs', 'agree', 'thanks', 'collected', 'shared', 'followee', 'follower', 'followed_column',
+            'followed_topic', 'viewed', 'gender', 'weibo',),
+            'collection_info': ('collection_id', 'title', 'description', 'follower', 'comment',),
+            'topic_info': ('title', 'logo', 'description', 'topic_id', 'follower',), 'column_info': (
+            'creator_id', 'creator_hash', 'creator_sign', 'creator_name', 'creator_logo', 'column_id', 'name', 'logo',
+            'description', 'article', 'follower',), 'article_info': (
+            'author_id', 'author_hash', 'author_sign', 'author_name', 'author_logo', 'column_id', 'name', 'article_id',
+            'href', 'title', 'title_image', 'content', 'comment', 'agree', 'publish_date',), }
+        return {k: v for (k, v) in zip(template[kind], result)}
 
 import urllib2
 import urllib

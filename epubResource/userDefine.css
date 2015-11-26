@@ -88,8 +88,3 @@ a:active    {text-decoration:underline; color:#259;}
 .content-footer > .agree-count    {float:left;clear:left;}
 .content-footer > .comment-count  {float:left;clear:right;}
 .content-footer > .update-date    {float:right}
-
-/*我实在是太懒了。。。。。。*/
-.answer-date-link-wrap {
-    display: none
-}

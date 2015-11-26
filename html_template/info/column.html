@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>{creator_name}的专栏_{name}({column_id})</title>
+    <link rel="stylesheet" href="{markdown_css}">
+    <link rel="stylesheet" href="{front_css}">
+</head>
+<body>
+<div class="container text-center">
+    <img src="{base_image_path}/{logo}" class="text-center v-center" width="320" height="320">
+
+    <h1>{creator_name}的专栏_{name}({column_id})</h1>
+
+    <div>
+        <hr/>
+        {description}
+        <hr/>
+    </div>
+    <div>
+        <table class="margin-center">
+            <thead>
+            <tr>
+                <td colspan="2">
+                    专栏信息
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>创建者</th>
+                <td><a href="http://www.zhihu.com/people/{creator_hash}">{creator_name}</td>
+            </tr>
+            <tr>
+                <th>文章总数</th>
+                <td>{article}</td>
+            </tr>
+            <tr>
+                <th>关注人数</th>
+                <td>{follower}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>版权信息:<a href="http://www.zhihu.com/terms">知乎协议</a></p>
+</div>
+</body>
+</html>

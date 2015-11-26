@@ -78,13 +78,6 @@ class Init(object):
                             href          VARCHAR(255)    NOT NULL,
                             PRIMARY KEY(topic_id, href))""")  # 负责保存话题链接，每次获取话题内容时都要重新更新之
 
-            # 圆桌内容表
-            cursor.execute("""
-                            CREATE  TABLE       TableIndex(
-                            table_id      VARCHAR(50)     NOT NULL,
-                            href          VARCHAR(255)    NOT NULL,
-                            PRIMARY KEY(table_id, href))""")  # 负责保存圆桌内的答案链接，每次获取圆桌内容时都要重新更新之
-
             # 用户信息表
             cursor.execute("""
                             CREATE TABLE AuthorInfo (
@@ -131,17 +124,6 @@ class Init(object):
                             follower            INT(20)         DEFAULT 0,
                             PRIMARY KEY (topic_id))""")  # 负责保存话题信息
 
-            # 圆桌信息表
-            cursor.execute("""CREATE TABLE TableInfo (
-                            title               VARCHAR(255),
-                            logo                VARCHAR(255),
-                            description         VARCHAR(3000),
-                            active              INT             DEFAULT 0,
-                            question            INT             DEFAULT 0,
-                            comment             INT             DEFAULT 0,
-                            table_id             VARCHAR(50),
-                            PRIMARY KEY (table_id))""")  # 负责保存圆桌信息
-
             # 专栏信息
             cursor.execute("""CREATE TABLE ColumnInfo(
                         creator_id       VARCHAR(255)    NOT NULL    DEFAULT '',
@@ -151,11 +133,11 @@ class Init(object):
                         creator_logo     VARCHAR(255)    NOT NULL    DEFAULT '',
 
                         column_id        VARCHAR(255)    NOT NULL    DEFAULT '',
-                        name      VARCHAR(255)    NOT NULL    DEFAULT '',
-                        logo      VARCHAR(255)    NOT NULL    DEFAULT '',
-                        description     VARCHAR(3000)   NOT NULL    DEFAULT '',
-                        article    INT(20)         NOT NULL    DEFAULT 0,
-                        follower  INT(20)         NOT NULL    DEFAULT 0,
+                        name             VARCHAR(255)    NOT NULL    DEFAULT '',
+                        logo             VARCHAR(255)    NOT NULL    DEFAULT '',
+                        description      VARCHAR(3000)   NOT NULL    DEFAULT '',
+                        article          INT(20)         NOT NULL    DEFAULT 0,
+                        follower         INT(20)         NOT NULL    DEFAULT 0,
                         PRIMARY KEY(column_id))""")
 
             # 专栏内容
