@@ -102,9 +102,14 @@ class SettingClass(object):
     PICQUALITY = 1  # 图片质量（0/1/2，无图/标清/原图）
     MAXQUESTION = 100  # 每本电子书中最多可以放多少个问题
     MAXANSWER = 600  # 每本电子书中最多可以放多少个回答
+    MAXARTICLE = 600  # 每本电子书中最多可以放多少篇文章
     MAXTRY = 5  # 最大尝试次数
-    ANSWERORDERBY = 'agree'  # 答案排序原则
-    QUESTIONORDERBY = 'agreeCount'  # 问题排序原则
+    ANSWERORDERBY = 'agree_count'  # 答案排序原则  agree_count|update_date|char_count|
+    ANSWERORDERBYDESC = True  # 答案排序顺序->是否为desc
+    QUESTIONORDERBY = 'agree_count'  # 问题排序原则  agree_count|char_count|answer_count
+    QUESTIONORDERBYDESC = True  # 问题排序顺序->是否为desc
+    ARTICLEORDERBY = 'update_date'  # 文章排序原则  update_date|update_date|char_count
+    ARTICLEORDERBYDESC = True  # 文章排序顺序->是否为desc
     THREADMODE = False  # 线程模式：为False时所有任务均在主线程上执行，用于调试错误
     PRIVATE = True
     WAITFOR_PIC = 10

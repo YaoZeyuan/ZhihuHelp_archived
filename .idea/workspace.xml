@@ -4,25 +4,18 @@
     <bookmark url="file://$PROJECT_DIR$/codes/main.py" line="24" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    添加image_downloader">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/epubResource/kanshan.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/info/answer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/info/article.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/info/collection.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/info/column.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/epubResource/front.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/info/question.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/codes/epubBuilder/simple_info.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/info/topic.html" />
+    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    完成filter模块，明天添加答案生成模块，改善epub制作模块">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/content/answer.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/content/article.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/index/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/content/question.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/baseClass.py" afterPath="$PROJECT_DIR$/codes/baseClass.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" afterPath="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/filter.py" afterPath="$PROJECT_DIR$/codes/filter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/epubBuilder/image_container.py" afterPath="$PROJECT_DIR$/codes/epubBuilder/image_container.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/init.py" afterPath="$PROJECT_DIR$/codes/init.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/epubResource/userDefine.css" afterPath="$PROJECT_DIR$/epubResource/userDefine.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/知乎助手实现思路.md" afterPath="$PROJECT_DIR$/知乎助手实现思路.md" />
     </list>
     <ignored path="ZhihuHelp__Python.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,14 +45,109 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="epub_creator.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub_creator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="83" selection-start-line="28" selection-start-column="83" selection-end-line="28" selection-end-column="83" />
+              <folding>
+                <element signature="e#24#66#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="filter.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/codes/filter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5185185">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.4434629">
+              <caret line="148" column="25" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
               <folding>
-                <element signature="e#24#54#0" expanded="true" />
+                <element signature="e#24#67#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="epub.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="280" column="8" selection-start-line="280" selection-start-column="8" selection-end-line="280" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dict2Html.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/dict2Html.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="60" column="22" selection-start-line="40" selection-start-column="8" selection-end-line="60" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="epubBuilder.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="知乎助手实现思路.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/知乎助手实现思路.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.866667">
+              <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="article.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/html_template/content/article.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="question.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/html_template/content/question.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="answer.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/html_template/content/answer.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/html_template/index/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -70,8 +158,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
-        <option value="Html5" />
         <option value="CSS File" />
+        <option value="Html5" />
       </list>
     </option>
   </component>
@@ -91,11 +179,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/parse_unit/parser_unit.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/epubBuilder.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/setting.ini" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/topic.html" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/simpleFilter.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/dict2Html.py" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/single_question.html" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/collection.html" />
@@ -120,7 +203,6 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/codes/read_list_parser.py" />
         <option value="$PROJECT_DIR$/codes/epubBuilder/image_container.py" />
-        <option value="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" />
         <option value="$PROJECT_DIR$/codes/html_template/answer_info.html" />
         <option value="$PROJECT_DIR$/codes/html_template/info/topic.html" />
         <option value="$PROJECT_DIR$/codes/html_template/info/article.html" />
@@ -133,7 +215,6 @@
         <option value="$PROJECT_DIR$/codes/html_template/info/collection.html" />
         <option value="$PROJECT_DIR$/codes/epubBuilder/simple_info.html" />
         <option value="$PROJECT_DIR$/codes/init.py" />
-        <option value="$PROJECT_DIR$/codes/baseClass.py" />
         <option value="$PROJECT_DIR$/epubResource/front.css" />
         <option value="$PROJECT_DIR$/html_template/info/answer.html" />
         <option value="$PROJECT_DIR$/html_template/info/article.html" />
@@ -141,7 +222,14 @@
         <option value="$PROJECT_DIR$/html_template/info/column.html" />
         <option value="$PROJECT_DIR$/html_template/info/question.html" />
         <option value="$PROJECT_DIR$/html_template/info/topic.html" />
+        <option value="$PROJECT_DIR$/codes/baseClass.py" />
+        <option value="$PROJECT_DIR$/html_template/article.html" />
+        <option value="$PROJECT_DIR$/html_template/question.html" />
+        <option value="$PROJECT_DIR$/html_template/answer.html" />
+        <option value="$PROJECT_DIR$/html_template/index/index.html" />
+        <option value="$PROJECT_DIR$/知乎助手实现思路.md" />
         <option value="$PROJECT_DIR$/codes/filter.py" />
+        <option value="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" />
       </list>
     </option>
   </component>
@@ -227,7 +315,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="info" />
+              <option name="myItemId" value="index" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -241,7 +329,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="epubResource" />
+              <option name="myItemId" value="html_template" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="content" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -256,6 +348,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="codes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZhihuHelp__Python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZhihuHelp__Python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="codes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="epubBuilder" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -297,11 +407,11 @@
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\parse_unit" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\html_template\content" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\epubResource" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\codes\html_template\info" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit" />
-      <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\codes" />
     </key>
   </component>
   <component name="RunManager" selected="Python.zhihuHelp">
@@ -864,7 +974,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448372220816</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="*    完成filter模块，明天添加答案生成模块，改善epub制作模块">
+      <created>1448555964118</created>
+      <option name="number" value="00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1448555964118</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TodoView">
@@ -880,26 +996,26 @@
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2730711" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5025792" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5025792" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32214764" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32436976" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25037822" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31932774" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2730711" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32214764" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25037822" sideWeight="0.49144253" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496329" sideWeight="0.50855744" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277311" sideWeight="0.4974208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31932774" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -936,7 +1052,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="*   更新单元测试，今天争取发布" />
     <MESSAGE value="*   更新单元测试" />
     <MESSAGE value="*   更新parser" />
     <MESSAGE value="*   把Author，Question检查完了&#10;*   目前还没考虑到被审查的情况" />
@@ -961,7 +1076,8 @@
     <MESSAGE value="*    rename" />
     <MESSAGE value="*    修正CommandParser" />
     <MESSAGE value="*    添加image_downloader" />
-    <option name="LAST_COMMIT_MESSAGE" value="*    添加image_downloader" />
+    <MESSAGE value="*    完成filter模块，明天添加答案生成模块，改善epub制作模块" />
+    <option name="LAST_COMMIT_MESSAGE" value="*    完成filter模块，明天添加答案生成模块，改善epub制作模块" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -971,55 +1087,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/unit/unit_html/topic.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="495.27585">
-          <caret line="3115" column="7" selection-start-line="3115" selection-start-column="7" selection-end-line="3115" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unit/addressFile/address_All">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unit/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unit/unit_html/single_question.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.87826085">
-          <caret line="6214" column="7" selection-start-line="6214" selection-start-column="7" selection-end-line="6214" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/contentPackage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unit/unit_html/collection.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8786127">
-          <caret line="1705" column="7" selection-start-line="1705" selection-start-column="7" selection-end-line="1705" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unit/unit_html/private_collection.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="658" column="7" selection-start-line="658" selection-start-column="7" selection-end-line="658" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/codes/epubBuilder/htmlTemplate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1203,14 +1270,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/dict2Html.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51943463">
-          <caret line="50" column="7" selection-start-line="50" selection-start-column="7" selection-end-line="50" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19589552">
@@ -1230,14 +1289,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="119" column="18" selection-start-line="119" selection-start-column="18" selection-end-line="119" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/codes/setting.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1251,61 +1302,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="8" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub_creator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/baseClass.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="168" column="60" selection-start-line="168" selection-start-column="60" selection-end-line="168" selection-end-column="60" />
-          <folding>
-            <element signature="e#24#33#0" expanded="true" />
-            <marker date="1448545031364" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
-            <marker date="1448545031364" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/init.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="144" column="24" selection-start-line="144" selection-start-column="24" selection-end-line="144" selection-end-column="37" />
-          <caret line="145" column="24" selection-start-line="145" selection-start-column="24" selection-end-line="145" selection-end-column="37" />
-          <caret line="146" column="24" selection-start-line="146" selection-start-column="24" selection-end-line="146" selection-end-column="37" />
-          <caret line="147" column="24" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="37" />
-          <caret line="148" column="24" selection-start-line="148" selection-start-column="24" selection-end-line="148" selection-end-column="37" />
-          <caret line="150" column="24" selection-start-line="150" selection-start-column="24" selection-end-line="150" selection-end-column="37" />
-          <caret line="151" column="24" selection-start-line="151" selection-start-column="24" selection-end-line="151" selection-end-column="37" />
-          <caret line="152" column="24" selection-start-line="152" selection-start-column="24" selection-end-line="152" selection-end-column="37" />
-          <caret line="153" column="24" selection-start-line="153" selection-start-column="24" selection-end-line="153" selection-end-column="37" />
-          <caret line="154" column="24" selection-start-line="154" selection-start-column="24" selection-end-line="154" selection-end-column="37" />
-          <caret line="155" column="24" selection-start-line="155" selection-start-column="24" selection-end-line="155" selection-end-column="37" />
-          <caret line="156" column="24" selection-start-line="156" selection-start-column="24" selection-end-line="156" selection-end-column="37" />
-          <caret line="157" column="24" selection-start-line="157" selection-start-column="24" selection-end-line="157" selection-end-column="37" />
-          <caret line="158" column="24" selection-start-line="158" selection-start-column="24" selection-end-line="158" selection-end-column="37" />
-          <caret line="159" column="24" selection-start-line="159" selection-start-column="24" selection-end-line="159" selection-end-column="37" />
-          <folding>
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..VarPickle..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..LoginRecord..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Answer..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Question..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..CollectionIndex..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TopicIndex..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..AuthorInfo..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..CollectionInfo..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..TopicInfo..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..ColumnInfo..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Article..." />
-            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..userActive..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1391,12 +1387,118 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/codes/init.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="159" column="36" selection-start-line="159" selection-start-column="24" selection-end-line="159" selection-end-column="36" />
+          <folding>
+            <marker date="1448544853659" expanded="true" signature="-1:-1" placeholder="CREATE TABLE..Article..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/baseClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40812722">
+          <caret line="104" column="40" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="40" />
+          <folding>
+            <marker date="1448704663789" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448704663789" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/contentPackage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.4222617">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html_template/content/article.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html_template/content/question.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html_template/content/answer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html_template/index/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/知乎助手实现思路.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.866667">
+          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/dict2Html.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="22" selection-start-line="40" selection-start-column="8" selection-end-line="60" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="280" column="8" selection-start-line="280" selection-start-column="8" selection-end-line="280" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub_creator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="83" selection-start-line="28" selection-start-column="83" selection-end-line="28" selection-end-column="83" />
+          <folding>
+            <element signature="e#24#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/codes/filter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5185185">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4434629">
+          <caret line="148" column="25" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
           <folding>
-            <element signature="e#24#54#0" expanded="true" />
+            <element signature="e#24#67#0" expanded="true" />
           </folding>
         </state>
       </provider>
