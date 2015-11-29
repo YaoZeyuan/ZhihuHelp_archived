@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from baseClass import SqlClass, SettingClass, TypeClass
 from image_container import ImageContainer
-import re
 
 
 class Book(object):
+    u"""
+    负责在数据库中提取数据，生成基本的book字典
+    """
     def __init__(self, book_info):
         self.book_info = book_info
         self.kind = book_info['kind']
@@ -70,22 +72,82 @@ class Book(object):
         article_list = [add_property(x) for x in article_list]
         return article_list
 
-class RawBook(object):
-    u"""
-    负责在数据库中提取数据和对数据进行处理,返回处理完毕的html信息和所有待下载图片的imgContainer
-    """
 
-    def __init__(self, book_list):
-        self.raw_info = book_list
-        self.imgContainer = ImageContainer()
-        self.book = {}
-        self.init_book()
+import re
+
+
+class CreateHtmlPage(object):
+    u'''
+    工具类，用于生成html页面
+    '''
+
+    def __init__(self, image_container):
+        self.image_container = image_container
         return
 
+    def fix_image(self, content):
+        for img in re.findall(r'<img.*?>', content):
+            src = re.search(r'(?<=src=").*?(?=")', img)
+            if not src:
+                continue
+            else:
+                src = src.group(0)
+                if src.replace(' ', '') == '':
+                    continue
+            src_download = CreateHtmlPage.fix_image_src(src)
+            if src_download:
+                filename = self.image_container.add(src_download)
+            content = content.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
+        return content
 
+    @staticmethod
+    def fix_image_src(href):
+        if 'https' in href[:5]:  # 去除https
+            href = 'http' + href[5:]
+
+        if SettingClass.PICQUALITY == 0:
+            return ''
+        if 'equation?tex=' in href:  # 不处理tex图片
+            return href
+        if SettingClass.PICQUALITY == 1:
+            return href
+        if SettingClass.PICQUALITY == 2:
+            if not ('_' in href):
+                return href
+            pos = href.rfind('_')
+            return href[:pos] + href[pos + 2:]  # 删除'_m'等图片质量控制符，获取原图
+        return href
+
+    def create_question(question):
+        def create_answer(answer):
+            with open('./html_template/content/answer.html') as answer_temp:
+                template = answer_temp.read()
+            return template.format(**answer)
+
+        answer_content = ''.join([create_answer(answer) for answer in question['article_list']])
+        question['answer_content'] = answer_content
+        with open('./html_template/content/question.html') as question_temp:
+            template = question_temp.read()
+        return template.format(**question)
+
+    def create_article(article):
+        with open('./html_template/content/article.html') as article_temp:
+            template = article_temp.read()
+        return template.format(**article)
+class RawBook(object):
+    u"""
+    负责数据进行处理,返回处理完毕的html信息和所有待下载图片的imgContainer
+    """
+
+    def __init__(self, book_info_list):
+        self.book_info_list = book_info_list
+        self.image_container = ImageContainer()
+        return
 
     def get_image_container(self):
-        return self.imgContainer
+        return self.image_container
+
+
 
     def create_info_dict(self, kind, raw):
         info = {}
@@ -117,7 +179,7 @@ class RawBook(object):
 
         def add_topic_info():
             info.update(raw)
-            info['logo'] = self.imgContainer.add(raw['logo'])
+            info['logo'] = self.image_container.add(raw['logo'])
             return
 
         def add_collection_info():
