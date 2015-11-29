@@ -4,18 +4,13 @@
     <bookmark url="file://$PROJECT_DIR$/codes/main.py" line="24" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    完成filter模块，明天添加答案生成模块，改善epub制作模块">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/content/answer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/content/article.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/index/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/html_template/content/question.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    提交一下代码，明天再整理吧">
       <change type="MODIFICATION" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/baseClass.py" afterPath="$PROJECT_DIR$/codes/baseClass.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" afterPath="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/filter.py" afterPath="$PROJECT_DIR$/codes/filter.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/知乎助手实现思路.md" afterPath="$PROJECT_DIR$/知乎助手实现思路.md" />
+      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\codes\epubBuilder\epub.py" afterPath="$PROJECT_DIR$/codes/epub.py" />
+      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\codes\epubBuilder\epub_creator.py" afterPath="$PROJECT_DIR$/codes/epub_creator.py" />
+      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\codes\epubBuilder\image_container.py" afterPath="$PROJECT_DIR$/codes/image_container.py" />
     </list>
     <ignored path="ZhihuHelp__Python.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,11 +40,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="epub_creator.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub_creator.py">
+      <file leaf-file-name="epub_creator.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/codes/epub_creator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="83" selection-start-line="28" selection-start-column="83" selection-end-line="28" selection-end-column="83" />
+            <state vertical-scroll-proportion="0.295053">
+              <caret line="52" column="16" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
               <folding>
                 <element signature="e#24#66#0" expanded="true" />
               </folding>
@@ -57,23 +52,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="filter.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="filter.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/codes/filter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4434629">
-              <caret line="148" column="25" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="265" column="33" selection-start-line="265" selection-start-column="33" selection-end-line="265" selection-end-column="33" />
               <folding>
-                <element signature="e#24#67#0" expanded="true" />
+                <element signature="e#24#68#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="epub.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub.py">
+        <entry file="file://$PROJECT_DIR$/codes/epub.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="280" column="8" selection-start-line="280" selection-start-column="8" selection-end-line="280" selection-end-column="8" />
+              <caret line="78" column="25" selection-start-line="78" selection-start-column="25" selection-end-line="78" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -83,7 +78,7 @@
         <entry file="file://$PROJECT_DIR$/codes/epubBuilder/dict2Html.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="60" column="22" selection-start-line="40" selection-start-column="8" selection-end-line="60" selection-end-column="22" />
+              <caret line="60" column="22" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -93,60 +88,7 @@
         <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="知乎助手实现思路.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/知乎助手实现思路.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.866667">
-              <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="MarkdownPreviewEditor">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="article.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html_template/content/article.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="question.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html_template/content/question.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="answer.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html_template/content/answer.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html_template/index/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="107" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -179,8 +121,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/dict2Html.py" />
-        <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/single_question.html" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/collection.html" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/unit/unit_html/private_collection.html" />
         <option value="$PROJECT_DIR$/zhihuhelp1.7.0/codes/epubBuilder/htmlTemplate.py" />
@@ -228,8 +168,10 @@
         <option value="$PROJECT_DIR$/html_template/answer.html" />
         <option value="$PROJECT_DIR$/html_template/index/index.html" />
         <option value="$PROJECT_DIR$/知乎助手实现思路.md" />
+        <option value="$PROJECT_DIR$/codes/epubBuilder/epub.py" />
         <option value="$PROJECT_DIR$/codes/filter.py" />
         <option value="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" />
+        <option value="$PROJECT_DIR$/codes/epub_creator.py" />
       </list>
     </option>
   </component>
@@ -407,11 +349,11 @@
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\parse_unit" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\codes" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\html_template\content" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\epubResource" />
       <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\codes\html_template\info" />
-      <recent name="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\zhihuhelp1.7.0\unit" />
     </key>
   </component>
   <component name="RunManager" selected="Python.zhihuHelp">
@@ -980,7 +922,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448555964118</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="*    提交一下代码，明天再整理吧">
+      <created>1448736351537</created>
+      <option name="number" value="00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1448736351537</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1052,7 +1000,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="*   更新单元测试" />
     <MESSAGE value="*   更新parser" />
     <MESSAGE value="*   把Author，Question检查完了&#10;*   目前还没考虑到被审查的情况" />
     <MESSAGE value="*   把答案待审查的情况也加进去了&#10;*   这一版的parser就差不多了" />
@@ -1077,7 +1024,8 @@
     <MESSAGE value="*    修正CommandParser" />
     <MESSAGE value="*    添加image_downloader" />
     <MESSAGE value="*    完成filter模块，明天添加答案生成模块，改善epub制作模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="*    完成filter模块，明天添加答案生成模块，改善epub制作模块" />
+    <MESSAGE value="*    提交一下代码，明天再整理吧" />
+    <option name="LAST_COMMIT_MESSAGE" value="*    提交一下代码，明天再整理吧" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1257,6 +1205,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.6696113">
           <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1305,12 +1254,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/image_container.py">
+    <entry file="file://$PROJECT_DIR$/codes/image_container.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
           <folding>
-            <element signature="e#24#38#0" expanded="true" />
+            <element signature="e#24#38#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1402,8 +1351,8 @@
         <state vertical-scroll-proportion="0.40812722">
           <caret line="104" column="40" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="40" />
           <folding>
-            <marker date="1448704663789" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
-            <marker date="1448704663789" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448736349645" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448736349645" expanded="true" signature="-1:-1" placeholder="select cooki..LoginRecord..." />
           </folding>
         </state>
       </provider>
@@ -1412,14 +1361,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.4222617">
           <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html_template/content/article.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1448,9 +1389,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/html_template/content/article.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/知乎助手实现思路.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.866667">
+        <state vertical-scroll-proportion="0.60820895">
           <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
           <folding />
         </state>
@@ -1462,7 +1411,25 @@
     <entry file="file://$PROJECT_DIR$/codes/epubBuilder/dict2Html.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="22" selection-start-line="40" selection-start-column="8" selection-end-line="60" selection-end-column="22" />
+          <caret line="60" column="22" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/filter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="265" column="33" selection-start-line="265" selection-start-column="33" selection-end-line="265" selection-end-column="33" />
+          <folding>
+            <element signature="e#24#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/epub.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="78" column="25" selection-start-line="78" selection-start-column="25" selection-end-line="78" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -1470,35 +1437,17 @@
     <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="107" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub.py">
+    <entry file="file://$PROJECT_DIR$/codes/epub_creator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="280" column="8" selection-start-line="280" selection-start-column="8" selection-end-line="280" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epub_creator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="83" selection-start-line="28" selection-start-column="83" selection-end-line="28" selection-end-column="83" />
+        <state vertical-scroll-proportion="0.295053">
+          <caret line="52" column="16" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
           <folding>
             <element signature="e#24#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codes/filter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4434629">
-          <caret line="148" column="25" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
-          <folding>
-            <element signature="e#24#67#0" expanded="true" />
           </folding>
         </state>
       </provider>

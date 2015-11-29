@@ -126,7 +126,7 @@ class Book():
         self.identifier += 1
         id = self.identifier
         self.mainfest.addHtml(fileName, id)
-        self.spine.addFile(id, linear=True)
+        self.spine.addFile(id, linear=linear)
         self.ncx.addFile(fileName, id, title)
         self.index += '<li><a href="{0}">{1}</a></li>'.format(fileName, title)  # test此处尚欠考虑，待测试时再监测
         return

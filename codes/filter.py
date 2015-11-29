@@ -263,10 +263,10 @@ class HtmlTranslator(object):
         page_list = [{'filename': 'info.html', 'content': book['info']}]
         if book['kind'] in ['article', 'column']:
             for article in book['article_list']:
-                page_list.append(
-                    {'filename': article['article_id'] + '.html', 'content': fix_image(create_article(article))})
+                page_list.append({'filename': article['article_id'] + '.html', 'title': article['title'],
+                                  'content': fix_image(create_article(article))})
         else:
             for question in book['article_list']:
-                page_list.append(
-                    {'filename': question['question_id'] + '.html', 'content': fix_image(create_question(question))})
+                page_list.append({'filename': question['question_id'] + '.html', 'title': question['title'],
+                                  'content': fix_image(create_question(question))})
         return page_list
