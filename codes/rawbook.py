@@ -3,13 +3,14 @@ from baseClass import SqlClass, SettingClass
 from codes.epubBuilder.image_container import ImageContainer
 import re
 
-class Filter(object):
+
+class RawBook(object):
     u"""
     负责在数据库中提取数据和对数据进行处理,返回处理完毕的html信息和所有待下载图片的imgContainer
     """
 
-    def __init__(self, raw_book_info):
-        self.raw_info = raw_book_info
+    def __init__(self, book_info):
+        self.raw_info = book_info
         self.imgContainer = ImageContainer()
         self.book = {}
         self.init_book()

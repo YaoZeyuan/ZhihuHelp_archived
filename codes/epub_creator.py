@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from image_container import ImageContainer
-from filter import Filter, HtmlTranslator
+from filter import RawBook, HtmlTranslator
 from baseClass import BaseClass
 from epub import Book
 
@@ -60,13 +60,13 @@ class EpubCreator(object):
         return translator.start()
 
     def parse_data(self, raw_book_info):
-        raw_data = Filter(raw_book_info)
+        raw_data = RawBook(raw_book_info)
         return raw_data.get_book()
 
     def create_book(self, info):
-
         return
 
 
 def create_epub(task):
+    raw_book = RawBook(task['book_list'])
     return

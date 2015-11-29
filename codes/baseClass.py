@@ -93,6 +93,13 @@ class BaseClass(object):
     def get_time():
         return time.time()
 
+
+class TypeClass(object):
+    article_type = ['article', 'column', ]
+    question_type = ['answer', 'question', 'author', 'collection', 'topic', ]
+    type_list = question_type + article_type  # 文章必须放在专栏之前（否则检测类别的时候就一律检测为专栏了）
+    pass
+
 class SettingClass(object):
     u"""
     用于储存、获取设置值、全局变量值
