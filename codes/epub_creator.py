@@ -19,17 +19,17 @@ class EpubCreator(object):
         return
 
     def init_base_dir(self):
-        BaseClass.mkdir(self.base_path + u'/知乎助手生成的电子书')
-        BaseClass.mkdir(self.base_path + u'/知乎电子书临时资源库')
-        BaseClass.mkdir(self.base_path + u'/知乎电子书临时资源库/知乎图片池')
+        BaseClass.make_dir(self.base_path + u'/知乎助手生成的电子书')
+        BaseClass.make_dir(self.base_path + u'/知乎电子书临时资源库')
+        BaseClass.make_dir(self.base_path + u'/知乎电子书临时资源库/知乎图片池')
         return
 
     def start(self):
         raw_book_list = self.init_book_data()
         book_list = [self.translate_book_into_html(book) for book in raw_book_list]
         for book in book_list:
-            BaseClass.chdir(self.base_path)
-            BaseClass.chdir(self.base_path + u'/知乎电子书临时资源库')
+            BaseClass.change_dir(self.base_path)
+            BaseClass.change_dir(self.base_path + u'/知乎电子书临时资源库')
             epub = Book(book['info']['title'], 27149527)
             book.start_download_image()
             for page in book['page_list']:
@@ -66,3 +66,7 @@ class EpubCreator(object):
     def create_book(self, info):
 
         return
+
+
+def create_epub(task):
+    return

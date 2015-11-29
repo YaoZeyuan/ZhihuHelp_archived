@@ -4,7 +4,7 @@ from worker import worker_factory
 from init import Init
 from login import *
 from simpleFilter import *
-from epubBuilder.epubBuilder import *
+from epub_creator import create_epub
 from read_list_parser import ReadListParser
 
 
@@ -13,15 +13,13 @@ class ZhihuHelp(BaseClass):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
-        self.checkUpdate()
         init = Init()
         SqlClass.set_conn(init.getConn())
-        self.baseDir = os.path.realpath('.')
         self.config = Setting()
         return
 
-    def start(self):
-        # 登陆
+    def init_config(self):
+        BaseClass.base_path = os.path.realpath('.')
         login = Login()
         if SettingClass.REMEMBERACCOUNT:
             print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
@@ -37,50 +35,33 @@ class ZhihuHelp(BaseClass):
 
         # 储存设置
         self.config.save()
-        # 主程序开始运行
+        return
+
+    def create_book(self, command, counter):
+        BaseClass.reset_dir()
+
+        BaseClass.logger.info(u"开始制作第 {} 本电子书".format(counter))
+        BaseClass.logger.info(u"对记录 {} 进行分析".format(command))
+        task = ReadListParser.parse_command(command)  # 分析命令
+        worker_factory(task['work_list'])  # 执行抓取程序
+        BaseClass.logger.info(u"网页信息抓取完毕")
+
+        BaseClass.logger.info(u"开始自数据库中生成电子书数据")
+        create_epub(task)
+        return
+
+    def start(self):
+        self.check_update()
+        self.init_config()
         BaseClass.logger.info(u"开始读取ReadList.txt设置信息")
-        readList = open('./ReadList.txt', 'r')
-        bookCount = 1
-        for line in readList:
-            # 一行内容代表一本电子书
-            chapter = 1
-            BaseClass.logger.info(u"正在制作第 {0} 本电子书".format(bookCount))
-            BaseClass.logger.info(u"对第 {0} 行的记录 {1} 进行分析".format(chapter, line))
-            task = ReadListParser.parse_command(line) #分析命令
-            worker_factory(task['work_list']) #执行抓取程序
-
-            BaseClass.logger.info(u"网页信息抓取完毕，开始自数据库中生成电子书数据")
-            content = extract_data(task)
-            create_epub(content)
-
-            BaseClass.logger.info(u"电子书数据生成完毕，开始生成电子书")
-            try:
-                if self.epubContent:
-                    Zhihu2Epub(self.epubContent)
-                del self.epubContent
-            except AttributeError:
-                pass
-            BaseClass.logger.info(u"第 {0} 本电子书生成完毕".format(bookCount))
-            self.resetDir()
-            bookCount += 1
+        with open('./ReadList.txt', 'r') as read_list:
+            counter = 1
+            for line in read_list:
+                self.create_book(line, counter)  # 一行内容代表一本电子书
+                counter += 1
         return
 
-    def addEpubContent(self, result):
-        u'''
-        分析到的数据为自行制作的Package类型，
-        具有一定的内容分析能力
-        '''
-        try:
-            self.epubContent.merge(result)
-        except AttributeError:
-            self.epubContent = result
-        return
-
-    def resetDir(self):
-        chdir(self.baseDir)
-        return
-
-    def checkUpdate(self):  # 强制更新
+    def check_update(self):  # 强制更新
         u"""
             *   功能
                 *   检测更新。

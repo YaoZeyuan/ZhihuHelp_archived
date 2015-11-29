@@ -20,6 +20,9 @@ class BaseClass(object):
     logger.addHandler(handler)  # 为logger添加handler
     #logger.setLevel(logging.INFO)  # 发布时关闭log输出
     logger.setLevel(logging.DEBUG)  # debug模式
+
+    base_path = './'  # 初始地址
+
     # 辅助函数
     @staticmethod
     def printInOneLine(text=''):  # Pass
@@ -59,11 +62,17 @@ class BaseClass(object):
         return
 
     @staticmethod
-    def printCurrentDir():
-        print os.path.realpath('.')
+    def reset_dir():
+        BaseClass.change_dir(BaseClass.base_path)
+        return
 
     @staticmethod
-    def mkdir(path):
+    def printCurrentDir():
+        print os.path.realpath('.')
+        return
+
+    @staticmethod
+    def make_dir(path):
         try:
             os.mkdir(path)
         except OSError:
@@ -71,12 +80,12 @@ class BaseClass(object):
         return
 
     @staticmethod
-    def chdir(path):
+    def change_dir(path):
         try:
             os.chdir(path)
         except OSError:
             print u'指定目录不存在，自动创建之'
-            BaseClass.mkdir(path)
+            BaseClass.make_dir(path)
             os.chdir(path)
         return
 
@@ -114,19 +123,6 @@ class SettingClass(object):
     PRIVATE = True
     WAITFOR_PIC = 10
     WAITFOR_HTML = 5
-
-
-class TestClass(object):
-    u"""
-    用于存放测试用变量
-    """
-    # 测试变量
-    test_chekcUpdate_flag = False
-    test_catchAnswerData_flag = False
-    test_buffer_flag = False
-    # test_chekcUpdate_flag = False
-    # test_chekcUpdate_flag = False
-
 
 class SqlClass(object):
     u'''

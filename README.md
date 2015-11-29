@@ -56,7 +56,7 @@
             ```
 
 
-            *   ![chdir](http://pic3.zhimg.com/fe54216ccd4e796f24944cfa504bc1ba_b.jpg)
+            *   ![change_dir](http://pic3.zhimg.com/fe54216ccd4e796f24944cfa504bc1ba_b.jpg)
         3.  输入
 
 
