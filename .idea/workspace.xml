@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    简化main模块">
-      <change type="MODIFICATION" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/baseClass.py" afterPath="$PROJECT_DIR$/codes/baseClass.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/epub_creator.py" afterPath="$PROJECT_DIR$/codes/epub_creator.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/read_list_parser.py" afterPath="$PROJECT_DIR$/codes/read_list_parser.py" />
+    <list default="true" id="e3af046f-35ed-4f36-a406-bec8c4c29257" name="Default" comment="*    更新ReadListParser">
+      <change type="DELETED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\README.md" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/main.py" afterPath="$PROJECT_DIR$/codes/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\MyDocument\Documents\GitHub\ZhihuHelp__Python\codes\filter.py" afterPath="$PROJECT_DIR$/codes/rawbook.py" />
     </list>
     <ignored path="ZhihuHelp__Python.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,35 +46,47 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="read_list_parser.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="read_list_parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/codes/read_list_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.66784453">
-              <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
               <folding>
-                <marker date="1448803128268" expanded="true" signature="4414:4459" placeholder="select * fro..AuthorInfo..." />
-                <marker date="1448803128268" expanded="true" signature="4536:4633" placeholder="select * fro..Question..." />
-                <marker date="1448803128268" expanded="true" signature="4581:4629" placeholder="select quest..Answer..." />
-                <marker date="1448803128268" expanded="true" signature="4708:4749" placeholder="select * fro..Answer..." />
-                <marker date="1448803128268" expanded="true" signature="5273:5326" placeholder="select * fro..CollectionInfo..." />
-                <marker date="1448803128268" expanded="true" signature="5407:5555" placeholder="select * fro..Question..." />
-                <marker date="1448803128268" expanded="true" signature="5452:5554" placeholder="select quest..Answer..." />
-                <marker date="1448803128268" expanded="true" signature="5498:5528" placeholder="select href ..." />
-                <marker date="1448803128268" expanded="true" signature="5651:5743" placeholder="select * fro..Answer..." />
-                <marker date="1448803128268" expanded="true" signature="5687:5717" placeholder="select href ..." />
-                <marker date="1448803128268" expanded="true" signature="6248:6291" placeholder="select * fro..TopicInfo..." />
-                <marker date="1448803128268" expanded="true" signature="6367:6505" placeholder="select * fro..Question..." />
-                <marker date="1448803128268" expanded="true" signature="6412:6504" placeholder="select quest..Answer..." />
-                <marker date="1448803128268" expanded="true" signature="6458:6483" placeholder="select href ..." />
-                <marker date="1448803128268" expanded="true" signature="6596:6678" placeholder="select * fro..Answer..." />
-                <marker date="1448803128268" expanded="true" signature="6632:6657" placeholder="select href ..." />
-                <marker date="1448803128268" expanded="true" signature="7255:7300" placeholder="select * fro..ColumnInfo..." />
-                <marker date="1448803128268" expanded="true" signature="7401:7463" placeholder="select * fro..Article..." />
-                <marker date="1448803128268" expanded="true" signature="8077:8122" placeholder="select * fro..ColumnInfo..." />
-                <marker date="1448803128268" expanded="true" signature="8223:8257" placeholder="select * fro..Article..." />
-                <marker date="1448803128268" expanded="true" signature="8223:8265" placeholder="select * fro..Article..." />
-                <marker date="1448803128268" expanded="true" signature="9301:9334" placeholder="select * fro..Question..." />
-                <marker date="1448803128268" expanded="true" signature="9396:9427" placeholder="select * fro..Answer..." />
+                <marker date="1448803173049" expanded="true" signature="4415:4460" placeholder="select * fro..AuthorInfo..." />
+                <marker date="1448803173049" expanded="true" signature="4537:4634" placeholder="select * fro..Question..." />
+                <marker date="1448803173049" expanded="true" signature="4582:4630" placeholder="select quest..Answer..." />
+                <marker date="1448803173049" expanded="true" signature="4709:4750" placeholder="select * fro..Answer..." />
+                <marker date="1448803173049" expanded="true" signature="5274:5327" placeholder="select * fro..CollectionInfo..." />
+                <marker date="1448803173049" expanded="true" signature="5408:5556" placeholder="select * fro..Question..." />
+                <marker date="1448803173049" expanded="true" signature="5453:5555" placeholder="select quest..Answer..." />
+                <marker date="1448803173049" expanded="true" signature="5499:5529" placeholder="select href ..." />
+                <marker date="1448803173049" expanded="true" signature="5652:5744" placeholder="select * fro..Answer..." />
+                <marker date="1448803173049" expanded="true" signature="5688:5718" placeholder="select href ..." />
+                <marker date="1448803173049" expanded="true" signature="6249:6292" placeholder="select * fro..TopicInfo..." />
+                <marker date="1448803173049" expanded="true" signature="6368:6506" placeholder="select * fro..Question..." />
+                <marker date="1448803173049" expanded="true" signature="6413:6505" placeholder="select quest..Answer..." />
+                <marker date="1448803173049" expanded="true" signature="6459:6484" placeholder="select href ..." />
+                <marker date="1448803173049" expanded="true" signature="6597:6679" placeholder="select * fro..Answer..." />
+                <marker date="1448803173049" expanded="true" signature="6633:6658" placeholder="select href ..." />
+                <marker date="1448803173049" expanded="true" signature="7256:7301" placeholder="select * fro..ColumnInfo..." />
+                <marker date="1448803173049" expanded="true" signature="7402:7464" placeholder="select * fro..Article..." />
+                <marker date="1448803173049" expanded="true" signature="8078:8123" placeholder="select * fro..ColumnInfo..." />
+                <marker date="1448803173049" expanded="true" signature="8224:8258" placeholder="select * fro..Article..." />
+                <marker date="1448803173049" expanded="true" signature="8224:8266" placeholder="select * fro..Article..." />
+                <marker date="1448803173049" expanded="true" signature="9303:9336" placeholder="select * fro..Question..." />
+                <marker date="1448803173049" expanded="true" signature="9398:9429" placeholder="select * fro..Answer..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/codes/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.25795054">
+              <caret line="42" column="32" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
+              <folding>
+                <element signature="e#25#58#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -87,10 +96,10 @@
         <entry file="file://$PROJECT_DIR$/codes/baseClass.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="98" column="76" selection-start-line="98" selection-start-column="76" selection-end-line="98" selection-end-column="76" />
+              <caret line="99" column="77" selection-start-line="99" selection-start-column="77" selection-end-line="99" selection-end-column="77" />
               <folding>
-                <marker date="1448785228922" expanded="true" signature="9083:9174" placeholder="select cooki..LoginRecord..." />
-                <marker date="1448785228922" expanded="true" signature="9291:9361" placeholder="select cooki..LoginRecord..." />
+                <marker date="1448803173034" expanded="true" signature="9087:9178" placeholder="select cooki..LoginRecord..." />
+                <marker date="1448803173034" expanded="true" signature="9295:9365" placeholder="select cooki..LoginRecord..." />
               </folding>
             </state>
           </provider>
@@ -100,7 +109,7 @@
         <entry file="file://$PROJECT_DIR$/codes/rawbook.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="13" />
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="13" />
               <folding>
                 <element signature="e#24#68#0" expanded="true" />
               </folding>
@@ -180,12 +189,12 @@
         <option value="$PROJECT_DIR$/知乎助手实现思路.md" />
         <option value="$PROJECT_DIR$/codes/epubBuilder/epub.py" />
         <option value="$PROJECT_DIR$/codes/epubBuilder/epub_creator.py" />
-        <option value="$PROJECT_DIR$/codes/main.py" />
         <option value="$PROJECT_DIR$/codes/filter.py" />
         <option value="$PROJECT_DIR$/codes/rawbook.py" />
         <option value="$PROJECT_DIR$/codes/epub_creator.py" />
         <option value="$PROJECT_DIR$/codes/baseClass.py" />
         <option value="$PROJECT_DIR$/codes/read_list_parser.py" />
+        <option value="$PROJECT_DIR$/codes/main.py" />
       </list>
     </option>
   </component>
@@ -936,7 +945,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448778212384</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="*    更新ReadListParser">
+      <created>1448803174618</created>
+      <option name="number" value="00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1448803174618</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1008,7 +1023,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="*   把答案待审查的情况也加进去了&#10;*   这一版的parser就差不多了" />
     <MESSAGE value="*   调试完成，现在已经可用了&#10;*   下一步是修复电子书模板里的bug，以及修复下载图片时的问题" />
     <MESSAGE value="*   修复了一处抓取topic时的bug&#10;*   准备修复tex图片问题" />
     <MESSAGE value="*   基本修复了tex问题" />
@@ -1033,7 +1047,8 @@
     <MESSAGE value="*    提交一下代码，明天再整理吧" />
     <MESSAGE value="*    思路理清了，先去买饭，吃完饭回来继续实现" />
     <MESSAGE value="*    简化main模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="*    简化main模块" />
+    <MESSAGE value="*    更新ReadListParser" />
+    <option name="LAST_COMMIT_MESSAGE" value="*    更新ReadListParser" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1387,16 +1402,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codes/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5547703">
-          <caret line="86" column="38" selection-start-line="86" selection-start-column="38" selection-end-line="86" selection-end-column="38" />
-          <folding>
-            <element signature="e#25#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/codes/epubBuilder/epubBuilder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="3.7102473">
@@ -1424,7 +1429,7 @@
     <entry file="file://$PROJECT_DIR$/codes/rawbook.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="13" />
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="13" />
           <folding>
             <element signature="e#24#68#0" expanded="true" />
           </folding>
@@ -1434,10 +1439,10 @@
     <entry file="file://$PROJECT_DIR$/codes/baseClass.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="98" column="76" selection-start-line="98" selection-start-column="76" selection-end-line="98" selection-end-column="76" />
+          <caret line="99" column="77" selection-start-line="99" selection-start-column="77" selection-end-line="99" selection-end-column="77" />
           <folding>
-            <marker date="1448785228922" expanded="true" signature="9083:9174" placeholder="select cooki..LoginRecord..." />
-            <marker date="1448785228922" expanded="true" signature="9291:9361" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448803173034" expanded="true" signature="9087:9178" placeholder="select cooki..LoginRecord..." />
+            <marker date="1448803173034" expanded="true" signature="9295:9365" placeholder="select cooki..LoginRecord..." />
           </folding>
         </state>
       </provider>
@@ -1454,32 +1459,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/codes/read_list_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.66784453">
-          <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding>
-            <marker date="1448803128268" expanded="true" signature="4414:4459" placeholder="select * fro..AuthorInfo..." />
-            <marker date="1448803128268" expanded="true" signature="4536:4633" placeholder="select * fro..Question..." />
-            <marker date="1448803128268" expanded="true" signature="4581:4629" placeholder="select quest..Answer..." />
-            <marker date="1448803128268" expanded="true" signature="4708:4749" placeholder="select * fro..Answer..." />
-            <marker date="1448803128268" expanded="true" signature="5273:5326" placeholder="select * fro..CollectionInfo..." />
-            <marker date="1448803128268" expanded="true" signature="5407:5555" placeholder="select * fro..Question..." />
-            <marker date="1448803128268" expanded="true" signature="5452:5554" placeholder="select quest..Answer..." />
-            <marker date="1448803128268" expanded="true" signature="5498:5528" placeholder="select href ..." />
-            <marker date="1448803128268" expanded="true" signature="5651:5743" placeholder="select * fro..Answer..." />
-            <marker date="1448803128268" expanded="true" signature="5687:5717" placeholder="select href ..." />
-            <marker date="1448803128268" expanded="true" signature="6248:6291" placeholder="select * fro..TopicInfo..." />
-            <marker date="1448803128268" expanded="true" signature="6367:6505" placeholder="select * fro..Question..." />
-            <marker date="1448803128268" expanded="true" signature="6412:6504" placeholder="select quest..Answer..." />
-            <marker date="1448803128268" expanded="true" signature="6458:6483" placeholder="select href ..." />
-            <marker date="1448803128268" expanded="true" signature="6596:6678" placeholder="select * fro..Answer..." />
-            <marker date="1448803128268" expanded="true" signature="6632:6657" placeholder="select href ..." />
-            <marker date="1448803128268" expanded="true" signature="7255:7300" placeholder="select * fro..ColumnInfo..." />
-            <marker date="1448803128268" expanded="true" signature="7401:7463" placeholder="select * fro..Article..." />
-            <marker date="1448803128268" expanded="true" signature="8077:8122" placeholder="select * fro..ColumnInfo..." />
-            <marker date="1448803128268" expanded="true" signature="8223:8257" placeholder="select * fro..Article..." />
-            <marker date="1448803128268" expanded="true" signature="8223:8265" placeholder="select * fro..Article..." />
-            <marker date="1448803128268" expanded="true" signature="9301:9334" placeholder="select * fro..Question..." />
-            <marker date="1448803128268" expanded="true" signature="9396:9427" placeholder="select * fro..Answer..." />
+            <marker date="1448803173049" expanded="true" signature="4415:4460" placeholder="select * fro..AuthorInfo..." />
+            <marker date="1448803173049" expanded="true" signature="4537:4634" placeholder="select * fro..Question..." />
+            <marker date="1448803173049" expanded="true" signature="4582:4630" placeholder="select quest..Answer..." />
+            <marker date="1448803173049" expanded="true" signature="4709:4750" placeholder="select * fro..Answer..." />
+            <marker date="1448803173049" expanded="true" signature="5274:5327" placeholder="select * fro..CollectionInfo..." />
+            <marker date="1448803173049" expanded="true" signature="5408:5556" placeholder="select * fro..Question..." />
+            <marker date="1448803173049" expanded="true" signature="5453:5555" placeholder="select quest..Answer..." />
+            <marker date="1448803173049" expanded="true" signature="5499:5529" placeholder="select href ..." />
+            <marker date="1448803173049" expanded="true" signature="5652:5744" placeholder="select * fro..Answer..." />
+            <marker date="1448803173049" expanded="true" signature="5688:5718" placeholder="select href ..." />
+            <marker date="1448803173049" expanded="true" signature="6249:6292" placeholder="select * fro..TopicInfo..." />
+            <marker date="1448803173049" expanded="true" signature="6368:6506" placeholder="select * fro..Question..." />
+            <marker date="1448803173049" expanded="true" signature="6413:6505" placeholder="select quest..Answer..." />
+            <marker date="1448803173049" expanded="true" signature="6459:6484" placeholder="select href ..." />
+            <marker date="1448803173049" expanded="true" signature="6597:6679" placeholder="select * fro..Answer..." />
+            <marker date="1448803173049" expanded="true" signature="6633:6658" placeholder="select href ..." />
+            <marker date="1448803173049" expanded="true" signature="7256:7301" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448803173049" expanded="true" signature="7402:7464" placeholder="select * fro..Article..." />
+            <marker date="1448803173049" expanded="true" signature="8078:8123" placeholder="select * fro..ColumnInfo..." />
+            <marker date="1448803173049" expanded="true" signature="8224:8258" placeholder="select * fro..Article..." />
+            <marker date="1448803173049" expanded="true" signature="8224:8266" placeholder="select * fro..Article..." />
+            <marker date="1448803173049" expanded="true" signature="9303:9336" placeholder="select * fro..Question..." />
+            <marker date="1448803173049" expanded="true" signature="9398:9429" placeholder="select * fro..Answer..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25795054">
+          <caret line="42" column="32" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
+          <folding>
+            <element signature="e#25#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
