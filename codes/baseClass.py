@@ -98,6 +98,8 @@ class TypeClass(object):
     article_type = ['article', 'column', ]
     question_type = ['answer', 'question', 'author', 'collection', 'topic', ]
     type_list = question_type + article_type  # 文章必须放在专栏之前（否则检测类别的时候就一律检测为专栏了）
+    info_table = {'column': 'column_info', 'author': 'author_info', 'collection': 'collection_info',
+        'topic': 'topic_info', }
     pass
 
 class SettingClass(object):
@@ -157,6 +159,16 @@ class SqlClass(object):
     def commit():
         SqlClass.conn.commit()
         return
+
+    @staticmethod
+    def get_result_list(sql):
+        result = SqlClass.cursor.execute(sql).fetchall()
+        return result
+
+    @staticmethod
+    def get_result(sql):
+        result = SqlClass.cursor.execute(sql).fetchone()
+        return result
 
     @staticmethod
     def wrap(kind, result=()):

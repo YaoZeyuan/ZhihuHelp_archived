@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from image_container import ImageContainer
-from filter import RawBook, HtmlTranslator
+from rawbook import RawBook, HtmlTranslator
 from baseClass import BaseClass
 from epub import Book
 
@@ -68,5 +68,9 @@ class EpubCreator(object):
 
 
 def create_epub(task):
+    """
+    传入的为一个list的电子书，不能明确电子书的种类，也不能知道list中有多少电子书
+    所以最终生成的时候，需要将所有电子书都合并在一个包里，每本书为一个章节
+    """
     raw_book = RawBook(task['book_list'])
     return

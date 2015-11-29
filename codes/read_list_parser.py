@@ -172,8 +172,7 @@ class ReadListParser():
             task['book']['kind'] = 'article'
             task['book']['info'] = 'select * from ColumnInfo where column_id = {} '.format(column_id)
             task['book']['question'] = ''
-            task['book']['answer'] = 'select * from Article where column_id = {} and article_id = {} '.format(column_id,
-                                                                                                              article_id)
+            task['book']['answer'] = ' column_id = {} and article_id = {} '.format(column_id, article_id)
             return task
 
         def parse_column(command):
@@ -233,7 +232,7 @@ class ReadListParser():
             book['kind'] = 'article'
             book['info'] = ''
             book['question'] = ''
-            book['answer'] = answer
+            book['answer'] = 'select * from Article where ({})'.format(' or '.join(answer))
             return book
 
         # 对于author,topic,collection,column,直接合并即可

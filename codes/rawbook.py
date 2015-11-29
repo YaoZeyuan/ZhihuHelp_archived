@@ -1,30 +1,38 @@
 # -*- coding: utf-8 -*-
-from baseClass import SqlClass, SettingClass
-from codes.epubBuilder.image_container import ImageContainer
+from baseClass import SqlClass, SettingClass, TypeClass
+from image_container import ImageContainer
 import re
 
 
-class RawBook(object):
-    u"""
-    负责在数据库中提取数据和对数据进行处理,返回处理完毕的html信息和所有待下载图片的imgContainer
-    """
-
+class Book(object):
     def __init__(self, book_info):
-        self.raw_info = book_info
-        self.imgContainer = ImageContainer()
-        self.book = {}
-        self.init_book()
+        self.book_info = book_info
+        self.kind = book_info['kind']
+        self.book = {'kind': self.kind, 'info': None, 'article_list': [], }
         return
 
-    def init_book(self):
-        self.book['info'] = ''
-        self.book['kind'] = self.raw_info['kind']
-        self.book['article_list'] = []
-        return
+    def get_book(self):
+        self.book['info'] = self.get_info()
+        self.book['article_list'] = self.get_article_list()
+        return self.book
 
-    def get_raw_question_list(self):
-        question_list = [SqlClass.wrap('question', x) for x in self.get_result_list(self.raw_info['question'])]
-        answer_list = [SqlClass.wrap('answer', x) for x in self.get_result_list(self.raw_info['answer'])]
+    def get_info(self):
+        info = dict()
+        if self.book_info['info']:
+            info = SqlClass.cursor.execute(self.book_info['info']).fetchone()
+            info = SqlClass.wrap(TypeClass.info_table[self.kind], info)
+        return info
+
+    def get_article_list(self):
+        if self.kind in ['article', 'column']:
+            article_list = self.__get_question_list()
+        else:
+            article_list = self.__get_article_list()
+        return article_list
+
+    def __get_question_list(self):
+        question_list = [SqlClass.wrap('question', x) for x in SqlClass.get_result_list(self.book_info['question'])]
+        answer_list = [SqlClass.wrap('answer', x) for x in SqlClass.get_result_list(self.book_info['answer'])]
 
         def merge_answer_into_question():
             question_dict = {x['question_id']: {'question': x.copy(), 'answer_list': [], 'agree': 0} for x in
@@ -50,28 +58,31 @@ class RawBook(object):
         question_list = [add_property(x) for x in merge_answer_into_question()]
         return question_list
 
-    def get_raw_article_list(self):
+    def __get_article_list(self):
         def add_property(article):
             article['char_count'] = len(article['content'])
             article['agree_count'] = article['agree']
             article['update_date'] = article['publish_date']
             article['answer_count'] = 1
             return article
-        article_list = [SqlClass.wrap('article', x) for x in self.get_result_list(self.raw_info['answer'])]
+
+        article_list = [SqlClass.wrap('article', x) for x in SqlClass.get_result_list(self.raw_info['answer'])]
         article_list = [add_property(x) for x in article_list]
         return article_list
 
-    def get_result_list(self, sql):
-        result = SqlClass.cursor.execute(sql).fetchall()
-        return result
+class RawBook(object):
+    u"""
+    负责在数据库中提取数据和对数据进行处理,返回处理完毕的html信息和所有待下载图片的imgContainer
+    """
 
-    def get_book(self):
-        self.book['info'] = self.create_info_dict(self.raw_info['kind'], self.raw_info['info'])
-        if self.raw_info['kind'] in ['article', 'column']:
-            self.book['article_list'] = self.get_raw_question_list()
-        else:
-            self.book['article_list'] = self.get_raw_article_list()
-        return self.book
+    def __init__(self, book_list):
+        self.raw_info = book_list
+        self.imgContainer = ImageContainer()
+        self.book = {}
+        self.init_book()
+        return
+
+
 
     def get_image_container(self):
         return self.imgContainer
