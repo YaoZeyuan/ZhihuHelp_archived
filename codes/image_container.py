@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import hashlib
+import os.path
 from multiprocessing.dummy import Pool as ThreadPool  # 多线程并行库
 from baseClass import SettingClass, HttpBaseClass
 from worker import PageWorker  # 引入控制台
@@ -30,9 +31,17 @@ class ImageContainer(object):
             return image['filename']
         return ''
 
+    def get_filename_list(self):
+        return self.container.values()
+
     def download(self, image):
         filename = image['filename']
         href = image['href']
+
+        if os.path.isfile(self.save_path + '/' + filename):
+            self.delete(href)
+            return
+
         content = HttpBaseClass.get_http_content(url=href, timeout=SettingClass.WAITFOR_PIC)
         if not content:
             return
@@ -48,15 +57,10 @@ class ImageContainer(object):
         return
 
     def create_image(self, href):
-        image = {'filename': self.get_filename(href), 'href': self.remove_http(href)}
+        image = {'filename': self.create_filename(href), 'href': href}
         return image
 
-    def remove_http(self, href):
-        if href[:5] == 'https':
-            href = 'http' + href[5:]
-        return href
-
-    def get_filename(self, href):
+    def create_filename(self, href):
         filename = self.md5(href) + '.jpg'
         return filename
 

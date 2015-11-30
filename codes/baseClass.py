@@ -90,6 +90,17 @@ class BaseClass(object):
         return
 
     @staticmethod
+    def init_path():
+        BaseClass.reset_dir()
+        BaseClass.make_dir(BaseClass.base_path + u'/知乎助手生成的电子书')
+        BaseClass.make_dir(u'./知乎电子书临时资源库')
+        BaseClass.change_dir(u'./知乎电子书临时资源库')
+        BaseClass.make_dir(u'./知乎网页池')
+        BaseClass.make_dir(u'./知乎图片池')
+        BaseClass.reset_dir()
+        return
+
+    @staticmethod
     def get_time():
         return time.time()
 
