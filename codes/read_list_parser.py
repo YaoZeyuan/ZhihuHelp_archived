@@ -135,10 +135,10 @@ class ReadListParser():
             task['book']['kind'] = 'collection'
             task['book']['info'] = 'select * from CollectionInfo where collection_id = {}'.format(collection_id)
             task['book'][
-                'question'] = 'select * from Question where question_id in (select question_id from Answer where href in (select href in CollectionIndex where collection_id = {}))'.format(
+                'question'] = 'select * from Question where question_id in (select question_id from Answer where href in (select href from CollectionIndex where collection_id = {}))'.format(
                 collection_id)
             task['book'][
-                'answer'] = 'select * from Answer where href in (select href in CollectionIndex where collection_id = {})'.format(
+                'answer'] = 'select * from Answer where href in (select href from CollectionIndex where collection_id = {})'.format(
                 collection_id)
             return task
 
@@ -153,10 +153,10 @@ class ReadListParser():
             task['book']['kind'] = 'topic'
             task['book']['info'] = 'select * from TopicInfo where topic_id = {}'.format(topic_id)
             task['book'][
-                'question'] = 'select * from Question where question_id in (select question_id from Answer where href in (select href in TopicIndex where topic_id = {}))'.format(
+                'question'] = 'select * from Question where question_id in (select question_id from Answer where href in (select href from TopicIndex where topic_id = {}))'.format(
                 topic_id)
             task['book'][
-                'answer'] = 'select * from Answer where href in (select href in TopicIndex where topic_id = {})'.format(
+                'answer'] = 'select * from Answer where href in (select href from TopicIndex where topic_id = {})'.format(
                 topic_id)
             return task
 
@@ -205,7 +205,7 @@ class ReadListParser():
         将task_list按类别合并在一起
         """
 
-        def merge_question_book(book_list):
+        def merge_question_book(kind, book_list):
             """
             只有answer，question需要合并
             """
@@ -244,8 +244,10 @@ class ReadListParser():
 
         # 将answer,question,article单独合并为一本电子书
         for kind in ['question', 'answer']:
-            task_package['book_list'][kind] = [merge_question_book(kind, task_package['book_list'][kind])]
-        task_package['book_list']['article'] = [merge_article_book(task_package['book_list']['article'])]
+            if task_package['book_list'][kind]:
+                task_package['book_list'][kind] = [merge_question_book(kind, task_package['book_list'][kind])]
+        if task_package['book_list']['article']:
+            task_package['book_list']['article'] = [merge_article_book(task_package['book_list']['article'])]
         return task_package
 
 

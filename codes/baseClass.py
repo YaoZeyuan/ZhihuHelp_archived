@@ -122,7 +122,7 @@ class SettingClass(object):
     # 默认数据库名称
     dataBaseFileName = u'./zhihuDB_173.db'
 
-    UPDATETIME = '2015-11-20'  # 更新日期
+    UPDATETIME = '2015-11-21'  # 更新日期
 
     ACCOUNT = 'mengqingxue2014@qq.com'  # 默认账号密码
     PASSWORD = '131724qingxue'  #
@@ -173,6 +173,7 @@ class SqlClass(object):
 
     @staticmethod
     def get_result_list(sql):
+        BaseClass.logger.debug(sql)
         result = SqlClass.cursor.execute(sql).fetchall()
         return result
 

@@ -31,9 +31,9 @@ class Book(object):
 
     def get_article_list(self):
         if self.kind in ['article', 'column']:
-            article_list = self.__get_question_list()
-        else:
             article_list = self.__get_article_list()
+        else:
+            article_list = self.__get_question_list()
         return article_list
 
     def __get_question_list(self):
@@ -56,7 +56,7 @@ class Book(object):
                 answer['update_date'] = answer['edit_date']
                 agree_count += answer['agree']
                 char_count += answer['char_count']
-            question['answer_count'] = len(question['answer'])
+            question['answer_count'] = len(question['answer_list'])
             question['agree_count'] = agree_count
             question['char_count'] = char_count
             return question
@@ -72,7 +72,7 @@ class Book(object):
             article['answer_count'] = 1
             return article
 
-        article_list = [SqlClass.wrap('article', x) for x in SqlClass.get_result_list(self.raw_info['answer'])]
+        article_list = [SqlClass.wrap('article', x) for x in SqlClass.get_result_list(self.book_info['answer'])]
         article_list = [add_property(x) for x in article_list]
         return article_list
 
@@ -101,6 +101,8 @@ class CreateHtmlPage(object):
             src_download = CreateHtmlPage.fix_image_src(src)
             if src_download:
                 filename = self.image_container.add(src_download)
+            else:
+                filename = ''
             content = content.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
         return content
 
@@ -128,14 +130,15 @@ class CreateHtmlPage(object):
                 template = answer_temp.read()
             return template.format(**answer)
 
-        answer_content = ''.join([create_answer(answer) for answer in question['article_list']])
+        answer_content = ''.join([create_answer(answer) for answer in question['answer_list']])
         question['answer_content'] = answer_content
         with open('./html_template/content/question.html') as question_temp:
             template = question_temp.read()
+        question.update(question['question'])
         content = template.format(**question)
         page = dict()
         page['content'] = self.fix_image(content)
-        page['filename'] = prefix + str(question['question_id']) + '.html'
+        page['filename'] = str(prefix) + str(question['question_id']) + '.html'
         page['title'] = question['title']
         return page
 
@@ -155,8 +158,8 @@ class CreateHtmlPage(object):
         content = template.format(**info)
         page = dict()
         page['content'] = self.fix_image(content)
-        page['filename'] = prefix + 'info.html'
-        page['title'] = self.info['title']
+        page['filename'] = str(prefix) + 'info.html'
+        page['title'] = info['title']
         return page
 
 
@@ -173,7 +176,7 @@ class BookSplit(object):
 
     def __sort(self):
         for book in self.raw_book_list:
-            if book['kind'] in ['article', 'column']:
+            if book['kind'] in TypeClass.article_type:
                 self.sort_article(book)
             else:
                 self.sort_question(book)
@@ -277,10 +280,10 @@ class RawBook(object):
         book['title'] = raw_book['info']['title']
         book['pre_fix'] = index
 
-        page = creator.create_info_page(raw_book['info']['kind'], raw_book['info'], book['pre_fix'])
+        page = creator.create_info_page(raw_book['kind'], raw_book['info'], book['pre_fix'])
         book['page_list'].append(page)
         for article in raw_book['article_list']:
-            if raw_book['info']['kind'] in TypeClass.article_type:
+            if raw_book['kind'] in TypeClass.article_type:
                 page = creator.create_article(article, index)
             else:
                 page = creator.create_question(article, index)
