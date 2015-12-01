@@ -42,8 +42,10 @@ class EpubCreator(object):
             epub.addDesc(u'该电子书由知乎助手生成，知乎助手是姚泽源为知友制作的仅供个人使用的简易电子书制作工具，源代码遵循WTFPL，希望大家能认真领会该协议的真谛，为飞面事业做出自己的贡献 XD')
             epub.addRight('CC')
             epub.addPublisher('ZhihuHelp')
-            epub.addCss(u'../../../epubResource/markdownStyle.css')
-            epub.addCss(u'../../../epubResource/userDefine.css')
+            BaseClass.logger.debug(u'当前目录为')
+            BaseClass.printCurrentDir()
+            epub.addCss(u'../../epubResource/markdownStyle.css')
+            epub.addCss(u'../../epubResource/userDefine.css')
             epub.buildingEpub()
         return
 

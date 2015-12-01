@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>{title}</title>
+    <link rel="stylesheet" href="../markdown.css">
+    <link rel="stylesheet" href="../front.css">
 </head>
 <body>
+<div class="title-image">{title_image}</div>
+<div class="title">
+    {title}
+</div>
+<div class="author-info">
+    <div class="author-name"><a href="http://www.zhihu.com/people/{author_hash}">{author_name}</a>&nbsp<p>
+        {author_sign}</p></div>
+    <div class="author-logo"><img src="{author_logo}"></div>
+</div>
+<div class="article-info"><p>评论数:{comment}</p>
 
+    <p>赞同数:{agree}</p>
+
+    <p>发布时间:{publish_date}</p></div>
+<div class="content">
+    {content}
+</div>
 </body>
 </html>
