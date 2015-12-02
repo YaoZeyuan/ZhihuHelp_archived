@@ -16,6 +16,7 @@ class EpubCreator(object):
         return
 
     def create(self):
+        self.image_container.set_save_path(BaseClass.base_path + u'/知乎电子书临时资源库/知乎图片池/')
         self.image_container.start_download()
         title = '_'.join([book['title'] for book in self.book_list])
         title = title.replace('\r', '').replace('\n', '')
@@ -33,8 +34,8 @@ class EpubCreator(object):
                 with open(html_tmp_path + page['filename'], 'w') as html:
                     html.write(page['content'])
                 epub.addHtml(html_tmp_path + page['filename'], page['title'])
-        for filename in self.book['image_list']:
-            epub.addImg(image_tmp_path + filename)
+        for image in self.book['image_list']:
+            epub.addImg(image_tmp_path + image['filename'])
         epub.addLanguage('zh-cn')
         epub.addCreator('ZhihuHelp1.7.0')
         epub.addDesc(u'该电子书由知乎助手生成，知乎助手是姚泽源为知友制作的仅供个人使用的简易电子书制作工具，源代码遵循WTFPL，希望大家能认真领会该协议的真谛，为飞面事业做出自己的贡献 XD')

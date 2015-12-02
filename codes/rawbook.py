@@ -90,7 +90,7 @@ class CreateHtmlPage(object):
         return
 
     def fix_image(self, content):
-        for img in re.findall(r'<img.*?>', content):
+        for img in re.findall(r'<img[^>]*', content):
             src = re.search(r'(?<=src=").*?(?=")', img)
             if not src:
                 continue

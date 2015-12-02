@@ -43,7 +43,7 @@ class ZhihuHelp(BaseClass):
         BaseClass.logger.info(u"开始制作第 {} 本电子书".format(counter))
         BaseClass.logger.info(u"对记录 {} 进行分析".format(command))
         task = ReadListParser.get_task(command)  # 分析命令
-        worker_factory(task['work_list'])  # 执行抓取程序
+        # worker_factory(task['work_list'])  # 执行抓取程序
         BaseClass.logger.info(u"网页信息抓取完毕")
 
         BaseClass.logger.info(u"开始自数据库中生成电子书数据")

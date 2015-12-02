@@ -34,12 +34,13 @@ class ImageContainer(object):
     def get_filename_list(self):
         return self.container.values()
 
-    def download(self, image):
+    def download(self, index):
+        image = self.container[index]
         filename = image['filename']
         href = image['href']
 
         if os.path.isfile(self.save_path + '/' + filename):
-            self.delete(href)
+            # self.delete(href)
             return
 
         content = HttpBaseClass.get_http_content(url=href, timeout=SettingClass.WAITFOR_PIC)
@@ -47,7 +48,7 @@ class ImageContainer(object):
             return
         with open(self.save_path + '/' + filename, 'wb') as image:
             image.write(content)
-        self.delete(href)
+        #self.delete(href)
         return
 
     def start_download(self):
@@ -61,7 +62,7 @@ class ImageContainer(object):
         return image
 
     def create_filename(self, href):
-        filename = self.md5(href) + '.jpg'
+        filename = self.hash(href) + '.jpg'
         return filename
 
     def hash(self, string):
