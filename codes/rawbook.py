@@ -277,7 +277,12 @@ class RawBook(object):
 
     def create_single_book(self, raw_book, index, creator):
         book = {'title': '', 'page_list': [], 'pre_fix': '', }
+        # todo 临时修复之，待发布新版之后抓紧改过来
+        if not 'title' in raw_book['info']:
+            raw_book['info']['title'] = raw_book['info']['name']
+
         book['title'] = raw_book['info']['title']
+
         book['pre_fix'] = index
 
         page = creator.create_info_page(raw_book['kind'], raw_book['info'], book['pre_fix'])
