@@ -9,15 +9,10 @@ class EpubCreator(object):
     一次只做一本书
     而且只做知乎相关书目
     """
-
     def __init__(self, book):
         self.book = book
         self.book_list = book['book_list']
         self.image_container = book['image_container']
-        return
-
-    def init_base_dir(self):
-
         return
 
     def create(self):

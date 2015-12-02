@@ -24,12 +24,11 @@ class ZhihuHelp(BaseClass):
         if SettingClass.REMEMBERACCOUNT:
             print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
             print   u'直接点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
-            BaseClass.logger.info("此处跳过了检查设置文件代码，发布前记得改过来")
-            # if raw_input():
-            #    login.login()
-            #    SettingClass.PICQUALITY = self.config.set_picture_quality_guide()
-            # else:
-            HttpBaseClass.set_cookie()
+            if raw_input():
+                login.login()
+                SettingClass.PICQUALITY = self.config.set_picture_quality_guide()
+            else:
+                HttpBaseClass.set_cookie()
         else:
             login.login()
             SettingClass.PICQUALITY = self.config.set_picture_quality_guide()
@@ -44,7 +43,7 @@ class ZhihuHelp(BaseClass):
         BaseClass.logger.info(u"开始制作第 {} 本电子书".format(counter))
         BaseClass.logger.info(u"对记录 {} 进行分析".format(command))
         task = ReadListParser.get_task(command)  # 分析命令
-        #worker_factory(task['work_list'])  # 执行抓取程序
+        worker_factory(task['work_list'])  # 执行抓取程序
         BaseClass.logger.info(u"网页信息抓取完毕")
 
         BaseClass.logger.info(u"开始自数据库中生成电子书数据")

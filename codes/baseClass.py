@@ -69,7 +69,6 @@ class BaseClass(object):
 
     @staticmethod
     def printCurrentDir():
-        print os.getcwd()
         print os.path.realpath('.')
         return
 
@@ -235,11 +234,17 @@ class HttpBaseClass(object):
         报错:
             IOError     当解压缩页面失败时报错
         """
+        # UA还是得要啊。。。
+        # 没UA知乎分分钟只返回给你首页看- -
+        header = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36', }
+        header.update(extra_header)
+
         if data:
             data = urllib.urlencode(data)
         request = urllib2.Request(url=url, data=data)
-        for key in extra_header:
-            request.add_header(key, extra_header[key])
+        for key in header:
+            request.add_header(key, header[key])
 
         response = None
         try:
@@ -260,8 +265,8 @@ class HttpBaseClass(object):
             BaseClass.logger.info(u'未知错误')
             BaseClass.logger.info(u'错误页面:{}'.format(url))
             BaseClass.logger.info(u'错误堆栈信息:{}'.format(traceback.format_exc()))
-
-        return HttpBaseClass.unpack_response(response)
+        content = HttpBaseClass.unpack_response(response)
+        return content
 
     @staticmethod
     def unpack_response(response):
