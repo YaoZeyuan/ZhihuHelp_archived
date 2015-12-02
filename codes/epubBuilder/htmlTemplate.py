@@ -14,7 +14,7 @@ def baseTemplate(dataDict={}):
             <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" >
                 <head>
                     <meta charset="utf-8" />
-                    <link rel="stylesheet" type="text/css" href="../markdownStyle.css"/>
+                    <link rel="stylesheet" type="text/css" href="../markdown.css"/>
                     <link rel="stylesheet" type="text/css" href="../userDefine.css"/>
                     <title>{Title}</title>
                 </head>

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import os.path
 import sys
 import traceback
 import logging
@@ -68,6 +69,7 @@ class BaseClass(object):
 
     @staticmethod
     def printCurrentDir():
+        print os.getcwd()
         print os.path.realpath('.')
         return
 

@@ -5,7 +5,7 @@ u"""
 提供简单的接口
 
 """
-
+from codes.baseClass import BaseClass
 
 class Metadata():
     def __init__(self):
@@ -256,8 +256,8 @@ class Book():
     <meta name="provider" content="www.zhihu.com"/>
     <meta name="builder" content="ZhihuHelpv1.7"/>
     <meta name="right" content="该文档由ZhihuHelp_v1.7生成。ZhihuHelp为姚泽源为知友提供的知乎答案收集工具，仅供个人交流与学习使用。在未获得知乎原答案作者的商业授权前，不得用于任何商业用途。"/>
-    <link rel="markdownStyle.css" type="text/css" href="../markdownStyle.css"/>
-    <link rel="userDefine.css" type="text/css" href="../userDefine.css"/>
+    <link rel="markdown.css" type="text/css" href="../markdown.css">
+    <link rel="userDefine.css" type="text/css" href="../userDefine.css">
     <title>目录</title>
   </head>
   <body>
@@ -302,7 +302,7 @@ class Book():
 
         # 直接使用的旧版函数，应当予以更新
         chdir('../../')
-        filePath = u'./../助手生成的电子书/' + self.bookTitle + u'.epub'
+        filePath = u'./../知乎助手生成的电子书/' + self.bookTitle + u'.epub'
         epub = zipfile.ZipFile(file=filePath, mode='w', compression=zipfile.ZIP_STORED, allowZip64=True)
         chdir(u'./' + self.bookTitle + u'/')
         epub.write('./mimetype')

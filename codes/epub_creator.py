@@ -24,6 +24,7 @@ class EpubCreator(object):
         self.image_container.start_download()
         title = '_'.join([book['title'] for book in self.book_list])
         title = title.replace('\r', '').replace('\n', '')
+        BaseClass.change_dir(BaseClass.base_path + u'/知乎电子书临时资源库/')
         epub = Book(title, 27149527)
         html_tmp_path = BaseClass.base_path + u'/知乎电子书临时资源库/知乎网页池/'
         image_tmp_path = BaseClass.base_path + u'/知乎电子书临时资源库/知乎图片池/'
@@ -46,8 +47,8 @@ class EpubCreator(object):
         epub.addPublisher('ZhihuHelp')
         BaseClass.logger.debug(u'当前目录为')
         BaseClass.printCurrentDir()
-        epub.addCss(u'../../epubResource/markdownStyle.css')
-        epub.addCss(u'../../epubResource/userDefine.css')
+        epub.addCss(BaseClass.base_path + u'/epubResource/markdown.css')
+        epub.addCss(BaseClass.base_path + u'/epubResource/front.css')
         epub.buildingEpub()
         return
 
