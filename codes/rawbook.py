@@ -1,44 +1,114 @@
 # -*- coding: utf-8 -*-
-from baseClass import SqlClass, SettingClass, TypeClass
+import random
+from baseClass import SqlClass, SettingClass, TypeClass, BaseClass
 from image_container import ImageContainer
 
+
+class EpubArticle(object):
+    def __init__(self):
+        return
+
+
+class EpubBookProperty(object):
+    def __init__(self):
+        self.article_count = 0
+        self.answer_count = 0
+        self.agree_count = 0
+        self.char_count = 0
+
+        self.title = ''
+        self.id = ''
+        self.split_index = 0
+        return
+
+
+class EpubBookConfig(object):
+    def __init__(self):
+
+        self.kind = ''
+        self.article_list = []
+        self.property = EpubBookProperty()
+
+        self.info = {}
+        return
+
+    def set_article_list(self, article_list):
+        for article in article_list:
+            self.property.answer_count += article['answer_count']
+            self.property.agree_count += article['agree_count']
+            self.property.char_count += article['char_count']
+        self.property.article_count = len(article_list)
+        return
+
+    def set_info(self, info):
+        self.info.update(info)
+        if self.kind == TypeClass.question:
+            self.property.title = '知乎问题集锦({})'.format(BaseClass.get_time())
+            self.property.id = BaseClass.get_time()
+        if self.kind == TypeClass.answer:
+            self.property.title = '知乎回答集锦({})'.format(BaseClass.get_time())
+            self.property.id = BaseClass.get_time()
+        if self.kind == TypeClass.article:
+            self.property.title = '知乎专栏文章集锦({})'.format(BaseClass.get_time())
+            self.property.id = BaseClass.get_time()
+
+        if self.kind == TypeClass.topic:
+            self.property.title = '话题_{}({})'.format(info['title'], info['topic_id'])
+            self.property.id = info['topic_id']
+        if self.kind == TypeClass.collection:
+            self.property.title = '收藏夹_{}({})'.format(info['title'], info['collection_id'])
+            self.property.id = info['collection_id']
+        if self.kind == TypeClass.author:
+            self.property.title = '作者_{}({})'.format(info['name'], info['author_id'])
+            self.property.id = info['author_id']
+        if self.kind == TypeClass.collection:
+            self.property.title = '专栏_{}({})'.format(info['name'], info['column_id'])
+            self.property.id = info['column_id']
+        return
+
+    def copy(self):
+        new_book = EpubBookConfig()
+        new_book.kind = self.kind
+        new_book.property = EpubBookProperty()
+        new_book.set_info(self.info)
+        return
 
 class Book(object):
     u"""
     负责在数据库中提取数据，生成基本的book字典
+    只代表一本书
     """
     def __init__(self, book_info):
         self.book_info = book_info
-        self.kind = book_info['kind']
-        self.book = {'kind': self.kind, 'info': None, 'article_list': [], }
+        self.book = EpubBookConfig()
+
+        self.book.kind = book_info.kind
         return
 
     def get_book(self):
-        self.book['info'] = self.get_info()
-        self.book['article_list'] = self.get_article_list()
-        self.book['article_count'] = len(self.book['article_list'])
-        self.book['answer_count'] = 0
-        for x in self.book['article_list']:
-            self.book['answer_count'] += x['answer_count']
+        self.catch_info()
+        self.get_article_list()
         return self.book
 
-    def get_info(self):
-        info = dict()
-        if self.book_info['info']:
-            info = SqlClass.cursor.execute(self.book_info['info']).fetchone()
-            info = SqlClass.wrap(TypeClass.info_table[self.kind], info)
-        return info
+    def catch_info(self):
+        info = {}
+        if self.book_info.info:
+            info = SqlClass.cursor.execute(self.book_info.info).fetchone()
+            info = SqlClass.wrap(TypeClass.info_table[self.book.kind], info)
+        self.book.set_info(info)
+        return
 
     def get_article_list(self):
-        if self.kind in ['article', 'column']:
+        if self.book.kind in ['article', 'column']:
             article_list = self.__get_article_list()
         else:
             article_list = self.__get_question_list()
-        return article_list
+        self.book.set_article_list(article_list)
+        return
 
     def __get_question_list(self):
-        question_list = [SqlClass.wrap('question', x) for x in SqlClass.get_result_list(self.book_info['question'])]
-        answer_list = [SqlClass.wrap('answer', x) for x in SqlClass.get_result_list(self.book_info['answer'])]
+        question_list = [SqlClass.wrap('question', x) for x in SqlClass.get_result_list(self.book_info.question)]
+        answer_list = [SqlClass.wrap('answer', x) for x in SqlClass.get_result_list(self.book_info.answer)]
 
         def merge_answer_into_question():
             question_dict = {x['question_id']: {'question': x.copy(), 'answer_list': [], 'agree': 0} for x in
@@ -152,14 +222,18 @@ class CreateHtmlPage(object):
         page['title'] = article['title']
         return page
 
-    def create_info_page(self, kind, info, prefix=''):
+    def create_info_page(self, book, prefix=''):
+        kind = book.kind
+        info = book.info
         with open('./html_template/info/{}.html'.format(kind)) as file:
             template = file.read()
         content = template.format(**info)
         page = dict()
         page['content'] = self.fix_image(content)
         page['filename'] = str(prefix) + 'info.html'
-        page['title'] = info['title']
+        page['title'] = book.property.title
+        if book.property.split_index:
+            page['title'] += "_({})".format(book.property.split_index)
         return page
 
 
@@ -176,14 +250,14 @@ class BookSplit(object):
 
     def __sort(self):
         for book in self.raw_book_list:
-            if book['kind'] in TypeClass.article_type:
+            if book.kind in TypeClass.article_type:
                 self.sort_article(book)
             else:
                 self.sort_question(book)
         return
 
     def sort_article(self, book):
-        article_list = book['article_list']
+        article_list = book.article_list
         article_list.sort(key=lambda x: x[SettingClass.ARTICLEORDERBY], reverse=SettingClass.ARTICLEORDERBYDESC)
         return
 
@@ -192,33 +266,32 @@ class BookSplit(object):
             answer_list.sort(key=lambda x: x[SettingClass.ANSWERORDERBY], reverse=SettingClass.ANSWERORDERBYDESC)
             return
 
-        article_list = book['article_list']
-        article_list.sort(key=lambda x: x[SettingClass.QUESTIONORDERBY], reverse=SettingClass.QUESTIONORDERBYDESC)
-        for item in book['article_list']:
+        book.article_list.sort(key=lambda x: x[SettingClass.QUESTIONORDERBY], reverse=SettingClass.QUESTIONORDERBYDESC)
+        for item in book.article_list:
             sort_answer(item['answer_list'])
         return
 
     def __split(self):
         def split(book, surplus, index=1):
-            if book['answer_count'] <= surplus:
-                book['split_index'] = index
+            if book.property.answer_count <= surplus:
+                book.property.split_index = index
                 return [book]
             article_list = []
             while surplus > 0:
-                article = book['article_list'].pop()
+                article = book.article_list.pop()
                 article_list.append(article)
                 surplus -= article['answer_count']
-                book['answer_count'] -= article['answer_count']
+                book.property.answer_count -= article['answer_count']
             new_book = book.copy()
-            new_book['article_list'] = article_list
-            new_book['split_index'] = index
+            new_book.set_article_list(article_list)
+            new_book.property.split_index = index
             return [new_book] + split(book, SettingClass.MAXANSWER, index + 1)
 
         counter = 0
         book_list = []
         while len(self.raw_book_list):
             book = self.raw_book_list.pop()
-            if (counter + book['answer_count']) < SettingClass.MAXANSWER:
+            if (counter + book.property.answer_count) < SettingClass.MAXANSWER:
                 book_list.append(book)
             else:
                 split_list = split(book, SettingClass.MAXANSWER - counter)
@@ -241,6 +314,8 @@ class RawBook(object):
     def merge_raw_info(self, raw_info):
         book_info_list = []
         for kind in TypeClass.type_list:
+            if not kind in raw_info:
+                continue
             for info in raw_info[kind]:
                 book_info_list.append(info)
         return book_info_list
@@ -277,18 +352,17 @@ class RawBook(object):
 
     def create_single_book(self, raw_book, index, creator):
         book = {'title': '', 'page_list': [], 'pre_fix': '', }
-        # todo 临时修复之，待发布新版之后抓紧改过来
-        if not 'title' in raw_book['info']:
-            raw_book['info']['title'] = raw_book['info']['name']
 
-        book['title'] = raw_book['info']['title']
+        book['title'] = raw_book.property.title
+        if raw_book.property.split_index:
+            book['title'] += "_({})".format(raw_book.property.split_index)
 
         book['pre_fix'] = index
 
-        page = creator.create_info_page(raw_book['kind'], raw_book['info'], book['pre_fix'])
+        page = creator.create_info_page(raw_book, book['pre_fix'])
         book['page_list'].append(page)
-        for article in raw_book['article_list']:
-            if raw_book['kind'] in TypeClass.article_type:
+        for article in raw_book.article_list:
+            if raw_book.kind in TypeClass.article_type:
                 page = creator.create_article(article, index)
             else:
                 page = creator.create_question(article, index)

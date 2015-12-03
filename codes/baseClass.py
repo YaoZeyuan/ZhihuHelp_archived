@@ -6,7 +6,6 @@ import traceback
 import logging
 import logging.handlers
 
-
 class BaseClass(object):
     u'''
     用于存放常用函数
@@ -103,10 +102,20 @@ class BaseClass(object):
 
     @staticmethod
     def get_time():
-        return time.time()
+        return str(time.time()).split('.')[0]
+
 
 
 class TypeClass(object):
+    answer = 'answer'
+    question = 'question'
+    topic = 'topic'
+    collection = 'collection'
+    author = 'author'
+    column = 'column'
+    article = 'article'
+
+    question_answer = ['answer', 'question']
     article_type = ['article', 'column', ]
     question_type = ['answer', 'question', 'author', 'collection', 'topic', ]
     type_list = question_type + article_type  # 文章必须放在专栏之前（否则检测类别的时候就一律检测为专栏了）
