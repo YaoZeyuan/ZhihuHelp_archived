@@ -51,6 +51,8 @@ class EpubBookConfig(object):
         if self.kind == TypeClass.article:
             self.property.title = '知乎专栏文章集锦({})'.format(BaseClass.get_time())
             self.property.id = BaseClass.get_time()
+        if self.kind in [TypeClass.answer, TypeClass.question, TypeClass.article]:
+            self.info['title'] = self.property.title
 
         if self.kind == TypeClass.topic:
             self.property.title = '话题_{}({})'.format(info['title'], info['topic_id'])
