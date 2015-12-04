@@ -64,29 +64,29 @@ class Task():
         return
 
     def merge_answer_book_list(self):
-        book_list = self.book_list['answer']
+        book_list = self.book_list[TypeClass.answer]
         book = CommandBook()
         question = []
         answer = []
         for item in book_list:
             question.append(item.question)
             answer.append(item.answer)
-        book.kind = 'answer'
+        book.kind = TypeClass.answer
         book.question = 'select * from Question where ({})'.format(' or '.join(question))
         book.answer = 'select * from Answer where ({})'.format(' or '.join(answer))
-        self.book_list['answer'] = [book]
+        self.book_list[TypeClass.answer] = [book]
         return
 
     def merge_question_book_list(self):
-        book_list = self.book_list['answer']
+        book_list = self.book_list[TypeClass.question]
         book = CommandBook()
         question = []
         answer = []
         for item in book_list:
             question.append(item.question)
             answer.append(item.answer)
-        book.kind = 'question'
+        book.kind = TypeClass.question
         book.question = 'select * from Question where ({})'.format(' or '.join(question))
         book.answer = 'select * from Answer where ({})'.format(' or '.join(answer))
-        self.book_list['answer'] = [book]
+        self.book_list[TypeClass.question] = [book]
         return

@@ -63,7 +63,7 @@ class EpubBookConfig(object):
         if self.kind == TypeClass.author:
             self.property.title = '作者_{}({})'.format(info['name'], info['author_id'])
             self.property.id = info['author_id']
-        if self.kind == TypeClass.collection:
+        if self.kind == TypeClass.column:
             self.property.title = '专栏_{}({})'.format(info['name'], info['column_id'])
             self.property.id = info['column_id']
         return

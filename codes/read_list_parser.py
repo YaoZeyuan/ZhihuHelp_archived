@@ -176,7 +176,8 @@ class ReadListParser():
             return task
 
         def parse_error(command):
-            BaseClass.logger.info(u"""匹配失败，未知readList类型。\n失败命令:{}""".format(command))
+            if command:
+                BaseClass.logger.info(u"""匹配失败，未知readList类型。\n失败命令:{}""".format(command))
             return
 
         parser = {'answer': parse_answer, 'question': parse_question, 'author': parse_author,
