@@ -2,8 +2,10 @@
 import hashlib
 import os.path
 from multiprocessing.dummy import Pool as ThreadPool  # 多线程并行库
-from baseClass import SettingClass, HttpBaseClass
 from worker import PageWorker  # 引入控制台
+from src.tools.extra_tools import ExtraTools
+from src.tools.http import Http
+
 
 class ImageContainer(object):
     def __init__(self, save_path=''):
@@ -40,15 +42,13 @@ class ImageContainer(object):
         href = image['href']
 
         if os.path.isfile(self.save_path + '/' + filename):
-            # self.delete(href)
             return
 
-        content = HttpBaseClass.get_http_content(url=href, timeout=SettingClass.WAITFOR_PIC)
+        content = Http.get_content(url=href, timeout=SettingClass.WAITFOR_PIC)
         if not content:
             return
         with open(self.save_path + '/' + filename, 'wb') as image:
             image.write(content)
-        #self.delete(href)
         return
 
     def start_download(self):
@@ -62,9 +62,5 @@ class ImageContainer(object):
         return image
 
     def create_filename(self, href):
-        filename = self.hash(href) + '.jpg'
+        filename = ExtraTools.md5(href) + '.jpg'
         return filename
-
-    def hash(self, string):
-        self.md5.update(str(string))
-        return self.md5.hexdigest()

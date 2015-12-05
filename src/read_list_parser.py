@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
-
-from baseClass import BaseClass, TypeClass
-from task_info import TaskInfo, Task
+from src.container.task import SingleTask, TaskPackage
+from src.tools.debug import Debug
+from src.tools.match import Match
+from src.tools.type import Type
 
 
 class ReadListParser():
@@ -21,16 +22,6 @@ class ReadListParser():
             *   应该将同一book_list里的所有book输出到同一本电子书内，这样才符合当时的本意
             *   那就按章节进行区分吧，由RawBook负责进行生成处理
     """
-    # url模式
-    pattern = dict()
-    pattern['answer'] = r'(?<=zhihu\.com/)question/(?P<question_id>\d{8})/answer/(?P<answer_id>\d{8})'
-    pattern['question'] = r'(?<=zhihu\.com/)question/(?P<question_id>\d{8})'
-    pattern['author'] = r'(?<=zhihu\.com/)people/(?P<author_id>[^/\n\r]*)'
-    pattern['collection'] = r'(?<=zhihu\.com/)collection/(?P<collection_id>\d*)'
-    pattern['topic'] = r'(?<=zhihu\.com/)topic/(?P<topic_id>\d*)'
-    pattern['article'] = r'(?<=zhuanlan\.zhihu\.com/)(?P<column_id>[^/]*)/(?P<article_id>\d{8})'
-    pattern['column'] = r'(?<=zhuanlan\.zhihu\.com/)(?P<column_id>[^/\n\r]*)'
-
     @staticmethod
     def get_task(command):
         u"""
@@ -76,108 +67,109 @@ class ReadListParser():
         """
 
         def detect(command):
-            for command_type in TypeClass.type_list:
-                result = re.search(ReadListParser.pattern[command_type], command)
+            for command_type in Type.type_list:
+                result = Match.__dict__[command_type](command)
                 if result:
                     return command_type
             return 'unknown'
 
         def parse_question(command):
-            result = re.search(ReadListParser.pattern['question'], command)
+            result = Match.question(command)
             question_id = result.group('question_id')
-            task = TaskInfo()
+            task = SingleTask()
             task.kind = 'question'
 
             task.spider.href = 'http://www.zhihu.com/question/{}'.format(question_id)
             task.book.kind = 'question'
-            task.book.info = ''
-            task.book.question = 'question_id = "{}"'.format(question_id)
-            task.book.answer = 'question_id = "{}"'.format(question_id)
+            task.book.property.sql.info = ''
+            task.book.property.sql.question = 'question_id = "{}"'.format(question_id)
+            task.book.property.sql.answer = 'question_id = "{}"'.format(question_id)
             return task
 
         def parse_answer(command):
-            result = re.search(ReadListParser.pattern['answer'], command)
+            result = Match.answer(command)
             question_id = result.group('question_id')
             answer_id = result.group('answer_id')
-            task = TaskInfo()
+            task = SingleTask()
             task.kind = 'answer'
             task.spider.href = 'http://www.zhihu.com/question/{}/answer/{}'.format(question_id, answer_id)
 
             task.book.kind = 'answer'
-            task.book.info = ''
-            task.book.question = 'question_id = "{}"'.format(question_id)
-            task.book.answer = 'question_id = "{}" and answer_id = "{}"'.format(question_id, answer_id)
+            task.book.property.sql.info = ''
+            task.book.property.sql.question = 'question_id = "{}"'.format(question_id)
+            task.book.property.sql.answer = 'question_id = "{}" and answer_id = "{}"'.format(question_id, answer_id)
             return task
 
         def parse_author(command):
-            result = re.search(ReadListParser.pattern['author'], command)
+            result = Match.author(command)
             author_id = result.group('author_id')
-            task = TaskInfo()
+            task = SingleTask()
             task.kind = 'author'
             task.spider.href = 'http://www.zhihu.com/people/{}'.format(author_id)
             task.book.kind = 'author'
-            task.book.info = 'select * from AuthorInfo where author_id = "{}"'.format(author_id)
-            task.book.question = 'select * from Question where question_id in (select question_id from Answer where author_id = "{}")'.format(
+            task.book.property.sql.info = 'select * from AuthorInfo where author_id = "{}"'.format(author_id)
+            task.book.property.sql.question = 'select * from Question where question_id in (select question_id from Answer where author_id = "{}")'.format(
                 author_id)
-            task.book.answer = 'select * from Answer where author_id = "{}"'.format(author_id)
+            task.book.property.sql.answer = 'select * from Answer where author_id = "{}"'.format(author_id)
             return task
 
         def parse_collection(command):
-            result = re.search(ReadListParser.pattern['collection'], command)
+            result = Match.collection(command)
             collection_id = result.group('collection_id')
-            task = TaskInfo()
+            task = SingleTask()
             task.kind = 'collection'
             task.spider.href = 'http://www.zhihu.com/collection/{}'.format(collection_id)
             task.book.kind = 'collection'
-            task.book.info = 'select * from CollectionInfo where collection_id = "{}"'.format(collection_id)
-            task.book.question = 'select * from Question where question_id in (select question_id from Answer where href in (select href from CollectionIndex where collection_id = "{}"))'.format(
+            task.book.property.sql.info = 'select * from CollectionInfo where collection_id = "{}"'.format(
                 collection_id)
-            task.book.answer = 'select * from Answer where href in (select href from CollectionIndex where collection_id = "{}")'.format(
+            task.book.property.sql.question = 'select * from Question where question_id in (select question_id from Answer where href in (select href from CollectionIndex where collection_id = "{}"))'.format(
+                collection_id)
+            task.book.property.sql.answer = 'select * from Answer where href in (select href from CollectionIndex where collection_id = "{}")'.format(
                 collection_id)
             return task
 
         def parse_topic(command):
-            result = re.search(ReadListParser.pattern['topic'], command)
+            result = Match.topic(command)
             topic_id = result.group('topic_id')
-            task = TaskInfo()
+            task = SingleTask()
             task.kind = 'topic'
             task.spider.href = 'http://www.zhihu.com/topic/{}'.format(topic_id)
             task.book.kind = 'topic'
-            task.book.info = 'select * from TopicInfo where topic_id = "{}"'.format(topic_id)
-            task.book.question = 'select * from Question where question_id in (select question_id from Answer where href in (select href from TopicIndex where topic_id = "{}"))'.format(
+            task.book.property.sql.info = 'select * from TopicInfo where topic_id = "{}"'.format(topic_id)
+            task.book.property.sql.question = 'select * from Question where question_id in (select question_id from Answer where href in (select href from TopicIndex where topic_id = "{}"))'.format(
                 topic_id)
-            task.book.answer = 'select * from Answer where href in (select href from TopicIndex where topic_id = "{}")'.format(
+            task.book.property.sql.answer = 'select * from Answer where href in (select href from TopicIndex where topic_id = "{}")'.format(
                 topic_id)
             return task
 
         def parse_article(command):
-            result = re.search(ReadListParser.pattern['article'], command)
+            result = Match.article(command)
             column_id = result.group('column_id')
             article_id = result.group('article_id')
-            task = TaskInfo()
+            task = SingleTask()
             task.kind = 'article'
             task.spider.href = 'http://zhuanlan.zhihu.com/{}/{}'.format(column_id, article_id)
             task.book.kind = 'article'
-            task.book.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
-            task.book.question = ''
-            task.book.answer = ' column_id = {} and article_id = {} '.format(column_id, article_id)
+            task.book.property.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
+            task.book.property.sql.question = ''
+            task.book.property.sql.answer = ' column_id = {} and article_id = {} '.format(column_id, article_id)
             return task
 
         def parse_column(command):
-            result = re.search(ReadListParser.pattern['column'], command)
+            result = Match.column(command)
             column_id = result.group('column_id')
-            task = TaskInfo()
+            task = SingleTask()
             task.kind = 'article'
             task.spider.href = 'http://zhuanlan.zhihu.com/{}'.format(column_id)
             task.book.kind = 'column'
-            task.book.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
-            task.book.question = ''
-            task.book.answer = 'select * from Article where column_id = "{}" '.format(column_id)
+            task.book.property.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
+            task.book.property.sql.question = ''
+            task.book.property.sql.answer = 'select * from Article where column_id = "{}" '.format(column_id)
             return task
 
         def parse_error(command):
             if command:
-                BaseClass.logger.info(u"""匹配失败，未知readList类型。\n失败命令:{}""".format(command))
+                Debug.logger.info(u"""匹配失败，未知readList类型。\n失败命令:{}""".format(command))
             return
 
         parser = {'answer': parse_answer, 'question': parse_question, 'author': parse_author,
@@ -188,7 +180,7 @@ class ReadListParser():
 
     @staticmethod
     def merge_task_list(task_list):
-        task = Task()
+        task_package = TaskPackage()
         for item in task_list:
-            task.add_task(item)
-        return task.get_task()
+            task_package.add_task(item)
+        return task_package.get_task()
