@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-from src.tools.config import Config
-from src.tools.http import Http
-from src.tools.path import Path
-
-import guide
 import init
 
 from worker import worker_factory
@@ -25,8 +20,8 @@ class ZhihuHelp(object):
     def init_config(self):
         login = Login()
         if Config.remember_account:
-            print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量)'
-            print   u'点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
+            print u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量)'
+            print u'点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
             if raw_input():
                 login.start()
                 Config.picture_quality = guide.set_picture_quality()
@@ -41,23 +36,22 @@ class ZhihuHelp(object):
         return
 
     def create_book(self, command, counter):
-        BaseClass.reset_dir()
+        Path.reset_path()
 
-        BaseClass.logger.info(u"开始制作第 {} 本电子书".format(counter))
-        BaseClass.logger.info(u"对记录 {} 进行分析".format(command))
+        Debug.logger.info(u"开始制作第 {} 本电子书".format(counter))
+        Debug.logger.info(u"对记录 {} 进行分析".format(command))
         task = ReadListParser.get_task(command)  # 分析命令
         worker_factory(task.work_list)  # 执行抓取程序
-        BaseClass.logger.info(u"网页信息抓取完毕")
+        Debug.logger.info(u"网页信息抓取完毕")
 
-        BaseClass.logger.info(u"开始自数据库中生成电子书数据")
+        Debug.logger.info(u"开始自数据库中生成电子书数据")
         create_epub(task)
         return
 
     def start(self):
-        #self.check_update()
+        self.check_update()
         self.init_config()
-        BaseClass.init_path()
-        BaseClass.logger.info(u"开始读取ReadList.txt设置信息")
+        Debug.logger.info(u"开始读取ReadList.txt设置信息")
         with open('./ReadList.txt', 'r') as read_list:
             counter = 1
             for line in read_list:
@@ -78,17 +72,14 @@ class ZhihuHelp(object):
         """
         print   u"检查更新。。。"
         try:
-            updateTime = urllib2.urlopen(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt",
-                                         timeout=10)
+            content = Http.get_content(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt")
         except:
             return
-        time = updateTime.readline().replace(u'\n', '').replace(u'\r', '')
-        url = updateTime.readline().replace(u'\n', '').replace(u'\r', '')
-        updateComment = updateTime.read()
-        if time == SettingClass.UPDATETIME:
+        time, url, comment = [x.strip() for x in content.split('\n')]
+        if time == Config.update_time:
             return
         else:
-            print u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(updateComment, time)
+            print u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(comment, time)
             print u'新版本下载地址:' + url
             raw_input()
             import webbrowser
