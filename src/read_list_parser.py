@@ -41,12 +41,11 @@ class ReadListParser():
         raw_task_list = []
         for command in command_list:
             raw_task = ReadListParser.parse_command(command)
-            if not raw_task:
-                continue
-            raw_task_list.append(raw_task)
+            if raw_task:
+                raw_task_list.append(raw_task)
 
-        task = ReadListParser.merge_task_list(raw_task_list)
-        return task
+        task_package = ReadListParser.merge_task_list(raw_task_list)
+        return task_package
 
     @staticmethod
     def parse_command(raw_command=''):
@@ -169,7 +168,7 @@ class ReadListParser():
 
         def parse_error(command):
             if command:
-                Debug.logger.info(u"""匹配失败，未知readList类型。\n失败命令:{}""".format(command))
+                Debug.logger.info(u"""无法解析记录:{}所属网址类型,请检查后重试。""".format(command))
             return
 
         parser = {'answer': parse_answer, 'question': parse_question, 'author': parse_author,
