@@ -11,6 +11,8 @@ class Config(object):
     # 全局变量
     update_time = '2015-11-21'  # 更新日期
 
+    debug = True
+
     account = 'mengqingxue2014@qq.com'  # 默认账号密码
     password = '131724qingxue'  #
     remember_account = False  # 是否使用已有密码

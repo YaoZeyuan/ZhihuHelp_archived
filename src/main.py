@@ -25,15 +25,15 @@ class ZhihuHelp(object):
     def init_config(self):
         login = Login()
         if Config.remember_account:
-            print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
-            print   u'直接点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
+            print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量)'
+            print   u'点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
             if raw_input():
-                login.login()
+                login.start()
                 Config.picture_quality = guide.set_picture_quality()
             else:
                 Http.set_cookie()
         else:
-            login.login()
+            login.start()
             Config.picture_quality = guide.set_picture_quality()
 
         # 储存设置

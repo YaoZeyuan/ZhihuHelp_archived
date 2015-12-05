@@ -1,30 +1,36 @@
 # -*- coding: utf-8 -*-
+import cookielib
+import os
 
-import urllib  # 编码请求字串，用于处理验证码
 import json
-import pickle
-import datetime
+import urllib2
+import guide
 
-from setting import *
+from src.tools.config import Config
+from src.tools.db import DB
+from src.tools.debug import Debug
+from src.tools.extra_tools import ExtraTools
+from src.tools.http import Http
+from src.tools.match import Match
+from src.tools.path import Path
 
 
 class Login():
     def __init__(self):
-        self.setting = Setting()
         self.cookieJar = cookielib.LWPCookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))
         urllib2.install_opener(self.opener)
 
-    def sendMessage(self, account, password, captcha=''):
-        content = HttpBaseClass.get_http_content('http://www.zhihu.com/')
-        xsrf = self.get_xsrf(content)
+    def login(self, account, password, captcha=''):
+        content = Http.get_content('http://www.zhihu.com/')
+        xsrf = Match.xsrf(content)
         if not xsrf:
-            BaseClass.logger.info(u'知乎网页打开失败')
-            BaseClass.logger.info(u'请敲击回车重新发送登陆请求')
+            Debug.logger.info(u'登陆失败')
+            Debug.logger.info(u'敲击回车重新发送登陆请求')
             return False
         xsrf = xsrf.split('=')[1]
         # add xsrf as cookie into cookieJar,
-        cookie = HttpBaseClass.make_cookie(name='_xsrf', value=xsrf, domain='www.zhihu.com')
+        cookie = Http.make_cookie(name='_xsrf', value=xsrf, domain='www.zhihu.com')
         self.cookieJar.set_cookie(cookie)
         if captcha:
             post_data = {'_xsrf': xsrf, 'email': account, 'password': password, 'remember_me': True,
@@ -44,9 +50,9 @@ class Login():
             'Origin':'http://www.zhihu.com',
             'Referer':'http://www.zhihu.com/',
         }
-        result = HttpBaseClass.get_http_content(url = r'http://www.zhihu.com/login/email',data=post_data,extra_header=header)
+        result = Http.get_content(url=r'http://www.zhihu.com/login/email', data=post_data, extra_header=header)
         if not result:
-            BaseClass.logger.info(u'登陆失败，请敲击回车重新登陆')
+            Debug.logger.info(u'登陆失败，请敲击回车重新登陆')
             return False
         response = json.loads(result)
 
@@ -55,69 +61,60 @@ class Login():
             print u'登陆账号:', account
             print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
             if raw_input() == 'yes':
-                SettingClass.ACCOUNT = account
-                SettingClass.PASSWORD = password
-                SettingClass.REMEMBERACCOUNT = True
-                print u'帐号密码已保存,可通过修改setting.ini进行修改密码等操作'
+                Config.account, Config.password, Config.remember_account = account, password, True
+                print u'帐号密码已保存,可通过修改config.json修改设置'
             else:
-                SettingClass.ACCOUNT = ''
-                SettingClass.PASSWORD = ''
-                SettingClass.REMEMBERACCOUNT = False
+                Config.account, Config.password, Config.remember_account = '', '', False
                 print u'跳过保存环节，进入下一流程'
-            self.setting.save()
-            cookie = self.saveCookieJar()
+            Config._save()
+            cookie = self.get_cookie()
             data = {}
             data['account'] = account
             data['password'] = password
-            data['recordDate'] = datetime.date.today().isoformat()
+            data['recordDate'] = ExtraTools.get_today()
             data['cookieStr'] = cookie
-            SqlClass.save2DB(data, 'LoginRecord')
-            SqlClass.commit()
+            DB.save(data, 'LoginRecord')
+            DB.commit()
             return True
         else:
             print u'登陆失败'
-            BaseClass.printDict(response)
+            Debug.print_dict(response)
             return False
 
-    def getCaptcha(self):
-        content = HttpBaseClass.get_http_content('http://www.zhihu.com/captcha.gif')  # 开始拉取验证码
-        f = open(u'我是登陆知乎时的验证码.gif', 'wb')
-        f.write(content)
-        f.close()
-        print u'请输入您所看到的验证码，验证码在助手所处的文件夹中,\n双击打开『我是登陆知乎时的验证码.gif』即可\n如果不需要输入验证码可以敲击回车跳过此步'
+    @staticmethod
+    def get_captcha():
+        content = Http.get_content('http://www.zhihu.com/captcha.gif')  # 开始拉取验证码
+        captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
+        with open(captcha_path, 'wb') as image:
+            image.write(content)
+        print u'请输入您所看到的验证码'
+        print u'验证码在助手所处的文件夹中'
+        print u'验证码位置:'
+        print captcha_path
+        print u'如果不需要输入验证码可点按回车跳过此步'
         captcha = raw_input()
         return captcha
 
-    def login(self):
-        self.setting.guide()
-        account, password = self.setting.login_guide()
+    def start(self):
+        guide.hello_world()
+        account, password = guide.set_account()
         captcha = ''
-        while not self.sendMessage(account, password, captcha):
-            print u'啊哦，登录失败了'
-            print u'请问是否需要更换登陆账号？输入『yes』后按回车可以更换账号密码'
-            print u'或者猛击回车进入获取验证码的流程'
+        while not self.login(account, password, captcha):
+            print u'啊哦，登录失败，可能需要输入验证码'
+            print u'直接回车开始下载验证码'
+            print u'输入『yes』后按回车可以更换账号密码重新登录'
             confirm = raw_input()
             if confirm == 'yes':
-                account, password = self.setting.login_guide()
-            captcha = self.getCaptcha()
+                account, password = guide.set_account()
+            captcha = self.get_captcha()
         return
 
-    def saveCookieJar(self):
-        fileName = u'./theFileNameIsSoLongThatYouWontKnowWhatIsThat.txt'
-        f = open(fileName, 'w')
-        f.close()
-        self.cookieJar.save(fileName)
-        f = open(fileName, 'r')
-        content = f.read()
-        f.close()
-        os.remove(fileName)
+    def get_cookie(self):
+        filename = ExtraTools.md5(ExtraTools.get_time())
+        with open(filename, 'w') as f:
+            pass
+        self.cookieJar.save(filename)
+        with open(filename) as f:
+            content = f.read()
+        os.remove(filename)
         return content
-
-    def get_xsrf(self, content=''):
-        u'''
-        提取xsrf信息
-        '''
-        xsrf = re.search(r'(?<=name="_xsrf" value=")[^"]*(?="/>)', content)
-        if xsrf:
-            return '_xsrf=' + xsrf.group(0)
-        return ''

@@ -2,6 +2,7 @@
 import logging
 import logging.handlers
 import sys
+from src.tools.config import Config
 
 
 class Debug(object):
@@ -16,8 +17,10 @@ class Debug(object):
 
     logger = logging.getLogger('main')  # 获取名为main的logger
     logger.addHandler(handler)  # 为logger添加handler
-    # logger.setLevel(logging.INFO)  # 发布时关闭log输出
-    logger.setLevel(logging.DEBUG)  # debug模式
+    if Config.debug:
+        logger.setLevel(logging.DEBUG)  # debug模式
+    else:
+        logger.setLevel(logging.INFO)  # 发布时关闭log输出
 
     # 辅助函数
     @staticmethod
