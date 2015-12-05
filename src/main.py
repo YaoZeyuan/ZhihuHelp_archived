@@ -1,40 +1,43 @@
 # -*- coding: utf-8 -*-
+from src.tools.config import Config
+from src.tools.http import Http
+from src.tools.path import Path
+
+import guide
+import init
 
 from worker import worker_factory
-from init import Init
 from login import *
-from simpleFilter import *
 from epub_creator import create_epub
 from read_list_parser import ReadListParser
 
 
-class ZhihuHelp(BaseClass):
+class ZhihuHelp(object):
     def __init__(self):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
-        init = Init()
-        SqlClass.set_conn(init.getConn())
-        self.config = Setting()
+        init.init_database()
+        Path.init_base_path()
+        Config._load()
         return
 
     def init_config(self):
-        BaseClass.base_path = os.path.realpath('.')
         login = Login()
-        if SettingClass.REMEMBERACCOUNT:
+        if Config.remember_account:
             print   u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量、最大线程数)'
             print   u'直接点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
             if raw_input():
                 login.login()
-                SettingClass.PICQUALITY = self.config.set_picture_quality_guide()
+                Config.picture_quality = guide.set_picture_quality()
             else:
-                HttpBaseClass.set_cookie()
+                Http.set_cookie()
         else:
             login.login()
-            SettingClass.PICQUALITY = self.config.set_picture_quality_guide()
+            Config.picture_quality = guide.set_picture_quality()
 
         # 储存设置
-        self.config.save()
+        Config._save()
         return
 
     def create_book(self, command, counter):

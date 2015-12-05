@@ -4,8 +4,14 @@ import os
 
 class Path(object):
     base_path = os.path.abspath('./')  # 初始地址,不含分隔符
+
+    config_path = base_path + u'/config.json'
+    db_path = base_path + u'/zhihuDB_173.db'
+    sql_path = base_path + u'/db/zhihuhelp.sql'
+
     html_pool_path = base_path + u'/知乎电子书临时资源库/知乎网页池'
     image_pool_path = base_path + u'/知乎电子书临时资源库/知乎图片池'
+
 
     @staticmethod
     def reset_path():
@@ -45,3 +51,12 @@ class Path(object):
         Path.mkdir(u'./知乎图片池')
         Path.reset_path()
         return
+
+    @staticmethod
+    def init_base_path():
+        Path.base_path = os.path.abspath('.')
+        return
+
+    @staticmethod
+    def is_file(path):
+        return os.path.isfile(path)

@@ -13,8 +13,17 @@ class DB(object):
     @staticmethod
     def set_conn(conn):
         DB.conn = conn
+        DB.conn.text_factory = str
         DB.cursor = conn.cursor()
         return
+
+    @staticmethod
+    def execute(sql):
+        return DB.cursor.execute(sql)
+
+    @staticmethod
+    def commit():
+        return DB.cursor.commit()
 
     @staticmethod
     def save(data={}, table_name=''):

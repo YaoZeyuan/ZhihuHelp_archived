@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+import json
+import os
+from src.tools.path import Path
+
+
 class Config(object):
     u"""
     用于储存、获取设置值、全局变量值
     """
     # 全局变量
-    database_filename = u'./zhihuDB_173.db'  # 默认数据库名称
-
     update_time = '2015-11-21'  # 更新日期
 
     account = 'mengqingxue2014@qq.com'  # 默认账号密码
@@ -26,3 +29,29 @@ class Config(object):
     show_private_answer = True
     timeout_download_picture = 10
     timeout_download_html = 5
+
+    _config_store = {}
+
+    @staticmethod
+    def _save():
+        Config._sync()
+        with open(Path.config_path, 'w') as f:
+            json.dump(Config._config_store, f, indent=4)
+        return
+
+    @staticmethod
+    def _load():
+        if not os.path.isfile(Path.config_path):
+            return
+        with open(Path.config_path) as f:
+            config = json.load(f)
+        for (key, value) in config:
+            Config.__dict__[key] = value
+        return
+
+    @staticmethod
+    def _sync():
+        for attr in dir(Config):
+            if not '_' in attr[:2]:
+                Config._config_store[attr] = Config.__dict__[attr]
+        return
