@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from image_container import ImageContainer
+
 from rawbook import RawBook
-from baseClass import BaseClass
 from epub import Book
 from src.tools.debug import Debug
+from src.tools.extra_tools import ExtraTools
 from src.tools.path import Path
 
 
@@ -24,7 +24,7 @@ class EpubCreator(object):
         self.image_container.start_download()
         title = '_'.join([book.property.epub.title for book in self.book_list])
         title = title.strip()
-        Path.change_dir(BaseClass.base_path + u'/知乎电子书临时资源库/')
+        Path.chdir(Path.base_path + u'/知乎电子书临时资源库/')
         epub = Book(title, 27149527)
         html_tmp_path = Path.html_pool_path + '/'
         image_tmp_path = Path.image_pool_path + '/'
@@ -32,7 +32,7 @@ class EpubCreator(object):
             page = book.page_list[0]
             with open(html_tmp_path + page.filename, 'w') as html:
                 html.write(page.content)
-            epub.createChapter(html_tmp_path + page.filename, BaseClass.get_time(), page.title)
+            epub.createChapter(html_tmp_path + page.filename, ExtraTools.get_time(), page.title)
 
             for page in book.page_list[1:]:
                 with open(html_tmp_path + page.filename, 'w') as html:

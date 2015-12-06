@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import json  # 用于JsonWorker
-from parser.parserTools import AuthorParser,CollectionParser,TopicParser,QuestionParser
-from baseClass import BaseClass,HttpBaseClass,SqlClass,SettingClass
 from multiprocessing.dummy import Pool as ThreadPool #多线程并行库
+from src.tools.config import Config
+from src.tools.db import DB
+from src.tools.debug import Debug
+from src.tools.http import Http
+
 
 class PageWorker(object):
     def __init__(self, task_list):
@@ -11,14 +14,14 @@ class PageWorker(object):
         self.work_set = set() # 待抓取网址池
         self.answer_list = []
         self.question_list = []
-        self.thread_pool = ThreadPool(SettingClass.MAXTHREAD)
+        self.thread_pool = ThreadPool(Config.max_thread)
 
         self.info_list = []
         self.extra_index_list = []
         self.info_url_set = self.task_set.copy()
 
         self.add_property() # 添加扩展属性
-        HttpBaseClass.set_cookie()
+        Http.set_cookie()
 
     def add_property(self):
 
@@ -32,15 +35,15 @@ class PageWorker(object):
             floor = content.rfind('</a>', 0, floor)
             cell = content.rfind('>', 0, floor)
             max_page = int(content[cell + 1:floor])
-            BaseClass.logger.info(u'答案列表共计{}页'.format(max_page))
+            Debug.logger.info(u'答案列表共计{}页'.format(max_page))
         except:
-            BaseClass.logger.info(u'答案列表共计1页')
+            Debug.logger.info(u'答案列表共计1页')
         finally:
             return max_page
 
     @staticmethod
     def control_center(func, argv, test_flag):
-        max_try = SettingClass.MAXTRY
+        max_try = Config.max_try
         for time in range(max_try):
             if test_flag:
                 func(**argv)
@@ -65,8 +68,8 @@ class PageWorker(object):
         for key in save_config:
             for item in save_config[key]:
                 if item:
-                    SqlClass.save2DB(item, key)
-        SqlClass.commit()
+                    DB.save(item, key)
+        DB.commit()
         return
 
     def start(self):
@@ -77,7 +80,7 @@ class PageWorker(object):
         return
 
     def create_work_set(self, target_url):
-        content = HttpBaseClass.get_http_content(target_url, timeout=SettingClass.WAITFOR_HTML)
+        content = Http.get_content(target_url)
         if not content:
             return
         self.task_set.discard(target_url)
@@ -101,7 +104,7 @@ class PageWorker(object):
         return
 
     def worker(self, target_url):
-        content = HttpBaseClass.get_http_content(target_url, timeout=SettingClass.WAITFOR_HTML)
+        content = Http.get_content(target_url)
         if not content:
             return
         self.work_set.discard(target_url)
@@ -149,7 +152,7 @@ class AuthorWorker(PageWorker):
         return
 
     def create_work_set(self, target_url):
-        content = HttpBaseClass.get_http_content(target_url + '/answers?order_by=vote_num', timeout=SettingClass.WAITFOR_HTML)
+        content = Http.get_content(target_url + '/answers?order_by=vote_num')
         if not content:
             return
         self.task_set.discard(target_url)
@@ -160,7 +163,7 @@ class AuthorWorker(PageWorker):
         return
 
     def catch_info(self, target_url):
-        content = HttpBaseClass.get_http_content(target_url + '/about', timeout=SettingClass.WAITFOR_HTML)
+        content = Http.get_content(target_url + '/about')
         if not content:
             return
         self.info_url_set.discard(target_url)
@@ -183,7 +186,7 @@ class CollectionWorker(PageWorker):
         return
 
     def create_work_set(self, target_url):
-        content = HttpBaseClass.get_http_content(target_url, timeout=SettingClass.WAITFOR_HTML)
+        content = Http.get_content(target_url)
         if not content:
             return
         self.task_set.discard(target_url)
@@ -194,7 +197,7 @@ class CollectionWorker(PageWorker):
         return
 
     def catch_info(self, target_url):
-        content = HttpBaseClass.get_http_content(target_url, timeout=SettingClass.WAITFOR_HTML)
+        content = Http.get_content(target_url)
         if not content:
             return
         self.info_url_set.discard(target_url)
@@ -236,7 +239,7 @@ class TopicWorker(PageWorker):
         return
 
     def create_work_set(self, target_url):
-        content = HttpBaseClass.get_http_content(target_url + '/top-answers', timeout=SettingClass.WAITFOR_HTML)
+        content = Http.get_content(target_url + '/top-answers')
         if not content:
             return
         self.task_set.discard(target_url)
@@ -247,7 +250,7 @@ class TopicWorker(PageWorker):
         return
 
     def catch_info(self, target_url):
-        content = HttpBaseClass.get_http_content(target_url + '/top-answers', timeout=SettingClass.WAITFOR_HTML)
+        content = Http.get_content(target_url + '/top-answers')
         if not content:
             return
         self.info_url_set.discard(target_url)
@@ -286,8 +289,8 @@ class TopicWorker(PageWorker):
     def clear_index(self):
         topic_id_tuple = tuple(set(x['topic_id'] for x in self.topic_index_list))
         sql = 'DELETE  from TopicIndex where topic_id in ({})'.format((' ?,' * len(topic_id_tuple))[:-1])
-        SqlClass.cursor.execute(sql, topic_id_tuple)
-        SqlClass.commit()
+        DB.cursor.execute(sql, topic_id_tuple)
+        DB.commit()
         return
 
 def worker_factory(task):
