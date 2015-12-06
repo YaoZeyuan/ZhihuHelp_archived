@@ -5,6 +5,7 @@ u"""
 提供简单的接口
 
 """
+from src.tools.debug import Debug
 from src.tools.path import Path
 
 
@@ -314,7 +315,7 @@ class Book():
         def Help_ZipToEpub(Dir='.'):
             for p in os.listdir(Dir):
                 if p == targetFileName or p == 'mimetype':
-                    print u'该文件已添加，自动跳过'
+                    Debug.print_in_single_line(u'该文件已添加，自动跳过')
                     continue
                 filepath = os.path.join(Dir, p)
                 if not os.path.isfile(filepath):
@@ -322,7 +323,7 @@ class Book():
                         continue
                     Help_ZipToEpub(Dir=filepath)
                 else:
-                    print u'将{}添加至电子书内'.format(filepath)
+                    Debug.print_in_single_line(u'将{}添加至电子书内'.format(filepath))
                     epub.write(filepath, compress_type=zipfile.ZIP_STORED)
 
         Help_ZipToEpub()

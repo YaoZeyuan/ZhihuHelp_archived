@@ -163,7 +163,7 @@ class AuthorWorker(PageWorker):
         self.task_set.discard(target_url)
         max_page = self.parse_max_page(content)
         for page in range(max_page):
-            url = '{}/answers?order_by=vote_num&page={}'.format(target_url, page)
+            url = '{}/answers?order_by=vote_num&page={}'.format(target_url, page + 1)
             self.work_set.add(url)
         return
 
@@ -197,7 +197,7 @@ class CollectionWorker(PageWorker):
         self.task_set.discard(target_url)
         max_page = self.parse_max_page(content)
         for page in range(max_page):
-            url = '{}?page={}'.format(target_url, page)
+            url = '{}?page={}'.format(target_url, page + 1)
             self.work_set.add(url)
         return
 
@@ -250,7 +250,7 @@ class TopicWorker(PageWorker):
         self.task_set.discard(target_url)
         max_page = self.parse_max_page(content)
         for page in range(max_page):
-            url = '{}/top-answers?page={}'.format(target_url, page)
+            url = '{}/top-answers?page={}'.format(target_url, page + 1)
             self.work_set.add(url)
         return
 
