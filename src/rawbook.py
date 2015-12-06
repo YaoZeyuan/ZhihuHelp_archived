@@ -1,57 +1,17 @@
 # -*- coding: utf-8 -*-
 import copy
-import random
-from baseClass import SqlClass, SettingClass, TypeClass, BaseClass
-from image_container import ImageContainer
 from src.container.book import Page, EpubBook
+from src.container.image import ImageContainer
 from src.tools.config import Config
 from src.tools.type import Type
-
-
-class EpubArticle(object):
-    def __init__(self):
-        return
-
-
-class EpubBookProperty(object):
-    def __init__(self):
-        self.article_count = 0
-        self.answer_count = 0
-        self.agree_count = 0
-        self.char_count = 0
-
-        self.title = ''
-        self.id = ''
-        self.split_index = 0
-        return
-
-
-class EpubBookConfig(object):
-    def __init__(self):
-
-        self.kind = ''
-        self.article_list = []
-        self.property = EpubBookProperty()
-
-        self.info = {}
-        return
-
-    def copy(self):
-        new_book = EpubBookConfig()
-        new_book.kind = self.kind
-        new_book.property = EpubBookProperty()
-        new_book.set_info(self.info)
-        return
-
-
 
 import re
 
 
 class CreateHtmlPage(object):
-    u'''
+    u"""
     工具类，用于生成html页面
-    '''
+    """
 
     def __init__(self, image_container):
         self.image_container = image_container
@@ -134,6 +94,7 @@ class CreateHtmlPage(object):
             page.title += "_({})".format(book.property.epub.split_index)
         return page
 
+
 class RawBook(object):
     u"""
     负责数据进行处理,返回处理完毕的html信息和所有待下载图片的imgContainer
@@ -192,7 +153,6 @@ class RawBook(object):
                 counter = 0
         self.result_list.append(book_list)
         return
-
 
     def create_book(self, book_list):
         index = 0

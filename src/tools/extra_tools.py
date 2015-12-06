@@ -2,7 +2,6 @@
 import hashlib
 import time
 import datetime
-import re
 
 
 class ExtraTools(object):
@@ -15,6 +14,13 @@ class ExtraTools(object):
     @staticmethod
     def get_today():
         return datetime.date.today().isoformat()
+
+    @staticmethod
+    def get_yesterday():
+        today = datetime.date.today()
+        one = datetime.timedelta(days=1)
+        yesterday = today - one
+        return yesterday.isoformat()
 
     @staticmethod
     def md5(content):
