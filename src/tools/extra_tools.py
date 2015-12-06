@@ -27,3 +27,22 @@ class ExtraTools(object):
         ExtraTools.encrypt.update(str(content))
         return ExtraTools.encrypt.hexdigest()
 
+    @staticmethod
+    def fix_filename(filename):
+        illegal = {
+            '\\': '＼',
+            '/': '',
+            ':': '：',
+            '*': '＊',
+            '?': '？',
+            '<': '《',
+            '>': '》',
+            '|': '｜',
+            '"': '〃',
+            '!': '！',
+            '\n': ''
+        }
+        for key,value in illegal.items():
+            filename = filename.replace(key, value)
+        return filename
+

@@ -127,7 +127,7 @@ class RawBook(object):
 
     def split(self):
         def split(book, surplus, index=1):
-            if book.epub.answer_count <= surplus:
+            if (book.epub.answer_count <= surplus) or (book.epub.article_count <= 1):
                 book.epub.split_index = index
                 return [book]
             article_list = []
@@ -151,6 +151,7 @@ class RawBook(object):
                 split_list = split(book, Config.max_answer - counter)
                 book_list.append(split_list[0])
                 self.result_list.append(book_list)
+                book_list = []
                 self.book_list += split_list[1:]
                 counter = 0
         self.result_list.append(book_list)
