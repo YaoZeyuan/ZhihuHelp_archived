@@ -84,13 +84,13 @@ class PageWorker(object):
         return
 
     def create_work_set(self, target_url):
-        content = Http.get_content(target_url)
+        content = Http.get_content(target_url + '?nr=1&sort=created')
         if not content:
             return
         self.task_set.discard(target_url)
         max_page = self.parse_max_page(content)
         for page in range(max_page):
-            url = '{}?nr=1&sort=created&page={}'.format(target_url, page)
+            url = '{}?nr=1&sort=created&page={}'.format(target_url, page + 1)
             self.work_set.add(url)
         return
 
@@ -108,6 +108,7 @@ class PageWorker(object):
         return
 
     def worker(self, target_url):
+        Debug.logger.debug(u'开始抓取{}的内容'.format(target_url))
         content = Http.get_content(target_url)
         if not content:
             return

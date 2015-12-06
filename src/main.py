@@ -50,7 +50,7 @@ class ZhihuHelp(object):
         task_package = ReadListParser.get_task(command)  # 分析命令
 
         if not task_package.is_work_list_empty():
-            #worker_factory(task_package.work_list)  # 执行抓取程序
+            worker_factory(task_package.work_list)  # 执行抓取程序
             Debug.logger.info(u"网页信息抓取完毕")
 
         if not task_package.is_book_list_empty():
@@ -67,6 +67,7 @@ class ZhihuHelp(object):
         with open('./ReadList.txt', 'r') as read_list:
             counter = 1
             for line in read_list:
+                line = line.strip()
                 self.create_book(line, counter)  # 一行内容代表一本电子书
                 counter += 1
         return
