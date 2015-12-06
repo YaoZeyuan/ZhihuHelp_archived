@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from src.lib.bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 from src.parser.content.simple_answer import SimpleAnswer
-from src.parser.content.simple_question import SimpleQuestion
 from src.parser.tools.parser_tools import ParserTools
 
 
