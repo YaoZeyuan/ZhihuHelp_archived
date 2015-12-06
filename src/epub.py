@@ -82,9 +82,7 @@ class Book():
 
         rmdir(u'./' + str(self.bookTitle))
         mkdir(u'./' + str(self.bookTitle))
-        Path.pwd()
         chdir(u'./' + str(self.bookTitle))
-        Path.pwd()
         self.__writeMimetype()
         self.addTitle(self.bookTitle)
         self.addIdentifier(self.bookID)

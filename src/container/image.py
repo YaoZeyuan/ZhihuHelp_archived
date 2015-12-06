@@ -2,10 +2,12 @@
 import hashlib
 import os.path
 from multiprocessing.dummy import Pool as ThreadPool  # 多线程并行库
+
 from src.tools.config import Config
-from worker import PageWorker  # 引入控制台
+from src.tools.debug import Debug
 from src.tools.extra_tools import ExtraTools
 from src.tools.http import Http
+from src.worker import PageWorker
 
 
 class ImageContainer(object):
@@ -44,8 +46,8 @@ class ImageContainer(object):
 
         if os.path.isfile(self.save_path + '/' + filename):
             return
-
-        content = Http.get_content(url=href, timeout=SettingClass.WAITFOR_PIC)
+        Debug.print_in_single_line(u'开始下载图片{}'.format(href))
+        content = Http.get_content(url=href, timeout=Config.timeout_download_picture)
         if not content:
             return
         with open(self.save_path + '/' + filename, 'wb') as image:
@@ -54,7 +56,7 @@ class ImageContainer(object):
 
     def start_download(self):
         argv = {'func': self.download,  # 所有待存入数据库中的数据都应当是list
-            'iterable': self.container, }
+                'iterable': self.container, }
         PageWorker.control_center(self.thread_pool.map, argv, self.container)
         return
 

@@ -84,7 +84,6 @@ class CreateHtmlPage(object):
     def create_info_page(self, book):
         kind = book.kind
         info = book.info
-        Path.pwd()
         with open('./src/template/info/{}.html'.format(kind)) as file:
             template = file.read()
         content = template.format(**info)

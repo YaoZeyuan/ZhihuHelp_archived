@@ -42,7 +42,6 @@ class Http(object):
         for key in header:
             request.add_header(key, header[key])
 
-        response = None
         try:
             response = urllib2.urlopen(request, timeout=timeout)
         except urllib2.HTTPError as error:
@@ -57,12 +56,17 @@ class Http(object):
         except socket.timeout as error:
             Debug.logger.info(u'打开网页超时')
             Debug.logger.info(u'超时页面:{}'.format(url))
-        except:
+        except socket.error:
+            Debug.logger.info(u'打开网页超时')
+            Debug.logger.info(u'超时页面:{}'.format(url))
+        except Exception:
             Debug.logger.info(u'未知错误')
             Debug.logger.info(u'错误页面:{}'.format(url))
             Debug.logger.info(u'错误堆栈信息:{}'.format(traceback.format_exc()))
-        content = Http.__unpack(response)
-        return content
+        else:
+            content = Http.__unpack(response)
+            return content
+        return ''
 
     @staticmethod
     def __unpack(response):
