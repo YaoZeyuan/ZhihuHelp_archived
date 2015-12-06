@@ -127,18 +127,18 @@ class RawBook(object):
 
     def split(self):
         def split(book, surplus, index=1):
-            if book.property.answer_count <= surplus:
-                book.property.split_index = index
+            if book.property.epub.answer_count <= surplus:
+                book.property.epub.split_index = index
                 return [book]
             article_list = []
             while surplus > 0:
                 article = book.article_list.pop()
                 article_list.append(article)
                 surplus -= article['answer_count']
-                book.property.answer_count -= article['answer_count']
+                book.property.epub.answer_count -= article['answer_count']
             new_book = copy.deepcopy(book)
             new_book.set_article_list(article_list)
-            new_book.property.split_index = index
+            new_book.property.epub.split_index = index
             return [new_book] + split(book, Config.max_answer, index + 1)
 
         counter = 0

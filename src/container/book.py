@@ -46,7 +46,6 @@ class Book(object):
         self.kind = ''
         self.property = BookProperty()
         self.info = {}
-        self.split_index = 0
         self.article_list = []
         self.page_list = []
         self.prefix = ''
