@@ -104,7 +104,9 @@ class HTMLAwareEntitySubstitution(EntitySubstitution):
 
     @classmethod
     def _substitute_if_appropriate(cls, ns, f):
-        if (isinstance(ns, NavigableString) and ns.parent is not None and ns.parent.name in cls.cdata_containing_tags):
+        if (isinstance(ns, NavigableString)
+            and ns.parent is not None
+            and ns.parent.name in cls.cdata_containing_tags):
             # Do nothing.
             return ns
         # Substitute.
@@ -112,11 +114,13 @@ class HTMLAwareEntitySubstitution(EntitySubstitution):
 
     @classmethod
     def substitute_html(cls, ns):
-        return cls._substitute_if_appropriate(ns, EntitySubstitution.substitute_html)
+        return cls._substitute_if_appropriate(
+            ns, EntitySubstitution.substitute_html)
 
     @classmethod
     def substitute_xml(cls, ns):
-        return cls._substitute_if_appropriate(ns, EntitySubstitution.substitute_xml)
+        return cls._substitute_if_appropriate(
+            ns, EntitySubstitution.substitute_xml)
 
 
 class PageElement(object):
@@ -141,11 +145,17 @@ class PageElement(object):
     # will leave the contents of <script> and <style> tags alone. For
     # an XML document, all tags will be given the same treatment.
 
-    HTML_FORMATTERS = {"html": HTMLAwareEntitySubstitution.substitute_html,
-        "minimal": HTMLAwareEntitySubstitution.substitute_xml, None: None}
+    HTML_FORMATTERS = {
+        "html": HTMLAwareEntitySubstitution.substitute_html,
+        "minimal": HTMLAwareEntitySubstitution.substitute_xml,
+        None: None
+    }
 
-    XML_FORMATTERS = {"html": EntitySubstitution.substitute_html, "minimal": EntitySubstitution.substitute_xml,
-        None: None}
+    XML_FORMATTERS = {
+        "html": EntitySubstitution.substitute_html,
+        "minimal": EntitySubstitution.substitute_xml,
+        None: None
+    }
 
     def format_string(self, s, formatter='minimal'):
         """Format the given string using the given formatter."""
@@ -176,11 +186,14 @@ class PageElement(object):
     def _formatter_for_name(self, name):
         "Look up a formatter function based on its name and the tree."
         if self._is_xml:
-            return self.XML_FORMATTERS.get(name, EntitySubstitution.substitute_xml)
+            return self.XML_FORMATTERS.get(
+                name, EntitySubstitution.substitute_xml)
         else:
-            return self.HTML_FORMATTERS.get(name, HTMLAwareEntitySubstitution.substitute_xml)
+            return self.HTML_FORMATTERS.get(
+                name, HTMLAwareEntitySubstitution.substitute_xml)
 
-    def setup(self, parent=None, previous_element=None, next_element=None, previous_sibling=None, next_sibling=None):
+    def setup(self, parent=None, previous_element=None, next_element=None,
+              previous_sibling=None, next_sibling=None):
         """Sets up the initial relations between this element and
         other elements."""
         self.parent = parent
@@ -197,7 +210,8 @@ class PageElement(object):
         if self.next_sibling:
             self.next_sibling.previous_sibling = self
 
-        if (not previous_sibling and self.parent is not None and self.parent.contents):
+        if (not previous_sibling
+            and self.parent is not None and self.parent.contents):
             previous_sibling = self.parent.contents[-1]
 
         self.previous_sibling = previous_sibling
@@ -209,8 +223,9 @@ class PageElement(object):
 
     def replace_with(self, replace_with):
         if not self.parent:
-            raise ValueError("Cannot replace one element with another when the"
-                             "element to be replaced is not part of a tree.")
+            raise ValueError(
+                "Cannot replace one element with another when the"
+                "element to be replaced is not part of a tree.")
         if replace_with is self:
             return
         if replace_with is self.parent:
@@ -226,8 +241,9 @@ class PageElement(object):
     def unwrap(self):
         my_parent = self.parent
         if not self.parent:
-            raise ValueError("Cannot replace an element with its contents when that"
-                             "element is not part of a tree.")
+            raise ValueError(
+                "Cannot replace an element with its contents when that"
+                "element is not part of a tree.")
         my_index = self.parent.index(self)
         self.extract()
         for child in reversed(self.contents[:]):
@@ -253,7 +269,8 @@ class PageElement(object):
         last_child = self._last_descendant()
         next_element = last_child.next_element
 
-        if (self.previous_element is not None and self.previous_element != next_element):
+        if (self.previous_element is not None and
+                    self.previous_element != next_element):
             self.previous_element.next_element = next_element
         if next_element is not None and next_element != self.previous_element:
             next_element.previous_element = self.previous_element
@@ -261,9 +278,11 @@ class PageElement(object):
         last_child.next_element = None
 
         self.parent = None
-        if (self.previous_sibling is not None and self.previous_sibling != self.next_sibling):
+        if (self.previous_sibling is not None
+            and self.previous_sibling != self.next_sibling):
             self.previous_sibling.next_sibling = self.next_sibling
-        if (self.next_sibling is not None and self.next_sibling != self.previous_sibling):
+        if (self.next_sibling is not None
+            and self.next_sibling != self.previous_sibling):
             self.next_sibling.previous_sibling = self.previous_sibling
         self.previous_sibling = self.next_sibling = None
         return self
@@ -286,7 +305,8 @@ class PageElement(object):
     def insert(self, position, new_child):
         if new_child is self:
             raise ValueError("Cannot insert a tag into itself.")
-        if (isinstance(new_child, basestring) and not isinstance(new_child, NavigableString)):
+        if (isinstance(new_child, basestring)
+            and not isinstance(new_child, NavigableString)):
             new_child = NavigableString(new_child)
 
         position = min(position, len(self.contents))
@@ -360,7 +380,8 @@ class PageElement(object):
             raise ValueError("Can't insert an element before itself.")
         parent = self.parent
         if parent is None:
-            raise ValueError("Element has no parent, so 'before' has no meaning.")
+            raise ValueError(
+                "Element has no parent, so 'before' has no meaning.")
         # Extract first so that the index won't be screwed up if they
         # are siblings.
         if isinstance(predecessor, PageElement):
@@ -378,7 +399,8 @@ class PageElement(object):
             raise ValueError("Can't insert an element after itself.")
         parent = self.parent
         if parent is None:
-            raise ValueError("Element has no parent, so 'after' has no meaning.")
+            raise ValueError(
+                "Element has no parent, so 'after' has no meaning.")
         # Extract first so that the index won't be screwed up if they
         # are siblings.
         if isinstance(successor, PageElement):
@@ -393,24 +415,29 @@ class PageElement(object):
 
     findNext = find_next  # BS3
 
-    def find_all_next(self, name=None, attrs={}, text=None, limit=None, **kwargs):
+    def find_all_next(self, name=None, attrs={}, text=None, limit=None,
+                      **kwargs):
         """Returns all items that match the given criteria and appear
         after this Tag in the document."""
-        return self._find_all(name, attrs, text, limit, self.next_elements, **kwargs)
+        return self._find_all(name, attrs, text, limit, self.next_elements,
+                              **kwargs)
 
     findAllNext = find_all_next  # BS3
 
     def find_next_sibling(self, name=None, attrs={}, text=None, **kwargs):
         """Returns the closest sibling to this Tag that matches the
         given criteria and appears after this Tag in the document."""
-        return self._find_one(self.find_next_siblings, name, attrs, text, **kwargs)
+        return self._find_one(self.find_next_siblings, name, attrs, text,
+                              **kwargs)
 
     findNextSibling = find_next_sibling  # BS3
 
-    def find_next_siblings(self, name=None, attrs={}, text=None, limit=None, **kwargs):
+    def find_next_siblings(self, name=None, attrs={}, text=None, limit=None,
+                           **kwargs):
         """Returns the siblings of this Tag that match the given
         criteria and appear after this Tag in the document."""
-        return self._find_all(name, attrs, text, limit, self.next_siblings, **kwargs)
+        return self._find_all(name, attrs, text, limit,
+                              self.next_siblings, **kwargs)
 
     findNextSiblings = find_next_siblings  # BS3
     fetchNextSiblings = find_next_siblings  # BS2
@@ -418,14 +445,17 @@ class PageElement(object):
     def find_previous(self, name=None, attrs={}, text=None, **kwargs):
         """Returns the first item that matches the given criteria and
         appears before this Tag in the document."""
-        return self._find_one(self.find_all_previous, name, attrs, text, **kwargs)
+        return self._find_one(
+            self.find_all_previous, name, attrs, text, **kwargs)
 
     findPrevious = find_previous  # BS3
 
-    def find_all_previous(self, name=None, attrs={}, text=None, limit=None, **kwargs):
+    def find_all_previous(self, name=None, attrs={}, text=None, limit=None,
+                          **kwargs):
         """Returns all items that match the given criteria and appear
         before this Tag in the document."""
-        return self._find_all(name, attrs, text, limit, self.previous_elements, **kwargs)
+        return self._find_all(name, attrs, text, limit, self.previous_elements,
+                              **kwargs)
 
     findAllPrevious = find_all_previous  # BS3
     fetchPrevious = find_all_previous  # BS2
@@ -433,14 +463,17 @@ class PageElement(object):
     def find_previous_sibling(self, name=None, attrs={}, text=None, **kwargs):
         """Returns the closest sibling to this Tag that matches the
         given criteria and appears before this Tag in the document."""
-        return self._find_one(self.find_previous_siblings, name, attrs, text, **kwargs)
+        return self._find_one(self.find_previous_siblings, name, attrs, text,
+                              **kwargs)
 
     findPreviousSibling = find_previous_sibling  # BS3
 
-    def find_previous_siblings(self, name=None, attrs={}, text=None, limit=None, **kwargs):
+    def find_previous_siblings(self, name=None, attrs={}, text=None,
+                               limit=None, **kwargs):
         """Returns the siblings of this Tag that match the given
         criteria and appear before this Tag in the document."""
-        return self._find_all(name, attrs, text, limit, self.previous_siblings, **kwargs)
+        return self._find_all(name, attrs, text, limit,
+                              self.previous_siblings, **kwargs)
 
     findPreviousSiblings = find_previous_siblings  # BS3
     fetchPreviousSiblings = find_previous_siblings  # BS2
@@ -462,7 +495,8 @@ class PageElement(object):
         """Returns the parents of this Tag that match the given
         criteria."""
 
-        return self._find_all(name, attrs, None, limit, self.parents, **kwargs)
+        return self._find_all(name, attrs, None, limit, self.parents,
+                              **kwargs)
 
     findParents = find_parents  # BS3
     fetchParents = find_parents  # BS2
@@ -499,11 +533,14 @@ class PageElement(object):
         if text is None and not limit and not attrs and not kwargs:
             if name is True or name is None:
                 # Optimization to find all tags.
-                result = (element for element in generator if isinstance(element, Tag))
+                result = (element for element in generator
+                          if isinstance(element, Tag))
                 return ResultSet(strainer, result)
             elif isinstance(name, basestring):
                 # Optimization to find all tags with a given name.
-                result = (element for element in generator if isinstance(element, Tag) and element.name == name)
+                result = (element for element in generator
+                          if isinstance(element, Tag)
+                          and element.name == name)
                 return ResultSet(strainer, result)
         results = ResultSet(strainer)
         while True:
@@ -568,7 +605,9 @@ class PageElement(object):
     #     |                           Attribute
     #    Tag
     attribselect_re = re.compile(
-        r'^(?P<tag>[a-zA-Z0-9][-.a-zA-Z0-9:_]*)?\[(?P<attribute>[\w-]+)(?P<operator>[=~\|\^\$\*]?)' + r'=?"?(?P<value>[^\]"]*)"?\]$')
+        r'^(?P<tag>[a-zA-Z0-9][-.a-zA-Z0-9:_]*)?\[(?P<attribute>[\w-]+)(?P<operator>[=~\|\^\$\*]?)' +
+        r'=?"?(?P<value>[^\]"]*)"?\]$'
+    )
 
     def _attr_value_as_string(self, value, default=None):
         """Force an attribute value into a string representation.
@@ -612,10 +651,12 @@ class PageElement(object):
             return _includes_value
         elif operator == '^':
             # string representation of `attribute` starts with `value`
-            return lambda el: el._attr_value_as_string(attribute, '').startswith(value)
+            return lambda el: el._attr_value_as_string(
+                attribute, '').startswith(value)
         elif operator == '$':
             # string represenation of `attribute` ends with `value`
-            return lambda el: el._attr_value_as_string(attribute, '').endswith(value)
+            return lambda el: el._attr_value_as_string(
+                attribute, '').endswith(value)
         elif operator == '*':
             # string representation of `attribute` contains `value`
             return lambda el: value in el._attr_value_as_string(attribute, '')
@@ -624,7 +665,8 @@ class PageElement(object):
             # `value` or starts with `value` and then a dash.
             def _is_or_starts_with_dash(element):
                 attribute_value = element._attr_value_as_string(attribute, '')
-                return (attribute_value == value or attribute_value.startswith(value + '-'))
+                return (attribute_value == value or attribute_value.startswith(
+                    value + '-'))
 
             return _is_or_starts_with_dash
         else:
@@ -683,7 +725,9 @@ class NavigableString(unicode, PageElement):
         if attr == 'string':
             return self
         else:
-            raise AttributeError("'%s' object has no attribute '%s'" % (self.__class__.__name__, attr))
+            raise AttributeError(
+                "'%s' object has no attribute '%s'" % (
+                    self.__class__.__name__, attr))
 
     def output_ready(self, formatter="minimal"):
         output = self.format_string(self, formatter)
@@ -752,8 +796,8 @@ class Doctype(PreformattedString):
 class Tag(PageElement):
     """Represents a found HTML tag with its attributes and contents."""
 
-    def __init__(self, parser=None, builder=None, name=None, namespace=None, prefix=None, attrs=None, parent=None,
-                 previous=None):
+    def __init__(self, parser=None, builder=None, name=None, namespace=None,
+                 prefix=None, attrs=None, parent=None, previous=None):
         "Basic constructor."
 
         if parser is None:
@@ -771,7 +815,8 @@ class Tag(PageElement):
             attrs = {}
         elif attrs:
             if builder is not None and builder.cdata_list_attributes:
-                attrs = builder._replace_cdata_list_attribute_values(self.name, attrs)
+                attrs = builder._replace_cdata_list_attribute_values(
+                    self.name, attrs)
             else:
                 attrs = dict(attrs)
         else:
@@ -794,7 +839,8 @@ class Tag(PageElement):
         """A copy of a Tag is a new Tag, unconnected to the parse tree.
         Its contents are a copy of the old Tag's contents.
         """
-        clone = type(self)(None, self.builder, self.name, self.namespace, self.nsprefix, self.attrs)
+        clone = type(self)(None, self.builder, self.name, self.namespace,
+                           self.nsprefix, self.attrs)
         for attr in ('can_be_empty_element', 'hidden'):
             setattr(clone, attr, getattr(self, attr))
         for child in self.contents:
@@ -849,8 +895,10 @@ class Tag(PageElement):
         no comments, processing instructions, etc.
         """
         for descendant in self.descendants:
-            if ((types is None and not isinstance(descendant, NavigableString)) or (
-                    types is not None and type(descendant) not in types)):
+            if (
+                        (types is None and not isinstance(descendant, NavigableString))
+                    or
+                        (types is not None and type(descendant) not in types)):
                 continue
             if strip:
                 descendant = descendant.strip()
@@ -865,11 +913,13 @@ class Tag(PageElement):
         for string in self._all_strings(True):
             yield string
 
-    def get_text(self, separator=u"", strip=False, types=(NavigableString, CData)):
+    def get_text(self, separator=u"", strip=False,
+                 types=(NavigableString, CData)):
         """
         Get all child strings, concatenated using the given separator.
         """
-        return separator.join([s for s in self._all_strings(strip, types=types)])
+        return separator.join([s for s in self._all_strings(
+            strip, types=types)])
 
     getText = get_text
     text = property(get_text)
@@ -960,21 +1010,27 @@ class Tag(PageElement):
         if len(tag) > 3 and tag.endswith('Tag'):
             # BS3: soup.aTag -> "soup.find("a")
             tag_name = tag[:-3]
-            warnings.warn('.%sTag is deprecated, use .find("%s") instead.' % (tag_name, tag_name))
+            warnings.warn(
+                '.%sTag is deprecated, use .find("%s") instead.' % (
+                    tag_name, tag_name))
             return self.find(tag_name)
         # We special case contents to avoid recursion.
         elif not tag.startswith("__") and not tag == "contents":
             return self.find(tag)
-        raise AttributeError("'%s' object has no attribute '%s'" % (self.__class__, tag))
+        raise AttributeError(
+            "'%s' object has no attribute '%s'" % (self.__class__, tag))
 
     def __eq__(self, other):
         """Returns true iff this tag has the same name, the same attributes,
         and the same contents (recursively) as the given tag."""
         if self is other:
             return True
-        if (not hasattr(other, 'name') or not hasattr(other, 'attrs') or not hasattr(other,
-                                                                                     'contents') or self.name != other.name or self.attrs != other.attrs or len(
-            self) != len(other)):
+        if (not hasattr(other, 'name') or
+                not hasattr(other, 'attrs') or
+                not hasattr(other, 'contents') or
+                    self.name != other.name or
+                    self.attrs != other.attrs or
+                    len(self) != len(other)):
             return False
         for i, my_child in enumerate(self.contents):
             if my_child != other.contents[i]:
@@ -1009,7 +1065,8 @@ class Tag(PageElement):
     if PY3K:
         __str__ = __repr__ = __unicode__
 
-    def encode(self, encoding=DEFAULT_OUTPUT_ENCODING, indent_level=None, formatter="minimal",
+    def encode(self, encoding=DEFAULT_OUTPUT_ENCODING,
+               indent_level=None, formatter="minimal",
                errors="xmlcharrefreplace"):
         # Turn the data structure into Unicode, then encode the
         # Unicode.
@@ -1018,10 +1075,14 @@ class Tag(PageElement):
 
     def _should_pretty_print(self, indent_level):
         """Should this tag be pretty-printed?"""
-        return (indent_level is not None and (
-        self.name not in HTMLAwareEntitySubstitution.preformatted_tags or self._is_xml))
+        return (
+            indent_level is not None and
+            (self.name not in HTMLAwareEntitySubstitution.preformatted_tags
+             or self._is_xml))
 
-    def decode(self, indent_level=None, eventual_encoding=DEFAULT_OUTPUT_ENCODING, formatter="minimal"):
+    def decode(self, indent_level=None,
+               eventual_encoding=DEFAULT_OUTPUT_ENCODING,
+               formatter="minimal"):
         """Returns a Unicode representation of this tag and its contents.
 
         :param eventual_encoding: The tag is destined to be
@@ -1047,11 +1108,15 @@ class Tag(PageElement):
                         val = ' '.join(val)
                     elif not isinstance(val, basestring):
                         val = unicode(val)
-                    elif (isinstance(val, AttributeValueWithCharsetSubstitution) and eventual_encoding is not None):
+                    elif (
+                                isinstance(val, AttributeValueWithCharsetSubstitution)
+                            and eventual_encoding is not None):
                         val = val.encode(eventual_encoding)
 
                     text = self.format_string(val, formatter)
-                    decoded = (unicode(key) + '=' + EntitySubstitution.quoted_attribute_value(text))
+                    decoded = (
+                        unicode(key) + '='
+                        + EntitySubstitution.quoted_attribute_value(text))
                 attrs.append(decoded)
         close = ''
         closeTag = ''
@@ -1075,7 +1140,8 @@ class Tag(PageElement):
             indent_contents = indent_level + 1
         else:
             indent_contents = None
-        contents = self.decode_contents(indent_contents, eventual_encoding, formatter)
+        contents = self.decode_contents(
+            indent_contents, eventual_encoding, formatter)
 
         if self.hidden:
             # This is the 'document root' object.
@@ -1089,7 +1155,8 @@ class Tag(PageElement):
                 # Even if this particular tag is not pretty-printed,
                 # we should indent up to the start of the tag.
                 s.append(indent_space)
-            s.append('<%s%s%s%s>' % (prefix, self.name, attribute_string, close))
+            s.append('<%s%s%s%s>' % (
+                prefix, self.name, attribute_string, close))
             if pretty_print:
                 s.append("\n")
             s.append(contents)
@@ -1112,7 +1179,9 @@ class Tag(PageElement):
         else:
             return self.encode(encoding, True, formatter=formatter)
 
-    def decode_contents(self, indent_level=None, eventual_encoding=DEFAULT_OUTPUT_ENCODING, formatter="minimal"):
+    def decode_contents(self, indent_level=None,
+                        eventual_encoding=DEFAULT_OUTPUT_ENCODING,
+                        formatter="minimal"):
         """Renders the contents of this tag as a Unicode string.
 
         :param indent_level: Each line of the rendering will be
@@ -1140,7 +1209,8 @@ class Tag(PageElement):
             if isinstance(c, NavigableString):
                 text = c.output_ready(formatter)
             elif isinstance(c, Tag):
-                s.append(c.decode(indent_level, eventual_encoding, formatter))
+                s.append(c.decode(indent_level, eventual_encoding,
+                                  formatter))
             if text and indent_level and not self.name == 'pre':
                 text = text.strip()
             if text:
@@ -1151,7 +1221,9 @@ class Tag(PageElement):
                     s.append("\n")
         return ''.join(s)
 
-    def encode_contents(self, indent_level=None, encoding=DEFAULT_OUTPUT_ENCODING, formatter="minimal"):
+    def encode_contents(
+            self, indent_level=None, encoding=DEFAULT_OUTPUT_ENCODING,
+            formatter="minimal"):
         """Renders the contents of this tag as a bytestring.
 
         :param indent_level: Each line of the rendering will be
@@ -1167,14 +1239,17 @@ class Tag(PageElement):
         return contents.encode(encoding)
 
     # Old method for BS3 compatibility
-    def renderContents(self, encoding=DEFAULT_OUTPUT_ENCODING, prettyPrint=False, indentLevel=0):
+    def renderContents(self, encoding=DEFAULT_OUTPUT_ENCODING,
+                       prettyPrint=False, indentLevel=0):
         if not prettyPrint:
             indentLevel = None
-        return self.encode_contents(indent_level=indentLevel, encoding=encoding)
+        return self.encode_contents(
+            indent_level=indentLevel, encoding=encoding)
 
     # Soup methods
 
-    def find(self, name=None, attrs={}, recursive=True, text=None, **kwargs):
+    def find(self, name=None, attrs={}, recursive=True, text=None,
+             **kwargs):
         """Return only the first child of this Tag matching the given
         criteria."""
         r = None
@@ -1185,7 +1260,8 @@ class Tag(PageElement):
 
     findChild = find
 
-    def find_all(self, name=None, attrs={}, recursive=True, text=None, limit=None, **kwargs):
+    def find_all(self, name=None, attrs={}, recursive=True, text=None,
+                 limit=None, **kwargs):
         """Extracts a list of Tag objects that match the given
         criteria.  You can specify the name of the Tag and any
         attributes you want the Tag to have.
@@ -1241,7 +1317,8 @@ class Tag(PageElement):
         current_context = [self]
 
         if tokens[-1] in self._selector_combinators:
-            raise ValueError('Final combinator "%s" is missing an argument.' % tokens[-1])
+            raise ValueError(
+                'Final combinator "%s" is missing an argument.' % tokens[-1])
 
         if self._select_debug:
             print 'Running CSS selector "%s"' % selector
@@ -1302,7 +1379,8 @@ class Tag(PageElement):
                     # Pseudo-class
                     tag_name, pseudo = token.split(':', 1)
                     if tag_name == '':
-                        raise ValueError("A pseudo-class must be prefixed with a tag name.")
+                        raise ValueError(
+                            "A pseudo-class must be prefixed with a tag name.")
                     pseudo_attributes = re.match('([a-zA-Z\d-]+)\(([a-zA-Z\d]+)\)', pseudo)
                     found = []
                     if pseudo_attributes is None:
@@ -1317,7 +1395,8 @@ class Tag(PageElement):
                             raise NotImplementedError(
                                 'Only numeric values are currently supported for the nth-of-type pseudo-class.')
                         if pseudo_value < 1:
-                            raise ValueError('nth-of-type pseudo-class value must be at least 1.')
+                            raise ValueError(
+                                'nth-of-type pseudo-class value must be at least 1.')
 
                         class Counter(object):
                             def __init__(self, destination):
@@ -1336,7 +1415,8 @@ class Tag(PageElement):
 
                         checker = Counter(pseudo_value).nth_child_of_type
                     else:
-                        raise NotImplementedError('Only the following pseudo-classes are implemented: nth-of-type.')
+                        raise NotImplementedError(
+                            'Only the following pseudo-classes are implemented: nth-of-type.')
 
                 elif token == '*':
                     # Star selector -- matches everything
@@ -1362,7 +1442,8 @@ class Tag(PageElement):
                     # Just a tag name.
                     tag_name = token
                 else:
-                    raise ValueError('Unsupported or invalid CSS selector: "%s"' % token)
+                    raise ValueError(
+                        'Unsupported or invalid CSS selector: "%s"' % token)
                 if recursive_candidate_generator:
                     # This happens when the selector looks like  "> foo".
                     #
@@ -1418,7 +1499,8 @@ class Tag(PageElement):
                 count = 0
                 for tag in current_context:
                     if self._select_debug:
-                        print "    Running candidate generator on %s %s" % (tag.name, repr(tag.attrs))
+                        print "    Running candidate generator on %s %s" % (
+                            tag.name, repr(tag.attrs))
                     for candidate in _use_candidate_generator(tag):
                         if not isinstance(candidate, Tag):
                             continue
@@ -1463,7 +1545,8 @@ class Tag(PageElement):
         """This was kind of misleading because has_key() (attributes)
         was different from __in__ (contents). has_key() is gone in
         Python 3, anyway."""
-        warnings.warn('has_key is deprecated. Use has_attr("%s") instead.' % (key))
+        warnings.warn('has_key is deprecated. Use has_attr("%s") instead.' % (
+            key))
         return self.has_attr(key)
 
 
@@ -1502,8 +1585,8 @@ class SoupStrainer(object):
     def _normalize_search_value(self, value):
         # Leave it alone if it's a Unicode string, a callable, a
         # regular expression, a boolean, or None.
-        if (isinstance(value, unicode) or callable(value) or hasattr(value, 'match') or isinstance(value,
-                                                                                                   bool) or value is None):
+        if (isinstance(value, unicode) or callable(value) or hasattr(value, 'match')
+            or isinstance(value, bool) or value is None):
             return value
 
         # If it's a bytestring, convert it to Unicode, treating it as UTF-8.
@@ -1514,7 +1597,8 @@ class SoupStrainer(object):
         if hasattr(value, '__iter__'):
             new_value = []
             for v in value:
-                if (hasattr(v, '__iter__') and not isinstance(v, bytes) and not isinstance(v, unicode)):
+                if (hasattr(v, '__iter__') and not isinstance(v, bytes)
+                    and not isinstance(v, unicode)):
                     # This is almost certainly the user's mistake. In the
                     # interests of avoiding infinite loops, we'll let
                     # it through as-is rather than doing a recursive call.
@@ -1540,10 +1624,14 @@ class SoupStrainer(object):
         if isinstance(markup_name, Tag):
             markup = markup_name
             markup_attrs = markup
-        call_function_with_tag_data = (isinstance(self.name, collections.Callable) and not isinstance(markup_name, Tag))
+        call_function_with_tag_data = (
+            isinstance(self.name, collections.Callable)
+            and not isinstance(markup_name, Tag))
 
-        if ((not self.name) or call_function_with_tag_data or (markup and self._matches(markup, self.name)) or (
-            not markup and self._matches(markup_name, self.name))):
+        if ((not self.name)
+            or call_function_with_tag_data
+            or (markup and self._matches(markup, self.name))
+            or (not markup and self._matches(markup_name, self.name))):
             if call_function_with_tag_data:
                 match = self.name(markup_name, markup_attrs)
             else:
@@ -1579,7 +1667,8 @@ class SoupStrainer(object):
         # matches.
         if hasattr(markup, '__iter__') and not isinstance(markup, (Tag, basestring)):
             for element in markup:
-                if isinstance(element, NavigableString) and self.search(element):
+                if isinstance(element, NavigableString) \
+                        and self.search(element):
                     found = element
                     break
         # If it's a Tag, make sure its name or attributes match.
@@ -1588,11 +1677,13 @@ class SoupStrainer(object):
             if not self.text or self.name or self.attrs:
                 found = self.search_tag(markup)
         # If it's text, make sure the text matches.
-        elif isinstance(markup, NavigableString) or isinstance(markup, basestring):
+        elif isinstance(markup, NavigableString) or \
+                isinstance(markup, basestring):
             if not self.name and not self.attrs and self._matches(markup, self.text):
                 found = markup
         else:
-            raise Exception("I don't know how to match against a %s" % markup.__class__)
+            raise Exception(
+                "I don't know how to match against a %s" % markup.__class__)
         return found
 
     def _matches(self, markup, match_against):
@@ -1601,7 +1692,8 @@ class SoupStrainer(object):
         if isinstance(markup, list) or isinstance(markup, tuple):
             # This should only happen when searching a multi-valued attribute
             # like 'class'.
-            if (isinstance(match_against, unicode) and ' ' in match_against):
+            if (isinstance(match_against, unicode)
+                and ' ' in match_against):
                 # A bit of a special case. If they try to match "foo
                 # bar" on a multivalue attribute's value, only accept
                 # the literal value "foo bar"

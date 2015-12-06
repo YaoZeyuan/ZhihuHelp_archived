@@ -27,7 +27,9 @@ def diagnose(data):
                 break
         else:
             basic_parsers.remove(name)
-            print ("I noticed that %s is not installed. Installing it may help." % name)
+            print (
+                "I noticed that %s is not installed. Installing it may help." %
+                name)
 
     if 'lxml' in basic_parsers:
         basic_parsers.append(["lxml", "xml"])
@@ -35,14 +37,16 @@ def diagnose(data):
             from lxml import etree
             print "Found lxml version %s" % ".".join(map(str, etree.LXML_VERSION))
         except ImportError, e:
-            print ("lxml is not installed or couldn't be imported.")
+            print (
+                "lxml is not installed or couldn't be imported.")
 
     if 'html5lib' in basic_parsers:
         try:
             import html5lib
             print "Found html5lib version %s" % html5lib.__version__
         except ImportError, e:
-            print ("html5lib is not installed or couldn't be imported.")
+            print (
+                "html5lib is not installed or couldn't be imported.")
 
     if hasattr(data, 'read'):
         data = data.read()

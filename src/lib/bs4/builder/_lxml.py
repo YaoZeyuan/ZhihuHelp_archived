@@ -1,12 +1,27 @@
-__all__ = ['LXMLTreeBuilderForXML', 'LXMLTreeBuilder', ]
+__all__ = [
+    'LXMLTreeBuilderForXML',
+    'LXMLTreeBuilder',
+]
 
 from io import BytesIO
 from StringIO import StringIO
 import collections
 
 from lxml import etree
-from bs4.element import (Comment, Doctype, NamespacedAttribute, ProcessingInstruction, )
-from bs4.builder import (FAST, HTML, HTMLTreeBuilder, PERMISSIVE, ParserRejectedMarkup, TreeBuilder, XML)
+from bs4.element import (
+    Comment,
+    Doctype,
+    NamespacedAttribute,
+    ProcessingInstruction,
+)
+from bs4.builder import (
+    FAST,
+    HTML,
+    HTMLTreeBuilder,
+    PERMISSIVE,
+    ParserRejectedMarkup,
+    TreeBuilder,
+    XML)
 from bs4.dammit import EncodingDetector
 
 LXML = 'lxml'
@@ -34,7 +49,8 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         # will be instantiated with default arguments.
         if self._default_parser is not None:
             return self._default_parser
-        return etree.XMLParser(target=self, strip_cdata=False, recover=True, encoding=encoding)
+        return etree.XMLParser(
+            target=self, strip_cdata=False, recover=True, encoding=encoding)
 
     def parser_for(self, encoding):
         # Use the default parser.
@@ -63,7 +79,8 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         else:
             return (None, tag)
 
-    def prepare_markup(self, markup, user_specified_encoding=None, exclude_encodings=None,
+    def prepare_markup(self, markup, user_specified_encoding=None,
+                       exclude_encodings=None,
                        document_declared_encoding=None):
         """
         :yield: A series of 4-tuples.
@@ -80,7 +97,8 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         if isinstance(markup, unicode):
             # No, apparently not. Convert the Unicode to UTF-8 and
             # tell lxml to parse it as UTF-8.
-            yield (markup.encode("utf8"), "utf8", document_declared_encoding, False)
+            yield (markup.encode("utf8"), "utf8",
+                   document_declared_encoding, False)
 
         # Instead of using UnicodeDammit to convert the bytestring to
         # Unicode using different encodings, use EncodingDetector to
@@ -88,7 +106,8 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         # the document as each one in turn.
         is_html = not self.is_xml
         try_encodings = [user_specified_encoding, document_declared_encoding]
-        detector = EncodingDetector(markup, try_encodings, is_html, exclude_encodings)
+        detector = EncodingDetector(
+            markup, try_encodings, is_html, exclude_encodings)
         for encoding in detector.encodings:
             yield (detector.markup, encoding, document_declared_encoding, False)
 
@@ -134,7 +153,8 @@ class LXMLTreeBuilderForXML(TreeBuilder):
             # tag, so we can recreate it later.
             attrs = attrs.copy()
             for prefix, namespace in nsmap.items():
-                attribute = NamespacedAttribute("xmlns", prefix, "http://www.w3.org/2000/xmlns/")
+                attribute = NamespacedAttribute(
+                    "xmlns", prefix, "http://www.w3.org/2000/xmlns/")
                 attrs[attribute] = namespace
 
         # Namespaces are in play. Find any attributes that came in

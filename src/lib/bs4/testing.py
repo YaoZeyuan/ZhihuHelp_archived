@@ -5,7 +5,13 @@ import copy
 import unittest
 
 from bs4 import BeautifulSoup
-from bs4.element import (CharsetMetaAttributeValue, Comment, ContentMetaAttributeValue, Doctype, SoupStrainer, )
+from bs4.element import (
+    CharsetMetaAttributeValue,
+    Comment,
+    ContentMetaAttributeValue,
+    Doctype,
+    SoupStrainer,
+)
 from bs4.builder import HTMLParserTreeBuilder
 
 default_builder = HTMLParserTreeBuilder
@@ -90,7 +96,8 @@ class HTMLTreeBuilderSmokeTest(object):
     def test_normal_doctypes(self):
         """Make sure normal, everyday HTML doctypes are handled correctly."""
         self.assertDoctypeHandled("html")
-        self.assertDoctypeHandled('html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"')
+        self.assertDoctypeHandled(
+            'html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"')
 
     def test_empty_doctype(self):
         soup = self.soup("<!DOCTYPE>")
@@ -121,7 +128,9 @@ class HTMLTreeBuilderSmokeTest(object):
 <body>Goodbye.</body>
 </html>"""
         soup = self.soup(markup)
-        self.assertEqual(soup.encode("utf-8").replace(b"\n", b""), markup.replace(b"\n", b""))
+        self.assertEqual(
+            soup.encode("utf-8").replace(b"\n", b""),
+            markup.replace(b"\n", b""))
 
     def test_processing_instruction(self):
         markup = b"""<?PITarget PIContent?>"""
@@ -233,13 +242,16 @@ Hello, world!
                   '<tr><td>foo</td></tr>'
                   '</table></td>')
 
-        self.assertSoupEquals(markup, '<table id="1"><tr><td>Here\'s another table:'
-                                      '<table id="2"><tr><td>foo</td></tr></table>'
-                                      '</td></tr></table>')
+        self.assertSoupEquals(
+            markup,
+            '<table id="1"><tr><td>Here\'s another table:'
+            '<table id="2"><tr><td>foo</td></tr></table>'
+            '</td></tr></table>')
 
-        self.assertSoupEquals("<table><thead><tr><td>Foo</td></tr></thead>"
-                              "<tbody><tr><td>Bar</td></tr></tbody>"
-                              "<tfoot><tr><td>Baz</td></tr></tfoot></table>")
+        self.assertSoupEquals(
+            "<table><thead><tr><td>Foo</td></tr></thead>"
+            "<tbody><tr><td>Bar</td></tr></tbody>"
+            "<tfoot><tr><td>Baz</td></tr></tfoot></table>")
 
     def test_deeply_nested_multivalued_attribute(self):
         # html5lib can set the attributes of the same tag many times
@@ -275,7 +287,8 @@ Hello, world!
         self.assertSoupEquals("<p>pi&ntilde;ata</p>", expect)
 
     def test_quot_entity_converted_to_quotation_mark(self):
-        self.assertSoupEquals("<p>I said &quot;good day!&quot;</p>", '<p>I said "good day!"</p>')
+        self.assertSoupEquals("<p>I said &quot;good day!&quot;</p>",
+                              '<p>I said "good day!"</p>')
 
     def test_out_of_range_entity(self):
         expect = u"\N{REPLACEMENT CHARACTER}"
@@ -328,8 +341,10 @@ Hello, world!
         self.assertEqual(markup, soup.encode())
         html = soup.html
         self.assertEqual('http://www.w3.org/1999/xhtml', soup.html['xmlns'])
-        self.assertEqual('http://www.w3.org/1998/Math/MathML', soup.html['xmlns:mathml'])
-        self.assertEqual('http://www.w3.org/2000/svg', soup.html['xmlns:svg'])
+        self.assertEqual(
+            'http://www.w3.org/1998/Math/MathML', soup.html['xmlns:mathml'])
+        self.assertEqual(
+            'http://www.w3.org/2000/svg', soup.html['xmlns:svg'])
 
     def test_multivalued_attribute_value_becomes_list(self):
         markup = b'<a class="foo bar">'
@@ -354,11 +369,13 @@ Hello, world!
     def test_soupstrainer(self):
         """Parsers should be able to work with SoupStrainers."""
         strainer = SoupStrainer("b")
-        soup = self.soup("A <b>bold</b> <meta/> <i>statement</i>", parse_only=strainer)
+        soup = self.soup("A <b>bold</b> <meta/> <i>statement</i>",
+                         parse_only=strainer)
         self.assertEqual(soup.decode(), "<b>bold</b>")
 
     def test_single_quote_attribute_values_become_double_quotes(self):
-        self.assertSoupEquals("<foo attr='bar'></foo>", '<foo attr="bar"></foo>')
+        self.assertSoupEquals("<foo attr='bar'></foo>",
+                              '<foo attr="bar"></foo>')
 
     def test_attribute_values_with_nested_quotes_are_left_alone(self):
         text = """<foo attr='bar "brawls" happen'>a</foo>"""
@@ -368,13 +385,16 @@ Hello, world!
         text = """<foo attr='bar "brawls" happen'>a</foo>"""
         soup = self.soup(text)
         soup.foo['attr'] = 'Brawls happen at "Bob\'s Bar"'
-        self.assertSoupEquals(soup.foo.decode(), """<foo attr="Brawls happen at &quot;Bob\'s Bar&quot;">a</foo>""")
+        self.assertSoupEquals(
+            soup.foo.decode(),
+            """<foo attr="Brawls happen at &quot;Bob\'s Bar&quot;">a</foo>""")
 
     def test_ampersand_in_attribute_value_gets_escaped(self):
         self.assertSoupEquals('<this is="really messed up & stuff"></this>',
                               '<this is="really messed up &amp; stuff"></this>')
 
-        self.assertSoupEquals('<a href="http://example.org?a=1&b=2;3">foo</a>',
+        self.assertSoupEquals(
+            '<a href="http://example.org?a=1&b=2;3">foo</a>',
             '<a href="http://example.org?a=1&amp;b=2;3">foo</a>')
 
     def test_escaped_ampersand_in_attribute_value_is_left_alone(self):
@@ -392,7 +412,9 @@ Hello, world!
         # parsing.
         quote = b"<p>\x91Foo\x92</p>"
         soup = self.soup(quote)
-        self.assertEqual(soup.p.string, u"\N{LEFT SINGLE QUOTATION MARK}Foo\N{RIGHT SINGLE QUOTATION MARK}")
+        self.assertEqual(
+            soup.p.string,
+            u"\N{LEFT SINGLE QUOTATION MARK}Foo\N{RIGHT SINGLE QUOTATION MARK}")
 
     def test_non_breaking_spaces_converted_on_the_way_in(self):
         soup = self.soup("<a>&nbsp;&nbsp;</a>")
@@ -434,11 +456,12 @@ Hello, world!
     def test_real_shift_jis_document(self):
         # Smoke test to make sure the parser can handle a document in
         # Shift-JIS encoding, without choking.
-        shift_jis_html = (b'<html><head></head><body><pre>'
-                          b'\x82\xb1\x82\xea\x82\xcdShift-JIS\x82\xc5\x83R\x81[\x83f'
-                          b'\x83B\x83\x93\x83O\x82\xb3\x82\xea\x82\xbd\x93\xfa\x96{\x8c'
-                          b'\xea\x82\xcc\x83t\x83@\x83C\x83\x8b\x82\xc5\x82\xb7\x81B'
-                          b'</pre></body></html>')
+        shift_jis_html = (
+            b'<html><head></head><body><pre>'
+            b'\x82\xb1\x82\xea\x82\xcdShift-JIS\x82\xc5\x83R\x81[\x83f'
+            b'\x83B\x83\x93\x83O\x82\xb3\x82\xea\x82\xbd\x93\xfa\x96{\x8c'
+            b'\xea\x82\xcc\x83t\x83@\x83C\x83\x8b\x82\xc5\x82\xb7\x81B'
+            b'</pre></body></html>')
         unicode_html = shift_jis_html.decode("shift-jis")
         soup = self.soup(unicode_html)
 
@@ -451,9 +474,12 @@ Hello, world!
         # A real-world test to make sure we can convert ISO-8859-9 (a
         # Hebrew encoding) to UTF-8.
         hebrew_document = b'<html><head><title>Hebrew (ISO 8859-8) in Visual Directionality</title></head><body><h1>Hebrew (ISO 8859-8) in Visual Directionality</h1>\xed\xe5\xec\xf9</body></html>'
-        soup = self.soup(hebrew_document, from_encoding="iso8859-8")
+        soup = self.soup(
+            hebrew_document, from_encoding="iso8859-8")
         self.assertEqual(soup.original_encoding, 'iso8859-8')
-        self.assertEqual(soup.encode('utf-8'), hebrew_document.decode("iso8859-8").encode("utf-8"))
+        self.assertEqual(
+            soup.encode('utf-8'),
+            hebrew_document.decode("iso8859-8").encode("utf-8"))
 
     def test_meta_tag_reflects_current_encoding(self):
         # Here's the <meta> tag saying that a document is
@@ -462,9 +488,10 @@ Hello, world!
                     'http-equiv="Content-type"/>')
 
         # Here's a document incorporating that meta tag.
-        shift_jis_html = ('<html><head>\n%s\n'
-                          '<meta http-equiv="Content-language" content="ja"/>'
-                          '</head><body>Shift-JIS markup goes here.') % meta_tag
+        shift_jis_html = (
+                             '<html><head>\n%s\n'
+                             '<meta http-equiv="Content-language" content="ja"/>'
+                             '</head><body>Shift-JIS markup goes here.') % meta_tag
         soup = self.soup(shift_jis_html)
 
         # Parse the document, and the charset is seemingly unaffected.
@@ -488,9 +515,10 @@ Hello, world!
         meta_tag = ('<meta id="encoding" charset="x-sjis" />')
 
         # Here's a document incorporating that meta tag.
-        shift_jis_html = ('<html><head>\n%s\n'
-                          '<meta http-equiv="Content-language" content="ja"/>'
-                          '</head><body>Shift-JIS markup goes here.') % meta_tag
+        shift_jis_html = (
+                             '<html><head>\n%s\n'
+                             '<meta http-equiv="Content-language" content="ja"/>'
+                             '</head><body>Shift-JIS markup goes here.') % meta_tag
         soup = self.soup(shift_jis_html)
 
         # Parse the document, and the charset is seemingly unaffected.
@@ -523,7 +551,8 @@ class XMLTreeBuilderSmokeTest(object):
 
     def test_docstring_generated(self):
         soup = self.soup("<root/>")
-        self.assertEqual(soup.encode(), b'<?xml version="1.0" encoding="utf-8"?>\n<root/>')
+        self.assertEqual(
+            soup.encode(), b'<?xml version="1.0" encoding="utf-8"?>\n<root/>')
 
     def test_real_xhtml_document(self):
         """A real XHTML document should come out *exactly* the same as it went in."""
@@ -534,7 +563,8 @@ class XMLTreeBuilderSmokeTest(object):
 <body>Goodbye.</body>
 </html>"""
         soup = self.soup(markup)
-        self.assertEqual(soup.encode("utf-8"), markup)
+        self.assertEqual(
+            soup.encode("utf-8"), markup)
 
     def test_formatter_processes_script_tag_for_xml_documents(self):
         doc = """
@@ -556,15 +586,20 @@ class XMLTreeBuilderSmokeTest(object):
     def test_popping_namespaced_tag(self):
         markup = '<rss xmlns:dc="foo"><dc:creator>b</dc:creator><dc:date>2012-07-02T20:33:42Z</dc:date><dc:rights>c</dc:rights><image>d</image></rss>'
         soup = self.soup(markup)
-        self.assertEqual(unicode(soup.rss), markup)
+        self.assertEqual(
+            unicode(soup.rss), markup)
 
     def test_docstring_includes_correct_encoding(self):
         soup = self.soup("<root/>")
-        self.assertEqual(soup.encode("latin1"), b'<?xml version="1.0" encoding="latin1"?>\n<root/>')
+        self.assertEqual(
+            soup.encode("latin1"),
+            b'<?xml version="1.0" encoding="latin1"?>\n<root/>')
 
     def test_large_xml_document(self):
         """A large XML document should come out the same as it went in."""
-        markup = (b'<?xml version="1.0" encoding="utf-8"?>\n<root>' + b'0' * (2 ** 12) + b'</root>')
+        markup = (b'<?xml version="1.0" encoding="utf-8"?>\n<root>'
+                  + b'0' * (2 ** 12)
+                  + b'</root>')
         soup = self.soup(markup)
         self.assertEqual(soup.encode("utf-8"), markup)
 

@@ -7,11 +7,25 @@ import sys
 import tempfile
 import warnings
 
-from bs4 import (BeautifulSoup, )
-from bs4.element import (CharsetMetaAttributeValue, ContentMetaAttributeValue, SoupStrainer, NamespacedAttribute, )
+from bs4 import (
+    BeautifulSoup,
+)
+from bs4.element import (
+    CharsetMetaAttributeValue,
+    ContentMetaAttributeValue,
+    SoupStrainer,
+    NamespacedAttribute,
+)
 import bs4.dammit
-from bs4.dammit import (EntitySubstitution, UnicodeDammit, EncodingDetector, )
-from bs4.testing import (SoupTest, skipIf, )
+from bs4.dammit import (
+    EntitySubstitution,
+    UnicodeDammit,
+    EncodingDetector,
+)
+from bs4.testing import (
+    SoupTest,
+    skipIf,
+)
 
 try:
     from bs4.builder import LXMLTreeBuilder, LXMLTreeBuilderForXML
@@ -81,7 +95,8 @@ class TestWarnings(SoupTest):
         self.assertEqual("utf8", soup.original_encoding)
 
     def test_unrecognized_keyword_argument(self):
-        self.assertRaises(TypeError, self.soup, "<a>", no_such_argument=True)
+        self.assertRaises(
+            TypeError, self.soup, "<a>", no_such_argument=True)
 
 
 class TestWarnings(SoupTest):
@@ -130,46 +145,59 @@ class TestEntitySubstitution(unittest.TestCase):
         # Unicode characters corresponding to named HTML entites
         # are substituted, and no others.
         s = u"foo\u2200\N{SNOWMAN}\u00f5bar"
-        self.assertEqual(self.sub.substitute_html(s), u"foo&forall;\N{SNOWMAN}&otilde;bar")
+        self.assertEqual(self.sub.substitute_html(s),
+                         u"foo&forall;\N{SNOWMAN}&otilde;bar")
 
     def test_smart_quote_substitution(self):
         # MS smart quotes are a common source of frustration, so we
         # give them a special test.
         quotes = b"\x91\x92foo\x93\x94"
         dammit = UnicodeDammit(quotes)
-        self.assertEqual(self.sub.substitute_html(dammit.markup), "&lsquo;&rsquo;foo&ldquo;&rdquo;")
+        self.assertEqual(self.sub.substitute_html(dammit.markup),
+                         "&lsquo;&rsquo;foo&ldquo;&rdquo;")
 
     def test_xml_converstion_includes_no_quotes_if_make_quoted_attribute_is_false(self):
         s = 'Welcome to "my bar"'
         self.assertEqual(self.sub.substitute_xml(s, False), s)
 
     def test_xml_attribute_quoting_normally_uses_double_quotes(self):
-        self.assertEqual(self.sub.substitute_xml("Welcome", True), '"Welcome"')
-        self.assertEqual(self.sub.substitute_xml("Bob's Bar", True), '"Bob\'s Bar"')
+        self.assertEqual(self.sub.substitute_xml("Welcome", True),
+                         '"Welcome"')
+        self.assertEqual(self.sub.substitute_xml("Bob's Bar", True),
+                         '"Bob\'s Bar"')
 
     def test_xml_attribute_quoting_uses_single_quotes_when_value_contains_double_quotes(self):
         s = 'Welcome to "my bar"'
-        self.assertEqual(self.sub.substitute_xml(s, True), "'Welcome to \"my bar\"'")
+        self.assertEqual(self.sub.substitute_xml(s, True),
+                         "'Welcome to \"my bar\"'")
 
     def test_xml_attribute_quoting_escapes_single_quotes_when_value_contains_both_single_and_double_quotes(self):
         s = 'Welcome to "Bob\'s Bar"'
-        self.assertEqual(self.sub.substitute_xml(s, True), '"Welcome to &quot;Bob\'s Bar&quot;"')
+        self.assertEqual(
+            self.sub.substitute_xml(s, True),
+            '"Welcome to &quot;Bob\'s Bar&quot;"')
 
     def test_xml_quotes_arent_escaped_when_value_is_not_being_quoted(self):
         quoted = 'Welcome to "Bob\'s Bar"'
         self.assertEqual(self.sub.substitute_xml(quoted), quoted)
 
     def test_xml_quoting_handles_angle_brackets(self):
-        self.assertEqual(self.sub.substitute_xml("foo<bar>"), "foo&lt;bar&gt;")
+        self.assertEqual(
+            self.sub.substitute_xml("foo<bar>"),
+            "foo&lt;bar&gt;")
 
     def test_xml_quoting_handles_ampersands(self):
         self.assertEqual(self.sub.substitute_xml("AT&T"), "AT&amp;T")
 
     def test_xml_quoting_including_ampersands_when_they_are_part_of_an_entity(self):
-        self.assertEqual(self.sub.substitute_xml("&Aacute;T&T"), "&amp;Aacute;T&amp;T")
+        self.assertEqual(
+            self.sub.substitute_xml("&Aacute;T&T"),
+            "&amp;Aacute;T&amp;T")
 
     def test_xml_quoting_ignoring_ampersands_when_they_are_part_of_an_entity(self):
-        self.assertEqual(self.sub.substitute_xml_containing_entities("&Aacute;T&T"), "&Aacute;T&amp;T")
+        self.assertEqual(
+            self.sub.substitute_xml_containing_entities("&Aacute;T&T"),
+            "&Aacute;T&amp;T")
 
     def test_quotes_not_html_substituted(self):
         """There's no need to do this except inside attribute values."""
@@ -186,7 +214,8 @@ class TestEncodingConversion(SoupTest):
         self.unicode_data = u'<html><head><meta charset="utf-8"/></head><body><foo>Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!</foo></body></html>'
         self.utf8_data = self.unicode_data.encode("utf-8")
         # Just so you know what it looks like.
-        self.assertEqual(self.utf8_data,
+        self.assertEqual(
+            self.utf8_data,
             b'<html><head><meta charset="utf-8"/></head><body><foo>Sacr\xc3\xa9 bleu!</foo></body></html>')
 
     def test_ascii_in_unicode_out(self):
@@ -230,7 +259,8 @@ class TestEncodingConversion(SoupTest):
         soup_from_unicode = self.soup(self.unicode_data)
         self.assertEqual(soup_from_unicode.encode('utf-8'), self.utf8_data)
 
-    @skipIf(PYTHON_2_PRE_2_7 or PYTHON_3_PRE_3_2,
+    @skipIf(
+        PYTHON_2_PRE_2_7 or PYTHON_3_PRE_3_2,
         "Bad HTMLParser detected; skipping test of non-ASCII characters in attribute name.")
     def test_attribute_name_containing_unicode_characters(self):
         markup = u'<div><a \N{SNOWMAN}="snowman"></a></div>'
@@ -248,22 +278,26 @@ class TestUnicodeDammit(unittest.TestCase):
     def test_smart_quotes_to_unicode(self):
         markup = b"<foo>\x91\x92\x93\x94</foo>"
         dammit = UnicodeDammit(markup)
-        self.assertEqual(dammit.unicode_markup, u"<foo>\u2018\u2019\u201c\u201d</foo>")
+        self.assertEqual(
+            dammit.unicode_markup, u"<foo>\u2018\u2019\u201c\u201d</foo>")
 
     def test_smart_quotes_to_xml_entities(self):
         markup = b"<foo>\x91\x92\x93\x94</foo>"
         dammit = UnicodeDammit(markup, smart_quotes_to="xml")
-        self.assertEqual(dammit.unicode_markup, "<foo>&#x2018;&#x2019;&#x201C;&#x201D;</foo>")
+        self.assertEqual(
+            dammit.unicode_markup, "<foo>&#x2018;&#x2019;&#x201C;&#x201D;</foo>")
 
     def test_smart_quotes_to_html_entities(self):
         markup = b"<foo>\x91\x92\x93\x94</foo>"
         dammit = UnicodeDammit(markup, smart_quotes_to="html")
-        self.assertEqual(dammit.unicode_markup, "<foo>&lsquo;&rsquo;&ldquo;&rdquo;</foo>")
+        self.assertEqual(
+            dammit.unicode_markup, "<foo>&lsquo;&rsquo;&ldquo;&rdquo;</foo>")
 
     def test_smart_quotes_to_ascii(self):
         markup = b"<foo>\x91\x92\x93\x94</foo>"
         dammit = UnicodeDammit(markup, smart_quotes_to="ascii")
-        self.assertEqual(dammit.unicode_markup, """<foo>''""</foo>""")
+        self.assertEqual(
+            dammit.unicode_markup, """<foo>''""</foo>""")
 
     def test_detect_utf8(self):
         utf8 = b"\xc3\xa9"
@@ -304,20 +338,26 @@ class TestUnicodeDammit(unittest.TestCase):
         self.assertEqual(dammit.original_encoding.lower(), 'windows-1252')
 
         # And if we exclude that, there is no valid guess at all.
-        dammit = UnicodeDammit(utf8_data, exclude_encodings=["utf-8", "windows-1252"])
+        dammit = UnicodeDammit(
+            utf8_data, exclude_encodings=["utf-8", "windows-1252"])
         self.assertEqual(dammit.original_encoding, None)
 
     def test_encoding_detector_replaces_junk_in_encoding_name_with_replacement_character(self):
-        detected = EncodingDetector(b'<?xml version="1.0" encoding="UTF-\xdb" ?>')
+        detected = EncodingDetector(
+            b'<?xml version="1.0" encoding="UTF-\xdb" ?>')
         encodings = list(detected.encodings)
         assert u'utf-\N{REPLACEMENT CHARACTER}' in encodings
 
     def test_detect_html5_style_meta_tag(self):
 
-        for data in (b'<html><meta charset="euc-jp" /></html>', b"<html><meta charset='euc-jp' /></html>",
-                     b"<html><meta charset=euc-jp /></html>", b"<html><meta charset=euc-jp/></html>"):
+        for data in (
+                b'<html><meta charset="euc-jp" /></html>',
+                b"<html><meta charset='euc-jp' /></html>",
+                b"<html><meta charset=euc-jp /></html>",
+                b"<html><meta charset=euc-jp/></html>"):
             dammit = UnicodeDammit(data, is_html=True)
-            self.assertEqual("euc-jp", dammit.original_encoding)
+            self.assertEqual(
+                "euc-jp", dammit.original_encoding)
 
     def test_last_ditch_entity_replacement(self):
         # This is a UTF-8 document that contains bytestrings
@@ -367,8 +407,9 @@ class TestUnicodeDammit(unittest.TestCase):
         utf8 = (u"\N{SNOWMAN}" * 3).encode("utf8")
 
         # Here's a Windows-1252 document.
-        windows_1252 = (u"\N{LEFT DOUBLE QUOTATION MARK}Hi, I like Windows!"
-                        u"\N{RIGHT DOUBLE QUOTATION MARK}").encode("windows_1252")
+        windows_1252 = (
+            u"\N{LEFT DOUBLE QUOTATION MARK}Hi, I like Windows!"
+            u"\N{RIGHT DOUBLE QUOTATION MARK}").encode("windows_1252")
 
         # Through some unholy alchemy, they've been stuck together.
         doc = utf8 + windows_1252 + utf8
@@ -382,16 +423,19 @@ class TestUnicodeDammit(unittest.TestCase):
         # But if we run it through fix_embedded_windows_1252, it's fixed:
 
         fixed = UnicodeDammit.detwingle(doc)
-        self.assertEqual(u"☃☃☃“Hi, I like Windows!”☃☃☃", fixed.decode("utf8"))
+        self.assertEqual(
+            u"☃☃☃“Hi, I like Windows!”☃☃☃", fixed.decode("utf8"))
 
     def test_detwingle_ignores_multibyte_characters(self):
         # Each of these characters has a UTF-8 representation ending
         # in \x93. \x93 is a smart quote if interpreted as
         # Windows-1252. But our code knows to skip over multibyte
         # UTF-8 characters, so they'll survive the process unscathed.
-        for tricky_unicode_char in (u"\N{LATIN SMALL LIGATURE OE}",  # 2-byte char '\xc5\x93'
-                                    u"\N{LATIN SUBSCRIPT SMALL LETTER X}",  # 3-byte char '\xe2\x82\x93'
-                                    u"\xf0\x90\x90\x93",  # This is a CJK character, not sure which one.):
+        for tricky_unicode_char in (
+                u"\N{LATIN SMALL LIGATURE OE}",  # 2-byte char '\xc5\x93'
+                u"\N{LATIN SUBSCRIPT SMALL LETTER X}",  # 3-byte char '\xe2\x82\x93'
+                u"\xf0\x90\x90\x93",  # This is a CJK character, not sure which one.
+        ):
             input = tricky_unicode_char.encode("utf8")
             self.assertTrue(input.endswith(b'\x93'))
             output = UnicodeDammit.detwingle(input)

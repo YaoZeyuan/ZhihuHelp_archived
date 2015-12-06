@@ -27,7 +27,11 @@ import os
 import warnings
 
 from .builder import builder_registry, ParserRejectedMarkup
-from .element import (DEFAULT_OUTPUT_ENCODING, NavigableString, Tag, )
+from .element import (
+    DEFAULT_OUTPUT_ENCODING,
+    NavigableString,
+    Tag,
+)
 
 
 # The very first thing we do is give a useful error if someone is
@@ -67,58 +71,68 @@ class BeautifulSoup(Tag):
 
     NO_PARSER_SPECIFIED_WARNING = "No parser was explicitly specified, so I'm using the best available %(markup_type)s parser for this system (\"%(parser)s\"). This usually isn't a problem, but if you run this code on another system, or in a different virtual environment, it may use a different parser and behave differently.\n\nTo get rid of this warning, change this:\n\n BeautifulSoup([your markup])\n\nto this:\n\n BeautifulSoup([your markup], \"%(parser)s\")\n"
 
-    def __init__(self, markup="", features=None, builder=None, parse_only=None, from_encoding=None,
-                 exclude_encodings=None, **kwargs):
+    def __init__(self, markup="", features=None, builder=None,
+                 parse_only=None, from_encoding=None, exclude_encodings=None,
+                 **kwargs):
         """The Soup object is initialized as the 'root tag', and the
         provided markup (which can be a string or a file-like object)
         is fed into the underlying parser."""
 
         if 'convertEntities' in kwargs:
-            warnings.warn("BS4 does not respect the convertEntities argument to the "
-                          "BeautifulSoup constructor. Entities are always converted "
-                          "to Unicode characters.")
+            warnings.warn(
+                "BS4 does not respect the convertEntities argument to the "
+                "BeautifulSoup constructor. Entities are always converted "
+                "to Unicode characters.")
 
         if 'markupMassage' in kwargs:
             del kwargs['markupMassage']
-            warnings.warn("BS4 does not respect the markupMassage argument to the "
-                          "BeautifulSoup constructor. The tree builder is responsible "
-                          "for any necessary markup massage.")
+            warnings.warn(
+                "BS4 does not respect the markupMassage argument to the "
+                "BeautifulSoup constructor. The tree builder is responsible "
+                "for any necessary markup massage.")
 
         if 'smartQuotesTo' in kwargs:
             del kwargs['smartQuotesTo']
-            warnings.warn("BS4 does not respect the smartQuotesTo argument to the "
-                          "BeautifulSoup constructor. Smart quotes are always converted "
-                          "to Unicode characters.")
+            warnings.warn(
+                "BS4 does not respect the smartQuotesTo argument to the "
+                "BeautifulSoup constructor. Smart quotes are always converted "
+                "to Unicode characters.")
 
         if 'selfClosingTags' in kwargs:
             del kwargs['selfClosingTags']
-            warnings.warn("BS4 does not respect the selfClosingTags argument to the "
-                          "BeautifulSoup constructor. The tree builder is responsible "
-                          "for understanding self-closing tags.")
+            warnings.warn(
+                "BS4 does not respect the selfClosingTags argument to the "
+                "BeautifulSoup constructor. The tree builder is responsible "
+                "for understanding self-closing tags.")
 
         if 'isHTML' in kwargs:
             del kwargs['isHTML']
-            warnings.warn("BS4 does not respect the isHTML argument to the "
-                          "BeautifulSoup constructor. Suggest you use "
-                          "features='lxml' for HTML and features='lxml-xml' for "
-                          "XML.")
+            warnings.warn(
+                "BS4 does not respect the isHTML argument to the "
+                "BeautifulSoup constructor. Suggest you use "
+                "features='lxml' for HTML and features='lxml-xml' for "
+                "XML.")
 
         def deprecated_argument(old_name, new_name):
             if old_name in kwargs:
-                warnings.warn('The "%s" argument to the BeautifulSoup constructor '
-                              'has been renamed to "%s."' % (old_name, new_name))
+                warnings.warn(
+                    'The "%s" argument to the BeautifulSoup constructor '
+                    'has been renamed to "%s."' % (old_name, new_name))
                 value = kwargs[old_name]
                 del kwargs[old_name]
                 return value
             return None
 
-        parse_only = parse_only or deprecated_argument("parseOnlyThese", "parse_only")
+        parse_only = parse_only or deprecated_argument(
+            "parseOnlyThese", "parse_only")
 
-        from_encoding = from_encoding or deprecated_argument("fromEncoding", "from_encoding")
+        from_encoding = from_encoding or deprecated_argument(
+            "fromEncoding", "from_encoding")
 
         if len(kwargs) > 0:
             arg = kwargs.keys().pop()
-            raise TypeError("__init__() got an unexpected keyword argument '%s'" % arg)
+            raise TypeError(
+                "__init__() got an unexpected keyword argument '%s'" % arg)
 
         if builder is None:
             original_features = features
@@ -128,15 +142,20 @@ class BeautifulSoup(Tag):
                 features = self.DEFAULT_BUILDER_FEATURES
             builder_class = builder_registry.lookup(*features)
             if builder_class is None:
-                raise FeatureNotFound("Couldn't find a tree builder with the features you "
-                                      "requested: %s. Do you need to install a parser library?" % ",".join(features))
+                raise FeatureNotFound(
+                    "Couldn't find a tree builder with the features you "
+                    "requested: %s. Do you need to install a parser library?"
+                    % ",".join(features))
             builder = builder_class()
-            if not (original_features == builder.NAME or original_features in builder.ALTERNATE_NAMES):
+            if not (original_features == builder.NAME or
+                            original_features in builder.ALTERNATE_NAMES):
                 if builder.is_xml:
                     markup_type = "XML"
                 else:
                     markup_type = "HTML"
-                warnings.warn(self.NO_PARSER_SPECIFIED_WARNING % dict(parser=builder.NAME, markup_type=markup_type))
+                warnings.warn(self.NO_PARSER_SPECIFIED_WARNING % dict(
+                    parser=builder.NAME,
+                    markup_type=markup_type))
 
         self.builder = builder
         self.is_xml = builder.is_xml
@@ -151,7 +170,8 @@ class BeautifulSoup(Tag):
             # involving passing non-markup to Beautiful Soup.
             # Beautiful Soup will still parse the input as markup,
             # just in case that's what the user really wants.
-            if (isinstance(markup, unicode) and not os.path.supports_unicode_filenames):
+            if (isinstance(markup, unicode)
+                and not os.path.supports_unicode_filenames):
                 possible_filename = markup.encode("utf8")
             else:
                 possible_filename = markup
@@ -171,16 +191,17 @@ class BeautifulSoup(Tag):
             if markup[:5] == "http:" or markup[:6] == "https:":
                 # TODO: This is ugly but I couldn't get it to work in
                 # Python 3 otherwise.
-                if ((isinstance(markup, bytes) and not b' ' in markup) or (
-                    isinstance(markup, unicode) and not u' ' in markup)):
+                if ((isinstance(markup, bytes) and not b' ' in markup)
+                    or (isinstance(markup, unicode) and not u' ' in markup)):
                     if isinstance(markup, unicode):
                         markup = markup.encode("utf8")
                     warnings.warn(
                         '"%s" looks like a URL. Beautiful Soup is not an HTTP client. You should probably use an HTTP client to get the document behind the URL, and feed that document to Beautiful Soup.' % markup)
 
-        for (
-        self.markup, self.original_encoding, self.declared_html_encoding, self.contains_replacement_characters) in (
-                self.builder.prepare_markup(markup, from_encoding, exclude_encodings=exclude_encodings)):
+        for (self.markup, self.original_encoding, self.declared_html_encoding,
+             self.contains_replacement_characters) in (
+                self.builder.prepare_markup(
+                    markup, from_encoding, exclude_encodings=exclude_encodings)):
             self.reset()
             try:
                 self._feed()
@@ -277,8 +298,9 @@ class BeautifulSoup(Tag):
             self.current_data = []
 
             # Should we add this string to the tree at all?
-            if self.parse_only and len(self.tagStack) <= 1 and (
-                not self.parse_only.text or not self.parse_only.search(current_data)):
+            if self.parse_only and len(self.tagStack) <= 1 and \
+                    (not self.parse_only.text or \
+                             not self.parse_only.search(current_data)):
                 return
 
             o = containerClass(current_data)
@@ -365,11 +387,13 @@ class BeautifulSoup(Tag):
         # print "Start tag %s: %s" % (name, attrs)
         self.endData()
 
-        if (self.parse_only and len(self.tagStack) <= 1 and (
-            self.parse_only.text or not self.parse_only.search_tag(name, attrs))):
+        if (self.parse_only and len(self.tagStack) <= 1
+            and (self.parse_only.text
+                 or not self.parse_only.search_tag(name, attrs))):
             return None
 
-        tag = Tag(self, self.builder, name, namespace, nsprefix, attrs, self.currentTag, self._most_recent_element)
+        tag = Tag(self, self.builder, name, namespace, nsprefix, attrs,
+                  self.currentTag, self._most_recent_element)
         if tag is None:
             return tag
         if self._most_recent_element:
@@ -386,7 +410,9 @@ class BeautifulSoup(Tag):
     def handle_data(self, data):
         self.current_data.append(data)
 
-    def decode(self, pretty_print=False, eventual_encoding=DEFAULT_OUTPUT_ENCODING, formatter="minimal"):
+    def decode(self, pretty_print=False,
+               eventual_encoding=DEFAULT_OUTPUT_ENCODING,
+               formatter="minimal"):
         """Returns a string or Unicode representation of this document.
         To get Unicode, pass None for encoding."""
 
@@ -402,7 +428,8 @@ class BeautifulSoup(Tag):
             indent_level = None
         else:
             indent_level = 0
-        return prefix + super(BeautifulSoup, self).decode(indent_level, eventual_encoding, formatter)
+        return prefix + super(BeautifulSoup, self).decode(
+            indent_level, eventual_encoding, formatter)
 
 
 # Alias to make it easier to type import: 'from bs4 import _soup'
@@ -415,8 +442,9 @@ class BeautifulStoneSoup(BeautifulSoup):
 
     def __init__(self, *args, **kwargs):
         kwargs['features'] = 'xml'
-        warnings.warn('The BeautifulStoneSoup class is deprecated. Instead of using '
-                      'it, pass features="xml" into the BeautifulSoup constructor.')
+        warnings.warn(
+            'The BeautifulStoneSoup class is deprecated. Instead of using '
+            'it, pass features="xml" into the BeautifulSoup constructor.')
         super(BeautifulStoneSoup, self).__init__(*args, **kwargs)
 
 

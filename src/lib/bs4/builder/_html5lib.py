@@ -1,12 +1,27 @@
-__all__ = ['HTML5TreeBuilder', ]
+__all__ = [
+    'HTML5TreeBuilder',
+]
 
 import warnings
 
-from bs4.builder import (PERMISSIVE, HTML, HTML_5, HTMLTreeBuilder, )
-from bs4.element import (NamespacedAttribute, whitespace_re, )
+from bs4.builder import (
+    PERMISSIVE,
+    HTML,
+    HTML_5,
+    HTMLTreeBuilder,
+)
+from bs4.element import (
+    NamespacedAttribute,
+    whitespace_re,
+)
 import html5lib
 from html5lib.constants import namespaces
-from bs4.element import (Comment, Doctype, NavigableString, Tag, )
+from bs4.element import (
+    Comment,
+    Doctype,
+    NavigableString,
+    Tag,
+)
 
 
 class HTML5TreeBuilder(HTMLTreeBuilder):
@@ -16,7 +31,8 @@ class HTML5TreeBuilder(HTMLTreeBuilder):
 
     features = [NAME, PERMISSIVE, HTML_5, HTML]
 
-    def prepare_markup(self, markup, user_specified_encoding, document_declared_encoding=None, exclude_encodings=None):
+    def prepare_markup(self, markup, user_specified_encoding,
+                       document_declared_encoding=None, exclude_encodings=None):
         # Store the user-specified encoding for use later on.
         self.user_specified_encoding = user_specified_encoding
 
@@ -45,7 +61,8 @@ class HTML5TreeBuilder(HTMLTreeBuilder):
             doc.original_encoding = parser.tokenizer.stream.charEncoding[0]
 
     def create_treebuilder(self, namespaceHTMLElements):
-        self.underlying_builder = TreeBuilderForHtml5lib(self.soup, namespaceHTMLElements)
+        self.underlying_builder = TreeBuilderForHtml5lib(
+            self.soup, namespaceHTMLElements)
         return self.underlying_builder
 
     def test_fragment_to_document(self, fragment):
@@ -105,7 +122,9 @@ class AttrList(object):
         # If this attribute is a multi-valued attribute for this element,
         # turn its value into a list.
         list_attr = HTML5TreeBuilder.cdata_list_attributes
-        if (name in list_attr['*'] or (self.element.name in list_attr and name in list_attr[self.element.name])):
+        if (name in list_attr['*']
+            or (self.element.name in list_attr
+                and name in list_attr[self.element.name])):
             value = whitespace_re.split(value)
         self.element[name] = value
 
@@ -152,7 +171,8 @@ class Element(html5lib.treebuilders._base.Node):
         if not isinstance(child, basestring) and child.parent is not None:
             node.element.extract()
 
-        if (string_child and self.element.contents and self.element.contents[-1].__class__ == NavigableString):
+        if (string_child and self.element.contents
+            and self.element.contents[-1].__class__ == NavigableString):
             # We are appending a string onto another string.
             # TODO This has O(n^2) performance, for input like
             # "a</a>a</a>a</a>..."
@@ -179,7 +199,9 @@ class Element(html5lib.treebuilders._base.Node):
             else:
                 most_recent_element = self.element
 
-            self.soup.object_was_parsed(child, parent=self.element, most_recent_element=most_recent_element)
+            self.soup.object_was_parsed(
+                child, parent=self.element,
+                most_recent_element=most_recent_element)
 
     def getAttributes(self):
         return AttrList(self.element)
@@ -195,7 +217,8 @@ class Element(html5lib.treebuilders._base.Node):
                     del attributes[name]
                     attributes[new_name] = value
 
-            self.soup.builder._replace_cdata_list_attribute_values(self.name, attributes)
+            self.soup.builder._replace_cdata_list_attribute_values(
+                self.name, attributes)
             for name, value in attributes.items():
                 self.element[name] = value
 
@@ -217,8 +240,8 @@ class Element(html5lib.treebuilders._base.Node):
 
     def insertBefore(self, node, refNode):
         index = self.element.index(refNode.element)
-        if (node.element.__class__ == NavigableString and self.element.contents and self.element.contents[
-                index - 1].__class__ == NavigableString):
+        if (node.element.__class__ == NavigableString and self.element.contents
+            and self.element.contents[index - 1].__class__ == NavigableString):
             # (See comments in appendChild)
             old_node = self.element.contents[index - 1]
             new_str = self.soup.new_string(old_node + node.element)

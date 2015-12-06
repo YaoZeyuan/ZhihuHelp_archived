@@ -15,9 +15,21 @@ import re
 import warnings
 
 from bs4 import BeautifulSoup
-from bs4.builder import (builder_registry, )
-from bs4.element import (PY3K, CData, Comment, Doctype, NavigableString, SoupStrainer, Tag, )
-from bs4.testing import (SoupTest, )
+from bs4.builder import (
+    builder_registry,
+)
+from bs4.element import (
+    PY3K,
+    CData,
+    Comment,
+    Doctype,
+    NavigableString,
+    SoupStrainer,
+    Tag,
+)
+from bs4.testing import (
+    SoupTest,
+)
 
 XML_BUILDER_PRESENT = (builder_registry.lookup("xml") is not None)
 LXML_PRESENT = (builder_registry.lookup("lxml") is not None)
@@ -84,21 +96,26 @@ class TestFindAll(TreeTest):
         self.assertEqual(soup.find_all(string="bar"), [u"bar"])
         self.assertEqual(soup.find_all(text="bar"), [u"bar"])
         # Match any of a number of strings.
-        self.assertEqual(soup.find_all(text=["Foo", "bar"]), [u"Foo", u"bar"])
+        self.assertEqual(
+            soup.find_all(text=["Foo", "bar"]), [u"Foo", u"bar"])
         # Match a regular expression.
-        self.assertEqual(soup.find_all(text=re.compile('.*')), [u"Foo", u"bar", u'\xbb'])
+        self.assertEqual(soup.find_all(text=re.compile('.*')),
+                         [u"Foo", u"bar", u'\xbb'])
         # Match anything.
-        self.assertEqual(soup.find_all(text=True), [u"Foo", u"bar", u'\xbb'])
+        self.assertEqual(soup.find_all(text=True),
+                         [u"Foo", u"bar", u'\xbb'])
 
     def test_find_all_limit(self):
         """You can limit the number of items returned by find_all."""
         soup = self.soup("<a>1</a><a>2</a><a>3</a><a>4</a><a>5</a>")
         self.assertSelects(soup.find_all('a', limit=3), ["1", "2", "3"])
         self.assertSelects(soup.find_all('a', limit=1), ["1"])
-        self.assertSelects(soup.find_all('a', limit=10), ["1", "2", "3", "4", "5"])
+        self.assertSelects(
+            soup.find_all('a', limit=10), ["1", "2", "3", "4", "5"])
 
         # A limit of 0 means no limit.
-        self.assertSelects(soup.find_all('a', limit=0), ["1", "2", "3", "4", "5"])
+        self.assertSelects(
+            soup.find_all('a', limit=0), ["1", "2", "3", "4", "5"])
 
     def test_calling_a_tag_is_calling_findall(self):
         soup = self.soup("<a>1</a><b>2<a id='foo'>3</a></b>")
@@ -146,14 +163,19 @@ class TestFindAllByName(TreeTest):
 
     def test_find_all_by_tag_name(self):
         # Find all the <a> tags.
-        self.assertSelects(self.tree.find_all('a'), ['First tag.', 'Nested tag.'])
+        self.assertSelects(
+            self.tree.find_all('a'), ['First tag.', 'Nested tag.'])
 
     def test_find_all_by_name_and_text(self):
-        self.assertSelects(self.tree.find_all('a', text='First tag.'), ['First tag.'])
+        self.assertSelects(
+            self.tree.find_all('a', text='First tag.'), ['First tag.'])
 
-        self.assertSelects(self.tree.find_all('a', text=True), ['First tag.', 'Nested tag.'])
+        self.assertSelects(
+            self.tree.find_all('a', text=True), ['First tag.', 'Nested tag.'])
 
-        self.assertSelects(self.tree.find_all('a', text=re.compile("tag")), ['First tag.', 'Nested tag.'])
+        self.assertSelects(
+            self.tree.find_all('a', text=re.compile("tag")),
+            ['First tag.', 'Nested tag.'])
 
     def test_find_all_on_non_root_element(self):
         # You can call find_all on any node, not just the root.
@@ -163,16 +185,24 @@ class TestFindAllByName(TreeTest):
         self.assertSelects(self.tree('a'), ['First tag.', 'Nested tag.'])
 
     def test_find_all_by_tag_strainer(self):
-        self.assertSelects(self.tree.find_all(SoupStrainer('a')), ['First tag.', 'Nested tag.'])
+        self.assertSelects(
+            self.tree.find_all(SoupStrainer('a')),
+            ['First tag.', 'Nested tag.'])
 
     def test_find_all_by_tag_names(self):
-        self.assertSelects(self.tree.find_all(['a', 'b']), ['First tag.', 'Second tag.', 'Nested tag.'])
+        self.assertSelects(
+            self.tree.find_all(['a', 'b']),
+            ['First tag.', 'Second tag.', 'Nested tag.'])
 
     def test_find_all_by_tag_dict(self):
-        self.assertSelects(self.tree.find_all({'a': True, 'b': True}), ['First tag.', 'Second tag.', 'Nested tag.'])
+        self.assertSelects(
+            self.tree.find_all({'a': True, 'b': True}),
+            ['First tag.', 'Second tag.', 'Nested tag.'])
 
     def test_find_all_by_tag_re(self):
-        self.assertSelects(self.tree.find_all(re.compile('^[ab]$')), ['First tag.', 'Second tag.', 'Nested tag.'])
+        self.assertSelects(
+            self.tree.find_all(re.compile('^[ab]$')),
+            ['First tag.', 'Second tag.', 'Nested tag.'])
 
     def test_find_all_with_tags_matching_method(self):
         # You can define an oracle method that determines whether
@@ -184,7 +214,8 @@ class TestFindAllByName(TreeTest):
                             <a id="1">Does not match.</a>
                             <b id="b">Match 2.</a>""")
 
-        self.assertSelects(tree.find_all(id_matches_name), ["Match 1.", "Match 2."])
+        self.assertSelects(
+            tree.find_all(id_matches_name), ["Match 1.", "Match 2."])
 
 
 class TestFindAllByAttribute(TreeTest):
@@ -196,7 +227,8 @@ class TestFindAllByAttribute(TreeTest):
                          <a id="second">
                           Non-matching <b id="first">Matching b.</b>a.
                          </a>""")
-        self.assertSelects(tree.find_all(id='first'), ["Matching a.", "Matching b."])
+        self.assertSelects(tree.find_all(id='first'),
+                           ["Matching a.", "Matching b."])
 
     def test_find_all_by_utf8_attribute_value(self):
         peace = u"םולש".encode("utf8")
@@ -218,11 +250,14 @@ class TestFindAllByAttribute(TreeTest):
                          """)
 
         # This doesn't do what you want.
-        self.assertSelects(tree.find_all(name='name1'), ["A tag called 'name1'."])
+        self.assertSelects(tree.find_all(name='name1'),
+                           ["A tag called 'name1'."])
         # This does what you want.
-        self.assertSelects(tree.find_all(attrs={'name': 'name1'}), ["Name match."])
+        self.assertSelects(tree.find_all(attrs={'name': 'name1'}),
+                           ["Name match."])
 
-        self.assertSelects(tree.find_all(attrs={'class': 'class2'}), ["Class match."])
+        self.assertSelects(tree.find_all(attrs={'class': 'class2'}),
+                           ["Class match."])
 
     def test_find_all_by_class(self):
         tree = self.soup("""
@@ -271,7 +306,8 @@ class TestFindAllByAttribute(TreeTest):
         def small_attribute_value(value):
             return len(value) <= 3
 
-        self.assertSelects(soup.find_all("a", small_attribute_value), ["Found it"])
+        self.assertSelects(
+            soup.find_all("a", small_attribute_value), ["Found it"])
 
     def test_find_all_with_string_for_attrs_finds_multiple_classes(self):
         soup = self.soup('<a class="foo bar"></a><a class="foo"></a>')
@@ -307,7 +343,8 @@ class TestFindAllByAttribute(TreeTest):
         tree = self.soup("""<a id="1">ID present.</a>
                             <a>No ID present.</a>
                             <a id="">ID is empty.</a>""")
-        self.assertSelects(tree.find_all(id=True), ["ID present.", "ID is empty."])
+        self.assertSelects(
+            tree.find_all(id=True), ["ID present.", "ID is empty."])
 
     def test_find_all_with_numeric_attribute(self):
         # If you search for a number, it's treated as a string.
@@ -325,7 +362,8 @@ class TestFindAllByAttribute(TreeTest):
                             <a id="2">2</a>
                             <a id="3">3</a>
                             <a>No ID.</a>""")
-        self.assertSelects(tree.find_all(id=["1", "3", "4"]), ["1", "3"])
+        self.assertSelects(tree.find_all(id=["1", "3", "4"]),
+                           ["1", "3"])
 
     def test_find_all_with_regular_expression_attribute_value(self):
         # You can pass a regular expression as an attribute value, and
@@ -337,7 +375,8 @@ class TestFindAllByAttribute(TreeTest):
                             <a id="b">One b.</a>
                             <a>No ID.</a>""")
 
-        self.assertSelects(tree.find_all(id=re.compile("^a+$")), ["One a.", "Two as."])
+        self.assertSelects(tree.find_all(id=re.compile("^a+$")),
+                           ["One a.", "Two as."])
 
     def test_find_by_name_and_containing_string(self):
         soup = self.soup("<b>foo</b><b>bar</b><a>foo</a>")
@@ -405,8 +444,10 @@ class TestParentOperations(TreeTest):
         self.assertEqual(None, self.tree.parent)
 
     def test_find_parents(self):
-        self.assertSelectsIDs(self.start.find_parents('ul'), ['bottom', 'middle', 'top'])
-        self.assertSelectsIDs(self.start.find_parents('ul', id="middle"), ['middle'])
+        self.assertSelectsIDs(
+            self.start.find_parents('ul'), ['bottom', 'middle', 'top'])
+        self.assertSelectsIDs(
+            self.start.find_parents('ul', id="middle"), ['middle'])
 
     def test_find_parent(self):
         self.assertEqual(self.start.find_parent('ul')['id'], 'bottom')
@@ -421,7 +462,8 @@ class TestParentOperations(TreeTest):
         self.assertEqual(text.find_parent('ul')['id'], 'bottom')
 
     def test_parent_generator(self):
-        parents = [parent['id'] for parent in self.start.parents if parent is not None and 'id' in parent.attrs]
+        parents = [parent['id'] for parent in self.start.parents
+                   if parent is not None and 'id' in parent.attrs]
         self.assertEqual(parents, ['bottom', 'middle', 'top'])
 
 
@@ -495,7 +537,8 @@ class TestPreviousOperations(ProximityTest):
         # The <b> tag containing the "Three" node is the predecessor
         # of the "Three" node itself, which is why "Three" shows up
         # here.
-        self.assertSelects(self.end.find_all_previous('b'), ["Three", "Two", "One"])
+        self.assertSelects(
+            self.end.find_all_previous('b'), ["Three", "Two", "One"])
         self.assertSelects(self.end.find_all_previous(id=1), ["One"])
 
     def test_find_previous(self):
@@ -505,7 +548,8 @@ class TestPreviousOperations(ProximityTest):
     def test_find_previous_for_text_element(self):
         text = self.tree.find(text="Three")
         self.assertEqual(text.find_previous("b").string, "Three")
-        self.assertSelects(text.find_all_previous("b"), ["Three", "Two", "One"])
+        self.assertSelects(
+            text.find_all_previous("b"), ["Three", "Two", "One"])
 
     def test_previous_generator(self):
         start = self.tree.find(text="One")
@@ -569,7 +613,8 @@ class TestNextSibling(SiblingTest):
         self.assertEqual(self.start.find_next_sibling('span')['id'], '2')
 
     def test_next_siblings(self):
-        self.assertSelectsIDs(self.start.find_next_siblings("span"), ['2', '3', '4'])
+        self.assertSelectsIDs(self.start.find_next_siblings("span"),
+                              ['2', '3', '4'])
 
         self.assertSelectsIDs(self.start.find_next_siblings(id='3'), ['3'])
 
@@ -612,7 +657,8 @@ class TestPreviousSibling(SiblingTest):
         self.assertEqual(self.end.find_previous_sibling('span')['id'], '3')
 
     def test_previous_siblings(self):
-        self.assertSelectsIDs(self.end.find_previous_siblings("span"), ['3', '2', '1'])
+        self.assertSelectsIDs(self.end.find_previous_siblings("span"),
+                              ['3', '2', '1'])
 
         self.assertSelectsIDs(self.end.find_previous_siblings(id='1'), ['1'])
 
@@ -689,7 +735,9 @@ class TestTreeModification(SoupTest):
         a['href'] = 'http://foo.com/'
         soup.body.insert(0, a)
         soup.body.insert(1, ol)
-        self.assertEqual(soup.body.encode(), b'<body><a href="http://foo.com/"></a><ol></ol></body>')
+        self.assertEqual(
+            soup.body.encode(),
+            b'<body><a href="http://foo.com/"></a><ol></ol></body>')
 
     def test_append_to_contents_moves_tag(self):
         doc = """<p id="1">Don't leave me <b>here</b>.</p>
@@ -704,8 +752,10 @@ class TestTreeModification(SoupTest):
         # The <b> tag is now a child of the second paragraph.
         self.assertEqual(bold.parent, second_para)
 
-        self.assertEqual(soup.decode(), self.document_for('<p id="1">Don\'t leave me .</p>\n'
-                                                          '<p id="2">Don\'t leave!<b>here</b></p>'))
+        self.assertEqual(
+            soup.decode(), self.document_for(
+                '<p id="1">Don\'t leave me .</p>\n'
+                '<p id="2">Don\'t leave!<b>here</b></p>'))
 
     def test_replace_with_returns_thing_that_was_replaced(self):
         text = "<a></a><b><c></c></b>"
@@ -778,7 +828,9 @@ class TestTreeModification(SoupTest):
         soup = self.soup("<a><b>Argh!</b><c></c></a>")
         soup.b.insert(1, "Hooray!")
 
-        self.assertEqual(soup.decode(), self.document_for("<a><b>Argh!Hooray!</b><c></c></a>"))
+        self.assertEqual(
+            soup.decode(), self.document_for(
+                "<a><b>Argh!Hooray!</b><c></c></a>"))
 
         new_text = soup.find(text="Hooray!")
         self.assertEqual(new_text.previous_element, "Argh!")
@@ -801,13 +853,15 @@ class TestTreeModification(SoupTest):
 
     def test_insert_tag(self):
         builder = self.default_builder
-        soup = self.soup("<a><b>Find</b><c>lady!</c><d></d></a>", builder=builder)
+        soup = self.soup(
+            "<a><b>Find</b><c>lady!</c><d></d></a>", builder=builder)
         magic_tag = Tag(soup, builder, 'magictag')
         magic_tag.insert(0, "the")
         soup.a.insert(1, magic_tag)
 
-        self.assertEqual(soup.decode(),
-            self.document_for("<a><b>Find</b><magictag>the</magictag><c>lady!</c><d></d></a>"))
+        self.assertEqual(
+            soup.decode(), self.document_for(
+                "<a><b>Find</b><magictag>the</magictag><c>lady!</c><d></d></a>"))
 
         # Make sure all the relationships are hooked up correctly.
         b_tag = soup.b
@@ -852,18 +906,22 @@ class TestTreeModification(SoupTest):
         soup = self.soup("<a>foo</a><b>bar</b>")
         soup.b.insert_before("BAZ")
         soup.a.insert_before("QUUX")
-        self.assertEqual(soup.decode(), self.document_for("QUUX<a>foo</a>BAZ<b>bar</b>"))
+        self.assertEqual(
+            soup.decode(), self.document_for("QUUX<a>foo</a>BAZ<b>bar</b>"))
 
         soup.a.insert_before(soup.b)
-        self.assertEqual(soup.decode(), self.document_for("QUUX<b>bar</b><a>foo</a>BAZ"))
+        self.assertEqual(
+            soup.decode(), self.document_for("QUUX<b>bar</b><a>foo</a>BAZ"))
 
     def test_insert_after(self):
         soup = self.soup("<a>foo</a><b>bar</b>")
         soup.b.insert_after("BAZ")
         soup.a.insert_after("QUUX")
-        self.assertEqual(soup.decode(), self.document_for("<a>foo</a>QUUX<b>bar</b>BAZ"))
+        self.assertEqual(
+            soup.decode(), self.document_for("<a>foo</a>QUUX<b>bar</b>BAZ"))
         soup.b.insert_after(soup.a)
-        self.assertEqual(soup.decode(), self.document_for("QUUX<b>bar</b><a>foo</a>BAZ"))
+        self.assertEqual(
+            soup.decode(), self.document_for("QUUX<b>bar</b><a>foo</a>BAZ"))
 
     def test_insert_after_raises_exception_if_after_has_no_meaning(self):
         soup = self.soup("")
@@ -882,10 +940,14 @@ class TestTreeModification(SoupTest):
         self.assertRaises(ValueError, tag.insert_before, tag)
 
     def test_replace_with(self):
-        soup = self.soup("<p>There's <b>no</b> business like <b>show</b> business</p>")
+        soup = self.soup(
+            "<p>There's <b>no</b> business like <b>show</b> business</p>")
         no, show = soup.find_all('b')
         show.replace_with(no)
-        self.assertEqual(soup.decode(), self.document_for("<p>There's  business like <b>no</b> business</p>"))
+        self.assertEqual(
+            soup.decode(),
+            self.document_for(
+                "<p>There's  business like <b>no</b> business</p>"))
 
         self.assertEqual(show.parent, None)
         self.assertEqual(no.parent, soup.p)
@@ -905,7 +967,8 @@ class TestTreeModification(SoupTest):
         self.assertEqual("<a><b></b></a>", soup.decode())
 
     def test_nested_tag_replace_with(self):
-        soup = self.soup("""<a>We<b>reserve<c>the</c><d>right</d></b></a><e>to<f>refuse</f><g>service</g></e>""")
+        soup = self.soup(
+            """<a>We<b>reserve<c>the</c><d>right</d></b></a><e>to<f>refuse</f><g>service</g></e>""")
 
         # Replace the entire <b> tag and its contents ("reserve the
         # right") with the <f> tag ("refuse").
@@ -913,7 +976,9 @@ class TestTreeModification(SoupTest):
         move_tag = soup.f
         remove_tag.replace_with(move_tag)
 
-        self.assertEqual(soup.decode(), self.document_for("<a>We<f>refuse</f></a><e>to<g>service</g></e>"))
+        self.assertEqual(
+            soup.decode(), self.document_for(
+                "<a>We<f>refuse</f></a><e>to<g>service</g></e>"))
 
         # The <b> tag is now an orphan.
         self.assertEqual(remove_tag.parent, None)
@@ -949,26 +1014,32 @@ class TestTreeModification(SoupTest):
         soup = self.soup("I wish I was bold.")
         value = soup.string.wrap(soup.new_tag("b"))
         self.assertEqual(value.decode(), "<b>I wish I was bold.</b>")
-        self.assertEqual(soup.decode(), self.document_for("<b>I wish I was bold.</b>"))
+        self.assertEqual(
+            soup.decode(), self.document_for("<b>I wish I was bold.</b>"))
 
     def test_wrap_extracts_tag_from_elsewhere(self):
         soup = self.soup("<b></b>I wish I was bold.")
         soup.b.next_sibling.wrap(soup.b)
-        self.assertEqual(soup.decode(), self.document_for("<b>I wish I was bold.</b>"))
+        self.assertEqual(
+            soup.decode(), self.document_for("<b>I wish I was bold.</b>"))
 
     def test_wrap_puts_new_contents_at_the_end(self):
         soup = self.soup("<b>I like being bold.</b>I wish I was bold.")
         soup.b.next_sibling.wrap(soup.b)
         self.assertEqual(2, len(soup.b.contents))
-        self.assertEqual(soup.decode(), self.document_for("<b>I like being bold.I wish I was bold.</b>"))
+        self.assertEqual(
+            soup.decode(), self.document_for(
+                "<b>I like being bold.I wish I was bold.</b>"))
 
     def test_extract(self):
-        soup = self.soup('<html><body>Some content. <div id="nav">Nav crap</div> More content.</body></html>')
+        soup = self.soup(
+            '<html><body>Some content. <div id="nav">Nav crap</div> More content.</body></html>')
 
         self.assertEqual(len(soup.body.contents), 3)
         extracted = soup.find(id="nav").extract()
 
-        self.assertEqual(soup.decode(), "<html><body>Some content.  More content.</body></html>")
+        self.assertEqual(
+            soup.decode(), "<html><body>Some content.  More content.</body></html>")
         self.assertEqual(extracted.decode(), '<div id="nav">Nav crap</div>')
 
         # The extracted tag is now an orphan.
@@ -1065,7 +1136,9 @@ class TestElementObjects(SoupTest):
         with warnings.catch_warnings(record=True) as w:
             tag = soup.bTag
         self.assertEqual(soup.b, tag)
-        self.assertEqual('.bTag is deprecated, use .find("b") instead.', str(w[0].message))
+        self.assertEqual(
+            '.bTag is deprecated, use .find("b") instead.',
+            str(w[0].message))
 
     def test_has_attr(self):
         """has_attr() checks for the presence of an attribute.
@@ -1134,8 +1207,10 @@ class TestElementObjects(SoupTest):
         soup = self.soup("foo<!--IGNORE-->bar")
         self.assertEqual(soup.get_text(), "foobar")
 
-        self.assertEqual(soup.get_text(types=(NavigableString, Comment)), "fooIGNOREbar")
-        self.assertEqual(soup.get_text(types=None), "fooIGNOREbar")
+        self.assertEqual(
+            soup.get_text(types=(NavigableString, Comment)), "fooIGNOREbar")
+        self.assertEqual(
+            soup.get_text(types=None), "fooIGNOREbar")
 
     def test_all_strings_ignores_comments(self):
         soup = self.soup("foo<!--IGNORE-->bar")
@@ -1281,22 +1356,28 @@ class TestSubstitutions(SoupTest):
         soup = self.soup(markup)
         decoded = soup.decode(formatter="minimal")
         # The < is converted back into &lt; but the e-with-acute is left alone.
-        self.assertEqual(decoded,
-            self.document_for(u"<b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"))
+        self.assertEqual(
+            decoded,
+            self.document_for(
+                u"<b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"))
 
     def test_formatter_html(self):
         markup = u"<b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"
         soup = self.soup(markup)
         decoded = soup.decode(formatter="html")
-        self.assertEqual(decoded, self.document_for("<b>&lt;&lt;Sacr&eacute; bleu!&gt;&gt;</b>"))
+        self.assertEqual(
+            decoded,
+            self.document_for("<b>&lt;&lt;Sacr&eacute; bleu!&gt;&gt;</b>"))
 
     def test_formatter_minimal(self):
         markup = u"<b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"
         soup = self.soup(markup)
         decoded = soup.decode(formatter="minimal")
         # The < is converted back into &lt; but the e-with-acute is left alone.
-        self.assertEqual(decoded,
-            self.document_for(u"<b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"))
+        self.assertEqual(
+            decoded,
+            self.document_for(
+                u"<b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"))
 
     def test_formatter_null(self):
         markup = u"<b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"
@@ -1304,7 +1385,8 @@ class TestSubstitutions(SoupTest):
         decoded = soup.decode(formatter=None)
         # Neither the angle brackets nor the e-with-acute are converted.
         # This is not valid HTML, but it's what the user wanted.
-        self.assertEqual(decoded, self.document_for(u"<b><<Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!>></b>"))
+        self.assertEqual(decoded,
+                         self.document_for(u"<b><<Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!>></b>"))
 
     def test_formatter_custom(self):
         markup = u"<b>&lt;foo&gt;</b><b>bar</b>"
@@ -1312,7 +1394,9 @@ class TestSubstitutions(SoupTest):
         decoded = soup.decode(formatter=lambda x: x.upper())
         # Instead of normal entity conversion code, the custom
         # callable is called on every string.
-        self.assertEqual(decoded, self.document_for(u"<b><FOO></b><b>BAR</b>"))
+        self.assertEqual(
+            decoded,
+            self.document_for(u"<b><FOO></b><b>BAR</b>"))
 
     def test_formatter_is_run_on_attribute_values(self):
         markup = u'<a href="http://a.com?a=b&c=é">e</a>'
@@ -1353,7 +1437,9 @@ class TestSubstitutions(SoupTest):
         soup = self.soup("<div>  foo  <pre>  \tbar\n  \n  </pre>  baz  ")
         # Everything outside the <pre> tag is reformatted, but everything
         # inside is left alone.
-        self.assertEqual(u'<div>\n foo\n <pre>  \tbar\n  \n  </pre>\n baz\n</div>', soup.div.prettify())
+        self.assertEqual(
+            u'<div>\n foo\n <pre>  \tbar\n  \n  </pre>\n baz\n</div>',
+            soup.div.prettify())
 
     def test_prettify_accepts_formatter(self):
         soup = BeautifulSoup("<html><body>foo</body></html>", 'html.parser')
@@ -1416,12 +1502,14 @@ class TestEncoding(SoupTest):
     def test_unicode_string_can_be_encoded(self):
         html = u"<b>\N{SNOWMAN}</b>"
         soup = self.soup(html)
-        self.assertEqual(soup.b.string.encode("utf-8"), u"\N{SNOWMAN}".encode("utf-8"))
+        self.assertEqual(soup.b.string.encode("utf-8"),
+                         u"\N{SNOWMAN}".encode("utf-8"))
 
     def test_tag_containing_unicode_string_can_be_encoded(self):
         html = u"<b>\N{SNOWMAN}</b>"
         soup = self.soup(html)
-        self.assertEqual(soup.b.encode("utf-8"), html.encode("utf-8"))
+        self.assertEqual(
+            soup.b.encode("utf-8"), html.encode("utf-8"))
 
     def test_encoding_substitutes_unrecognized_characters_by_default(self):
         html = u"<b>\N{SNOWMAN}</b>"
@@ -1431,7 +1519,8 @@ class TestEncoding(SoupTest):
     def test_encoding_can_be_made_strict(self):
         html = u"<b>\N{SNOWMAN}</b>"
         soup = self.soup(html)
-        self.assertRaises(UnicodeEncodeError, soup.encode, "ascii", errors="strict")
+        self.assertRaises(
+            UnicodeEncodeError, soup.encode, "ascii", errors="strict")
 
     def test_decode_contents(self):
         html = u"<b>\N{SNOWMAN}</b>"
@@ -1441,12 +1530,15 @@ class TestEncoding(SoupTest):
     def test_encode_contents(self):
         html = u"<b>\N{SNOWMAN}</b>"
         soup = self.soup(html)
-        self.assertEqual(u"\N{SNOWMAN}".encode("utf8"), soup.b.encode_contents(encoding="utf8"))
+        self.assertEqual(
+            u"\N{SNOWMAN}".encode("utf8"), soup.b.encode_contents(
+                encoding="utf8"))
 
     def test_deprecated_renderContents(self):
         html = u"<b>\N{SNOWMAN}</b>"
         soup = self.soup(html)
-        self.assertEqual(u"\N{SNOWMAN}".encode("utf8"), soup.b.renderContents())
+        self.assertEqual(
+            u"\N{SNOWMAN}".encode("utf8"), soup.b.renderContents())
 
     def test_repr(self):
         html = u"<b>\N{SNOWMAN}</b>"
@@ -1483,7 +1575,8 @@ class TestNavigableStringSubclasses(SoupTest):
         soup = self.soup("")
         cdata = CData("<><><>")
         soup.insert(1, cdata)
-        self.assertEqual(b"<![CDATA[<><><>]]>", soup.encode(formatter=increment))
+        self.assertEqual(
+            b"<![CDATA[<><><>]]>", soup.encode(formatter=increment))
         self.assertEqual(1, self.count)
 
     def test_doctype_ends_in_newline(self):
@@ -1552,8 +1645,11 @@ class TestSoupSelector(TreeTest):
         el_ids = [el['id'] for el in self.soup.select(selector)]
         el_ids.sort()
         expected_ids.sort()
-        self.assertEqual(expected_ids, el_ids, "Selector %s, expected [%s], got [%s]" % (
-            selector, ', '.join(expected_ids), ', '.join(el_ids)))
+        self.assertEqual(expected_ids, el_ids,
+                         "Selector %s, expected [%s], got [%s]" % (
+                             selector, ', '.join(expected_ids), ', '.join(el_ids)
+                         )
+                         )
 
     assertSelect = assertSelects
 
@@ -1609,7 +1705,10 @@ class TestSoupSelector(TreeTest):
         self.assertEqual(self.soup.select('custom-dashed-tag'), self.soup.find_all('custom-dashed-tag'))
 
     def test_header_tags(self):
-        self.assertSelectMultiple(('h1', ['header1']), ('h2', ['header2', 'header3']), )
+        self.assertSelectMultiple(
+            ('h1', ['header1']),
+            ('h2', ['header2', 'header3']),
+        )
 
     def test_class_one(self):
         for selector in ('.onep', 'p.onep', 'html p.onep'):
@@ -1643,12 +1742,13 @@ class TestSoupSelector(TreeTest):
             self.assertEqual(len(self.soup.select(selector)), 0)
 
     def test_multi_class_support(self):
-        for selector in (
-        '.class1', 'p.class1', '.class2', 'p.class2', '.class3', 'p.class3', 'html p.class2', 'div#inner .class2'):
+        for selector in ('.class1', 'p.class1', '.class2', 'p.class2',
+                         '.class3', 'p.class3', 'html p.class2', 'div#inner .class2'):
             self.assertSelects(selector, ['pmulti'])
 
     def test_multi_class_selection(self):
-        for selector in ('.class1.class3', '.class3.class2', '.class1.class2.class3'):
+        for selector in ('.class1.class3', '.class3.class2',
+                         '.class1.class2.class3'):
             self.assertSelects(selector, ['pmulti'])
 
     def test_child_selector(self):
@@ -1659,56 +1759,119 @@ class TestSoupSelector(TreeTest):
         self.assertSelects('.s1 > a#s1a2 span', ['s1a2s1'])
 
     def test_attribute_equals(self):
-        self.assertSelectMultiple(('p[class="onep"]', ['p1']), ('p[id="p1"]', ['p1']), ('[class="onep"]', ['p1']),
-            ('[id="p1"]', ['p1']), ('link[rel="stylesheet"]', ['l1']), ('link[type="text/css"]', ['l1']),
-            ('link[href="blah.css"]', ['l1']), ('link[href="no-blah.css"]', []), ('[rel="stylesheet"]', ['l1']),
-            ('[type="text/css"]', ['l1']), ('[href="blah.css"]', ['l1']), ('[href="no-blah.css"]', []),
-            ('p[href="no-blah.css"]', []), ('[href="no-blah.css"]', []), )
+        self.assertSelectMultiple(
+            ('p[class="onep"]', ['p1']),
+            ('p[id="p1"]', ['p1']),
+            ('[class="onep"]', ['p1']),
+            ('[id="p1"]', ['p1']),
+            ('link[rel="stylesheet"]', ['l1']),
+            ('link[type="text/css"]', ['l1']),
+            ('link[href="blah.css"]', ['l1']),
+            ('link[href="no-blah.css"]', []),
+            ('[rel="stylesheet"]', ['l1']),
+            ('[type="text/css"]', ['l1']),
+            ('[href="blah.css"]', ['l1']),
+            ('[href="no-blah.css"]', []),
+            ('p[href="no-blah.css"]', []),
+            ('[href="no-blah.css"]', []),
+        )
 
     def test_attribute_tilde(self):
-        self.assertSelectMultiple(('p[class~="class1"]', ['pmulti']), ('p[class~="class2"]', ['pmulti']),
-            ('p[class~="class3"]', ['pmulti']), ('[class~="class1"]', ['pmulti']), ('[class~="class2"]', ['pmulti']),
-            ('[class~="class3"]', ['pmulti']), ('a[rel~="friend"]', ['bob']), ('a[rel~="met"]', ['bob']),
-            ('[rel~="friend"]', ['bob']), ('[rel~="met"]', ['bob']), )
+        self.assertSelectMultiple(
+            ('p[class~="class1"]', ['pmulti']),
+            ('p[class~="class2"]', ['pmulti']),
+            ('p[class~="class3"]', ['pmulti']),
+            ('[class~="class1"]', ['pmulti']),
+            ('[class~="class2"]', ['pmulti']),
+            ('[class~="class3"]', ['pmulti']),
+            ('a[rel~="friend"]', ['bob']),
+            ('a[rel~="met"]', ['bob']),
+            ('[rel~="friend"]', ['bob']),
+            ('[rel~="met"]', ['bob']),
+        )
 
     def test_attribute_startswith(self):
-        self.assertSelectMultiple(('[rel^="style"]', ['l1']), ('link[rel^="style"]', ['l1']),
-            ('notlink[rel^="notstyle"]', []), ('[rel^="notstyle"]', []), ('link[rel^="notstyle"]', []),
-            ('link[href^="bla"]', ['l1']), ('a[href^="http://"]', ['bob', 'me']), ('[href^="http://"]', ['bob', 'me']),
-            ('[id^="p"]', ['pmulti', 'p1']), ('[id^="m"]', ['me', 'main']), ('div[id^="m"]', ['main']),
-            ('a[id^="m"]', ['me']), ('div[data-tag^="dashed"]', ['data1']))
+        self.assertSelectMultiple(
+            ('[rel^="style"]', ['l1']),
+            ('link[rel^="style"]', ['l1']),
+            ('notlink[rel^="notstyle"]', []),
+            ('[rel^="notstyle"]', []),
+            ('link[rel^="notstyle"]', []),
+            ('link[href^="bla"]', ['l1']),
+            ('a[href^="http://"]', ['bob', 'me']),
+            ('[href^="http://"]', ['bob', 'me']),
+            ('[id^="p"]', ['pmulti', 'p1']),
+            ('[id^="m"]', ['me', 'main']),
+            ('div[id^="m"]', ['main']),
+            ('a[id^="m"]', ['me']),
+            ('div[data-tag^="dashed"]', ['data1'])
+        )
 
     def test_attribute_endswith(self):
-        self.assertSelectMultiple(('[href$=".css"]', ['l1']), ('link[href$=".css"]', ['l1']), ('link[id$="1"]', ['l1']),
+        self.assertSelectMultiple(
+            ('[href$=".css"]', ['l1']),
+            ('link[href$=".css"]', ['l1']),
+            ('link[id$="1"]', ['l1']),
             ('[id$="1"]', ['data1', 'l1', 'p1', 'header1', 's1a1', 's2a1', 's1a2s1', 'dash1']),
-            ('div[id$="1"]', ['data1']), ('[id$="noending"]', []), )
+            ('div[id$="1"]', ['data1']),
+            ('[id$="noending"]', []),
+        )
 
     def test_attribute_contains(self):
-        self.assertSelectMultiple(# From test_attribute_startswith
-            ('[rel*="style"]', ['l1']), ('link[rel*="style"]', ['l1']), ('notlink[rel*="notstyle"]', []),
-            ('[rel*="notstyle"]', []), ('link[rel*="notstyle"]', []), ('link[href*="bla"]', ['l1']),
-            ('[href*="http://"]', ['bob', 'me']), ('[id*="p"]', ['pmulti', 'p1']), ('div[id*="m"]', ['main']),
-            ('a[id*="m"]', ['me']), # From test_attribute_endswith
-            ('[href*=".css"]', ['l1']), ('link[href*=".css"]', ['l1']), ('link[id*="1"]', ['l1']),
+        self.assertSelectMultiple(
+            # From test_attribute_startswith
+            ('[rel*="style"]', ['l1']),
+            ('link[rel*="style"]', ['l1']),
+            ('notlink[rel*="notstyle"]', []),
+            ('[rel*="notstyle"]', []),
+            ('link[rel*="notstyle"]', []),
+            ('link[href*="bla"]', ['l1']),
+            ('[href*="http://"]', ['bob', 'me']),
+            ('[id*="p"]', ['pmulti', 'p1']),
+            ('div[id*="m"]', ['main']),
+            ('a[id*="m"]', ['me']),
+            # From test_attribute_endswith
+            ('[href*=".css"]', ['l1']),
+            ('link[href*=".css"]', ['l1']),
+            ('link[id*="1"]', ['l1']),
             ('[id*="1"]', ['data1', 'l1', 'p1', 'header1', 's1a1', 's1a2', 's2a1', 's1a2s1', 'dash1']),
-            ('div[id*="1"]', ['data1']), ('[id*="noending"]', []), # New for this test
-            ('[href*="."]', ['bob', 'me', 'l1']), ('a[href*="."]', ['bob', 'me']), ('link[href*="."]', ['l1']),
-            ('div[id*="n"]', ['main', 'inner']), ('div[id*="nn"]', ['inner']), ('div[data-tag*="edval"]', ['data1']))
+            ('div[id*="1"]', ['data1']),
+            ('[id*="noending"]', []),
+            # New for this test
+            ('[href*="."]', ['bob', 'me', 'l1']),
+            ('a[href*="."]', ['bob', 'me']),
+            ('link[href*="."]', ['l1']),
+            ('div[id*="n"]', ['main', 'inner']),
+            ('div[id*="nn"]', ['inner']),
+            ('div[data-tag*="edval"]', ['data1'])
+        )
 
     def test_attribute_exact_or_hypen(self):
-        self.assertSelectMultiple(('p[lang|="en"]', ['lang-en', 'lang-en-gb', 'lang-en-us']),
-            ('[lang|="en"]', ['lang-en', 'lang-en-gb', 'lang-en-us']), ('p[lang|="fr"]', ['lang-fr']),
-            ('p[lang|="gb"]', []), )
+        self.assertSelectMultiple(
+            ('p[lang|="en"]', ['lang-en', 'lang-en-gb', 'lang-en-us']),
+            ('[lang|="en"]', ['lang-en', 'lang-en-gb', 'lang-en-us']),
+            ('p[lang|="fr"]', ['lang-fr']),
+            ('p[lang|="gb"]', []),
+        )
 
     def test_attribute_exists(self):
-        self.assertSelectMultiple(('[rel]', ['l1', 'bob', 'me']), ('link[rel]', ['l1']), ('a[rel]', ['bob', 'me']),
-            ('[lang]', ['lang-en', 'lang-en-gb', 'lang-en-us', 'lang-fr']), ('p[class]', ['p1', 'pmulti']),
-            ('[blah]', []), ('p[blah]', []), ('div[data-tag]', ['data1']))
+        self.assertSelectMultiple(
+            ('[rel]', ['l1', 'bob', 'me']),
+            ('link[rel]', ['l1']),
+            ('a[rel]', ['bob', 'me']),
+            ('[lang]', ['lang-en', 'lang-en-gb', 'lang-en-us', 'lang-fr']),
+            ('p[class]', ['p1', 'pmulti']),
+            ('[blah]', []),
+            ('p[blah]', []),
+            ('div[data-tag]', ['data1'])
+        )
 
     def test_unsupported_pseudoclass(self):
-        self.assertRaises(NotImplementedError, self.soup.select, "a:no-such-pseudoclass")
+        self.assertRaises(
+            NotImplementedError, self.soup.select, "a:no-such-pseudoclass")
 
-        self.assertRaises(NotImplementedError, self.soup.select, "a:nth-of-type(a)")
+        self.assertRaises(
+            NotImplementedError, self.soup.select, "a:nth-of-type(a)")
 
     def test_nth_of_type(self):
         # Try to select first paragraph
@@ -1726,7 +1889,8 @@ class TestSoupSelector(TreeTest):
         self.assertEqual(len(els), 0)
 
         # Pass in an invalid value.
-        self.assertRaises(ValueError, self.soup.select, 'div p:nth-of-type(0)')
+        self.assertRaises(
+            ValueError, self.soup.select, 'div p:nth-of-type(0)')
 
     def test_nth_of_type_direct_descendant(self):
         els = self.soup.select('div#inner > p:nth-of-type(1)')

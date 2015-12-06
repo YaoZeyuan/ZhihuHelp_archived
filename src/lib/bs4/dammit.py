@@ -45,8 +45,10 @@ try:
 except ImportError:
     pass
 
-xml_encoding_re = re.compile('^<\?.*encoding=[\'"](.*?)[\'"].*\?>'.encode(), re.I)
-html_meta_re = re.compile('<\s*meta[^>]+charset\s*=\s*["\']?([^>]*?)[ /;\'">]'.encode(), re.I)
+xml_encoding_re = re.compile(
+    '^<\?.*encoding=[\'"](.*?)[\'"].*\?>'.encode(), re.I)
+html_meta_re = re.compile(
+    '<\s*meta[^>]+charset\s*=\s*["\']?([^>]*?)[ /;\'">]'.encode(), re.I)
 
 
 class EntitySubstitution(object):
@@ -69,9 +71,16 @@ class EntitySubstitution(object):
         re_definition = "[%s]" % "".join(characters_for_re)
         return lookup, reverse_lookup, re.compile(re_definition)
 
-    (CHARACTER_TO_HTML_ENTITY, HTML_ENTITY_TO_CHARACTER, CHARACTER_TO_HTML_ENTITY_RE) = _populate_class_variables()
+    (CHARACTER_TO_HTML_ENTITY, HTML_ENTITY_TO_CHARACTER,
+     CHARACTER_TO_HTML_ENTITY_RE) = _populate_class_variables()
 
-    CHARACTER_TO_XML_ENTITY = {"'": "apos", '"': "quot", "&": "amp", "<": "lt", ">": "gt", }
+    CHARACTER_TO_XML_ENTITY = {
+        "'": "apos",
+        '"': "quot",
+        "&": "amp",
+        "<": "lt",
+        ">": "gt",
+    }
 
     BARE_AMPERSAND_OR_BRACKET = re.compile("([<>]|"
                                            "&(?!#\d+;|#x[0-9a-fA-F]+;|\w+;)"
@@ -142,14 +151,16 @@ class EntitySubstitution(object):
          quoted, as befits an attribute value.
         """
         # Escape angle brackets and ampersands.
-        value = cls.AMPERSAND_OR_BRACKET.sub(cls._substitute_xml_entity, value)
+        value = cls.AMPERSAND_OR_BRACKET.sub(
+            cls._substitute_xml_entity, value)
 
         if make_quoted_attribute:
             value = cls.quoted_attribute_value(value)
         return value
 
     @classmethod
-    def substitute_xml_containing_entities(cls, value, make_quoted_attribute=False):
+    def substitute_xml_containing_entities(
+            cls, value, make_quoted_attribute=False):
         """Substitute XML entities for special XML characters.
 
         :param value: A string to be substituted. The less-than sign will
@@ -162,7 +173,8 @@ class EntitySubstitution(object):
         """
         # Escape angle brackets, and ampersands that aren't part of
         # entities.
-        value = cls.BARE_AMPERSAND_OR_BRACKET.sub(cls._substitute_xml_entity, value)
+        value = cls.BARE_AMPERSAND_OR_BRACKET.sub(
+            cls._substitute_xml_entity, value)
 
         if make_quoted_attribute:
             value = cls.quoted_attribute_value(value)
@@ -180,7 +192,8 @@ class EntitySubstitution(object):
         character with "&eacute;" will make it more readable to some
         people.
         """
-        return cls.CHARACTER_TO_HTML_ENTITY_RE.sub(cls._substitute_html_entity, s)
+        return cls.CHARACTER_TO_HTML_ENTITY_RE.sub(
+            cls._substitute_html_entity, s)
 
 
 class EncodingDetector:
@@ -204,7 +217,8 @@ class EncodingDetector:
     5. Windows-1252.
     """
 
-    def __init__(self, markup, override_encodings=None, is_html=False, exclude_encodings=None):
+    def __init__(self, markup, override_encodings=None, is_html=False,
+                 exclude_encodings=None):
         self.override_encodings = override_encodings or []
         exclude_encodings = exclude_encodings or []
         self.exclude_encodings = set([x.lower() for x in exclude_encodings])
@@ -241,7 +255,8 @@ class EncodingDetector:
         # Look within the document for an XML or HTML encoding
         # declaration.
         if self.declared_encoding is None:
-            self.declared_encoding = self.find_declared_encoding(self.markup, self.is_html)
+            self.declared_encoding = self.find_declared_encoding(
+                self.markup, self.is_html)
         if self._usable(self.declared_encoding, tried):
             yield self.declared_encoding
 
@@ -264,10 +279,12 @@ class EncodingDetector:
         if isinstance(data, unicode):
             # Unicode data cannot have a byte-order mark.
             return data, encoding
-        if (len(data) >= 4) and (data[:2] == b'\xfe\xff') and (data[2:4] != '\x00\x00'):
+        if (len(data) >= 4) and (data[:2] == b'\xfe\xff') \
+                and (data[2:4] != '\x00\x00'):
             encoding = 'utf-16be'
             data = data[2:]
-        elif (len(data) >= 4) and (data[:2] == b'\xff\xfe') and (data[2:4] != '\x00\x00'):
+        elif (len(data) >= 4) and (data[:2] == b'\xff\xfe') \
+                and (data[2:4] != '\x00\x00'):
             encoding = 'utf-16le'
             data = data[2:]
         elif data[:3] == b'\xef\xbb\xbf':
@@ -301,7 +318,8 @@ class EncodingDetector:
         if not declared_encoding_match and is_html:
             declared_encoding_match = html_meta_re.search(markup, endpos=html_endpos)
         if declared_encoding_match is not None:
-            declared_encoding = declared_encoding_match.groups()[0].decode('ascii', 'replace')
+            declared_encoding = declared_encoding_match.groups()[0].decode(
+                'ascii', 'replace')
         if declared_encoding:
             return declared_encoding.lower()
         return None
@@ -317,17 +335,24 @@ class UnicodeDammit:
     # meta tags to the corresponding Python codec names. It only covers
     # values that aren't in Python's aliases and can't be determined
     # by the heuristics in find_codec.
-    CHARSET_ALIASES = {"macintosh": "mac-roman", "x-sjis": "shift-jis"}
+    CHARSET_ALIASES = {"macintosh": "mac-roman",
+                       "x-sjis": "shift-jis"}
 
-    ENCODINGS_WITH_SMART_QUOTES = ["windows-1252", "iso-8859-1", "iso-8859-2", ]
+    ENCODINGS_WITH_SMART_QUOTES = [
+        "windows-1252",
+        "iso-8859-1",
+        "iso-8859-2",
+    ]
 
-    def __init__(self, markup, override_encodings=[], smart_quotes_to=None, is_html=False, exclude_encodings=[]):
+    def __init__(self, markup, override_encodings=[],
+                 smart_quotes_to=None, is_html=False, exclude_encodings=[]):
         self.smart_quotes_to = smart_quotes_to
         self.tried_encodings = []
         self.contains_replacement_characters = False
         self.is_html = is_html
 
-        self.detector = EncodingDetector(markup, override_encodings, is_html, exclude_encodings)
+        self.detector = EncodingDetector(
+            markup, override_encodings, is_html, exclude_encodings)
 
         # Short-circuit if the data is in Unicode to begin with.
         if isinstance(markup, unicode) or markup == '':
@@ -355,8 +380,9 @@ class UnicodeDammit:
                 if encoding != "ascii":
                     u = self._convert_from(encoding, "replace")
                 if u is not None:
-                    logging.warning("Some characters could not be decoded, and were "
-                                    "replaced with REPLACEMENT CHARACTER.")
+                    logging.warning(
+                        "Some characters could not be decoded, and were "
+                        "replaced with REPLACEMENT CHARACTER.")
                     self.contains_replacement_characters = True
                     break
 
@@ -392,7 +418,8 @@ class UnicodeDammit:
         markup = self.markup
         # Convert smart quotes to HTML if coming from an encoding
         # that might have them.
-        if (self.smart_quotes_to is not None and proposed in self.ENCODINGS_WITH_SMART_QUOTES):
+        if (self.smart_quotes_to is not None
+            and proposed in self.ENCODINGS_WITH_SMART_QUOTES):
             smart_quotes_re = b"([\x80-\x9f])"
             smart_quotes_compiled = re.compile(smart_quotes_re)
             markup = smart_quotes_compiled.sub(self._sub_ms_char, markup)
@@ -422,9 +449,12 @@ class UnicodeDammit:
         return self.detector.declared_encoding
 
     def find_codec(self, charset):
-        value = (self._codec(self.CHARSET_ALIASES.get(charset, charset)) or (
-        charset and self._codec(charset.replace("-", ""))) or (charset and self._codec(charset.replace("-", "_"))) or (
-                 charset and charset.lower()) or charset)
+        value = (self._codec(self.CHARSET_ALIASES.get(charset, charset))
+                 or (charset and self._codec(charset.replace("-", "")))
+                 or (charset and self._codec(charset.replace("-", "_")))
+                 or (charset and charset.lower())
+                 or charset
+                 )
         if value:
             return value.lower()
         return None
@@ -441,46 +471,181 @@ class UnicodeDammit:
         return codec
 
     # A partial mapping of ISO-Latin-1 to HTML entities/XML numeric entities.
-    MS_CHARS = {b'\x80': ('euro', '20AC'), b'\x81': ' ', b'\x82': ('sbquo', '201A'), b'\x83': ('fnof', '192'),
-                b'\x84': ('bdquo', '201E'), b'\x85': ('hellip', '2026'), b'\x86': ('dagger', '2020'),
-                b'\x87': ('Dagger', '2021'), b'\x88': ('circ', '2C6'), b'\x89': ('permil', '2030'),
-                b'\x8A': ('Scaron', '160'), b'\x8B': ('lsaquo', '2039'), b'\x8C': ('OElig', '152'), b'\x8D': '?',
-                b'\x8E': ('#x17D', '17D'), b'\x8F': '?', b'\x90': '?', b'\x91': ('lsquo', '2018'),
-                b'\x92': ('rsquo', '2019'), b'\x93': ('ldquo', '201C'), b'\x94': ('rdquo', '201D'),
-                b'\x95': ('bull', '2022'), b'\x96': ('ndash', '2013'), b'\x97': ('mdash', '2014'),
-                b'\x98': ('tilde', '2DC'), b'\x99': ('trade', '2122'), b'\x9a': ('scaron', '161'),
-                b'\x9b': ('rsaquo', '203A'), b'\x9c': ('oelig', '153'), b'\x9d': '?', b'\x9e': ('#x17E', '17E'),
+    MS_CHARS = {b'\x80': ('euro', '20AC'),
+                b'\x81': ' ',
+                b'\x82': ('sbquo', '201A'),
+                b'\x83': ('fnof', '192'),
+                b'\x84': ('bdquo', '201E'),
+                b'\x85': ('hellip', '2026'),
+                b'\x86': ('dagger', '2020'),
+                b'\x87': ('Dagger', '2021'),
+                b'\x88': ('circ', '2C6'),
+                b'\x89': ('permil', '2030'),
+                b'\x8A': ('Scaron', '160'),
+                b'\x8B': ('lsaquo', '2039'),
+                b'\x8C': ('OElig', '152'),
+                b'\x8D': '?',
+                b'\x8E': ('#x17D', '17D'),
+                b'\x8F': '?',
+                b'\x90': '?',
+                b'\x91': ('lsquo', '2018'),
+                b'\x92': ('rsquo', '2019'),
+                b'\x93': ('ldquo', '201C'),
+                b'\x94': ('rdquo', '201D'),
+                b'\x95': ('bull', '2022'),
+                b'\x96': ('ndash', '2013'),
+                b'\x97': ('mdash', '2014'),
+                b'\x98': ('tilde', '2DC'),
+                b'\x99': ('trade', '2122'),
+                b'\x9a': ('scaron', '161'),
+                b'\x9b': ('rsaquo', '203A'),
+                b'\x9c': ('oelig', '153'),
+                b'\x9d': '?',
+                b'\x9e': ('#x17E', '17E'),
                 b'\x9f': ('Yuml', ''), }
 
     # A parochial partial mapping of ISO-Latin-1 to ASCII. Contains
     # horrors like stripping diacritical marks to turn á into a, but also
     # contains non-horrors like turning “ into ".
-    MS_CHARS_TO_ASCII = {b'\x80': 'EUR', b'\x81': ' ', b'\x82': ',', b'\x83': 'f', b'\x84': ',,', b'\x85': '...',
-        b'\x86': '+', b'\x87': '++', b'\x88': '^', b'\x89': '%', b'\x8a': 'S', b'\x8b': '<', b'\x8c': 'OE',
-        b'\x8d': '?', b'\x8e': 'Z', b'\x8f': '?', b'\x90': '?', b'\x91': "'", b'\x92': "'", b'\x93': '"', b'\x94': '"',
-        b'\x95': '*', b'\x96': '-', b'\x97': '--', b'\x98': '~', b'\x99': '(TM)', b'\x9a': 's', b'\x9b': '>',
-        b'\x9c': 'oe', b'\x9d': '?', b'\x9e': 'z', b'\x9f': 'Y', b'\xa0': ' ', b'\xa1': '!', b'\xa2': 'c',
-        b'\xa3': 'GBP', b'\xa4': '$',  # This approximation is especially parochial--this is the
+    MS_CHARS_TO_ASCII = {
+        b'\x80': 'EUR',
+        b'\x81': ' ',
+        b'\x82': ',',
+        b'\x83': 'f',
+        b'\x84': ',,',
+        b'\x85': '...',
+        b'\x86': '+',
+        b'\x87': '++',
+        b'\x88': '^',
+        b'\x89': '%',
+        b'\x8a': 'S',
+        b'\x8b': '<',
+        b'\x8c': 'OE',
+        b'\x8d': '?',
+        b'\x8e': 'Z',
+        b'\x8f': '?',
+        b'\x90': '?',
+        b'\x91': "'",
+        b'\x92': "'",
+        b'\x93': '"',
+        b'\x94': '"',
+        b'\x95': '*',
+        b'\x96': '-',
+        b'\x97': '--',
+        b'\x98': '~',
+        b'\x99': '(TM)',
+        b'\x9a': 's',
+        b'\x9b': '>',
+        b'\x9c': 'oe',
+        b'\x9d': '?',
+        b'\x9e': 'z',
+        b'\x9f': 'Y',
+        b'\xa0': ' ',
+        b'\xa1': '!',
+        b'\xa2': 'c',
+        b'\xa3': 'GBP',
+        b'\xa4': '$',  # This approximation is especially parochial--this is the
         # generic currency symbol.
-        b'\xa5': 'YEN', b'\xa6': '|', b'\xa7': 'S', b'\xa8': '..', b'\xa9': '', b'\xaa': '(th)', b'\xab': '<<',
-        b'\xac': '!', b'\xad': ' ', b'\xae': '(R)', b'\xaf': '-', b'\xb0': 'o', b'\xb1': '+-', b'\xb2': '2',
-        b'\xb3': '3', b'\xb4': ("'", 'acute'), b'\xb5': 'u', b'\xb6': 'P', b'\xb7': '*', b'\xb8': ',', b'\xb9': '1',
-        b'\xba': '(th)', b'\xbb': '>>', b'\xbc': '1/4', b'\xbd': '1/2', b'\xbe': '3/4', b'\xbf': '?', b'\xc0': 'A',
-        b'\xc1': 'A', b'\xc2': 'A', b'\xc3': 'A', b'\xc4': 'A', b'\xc5': 'A', b'\xc6': 'AE', b'\xc7': 'C', b'\xc8': 'E',
-        b'\xc9': 'E', b'\xca': 'E', b'\xcb': 'E', b'\xcc': 'I', b'\xcd': 'I', b'\xce': 'I', b'\xcf': 'I', b'\xd0': 'D',
-        b'\xd1': 'N', b'\xd2': 'O', b'\xd3': 'O', b'\xd4': 'O', b'\xd5': 'O', b'\xd6': 'O', b'\xd7': '*', b'\xd8': 'O',
-        b'\xd9': 'U', b'\xda': 'U', b'\xdb': 'U', b'\xdc': 'U', b'\xdd': 'Y', b'\xde': 'b', b'\xdf': 'B', b'\xe0': 'a',
-        b'\xe1': 'a', b'\xe2': 'a', b'\xe3': 'a', b'\xe4': 'a', b'\xe5': 'a', b'\xe6': 'ae', b'\xe7': 'c', b'\xe8': 'e',
-        b'\xe9': 'e', b'\xea': 'e', b'\xeb': 'e', b'\xec': 'i', b'\xed': 'i', b'\xee': 'i', b'\xef': 'i', b'\xf0': 'o',
-        b'\xf1': 'n', b'\xf2': 'o', b'\xf3': 'o', b'\xf4': 'o', b'\xf5': 'o', b'\xf6': 'o', b'\xf7': '/', b'\xf8': 'o',
-        b'\xf9': 'u', b'\xfa': 'u', b'\xfb': 'u', b'\xfc': 'u', b'\xfd': 'y', b'\xfe': 'b', b'\xff': 'y', }
+        b'\xa5': 'YEN',
+        b'\xa6': '|',
+        b'\xa7': 'S',
+        b'\xa8': '..',
+        b'\xa9': '',
+        b'\xaa': '(th)',
+        b'\xab': '<<',
+        b'\xac': '!',
+        b'\xad': ' ',
+        b'\xae': '(R)',
+        b'\xaf': '-',
+        b'\xb0': 'o',
+        b'\xb1': '+-',
+        b'\xb2': '2',
+        b'\xb3': '3',
+        b'\xb4': ("'", 'acute'),
+        b'\xb5': 'u',
+        b'\xb6': 'P',
+        b'\xb7': '*',
+        b'\xb8': ',',
+        b'\xb9': '1',
+        b'\xba': '(th)',
+        b'\xbb': '>>',
+        b'\xbc': '1/4',
+        b'\xbd': '1/2',
+        b'\xbe': '3/4',
+        b'\xbf': '?',
+        b'\xc0': 'A',
+        b'\xc1': 'A',
+        b'\xc2': 'A',
+        b'\xc3': 'A',
+        b'\xc4': 'A',
+        b'\xc5': 'A',
+        b'\xc6': 'AE',
+        b'\xc7': 'C',
+        b'\xc8': 'E',
+        b'\xc9': 'E',
+        b'\xca': 'E',
+        b'\xcb': 'E',
+        b'\xcc': 'I',
+        b'\xcd': 'I',
+        b'\xce': 'I',
+        b'\xcf': 'I',
+        b'\xd0': 'D',
+        b'\xd1': 'N',
+        b'\xd2': 'O',
+        b'\xd3': 'O',
+        b'\xd4': 'O',
+        b'\xd5': 'O',
+        b'\xd6': 'O',
+        b'\xd7': '*',
+        b'\xd8': 'O',
+        b'\xd9': 'U',
+        b'\xda': 'U',
+        b'\xdb': 'U',
+        b'\xdc': 'U',
+        b'\xdd': 'Y',
+        b'\xde': 'b',
+        b'\xdf': 'B',
+        b'\xe0': 'a',
+        b'\xe1': 'a',
+        b'\xe2': 'a',
+        b'\xe3': 'a',
+        b'\xe4': 'a',
+        b'\xe5': 'a',
+        b'\xe6': 'ae',
+        b'\xe7': 'c',
+        b'\xe8': 'e',
+        b'\xe9': 'e',
+        b'\xea': 'e',
+        b'\xeb': 'e',
+        b'\xec': 'i',
+        b'\xed': 'i',
+        b'\xee': 'i',
+        b'\xef': 'i',
+        b'\xf0': 'o',
+        b'\xf1': 'n',
+        b'\xf2': 'o',
+        b'\xf3': 'o',
+        b'\xf4': 'o',
+        b'\xf5': 'o',
+        b'\xf6': 'o',
+        b'\xf7': '/',
+        b'\xf8': 'o',
+        b'\xf9': 'u',
+        b'\xfa': 'u',
+        b'\xfb': 'u',
+        b'\xfc': 'u',
+        b'\xfd': 'y',
+        b'\xfe': 'b',
+        b'\xff': 'y',
+    }
 
     # A map used when removing rogue Windows-1252/ISO-8859-1
     # characters in otherwise UTF-8 documents.
     #
     # Note that \x81, \x8d, \x8f, \x90, and \x9d are undefined in
     # Windows-1252.
-    WINDOWS_1252_TO_UTF8 = {0x80: b'\xe2\x82\xac',  # €
+    WINDOWS_1252_TO_UTF8 = {
+        0x80: b'\xe2\x82\xac',  # €
         0x82: b'\xe2\x80\x9a',  # ‚
         0x83: b'\xc6\x92',  # ƒ
         0x84: b'\xe2\x80\x9e',  # „
@@ -601,9 +766,11 @@ class UnicodeDammit:
         0xfb: b'\xc3\xbb',  # û
         0xfc: b'\xc3\xbc',  # ü
         0xfd: b'\xc3\xbd',  # ý
-        0xfe: b'\xc3\xbe',  # þ}
+        0xfe: b'\xc3\xbe',  # þ
+    }
 
-    MULTIBYTE_MARKERS_AND_SIZES = [(0xc2, 0xdf, 2),  # 2-byte characters start with a byte C2-DF
+    MULTIBYTE_MARKERS_AND_SIZES = [
+        (0xc2, 0xdf, 2),  # 2-byte characters start with a byte C2-DF
         (0xe0, 0xef, 3),  # 3-byte characters start with E0-EF
         (0xf0, 0xf4, 4),  # 4-byte characters start with F0-F4
     ]
@@ -612,7 +779,8 @@ class UnicodeDammit:
     LAST_MULTIBYTE_MARKER = MULTIBYTE_MARKERS_AND_SIZES[-1][1]
 
     @classmethod
-    def detwingle(cls, in_bytes, main_encoding="utf8", embedded_encoding="windows-1252"):
+    def detwingle(cls, in_bytes, main_encoding="utf8",
+                  embedded_encoding="windows-1252"):
         """Fix characters from one encoding embedded in some other encoding.
 
         Currently the only situation supported is Windows-1252 (or its
@@ -625,12 +793,15 @@ class UnicodeDammit:
         characters have been converted to their `main_encoding`
         equivalents.
         """
-        if embedded_encoding.replace('_', '-').lower() not in ('windows-1252', 'windows_1252'):
-            raise NotImplementedError("Windows-1252 and ISO-8859-1 are the only currently supported "
-                                      "embedded encodings.")
+        if embedded_encoding.replace('_', '-').lower() not in (
+                'windows-1252', 'windows_1252'):
+            raise NotImplementedError(
+                "Windows-1252 and ISO-8859-1 are the only currently supported "
+                "embedded encodings.")
 
         if main_encoding.lower() not in ('utf8', 'utf-8'):
-            raise NotImplementedError("UTF-8 is the only currently supported main encoding.")
+            raise NotImplementedError(
+                "UTF-8 is the only currently supported main encoding.")
 
         byte_chunks = []
 
@@ -641,7 +812,8 @@ class UnicodeDammit:
             if not isinstance(byte, int):
                 # Python 2.x
                 byte = ord(byte)
-            if (byte >= cls.FIRST_MULTIBYTE_MARKER and byte <= cls.LAST_MULTIBYTE_MARKER):
+            if (byte >= cls.FIRST_MULTIBYTE_MARKER
+                and byte <= cls.LAST_MULTIBYTE_MARKER):
                 # This is the start of a UTF-8 multibyte character. Skip
                 # to the end.
                 for start, end, size in cls.MULTIBYTE_MARKERS_AND_SIZES:

@@ -1,6 +1,8 @@
 """Use the HTMLParser library to parse HTML files that aren't too bad."""
 
-__all__ = ['HTMLParserTreeBuilder', ]
+__all__ = [
+    'HTMLParserTreeBuilder',
+]
 
 from HTMLParser import HTMLParser
 
@@ -27,10 +29,20 @@ CONSTRUCTOR_TAKES_STRICT = major == 3 and minor == 2 and release >= 3
 CONSTRUCTOR_STRICT_IS_DEPRECATED = major == 3 and minor == 3
 CONSTRUCTOR_TAKES_CONVERT_CHARREFS = major == 3 and minor >= 4
 
-from bs4.element import (CData, Comment, Declaration, Doctype, ProcessingInstruction, )
+from bs4.element import (
+    CData,
+    Comment,
+    Declaration,
+    Doctype,
+    ProcessingInstruction,
+)
 from bs4.dammit import EntitySubstitution, UnicodeDammit
 
-from bs4.builder import (HTML, HTMLTreeBuilder, STRICT, )
+from bs4.builder import (
+    HTML,
+    HTMLTreeBuilder,
+    STRICT,
+)
 
 HTMLPARSER = 'html.parser'
 
@@ -124,8 +136,8 @@ class HTMLParserTreeBuilder(HTMLTreeBuilder):
             kwargs['convert_charrefs'] = False
         self.parser_args = (args, kwargs)
 
-    def prepare_markup(self, markup, user_specified_encoding=None, document_declared_encoding=None,
-                       exclude_encodings=None):
+    def prepare_markup(self, markup, user_specified_encoding=None,
+                       document_declared_encoding=None, exclude_encodings=None):
         """
         :return: A 4-tuple (markup, original encoding, encoding
         declared within markup, whether any characters had to be
@@ -136,9 +148,11 @@ class HTMLParserTreeBuilder(HTMLTreeBuilder):
             return
 
         try_encodings = [user_specified_encoding, document_declared_encoding]
-        dammit = UnicodeDammit(markup, try_encodings, is_html=True, exclude_encodings=exclude_encodings)
-        yield (
-        dammit.markup, dammit.original_encoding, dammit.declared_html_encoding, dammit.contains_replacement_characters)
+        dammit = UnicodeDammit(markup, try_encodings, is_html=True,
+                               exclude_encodings=exclude_encodings)
+        yield (dammit.markup, dammit.original_encoding,
+               dammit.declared_html_encoding,
+               dammit.contains_replacement_characters)
 
     def feed(self, markup):
         args, kwargs = self.parser_args
@@ -160,8 +174,9 @@ class HTMLParserTreeBuilder(HTMLTreeBuilder):
 if major == 3 and minor == 2 and not CONSTRUCTOR_TAKES_STRICT:
     import re
 
-    attrfind_tolerant = re.compile(r'\s*((?<=[\'"\s])[^\s/>][^\s/=>]*)(\s*=+\s*'
-                                   r'(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?')
+    attrfind_tolerant = re.compile(
+        r'\s*((?<=[\'"\s])[^\s/>][^\s/=>]*)(\s*=+\s*'
+        r'(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?')
     HTMLParserTreeBuilder.attrfind_tolerant = attrfind_tolerant
 
     locatestarttagend = re.compile(r"""
@@ -207,7 +222,8 @@ if major == 3 and minor == 2 and not CONSTRUCTOR_TAKES_STRICT:
             attrname, rest, attrvalue = m.group(1, 2, 3)
             if not rest:
                 attrvalue = None
-            elif attrvalue[:1] == '\'' == attrvalue[-1:] or attrvalue[:1] == '"' == attrvalue[-1:]:
+            elif attrvalue[:1] == '\'' == attrvalue[-1:] or \
+                                    attrvalue[:1] == '"' == attrvalue[-1:]:
                 attrvalue = attrvalue[1:-1]
             if attrvalue:
                 attrvalue = self.unescape(attrvalue)
@@ -219,11 +235,13 @@ if major == 3 and minor == 2 and not CONSTRUCTOR_TAKES_STRICT:
             lineno, offset = self.getpos()
             if "\n" in self.__starttag_text:
                 lineno = lineno + self.__starttag_text.count("\n")
-                offset = len(self.__starttag_text) - self.__starttag_text.rfind("\n")
+                offset = len(self.__starttag_text) \
+                         - self.__starttag_text.rfind("\n")
             else:
                 offset = offset + len(self.__starttag_text)
             if self.strict:
-                self.error("junk characters in start tag: %r" % (rawdata[k:endpos][:20],))
+                self.error("junk characters in start tag: %r"
+                           % (rawdata[k:endpos][:20],))
             self.handle_data(rawdata[i:endpos])
             return endpos
         if end.endswith('/>'):

@@ -1,9 +1,18 @@
 from collections import defaultdict
 import sys
 
-from bs4.element import (CharsetMetaAttributeValue, ContentMetaAttributeValue, whitespace_re)
+from bs4.element import (
+    CharsetMetaAttributeValue,
+    ContentMetaAttributeValue,
+    whitespace_re
+)
 
-__all__ = ['HTMLTreeBuilder', 'SAXTreeBuilder', 'TreeBuilder', 'TreeBuilderRegistry', ]
+__all__ = [
+    'HTMLTreeBuilder',
+    'SAXTreeBuilder',
+    'TreeBuilder',
+    'TreeBuilderRegistry',
+]
 
 # Some useful features for a TreeBuilder to have.
 FAST = 'fast'
@@ -50,7 +59,8 @@ class TreeBuilderRegistry(object):
                     candidate_set = set(candidates)
                 else:
                     # Eliminate any candidates that don't have this feature.
-                    candidate_set = candidate_set.intersection(set(we_have_the_feature))
+                    candidate_set = candidate_set.intersection(
+                        set(we_have_the_feature))
 
         # The only valid candidates are the ones in candidate_set.
         # Go through the original list of candidates and pick the first one
@@ -115,7 +125,8 @@ class TreeBuilder(object):
     def feed(self, markup):
         raise NotImplementedError()
 
-    def prepare_markup(self, markup, user_specified_encoding=None, document_declared_encoding=None):
+    def prepare_markup(self, markup, user_specified_encoding=None,
+                       document_declared_encoding=None):
         return markup, None, None, False
 
     def test_fragment_to_document(self, fragment):
@@ -143,7 +154,8 @@ class TreeBuilder(object):
             return attrs
         if self.cdata_list_attributes:
             universal = self.cdata_list_attributes.get('*', [])
-            tag_specific = self.cdata_list_attributes.get(tag_name.lower(), None)
+            tag_specific = self.cdata_list_attributes.get(
+                tag_name.lower(), None)
             for attr in attrs.keys():
                 if attr in universal or (tag_specific and attr in tag_specific):
                     # We have a "class"-type attribute whose string
@@ -217,7 +229,8 @@ class HTMLTreeBuilder(TreeBuilder):
     """
 
     preserve_whitespace_tags = set(['pre', 'textarea'])
-    empty_element_tags = set(['br', 'hr', 'input', 'img', 'meta', 'spacer', 'link', 'frame', 'base'])
+    empty_element_tags = set(['br', 'hr', 'input', 'img', 'meta',
+                              'spacer', 'link', 'frame', 'base'])
 
     # The HTML standard defines these attributes as containing a
     # space-separated list of values, not a single value. That is,
@@ -226,11 +239,22 @@ class HTMLTreeBuilder(TreeBuilder):
     # encounter one of these attributes, we will parse its value into
     # a list of values if possible. Upon output, the list will be
     # converted back into a string.
-    cdata_list_attributes = {"*": ['class', 'accesskey', 'dropzone'], "a": ['rel', 'rev'], "link": ['rel', 'rev'],
-        "td": ["headers"], "th": ["headers"], "td": ["headers"], "form": ["accept-charset"], "object": ["archive"],
+    cdata_list_attributes = {
+        "*": ['class', 'accesskey', 'dropzone'],
+        "a": ['rel', 'rev'],
+        "link": ['rel', 'rev'],
+        "td": ["headers"],
+        "th": ["headers"],
+        "td": ["headers"],
+        "form": ["accept-charset"],
+        "object": ["archive"],
 
         # These are HTML5 specific, as are *.accesskey and *.dropzone above.
-        "area": ["rel"], "icon": ["sizes"], "iframe": ["sandbox"], "output": ["for"], }
+        "area": ["rel"],
+        "icon": ["sizes"],
+        "iframe": ["sandbox"],
+        "output": ["for"],
+    }
 
     def set_up_substitutions(self, tag):
         # We are only interested in <meta> tags
@@ -257,7 +281,8 @@ class HTMLTreeBuilder(TreeBuilder):
             meta_encoding = charset
             tag['charset'] = CharsetMetaAttributeValue(charset)
 
-        elif (content is not None and http_equiv is not None and http_equiv.lower() == 'content-type'):
+        elif (content is not None and http_equiv is not None
+              and http_equiv.lower() == 'content-type'):
             # HTML 4 style:
             # <meta http-equiv="content-type" content="text/html; charset=utf8">
             tag['content'] = ContentMetaAttributeValue(content)

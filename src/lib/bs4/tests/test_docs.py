@@ -3,13 +3,18 @@
 # pylint: disable-msg=E0611,W0142
 
 __metaclass__ = type
-__all__ = ['additional_tests', ]
+__all__ = [
+    'additional_tests',
+]
 
 import doctest
 # from pkg_resources import (
 #    resource_filename, resource_exists, resource_listdir, cleanup_resources)
 
-DOCTEST_FLAGS = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE | doctest.REPORT_NDIFF)
+DOCTEST_FLAGS = (
+    doctest.ELLIPSIS |
+    doctest.NORMALIZE_WHITESPACE |
+    doctest.REPORT_NDIFF)
 
 
 # def additional_tests():

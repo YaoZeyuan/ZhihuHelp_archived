@@ -4,7 +4,11 @@ import unittest
 import warnings
 
 from bs4 import BeautifulSoup
-from bs4.builder import (builder_registry as registry, HTMLParserTreeBuilder, TreeBuilderRegistry, )
+from bs4.builder import (
+    builder_registry as registry,
+    HTMLParserTreeBuilder,
+    TreeBuilderRegistry,
+)
 
 try:
     from bs4.builder import HTML5TreeBuilder
@@ -14,7 +18,10 @@ except ImportError:
     HTML5LIB_PRESENT = False
 
 try:
-    from bs4.builder import (LXMLTreeBuilderForXML, LXMLTreeBuilder, )
+    from bs4.builder import (
+        LXMLTreeBuilderForXML,
+        LXMLTreeBuilder,
+    )
 
     LXML_PRESENT = True
 except ImportError:
@@ -26,13 +33,17 @@ class BuiltInRegistryTest(unittest.TestCase):
 
     def test_combination(self):
         if LXML_PRESENT:
-            self.assertEqual(registry.lookup('fast', 'html'), LXMLTreeBuilder)
+            self.assertEqual(registry.lookup('fast', 'html'),
+                             LXMLTreeBuilder)
 
         if LXML_PRESENT:
-            self.assertEqual(registry.lookup('permissive', 'xml'), LXMLTreeBuilderForXML)
-        self.assertEqual(registry.lookup('strict', 'html'), HTMLParserTreeBuilder)
+            self.assertEqual(registry.lookup('permissive', 'xml'),
+                             LXMLTreeBuilderForXML)
+        self.assertEqual(registry.lookup('strict', 'html'),
+                         HTMLParserTreeBuilder)
         if HTML5LIB_PRESENT:
-            self.assertEqual(registry.lookup('html5lib', 'html'), HTML5TreeBuilder)
+            self.assertEqual(registry.lookup('html5lib', 'html'),
+                             HTML5TreeBuilder)
 
     def test_lookup_by_markup_type(self):
         if LXML_PRESENT:
@@ -47,12 +58,16 @@ class BuiltInRegistryTest(unittest.TestCase):
 
     def test_named_library(self):
         if LXML_PRESENT:
-            self.assertEqual(registry.lookup('lxml', 'xml'), LXMLTreeBuilderForXML)
-            self.assertEqual(registry.lookup('lxml', 'html'), LXMLTreeBuilder)
+            self.assertEqual(registry.lookup('lxml', 'xml'),
+                             LXMLTreeBuilderForXML)
+            self.assertEqual(registry.lookup('lxml', 'html'),
+                             LXMLTreeBuilder)
         if HTML5LIB_PRESENT:
-            self.assertEqual(registry.lookup('html5lib'), HTML5TreeBuilder)
+            self.assertEqual(registry.lookup('html5lib'),
+                             HTML5TreeBuilder)
 
-        self.assertEqual(registry.lookup('html.parser'), HTMLParserTreeBuilder)
+        self.assertEqual(registry.lookup('html.parser'),
+                         HTMLParserTreeBuilder)
 
     def test_beautifulsoup_constructor_does_lookup(self):
 
@@ -67,7 +82,8 @@ class BuiltInRegistryTest(unittest.TestCase):
 
         # You'll get an exception if BS can't find an appropriate
         # builder.
-        self.assertRaises(ValueError, BeautifulSoup, "", features="no-such-feature")
+        self.assertRaises(ValueError, BeautifulSoup,
+                          "", features="no-such-feature")
 
 
 class RegistryTest(unittest.TestCase):
@@ -77,7 +93,8 @@ class RegistryTest(unittest.TestCase):
         self.registry = TreeBuilderRegistry()
 
     def builder_for_features(self, *feature_list):
-        cls = type('Builder_' + '_'.join(feature_list), (object,), {'features': feature_list})
+        cls = type('Builder_' + '_'.join(feature_list),
+                   (object,), {'features': feature_list})
 
         self.registry.register(cls)
         return cls
@@ -120,10 +137,12 @@ class RegistryTest(unittest.TestCase):
 
         # There are two builders featuring 'foo' and 'bar', but
         # the one that also features 'quux' was registered later.
-        self.assertEqual(self.registry.lookup('foo', 'bar'), has_both_late)
+        self.assertEqual(self.registry.lookup('foo', 'bar'),
+                         has_both_late)
 
         # There is only one builder featuring 'foo', 'bar', and 'baz'.
-        self.assertEqual(self.registry.lookup('foo', 'bar', 'baz'), has_both_early)
+        self.assertEqual(self.registry.lookup('foo', 'bar', 'baz'),
+                         has_both_early)
 
     def test_lookup_fails_when_cannot_reconcile_requested_features(self):
         builder1 = self.builder_for_features('foo', 'bar')
