@@ -67,7 +67,7 @@ class ReadListParser():
 
         def detect(command):
             for command_type in Type.type_list:
-                result = Match.__dict__[command_type](command)
+                result = getattr(Match, command_type)(command)
                 if result:
                     return command_type
             return 'unknown'

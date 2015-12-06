@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+import copy
+from src.lib.bs4 import BeautifulSoup
+from src.parser.content.answer import Answer
+from src.tools.debug import Debug
+
 
 class SimpleAnswer(Answer):
     def set_dom(self, dom):

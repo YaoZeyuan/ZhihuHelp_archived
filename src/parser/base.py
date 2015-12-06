@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+from src.lib.bs4 import BeautifulSoup
+from src.parser.content.simple_answer import SimpleAnswer
+from src.parser.content.simple_question import SimpleQuestion
+from src.parser.tools.parser_tools import ParserTools
+
+
 class BaseParser(ParserTools):
     def __init__(self, content):
         self.dom = BeautifulSoup(content, 'html.parser')

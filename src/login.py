@@ -101,8 +101,8 @@ class Login():
         captcha = ''
         while not self.login(account, password, captcha):
             print u'啊哦，登录失败，可能需要输入验证码'
-            print u'直接回车开始下载验证码'
-            print u'输入『yes』后按回车可以更换账号密码重新登录'
+            print u'输入『yes』按回车更换其他账号'
+            print u'直接敲击回车获取验证码'
             confirm = raw_input()
             if confirm == 'yes':
                 account, password = guide.set_account()

@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+from src.lib.bs4 import BeautifulSoup
+from src.parser.base import BaseParser
+from src.parser.content.answer import Answer
+from src.parser.info.question import QuestionInfo
 
 
 class QuestionParser(BaseParser):

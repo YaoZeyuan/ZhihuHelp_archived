@@ -27,9 +27,10 @@ class ZhihuHelp(object):
         if Config.remember_account:
             print u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量)'
             print u'点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
-            if raw_input():
-                login.start()
-                Config.picture_quality = guide.set_picture_quality()
+            if not Config.debug:
+                if raw_input():
+                    login.start()
+                    Config.picture_quality = guide.set_picture_quality()
             else:
                 Http.set_cookie()
         else:
@@ -84,11 +85,11 @@ class ZhihuHelp(object):
             content = Http.get_content(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt")
         except:
             return
-        time, url, comment = [x.strip() for x in content.split('\n')]
+        time, url = [x.strip() for x in content.split('\n')]
         if time == Config.update_time:
             return
         else:
-            print u"发现新版本，\n更新说明:{}\n更新日期:{} ，点按回车进入更新页面".format(comment, time)
+            print u"发现新版本，\n更新日期:{} ，点按回车进入更新页面".format(time)
             print u'新版本下载地址:' + url
             raw_input()
             import webbrowser

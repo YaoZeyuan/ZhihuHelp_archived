@@ -47,8 +47,8 @@ class Config(object):
             return
         with open(Path.config_path) as f:
             config = json.load(f)
-        for (key, value) in config:
-            Config.__dict__[key] = value
+        for (key, value) in config.items():
+            setattr(Config, key, value)
         return
 
     @staticmethod

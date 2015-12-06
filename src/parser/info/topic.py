@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from src.parser.tools.parser_tools import ParserTools
+from src.tools.debug import Debug
+
 
 class TopicInfo(ParserTools):
     def __init__(self, dom=None):

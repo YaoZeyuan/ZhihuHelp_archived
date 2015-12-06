@@ -29,7 +29,7 @@ class EpubCreator(object):
         html_tmp_path = Path.html_pool_path + '/'
         image_tmp_path = Path.image_pool_path + '/'
         for book in self.book_list:
-            page = book.page_list[0]
+            page = self.book.page_list[0]
             with open(html_tmp_path + page.filename, 'w') as html:
                 html.write(page.content)
             epub.createChapter(html_tmp_path + page.filename, ExtraTools.get_time(), page.title)
@@ -38,7 +38,7 @@ class EpubCreator(object):
                 with open(html_tmp_path + page.filename, 'w') as html:
                     html.write(page.content)
                 epub.addHtml(html_tmp_path + page.filename, page.title)
-        for image in self.book['image_list']:
+        for image in self.book.image_list:
             epub.addImg(image_tmp_path + image['filename'])
         epub.addLanguage('zh-cn')
         epub.addCreator('ZhihuHelp1.7.0')
@@ -47,8 +47,8 @@ class EpubCreator(object):
         epub.addPublisher('ZhihuHelp')
         Debug.logger.debug(u'当前目录为')
         Path.pwd()
-        epub.addCss(Path.base_path + u'/epubResource/markdown.css')
-        epub.addCss(Path.base_path + u'/epubResource/front.css')
+        epub.addCss(Path.base_path + u'/www/css/markdown.css')
+        epub.addCss(Path.base_path + u'/www/css/front.css')
         epub.buildingEpub()
         return
 

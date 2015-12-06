@@ -2,6 +2,7 @@
 import hashlib
 import os.path
 from multiprocessing.dummy import Pool as ThreadPool  # 多线程并行库
+from src.tools.config import Config
 from worker import PageWorker  # 引入控制台
 from src.tools.extra_tools import ExtraTools
 from src.tools.http import Http
@@ -12,7 +13,7 @@ class ImageContainer(object):
         self.save_path = save_path
         self.container = {}
         self.md5 = hashlib.md5()
-        self.thread_pool = ThreadPool(SettingClass.MAXTHREAD)
+        self.thread_pool = ThreadPool(Config.max_thread)
         return
 
     def set_save_path(self, save_path):

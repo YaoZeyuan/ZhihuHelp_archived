@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+from src.parser.content.author import Author
+from src.parser.tools.parser_tools import ParserTools
+from src.tools.debug import Debug
+
 
 class Answer(ParserTools):
     def __init__(self, dom=None):

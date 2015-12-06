@@ -15,7 +15,7 @@ class Path(object):
 
     @staticmethod
     def reset_path():
-        Path.change_dir(Path.base_path)
+        Path.chdir(Path.base_path)
         return
 
     @staticmethod

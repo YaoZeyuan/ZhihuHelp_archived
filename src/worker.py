@@ -2,6 +2,10 @@
 
 import json  # 用于JsonWorker
 from multiprocessing.dummy import Pool as ThreadPool #多线程并行库
+from src.parser.author import AuthorParser
+from src.parser.collection import CollectionParser
+from src.parser.question import QuestionParser
+from src.parser.topic import TopicParser
 from src.tools.config import Config
 from src.tools.db import DB
 from src.tools.debug import Debug

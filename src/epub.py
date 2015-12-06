@@ -5,7 +5,6 @@ u"""
 提供简单的接口
 
 """
-from codes.baseClass import BaseClass
 
 class Metadata():
     def __init__(self):
