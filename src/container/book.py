@@ -98,7 +98,7 @@ class Book(object):
         return
 
     def get_article_list(self):
-        if self.kind in ['article', 'column']:
+        if self.kind in Type.article_type_list:
             article_list = self.__get_article_list()
         else:
             article_list = self.__get_question_list()
@@ -152,6 +152,7 @@ class Book(object):
             self.property.epub.agree_count += article['agree_count']
             self.property.epub.char_count += article['char_count']
         self.property.epub.article_count = len(article_list)
+        self.article_list = article_list
         return
 
     def clear_property(self):
