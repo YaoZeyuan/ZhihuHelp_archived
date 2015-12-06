@@ -19,6 +19,7 @@ class ZhihuHelp(object):
         """
         init.init_database()
         Path.init_base_path()
+        Path.init_work_directory()
         Config._load()
         return
 
@@ -49,7 +50,7 @@ class ZhihuHelp(object):
         task_package = ReadListParser.get_task(command)  # 分析命令
 
         if not task_package.is_work_list_empty():
-            worker_factory(task_package.work_list)  # 执行抓取程序
+            #worker_factory(task_package.work_list)  # 执行抓取程序
             Debug.logger.info(u"网页信息抓取完毕")
 
         if not task_package.is_book_list_empty():
@@ -61,6 +62,7 @@ class ZhihuHelp(object):
     def start(self):
         self.check_update()
         self.init_config()
+
         Debug.logger.info(u"开始读取ReadList.txt设置信息")
         with open('./ReadList.txt', 'r') as read_list:
             counter = 1

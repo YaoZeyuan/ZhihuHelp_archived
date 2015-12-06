@@ -40,9 +40,9 @@ class TaskPackage():
     def get_task(self):
         if Type.answer in self.book_list:
             self.merge_answer_book_list()
-        elif Type.question in self.book_list:
+        if Type.question in self.book_list:
             self.merge_question_book_list()
-        elif Type.article in self.book_list:
+        if Type.article in self.book_list:
             self.merge_article_book_list()
         return self
 

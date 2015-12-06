@@ -29,7 +29,7 @@ class EpubCreator(object):
         html_tmp_path = Path.html_pool_path + '/'
         image_tmp_path = Path.image_pool_path + '/'
         for book in self.book_list:
-            page = self.book.page_list[0]
+            page = book.page_list[0]
             with open(html_tmp_path + page.filename, 'w') as html:
                 html.write(page.content)
             epub.createChapter(html_tmp_path + page.filename, ExtraTools.get_time(), page.title)
@@ -45,8 +45,6 @@ class EpubCreator(object):
         epub.addDesc(u'该电子书由知乎助手生成，知乎助手是姚泽源为知友制作的仅供个人使用的简易电子书制作工具，源代码遵循WTFPL，希望大家能认真领会该协议的真谛，为飞面事业做出自己的贡献 XD')
         epub.addRight('CC')
         epub.addPublisher('ZhihuHelp')
-        Debug.logger.debug(u'当前目录为')
-        Path.pwd()
         epub.addCss(Path.base_path + u'/www/css/markdown.css')
         epub.addCss(Path.base_path + u'/www/css/front.css')
         epub.buildingEpub()

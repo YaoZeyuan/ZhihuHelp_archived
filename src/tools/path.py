@@ -42,7 +42,7 @@ class Path(object):
         return
 
     @staticmethod
-    def init_path():
+    def init_work_directory():
         Path.reset_path()
         Path.mkdir(u'./知乎助手生成的电子书')
         Path.mkdir(u'./知乎电子书临时资源库')

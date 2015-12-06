@@ -3,6 +3,7 @@ import copy
 from src.container.book import Page, EpubBook
 from src.container.image import ImageContainer
 from src.tools.config import Config
+from src.tools.path import Path
 from src.tools.type import Type
 
 import re
@@ -54,13 +55,13 @@ class CreateHtmlPage(object):
 
     def create_question(self, question, prefix=''):
         def create_answer(answer):
-            with open('./html_template/content/answer.html') as answer_temp:
+            with open('./src/template/content/answer.html') as answer_temp:
                 template = answer_temp.read()
             return template.format(**answer)
 
         answer_content = ''.join([create_answer(answer) for answer in question['answer_list']])
         question['answer_content'] = answer_content
-        with open('./html_template/content/question.html') as question_temp:
+        with open('./src/template/content/question.html') as question_temp:
             template = question_temp.read()
         question.update(question['question'])
         content = template.format(**question)
@@ -71,7 +72,7 @@ class CreateHtmlPage(object):
         return page
 
     def create_article(self, article, prefix=''):
-        with open('./html_template/content/article.html') as article_temp:
+        with open('./src/template/content/article.html') as article_temp:
             template = article_temp.read()
         content = template.format(**article)
         page = Page()
@@ -83,14 +84,15 @@ class CreateHtmlPage(object):
     def create_info_page(self, book):
         kind = book.kind
         info = book.info
-        with open('./html_template/info/{}.html'.format(kind)) as file:
+        Path.pwd()
+        with open('./src/template/info/{}.html'.format(kind)) as file:
             template = file.read()
         content = template.format(**info)
         page = Page()
         page.content = self.fix_image(content)
         page.filename = str(book.property.epub.prefix) + 'info.html'
         page.title = book.property.epub.title
-        if book.property.split_index:
+        if book.property.epub.split_index:
             page.title += "_({})".format(book.property.epub.split_index)
         return page
 
