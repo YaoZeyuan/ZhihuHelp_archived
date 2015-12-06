@@ -132,7 +132,8 @@ class RawBook(object):
                 return [book]
             article_list = []
             while surplus > 0:
-                article = book.article_list.pop()
+                article = book.article_list[0]
+                book.article_list = book.article_list[1:]
                 article_list.append(article)
                 surplus -= article['answer_count']
                 book.epub.answer_count -= article['answer_count']
@@ -147,13 +148,18 @@ class RawBook(object):
             book = self.book_list.pop()
             if (counter + book.epub.answer_count) < Config.max_answer:
                 book_list.append(book)
-            else:
+            elif (counter + book.epub.answer_count) == Config.max_answer:
+                book_list.append(book)
+                self.result_list.append(book_list)
+                book_list = []
+                counter = 0
+            elif (counter + book.epub.answer_count) > Config.max_answer:
                 split_list = split(book, Config.max_answer - counter)
                 book_list.append(split_list[0])
                 self.result_list.append(book_list)
                 book_list = []
-                self.book_list += split_list[1:]
                 counter = 0
+                self.book_list = split_list[1:] + self.book_list
         self.result_list.append(book_list)
         return
 
