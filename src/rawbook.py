@@ -32,7 +32,12 @@ class CreateHtmlPage(object):
                 filename = self.image_container.add(src_download)
             else:
                 filename = ''
-            content = content.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
+            if 'dce9dde98c91a4d1e3cb86e6' in img:
+                pass
+                pass
+            new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
+            new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg', '../images/{}'.format(filename))
+            content = content.replace(img, new_image)
         return content
 
     @staticmethod

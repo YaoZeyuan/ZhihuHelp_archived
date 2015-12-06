@@ -50,7 +50,10 @@ class PageWorker(object):
         max_try = Config.max_try
         for time in range(max_try):
             if test_flag:
-                func(**argv)
+                try:
+                    func(**argv)
+                except Exception:
+                    Debug.logger.info(u'多线程控制器出现异常，稍后重试')
         return
 
     def create_save_config(self):

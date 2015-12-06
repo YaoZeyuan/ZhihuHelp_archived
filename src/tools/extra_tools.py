@@ -5,7 +5,7 @@ import datetime
 
 
 class ExtraTools(object):
-    encrypt = hashlib.md5()
+
 
     @staticmethod
     def get_time():
@@ -24,8 +24,9 @@ class ExtraTools(object):
 
     @staticmethod
     def md5(content):
-        ExtraTools.encrypt.update(str(content))
-        return ExtraTools.encrypt.hexdigest()
+        encrypt = hashlib.md5()
+        encrypt.update(str(content))
+        return encrypt.hexdigest()
 
     @staticmethod
     def fix_filename(filename):
