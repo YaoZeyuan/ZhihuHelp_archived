@@ -88,11 +88,11 @@ class TaskPackage():
     def is_work_list_empty(self):
         for kind in Type.type_list:
             if self.work_list.get(kind):
-                return True
-        return False
+                return False
+        return True
 
     def is_book_list_empty(self):
         for kind in Type.type_list:
             if self.book_list.get(kind):
-                return True
-        return False
+                return False
+        return True

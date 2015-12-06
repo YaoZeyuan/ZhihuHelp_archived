@@ -5,6 +5,8 @@ u"""
 提供简单的接口
 
 """
+from src.tools.path import Path
+
 
 class Metadata():
     def __init__(self):
@@ -79,7 +81,9 @@ class Book():
 
         rmdir(u'./' + str(self.bookTitle))
         mkdir(u'./' + str(self.bookTitle))
+        Path.pwd()
         chdir(u'./' + str(self.bookTitle))
+        Path.pwd()
         self.__writeMimetype()
         self.addTitle(self.bookTitle)
         self.addIdentifier(self.bookID)
