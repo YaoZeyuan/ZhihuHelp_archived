@@ -22,7 +22,7 @@ class EpubCreator(object):
     def create(self):
         self.image_container.set_save_path(Path.image_pool_path)
         self.image_container.start_download()
-        title = '_'.join([book.property.epub.title for book in self.book_list])
+        title = '_'.join([book.epub.title for book in self.book_list])
         title = title.strip()
         Path.chdir(Path.base_path + u'/知乎电子书临时资源库/')
         epub = Book(title, 27149527)

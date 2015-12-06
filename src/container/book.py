@@ -14,7 +14,7 @@ class Page(object):
         self.filename = ''
         return
 
-class BookProperty(object):
+class Book(object):
     class Sql(object):
         def __init__(self):
             self.question = ''
@@ -36,15 +36,9 @@ class BookProperty(object):
             return
 
     def __init__(self):
-        self.sql = BookProperty.Sql()
-        self.epub = BookProperty.Epub()
-        return
-
-
-class Book(object):
-    def __init__(self):
         self.kind = ''
-        self.property = BookProperty()
+        self.sql = Book.Sql()
+        self.epub = Book.Epub()
         self.info = {}
         self.article_list = []
         self.page_list = []
@@ -62,8 +56,8 @@ class Book(object):
 
     def catch_info(self):
         info = {}
-        if self.property.sql.info:
-            info = DB.cursor.execute(self.property.sql.info).fetchone()
+        if self.sql.info:
+            info = DB.cursor.execute(self.sql.info).fetchone()
             info = DB.wrap(Type.info_table[self.kind], info)
         self.set_info(info)
         return
@@ -71,29 +65,29 @@ class Book(object):
     def set_info(self, info):
         self.info.update(info)
         if self.kind == Type.question:
-            self.property.epub.title = '知乎问题集锦({})'.format(ExtraTools.get_time())
-            self.property.epub.id = ExtraTools.get_time()
+            self.epub.title = '知乎问题集锦({})'.format(ExtraTools.get_time())
+            self.epub.id = ExtraTools.get_time()
         elif self.kind == Type.answer:
-            self.property.epub.title = '知乎回答集锦({})'.format(ExtraTools.get_time())
-            self.property.epub.id = ExtraTools.get_time()
+            self.epub.title = '知乎回答集锦({})'.format(ExtraTools.get_time())
+            self.epub.id = ExtraTools.get_time()
         elif self.kind == Type.article:
-            self.property.epub.title = '知乎专栏文章集锦({})'.format(ExtraTools.get_time())
-            self.property.epub.id = ExtraTools.get_time()
+            self.epub.title = '知乎专栏文章集锦({})'.format(ExtraTools.get_time())
+            self.epub.id = ExtraTools.get_time()
         if self.kind in [Type.answer, Type.question, Type.article]:
-            self.info['title'] = self.property.epub.title
+            self.info['title'] = self.epub.title
 
         if self.kind == Type.topic:
-            self.property.epub.title = '话题_{}({})'.format(info['title'], info['topic_id'])
-            self.property.epub.id = info['topic_id']
+            self.epub.title = '话题_{}({})'.format(info['title'], info['topic_id'])
+            self.epub.id = info['topic_id']
         if self.kind == Type.collection:
-            self.property.epub.title = '收藏夹_{}({})'.format(info['title'], info['collection_id'])
-            self.property.epub.id = info['collection_id']
+            self.epub.title = '收藏夹_{}({})'.format(info['title'], info['collection_id'])
+            self.epub.id = info['collection_id']
         if self.kind == Type.author:
-            self.property.epub.title = '作者_{}({})'.format(info['name'], info['author_id'])
-            self.property.epub.id = info['author_id']
+            self.epub.title = '作者_{}({})'.format(info['name'], info['author_id'])
+            self.epub.id = info['author_id']
         if self.kind == Type.column:
-            self.property.epub.title = '专栏_{}({})'.format(info['name'], info['column_id'])
-            self.property.epub.id = info['column_id']
+            self.epub.title = '专栏_{}({})'.format(info['name'], info['column_id'])
+            self.epub.id = info['column_id']
         return
 
     def get_article_list(self):
@@ -105,8 +99,8 @@ class Book(object):
         return
 
     def __get_question_list(self):
-        question_list = [DB.wrap('question', x) for x in DB.get_result_list(self.property.sql.question)]
-        answer_list = [DB.wrap('answer', x) for x in DB.get_result_list(self.property.sql.answer)]
+        question_list = [DB.wrap('question', x) for x in DB.get_result_list(self.sql.question)]
+        answer_list = [DB.wrap('answer', x) for x in DB.get_result_list(self.sql.answer)]
 
         def merge_answer_into_question():
             question_dict = {x['question_id']: {'question': x.copy(), 'answer_list': [], 'agree': 0} for x in
@@ -140,25 +134,25 @@ class Book(object):
             article['answer_count'] = 1
             return article
 
-        article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.property.sql.answer)]
+        article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.answer)]
         article_list = [add_property(x) for x in article_list]
         return article_list
 
     def set_article_list(self, article_list):
         self.clear_property()
         for article in article_list:
-            self.property.epub.answer_count += article['answer_count']
-            self.property.epub.agree_count += article['agree_count']
-            self.property.epub.char_count += article['char_count']
-        self.property.epub.article_count = len(article_list)
+            self.epub.answer_count += article['answer_count']
+            self.epub.agree_count += article['agree_count']
+            self.epub.char_count += article['char_count']
+        self.epub.article_count = len(article_list)
         self.article_list = article_list
         return
 
     def clear_property(self):
-        self.property.epub.answer_count = 0
-        self.property.epub.agree_count = 0
-        self.property.epub.char_count = 0
-        self.property.epub.article_count = 0
+        self.epub.answer_count = 0
+        self.epub.agree_count = 0
+        self.epub.char_count = 0
+        self.epub.article_count = 0
         return
 
     def __sort(self):

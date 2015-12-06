@@ -51,9 +51,9 @@ class TaskPackage():
         book = Book()
         answer = []
         for item in book_list:
-            answer.append(item.property.sql.answer)
+            answer.append(item.sql.answer)
         book.kind = Type.article
-        book.property.sql.answer = 'select * from Article where ({})'.format(' or '.join(answer))
+        book.sql.answer = 'select * from Article where ({})'.format(' or '.join(answer))
         self.book_list[Type.article] = [book]
         return
 
@@ -63,11 +63,11 @@ class TaskPackage():
         question = []
         answer = []
         for item in book_list:
-            question.append(item.property.sql.question)
-            answer.append(item.property.sql.answer)
+            question.append(item.sql.question)
+            answer.append(item.sql.answer)
         book.kind = Type.answer
-        book.property.sql.question = 'select * from Question where ({})'.format(' or '.join(question))
-        book.property.sql.answer = 'select * from Answer where ({})'.format(' or '.join(answer))
+        book.sql.question = 'select * from Question where ({})'.format(' or '.join(question))
+        book.sql.answer = 'select * from Answer where ({})'.format(' or '.join(answer))
         self.book_list[Type.answer] = [book]
         return
 
@@ -77,11 +77,11 @@ class TaskPackage():
         question = []
         answer = []
         for item in book_list:
-            question.append(item.property.sql.question)
-            answer.append(item.property.sql.answer)
+            question.append(item.sql.question)
+            answer.append(item.sql.answer)
         book.kind = Type.question
-        book.property.sql.question = 'select * from Question where ({})'.format(' or '.join(question))
-        book.property.sql.answer = 'select * from Answer where ({})'.format(' or '.join(answer))
+        book.sql.question = 'select * from Question where ({})'.format(' or '.join(question))
+        book.sql.answer = 'select * from Answer where ({})'.format(' or '.join(answer))
         self.book_list[Type.question] = [book]
         return
 

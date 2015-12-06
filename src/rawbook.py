@@ -90,10 +90,10 @@ class CreateHtmlPage(object):
         content = template.format(**info)
         page = Page()
         page.content = self.fix_image(content)
-        page.filename = str(book.property.epub.prefix) + 'info.html'
-        page.title = book.property.epub.title
-        if book.property.epub.split_index:
-            page.title += "_({})".format(book.property.epub.split_index)
+        page.filename = str(book.epub.prefix) + 'info.html'
+        page.title = book.epub.title
+        if book.epub.split_index:
+            page.title += "_({})".format(book.epub.split_index)
         return page
 
 
@@ -127,25 +127,25 @@ class RawBook(object):
 
     def split(self):
         def split(book, surplus, index=1):
-            if book.property.epub.answer_count <= surplus:
-                book.property.epub.split_index = index
+            if book.epub.answer_count <= surplus:
+                book.epub.split_index = index
                 return [book]
             article_list = []
             while surplus > 0:
                 article = book.article_list.pop()
                 article_list.append(article)
                 surplus -= article['answer_count']
-                book.property.epub.answer_count -= article['answer_count']
+                book.epub.answer_count -= article['answer_count']
             new_book = copy.deepcopy(book)
             new_book.set_article_list(article_list)
-            new_book.property.epub.split_index = index
+            new_book.epub.split_index = index
             return [new_book] + split(book, Config.max_answer, index + 1)
 
         counter = 0
         book_list = []
         while len(self.book_list):
             book = self.book_list.pop()
-            if (counter + book.property.epub.answer_count) < Config.max_answer:
+            if (counter + book.epub.answer_count) < Config.max_answer:
                 book_list.append(book)
             else:
                 split_list = split(book, Config.max_answer - counter)
@@ -173,10 +173,10 @@ class RawBook(object):
         return book_package
 
     def create_single_book(self, book, index, creator):
-        if book.property.epub.split_index:
-            book.property.epub.title += "_({})".format(book.property.epub.split_index)
+        if book.epub.split_index:
+            book.epub.title += "_({})".format(book.epub.split_index)
 
-        book.property.epub.prefix = index
+        book.epub.prefix = index
 
         page = creator.create_info_page(book)
         book.page_list.append(page)

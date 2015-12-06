@@ -80,9 +80,9 @@ class ReadListParser():
 
             task.spider.href = 'http://www.zhihu.com/question/{}'.format(question_id)
             task.book.kind = 'question'
-            task.book.property.sql.info = ''
-            task.book.property.sql.question = 'question_id = "{}"'.format(question_id)
-            task.book.property.sql.answer = 'question_id = "{}"'.format(question_id)
+            task.book.sql.info = ''
+            task.book.sql.question = 'question_id = "{}"'.format(question_id)
+            task.book.sql.answer = 'question_id = "{}"'.format(question_id)
             return task
 
         def parse_answer(command):
@@ -94,9 +94,9 @@ class ReadListParser():
             task.spider.href = 'http://www.zhihu.com/question/{}/answer/{}'.format(question_id, answer_id)
 
             task.book.kind = 'answer'
-            task.book.property.sql.info = ''
-            task.book.property.sql.question = 'question_id = "{}"'.format(question_id)
-            task.book.property.sql.answer = 'question_id = "{}" and answer_id = "{}"'.format(question_id, answer_id)
+            task.book.sql.info = ''
+            task.book.sql.question = 'question_id = "{}"'.format(question_id)
+            task.book.sql.answer = 'question_id = "{}" and answer_id = "{}"'.format(question_id, answer_id)
             return task
 
         def parse_author(command):
@@ -106,10 +106,10 @@ class ReadListParser():
             task.kind = 'author'
             task.spider.href = 'http://www.zhihu.com/people/{}'.format(author_id)
             task.book.kind = 'author'
-            task.book.property.sql.info = 'select * from AuthorInfo where author_id = "{}"'.format(author_id)
-            task.book.property.sql.question = 'select * from Question where question_id in (select question_id from Answer where author_id = "{}")'.format(
+            task.book.sql.info = 'select * from AuthorInfo where author_id = "{}"'.format(author_id)
+            task.book.sql.question = 'select * from Question where question_id in (select question_id from Answer where author_id = "{}")'.format(
                 author_id)
-            task.book.property.sql.answer = 'select * from Answer where author_id = "{}"'.format(author_id)
+            task.book.sql.answer = 'select * from Answer where author_id = "{}"'.format(author_id)
             return task
 
         def parse_collection(command):
@@ -119,11 +119,11 @@ class ReadListParser():
             task.kind = 'collection'
             task.spider.href = 'http://www.zhihu.com/collection/{}'.format(collection_id)
             task.book.kind = 'collection'
-            task.book.property.sql.info = 'select * from CollectionInfo where collection_id = "{}"'.format(
+            task.book.sql.info = 'select * from CollectionInfo where collection_id = "{}"'.format(
                 collection_id)
-            task.book.property.sql.question = 'select * from Question where question_id in (select question_id from Answer where href in (select href from CollectionIndex where collection_id = "{}"))'.format(
+            task.book.sql.question = 'select * from Question where question_id in (select question_id from Answer where href in (select href from CollectionIndex where collection_id = "{}"))'.format(
                 collection_id)
-            task.book.property.sql.answer = 'select * from Answer where href in (select href from CollectionIndex where collection_id = "{}")'.format(
+            task.book.sql.answer = 'select * from Answer where href in (select href from CollectionIndex where collection_id = "{}")'.format(
                 collection_id)
             return task
 
@@ -134,10 +134,10 @@ class ReadListParser():
             task.kind = 'topic'
             task.spider.href = 'http://www.zhihu.com/topic/{}'.format(topic_id)
             task.book.kind = 'topic'
-            task.book.property.sql.info = 'select * from TopicInfo where topic_id = "{}"'.format(topic_id)
-            task.book.property.sql.question = 'select * from Question where question_id in (select question_id from Answer where href in (select href from TopicIndex where topic_id = "{}"))'.format(
+            task.book.sql.info = 'select * from TopicInfo where topic_id = "{}"'.format(topic_id)
+            task.book.sql.question = 'select * from Question where question_id in (select question_id from Answer where href in (select href from TopicIndex where topic_id = "{}"))'.format(
                 topic_id)
-            task.book.property.sql.answer = 'select * from Answer where href in (select href from TopicIndex where topic_id = "{}")'.format(
+            task.book.sql.answer = 'select * from Answer where href in (select href from TopicIndex where topic_id = "{}")'.format(
                 topic_id)
             return task
 
@@ -149,9 +149,9 @@ class ReadListParser():
             task.kind = 'article'
             task.spider.href = 'http://zhuanlan.zhihu.com/{}/{}'.format(column_id, article_id)
             task.book.kind = 'article'
-            task.book.property.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
-            task.book.property.sql.question = ''
-            task.book.property.sql.answer = ' column_id = {} and article_id = {} '.format(column_id, article_id)
+            task.book.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
+            task.book.sql.question = ''
+            task.book.sql.answer = ' column_id = {} and article_id = {} '.format(column_id, article_id)
             return task
 
         def parse_column(command):
@@ -161,9 +161,9 @@ class ReadListParser():
             task.kind = 'article'
             task.spider.href = 'http://zhuanlan.zhihu.com/{}'.format(column_id)
             task.book.kind = 'column'
-            task.book.property.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
-            task.book.property.sql.question = ''
-            task.book.property.sql.answer = 'select * from Article where column_id = "{}" '.format(column_id)
+            task.book.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
+            task.book.sql.question = ''
+            task.book.sql.answer = 'select * from Article where column_id = "{}" '.format(column_id)
             return task
 
         def parse_error(command):
