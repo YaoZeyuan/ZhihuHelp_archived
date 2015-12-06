@@ -605,7 +605,8 @@ class UnicodeDammit:
 
     MULTIBYTE_MARKERS_AND_SIZES = [(0xc2, 0xdf, 2),  # 2-byte characters start with a byte C2-DF
         (0xe0, 0xef, 3),  # 3-byte characters start with E0-EF
-        (0xf0, 0xf4, 4),  # 4-byte characters start with F0-F4]
+        (0xf0, 0xf4, 4),  # 4-byte characters start with F0-F4
+    ]
 
     FIRST_MULTIBYTE_MARKER = MULTIBYTE_MARKERS_AND_SIZES[0][0]
     LAST_MULTIBYTE_MARKER = MULTIBYTE_MARKERS_AND_SIZES[-1][1]
