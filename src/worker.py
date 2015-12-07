@@ -107,7 +107,7 @@ class PageWorker(object):
         return
 
     def worker(self, target_url):
-        Debug.logger.debug(u'开始抓取{}的内容'.format(target_url))
+        Debug.logger.info(u'开始抓取{}的内容'.format(target_url))
         content = Http.get_content(target_url)
         if not content:
             return
