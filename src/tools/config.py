@@ -27,7 +27,7 @@ class Config(object):
     question_order_by = 'agree_count'  # 问题排序原则  agree_count|char_count|answer_count
     question_order_by_desc = True  # 问题排序顺序->是否为desc
     article_order_by = 'update_date'  # 文章排序原则  update_date|update_date|char_count
-    article_order_by_desc = True  # 文章排序顺序->是否为desc
+    article_order_by_desc = False  # 文章排序顺序->是否为desc
     show_private_answer = True
     timeout_download_picture = 10
     timeout_download_html = 5

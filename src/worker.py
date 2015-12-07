@@ -309,27 +309,27 @@ class ColumnWorker(PageWorker):
         return
 
     def parse_content(self, content):
-        info = json.loads(content)
+        article_list = json.loads(content)
+        for info in article_list:
+            article = {}
+            article['author_id'] = info['author']['slug']
+            article['author_hash'] = info['author']['hash']
+            article['author_sign'] = info['author']['bio']
+            article['author_name'] = info['author']['name']
+            article['author_logo'] = info['author']['avatar']['template'].replace('{id}', info['author']['avatar'][
+                'id']).replace('_{size}', '')
 
-        article = {}
-        article['author_id'] = info['author']['slug']
-        article['author_hash'] = info['author']['hash']
-        article['author_sign'] = info['author']['bio']
-        article['author_name'] = info['author']['name']
-        article['author_logo'] = info['author']['avatar']['template'].replace('{id}', info['author']['avatar'][
-            'id']).replace('_{size}', '')
-
-        article['column_id'] = info['column']['slug']
-        article['name'] = info['column']['name']
-        article['article_id'] = info['slug']
-        article['href'] = u'http://zhuanlan.zhihu.com/{column_id}/{article_id}'.format(**article)
-        article['title'] = info['title']
-        article['title_image'] = info['titleImage']
-        article['content'] = info['content']
-        article['comment'] = info['commentsCount']
-        article['agree'] = info['likesCount']
-        article['publish_date'] = info['publishedTime'][:10]
-        self.answer_list.append(article)
+            article['column_id'] = info['column']['slug']
+            article['name'] = info['column']['name']
+            article['article_id'] = info['slug']
+            article['href'] = u'http://zhuanlan.zhihu.com/{column_id}/{article_id}'.format(**article)
+            article['title'] = info['title']
+            article['title_image'] = info['titleImage']
+            article['content'] = info['content']
+            article['comment'] = info['commentsCount']
+            article['agree'] = info['likesCount']
+            article['publish_date'] = info['publishedTime'][:10]
+            self.answer_list.append(article)
         return
 
     def create_save_config(self):

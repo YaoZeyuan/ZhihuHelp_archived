@@ -19,7 +19,7 @@ p
 
 
 /* author info */
-div.author-name a,div.author-name p
+div.author-name a,div.author-name p,div.author-info p,div,author-info a
 {
     display: inline-block;    
     margin:0;

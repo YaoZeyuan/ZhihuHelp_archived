@@ -151,14 +151,14 @@ class ReadListParser():
             task.book.kind = 'article'
             task.book.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
             task.book.sql.question = ''
-            task.book.sql.answer = ' column_id = {} and article_id = {} '.format(column_id, article_id)
+            task.book.sql.answer = ' column_id = "{}" and article_id = "{}" '.format(column_id, article_id)
             return task
 
         def parse_column(command):
             result = Match.column(command)
             column_id = result.group('column_id')
             task = SingleTask()
-            task.kind = 'article'
+            task.kind = 'column'
             task.spider.href = 'http://zhuanlan.zhihu.com/{}'.format(column_id)
             task.book.kind = 'column'
             task.book.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
