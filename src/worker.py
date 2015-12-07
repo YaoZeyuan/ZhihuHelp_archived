@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import json  # 用于JsonWorker
-from multiprocessing.dummy import Pool as ThreadPool #多线程并行库
+from multiprocessing.dummy import Pool as ThreadPool  # 多线程并行库
+
 from src.parser.author import AuthorParser
 from src.parser.collection import CollectionParser
 from src.parser.question import QuestionParser
@@ -10,12 +11,13 @@ from src.tools.config import Config
 from src.tools.db import DB
 from src.tools.debug import Debug
 from src.tools.http import Http
+from src.tools.match import Match
 
 
 class PageWorker(object):
     def __init__(self, task_list):
         self.task_set = set(task_list)
-        self.work_set = set() # 待抓取网址池
+        self.work_set = set()  # 待抓取网址池
         self.answer_list = []
         self.question_list = []
         self.thread_pool = ThreadPool(Config.max_thread)
@@ -24,7 +26,7 @@ class PageWorker(object):
         self.extra_index_list = []
         self.info_url_set = self.task_set.copy()
 
-        self.add_property() # 添加扩展属性
+        self.add_property()  # 添加扩展属性
         Http.set_cookie()
 
     def add_property(self):
@@ -57,10 +59,7 @@ class PageWorker(object):
         return
 
     def create_save_config(self):
-        config = {
-            'Answer' : self.answer_list,
-            'Question': self.question_list,
-        }
+        config = {'Answer': self.answer_list, 'Question': self.question_list, }
         return config
 
     def clear_index(self):
@@ -103,10 +102,7 @@ class PageWorker(object):
 
     def start_create_work_list(self):
         self.clear_work_set()
-        argv = {
-            'func':self.create_work_set,
-            'iterable':self.task_set,
-        }
+        argv = {'func': self.create_work_set, 'iterable': self.task_set, }
         self.control_center(self.thread_pool.map, argv, self.task_set)
         return
 
@@ -119,17 +115,15 @@ class PageWorker(object):
         self.parse_content(content)
         return
 
-    def parse_content(self,content):
+    def parse_content(self, content):
         parser = QuestionParser(content)
         self.question_list += parser.get_question_info_list()
         self.answer_list += parser.get_answer_list()
         return
 
     def start_worker(self):
-        argv = {
-            'func':self.worker, #所有待存入数据库中的数据都应当是list
-            'iterable':self.work_set,
-        }
+        argv = {'func': self.worker,  # 所有待存入数据库中的数据都应当是list
+            'iterable': self.work_set, }
         self.control_center(self.thread_pool.map, argv, self.work_set)
         return
 
@@ -137,23 +131,21 @@ class PageWorker(object):
         return
 
     def start_catch_info(self):
-        argv = {
-            'func':self.catch_info,
-            'iterable':self.info_url_set,
-        }
+        argv = {'func': self.catch_info, 'iterable': self.info_url_set, }
         self.control_center(self.thread_pool.map, argv, self.info_url_set)
         return
 
 
 class QuestionWorker(PageWorker):
-    def parse_content(self,content):
+    def parse_content(self, content):
         parser = QuestionParser(content)
         self.question_list += parser.get_question_info_list()
         self.answer_list += parser.get_answer_list()
         return
 
+
 class AuthorWorker(PageWorker):
-    def parse_content(self,content):
+    def parse_content(self, content):
         parser = AuthorParser(content)
         self.question_list += parser.get_question_info_list()
         self.answer_list += parser.get_answer_list()
@@ -180,11 +172,7 @@ class AuthorWorker(PageWorker):
         return
 
     def create_save_config(self):
-        config = {
-            'Answer' : self.answer_list,
-            'Question': self.question_list,
-            'AuthorInfo':self.info_list,
-        }
+        config = {'Answer': self.answer_list, 'Question': self.question_list, 'AuthorInfo': self.info_list, }
         return config
 
 
@@ -213,7 +201,7 @@ class CollectionWorker(PageWorker):
         self.info_list.append(parser.get_extra_info())
         return
 
-    def parse_content(self,content):
+    def parse_content(self, content):
         parser = CollectionParser(content)
         self.question_list += parser.get_question_info_list()
         self.answer_list += parser.get_answer_list()
@@ -225,21 +213,15 @@ class CollectionWorker(PageWorker):
 
     def add_collection_index(self, collection_id, answer_list):
         for answer in answer_list:
-            data = {
-                'href' : answer['href'],
-                'collection_id':collection_id,
-            }
+            data = {'href': answer['href'], 'collection_id': collection_id, }
             self.collection_index_list.append(data)
         return
 
     def create_save_config(self):
-        config = {
-            'Answer' : self.answer_list,
-            'Question': self.question_list,
-            'CollectionInfo':self.info_list,
-            'CollectionIndex':self.collection_index_list,
-        }
+        config = {'Answer': self.answer_list, 'Question': self.question_list, 'CollectionInfo': self.info_list,
+            'CollectionIndex': self.collection_index_list, }
         return config
+
 
 class TopicWorker(PageWorker):
     def add_property(self):
@@ -266,7 +248,7 @@ class TopicWorker(PageWorker):
         self.info_list.append(parser.get_extra_info())
         return
 
-    def parse_content(self,content):
+    def parse_content(self, content):
         parser = TopicParser(content)
         self.question_list += parser.get_question_info_list()
         self.answer_list += parser.get_answer_list()
@@ -278,20 +260,13 @@ class TopicWorker(PageWorker):
 
     def add_topic_index(self, topic_id, answer_list):
         for answer in answer_list:
-            data = {
-                'href' : answer['href'],
-                'topic_id':topic_id,
-            }
+            data = {'href': answer['href'], 'topic_id': topic_id, }
             self.topic_index_list.append(data)
         return
 
     def create_save_config(self):
-        config = {
-            'Answer' : self.answer_list,
-            'Question': self.question_list,
-            'TopicInfo':self.info_list,
-            'TopicIndex':self.topic_index_list,
-        }
+        config = {'Answer': self.answer_list, 'Question': self.question_list, 'TopicInfo': self.info_list,
+            'TopicIndex': self.topic_index_list, }
         return config
 
     def clear_index(self):
@@ -301,16 +276,69 @@ class TopicWorker(PageWorker):
         DB.commit()
         return
 
+
+class ColumnWorker(PageWorker):
+    def catch_info(self, target_url):
+        return
+
+    def create_work_set(self, target_url):
+        result = Match.column(target_url)
+        column_id = result.group('column_id')
+        content = Http.get_content('http://zhuanlan.zhihu.com/api/columns/' + column_id)
+        if not content:
+            return
+        raw_info = json.loads(content)
+        info = {}
+        info['creator_id'] = raw_info['creator']['slug']
+        info['creator_hash'] = raw_info['creator']['hash']
+        info['creator_sign'] = raw_info['creator']['bio']
+        info['creator_name'] = raw_info['creator']['name']
+        info['creator_logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['creator']['avatar']['id']).replace('_{size}', '')
+
+        info['column_id'] = raw_info['slug']
+        info['name'] = raw_info['name']
+        info['logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['avatar']['id']).replace('_{size}', '')
+        info['article'] = raw_info['postsCount']
+        info['follower'] = raw_info['followersCount']
+        info['description'] = raw_info['description']
+        self.info_list.append(info)
+        self.task_set.discard(target_url)
+        detect_url = 'http://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(column_id)
+        for i in range(info['article'] / 10 + 1):
+            self.work_set.add(detect_url + str(i * 10))
+        return
+
+    def parse_content(self, content):
+        info = json.loads(content)
+
+        article = {}
+        article['author_id'] = info['author']['slug']
+        article['author_hash'] = info['author']['hash']
+        article['author_sign'] = info['author']['bio']
+        article['author_name'] = info['author']['name']
+        article['author_logo'] = info['author']['avatar']['template'].replace('{id}', info['author']['avatar'][
+            'id']).replace('_{size}', '')
+
+        article['column_id'] = info['column']['slug']
+        article['name'] = info['column']['name']
+        article['article_id'] = info['slug']
+        article['href'] = u'http://zhuanlan.zhihu.com/{column_id}/{article_id}'.format(**article)
+        article['title'] = info['title']
+        article['title_image'] = info['titleImage']
+        article['content'] = info['content']
+        article['comment'] = info['commentsCount']
+        article['agree'] = info['likesCount']
+        article['publish_date'] = info['publishedTime'][:10]
+        self.answer_list.append(article)
+        return
+
+    def create_save_config(self):
+        config = {'ColumnInfo': self.info_list, 'Article': self.answer_list }
+        return config
+
 def worker_factory(task):
-    type_list ={
-        'answer': QuestionWorker,
-        'question':QuestionWorker,
-        'author':AuthorWorker,
-        'collection':CollectionWorker,
-        'topic':TopicWorker,
-        'column':TopicWorker,
-        'article':TopicWorker,
-    }
+    type_list = {'answer': QuestionWorker, 'question': QuestionWorker, 'author': AuthorWorker,
+        'collection': CollectionWorker, 'topic': TopicWorker, 'column': TopicWorker, 'article': TopicWorker, }
     for key in task:
         worker = type_list[key](task[key])
         worker.start()

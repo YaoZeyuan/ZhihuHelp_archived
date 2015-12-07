@@ -1,5 +1,6 @@
 p
 {
+    font-family: "DK-SONGTI";
     color:#423C42;    
 }
 
@@ -33,9 +34,9 @@ div.author-name{
 }
 
 div.author-logo{
+    float:right;
     display: inline-block;
     vertical-align: middle;
-    float:right;
 }
 
 /* answer info */
@@ -69,7 +70,7 @@ div.question
 }
 
 div.question h1{
-    font-family: 微软雅黑,DK-SONGTI;
+    font-family: "DK-SONGTI";
     color: #FFFFFF;
     background-color: #3982C6;
     padding-left: 200px;
