@@ -338,7 +338,7 @@ class ColumnWorker(PageWorker):
 
 def worker_factory(task):
     type_list = {'answer': QuestionWorker, 'question': QuestionWorker, 'author': AuthorWorker,
-        'collection': CollectionWorker, 'topic': TopicWorker, 'column': TopicWorker, 'article': TopicWorker, }
+        'collection': CollectionWorker, 'topic': TopicWorker, 'column': ColumnWorker, 'article': ColumnWorker, }
     for key in task:
         worker = type_list[key](task[key])
         worker.start()
