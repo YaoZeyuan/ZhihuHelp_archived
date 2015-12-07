@@ -28,10 +28,9 @@ class ZhihuHelp(object):
         if Config.remember_account:
             print u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量)'
             print u'点按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
-            if not Config.debug:
-                if raw_input():
-                    login.start()
-                    Config.picture_quality = guide.set_picture_quality()
+            if raw_input():
+                login.start()
+                Config.picture_quality = guide.set_picture_quality()
             else:
                 Http.set_cookie()
         else:
