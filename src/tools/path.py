@@ -32,7 +32,8 @@ class Path(object):
         try:
             os.mkdir(path)
         except OSError:
-            print u'指定目录已存在'
+            #Debug.logger.debug(u'指定目录已存在')
+            pass
         return
 
     @staticmethod
@@ -40,7 +41,7 @@ class Path(object):
         try:
             os.chdir(path)
         except OSError:
-            print u'指定目录不存在，自动创建之'
+            #Debug.logger.debug(u'指定目录不存在，自动创建之')
             Path.mkdir(path)
             os.chdir(path)
         return
