@@ -3,6 +3,7 @@ import copy
 from src.container.book import Page, EpubBook
 from src.container.image import ImageContainer
 from src.tools.config import Config
+from src.tools.match import Match
 from src.tools.path import Path
 from src.tools.type import Type
 
@@ -19,6 +20,7 @@ class CreateHtmlPage(object):
         return
 
     def fix_image(self, content):
+        content = Match.fix_html(content)
         for img in re.findall(r'<img[^>]*', content):
             src = re.search(r'(?<=src=").*?(?=")', img)
             if not src:

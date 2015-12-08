@@ -42,3 +42,7 @@ class Match(object):
     def html_body(content=''):
         content = content.replace('\r','').replace('\n', '')
         return re.search('(?<=<body>).*(?=</body>)', content).group(0)
+
+    @staticmethod
+    def fix_html(content=''):
+        return content.replace('</br>', '').replace('</img>', '')

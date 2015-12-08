@@ -82,6 +82,7 @@ div.article-info
 
 div.question
 {
+    width: 100%;
     float:right;
     background-color: #428ECE;
 }
