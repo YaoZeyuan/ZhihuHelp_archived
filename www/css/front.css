@@ -101,14 +101,14 @@ div.author-name
 
 div.author-name a
 {
-    font-weight: initial;
+    font-weight: 600;
     font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体,"DK-HEITI"; 
-    color:#000;
+    color:#3d3e45;
 }
 
-div.author-name progress
+div.author-name p
 {
-    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体,"DK-KAITI";
+    font-family: "楷体","DK-KAITI";
     font-weight: normal;
 }
 
