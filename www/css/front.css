@@ -1,3 +1,30 @@
+/* 多看定制样式 */
+div.content，p {
+    font-family: "DK-SONGTI";
+    color: #000;
+    font-size: 1rem;
+}
+div.author-name a
+{
+    float: left;
+    font-family: "DK-SONGTI";
+}
+
+div.author-name p{
+    float: left;
+    font-family: "DK-KAITI";
+}
+
+div.author-logo {
+    float: right;
+}
+div.extra-info p {
+    float: left;
+}
+div.extra-info p.publish-date {
+    float: right;
+}
+
 /* 多看阅读不支持浮动等css样式，只能分两份写了 */
 @media screen {
     p {

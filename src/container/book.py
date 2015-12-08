@@ -65,13 +65,13 @@ class Book(object):
     def set_info(self, info):
         self.info.update(info)
         if self.kind == Type.question:
-            self.epub.title = '知乎问题集锦({})'.format(ExtraTools.get_time())
+            self.epub.title = '知乎问题集锦({})'.format(ExtraTools.get_friendly_time())
             self.epub.id = ExtraTools.get_time()
         elif self.kind == Type.answer:
-            self.epub.title = '知乎回答集锦({})'.format(ExtraTools.get_time())
+            self.epub.title = '知乎回答集锦({})'.format(ExtraTools.get_friendly_time())
             self.epub.id = ExtraTools.get_time()
         elif self.kind == Type.article:
-            self.epub.title = '知乎专栏文章集锦({})'.format(ExtraTools.get_time())
+            self.epub.title = '知乎专栏文章集锦({})'.format(ExtraTools.get_friendly_time())
             self.epub.id = ExtraTools.get_time()
         if self.kind in [Type.answer, Type.question, Type.article]:
             self.info['title'] = self.epub.title
