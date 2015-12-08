@@ -4,17 +4,21 @@ import shutil
 
 
 class Path(object):
-    base_path = os.path.abspath('./')  # 初始地址,不含分隔符
-    config_path = ''
-    db_path = ''
-    sql_path = ''
+    try:
+        base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
+    except:
+        base_path = os.path.abspath('.') #对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
 
-    www_css = ''
-    www_image = ''
+    config_path = base_path + u'/config.json'
+    db_path = base_path + u'/zhihuDB_173.db'
+    sql_path = base_path + u'/db/zhihuhelp.sql'
 
-    html_pool_path = ''
-    image_pool_path = ''
-    result_path = ''
+    www_css = base_path + u'/www/css'
+    www_image = base_path + u'/www/image'
+
+    html_pool_path = base_path + u'/知乎电子书临时资源库/知乎网页池'
+    image_pool_path = base_path + u'/知乎电子书临时资源库/知乎图片池'
+    result_path = base_path + u'./知乎助手生成的电子书'
 
 
     @staticmethod
@@ -53,7 +57,11 @@ class Path(object):
 
     @staticmethod
     def init_base_path():
-        Path.base_path = os.path.abspath('.')
+        try:
+            base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
+        except:
+            base_path = os.path.abspath('.') #对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+
         Path.config_path = Path.base_path + u'/config.json'
         Path.db_path = Path.base_path + u'/zhihuDB_173.db'
         Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
