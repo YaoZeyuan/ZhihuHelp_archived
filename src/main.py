@@ -17,9 +17,9 @@ class ZhihuHelp(object):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
-        init.init_database()
         Path.init_base_path()
         Path.init_work_directory()
+        init.init_database()
         Config._load()
         return
 
@@ -41,6 +41,20 @@ class ZhihuHelp(object):
         Config._save()
         return
 
+    def start(self):
+        self.check_update()
+        self.init_config()
+
+        Debug.logger.info(u"开始读取ReadList.txt设置信息")
+        with open('./ReadList.txt', 'r') as read_list:
+            counter = 1
+            for line in read_list:
+                line = line.strip()
+                self.create_book(line, counter)  # 一行内容代表一本电子书
+                counter += 1
+        return
+
+
     def create_book(self, command, counter):
         Path.reset_path()
 
@@ -58,18 +72,7 @@ class ZhihuHelp(object):
 
         return
 
-    def start(self):
-        self.check_update()
-        self.init_config()
 
-        Debug.logger.info(u"开始读取ReadList.txt设置信息")
-        with open('./ReadList.txt', 'r') as read_list:
-            counter = 1
-            for line in read_list:
-                line = line.strip()
-                self.create_book(line, counter)  # 一行内容代表一本电子书
-                counter += 1
-        return
 
     def check_update(self):  # 强制更新
         u"""

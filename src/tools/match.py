@@ -37,3 +37,8 @@ class Match(object):
     @staticmethod
     def column(content=''):
         return re.search(r'(?<=zhuanlan\.zhihu\.com/)(?P<column_id>[^/\n\r]*)', content)
+
+    @staticmethod
+    def html_body(content=''):
+        content = content.replace('\r','').replace('\n', '')
+        return re.search('(?<=<body>).*(?=</body>)', content).group(0)

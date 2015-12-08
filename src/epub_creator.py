@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+import os
+import shutil
 
 from rawbook import RawBook
 from epub import Book
 from src.tools.debug import Debug
 from src.tools.extra_tools import ExtraTools
+from src.tools.match import Match
 from src.tools.path import Path
 
 
@@ -17,6 +20,29 @@ class EpubCreator(object):
         self.book = epub_book
         self.book_list = epub_book.book_list
         self.image_container = epub_book.image_container
+        return
+
+    def create_single_html_book(self):
+        title = '_'.join([book.epub.title for book in self.book_list])
+        title = title.strip()[:128] # 避开window文件名长度限制
+        title = ExtraTools.fix_filename(title) # 移除特殊字符
+        Path.reset_path()
+        Path.chdir(Path.result_path)
+        Path.rmdir(u'./' + title)
+        Path.mkdir(u'./' + title)
+        Path.chdir(u'./' + title)
+        page = []
+        for book in self.book_list:
+            page += book.page_list
+        content = ' \r\n<hr /> \r\n '.join([Match.html_body(x.content) for x in page]).replace('../images/', './images/')
+        with open(Path.base_path + '/src/template/content/single_html.html') as html:
+            template = html.read().format(title=title, content=content)
+        with open(title + u'.html', 'w') as html:
+            html.write(template)
+        shutil.copytree(Path.html_pool_path + u'/../{}/OEBPS/images'.format(title), './images')
+        shutil.copy(Path.www_css + '/front.css' , './front.css')
+        shutil.copy(Path.www_css + '/markdown.css' , './markdown.css')
+        Path.reset_path()
         return
 
     def create(self):
@@ -53,6 +79,7 @@ class EpubCreator(object):
         epub.addCss(Path.base_path + u'/www/css/markdown.css')
         epub.addCss(Path.base_path + u'/www/css/front.css')
         epub.buildingEpub()
+        Path.reset_path()
         return
 
 
@@ -66,4 +93,5 @@ def create_epub(task_package):
     for book in epub_book_list:
         epub = EpubCreator(book)
         epub.create()
+        epub.create_single_html_book()
     return
