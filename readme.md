@@ -74,6 +74,98 @@
     3.  助手目前还在快速迭代期，数据库、代码结构均不固定，所以暂时不能利用数据库起到永久保存知乎答案的功能，各位见谅则个:）
     4.  制作知乎2013年度回答300问的方法请见[www.zhihu.com/question/23845802/answer/26191403](http://www.zhihu.com/question/23845802/answer/26191403)
 
+4.  配置项说明：
+    0.  知乎助手的配置内容位于运行目录下的config.json中，各项配置功能如下
+    1.  article_order_by
+        *   文章排序指标
+        *   可选值
+            *   update_date
+                *   更新日期
+            *   agree_count
+                *   赞同数
+            *   char_count
+                *   字数
+    2.  article_order_by_desc
+        *   是否按照降序对排序指标进行排列
+        *   可选值
+            *   true
+                *   对于设定指标按降序排列（例如，按赞同数降序排列）
+            *   false
+                *   对于设定指标按升序排列
+    3.  answer_order_by
+        *   答案排序指标，为对问题内答案进行排序的依据
+        *   可选值
+            *   同article_order_by
+    4.  answer_order_by_desc
+        *   是否按照降序对排序指标进行排列
+        *   同article_order_by_desc
+    5.  question_order_by
+        *   问题排序指标，为对电子书内问题进行排序的依据
+        *   可选值
+            *   answer_count
+                *   问题内的答案数
+            *   char_count
+                *   问题内答案总字数
+            *   agree_count
+                *   问题内答案总赞同数
+    6.  question_order_by_desc
+        *   是否按照降序对排序指标进行排列
+        *   同article_order_by_desc 
+    7.  account
+        *   用户名，只能是知乎登陆邮箱
+    8.  password
+        *   密码
+    9.  max_answer
+        *   每本电子书中最大可容纳的答案数，超过该值电子书将自动分割为多本
+        *   备注
+            *   一篇文章视为一个回答
+    10. max_question
+        *   每本电子书中最大可容纳的问题，超过该值电子书将自动分割为多本
+        *   备注
+            *   本设置项未启用
+    11. max_article
+        *   每本电子书中最大可容纳的文章数，超过该值电子书将自动分割为多本
+        *   备注
+            *   本设置项未启用     
+    12. picture_quality
+        *   图片质量
+        *   可选项
+            *   0
+                *   无图模式
+            *   1   
+                *   标清模式，下载知乎网页中所展示的图片
+            *   2
+                *   原图模式，下载原图
+    13. show_private_answer
+        *   是否抓取『禁止转载』的答案
+        *   可选项
+            *   true
+            *   false
+    14. update_time
+        *   更新日期
+        *   修改本项会导致无法自动检测更新
+        *   如果想跳过检测的话将本项设置为与[助手最新版本号](http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt)一致即可
+    15. max_thread
+        *   最大线程数
+        *   不建议修改，线程开的过大在抓取时会引发429错误
+    16. max_try
+        *   网页打开失败时的最大尝试次数
+        *   默认为反复打开5次
+    17. debug
+        *   debug模式开关
+        *   可选值
+            *   true
+            *   false
+    18. timeout_download_html
+        *   下载网页超时时间
+        *   默认为5s
+    19. timeout_download_picture
+        *   下载图片超时时间
+        *   默认为10s
+    20. remember_account
+        *   是否记住密码
+        *   如为否，所有设置项都会被重置为默认值
+
 ##依赖
 
 仅要求python2.7环境，不依赖任何第三方组件
@@ -83,7 +175,7 @@
 - [x] 支持下载专栏文章；
 - [x] 支持下载单篇专栏文章；
 - [ ] 提供GUI界面；
-- [ ] 支持分卷输出电子书；
+- [x] 支持分卷输出电子书；
 - [ ] 撰写接口文档；
 - [ ] 支持自定义编辑电子书。
 - [ ] 电子书增加封面，封面图片
@@ -98,7 +190,7 @@
 - [ ] 收集更多的用户/答案信息
 - [ ] 按要求直接提取数据库数据
 - [ ] 改进电子书样式
-- [ ] 增加输出为单张网页的功能
+- [x] 增加输出为单张网页的功能
 - [ ] 在捕获收藏夹信息时将创建者头像一并捕获进来
 
 ##License
