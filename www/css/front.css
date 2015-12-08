@@ -61,6 +61,11 @@ div.article-info p:last-child
     float:right;
     margin: 0;
 }
+
+div.article-info
+{
+    margin-top:1rem;
+}
 /* answer info */
 
 
