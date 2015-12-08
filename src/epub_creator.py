@@ -63,7 +63,7 @@ class EpubCreator(object):
             page = book.page_list[0]
             with open(html_tmp_path + page.filename, 'w') as html:
                 html.write(page.content)
-            epub.createChapter(html_tmp_path + page.filename, ExtraTools.get_time(), page.title)
+            #epub.createChapter(html_tmp_path + page.filename, ExtraTools.get_time(), page.title)
             epub.addInfoPage(html_tmp_path + page.filename, page.title)
             for page in book.page_list[1:]:
                 with open(html_tmp_path + page.filename, 'w') as html:
