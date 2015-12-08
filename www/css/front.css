@@ -1,7 +1,15 @@
 p
 {
-    font-family: "DK-SONGTI";
+    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, "DK-SONGTI";
+    color:#000;    
+    font-size: 1rem; 
+}
+
+div.content
+{
+    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, "DK-SONGTI";
     color:#423C42;    
+    font-size: 1rem; 
 }
 
 
@@ -37,6 +45,7 @@ div.author-logo{
     float:right;
     display: inline-block;
     vertical-align: middle;
+    margin-top: 1rem;
 }
 
 /* answer info */
@@ -56,7 +65,7 @@ div.article-info p:last-child
 .answer-content:after{
     content:'';
     color:gray;
-    font-size:1.25em;
+    font-size:1.25rem;
     text-overflow: hidden;
     background-repeat: ' ';
     display: block;
@@ -65,7 +74,7 @@ div.article-info p:last-child
 
 div.question
 {
-    height: 400px;
+    float:right;
     background-color: #428ECE;
 }
 
@@ -73,17 +82,29 @@ div.question h1{
     font-family: "DK-SONGTI";
     color: #FFFFFF;
     background-color: #3982C6;
-    padding-left: 200px;
     vertical-align: middle;
-    white-space: nowrap;
-    margin-top: 20px;
-    text-align: right;
-    width: 60%;
-    position: relative;
-    top: 100px;
-    padding-top: 50px;
-    left: 183px;
-    padding-left: 100px;
-    padding-bottom: 50px;
-    padding-right: 100px;
+    text-align: left;
+    padding: 1rem;
+    width:70%;
+    float:right;
+    margin: 3rem 0;
+}
+
+div.author-name
+{
+    margin:1rem 0;
+    font-size: 1rem; 
+}
+
+div.author-name a
+{
+    font-weight: initial;
+    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体,"DK-HEITI"; 
+    color:#000;
+}
+
+div.author-name progress
+{
+    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体,"DK-KAITI";
+    font-weight: normal;
 }
