@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
 import hashlib
 import os.path
-from multiprocessing.dummy import Pool as ThreadPool  # 多线程并行库
 
 from src.tools.config import Config
+from src.tools.controler import Control
 from src.tools.debug import Debug
 from src.tools.extra_tools import ExtraTools
 from src.tools.http import Http
-from src.worker import PageWorker
-
 
 class ImageContainer(object):
     def __init__(self, save_path=''):
         self.save_path = save_path
         self.container = {}
         self.md5 = hashlib.md5()
-        self.thread_pool = ThreadPool(Config.max_thread)
         return
 
     def set_save_path(self, save_path):
@@ -57,7 +54,7 @@ class ImageContainer(object):
     def start_download(self):
         argv = {'func': self.download,  # 所有待存入数据库中的数据都应当是list
                 'iterable': self.container, }
-        PageWorker.control_center(self.thread_pool.map, argv, self.container)
+        Control.control_center(argv, self.container)
         return
 
     def create_image(self, href):

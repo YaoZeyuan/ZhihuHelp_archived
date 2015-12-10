@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import json  # 用于JsonWorker
-from multiprocessing.dummy import Pool as ThreadPool  # 多线程并行库
+
 
 from src.parser.author import AuthorParser
 from src.parser.collection import CollectionParser
 from src.parser.question import QuestionParser
 from src.parser.topic import TopicParser
 from src.tools.config import Config
+from src.tools.controler import Control
 from src.tools.db import DB
 from src.tools.debug import Debug
 from src.tools.http import Http
@@ -18,9 +19,9 @@ class PageWorker(object):
     def __init__(self, task_list):
         self.task_set = set(task_list)
         self.work_set = set()  # 待抓取网址池
+        self.work_complete_set = set()  # 已完成网址池
         self.answer_list = []
         self.question_list = []
-        self.thread_pool = ThreadPool(Config.max_thread)
 
         self.info_list = []
         self.extra_index_list = []
@@ -47,16 +48,7 @@ class PageWorker(object):
         finally:
             return max_page
 
-    @staticmethod
-    def control_center(func, argv, test_flag):
-        max_try = Config.max_try
-        for time in range(max_try):
-            if test_flag:
-                try:
-                    func(**argv)
-                except Exception:
-                    Debug.logger.info(u'多线程控制器出现异常，稍后重试')
-        return
+
 
     def create_save_config(self):
         config = {'Answer': self.answer_list, 'Question': self.question_list, }
@@ -103,16 +95,21 @@ class PageWorker(object):
     def start_create_work_list(self):
         self.clear_work_set()
         argv = {'func': self.create_work_set, 'iterable': self.task_set, }
-        self.control_center(self.thread_pool.map, argv, self.task_set)
+        Control.control_center(argv, self.task_set)
         return
 
     def worker(self, target_url):
+        if target_url in self.work_complete_set:
+            # 自动跳过已抓取成功的网址
+            return
+
         Debug.logger.info(u'开始抓取{}的内容'.format(target_url))
         content = Http.get_content(target_url)
         if not content:
             return
-        self.work_set.discard(target_url)
         self.parse_content(content)
+        Debug.logger.info(u'{}的内容抓取完成'.format(target_url))
+        self.work_complete_set.add(target_url)
         return
 
     def parse_content(self, content):
@@ -122,9 +119,11 @@ class PageWorker(object):
         return
 
     def start_worker(self):
+        a = list(self.work_set)
+        a.sort()
         argv = {'func': self.worker,  # 所有待存入数据库中的数据都应当是list
-            'iterable': self.work_set, }
-        self.control_center(self.thread_pool.map, argv, self.work_set)
+                'iterable': a, }
+        Control.control_center(argv, self.work_set)
         return
 
     def catch_info(self, target_url):
@@ -132,7 +131,7 @@ class PageWorker(object):
 
     def start_catch_info(self):
         argv = {'func': self.catch_info, 'iterable': self.info_url_set, }
-        self.control_center(self.thread_pool.map, argv, self.info_url_set)
+        Control.control_center(argv, self.info_url_set)
         return
 
 
@@ -219,7 +218,7 @@ class CollectionWorker(PageWorker):
 
     def create_save_config(self):
         config = {'Answer': self.answer_list, 'Question': self.question_list, 'CollectionInfo': self.info_list,
-            'CollectionIndex': self.collection_index_list, }
+                  'CollectionIndex': self.collection_index_list, }
         return config
 
 
@@ -266,7 +265,7 @@ class TopicWorker(PageWorker):
 
     def create_save_config(self):
         config = {'Answer': self.answer_list, 'Question': self.question_list, 'TopicInfo': self.info_list,
-            'TopicIndex': self.topic_index_list, }
+                  'TopicIndex': self.topic_index_list, }
         return config
 
     def clear_index(self):
@@ -293,11 +292,13 @@ class ColumnWorker(PageWorker):
         info['creator_hash'] = raw_info['creator']['hash']
         info['creator_sign'] = raw_info['creator']['bio']
         info['creator_name'] = raw_info['creator']['name']
-        info['creator_logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['creator']['avatar']['id']).replace('_{size}', '')
+        info['creator_logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['creator']['avatar'][
+            'id']).replace('_{size}', '')
 
         info['column_id'] = raw_info['slug']
         info['name'] = raw_info['name']
-        info['logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['avatar']['id']).replace('_{size}', '')
+        info['logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['avatar']['id']).replace(
+            '_{size}', '')
         info['article'] = raw_info['postsCount']
         info['follower'] = raw_info['followersCount']
         info['description'] = raw_info['description']
@@ -333,12 +334,14 @@ class ColumnWorker(PageWorker):
         return
 
     def create_save_config(self):
-        config = {'ColumnInfo': self.info_list, 'Article': self.answer_list }
+        config = {'ColumnInfo': self.info_list, 'Article': self.answer_list}
         return config
+
 
 def worker_factory(task):
     type_list = {'answer': QuestionWorker, 'question': QuestionWorker, 'author': AuthorWorker,
-        'collection': CollectionWorker, 'topic': TopicWorker, 'column': ColumnWorker, 'article': ColumnWorker, }
+                 'collection': CollectionWorker, 'topic': TopicWorker, 'column': ColumnWorker,
+                 'article': ColumnWorker, }
     for key in task:
         worker = type_list[key](task[key])
         worker.start()

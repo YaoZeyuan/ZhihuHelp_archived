@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
+from src.parser.author import AuthorParser
+from src.parser.collection import CollectionParser
+from src.parser.question import QuestionParser
+from src.parser.topic import TopicParser
+from src.tools.debug import Debug
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -7,15 +12,14 @@ sys.setdefaultencoding('utf8')
 # 添加库路径
 currentPath = sys.path[0].replace('unit', '')
 sys.path.append(currentPath)
-sys.path.append(currentPath + r'codes')
-sys.path.append(currentPath + r'codes\parser')
+sys.path.append(currentPath + r'src')
+sys.path.append(currentPath + r'src\tools')
+sys.path.append(currentPath + r'src\parser')
 
 sys.setrecursionlimit(1000000)  # 为了适应知乎上的长答案，需要专门设下递归深度限制。。。
 
-from baseClass import *
-from parserTools import *
 
-is_info = 1
+is_info = 0
 kind = 'collection' #直接在这里替换类别即可完成测试。可供测试的类别见字典键值
 unit ={
     'answer':{
@@ -54,15 +58,15 @@ parser = unit[kind]['parser'](content)
 
 
 if is_info:
-    BaseClass.printDict(parser.get_extra_info())
+    Debug.print_dict(parser.get_extra_info())
     print '----------------------'
     print '=========================='
 else:
     for answer in parser.get_answer_list():
-        BaseClass.printDict(answer)
+        Debug.print_dict(answer)
         print '----------------------'
     print '=========================='
 
     for question in parser.get_question_info_list():
-        BaseClass.printDict(question)
+        Debug.print_dict(question)
         print '----------------------'
