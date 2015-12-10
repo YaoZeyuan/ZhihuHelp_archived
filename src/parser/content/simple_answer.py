@@ -53,7 +53,9 @@ class SimpleAnswer(Answer):
             Debug.logger.debug(u'答案更新日期未找到')
             return
         href_tag = self.content.find('a', class_='answer-date-link')
-        if not href_tag:
+        if (not href_tag) and (self.body):
+            # 知乎站点有bug，会显示作者的匿名回答，导致self.body也可能为空
+            # 已向官方反馈
             href_tag = self.body.find('a', class_='answer-date-link') # 再试一次
         if not href_tag:
             Debug.logger.debug(u'问题id，答案id未找到')
