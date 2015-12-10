@@ -44,4 +44,7 @@ class Match(object):
 
     @staticmethod
     def fix_html(content=''):
-        return content.replace('</br>', '').replace('</img>', '')
+        content = content.replace('</br>', '').replace('</img>', '')
+        for item in re.findall(r'\<noscript\>.*?\</noscript\>', content, re.S):
+            content = content.replace(item, '')
+        return content

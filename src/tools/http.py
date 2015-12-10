@@ -77,7 +77,6 @@ class Http(object):
             content = response.read()
         except socket.timeout as error:
             Debug.logger.info(u'打开网页超时')
-            Debug.logger.info(u'超时页面:{}'.format())
             return ''
 
         decode = response.info().get(u"Content-Encoding")

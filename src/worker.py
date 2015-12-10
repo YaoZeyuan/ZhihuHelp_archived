@@ -112,7 +112,7 @@ class PageWorker(object):
         if not content:
             return
         self.parse_content(content)
-        Debug.logger.info(u'{}的内容抓取完成'.format(target_url))
+        Debug.logger.debug(u'{}的内容抓取完成'.format(target_url))
         self.work_complete_set.add(target_url)
         return
 
