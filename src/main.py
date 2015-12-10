@@ -48,11 +48,10 @@ class ZhihuHelp(object):
         with open('./ReadList.txt', 'r') as read_list:
             counter = 1
             for line in read_list:
-                line = line.strip()
+                line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
                 self.create_book(line, counter)  # 一行内容代表一本电子书
                 counter += 1
         return
-
 
     def create_book(self, command, counter):
         Path.reset_path()
@@ -70,8 +69,6 @@ class ZhihuHelp(object):
             create_epub(task_package)
 
         return
-
-
 
     def check_update(self):  # 强制更新
         u"""

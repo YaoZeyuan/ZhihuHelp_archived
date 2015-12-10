@@ -24,8 +24,11 @@ class EpubCreator(object):
 
     def create_single_html_book(self):
         title = '_'.join([book.epub.title for book in self.book_list])
-        title = title.strip()[:128] # 避开window文件名长度限制
-        title = ExtraTools.fix_filename(title) # 移除特殊字符
+        title = Match.fix_filename(title) # 移除特殊字符,控制文件名长度
+        if not title:
+            # 电子书题目为空时自动跳过
+            # 否则会发生『rm -rf / 』的惨剧。。。
+            return
         Path.reset_path()
         Path.chdir(Path.result_path)
         Path.rmdir(u'./' + title)
@@ -49,8 +52,7 @@ class EpubCreator(object):
         self.image_container.set_save_path(Path.image_pool_path)
         self.image_container.start_download()
         title = '_'.join([book.epub.title for book in self.book_list])
-        title = title.strip()[:128] # 避开window文件名长度限制
-        title = ExtraTools.fix_filename(title) # 移除特殊字符
+        title = Match.fix_filename(title) # 移除特殊字符
         if not title:
             # 电子书题目为空时自动跳过
             # 否则会发生『rm -rf / 』的惨剧。。。

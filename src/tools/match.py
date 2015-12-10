@@ -48,3 +48,23 @@ class Match(object):
         for item in re.findall(r'\<noscript\>.*?\</noscript\>', content, re.S):
             content = content.replace(item, '')
         return content
+
+    @staticmethod
+    def fix_filename(filename):
+        illegal = {
+            '\\': '＼',
+            '/': '',
+            ':': '：',
+            '*': '＊',
+            '?': '？',
+            '<': '《',
+            '>': '》',
+            '|': '｜',
+            '"': '〃',
+            '!': '！',
+            '\n': '',
+            '\r': ''
+        }
+        for key,value in illegal.items():
+            filename = filename.replace(key, value)
+        return filename[:240]
