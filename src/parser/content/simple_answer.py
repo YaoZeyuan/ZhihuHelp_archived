@@ -22,7 +22,7 @@ class SimpleAnswer(Answer):
         if not self.content:
             Debug.logger.debug(u'答案内容未找到')
             return
-        content = copy.deepcopy(self.content)
+        content = self.content
         span = content.find('span', class_='answer-date-link-wrap')
         if not span:
             Debug.logger.debug(u'答案内容未找到')
@@ -53,6 +53,8 @@ class SimpleAnswer(Answer):
             Debug.logger.debug(u'答案更新日期未找到')
             return
         href_tag = self.content.find('a', class_='answer-date-link')
+        if not href_tag:
+            href_tag = self.body.find('a', class_='answer-date-link') # 再试一次
         if not href_tag:
             Debug.logger.debug(u'问题id，答案id未找到')
             return

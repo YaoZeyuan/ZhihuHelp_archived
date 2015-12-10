@@ -48,5 +48,11 @@ class Debug(object):
         except UnicodeEncodeError as error:
             Debug.logger.info(u'编码异常')
             Debug.logger.info(u'系统默认编码为：' + sys.getdefaultencoding())
-            raise error
+            #raise error
+        return
+
+    @staticmethod
+    def print_config():
+        Config._sync()
+        Debug.print_dict(Config._config_store)
         return

@@ -40,8 +40,7 @@ class Match(object):
 
     @staticmethod
     def html_body(content=''):
-        content = content.replace('\r','').replace('\n', '')
-        return re.search('(?<=<body>).*(?=</body>)', content).group(0)
+        return re.search('(?<=<body>).*(?=</body>)', content, re.S).group(0)
 
     @staticmethod
     def fix_html(content=''):

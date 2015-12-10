@@ -111,8 +111,8 @@
 
     div.question-info {
         font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, DK-SONGTI;
-        float: right;
-        color: #FFF;
+        float: left;
+        color: #FFF !important;
         font-size: 1rem;
         margin: 0 1rem;
     }

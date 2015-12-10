@@ -44,7 +44,6 @@ class ZhihuHelp(object):
     def start(self):
         self.check_update()
         self.init_config()
-
         Debug.logger.info(u"开始读取ReadList.txt设置信息")
         with open('./ReadList.txt', 'r') as read_list:
             counter = 1

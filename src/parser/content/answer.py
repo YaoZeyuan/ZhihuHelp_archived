@@ -10,6 +10,10 @@ class Answer(ParserTools):
         self.author_parser = Author()
         return
 
+    @staticmethod
+    def answer_is_hidden(dom):
+        return dom.select('div.answer-status')
+
     def set_dom(self, dom):
         self.info = {}
         if dom and not (dom.select('div.answer-status')):

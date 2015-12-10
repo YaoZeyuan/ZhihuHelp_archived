@@ -47,7 +47,9 @@ class CreateHtmlPage(object):
 
         if Config.picture_quality == 0:
             return ''
-        if 'equation?tex=' in href:  # tex图片不必处理
+        if 'equation?tex=' in href:  # tex图片需要额外加上http协议头
+            if not 'http:' in href:
+                href = 'http:' + href
             return href
         if Config.picture_quality == 1:
             return href

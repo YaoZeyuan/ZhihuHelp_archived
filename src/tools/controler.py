@@ -12,8 +12,28 @@ class Control(object):
         max_try = Config.max_try
         for time in range(max_try):
             if test_flag:
+                if Config.debug:
+                    Control.debug_control(argv)
+                else:
+                    Control.release_control(argv)
                 # try:
                 Control.thread_pool.map(**argv)
                 # except Exception:
                 #    Debug.logger.info(u'多线程控制器出现异常，稍后重试')
+        return
+
+    @staticmethod
+    def debug_control(argv):
+        for item in argv['iterable']:
+            argv['func'](item)
+        return
+
+    @staticmethod
+    def release_control(argv):
+        try:
+            Control.thread_pool.map(**argv)
+        except Exception:
+            # 按照惯例，报错全部pass掉
+            # 等用户反馈了再开debug查吧
+            pass
         return

@@ -16,7 +16,7 @@ class Config(object):
     account = 'mengqingxue2014@qq.com'  # 默认账号密码
     password = '131724qingxue'  #
     remember_account = False  # 是否使用已有密码
-    max_thread = 10  # 最大线程数
+    max_thread = 10  # 最大线程数，其实设成5就行了，但下图片的时候还是得多开几个线程，所以还是设成10好了（反正冬天，CPU满了有利于室内保温 - -）
     picture_quality = 1  # 图片质量（0/1/2，无图/标清/原图）
     max_question = 100  # 每本电子书中最多可以放多少个问题
     max_answer = 600  # 每本电子书中最多可以放多少个回答
@@ -29,7 +29,7 @@ class Config(object):
     article_order_by = 'update_date'  # 文章排序原则  update_date|agree_count|char_count
     article_order_by_desc = False  # 文章排序顺序->是否为desc
     show_private_answer = True
-    timeout_download_picture = 10
+    timeout_download_picture = 20 # 多给知乎服务器点时间，批量生成tex太痛苦了- -
     timeout_download_html = 5
 
     _config_store = {}
