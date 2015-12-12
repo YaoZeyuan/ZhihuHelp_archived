@@ -56,6 +56,17 @@ class Path(object):
         return
 
     @staticmethod
+    def copy(src, dst):
+        if not os.path.exists(src):
+            #Debug.logger.info('{}不存在，自动跳过'.format(src))
+            return
+        if os.path.isdir(src):
+            shutil.copytree(src, dst)
+        else:
+            shutil.copy(src=src,dst=dst)
+        return
+
+    @staticmethod
     def init_base_path():
         try:
             base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
