@@ -1,0 +1,140 @@
+p {
+    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, "DK-SONGTI";
+    color: #000;
+    font-size: 1em;
+}
+
+/* 隐藏空图片 */
+img[src='']{
+    display: none;
+}
+
+div.content {
+    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, "DK-SONGTI";
+    color: #000;
+    font-size: 1em;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.v-center {
+    vertical-align: middle;
+}
+
+.margin-center {
+    margin: 0 auto;
+}
+
+/* author info */
+div.author-name a, div.author-name p, div.author-info p, div.author-info a {
+    display: inline-block;
+    margin: 0;
+}
+
+div.author-name p:before {
+    content: '，';
+}
+
+div.author-name {
+    display: inline-block;
+}
+
+div.author-logo {
+    float: right;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 1em;
+}
+
+/* article */
+div.extra-info p {
+    display: inline;
+    margin: 0;
+}
+
+div.extra-info p:last-child {
+    display: inline;
+    float: right;
+    margin: 0;
+}
+
+div.extra-info {
+    margin-top: 1em;
+}
+
+/* answer info */
+/* question */
+.answer-content:after {
+    content: '';
+    color: gray;
+    font-size: 1.25em;
+    text-overflow: hidden;
+    background-repeat: ' ';
+    display: block;
+
+}
+
+div.clear-float
+{
+    clear:both;
+}
+
+div.question {
+    background-color: #428ECE !important;
+}
+
+div.question-title {
+    width: 100%;
+    overflow:hidden
+}
+
+div.question-title h1 {
+    font-family: "DK-SONGTI";
+    color: #FFFFFF;
+    background-color: #3982C6;
+    vertical-align: middle;
+    text-align: left;
+    padding: 1em;
+    width: 70%;
+    margin: 3em 0em;
+    float: right;
+}
+
+div.author-name {
+    margin: 1em 0;
+    font-size: 1em;
+}
+
+div.author-name a {
+    font-weight: 600;
+    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, "DK-HEITI";
+    color: #3d3e45;
+}
+
+div.author-name p {
+    font-family: "楷体", "DK-KAITI";
+    font-weight: normal;
+}
+
+div.question-info {
+    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, DK-SONGTI;
+    float: left;
+    color: #FFF !important;
+    font-size: 1em;
+    margin: 0 1em;
+}
+
+div.content img {
+    width: 100%;
+}
+
+/* article */
+div.title-image {
+    text-align: center;
+}
+
+div.title-image img {
+    width: 100%;
+}

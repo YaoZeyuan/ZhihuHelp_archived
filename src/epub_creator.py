@@ -40,7 +40,7 @@ class EpubCreator(object):
         with open(title + u'.html', 'w') as html:
             html.write(template)
         shutil.copytree(Path.html_pool_path + u'/../{}/OEBPS/images'.format(title), './images')
-        shutil.copy(Path.www_css + '/front.css' , './front.css')
+        shutil.copy(Path.www_css + '/customer.css' , './customer.css')
         shutil.copy(Path.www_css + '/markdown.css' , './markdown.css')
         Path.reset_path()
         return
@@ -58,6 +58,10 @@ class EpubCreator(object):
         epub = Epub(title)
         html_tmp_path = Path.html_pool_path + '/'
         image_tmp_path = Path.image_pool_path + '/'
+        epub.set_creator('ZhihuHelp1.7.0')
+        epub.set_book_id()
+        epub.add_css(Path.base_path + u'/www/css/markdown.css')
+        epub.add_css(Path.base_path + u'/www/css/customer.css')
         for book in self.book_list:
             page = book.page_list[0]
             with open(html_tmp_path + page.filename, 'w') as html:
@@ -70,10 +74,8 @@ class EpubCreator(object):
             epub.finish_chapter()
         for image in self.book.image_list:
             epub.add_image(image_tmp_path + image['filename'])
-        epub.set_creator('ZhihuHelp1.7.0')
-        epub.set_book_id()
-        epub.add_css(Path.base_path + u'/www/css/markdown.css')
-        epub.add_css(Path.base_path + u'/www/css/front.css')
+
+
         epub.create()
         Path.reset_path()
         return

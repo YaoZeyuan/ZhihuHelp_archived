@@ -9,8 +9,8 @@ class EpubConfig(object):
     """
     base_path =  Path.base_path + u'/src/lib/epub/template'
     # META-INF
-    container_uri = base_path + u'/META-INF/container/container/container.xml'
-    duokan_container_uri = base_path + u'/META-INF/container/duokan_container/duokan-extension.xml'
+    container_uri = base_path + u'/META-INF/container/container.xml'
+    duokan_container_uri = base_path + u'/META-INF/duokan_container/duokan-extension.xml'
 
     # OEBPS
 

@@ -22,7 +22,7 @@ class EpubPath(object):
         EpubPath.base_path = base_path
         EpubPath.meta_inf_path = EpubPath.base_path + u'/META-INF'
         EpubPath.oebps_path = EpubPath.base_path + u'/OEBPS'
-        EpubPath.image_path = EpubPath.oebps_path + u'/image'
+        EpubPath.image_path = EpubPath.oebps_path + u'/images'
         EpubPath.html_path = EpubPath.oebps_path + u'/html'
         EpubPath.style_path = EpubPath.oebps_path + u'/style'
 

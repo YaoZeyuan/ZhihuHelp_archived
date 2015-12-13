@@ -29,7 +29,7 @@ class Metadata(Base):
         for key in ['title','creator','book_id','cover']:
             if hasattr(self,key):
                 self.content += getattr(self,key)
-        return
+        return self.content
 
 
 class Manifest(Base):

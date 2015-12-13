@@ -77,12 +77,16 @@ class Http(object):
             content = response.read()
         except socket.timeout as error:
             Debug.logger.info(u'打开网页超时')
-            return ''
+        except Exception:
+            Debug.logger.info(u'未知错误')
+        else:
+            decode = response.info().get(u"Content-Encoding")
+            if decode and u"gzip" in decode:
+                content = Http.__ungzip(content)
+            return content
+        return ''
 
-        decode = response.info().get(u"Content-Encoding")
-        if decode and u"gzip" in decode:
-            content = Http.__ungzip(content)
-        return content
+
 
     @staticmethod
     def __ungzip(content):

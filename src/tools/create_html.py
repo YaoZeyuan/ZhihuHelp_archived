@@ -35,7 +35,9 @@ class CreateHtml(object):
             new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
             new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
                                           '../images/{}'.format(filename))
+            new_image += '</img>'
             content = content.replace(img, '<div class="duokan-image-single">{}</div>'.format(new_image))
+
         return content
 
     @staticmethod
@@ -101,7 +103,7 @@ class CreateHtml(object):
         content = self.get_template('content', 'base').format(**result)
         page = Page()
         page.content = self.fix_image(content)
-        page.filename = str(prefix) + '_' + str(question['question_id']) + '.html'
+        page.filename = str(prefix) + '_' + str(question['question_id']) + '.xhtml'
         page.title = question['title']
         return page
 
@@ -119,7 +121,7 @@ class CreateHtml(object):
         content = self.get_template('content', 'base').format(**result)
         page = Page()
         page.content = self.fix_image(content)
-        page.filename = str(prefix) + '_' + str(article['article_id']) + '.html'
+        page.filename = str(prefix) + '_' + str(article['article_id']) + '.xhtml'
         page.title = article['title']
         return page
 
@@ -161,7 +163,7 @@ class CreateHtml(object):
         content = self.get_template('content', 'base').format(**result)
         page = Page()
         page.content = self.fix_image(content)
-        page.filename = str(book.epub.prefix) + '_' + 'info.html'
+        page.filename = str(book.epub.prefix) + '_' + 'info.xhtml'
         page.title = book.epub.title
         if book.epub.split_index:
             page.title += "_({})".format(book.epub.split_index)
