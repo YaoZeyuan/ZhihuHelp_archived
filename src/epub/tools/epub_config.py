@@ -23,7 +23,7 @@ class EpubConfig(object):
     ### metadata
     metadata_cover_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/cover.xml'
     metadata_creator_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/creator.xml'
-    metadata_identifier_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/identifier .xml'
+    metadata_book_id_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/book_id.xml'
     metadata_title_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/title.xml'
 
     ### manifest
@@ -45,3 +45,10 @@ class EpubConfig(object):
 
     ### ncx
     ncx_item_uri = Path.base_path + '/src/epub/template/OEBPS/toc/navMap/item.xml'
+
+    # Default
+    book_id = 'create_by_yaozeyuan'
+    book_title = 'no_title'
+    creator = 'zhihuhelp'
+    uid = 'urn:uuid:create-by-yao-ze-yuan-Tsingtao'
+    identifier = ''

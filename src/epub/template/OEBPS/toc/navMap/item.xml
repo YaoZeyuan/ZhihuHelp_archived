@@ -1,4 +1,4 @@
-<navPoint id="{id}" playOrder="{id}">
+<navPoint id="{resource_id}" playOrder="{resource_id}">
     <navLabel>
         <text>{title}</text>
     </navLabel>

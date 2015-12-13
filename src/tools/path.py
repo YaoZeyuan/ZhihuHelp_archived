@@ -32,6 +32,10 @@ class Path(object):
         return
 
     @staticmethod
+    def get_pwd():
+        return os.path.realpath('.')
+
+    @staticmethod
     def mkdir(path):
         try:
             os.mkdir(path)
@@ -52,7 +56,8 @@ class Path(object):
 
     @staticmethod
     def rmdir(path):
-        shutil.rmtree(path, ignore_errors=True)
+        if path:
+            shutil.rmtree(path, ignore_errors=True)
         return
 
     @staticmethod
@@ -65,6 +70,10 @@ class Path(object):
         else:
             shutil.copy(src=src,dst=dst)
         return
+
+    @staticmethod
+    def get_filename(src):
+        return os.path.basename(src)
 
     @staticmethod
     def init_base_path():

@@ -10,10 +10,10 @@ class INF(object):
 
     @staticmethod
     def add_container():
-        Path.copy(EpubConfig.container_uri, EpubPath.meta_inf)
+        Path.copy(EpubConfig.container_uri, EpubPath.meta_inf_path)
         return
 
     @staticmethod
     def add_duokan_ext():
-        Path.copy(EpubConfig.duokan_container_uri, EpubPath.meta_inf)
+        Path.copy(EpubConfig.duokan_container_uri, EpubPath.meta_inf_path)
         return
