@@ -485,29 +485,3 @@ class Ncx():
         """.format(self.metaData, self.bookTitle, self.ncx)
         return content
 
-
-# 工具函数
-import os
-
-
-def mkdir(path):
-    try:
-        os.mkdir(path)
-    except OSError:
-        print u'指定目录已存在'
-    return
-
-
-def chdir(path):
-    try:
-        os.chdir(path)
-    except OSError:
-        print u'指定目录不存在，自动创建之'
-        mkdir(path)
-        os.chdir(path)
-    return
-
-
-def rmdir(path):
-    shutil.rmtree(path=path, ignore_errors=True)
-    return

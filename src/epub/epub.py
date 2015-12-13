@@ -3,12 +3,13 @@ from src.epub.opf import OPF
 from src.epub.inf import INF
 from src.epub.mime_type import MimeType
 from src.epub.toc import TOC
+from src.epub.tools.epub_config import EpubConfig
 from src.epub.tools.epub_path import EpubPath
 from src.tools.path import Path
 
 
 class Epub(object):
-    def __int__(self, title):
+    def __init__(self, title):
         self.mime_type = MimeType()
         self.meta_inf = INF()
         self.opf = OPF()
@@ -92,7 +93,7 @@ class Epub(object):
         self.opf.set_creator(creator)
         return
 
-    def set_book_id(self,book_id, uid):
+    def set_book_id(self,book_id=EpubConfig.book_id, uid=EpubConfig.uid):
         self.opf.set_book_id(book_id,uid)
         self.toc.set_uid(uid)
         return

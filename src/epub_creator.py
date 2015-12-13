@@ -4,6 +4,7 @@ import shutil
 
 from rawbook import RawBook
 from epub import Book
+from src.epub.epub import Epub
 from src.tools.debug import Debug
 from src.tools.extra_tools import ExtraTools
 from src.tools.match import Match
@@ -58,29 +59,26 @@ class EpubCreator(object):
             # 否则会发生『rm -rf / 』的惨剧。。。
             return
         Path.chdir(Path.base_path + u'/知乎电子书临时资源库/')
-        epub = Book(title, 27149527)
+        epub = Epub(title)
         html_tmp_path = Path.html_pool_path + '/'
         image_tmp_path = Path.image_pool_path + '/'
         for book in self.book_list:
             page = book.page_list[0]
             with open(html_tmp_path + page.filename, 'w') as html:
                 html.write(page.content)
-            #epub.createChapter(html_tmp_path + page.filename, ExtraTools.get_time(), page.title)
-            epub.addInfoPage(html_tmp_path + page.filename, page.title)
+            epub.create_chapter(html_tmp_path + page.filename, page.title)
             for page in book.page_list[1:]:
                 with open(html_tmp_path + page.filename, 'w') as html:
                     html.write(page.content)
-                epub.addHtml(html_tmp_path + page.filename, page.title)
+                epub.add_html(html_tmp_path + page.filename, page.title)
+            epub.finish_chapter()
         for image in self.book.image_list:
-            epub.addImg(image_tmp_path + image['filename'])
-        epub.addLanguage('zh-cn')
-        epub.addCreator('ZhihuHelp1.7.0')
-        epub.addDesc(u'该电子书由知乎助手生成，知乎助手是姚泽源为知友制作的仅供个人使用的简易电子书制作工具，源代码遵循WTFPL，希望大家能认真领会该协议的真谛，为飞面事业做出自己的贡献 XD')
-        epub.addRight('CC')
-        epub.addPublisher('ZhihuHelp')
-        epub.addCss(Path.base_path + u'/www/css/markdown.css')
-        epub.addCss(Path.base_path + u'/www/css/front.css')
-        epub.buildingEpub()
+            epub.add_image(image_tmp_path + image['filename'])
+        epub.set_creator('ZhihuHelp1.7.0')
+        epub.set_book_id()
+        epub.add_css(Path.base_path + u'/www/css/markdown.css')
+        epub.add_css(Path.base_path + u'/www/css/front.css')
+        epub.create()
         Path.reset_path()
         return
 
