@@ -1,106 +1,14 @@
 # -*- coding: utf-8 -*-
 import copy
-from src.container.book import Page, EpubBook
+from src.container.book import EpubBook
 from src.container.image import ImageContainer
 from src.tools.config import Config
+from src.tools.create_html import CreateHtml
 from src.tools.match import Match
 from src.tools.path import Path
 from src.tools.type import Type
 
 import re
-
-
-class CreateHtmlPage(object):
-    u"""
-    工具类，用于生成html页面
-    """
-
-    def __init__(self, image_container):
-        self.image_container = image_container
-        return
-
-    def fix_image(self, content):
-        content = Match.fix_html(content)
-        for img in re.findall(r'<img[^>]*', content):
-            src = re.search(r'(?<=src=").*?(?=")', img)
-            if not src:
-                continue
-            else:
-                src = src.group(0)
-                if src.replace(' ', '') == '':
-                    continue
-            src_download = CreateHtmlPage.fix_image_src(src)
-            if src_download:
-                filename = self.image_container.add(src_download)
-            else:
-                filename = ''
-            img += '>'
-            new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
-            new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg', '../images/{}'.format(filename))
-            content = content.replace(img, '<div class="duokan-image-single">{}</div>'.format(new_image))
-        return content
-
-    @staticmethod
-    def fix_image_src(href):
-        if 'https' in href[:5]:  # 去除https
-            href = 'http' + href[5:]
-
-        if Config.picture_quality == 0:
-            return ''
-        if 'equation?tex=' in href:  # tex图片需要额外加上http协议头
-            if not 'http:' in href:
-                href = 'http:' + href
-            return href
-        if Config.picture_quality == 1:
-            return href
-        if Config.picture_quality == 2:
-            if not ('_' in href):
-                return href
-            pos = href.rfind('_')
-            return href[:pos] + href[pos + 2:]  # 删除'_m'等图片质量控制符，获取原图
-        return href
-
-    def create_question(self, question, prefix=''):
-        def create_answer(answer):
-            with open('./src/template/content/answer.html') as answer_temp:
-                template = answer_temp.read()
-            return template.format(**answer)
-
-        answer_content = ''.join([create_answer(answer) for answer in question['answer_list']])
-        question['answer_content'] = answer_content
-        with open('./src/template/content/question.html') as question_temp:
-            template = question_temp.read()
-        question.update(question['question'])
-        content = template.format(**question)
-        page = Page()
-        page.content = self.fix_image(content)
-        page.filename = str(prefix) + '_' + str(question['question_id']) + '.html'
-        page.title = question['title']
-        return page
-
-    def create_article(self, article, prefix=''):
-        with open('./src/template/content/article.html') as article_temp:
-            template = article_temp.read()
-        content = template.format(**article)
-        page = Page()
-        page.content = self.fix_image(content)
-        page.filename = str(prefix) + '_' + str(article['article_id']) + '.html'
-        page.title = article['title']
-        return page
-
-    def create_info_page(self, book):
-        kind = book.kind
-        info = book.info
-        with open('./src/template/info/{}.html'.format(kind)) as file:
-            template = file.read()
-        content = template.format(**info)
-        page = Page()
-        page.content = self.fix_image(content)
-        page.filename = str(book.epub.prefix) + '_' + 'info.html'
-        page.title = book.epub.title
-        if book.epub.split_index:
-            page.title += "_({})".format(book.epub.split_index)
-        return page
 
 
 class RawBook(object):
@@ -173,7 +81,7 @@ class RawBook(object):
         index = 0
         epub_book_list = []
         image_container = ImageContainer()
-        creator = CreateHtmlPage(image_container)
+        creator = CreateHtml(image_container)
         for book in book_list:
             epub_book = self.create_single_book(book, index, creator)
             epub_book_list.append(epub_book)

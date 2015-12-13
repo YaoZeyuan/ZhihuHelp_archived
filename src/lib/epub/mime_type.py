@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.epub.tools.epub_path import EpubPath
-
+from src.lib.epub.tools.epub_path import EpubPath
 
 class MimeType(object):
     def __init__(self):

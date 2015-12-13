@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
 import zipfile
-from src.epub.opf import OPF
-from src.epub.inf import INF
-from src.epub.mime_type import MimeType
-from src.epub.toc import TOC
-from src.epub.tools.epub_config import EpubConfig
-from src.epub.tools.epub_path import EpubPath
+from src.lib.epub.inf import INF
+from src.lib.epub.mime_type import MimeType
+from src.lib.epub.opf import OPF
+from src.lib.epub.toc import TOC
+from src.lib.epub.tools.epub_config import EpubConfig
+from src.lib.epub.tools.epub_path import EpubPath
+
 from src.tools.debug import Debug
 from src.tools.path import Path
 

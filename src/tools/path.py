@@ -7,7 +7,7 @@ class Path(object):
     try:
         base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
     except:
-        base_path = os.path.abspath('.') #对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+        base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
 
     config_path = base_path + u'/config.json'
     db_path = base_path + u'/zhihuDB_173.db'
@@ -19,7 +19,6 @@ class Path(object):
     html_pool_path = base_path + u'/知乎电子书临时资源库/知乎网页池'
     image_pool_path = base_path + u'/知乎电子书临时资源库/知乎图片池'
     result_path = base_path + u'./知乎助手生成的电子书'
-
 
     @staticmethod
     def reset_path():
@@ -36,7 +35,7 @@ class Path(object):
         try:
             path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
         except:
-            path = os.path.abspath('.') #对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+            path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
         return path
 
     @staticmethod
@@ -44,18 +43,16 @@ class Path(object):
         try:
             os.mkdir(path)
         except OSError:
-            #Debug.logger.debug(u'指定目录已存在')
+            # Debug.logger.debug(u'指定目录已存在')
             pass
         return
 
     @staticmethod
     def chdir(path):
-        print u'切换到'
-        print path
         try:
             os.chdir(path)
         except OSError:
-            #Debug.logger.debug(u'指定目录不存在，自动创建之')
+            # Debug.logger.debug(u'指定目录不存在，自动创建之')
             Path.mkdir(path)
             os.chdir(path)
         return
@@ -69,12 +66,12 @@ class Path(object):
     @staticmethod
     def copy(src, dst):
         if not os.path.exists(src):
-            #Debug.logger.info('{}不存在，自动跳过'.format(src))
+            # Debug.logger.info('{}不存在，自动跳过'.format(src))
             return
         if os.path.isdir(src):
             shutil.copytree(src, dst)
         else:
-            shutil.copy(src=src,dst=dst)
+            shutil.copy(src=src, dst=dst)
         return
 
     @staticmethod
@@ -86,7 +83,7 @@ class Path(object):
         try:
             base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
         except:
-            base_path = os.path.abspath('.') #对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+            base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
 
         Path.config_path = Path.base_path + u'/config.json'
         Path.db_path = Path.base_path + u'/zhihuDB_173.db'

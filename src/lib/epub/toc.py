@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from src.epub.tools.base import Base
-from src.epub.tools.epub_config import EpubConfig
-from src.epub.tools.epub_path import EpubPath
+from src.lib.epub.tools.base import Base
+from src.lib.epub.tools.epub_config import EpubConfig
+from src.lib.epub.tools.epub_path import EpubPath
 
 
 class Head(Base):

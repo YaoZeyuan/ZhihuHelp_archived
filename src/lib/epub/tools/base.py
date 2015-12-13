@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.epub.tools.epub_config import EpubConfig
+from src.lib.epub.tools.epub_config import EpubConfig
 
 
 class Base(object):

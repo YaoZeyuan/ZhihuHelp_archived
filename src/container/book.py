@@ -5,15 +5,6 @@ from src.tools.config import Config
 from src.tools.db import DB
 from src.tools.extra_tools import ExtraTools
 from src.tools.type import Type
-
-
-class Page(object):
-    def __init__(self):
-        self.content = ''
-        self.title = ''
-        self.filename = ''
-        return
-
 class Book(object):
     class Sql(object):
         def __init__(self):
