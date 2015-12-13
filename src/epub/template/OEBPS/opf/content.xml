@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <package xmlns="http://www.idpf.org/2007/opf"
          xmlns:dc="http://purl.org/dc/elements/1.1/"
-         unique-identifier="{book_id}" version="2.0">
+         unique-identifier="{uid}" version="2.0">
     <metadata>
         {metadata}
     </metadata>

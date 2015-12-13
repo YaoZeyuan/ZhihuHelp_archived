@@ -9,46 +9,46 @@ class EpubConfig(object):
     """
 
     # META-INF
-    container_uri = Path.base_path + '/src/epub/template/META-INF/container/container/container.xml'
-    duokan_container_uri = Path.base_path + '/src/epub/template/META-INF/container/duokan_container/duokan-extension.xml'
+    container_uri = Path.base_path + u'/src/epub/template/META-INF/container/container/container.xml'
+    duokan_container_uri = Path.base_path + u'/src/epub/template/META-INF/container/duokan_container/duokan-extension.xml'
 
     # OEBPS
 
     ## OPF
-    opf_content_uri = Path.base_path + '/src/epub/template/OEBPS/opf/content.xml'
+    opf_content_uri = Path.base_path + u'/src/epub/template/OEBPS/opf/content.xml'
 
     ### guide
-    guide_item_uri = Path.base_path + '/src/epub/template/OEBPS/opf/guide/item.xml'
+    guide_item_uri = Path.base_path + u'/src/epub/template/OEBPS/opf/guide/item.xml'
 
     ### metadata
-    metadata_cover_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/cover.xml'
-    metadata_creator_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/creator.xml'
-    metadata_book_id_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/book_id.xml'
-    metadata_title_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/title.xml'
+    metadata_cover_uri = Path.base_path + u'/src/epub/template/OEBPS/opf/metadata/cover.xml'
+    metadata_creator_uri = Path.base_path + u'/src/epub/template/OEBPS/opf/metadata/creator.xml'
+    metadata_book_id_uri = Path.base_path + u'/src/epub/template/OEBPS/opf/metadata/book_id.xml'
+    metadata_title_uri = Path.base_path + u'/src/epub/template/OEBPS/opf/metadata/title.xml'
 
     ### manifest
-    manifest_item_uri = Path.base_path + '/src/epub/template/OEBPS/opf/metadata/cover.xml'
+    manifest_item_uri = Path.base_path + u'/src/epub/template/OEBPS/opf/manifest/item.xml'
 
     ### spine
-    spine_item_uri = Path.base_path + '/src/epub/template/OEBPS/opf/spine/item.xml'
-    spine_item_nolinear_uri = Path.base_path + '/src/epub/template/OEBPS/opf/spine/item_nolinear.xml'
+    spine_item_uri = Path.base_path + u'/src/epub/template/OEBPS/opf/spine/item.xml'
+    spine_item_nolinear_uri = Path.base_path + u'/src/epub/template/OEBPS/opf/spine/item_nolinear.xml'
 
 
     ## TOC
-    toc_content_uri = Path.base_path + '/src/epub/template/OEBPS/toc/content.xml'
+    toc_content_uri = Path.base_path + u'/src/epub/template/OEBPS/toc/content.xml'
     ###head
-    head_uid_uri = Path.base_path + '/src/epub/template/OEBPS/toc/head/uid.xml'
-    head_depth_uri = Path.base_path + '/src/epub/template/OEBPS/toc/head/depth.xml'
+    head_uid_uri = Path.base_path + u'/src/epub/template/OEBPS/toc/head/uid.xml'
+    head_depth_uri = Path.base_path + u'/src/epub/template/OEBPS/toc/head/depth.xml'
 
     # doc_title
-    doc_title_title_uri = Path.base_path + '/src/epub/template/OEBPS/toc/docTitle/title.xml'
+    doc_title_title_uri = Path.base_path + u'/src/epub/template/OEBPS/toc/docTitle/title.xml'
 
     ### ncx
-    ncx_item_uri = Path.base_path + '/src/epub/template/OEBPS/toc/navMap/item.xml'
+    ncx_item_uri = Path.base_path + u'/src/epub/template/OEBPS/toc/navMap/item.xml'
 
     # Default
-    book_id = 'create_by_yaozeyuan'
-    book_title = 'no_title'
-    creator = 'zhihuhelp'
-    uid = 'urn:uuid:create-by-yao-ze-yuan-Tsingtao'
-    identifier = ''
+    book_id = u'create_by_yaozeyuan'
+    book_title = u'no_title'
+    creator = u'zhihuhelp'
+    uid = u'urn:uuid:create-by-yao-ze-yuan-Tsingtao'
+    identifier = u''

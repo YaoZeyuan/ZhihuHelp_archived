@@ -6,7 +6,7 @@ from src.epub.tools.epub_path import EpubPath
 
 class Metadata(Base):
     def set_title(self, title=EpubConfig.book_title):
-        template = self.get_template('metadata', 'cover')
+        template = self.get_template('metadata', 'title')
         self.title = template.format(title=title)
         return
 
@@ -26,7 +26,9 @@ class Metadata(Base):
         return
 
     def get_content(self):
-        self.content = self.title + self.creator + self.book_id + self.cover
+        for key in ['title','creator','book_id','cover']:
+            if hasattr(self,key):
+                self.content += getattr(self,key)
         return
 
 
@@ -57,7 +59,7 @@ class Manifest(Base):
         return resource_id
 
     def add_item(self, resource_id, href, media_type):
-        template = self.get_template('metadata', 'item')
+        template = self.get_template('manifest', 'item')
         self.content += template.format(resource_id=resource_id, href=href, media_type=media_type)
         return
 
@@ -95,6 +97,7 @@ class OPF(Base):
         self.metadata = Metadata()
         self.spine = Spine()
         self.metadata_completed = set()
+        self.uid = EpubConfig.uid
         return
 
     def set_title(self,title=EpubConfig.book_title):
@@ -110,6 +113,7 @@ class OPF(Base):
     def set_book_id(self,book_id=EpubConfig.book_id, uid=EpubConfig.uid):
         self.metadata.set_book_id(book_id,uid=uid)
         self.metadata_completed.add('book_id')
+        self.uid = uid
         return
 
 
@@ -164,9 +168,10 @@ class OPF(Base):
             'manifest':self.manifest.get_content(),
             'spine':self.spine.get_content(),
             'guide':self.guide.get_content(),
+            'uid':self.uid,
         }
         template = self.get_template('opf','content')
         content = template.format(**content)
-        with open(EpubPath.oebps_path + '/content.opf', 'w') as opf:
+        with open(EpubPath.oebps_path + u'/content.opf', 'w') as opf:
             opf.write(content)
         return

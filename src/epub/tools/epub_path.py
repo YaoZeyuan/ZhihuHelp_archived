@@ -10,21 +10,21 @@ class EpubPath(object):
     except:
         base_path = os.path.abspath('.') #对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
 
-    meta_inf_path = base_path + '/META-INF'
-    oebps_path = base_path + '/OEBPS'
-    image_path = oebps_path + '/image'
-    html_path = oebps_path + '/html'
-    style_path = oebps_path + '/style'
+    meta_inf_path = base_path + u'/META-INF'
+    oebps_path = base_path + u'/OEBPS'
+    image_path = oebps_path + u'/image'
+    html_path = oebps_path + u'/html'
+    style_path = oebps_path + u'/style'
 
 
     @staticmethod
     def set_base_path(base_path):
         EpubPath.base_path = base_path
-        EpubPath.meta_inf_path = EpubPath.base_path + '/META-INF'
-        EpubPath.oebps_path = EpubPath.base_path + '/OEBPS'
-        EpubPath.image_path = EpubPath.oebps_path + '/image'
-        EpubPath.html_path = EpubPath.oebps_path + '/html'
-        EpubPath.style_path = EpubPath.oebps_path + '/style'
+        EpubPath.meta_inf_path = EpubPath.base_path + u'/META-INF'
+        EpubPath.oebps_path = EpubPath.base_path + u'/OEBPS'
+        EpubPath.image_path = EpubPath.oebps_path + u'/image'
+        EpubPath.html_path = EpubPath.oebps_path + u'/html'
+        EpubPath.style_path = EpubPath.oebps_path + u'/style'
 
     @staticmethod
     def init_epub_path(base_path):

@@ -29,7 +29,7 @@ class DocTitle(Base):
 class Ncx(Base):
     def create_item(self, resource_id, href, title, extend_nav_point=''):
         template = self.get_template('ncx', 'item')
-        content = template.format(resource_id=resource_id, herf=href, title=title, extend_nav_point=extend_nav_point)
+        content = template.format(resource_id=resource_id, href=href, title=title, extend_nav_point=extend_nav_point)
         return content
 
     def add_item(self, resource_id, href, title, extend_nav_point=''):
@@ -64,6 +64,10 @@ class TOC(Base):
     def set_uid(self, uid=EpubConfig.uid):
         self.head.set_uid(uid)
         self.metadata_completed.add('uid')
+        return
+
+    def set_depth(self,depth='2'):
+        self.head.set_depth(depth)
         return
 
     def add_item(self, resource_id, href, title,extend_nav_point=''):
@@ -106,16 +110,18 @@ class TOC(Base):
             self.set_title()
         if not 'uid' in self.metadata_completed:
             self.set_uid()
+        if not 'depth' in self.metadata_completed:
+            self.set_depth()
         return
 
     def create_content(self):
         content = {
             'head':self.head.get_content(),
             'doc_title':self.doc_title.get_content(),
-            'ncx':self.ncx.get_content(),
+            'nav_point':self.ncx.get_content(),
         }
         template = self.get_template('toc','content')
         content = template.format(**content)
-        with open(EpubPath.oebps_path + '/toc.ncx', 'w') as toc:
+        with open(EpubPath.oebps_path + u'/toc.ncx', 'w') as toc:
             toc.write(content)
         return

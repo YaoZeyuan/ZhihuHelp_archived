@@ -8,20 +8,9 @@
         <meta name="dtb:maxPageNumber" content="0"/>
     </head>
     <docTitle>
-        {title}
+        {doc_title}
     </docTitle>
     <navMap>
-        <navPoint id="navpoint-1" playOrder="1">
-            <navLabel>
-                <text>Book cover</text>
-            </navLabel>
-            <content src="title.html"/>
-        </navPoint>
-        <navPoint id="navpoint-2" playOrder="2">
-            <navLabel>
-                <text>Contents</text>
-            </navLabel>
-            <content src="content.html"/>
-        </navPoint>
+        {nav_point}
     </navMap>
 </ncx>

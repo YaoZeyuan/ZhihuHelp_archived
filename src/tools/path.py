@@ -33,7 +33,11 @@ class Path(object):
 
     @staticmethod
     def get_pwd():
-        return os.path.realpath('.')
+        try:
+            path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
+        except:
+            path = os.path.abspath('.') #对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+        return path
 
     @staticmethod
     def mkdir(path):
@@ -46,6 +50,8 @@ class Path(object):
 
     @staticmethod
     def chdir(path):
+        print u'切换到'
+        print path
         try:
             os.chdir(path)
         except OSError:
