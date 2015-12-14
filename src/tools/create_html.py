@@ -109,6 +109,7 @@ class CreateHtml(object):
 
     def create_article(self, article, prefix=''):
         article['edit_date'] = article['publish_date']
+        article['description'] = ''
         result = {
             'answer': self.create_answer(article),
             'question': self.get_template('info', 'title').format(**article)
