@@ -19,17 +19,20 @@ class CreateHtml(object):
     def fix_image(self, content):
         content = Match.fix_html(content)
         for img in re.findall(r'<img[^>]*', content):
+            # fix img
             if img[-1] == '/':
                 img = img[:-1]
+            img += '>'
+
             src = re.search(r'(?<=src=").*?(?=")', img)
             if not src:
-                new_image = img + '></img>'
+                new_image = img + '</img>'
                 content = content.replace(img, new_image)
                 continue
             else:
                 src = src.group(0)
                 if src.replace(' ', '') == '':
-                    new_image = img + '></img>'
+                    new_image = img + '</img>'
                     content = content.replace(img, new_image)
                     continue
             src_download = CreateHtml.fix_image_src(src)
@@ -37,7 +40,6 @@ class CreateHtml(object):
                 filename = self.image_container.add(src_download)
             else:
                 filename = ''
-            img += '>'
             new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
             new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
                                           '../images/{}'.format(filename))
