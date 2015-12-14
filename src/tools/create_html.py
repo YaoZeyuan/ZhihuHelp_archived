@@ -19,12 +19,18 @@ class CreateHtml(object):
     def fix_image(self, content):
         content = Match.fix_html(content)
         for img in re.findall(r'<img[^>]*', content):
+            if img[-1] == '/':
+                img = img[:-1]
             src = re.search(r'(?<=src=").*?(?=")', img)
             if not src:
+                new_image = img + '></img>'
+                content = content.replace(img, new_image)
                 continue
             else:
                 src = src.group(0)
                 if src.replace(' ', '') == '':
+                    new_image = img + '></img>'
+                    content = content.replace(img, new_image)
                     continue
             src_download = CreateHtml.fix_image_src(src)
             if src_download:

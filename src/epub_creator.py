@@ -38,7 +38,7 @@ class EpubCreator(object):
         content = u' \r\n '.join([Match.html_body(x.content) for x in page]).replace(u'../images/', u'./images/')
         with open(TemplateConfig.content_base_uri) as html:
             content = html.read().format(title=title, body=content).replace(u'../style/',u'./')
-        with open(title + u'.html', u'w') as html:
+        with open(title + u'.html', 'w') as html:
             html.write(content)
         shutil.copytree(Path.html_pool_path + u'/../{}/OEBPS/images'.format(title), u'./images')
         shutil.copy(Path.www_css + u'/customer.css' , u'./customer.css')

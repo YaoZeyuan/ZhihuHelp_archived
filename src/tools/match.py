@@ -68,4 +68,4 @@ class Match(object):
         }
         for key,value in illegal.items():
             filename = filename.replace(key, value)
-        return unicode(filename[:240])
+        return unicode(filename[:50])
