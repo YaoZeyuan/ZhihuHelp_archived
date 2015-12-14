@@ -1,18 +1,17 @@
-p {
-    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, "DK-SONGTI";
-    color: #000;
-    font-size: 1em;
+/* 设置背景色，清除缩进 */
+body {
+    text-indent: 0 !important;
+    duokan-text-indent: 0 !important;
+}
+
+/* 清除浮动 */
+div.clear-float {
+    clear: both;
 }
 
 /* 隐藏空图片 */
-img[src='']{
+img[src=''], img[src$='./images/'] {
     display: none;
-}
-
-div.content {
-    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, "DK-SONGTI";
-    color: #000;
-    font-size: 1em;
 }
 
 .text-center {
@@ -27,71 +26,62 @@ div.content {
     margin: 0 auto;
 }
 
-/* author info */
-div.author-name a, div.author-name p, div.author-info p, div.author-info a {
-    display: inline-block;
-    margin: 0;
+/* 首页描述信息 */
+div.front-page.description
+{
+    margin : 2em 0;
 }
 
-div.author-name p:before {
-    content: '，';
+/* 评论信息 */
+div.extra-info p {
+    float: left;
 }
 
-div.author-name {
-    display: inline-block;
+div.extra-info p.update-date {
+    float: right;
+}
+
+div.extra-info {
+    margin: 1em 0;
+}
+
+/* 用户信息 */
+div.author-base {
+    float: left;
+    width: 100%;
+    margin: 2em 0;
+    font-size: 1.25em;
+    vertical-align: middle;
+}
+
+span.author-sign {
+    margin-left: 1em;
+    font-family: "DK-KAITI", '楷体';
+}
+
+span.author-name a {
+    font-family: "DK-HEITI", 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体;
+    color: #3d3e45;
+    font-weight: bold;
 }
 
 div.author-logo {
     float: right;
-    display: inline-block;
-    vertical-align: middle;
-    margin-top: 1em;
 }
 
-/* article */
-div.extra-info p {
-    display: inline;
-    margin: 0;
-}
-
-div.extra-info p:last-child {
-    display: inline;
-    float: right;
-    margin: 0;
-}
-
-div.extra-info {
-    margin-top: 1em;
-}
-
-/* answer info */
-/* question */
-.answer-content:after {
-    content: '';
-    color: gray;
-    font-size: 1.25em;
-    text-overflow: hidden;
-    background-repeat: ' ';
-    display: block;
-
-}
-
-div.clear-float
-{
-    clear:both;
-}
+/* 问题详情 */
 
 div.question {
-    background-color: #428ECE !important;
+    background-color: #428ECE;
 }
 
 div.question-title {
     width: 100%;
-    overflow:hidden
+    overflow: hidden
 }
 
 div.question-title h1 {
-    font-family: "DK-SONGTI";
+    font-family: "DK-SONGTI", 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
     color: #FFFFFF;
     background-color: #3982C6;
     vertical-align: middle;
@@ -100,34 +90,27 @@ div.question-title h1 {
     width: 70%;
     margin: 3em 0em;
     float: right;
-}
-
-div.author-name {
-    margin: 1em 0;
-    font-size: 1em;
-}
-
-div.author-name a {
-    font-weight: 600;
-    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, "DK-HEITI";
-    color: #3d3e45;
-}
-
-div.author-name p {
-    font-family: "楷体", "DK-KAITI";
-    font-weight: normal;
+    font-size: 1.5em;
 }
 
 div.question-info {
-    font-family: 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体, DK-SONGTI;
+    font-family: 'DK-SONGTI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
     float: left;
     color: #FFF !important;
-    font-size: 1em;
+    font-size: 1.25em;
     margin: 0 1em;
 }
 
+/* 答案内容 */
+div.content {
+    font-family: "DK-SONGTI", 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体;
+    color: #000;
+    font-size: 1.25em;
+}
+
 div.content img {
-    width: 100%;
+    max-width: 100%;
+    margin-bottom: 2em;
 }
 
 /* article */

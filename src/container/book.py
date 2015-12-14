@@ -56,28 +56,28 @@ class Book(object):
     def set_info(self, info):
         self.info.update(info)
         if self.kind == Type.question:
-            self.epub.title = '知乎问题集锦({})'.format(ExtraTools.get_friendly_time())
+            self.epub.title = u'知乎问题集锦({})'.format(ExtraTools.get_friendly_time())
             self.epub.id = ExtraTools.get_time()
         elif self.kind == Type.answer:
-            self.epub.title = '知乎回答集锦({})'.format(ExtraTools.get_friendly_time())
+            self.epub.title = u'知乎回答集锦({})'.format(ExtraTools.get_friendly_time())
             self.epub.id = ExtraTools.get_time()
         elif self.kind == Type.article:
-            self.epub.title = '知乎专栏文章集锦({})'.format(ExtraTools.get_friendly_time())
+            self.epub.title = u'知乎专栏文章集锦({})'.format(ExtraTools.get_friendly_time())
             self.epub.id = ExtraTools.get_time()
         if self.kind in [Type.answer, Type.question, Type.article]:
             self.info['title'] = self.epub.title
 
         if self.kind == Type.topic:
-            self.epub.title = '话题_{}({})'.format(info['title'], info['topic_id'])
+            self.epub.title = u'话题_{}({})'.format(info['title'], info['topic_id'])
             self.epub.id = info['topic_id']
         if self.kind == Type.collection:
-            self.epub.title = '收藏夹_{}({})'.format(info['title'], info['collection_id'])
+            self.epub.title = u'收藏夹_{}({})'.format(info['title'], info['collection_id'])
             self.epub.id = info['collection_id']
         if self.kind == Type.author:
-            self.epub.title = '作者_{}({})'.format(info['name'], info['author_id'])
+            self.epub.title = u'作者_{}({})'.format(info['name'], info['author_id'])
             self.epub.id = info['author_id']
         if self.kind == Type.column:
-            self.epub.title = '专栏_{}({})'.format(info['name'], info['column_id'])
+            self.epub.title = u'专栏_{}({})'.format(info['name'], info['column_id'])
             self.epub.id = info['column_id']
         return
 
