@@ -9,7 +9,7 @@ class Config(object):
     用于储存、获取设置值、全局变量值
     """
     # 全局变量
-    update_time = '2015-12-11'  # 更新日期
+    update_time = '2015-12-14'  # 更新日期
 
     debug = False
 

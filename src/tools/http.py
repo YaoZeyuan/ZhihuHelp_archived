@@ -46,13 +46,13 @@ class Http(object):
             response = urllib2.urlopen(request, timeout=timeout)
         except urllib2.HTTPError as error:
             Debug.logger.info(u'网页打开失败')
-            Debug.logger.info(u'错误页面:{}'.format(url))
+            Debug.logger.info(u'失败页面:{}'.format(url))
             Debug.logger.info(u'失败代码:{}'.format(error.code))
-            Debug.logger.info(u'错误原因:{}'.format(error.reason))
+            Debug.logger.info(u'失败原因:{}'.format(error.reason))
         except urllib2.URLError as error:
             Debug.logger.info(u'网络连接异常')
-            Debug.logger.info(u'错误页面:{}'.format(url))
-            Debug.logger.info(u'错误原因:{}'.format(error.reason))
+            Debug.logger.info(u'异常页面:{}'.format(url))
+            Debug.logger.info(u'异常原因:{}'.format(error.reason))
         except socket.timeout as error:
             Debug.logger.info(u'打开网页超时')
             Debug.logger.info(u'超时页面:{}'.format(url))
@@ -64,12 +64,12 @@ class Http(object):
             Debug.logger.info(u'错误页面:{}'.format(url))
             Debug.logger.info(u'错误堆栈信息:{}'.format(traceback.format_exc()))
         else:
-            content = Http.__unpack(response)
+            content = Http.__unpack(response, url)
             return content
         return ''
 
     @staticmethod
-    def __unpack(response):
+    def __unpack(response, url=''):
         if not response:
             return ''
 
@@ -77,16 +77,16 @@ class Http(object):
             content = response.read()
         except socket.timeout as error:
             Debug.logger.info(u'打开网页超时')
+            Debug.logger.info(u'超时页面:{}'.format(url))
         except Exception:
             Debug.logger.info(u'未知错误')
+            Debug.logger.info(u'报错页面:{}'.format(url))
         else:
             decode = response.info().get(u"Content-Encoding")
             if decode and u"gzip" in decode:
                 content = Http.__ungzip(content)
             return content
         return ''
-
-
 
     @staticmethod
     def __ungzip(content):
