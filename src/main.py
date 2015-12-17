@@ -66,7 +66,7 @@ class ZhihuHelp(object):
 
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始自数据库中生成电子书数据")
-            book = RawBook(task_package)
+            book = RawBook(task_package.book_list)
             book.create()
         return
 
