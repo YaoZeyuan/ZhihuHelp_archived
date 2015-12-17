@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-import init
+import sqlite3
+
+
 from src import guide
 from src.rawbook import RawBook
 from src.tools.config import Config
 from src.tools.debug import Debug
 from src.tools.http import Http
 from src.tools.path import Path
+from src.tools.db import DB
 
 from worker import worker_factory
 from login import Login
@@ -19,7 +22,7 @@ class ZhihuHelp(object):
         """
         Path.init_base_path()
         Path.init_work_directory()
-        init.init_database()
+        self.init_database()
         Config._load()
         return
 
@@ -69,6 +72,17 @@ class ZhihuHelp(object):
             book = RawBook(task_package.book_list)
             book.create()
         return
+
+    @staticmethod
+    def init_database():
+        if Path.is_file(Path.db_path):
+            DB.set_conn(sqlite3.connect(Path.db_path))
+        else:
+            DB.set_conn(sqlite3.connect(Path.db_path))
+            # 没有数据库就新建一个出来
+            with open(Path.sql_path) as sql_script:
+                DB.cursor.executescript(sql_script.read())
+            DB.commit()
 
     def check_update(self):  # 强制更新
         u"""

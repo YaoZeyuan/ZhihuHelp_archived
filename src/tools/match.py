@@ -46,6 +46,7 @@ class Match(object):
     def fix_html(content=''):
         content = content.replace('</br>', '').replace('</img>', '')
         content = content.replace('<br>', '<br/>')
+        content = content.replace('href="//link.zhihu.com', 'href="http://link.zhihu.com')  # 修复跳转链接
         for item in re.findall(r'\<noscript\>.*?\</noscript\>', content, re.S):
             content = content.replace(item, '')
         return content

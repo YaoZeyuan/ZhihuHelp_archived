@@ -40,6 +40,7 @@ class AuthorInfo(ParserTools):
         self.parse_description()
         self.parse_weibo()
         self.parse_gender()
+        self.parse_profile_count()
         return
 
     def parse_name(self):
@@ -102,7 +103,7 @@ class AuthorInfo(ParserTools):
 
     def parse_profile_count(self):
         def parse_items(root=None, kind='asks'):
-            node = root.select('a[href*="{} span.num"]'.format(kind))
+            node = root.select('a[href*="{}"] > span.num'.format(kind))
             if not node:
                 Debug.logger.debug(u'{}未找到'.format(kind))
                 return

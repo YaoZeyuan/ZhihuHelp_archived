@@ -2,9 +2,9 @@
 import sys
 
 from src.lib.zhihu_parser.author import AuthorParser
-from src.zhihu_parser.collection import CollectionParser
-from src.zhihu_parser.question import QuestionParser
-from src.zhihu_parser.topic import TopicParser
+from src.lib.zhihu_parser.collection import CollectionParser
+from src.lib.zhihu_parser.question import QuestionParser
+from src.lib.zhihu_parser.topic import TopicParser
 from src.tools.debug import Debug
 
 reload(sys)
@@ -19,9 +19,8 @@ sys.path.append(currentPath + r'src\parser')
 
 sys.setrecursionlimit(1000000)  # 为了适应知乎上的长答案，需要专门设下递归深度限制。。。
 
-
-is_info = 0
-kind = 'question' #直接在这里替换类别即可完成测试。可供测试的类别见字典键值
+is_info = 1
+kind = 'author'  # 直接在这里替换类别即可完成测试。可供测试的类别见字典键值
 unit ={
     'answer':{
         'src_answer':'./unit_html/single_answer.html',
