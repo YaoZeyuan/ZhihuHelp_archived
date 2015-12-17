@@ -3,7 +3,6 @@ import sqlite3
 from src.tools.db import DB
 from src.tools.path import Path
 
-
 def init_database():
     if Path.is_file(Path.db_path):
         DB.set_conn(sqlite3.connect(Path.db_path))

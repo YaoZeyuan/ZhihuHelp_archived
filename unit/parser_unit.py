@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
-from src.parser.author import AuthorParser
-from src.parser.collection import CollectionParser
-from src.parser.question import QuestionParser
-from src.parser.topic import TopicParser
+
+from src.lib.zhihu_parser.author import AuthorParser
+from src.zhihu_parser.collection import CollectionParser
+from src.zhihu_parser.question import QuestionParser
+from src.zhihu_parser.topic import TopicParser
 from src.tools.debug import Debug
 
 reload(sys)

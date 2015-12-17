@@ -2,13 +2,13 @@
 import copy
 from src.container.book import EpubBook
 from src.container.image import ImageContainer
+from src.lib.epub.epub import Epub
 from src.tools.config import Config
 from src.tools.create_html import CreateHtml
 from src.tools.match import Match
 from src.tools.path import Path
+from src.tools.template_config import TemplateConfig
 from src.tools.type import Type
-
-import re
 
 
 class RawBook(object):
@@ -16,74 +16,66 @@ class RawBook(object):
     负责数据进行处理,返回处理完毕的html信息和所有待下载图片的imgContainer
     """
 
-    def __init__(self, raw_book_list):
-        self.book_list = self.merge_raw_info(raw_book_list)
-        self.result_list = []
+    def __init__(self, raw_sql_book_list):
+        raw_book_list = [book.catch_data() for book in self.flatten(raw_sql_book_list)]
+        book_list = self.volume_book(raw_book_list)
+        self.book_list = [self.create_book_package(book) for book in book_list]
         return
 
-    def merge_raw_info(self, raw_book_list):
+    def flatten(self, task_list):
         book_list = []
         for kind in Type.type_list:
-            if not kind in raw_book_list:
+            if not kind in task_list:
                 continue
-            for book in raw_book_list[kind]:
-                book_list.append(book)
+            book_list += task_list[kind]
         return book_list
 
-    def get_book_list(self):
-        self.book_list = [x.catch_data() for x in self.book_list]
-        self.split()
-        book_list = []
-        for item in self.result_list:
-            book = self.create_book(item)
-            book_list.append(book)
-        return book_list
-
-    def split(self):
-        def split(book, surplus, index=1):
-            if (book.epub.answer_count <= surplus) or (book.epub.article_count <= 1):
-                book.epub.split_index = index
-                return [book]
+    def volume_book(self, raw_book_list):
+        def split(raw_book, surplus, index=1):
+            if (raw_book.epub.answer_count <= surplus) or (raw_book.epub.article_count <= 1):
+                raw_book.epub.split_index = index
+                return [raw_book]
             article_list = []
             while surplus > 0:
-                article = book.article_list[0]
-                book.article_list = book.article_list[1:]
+                article = raw_book.article_list[0]
+                raw_book.article_list = raw_book.article_list[1:]
                 article_list.append(article)
                 surplus -= article['answer_count']
-                book.epub.answer_count -= article['answer_count']
-            new_book = copy.deepcopy(book)
-            new_book.set_article_list(article_list)
-            new_book.epub.split_index = index
-            return [new_book] + split(book, Config.max_answer, index + 1)
+                raw_book.epub.answer_count -= article['answer_count']
+            book = copy.deepcopy(raw_book)
+            book.set_article_list(article_list)
+            book.epub.split_index = index
+            return [book] + split(raw_book, Config.max_answer, index + 1)
 
         counter = 0
+        book = []
         book_list = []
-        while len(self.book_list):
-            book = self.book_list.pop()
-            if (counter + book.epub.answer_count) < Config.max_answer:
+        while len(raw_book_list):
+            raw_book = raw_book_list.pop()
+            if (counter + raw_book.epub.answer_count) < Config.max_answer:
+                book.append(raw_book)
+            elif (counter + raw_book.epub.answer_count) == Config.max_answer:
+                book.append(raw_book)
                 book_list.append(book)
-            elif (counter + book.epub.answer_count) == Config.max_answer:
+                book = []
+                counter = 0
+            elif (counter + raw_book.epub.answer_count) > Config.max_answer:
+                split_list = split(raw_book, Config.max_answer - counter)
+                book.append(split_list[0])
                 book_list.append(book)
-                self.result_list.append(book_list)
-                book_list = []
+                book = []
                 counter = 0
-            elif (counter + book.epub.answer_count) > Config.max_answer:
-                split_list = split(book, Config.max_answer - counter)
-                book_list.append(split_list[0])
-                self.result_list.append(book_list)
-                book_list = []
-                counter = 0
-                self.book_list = split_list[1:] + self.book_list
-        self.result_list.append(book_list)
-        return
+                raw_book_list = split_list[1:] + raw_book_list
+        book_list.append(book)
+        return book_list
 
-    def create_book(self, book_list):
+    def create_book_package(self, book_list):
         index = 0
         epub_book_list = []
         image_container = ImageContainer()
         creator = CreateHtml(image_container)
         for book in book_list:
-            epub_book = self.create_single_book(book, index, creator)
+            epub_book = self.book_to_html(book, index, creator)
             epub_book_list.append(epub_book)
             index += 1
 
@@ -93,7 +85,7 @@ class RawBook(object):
         book_package.image_container = image_container
         return book_package
 
-    def create_single_book(self, book, index, creator):
+    def book_to_html(self, book, index, creator):
         if book.epub.split_index:
             book.epub.title += "_({})".format(book.epub.split_index)
 
@@ -108,3 +100,70 @@ class RawBook(object):
                 page = creator.create_question(article, index)
             book.page_list.append(page)
         return book
+
+    def create_book(self, book_package):
+        book_package.image_container.set_save_path(Path.image_pool_path)
+        book_package.image_container.start_download()
+        title = '_'.join([book.epub.title for book in book_package.book_list])
+        title = Match.fix_filename(title)  # 移除特殊字符
+        if not title:
+            # 电子书题目为空时自动跳过
+            # 否则会发生『rm -rf / 』的惨剧
+            return
+        Path.chdir(Path.base_path + u'/知乎电子书临时资源库/')
+        epub = Epub(title)
+        html_tmp_path = Path.html_pool_path + u'/'
+        image_tmp_path = Path.image_pool_path + u'/'
+        epub.set_creator(u'ZhihuHelp1.7.0')
+        epub.set_book_id()
+        epub.add_css(Path.base_path + u'/www/css/markdown.css')
+        epub.add_css(Path.base_path + u'/www/css/customer.css')
+        epub.add_css(Path.base_path + u'/www/css/normalize.css')
+        for book in book_package.book_list:
+            page = book.page_list[0]
+            with open(html_tmp_path + page.filename, u'w') as html:
+                html.write(page.content)
+            epub.create_chapter(html_tmp_path + page.filename, page.title)
+            for page in book.page_list[1:]:
+                with open(html_tmp_path + page.filename, u'w') as html:
+                    html.write(page.content)
+                epub.add_html(html_tmp_path + page.filename, page.title)
+            epub.finish_chapter()
+        for image in book_package.image_list:
+            epub.add_image(image_tmp_path + image['filename'])
+        epub.create()
+        Path.reset_path()
+        return
+
+    def create_single_html_book(self, book_package):
+        title = '_'.join([book.epub.title for book in book_package.book_list])
+        title = Match.fix_filename(title)  # 移除特殊字符,控制文件名长度
+        if not title:
+            # 电子书题目为空时自动跳过
+            # 否则会发生『rm -rf / 』的惨剧
+            return
+        Path.reset_path()
+        Path.chdir(Path.result_path)
+        Path.rmdir(u'./' + title)
+        Path.mkdir(u'./' + title)
+        Path.chdir(u'./' + title)
+        page = []
+        for book in book_package.book_list:
+            page += book.page_list
+        content = u' \r\n '.join([Match.html_body(x.content) for x in page]).replace(u'../images/', u'./images/')
+        with open(TemplateConfig.content_base_uri) as html:
+            content = html.read().format(title=title, body=content).replace(u'../style/', u'./')
+        with open(title + u'.html', 'w') as html:
+            html.write(content)
+        Path.copy(Path.html_pool_path + u'/../{}/OEBPS/images'.format(title), u'./images')
+        Path.copy(Path.www_css + u'/customer.css', u'./customer.css')
+        Path.copy(Path.www_css + u'/markdown.css', u'./markdown.css')
+        Path.copy(Path.www_css + u'/normalize.css', u'./normalize.css')
+        Path.reset_path()
+        return
+
+    def create(self):
+        for book_package in self.book_list:
+            self.create_book(book_package)
+            self.create_single_html_book(book_package)
+        return

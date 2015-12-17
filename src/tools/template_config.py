@@ -3,7 +3,7 @@ from src.tools.path import Path
 
 
 class TemplateConfig(object):
-    template_path =  Path.base_path + u'/src/template'
+    template_path = Path.base_path + u'/www/template'
     content_template_path = template_path + u'/content'
     content_info_template_path = content_template_path + u'/info'
     content_question_template_path = content_template_path + u'/question'

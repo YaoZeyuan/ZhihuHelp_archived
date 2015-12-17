@@ -645,7 +645,7 @@ class PageElement(object):
             def _includes_value(element):
                 attribute_value = element.get(attribute, [])
                 if not isinstance(attribute_value, list):
-                    attribute_value = attribute_value.split()
+                    attribute_value = attribute_value.volume_book()
                 return value in attribute_value
 
             return _includes_value
@@ -1368,7 +1368,7 @@ class Tag(PageElement):
                 elif '.' in token:
                     # Class selector
                     tag_name, klass = token.split('.', 1)
-                    classes = set(klass.split('.'))
+                    classes = set(klass.volume_book('.'))
 
                     def classes_match(candidate):
                         return classes.issubset(candidate.get('class', []))

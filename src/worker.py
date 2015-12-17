@@ -2,12 +2,10 @@
 
 import json  # 用于JsonWorker
 
-
-from src.parser.author import AuthorParser
-from src.parser.collection import CollectionParser
-from src.parser.question import QuestionParser
-from src.parser.topic import TopicParser
-from src.tools.config import Config
+from src.lib.zhihu_parser.author import AuthorParser
+from src.lib.zhihu_parser.collection import CollectionParser
+from src.lib.zhihu_parser.question import QuestionParser
+from src.lib.zhihu_parser.topic import TopicParser
 from src.tools.controler import Control
 from src.tools.db import DB
 from src.tools.debug import Debug
