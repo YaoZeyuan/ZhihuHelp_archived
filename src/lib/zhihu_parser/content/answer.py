@@ -12,7 +12,8 @@ class Answer(ParserTools):
 
     @staticmethod
     def answer_is_hidden(dom):
-        return dom.select('div.answer-status')
+        # 第二条是为了处理当答案已消失时，直呼仍然将问题显示出来的bug
+        return dom.select('div.answer-status') or (not dom.select('textarea.content,div.zm-editable-content'))
 
     def set_dom(self, dom):
         self.info = {}
