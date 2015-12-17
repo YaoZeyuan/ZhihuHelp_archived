@@ -4,6 +4,7 @@ from src.container.image import ImageContainer
 from src.tools.config import Config
 from src.tools.db import DB
 from src.tools.extra_tools import ExtraTools
+from src.tools.match import Match
 from src.tools.type import Type
 class Book(object):
     class Sql(object):
@@ -168,9 +169,14 @@ class Book(object):
         return
 
 
-class EpubBook(object):
+class HtmlBookPackage(object):
     def __init__(self):
         self.book_list = []
         self.image_list = []
         self.image_container = ImageContainer()
         return
+
+    def get_title(self):
+        title = '_'.join([book.epub.title for book in self.book_list])
+        title = Match.fix_filename(title)  # 移除特殊字符
+        return title

@@ -30,10 +30,10 @@ class ReadListParser():
         """
 
         def split_command(command):
-            return command.volume_book('$')
+            return command.split('$')
 
         def remove_comment(command):
-            return command.volume_book('#')[0]
+            return command.split('#')[0]
 
         command = remove_comment(command)
         command_list = split_command(command)

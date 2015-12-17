@@ -75,7 +75,7 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         # Split the namespace URL out of a fully-qualified lxml tag
         # name. Copied from lxml's src/lxml/sax.py.
         if tag[0] == '{':
-            return tuple(tag[1:].volume_book('}', 1))
+            return tuple(tag[1:].split('}', 1))
         else:
             return (None, tag)
 

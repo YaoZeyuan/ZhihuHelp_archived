@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import copy
-from src.container.book import EpubBook
+from src.container.book import HtmlBookPackage
 from src.container.image import ImageContainer
 from src.lib.epub.epub import Epub
 from src.tools.config import Config
@@ -69,22 +69,6 @@ class RawBook(object):
         book_list.append(book)
         return book_list
 
-    def create_book_package(self, book_list):
-        index = 0
-        epub_book_list = []
-        image_container = ImageContainer()
-        creator = CreateHtml(image_container)
-        for book in book_list:
-            epub_book = self.book_to_html(book, index, creator)
-            epub_book_list.append(epub_book)
-            index += 1
-
-        book_package = EpubBook()
-        book_package.book_list = epub_book_list
-        book_package.image_list = image_container.get_filename_list()
-        book_package.image_container = image_container
-        return book_package
-
     def book_to_html(self, book, index, creator):
         if book.epub.split_index:
             book.epub.title += "_({})".format(book.epub.split_index)
@@ -101,11 +85,26 @@ class RawBook(object):
             book.page_list.append(page)
         return book
 
+    def create_book_package(self, book_list):
+        index = 0
+        epub_book_list = []
+        image_container = ImageContainer()
+        creator = CreateHtml(image_container)
+        for book in book_list:
+            epub_book = self.book_to_html(book, index, creator)
+            epub_book_list.append(epub_book)
+            index += 1
+
+        book_package = HtmlBookPackage()
+        book_package.book_list = epub_book_list
+        book_package.image_list = image_container.get_filename_list()
+        book_package.image_container = image_container
+        return book_package
+
     def create_book(self, book_package):
         book_package.image_container.set_save_path(Path.image_pool_path)
         book_package.image_container.start_download()
-        title = '_'.join([book.epub.title for book in book_package.book_list])
-        title = Match.fix_filename(title)  # 移除特殊字符
+        title = book_package.get_title()
         if not title:
             # 电子书题目为空时自动跳过
             # 否则会发生『rm -rf / 』的惨剧
@@ -136,8 +135,7 @@ class RawBook(object):
         return
 
     def create_single_html_book(self, book_package):
-        title = '_'.join([book.epub.title for book in book_package.book_list])
-        title = Match.fix_filename(title)  # 移除特殊字符,控制文件名长度
+        title = book_package.get_title()
         if not title:
             # 电子书题目为空时自动跳过
             # 否则会发生『rm -rf / 』的惨剧

@@ -9,7 +9,6 @@ from src.tools.path import Path
 
 from worker import worker_factory
 from login import Login
-from epub_creator import create_epub
 from read_list_parser import ReadListParser
 
 
@@ -67,7 +66,6 @@ class ZhihuHelp(object):
 
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始自数据库中生成电子书数据")
-            create_epub(task_package)
             book = RawBook(task_package)
             book.create()
         return
@@ -88,7 +86,7 @@ class ZhihuHelp(object):
             content = Http.get_content(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt")
         except:
             return
-        time, url = [x.strip() for x in content.volume_book('\n')]
+        time, url = [x.strip() for x in content.split('\n')]
         if time == Config.update_time:
             return
         else:

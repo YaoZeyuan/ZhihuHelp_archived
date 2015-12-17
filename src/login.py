@@ -28,7 +28,7 @@ class Login():
             Debug.logger.info(u'登陆失败')
             Debug.logger.info(u'敲击回车重新发送登陆请求')
             return False
-        xsrf = xsrf.volume_book('=')[1]
+        xsrf = xsrf.split('=')[1]
         # add xsrf as cookie into cookieJar,
         cookie = Http.make_cookie(name='_xsrf', value=xsrf, domain='www.zhihu.com')
         self.cookieJar.set_cookie(cookie)
