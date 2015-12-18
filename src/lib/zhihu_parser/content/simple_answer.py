@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import copy
 from bs4 import BeautifulSoup
 from src.lib.zhihu_parser.content.answer import Answer
 from src.tools.debug import Debug
@@ -12,7 +13,7 @@ class SimpleAnswer(Answer):
             self.body = dom.find('textarea', class_='content')
             self.footer = dom.find('div', class_='zm-meta-panel')
             if self.body:
-                self.content = BeautifulSoup(self.get_tag_content(self.body), 'html.parser')
+                self.content = copy.deepcopy(self.body)
             self.author_parser.set_dom(dom)
         return
 
