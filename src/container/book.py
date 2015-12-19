@@ -15,6 +15,9 @@ class Book(object):
             self.info = ''
             return
 
+        def get_answer_sql(self):
+            return self.answer + Config.sql_answer_filter_extend
+
     class Epub(object):
         def __init__(self):
             self.article_count = 0
@@ -93,7 +96,7 @@ class Book(object):
 
     def __get_question_list(self):
         question_list = [DB.wrap('question', x) for x in DB.get_result_list(self.sql.question)]
-        answer_list = [DB.wrap('answer', x) for x in DB.get_result_list(self.sql.answer)]
+        answer_list = [DB.wrap('answer', x) for x in DB.get_result_list(self.sql.get_answer_sql())]
 
         def merge_answer_into_question():
             question_dict = {x['question_id']: {'question': x.copy(), 'answer_list': [], 'agree': 0} for x in
@@ -116,7 +119,7 @@ class Book(object):
             question['char_count'] = char_count
             return question
 
-        question_list = [add_property(x) for x in merge_answer_into_question()]
+        question_list = [add_property(x) for x in merge_answer_into_question() if len(x['answer_list'])]
         return question_list
 
     def __get_article_list(self):
@@ -127,7 +130,7 @@ class Book(object):
             article['answer_count'] = 1
             return article
 
-        article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.answer)]
+        article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         article_list = [add_property(x) for x in article_list]
         return article_list
 

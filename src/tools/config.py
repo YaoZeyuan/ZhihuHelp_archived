@@ -32,6 +32,7 @@ class Config(object):
     show_private_answer = True
     timeout_download_picture = 10  # 多给知乎服务器点时间，批量生成tex太痛苦了- -
     timeout_download_html = 5
+    sql_extend_answer_filter = '' # 附加到answer_sql语句后，用于对answer进行进一步的筛选（示例: and(agree > 5) ）
 
     _config_store = {}
 

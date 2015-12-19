@@ -55,6 +55,9 @@ class RawBook(object):
         book_list = []
         while len(raw_book_list):
             raw_book = raw_book_list.pop()
+            if not raw_book.epub.answer_count:
+                # 若书中没有答案则直接跳过
+                continue
             if (counter + raw_book.epub.answer_count) < Config.max_answer:
                 book.append(raw_book)
             elif (counter + raw_book.epub.answer_count) == Config.max_answer:
