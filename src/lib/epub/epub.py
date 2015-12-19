@@ -46,7 +46,7 @@ class Epub(object):
     def add_css(self, src):
         Path.copy(src, EpubPath.style_path)
         filename = Path.get_filename(src)
-        new_src = u'css/' + filename
+        new_src = u'style/' + filename
         resource_id = self.opf.add_css(new_src)
         return
 

@@ -121,3 +121,9 @@ div.title-image {
 div.title-image img {
     width: 100%;
 }
+
+/* 禁止信息页中的详情表格分页 */
+div.front-page.detail-info table.margin-center
+{
+    page-break-inside:avoid;
+}
