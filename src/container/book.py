@@ -16,7 +16,7 @@ class Book(object):
             return
 
         def get_answer_sql(self):
-            return self.answer + Config.sql_answer_filter_extend
+            return self.answer + Config.sql_extend_answer_filter
 
     class Epub(object):
         def __init__(self):
