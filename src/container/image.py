@@ -8,6 +8,7 @@ from src.tools.debug import Debug
 from src.tools.extra_tools import ExtraTools
 from src.tools.http import Http
 
+
 class ImageContainer(object):
     def __init__(self, save_path=''):
         self.save_path = save_path

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import copy
-from bs4 import BeautifulSoup
+
 from src.lib.zhihu_parser.content.answer import Answer
 from src.tools.debug import Debug
 

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import sqlite3
 
-
 from src import guide
 from src.rawbook import RawBook
 from src.tools.config import Config
@@ -9,8 +8,6 @@ from src.tools.debug import Debug
 from src.tools.http import Http
 from src.tools.path import Path
 from src.tools.db import DB
-
-from worker import worker_factory
 from login import Login
 from read_list_parser import ReadListParser
 

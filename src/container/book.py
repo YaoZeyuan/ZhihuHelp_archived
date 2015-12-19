@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-import copy
 from src.container.image import ImageContainer
 from src.tools.config import Config
 from src.tools.db import DB
 from src.tools.extra_tools import ExtraTools
 from src.tools.match import Match
 from src.tools.type import Type
+
+
 class Book(object):
     class Sql(object):
         def __init__(self):

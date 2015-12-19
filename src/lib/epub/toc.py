@@ -19,8 +19,9 @@ class Head(Base):
         self.content = self.uid + self.depth
         return self.content
 
+
 class DocTitle(Base):
-    def set_title(self, title = EpubConfig.book_title):
+    def set_title(self, title=EpubConfig.book_title):
         template = self.get_template('doc_title', 'title')
         self.title = template.format(title=title)
         return
@@ -40,7 +41,8 @@ class Ncx(Base):
     @staticmethod
     def create_chapter_item(resource_id, href, title, extend_nav_point=''):
         chapter = {
-            'chapter': dict(zip(('resource_id', 'href', 'title', 'extend_nav_point'), (resource_id, href, title, extend_nav_point))),
+            'chapter': dict(zip(('resource_id', 'href', 'title', 'extend_nav_point'),
+                                (resource_id, href, title, extend_nav_point))),
             'content': ''
         }
         return chapter
@@ -66,15 +68,15 @@ class TOC(Base):
         self.metadata_completed.add('uid')
         return
 
-    def set_depth(self,depth='2'):
+    def set_depth(self, depth='2'):
         self.head.set_depth(depth)
         return
 
-    def add_item(self, resource_id, href, title,extend_nav_point=''):
+    def add_item(self, resource_id, href, title, extend_nav_point=''):
         if self.chapter_list:
             self.chapter_list[-1]['content'] += self.ncx.create_item(resource_id, href, title)
         else:
-            self.ncx.add_item(resource_id, href, title,extend_nav_point)
+            self.ncx.add_item(resource_id, href, title, extend_nav_point)
         return
 
     def create_chapter(self, resource_id, href, title):
@@ -116,11 +118,11 @@ class TOC(Base):
 
     def create_content(self):
         content = {
-            'head':self.head.get_content(),
-            'doc_title':self.doc_title.get_content(),
-            'nav_point':self.ncx.get_content(),
+            'head': self.head.get_content(),
+            'doc_title': self.doc_title.get_content(),
+            'nav_point': self.ncx.get_content(),
         }
-        template = self.get_template('toc','content')
+        template = self.get_template('toc', 'content')
         content = template.format(**content)
         with open(EpubPath.oebps_path + u'/toc.ncx', 'w') as toc:
             toc.write(content)

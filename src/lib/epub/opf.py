@@ -26,9 +26,9 @@ class Metadata(Base):
         return
 
     def get_content(self):
-        for key in ['title','creator','book_id','cover']:
-            if hasattr(self,key):
-                self.content += getattr(self,key)
+        for key in ['title', 'creator', 'book_id', 'cover']:
+            if hasattr(self, key):
+                self.content += getattr(self, key)
         return self.content
 
 
@@ -63,32 +63,35 @@ class Manifest(Base):
         self.content += template.format(resource_id=resource_id, href=href, media_type=media_type)
         return
 
+
 class Spine(Base):
-    def add_item(self,resource_id):
+    def add_item(self, resource_id):
         template = self.get_template('spine', 'item')
         self.content += template.format(resource_id=resource_id)
         return
 
-    def add_item_nolinear(self,resource_id):
+    def add_item_nolinear(self, resource_id):
         template = self.get_template('spine', 'item_nolinear')
         self.content += template.format(resource_id=resource_id)
         return
 
+
 class Guide(Base):
-    def add_cover(self,href, title='Cover'):
+    def add_cover(self, href, title='Cover'):
         template = self.get_template('guide', 'item')
         self.content += template.format(href=href, title=title, item_type='Cover')
         return
 
-    def add_title_page(self,href, title='title_page'):
+    def add_title_page(self, href, title='title_page'):
         template = self.get_template('guide', 'item')
         self.content += template.format(href=href, title=title, item_type='title-page')
         return
 
-    def add_index(self,href, title='index'):
+    def add_index(self, href, title='index'):
         template = self.get_template('guide', 'item')
         self.content += template.format(href=href, title=title, item_type='toc')
         return
+
 
 class OPF(Base):
     def __init__(self):
@@ -100,49 +103,48 @@ class OPF(Base):
         self.uid = EpubConfig.uid
         return
 
-    def set_title(self,title=EpubConfig.book_title):
+    def set_title(self, title=EpubConfig.book_title):
         self.metadata.set_title(title)
         self.metadata_completed.add('title')
         return
 
-    def set_creator(self,creator=EpubConfig.creator):
+    def set_creator(self, creator=EpubConfig.creator):
         self.metadata.set_creator(creator)
         self.metadata_completed.add('creator')
         return
 
-    def set_book_id(self,book_id=EpubConfig.book_id, uid=EpubConfig.uid):
-        self.metadata.set_book_id(book_id,uid=uid)
+    def set_book_id(self, book_id=EpubConfig.book_id, uid=EpubConfig.uid):
+        self.metadata.set_book_id(book_id, uid=uid)
         self.metadata_completed.add('book_id')
         self.uid = uid
         return
 
-
-    def add_html(self,src):
+    def add_html(self, src):
         resource_id = self.manifest.add_html(src)
         self.spine.add_item(resource_id)
         return resource_id
 
-    def add_css(self,src):
+    def add_css(self, src):
         resource_id = self.manifest.add_css(src)
         return resource_id
 
-    def add_image(self,src):
+    def add_image(self, src):
         resource_id = self.manifest.add_image(src)
         return resource_id
 
-    def add_title_page_html(self,src):
+    def add_title_page_html(self, src):
         resource_id = self.manifest.add_html(src)
         self.spine.add_item_nolinear(resource_id)
         self.guide.add_title_page(src)
         return resource_id
 
-    def add_cover_image(self,src):
+    def add_cover_image(self, src):
         resource_id = self.manifest.add_image(src)
         self.guide.add_cover(src)
         self.metadata.set_cover(resource_id)
         return resource_id
 
-    def add_index(self,src):
+    def add_index(self, src):
         resource_id = self.manifest.add_html(src)
         self.guide.add_index(src)
         return resource_id
@@ -164,13 +166,13 @@ class OPF(Base):
 
     def create_content(self):
         content = {
-            'metadata':self.metadata.get_content(),
-            'manifest':self.manifest.get_content(),
-            'spine':self.spine.get_content(),
-            'guide':self.guide.get_content(),
-            'uid':self.uid,
+            'metadata': self.metadata.get_content(),
+            'manifest': self.manifest.get_content(),
+            'spine': self.spine.get_content(),
+            'guide': self.guide.get_content(),
+            'uid': self.uid,
         }
-        template = self.get_template('opf','content')
+        template = self.get_template('opf', 'content')
         content = template.format(**content)
         with open(EpubPath.oebps_path + u'/content.opf', 'w') as opf:
             opf.write(content)

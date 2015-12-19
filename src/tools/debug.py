@@ -2,6 +2,7 @@
 import logging
 import logging.handlers
 import sys
+
 from src.tools.config import Config
 
 
@@ -48,7 +49,7 @@ class Debug(object):
         except UnicodeEncodeError as error:
             Debug.logger.info(u'编码异常')
             Debug.logger.info(u'系统默认编码为：' + sys.getdefaultencoding())
-            #raise error
+            # raise error
         return
 
     @staticmethod

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import copy
+
 from src.container.book import HtmlBookPackage
 from src.container.image import ImageContainer
 from src.lib.epub.epub import Epub

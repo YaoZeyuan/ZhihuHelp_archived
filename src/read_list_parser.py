@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import re
 from src.container.task import SingleTask, TaskPackage
 from src.tools.debug import Debug
 from src.tools.match import Match
@@ -22,6 +21,7 @@ class ReadListParser():
             *   应该将同一book_list里的所有book输出到同一本电子书内，这样才符合当时的本意
             *   那就按章节进行区分吧，由RawBook负责进行生成处理
     """
+
     @staticmethod
     def get_task(command):
         u"""

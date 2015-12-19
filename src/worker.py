@@ -48,8 +48,6 @@ class PageWorker(object):
         finally:
             return max_page
 
-
-
     def create_save_config(self):
         config = {'Answer': self.answer_list, 'Question': self.question_list, }
         return config

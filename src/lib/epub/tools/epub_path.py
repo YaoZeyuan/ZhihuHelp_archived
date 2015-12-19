@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-import shutil
+
 from src.tools.path import Path
 
 
@@ -8,14 +8,13 @@ class EpubPath(object):
     try:
         base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
     except:
-        base_path = os.path.abspath('.') #对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+        base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
 
     meta_inf_path = base_path + u'/META-INF'
     oebps_path = base_path + u'/OEBPS'
     image_path = oebps_path + u'/image'
     html_path = oebps_path + u'/html'
     style_path = oebps_path + u'/style'
-
 
     @staticmethod
     def set_base_path(base_path):

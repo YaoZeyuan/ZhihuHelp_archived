@@ -67,6 +67,6 @@ class Match(object):
             '\n': '',
             '\r': ''
         }
-        for key,value in illegal.items():
+        for key, value in illegal.items():
             filename = filename.replace(key, value)
         return unicode(filename[:50])

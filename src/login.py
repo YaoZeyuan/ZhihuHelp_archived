@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 import cookielib
 import os
-
 import json
 import urllib2
-import guide
 
+import guide
 from src.tools.config import Config
 from src.tools.db import DB
 from src.tools.debug import Debug
@@ -47,8 +46,8 @@ class Login():
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36(KHTML, like Gecko)Chrome/34.0.1847.116 Safari/537.36',
             'Connection': 'keep-alive',
             'X-Requested-With': 'XMLHttpRequest',
-            'Origin':'http://www.zhihu.com',
-            'Referer':'http://www.zhihu.com/',
+            'Origin': 'http://www.zhihu.com',
+            'Referer': 'http://www.zhihu.com/',
         }
         result = Http.get_content(url=r'http://www.zhihu.com/login/email', data=post_data, extra_header=header)
         if not result:

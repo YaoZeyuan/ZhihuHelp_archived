@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from src.lib.epub.tools.epub_path import EpubPath
 
+
 class MimeType(object):
     def __init__(self):
         self.content = u'application/epub+zip'

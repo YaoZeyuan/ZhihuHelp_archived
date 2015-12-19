@@ -5,15 +5,13 @@ import datetime
 
 
 class ExtraTools(object):
-
-
     @staticmethod
     def get_time():
         return str(time.time()).split('.')[0]
 
     @staticmethod
     def get_friendly_time():
-        return datetime.datetime.today().isoformat().split('.')[0].replace(':','：')
+        return datetime.datetime.today().isoformat().split('.')[0].replace(':', '：')
 
     @staticmethod
     def get_today():
@@ -31,6 +29,3 @@ class ExtraTools(object):
         encrypt = hashlib.md5()
         encrypt.update(str(content))
         return encrypt.hexdigest()
-
-
-
