@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from src.lib.epub.tools.base import Base
-from src.lib.epub.tools.epub_config import EpubConfig
-from src.lib.epub.tools.epub_path import EpubPath
+from .tools.base import Base
+from .tools.epub_config import EpubConfig
+from .tools.epub_path import EpubPath
 
 
 class Metadata(Base):

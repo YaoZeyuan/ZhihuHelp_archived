@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from src.lib.epub.tools.epub_config import EpubConfig
-from src.lib.epub.tools.epub_path import EpubPath
+from .tools.epub_config import EpubConfig
+from .tools.epub_path import EpubPath
 
-from src.tools.path import Path
+from .zhihuhelp_tools.path import Path
 
 
 class INF(object):
