@@ -14,7 +14,7 @@ from src.tools.type import Type
 
 class RawBook(object):
     u"""
-    负责数据进行处理,返回处理完毕的html信息和所有待下载图片的imgContainer
+    负责将Book转换为Epub
     """
 
     def __init__(self, raw_sql_book_list):
@@ -23,7 +23,8 @@ class RawBook(object):
         self.book_list = [self.create_book_package(book) for book in book_list]
         return
 
-    def flatten(self, task_list):
+    @staticmethod
+    def flatten(task_list):
         book_list = []
         for kind in Type.type_list:
             if not kind in task_list:
@@ -31,7 +32,8 @@ class RawBook(object):
             book_list += task_list[kind]
         return book_list
 
-    def volume_book(self, raw_book_list):
+    @staticmethod
+    def volume_book(raw_book_list):
         def split(raw_book, surplus, index=1):
             if (raw_book.epub.answer_count <= surplus) or (raw_book.epub.article_count <= 1):
                 raw_book.epub.split_index = index
