@@ -10,6 +10,7 @@ from src.tools.path import Path
 from src.tools.db import DB
 from login import Login
 from read_list_parser import ReadListParser
+from src.worker import worker_factory
 
 
 class ZhihuHelp(object):
@@ -23,7 +24,8 @@ class ZhihuHelp(object):
         Config._load()
         return
 
-    def init_config(self):
+    @staticmethod
+    def init_config():
         login = Login()
         if Config.remember_account:
             print u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量)'
@@ -53,7 +55,8 @@ class ZhihuHelp(object):
                 counter += 1
         return
 
-    def create_book(self, command, counter):
+    @staticmethod
+    def create_book(command, counter):
         Path.reset_path()
 
         Debug.logger.info(u"开始制作第 {} 本电子书".format(counter))
@@ -61,7 +64,7 @@ class ZhihuHelp(object):
         task_package = ReadListParser.get_task(command)  # 分析命令
 
         if not task_package.is_work_list_empty():
-            # worker_factory(task_package.work_list)  # 执行抓取程序
+            worker_factory(task_package.work_list)  # 执行抓取程序
             Debug.logger.info(u"网页信息抓取完毕")
 
         if not task_package.is_book_list_empty():
@@ -81,7 +84,8 @@ class ZhihuHelp(object):
                 DB.cursor.executescript(sql_script.read())
             DB.commit()
 
-    def check_update(self):  # 强制更新
+    @staticmethod
+    def check_update():  # 强制更新
         u"""
             *   功能
                 *   检测更新。

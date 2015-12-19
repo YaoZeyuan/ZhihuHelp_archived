@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.tools.path import Path
+from .epub_path import EpubPath
 
 
 class EpubConfig(object):
@@ -7,7 +7,7 @@ class EpubConfig(object):
     用于记录epub创建过程中所需用到的常量
     比如，常见模板的实际路径
     """
-    base_path = Path.base_path + u'/src/lib/epub/template'
+    base_path = EpubPath.base_path + u'/template'
     # META-INF
     container_uri = base_path + u'/META-INF/container/container.xml'
     duokan_container_uri = base_path + u'/META-INF/duokan_container/duokan-extension.xml'

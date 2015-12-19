@@ -5,7 +5,7 @@ from src.container.book import HtmlBookPackage
 from src.container.image import ImageContainer
 from src.lib.epub.epub import Epub
 from src.tools.config import Config
-from src.tools.create_html import CreateHtml
+from src.tools.create_html import HtmlCreator
 from src.tools.match import Match
 from src.tools.path import Path
 from src.tools.template_config import TemplateConfig
@@ -92,7 +92,7 @@ class RawBook(object):
         index = 0
         epub_book_list = []
         image_container = ImageContainer()
-        creator = CreateHtml(image_container)
+        creator = HtmlCreator(image_container)
         for book in book_list:
             epub_book = self.book_to_html(book, index, creator)
             epub_book_list.append(epub_book)
@@ -118,6 +118,7 @@ class RawBook(object):
         image_tmp_path = Path.image_pool_path + u'/'
         epub.set_creator(u'ZhihuHelp1.7.0')
         epub.set_book_id()
+        epub.set_output_path(Path.result_path)
         epub.add_css(Path.base_path + u'/www/css/markdown.css')
         epub.add_css(Path.base_path + u'/www/css/customer.css')
         epub.add_css(Path.base_path + u'/www/css/normalize.css')

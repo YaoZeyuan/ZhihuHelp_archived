@@ -2,14 +2,14 @@
 import os
 import zipfile
 
-from src.lib.epub.inf import INF
-from src.lib.epub.mime_type import MimeType
-from src.lib.epub.opf import OPF
-from src.lib.epub.toc import TOC
-from src.lib.epub.tools.epub_config import EpubConfig
-from src.lib.epub.tools.epub_path import EpubPath
-from src.tools.debug import Debug
-from src.tools.path import Path
+from .inf import INF
+from .mime_type import MimeType
+from .opf import OPF
+from .toc import TOC
+from .tools.epub_config import EpubConfig
+from .tools.epub_path import EpubPath
+from .zhihuhelp_tools.debug import Debug
+from .zhihuhelp_tools.path import Path
 
 
 class Epub(object):
@@ -28,6 +28,11 @@ class Epub(object):
         Path.mkdir(u'./' + self.title)
         Path.chdir(u'./' + self.title)
         EpubPath.init_epub_path(Path.get_pwd())
+        return
+
+    @staticmethod
+    def set_output_path(output_path):
+        EpubPath.set_output_path(output_path)
         return
 
     def add_html(self, src, title):
@@ -78,7 +83,7 @@ class Epub(object):
 
     def zip_to_epub(self):
         epub_name = self.title + u'.epub'
-        file_path = Path.result_path + '/' + epub_name
+        file_path = EpubPath.output_path + '/' + epub_name
         EpubPath.reset_path()
         epub = zipfile.ZipFile(file=file_path, mode='w', compression=zipfile.ZIP_STORED, allowZip64=True)
         epub.write('./mimetype')

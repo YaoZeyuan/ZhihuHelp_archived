@@ -8,7 +8,7 @@ from src.tools.template_config import TemplateConfig
 from src.tools.type import Type
 
 
-class CreateHtml(object):
+class HtmlCreator(object):
     u"""
     工具类，用于生成html页面
     """
@@ -36,7 +36,7 @@ class CreateHtml(object):
                     new_image = img + '</img>'
                     content = content.replace(img, new_image)
                     continue
-            src_download = CreateHtml.fix_image_src(src)
+            src_download = HtmlCreator.fix_image_src(src)
             if src_download:
                 filename = self.image_container.add(src_download)
             else:
