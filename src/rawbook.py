@@ -5,7 +5,7 @@ from src.container.book import HtmlBookPackage
 from src.container.image import ImageContainer
 from src.lib.epub.epub import Epub
 from src.tools.config import Config
-from src.tools.create_html import HtmlCreator
+from src.tools.html_creator import HtmlCreator
 from src.tools.match import Match
 from src.tools.path import Path
 from src.tools.template_config import TemplateConfig

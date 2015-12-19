@@ -8,6 +8,6 @@ class MimeType(object):
         return
 
     def create(self):
-        with open(EpubPath.base_path + '/mimetype', 'w') as mimetype:
+        with open(EpubPath.work_path + '/mimetype', 'w') as mimetype:
             mimetype.write(self.content)
         return
