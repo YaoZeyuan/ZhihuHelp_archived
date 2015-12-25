@@ -49,18 +49,18 @@ div.extra-info {
 div.author-base {
     float: left;
     width: 100%;
-    margin: 2em 0;
-    font-size: 1.25em;
+    margin: 1em 0;
+    font-size: 16px;
     vertical-align: middle;
 }
 
 span.author-sign {
     margin-left: 1em;
-    font-family: "DK-KAITI", '楷体';
+    font-family: 'DK-KAITI', '楷体';
 }
 
 span.author-name a {
-    font-family: "DK-HEITI", 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体;
+    font-family: 'DK-HEITI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体;
     color: #3d3e45;
     font-weight: bold;
 }
@@ -68,6 +68,11 @@ span.author-name a {
 div.author-logo {
     float: right;
 }
+
+div.author-logo img{
+    vertical-align: middle;
+}
+
 
 /* 问题详情 */
 
@@ -77,11 +82,11 @@ div.question {
 
 div.question-title {
     width: 100%;
-    overflow: hidden
+    overflow: hidden;
 }
 
 div.question-title h1 {
-    font-family: "DK-SONGTI", 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
+    font-family: 'DK-SONGTI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
     color: #FFFFFF;
     background-color: #3982C6;
     vertical-align: middle;
@@ -97,15 +102,19 @@ div.question-info {
     font-family: 'DK-SONGTI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
     float: left;
     color: #FFF !important;
-    font-size: 1.25em;
+    font-size: 1em;
     margin: 0 1em;
+}
+
+div.question-info a{
+    color : #CCC;
 }
 
 /* 答案内容 */
 div.content {
-    font-family: "DK-SONGTI", 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体;
+    font-family: 'DK-SONGTI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体;
     color: #000;
-    font-size: 1.25em;
+    font-size: 16px;
 }
 
 div.content img {

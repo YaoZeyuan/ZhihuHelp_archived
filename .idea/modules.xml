@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/ZhihuHelp.iml" filepath="$PROJECT_DIR$/.idea/ZhihuHelp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ZhihuHelp__Python.iml" filepath="$PROJECT_DIR$/.idea/ZhihuHelp__Python.iml" />
     </modules>
   </component>
