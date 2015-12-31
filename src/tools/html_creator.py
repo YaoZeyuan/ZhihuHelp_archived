@@ -51,9 +51,6 @@ class HtmlCreator(object):
 
     @staticmethod
     def fix_image_src(href):
-        if 'https' in href[:5]:  # 去除https
-            href = 'http' + href[5:]
-
         if Config.picture_quality == 0:
             return ''
         if 'equation?tex=' in href:  # tex图片需要额外加上http协议头

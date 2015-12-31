@@ -19,6 +19,7 @@ class PageWorker(object):
         self.task_complete_set = set()
         self.work_set = set()  # 待抓取网址池
         self.work_complete_set = set()  # 已完成网址池
+        self.content_list = []  # 用于存放已抓取的内容
         self.answer_list = []
         self.question_list = []
 
@@ -107,7 +108,7 @@ class PageWorker(object):
         content = Http.get_content(target_url)
         if not content:
             return
-        self.parse_content(content)
+        self.content_list.append(content)
         Debug.logger.debug(u'{}的内容抓取完成'.format(target_url))
         self.work_complete_set.add(target_url)
         return
@@ -124,6 +125,14 @@ class PageWorker(object):
         argv = {'func': self.worker,  # 所有待存入数据库中的数据都应当是list
                 'iterable': a, }
         Control.control_center(argv, self.work_set)
+        Debug.logger.info(u"所有内容抓取完毕，开始对页面进行解析")
+        i = 0
+        for content in self.content_list:
+            i += 1
+            self.logger_info = Debug.logger.info(u"正在解析第{}/{}张页面".format(i, self.content_list.__len__()))
+            self.info = self.logger_info
+            self.parse_content(content)
+        Debug.logger.info(u"网页内容解析完毕")
         return
 
     def catch_info(self, target_url):
