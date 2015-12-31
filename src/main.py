@@ -99,6 +99,8 @@ class ZhihuHelp(object):
         print   u"检查更新。。。"
         try:
             content = Http.get_content(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt")
+            if not content:
+                raise Exception('HttpError')
         except:
             return
         time, url = [x.strip() for x in content.split('\n')]

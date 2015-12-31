@@ -297,7 +297,7 @@ class ColumnWorker(PageWorker):
             return
         result = Match.column(target_url)
         column_id = result.group('column_id')
-        content = Http.get_content('http://zhuanlan.zhihu.com/api/columns/' + column_id)
+        content = Http.get_content('https://zhuanlan.zhihu.com/api/columns/' + column_id)
         if not content:
             return
         raw_info = json.loads(content)
@@ -318,7 +318,7 @@ class ColumnWorker(PageWorker):
         info['description'] = raw_info['description']
         self.info_list.append(info)
         self.task_complete_set.add(target_url)
-        detect_url = 'http://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(column_id)
+        detect_url = 'https://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(column_id)
         for i in range(info['article'] / 10 + 1):
             self.work_set.add(detect_url + str(i * 10))
         return
@@ -337,7 +337,7 @@ class ColumnWorker(PageWorker):
             article['column_id'] = info['column']['slug']
             article['name'] = info['column']['name']
             article['article_id'] = info['slug']
-            article['href'] = u'http://zhuanlan.zhihu.com/{column_id}/{article_id}'.format(**article)
+            article['href'] = u'https://zhuanlan.zhihu.com/{column_id}/{article_id}'.format(**article)
             article['title'] = info['title']
             article['title_image'] = info['titleImage']
             article['content'] = info['content']

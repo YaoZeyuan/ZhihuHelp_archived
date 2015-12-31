@@ -63,5 +63,5 @@ class SimpleAnswer(Answer):
         href = self.get_attr(href_tag, 'href')
         self.parse_question_id(href)
         self.parse_answer_id(href)
-        self.info['href'] = "http://www.zhihu.com/question/{question_id}/answer/{answer_id}".format(**self.info)
+        self.info['href'] = "https://www.zhihu.com/question/{question_id}/answer/{answer_id}".format(**self.info)
         return

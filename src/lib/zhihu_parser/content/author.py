@@ -39,7 +39,7 @@ class Author(ParserTools):
     def create_anonymous_info(self):
         self.info['author_id'] = u"coder'sGirlFriend~"
         self.info['author_sign'] = u''
-        self.info['author_logo'] = u'http://pic1.zhimg.com/da8e974dc_s.jpg'
+        self.info['author_logo'] = u'https://pic1.zhimg.com/da8e974dc_s.jpg'
         self.info['author_name'] = u'匿名用户'
         return
 

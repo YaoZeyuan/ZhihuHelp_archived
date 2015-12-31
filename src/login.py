@@ -21,7 +21,7 @@ class Login():
         urllib2.install_opener(self.opener)
 
     def login(self, account, password, captcha=''):
-        content = Http.get_content('http://www.zhihu.com/')
+        content = Http.get_content('https://www.zhihu.com/')
         xsrf = Match.xsrf(content)
         if not xsrf:
             Debug.logger.info(u'登陆失败')
@@ -46,10 +46,10 @@ class Login():
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36(KHTML, like Gecko)Chrome/34.0.1847.116 Safari/537.36',
             'Connection': 'keep-alive',
             'X-Requested-With': 'XMLHttpRequest',
-            'Origin': 'http://www.zhihu.com',
-            'Referer': 'http://www.zhihu.com/',
+            'Origin': 'https://www.zhihu.com',
+            'Referer': 'https://www.zhihu.com/',
         }
-        result = Http.get_content(url=r'http://www.zhihu.com/login/email', data=post_data, extra_header=header)
+        result = Http.get_content(url=r'https://www.zhihu.com/login/email', data=post_data, extra_header=header)
         if not result:
             Debug.logger.info(u'登陆失败，请敲击回车重新登陆')
             return False
@@ -82,7 +82,7 @@ class Login():
 
     @staticmethod
     def get_captcha():
-        content = Http.get_content('http://www.zhihu.com/captcha.gif')  # 开始拉取验证码
+        content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
         with open(captcha_path, 'wb') as image:
             image.write(content)
