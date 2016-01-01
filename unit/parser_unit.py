@@ -43,6 +43,11 @@ unit ={
         'parser':TopicParser,
     },
     'collection':{
+        'src_answer': './unit_html/collection.html',
+        'src_info': './unit_html/collection.html',
+        'parser': CollectionParser,
+    },
+    'private_collection': {
         'src_answer':'./unit_html/private_collection.html',
         'src_info':'./unit_html/private_collection.html',
         'parser':CollectionParser,

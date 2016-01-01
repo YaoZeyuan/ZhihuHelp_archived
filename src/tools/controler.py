@@ -16,10 +16,7 @@ class Control(object):
                     Control.debug_control(argv)
                 else:
                     Control.release_control(argv)
-                # try:
                 Control.thread_pool.map(**argv)
-                # except Exception:
-                #    Debug.logger.info(u'多线程控制器出现异常，稍后重试')
         return
 
     @staticmethod

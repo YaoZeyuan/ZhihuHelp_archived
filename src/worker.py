@@ -108,6 +108,7 @@ class PageWorker(object):
         content = Http.get_content(target_url)
         if not content:
             return
+        content = Match.fix_html(content)  # 需要修正其中的<br>标签，避免爆栈
         self.content_list.append(content)
         Debug.logger.debug(u'{}的内容抓取完成'.format(target_url))
         self.work_complete_set.add(target_url)
@@ -129,8 +130,7 @@ class PageWorker(object):
         i = 0
         for content in self.content_list:
             i += 1
-            self.logger_info = Debug.logger.info(u"正在解析第{}/{}张页面".format(i, self.content_list.__len__()))
-            self.info = self.logger_info
+            Debug.print_in_single_line(u"正在解析第{}/{}张页面".format(i, self.content_list.__len__()))
             self.parse_content(content)
         Debug.logger.info(u"网页内容解析完毕")
         return
@@ -142,7 +142,6 @@ class PageWorker(object):
         argv = {'func': self.catch_info, 'iterable': self.info_url_set, }
         Control.control_center(argv, self.info_url_set)
         return
-
 
 class QuestionWorker(PageWorker):
     def parse_content(self, content):

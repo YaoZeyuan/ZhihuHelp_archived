@@ -43,6 +43,7 @@ class ParserTools(object):
     def get_tag_content(tag):
         u"""
         用于提取bs中tag.contents的内容
+        需要对<br>进行预处理，将<br>换成<br/>,否则会爆栈，参考http://palydawn.blog.163.com/blog/static/1829690562012112285248753/
         """
         return "".join([unicode(x) for x in tag.contents])
 
