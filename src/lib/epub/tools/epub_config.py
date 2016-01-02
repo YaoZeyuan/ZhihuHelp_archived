@@ -46,6 +46,12 @@ class EpubConfig(object):
     ### ncx
     ncx_item_uri = base_path + u'/OEBPS/toc/navMap/item.xml'
 
+    # Directory
+    directory_html_uri = base_path + u'/directory/item.html'
+    directory_chapter_uri = base_path + u'/directory/chapter.html'
+    directory_finish_chapter_uri = base_path + u'/directory/finish_chapter.html'
+    directory_content_uri = base_path + u'/directory/content.html'
+
     # Default
     book_id = u'create_by_yaozeyuan'
     book_title = u'no_title'

@@ -27,9 +27,8 @@ class RawBook(object):
     def flatten(task_list):
         book_list = []
         for kind in Type.type_list:
-            if not kind in task_list:
-                continue
-            book_list += task_list[kind]
+            if kind in task_list:
+                book_list += task_list[kind]
         return book_list
 
     @staticmethod

@@ -2,6 +2,7 @@
 import os
 import zipfile
 
+from .directory import Directory
 from .inf import INF
 from .mime_type import MimeType
 from .opf import OPF
@@ -18,9 +19,22 @@ class Epub(object):
         self.meta_inf = INF()
         self.opf = OPF()
         self.toc = TOC()
+        self.directory = Directory()
         self.title = title
         self.set_title(title)
         self.init_path()
+        self.init_index()
+        return
+
+    def init_index(self):
+        # 目录先放图片文件夹里
+        open(EpubPath.style_path + u'/index.xhtml', 'w')
+        self.add_html(EpubPath.style_path + u'/index.xhtml', u'目录')
+        return
+
+    def write_index(self):
+        with open(EpubPath.html_path + u'/index.xhtml', 'w') as index:
+            index.write(self.directory.get_content())
         return
 
     def init_path(self):
@@ -40,6 +54,7 @@ class Epub(object):
         filename = Path.get_filename(src)
         new_src = u'html/' + filename
         resource_id = self.opf.add_html(new_src)
+        self.directory.add_html(new_src, title)
         self.toc.add_item(resource_id, new_src, title)
         return
 
@@ -62,6 +77,7 @@ class Epub(object):
         filename = Path.get_filename(src)
         new_src = u'html/' + filename
         resource_id = self.opf.add_title_page_html(new_src)
+        self.directory.add_html(new_src, title)
         self.toc.add_item(resource_id, new_src, title)
         return
 
@@ -78,6 +94,7 @@ class Epub(object):
         self.mime_type.create()
         self.opf.create()
         self.toc.create()
+        self.write_index()
         self.zip_to_epub()
         return
 
@@ -101,10 +118,12 @@ class Epub(object):
         filename = Path.get_filename(src)
         new_src = u'html/' + filename
         resource_id = self.opf.add_title_page_html(new_src)
+        self.directory.create_chapter(new_src, title)
         self.toc.create_chapter(resource_id, new_src, title)
         return
 
     def finish_chapter(self):
+        self.directory.finish_chapter()
         self.toc.finish_chapter()
         return
 
