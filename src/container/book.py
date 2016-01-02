@@ -53,24 +53,43 @@ class Book(object):
     def catch_info(self):
         info = {}
         if self.sql.info:
-            info = DB.cursor.execute(self.sql.info).fetchone()
-            info = DB.wrap(Type.info_table[self.kind], info)
+            if self.kind in [Type.question, Type.answer]:
+                info = self.catch_question_book_info(self.sql.info)
+            elif self.kind == Type.article:
+                info = self.catch_article_book_info(self.sql.info)
+            else:
+                info = DB.cursor.execute(self.sql.info).fetchone()
+                info = DB.wrap(Type.info_table[self.kind], info)
         self.set_info(info)
         return
+
+    def catch_question_book_info(self, sql):
+        info_list = DB.cursor.execute(self.sql.info).fetchall()
+        info_list = [DB.wrap(Type.question, item) for item in info_list]
+        info = {}
+        info['title'] = '_'.join([str(item['title']) for item in info_list])
+        info['id'] = '_'.join([str(item['question_id']) for item in info_list])
+        return info
+
+    def catch_article_book_info(self, sql):
+        info_list = DB.cursor.execute(self.sql.info).fetchall()
+        info_list = [DB.wrap(Type.article, item) for item in info_list]
+        info = {}
+        info['title'] = '_'.join([str(item['title']) for item in info_list])
+        info['id'] = '_'.join([str(item['article_id']) for item in info_list])
+        return info
 
     def set_info(self, info):
         self.info.update(info)
         if self.kind == Type.question:
-            self.epub.title = u'知乎问题集锦({})'.format(ExtraTools.get_friendly_time())
-            self.epub.id = ExtraTools.get_time()
+            self.epub.title = u'知乎问题集锦({})'.format(info['title'])
+            self.epub.id = info['id']
         elif self.kind == Type.answer:
-            self.epub.title = u'知乎回答集锦({})'.format(ExtraTools.get_friendly_time())
-            self.epub.id = ExtraTools.get_time()
+            self.epub.title = u'知乎回答集锦({})'.format(info['title'])
+            self.epub.id = info['id']
         elif self.kind == Type.article:
-            self.epub.title = u'知乎专栏文章集锦({})'.format(ExtraTools.get_friendly_time())
-            self.epub.id = ExtraTools.get_time()
-        if self.kind in [Type.answer, Type.question, Type.article]:
-            self.info['title'] = self.epub.title
+            self.epub.title = u'知乎专栏文章集锦({})'.format(info['title'])
+            self.epub.id = info['id']
 
         if self.kind == Type.topic:
             self.epub.title = u'话题_{}({})'.format(info['title'], info['topic_id'])

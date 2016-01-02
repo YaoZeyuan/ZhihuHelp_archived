@@ -80,7 +80,7 @@ class ReadListParser():
 
             task.spider.href = 'https://www.zhihu.com/question/{}'.format(question_id)
             task.book.kind = 'question'
-            task.book.sql.info = ''
+            task.book.sql.info = ' question_id = "{}" '.format(question_id)
             task.book.sql.question = 'question_id = "{}"'.format(question_id)
             task.book.sql.answer = 'question_id = "{}"'.format(question_id)
             return task
@@ -94,9 +94,9 @@ class ReadListParser():
             task.spider.href = 'https://www.zhihu.com/question/{}/answer/{}'.format(question_id, answer_id)
 
             task.book.kind = 'answer'
-            task.book.sql.info = ''
-            task.book.sql.question = 'question_id = "{}"'.format(question_id)
-            task.book.sql.answer = 'question_id = "{}" and answer_id = "{}"'.format(question_id, answer_id)
+            task.book.sql.info = ' question_id = "{}" '.format(question_id)
+            task.book.sql.question = ' question_id = "{}" '.format(question_id)
+            task.book.sql.answer = ' question_id = "{}" and answer_id = "{}" '.format(question_id, answer_id)
             return task
 
         def parse_author(command):
@@ -149,7 +149,7 @@ class ReadListParser():
             task.kind = 'article'
             task.spider.href = 'https://zhuanlan.zhihu.com/{}/{}'.format(column_id, article_id)
             task.book.kind = 'article'
-            task.book.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
+            task.book.sql.info = ' column_id = "{}" and article_id = "{}" '.format(column_id, article_id)
             task.book.sql.question = ''
             task.book.sql.answer = ' column_id = "{}" and article_id = "{}" '.format(column_id, article_id)
             return task

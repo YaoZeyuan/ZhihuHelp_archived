@@ -55,7 +55,7 @@ class Config(object):
 
     @staticmethod
     def _sync():
-        for attr in dir(Config):
-            if not '_' in attr[:2]:
+        for attr in Config.__dict__:
+            if '_' not in attr[:2]:
                 Config._config_store[attr] = Config.__dict__[attr]
         return
