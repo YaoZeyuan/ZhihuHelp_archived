@@ -26,6 +26,22 @@ img[src=''], img[src$='./images/'] {
     margin: 0 auto;
 }
 
+/* 目录页面 */
+/* 隐藏多余的『目录』两字 */
+div.index-content > li {
+    display: none;
+}
+
+div.index-content a {
+    font-size: 1em;
+}
+
+div.index-content ul > li > a {
+    font-size: 1em;
+    font-family: 'DK-HEITI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 黑体;
+    color: #3d3e45;
+}
+
 /* 首页描述信息 */
 div.front-page.description
 {
@@ -47,8 +63,6 @@ div.extra-info {
 
 /* 用户信息 */
 div.author-base {
-    float: left;
-    width: 100%;
     margin: 1em 0;
     font-size: 16px;
     vertical-align: middle;
@@ -72,7 +86,6 @@ div.author-logo {
 div.author-logo img{
     vertical-align: middle;
 }
-
 
 /* 问题详情 */
 
