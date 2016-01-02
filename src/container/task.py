@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.container.book import Book
+from src.container.initialbook import InitialBook
 from src.tools.type import Type
 
 
@@ -17,7 +17,7 @@ class SingleTask(object):
     def __init__(self):
         self.kind = ''
         self.spider = Spider()
-        self.book = Book()
+        self.book = InitialBook()
         return
 
 
@@ -48,7 +48,7 @@ class TaskPackage():
 
     def merge_article_book_list(self):
         book_list = self.book_list[Type.article]
-        book = Book()
+        book = InitialBook()
         answer = [item.sql.answer for item in book_list]
         info = [item.sql.info for item in book_list]
         book.kind = Type.article
@@ -59,7 +59,7 @@ class TaskPackage():
 
     def merge_question_book_list(self, book_type):
         book_list = self.book_list[book_type]
-        book = Book()
+        book = InitialBook()
         question = [item.sql.question for item in book_list]
         answer = [item.sql.answer for item in book_list]
         info = [item.sql.info for item in book_list]

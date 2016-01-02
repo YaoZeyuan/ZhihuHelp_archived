@@ -2,7 +2,7 @@
 import sqlite3
 
 from src import guide
-from src.rawbook import RawBook
+from src.book import Book
 from src.tools.config import Config
 from src.tools.debug import Debug
 from src.tools.http import Http
@@ -69,7 +69,7 @@ class ZhihuHelp(object):
 
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始自数据库中生成电子书数据")
-            book = RawBook(task_package.book_list)
+            book = Book(task_package.book_list)
             book.create()
         return
 

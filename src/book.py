@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import copy
 
-from src.container.book import HtmlBookPackage
+from src.container.initialbook import HtmlBookPackage
 from src.container.image import ImageContainer
 from src.lib.epub.epub import Epub
 from src.tools.config import Config
@@ -12,7 +12,7 @@ from src.tools.template_config import TemplateConfig
 from src.tools.type import Type
 
 
-class RawBook(object):
+class Book(object):
     u"""
     负责将Book转换为Epub
     """

@@ -7,7 +7,7 @@ from src.tools.match import Match
 from src.tools.type import Type
 
 
-class Book(object):
+class InitialBook(object):
     class Sql(object):
         def __init__(self):
             self.question = ''
@@ -33,8 +33,8 @@ class Book(object):
 
     def __init__(self):
         self.kind = ''
-        self.sql = Book.Sql()
-        self.epub = Book.Epub()
+        self.sql = InitialBook.Sql()
+        self.epub = InitialBook.Epub()
         self.info = {}
         self.article_list = []
         self.page_list = []
