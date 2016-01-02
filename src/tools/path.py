@@ -18,7 +18,7 @@ class Path(object):
 
     html_pool_path = base_path + u'/知乎电子书临时资源库/知乎网页池'
     image_pool_path = base_path + u'/知乎电子书临时资源库/知乎图片池'
-    result_path = base_path + u'./知乎助手生成的电子书'
+    result_path = base_path + u'/知乎助手生成的电子书'
 
     @staticmethod
     def reset_path():
@@ -94,7 +94,7 @@ class Path(object):
 
         Path.html_pool_path = Path.base_path + u'/知乎电子书临时资源库/知乎网页池'
         Path.image_pool_path = Path.base_path + u'/知乎电子书临时资源库/知乎图片池'
-        Path.result_path = Path.base_path + u'./知乎助手生成的电子书'
+        Path.result_path = Path.base_path + u'/知乎助手生成的电子书'
 
         return
 
