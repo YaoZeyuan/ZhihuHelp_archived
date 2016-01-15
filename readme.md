@@ -4,9 +4,7 @@
 ![forks](https://img.shields.io/github/forks/YaoZeyuan/ZhihuHelp.svg) ![stars](https://img.shields.io/github/stars/YaoZeyuan/ZhihuHelp.svg) ![issues](https://img.shields.io/github/issues/YaoZeyuan/ZhihuHelp.svg)
 
 
-<center>
-  由 <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/YaoZeyuan/ZhihuHelp__Python" property="cc:attributionName" rel="cc:attributionURL">姚泽源</a> 创作，采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a>进行许可。
-</center>
+由 [姚泽源](http://www.yaozeyuan.online/) 创作，采用 [MIT](http://opensource.org/licenses/MIT) 协议进行许可。
 
 
 *   知乎助手构建于python标准库之上，旨在用最简洁的方式帮助知友将知乎内容转换为便于移动平台上通用的Epub电子书
