@@ -83,7 +83,11 @@ class Login():
     @staticmethod
     def get_captcha():
         content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
-        captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
+        if platform.system() == "Windows":
+            captcha_path = Path.base_path + u'\\captcha.gif'
+        else:
+            captcha_path = Path.base_path + u'/captcha.gif'
+
         with open(captcha_path, 'wb') as image:
             image.write(content)
         print u'请输入您所看到的验证码'
