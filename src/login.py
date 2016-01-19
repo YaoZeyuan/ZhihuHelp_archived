@@ -3,6 +3,7 @@ import cookielib
 import os
 import platform
 import sys
+import webbrowser
 import json
 import urllib2
 
@@ -85,8 +86,7 @@ class Login():
     @staticmethod
     def get_captcha():
         content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
-        captcha_path = '"' + Path.base_path + u'\captcha.gif' + '"'
-        os.system(u'"{}"'.format(captcha_path).encode(sys.stdout.encoding))
+        captcha_path = Path.base_path + u'\我是登陆知乎时的验证码.gif'
 
         with open(captcha_path, 'wb') as image:
             image.write(content)
@@ -94,18 +94,7 @@ class Login():
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
         print captcha_path
-        Debug.logger.info(u"正在调用外部程序打开验证码...")
-        if platform.system() == "Linux":
-            Debug.logger.info(u"Command: xdg-open %s &" % captcha_path)
-            os.system("xdg-open %s &" % captcha_path)
-        elif platform.system() in ["Darwin", "SunOS", "FreeBSD", "Unix", "OpenBSD", "NetBSD"]:
-            Debug.logger.info(u"Command: open %s &" % captcha_path)
-            os.system("open %s &" % captcha_path)
-        elif platform.system() == "Windows":
-            os.system(r'"%s"' % captcha_path)
-        else:
-            print(u"我们无法探测你的作业系统，请自行打开验证码 %s 文件，并输入验证码。" % os.path.join(os.path.join(os.getcwd(), captcha_path)))
-
+        webbrowser.open(u'file:///' + captcha_path)
         print u'如果不需要输入验证码可点按回车跳过此步'
         captcha = raw_input()
         return captcha
