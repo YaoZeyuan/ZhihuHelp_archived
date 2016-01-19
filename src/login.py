@@ -2,6 +2,7 @@
 import cookielib
 import os
 import platform
+import sys
 import json
 import urllib2
 
@@ -84,7 +85,8 @@ class Login():
     @staticmethod
     def get_captcha():
         content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
-        captcha_path = Path.base_path + u'/cap tcha.gif'
+        captcha_path = '"' + Path.base_path + u'\captcha.gif' + '"'
+        os.system(u'"{}"'.format(captcha_path).encode(sys.stdout.encoding))
 
         with open(captcha_path, 'wb') as image:
             image.write(content)
