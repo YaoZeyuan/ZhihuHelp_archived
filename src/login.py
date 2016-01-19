@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import cookielib
-import os, platform
+import os
+import platform
 import json
 import urllib2
 
@@ -83,10 +84,7 @@ class Login():
     @staticmethod
     def get_captcha():
         content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
-        # if platform.system() == "Windows":
-        #    captcha_path = Path.base_path + u'\\captcha.gif'
-        # else:
-        captcha_path = Path.base_path + u'/captcha.gif'
+        captcha_path = Path.base_path + u'/cap tcha.gif'
 
         with open(captcha_path, 'wb') as image:
             image.write(content)
@@ -98,21 +96,14 @@ class Login():
         if platform.system() == "Linux":
             Debug.logger.info(u"Command: xdg-open %s &" % captcha_path)
             os.system("xdg-open %s &" % captcha_path)
-        elif platform.system() == "Darwin":
+        elif platform.system() == "Darwin" or platform.system() == "SunOS" or \
+                platform.system() == "FreeBSD" or platform.system() == "Unix" or \
+                platform.system() == "Unix" or platform.system() == "OpenBSD" or \
+                platform.system() == "NetBSD":
             Debug.logger.info(u"Command: open %s &" % captcha_path)
             os.system("open %s &" % captcha_path)
-        elif platform.system() == "SunOS":
-            os.system("open %s &" % captcha_path)
-        elif platform.system() == "FreeBSD":
-            os.system("open %s &" % captcha_path)
-        elif platform.system() == "Unix":
-            os.system("open %s &" % captcha_path)
-        elif platform.system() == "OpenBSD":
-            os.system("open %s &" % captcha_path)
-        elif platform.system() == "NetBSD":
-            os.system("open %s &" % captcha_path)
         elif platform.system() == "Windows":
-            os.system("%s" % captcha_path)
+            os.system(r'"%s"' % captcha_path)
         else:
             print(u"我们无法探测你的作业系统，请自行打开验证码 %s 文件，并输入验证码。" % os.path.join(os.path.join(os.getcwd(), captcha_path)))
 

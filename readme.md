@@ -162,7 +162,7 @@
 
 ##依赖
 
-BeautifulSoup4
+仅要求python2.7环境，不依赖任何第三方组件
 
 ##Todo List
 
