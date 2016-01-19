@@ -83,10 +83,10 @@ class Login():
     @staticmethod
     def get_captcha():
         content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
-        if platform.system() == "Windows":
-            captcha_path = Path.base_path + u'\\captcha.gif'
-        else:
-            captcha_path = Path.base_path + u'/captcha.gif'
+        # if platform.system() == "Windows":
+        #    captcha_path = Path.base_path + u'\\captcha.gif'
+        # else:
+        captcha_path = Path.base_path + u'/captcha.gif'
 
         with open(captcha_path, 'wb') as image:
             image.write(content)
@@ -94,7 +94,7 @@ class Login():
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
         print captcha_path
-        Debug.logger.info("正在调用外部程序打开验证码...")
+        Debug.logger.info(u"正在调用外部程序打开验证码...")
         if platform.system() == "Linux":
             Debug.logger.info(u"Command: xdg-open %s &" % captcha_path)
             os.system("xdg-open %s &" % captcha_path)
