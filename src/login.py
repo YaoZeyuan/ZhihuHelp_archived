@@ -96,10 +96,7 @@ class Login():
         if platform.system() == "Linux":
             Debug.logger.info(u"Command: xdg-open %s &" % captcha_path)
             os.system("xdg-open %s &" % captcha_path)
-        elif platform.system() == "Darwin" or platform.system() == "SunOS" or \
-                platform.system() == "FreeBSD" or platform.system() == "Unix" or \
-                platform.system() == "Unix" or platform.system() == "OpenBSD" or \
-                platform.system() == "NetBSD":
+        elif platform.system() in ["Darwin", "SunOS", "FreeBSD", "Unix", "OpenBSD", "NetBSD"]:
             Debug.logger.info(u"Command: open %s &" % captcha_path)
             os.system("open %s &" % captcha_path)
         elif platform.system() == "Windows":
