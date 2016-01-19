@@ -92,7 +92,7 @@ class Login():
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
         print captcha_path
-        webbrowser.open(u'file:///' + captcha_path)
+        webbrowser.open_new_tab(u'file:///' + captcha_path)
         print u'如果不需要输入验证码可点按回车跳过此步'
         captcha = raw_input()
         return captcha
