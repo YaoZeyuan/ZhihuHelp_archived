@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import cookielib
 import os
-import platform
-import sys
 import webbrowser
 import json
 import urllib2
