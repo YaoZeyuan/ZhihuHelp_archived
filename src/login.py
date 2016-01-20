@@ -96,7 +96,6 @@ class Login():
         print captcha_path
         import sys
         if platform.system() == "Darwin":
-            os.system("chmod 755 '%s' " % captcha_path)
             os.system(u'"{}"'.format(captcha_path).encode(sys.stdout.encoding))
             os.system("open '%s' &" % captcha_path)
         else:
