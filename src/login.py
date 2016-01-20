@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import cookielib
 import os
+import platform
 import webbrowser
 import json
 import urllib2
@@ -86,13 +87,19 @@ class Login():
         content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
+
         with open(captcha_path, 'wb') as image:
             image.write(content)
         print u'请输入您所看到的验证码'
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
         print captcha_path
-        webbrowser.open(u'file:///' + captcha_path)
+        import sys
+        if platform.system() == "Darwin":
+            os.system(u'open "{}" &'.format(captcha_path).encode(sys.stdout.encoding))
+        else:
+            webbrowser.get().open_new_tab(u'file:///' + captcha_path)
+
         print u'如果不需要输入验证码可点按回车跳过此步'
         captcha = raw_input()
         return captcha
