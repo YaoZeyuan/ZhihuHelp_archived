@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import cookielib
 import os
+import platform
 import webbrowser
 import json
 import urllib2
@@ -92,7 +93,12 @@ class Login():
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
         print captcha_path
-        webbrowser.open_new_tab(u'file:///' + captcha_path)
+        if platform.system() == "Darwin":
+            os.system("open %s &" % captcha_path)
+        elif platform.system() in ["SunOS", "FreeBSD", "Unix", "OpenBSD", "NetBSD", "Windows"]:
+            webbrowser.get().open_new_tab(u'file:///' + captcha_path)
+        else:
+            print(u"无法检测你的作业系统,请自行打开验证码 %s 文件,输入验证码" % captcha_path)
         print u'如果不需要输入验证码可点按回车跳过此步'
         captcha = raw_input()
         return captcha
