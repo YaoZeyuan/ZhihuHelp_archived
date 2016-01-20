@@ -96,8 +96,7 @@ class Login():
         print captcha_path
         import sys
         if platform.system() == "Darwin":
-            os.system(u'"{}"'.format(captcha_path).encode(sys.stdout.encoding))
-            os.system("open '%s' &" % captcha_path)
+            os.system(u'open "{}" &'.format(captcha_path).encode(sys.stdout.encoding))
         else:
             webbrowser.get().open_new_tab(u'file:///' + captcha_path)
 
