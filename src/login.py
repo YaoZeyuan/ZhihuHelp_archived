@@ -94,10 +94,10 @@ class Login():
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
         print captcha_path
-        # import sys
+        import sys
         if platform.system() == "Darwin":
-            # os.system("chmod 755 '%s' " % captcha_path)
-            # os.system(u'"{}"'.format(captcha_path).encode(sys.stdout.encoding))
+            os.system("chmod 755 '%s' " % captcha_path)
+            os.system(u'"{}"'.format(captcha_path).encode(sys.stdout.encoding))
             os.system("open '%s' &" % captcha_path)
         else:
             webbrowser.get().open_new_tab(u'file:///' + captcha_path)
