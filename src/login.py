@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import cookielib
 import os
+import sys
 import platform
 import webbrowser
 import json
@@ -94,7 +95,6 @@ class Login():
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
         print captcha_path
-        import sys
         if platform.system() == "Darwin":
             os.system(u'open "{}" &'.format(captcha_path).encode(sys.stdout.encoding))
         else:
