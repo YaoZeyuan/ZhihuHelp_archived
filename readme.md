@@ -33,7 +33,7 @@
 
 
 1.  首先打开位于知乎助手文件夹内的ReadList.txt，将待下载的网址复制粘贴至ReadList中，然后保存并关闭。说明：一行表示一本书，用$表示分割一本书内的不同章节，#后面的是注释。
-    *   ![ReadList](http://pic2.zhimg.com/95cbba73c17c5ea162746fd4c3ebf649_b.jpg)
+    *   ![ReadList](https://pic3.zhimg.com/877e2bc9510528806fc4ac95c64f1c0e_r.png)
 
 2.  然后，Windows用户双击运行zhihuHelp.py，根据提示进行简单设定后开始自动进行抓取，生成的电子书在【助手生成的电子书】文件夹中，为Epub格式，可以在多看系列软件上流畅阅读
     *   Linux/Mac用户可以按如下方式运行zhihuHelper.py
