@@ -72,14 +72,12 @@ build/
 *.tlb
 *.tli
 *.tlh
-*.tmp
 *.tmp_proj
 *.log
 *.vspscc
 *.vssscc
 .builds
 *.pidb
-*.log
 *.scc
 
 # Visual C++ cache files
@@ -197,12 +195,13 @@ $RECYCLE.BIN/
 *.egg
 *.egg-info
 dist/
-build/
 eggs/
 parts/
 var/
 sdist/
 develop-eggs/
+.idea/
+知乎电子书临时资源库/
 .installed.cfg
 
 # Installer logs

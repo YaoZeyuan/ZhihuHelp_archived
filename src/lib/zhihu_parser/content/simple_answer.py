@@ -36,7 +36,7 @@ class SimpleAnswer(Answer):
         if not self.content:
             Debug.logger.debug(u'答案更新日期未找到')
             return
-        data_block = self.content.find('a', class_='answer-date-link')
+        data_block = self.body.find('a', class_='answer-date-link')
         if not data_block:
             Debug.logger.debug(u'答案更新日期未找到')
             return

@@ -21,18 +21,18 @@ class SingleTask(object):
         return
 
 
-class TaskPackage():
+class TaskPackage(object):
     def __init__(self):
         self.work_list = {}
         self.book_list = {}
         return
 
     def add_task(self, single_task=SingleTask()):
-        if not single_task.kind in self.work_list:
+        if single_task.kind not in self.work_list:
             self.work_list[single_task.kind] = []
         self.work_list[single_task.kind].append(single_task.spider.href)
 
-        if not single_task.kind in self.book_list:
+        if single_task.kind not in self.book_list:
             self.book_list[single_task.kind] = []
         self.book_list[single_task.kind].append(single_task.book)
         return
