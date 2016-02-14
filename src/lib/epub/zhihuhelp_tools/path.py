@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 import shutil
 import platform
 
@@ -33,14 +34,7 @@ class Path(object):
 
     @staticmethod
     def get_pwd():
-        try:
-            if platform.system() == "Darwin":          # TODO:Linux下可能也会存在这个问题
-                path = unicode(os.path.abspath('.'))
-            else:
-                path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-        except:
-            # Mac系统下, 不会执行到这一行, 会导致文件夹名乱码, 报错, 无法正常执行
-            path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+        path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
         return path
 
     @staticmethod
@@ -59,9 +53,7 @@ class Path(object):
         except OSError:
             # Debug.logger.debug(u'指定目录不存在，自动创建之')
             Path.mkdir(path)
-            print u"path是什么???" + str(path)
             os.chdir(path)
-            print u"OSError.message"
         return
 
     @staticmethod
