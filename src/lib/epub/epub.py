@@ -68,7 +68,7 @@ class Epub(object):
     def add_image(self, src):
         Path.copy(src, EpubPath.image_path)
         filename = Path.get_filename(src)
-        new_src = u'image/' + filename
+        new_src = u'images/' + filename
         resource_id = self.opf.add_image(new_src)
         return
 
@@ -84,7 +84,7 @@ class Epub(object):
     def add_cover_image(self, src):
         Path.copy(src, EpubPath.image_path)
         filename = Path.get_filename(src)
-        new_src = u'image/' + filename
+        new_src = u'images/' + filename
         resource_id = self.opf.add_cover_image(new_src)
         return
 
