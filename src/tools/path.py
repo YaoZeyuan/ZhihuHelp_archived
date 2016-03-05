@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 import shutil
 
 
 class Path(object):
-    try:
-        base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-    except:
-        base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
-
+    base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))  # 初始地址,不含分隔符
     config_path = base_path + u'/config.json'
     db_path = base_path + u'/zhihuDB_173.db'
     sql_path = base_path + u'/db/zhihuhelp.sql'
 
     www_css = base_path + u'/www/css'
-    www_image = base_path + u'/www/image'
+    www_image = base_path + u'/www/images'
 
     html_pool_path = base_path + u'/知乎电子书临时资源库/知乎网页池'
     image_pool_path = base_path + u'/知乎电子书临时资源库/知乎图片池'
@@ -32,10 +29,7 @@ class Path(object):
 
     @staticmethod
     def get_pwd():
-        try:
-            path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-        except:
-            path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+        path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
         return path
 
     @staticmethod
@@ -80,17 +74,14 @@ class Path(object):
 
     @staticmethod
     def init_base_path():
-        try:
-            base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-        except:
-            base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+        Path.base_path = Path.get_pwd()
 
         Path.config_path = Path.base_path + u'/config.json'
         Path.db_path = Path.base_path + u'/zhihuDB_173.db'
         Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
 
         Path.www_css = Path.base_path + u'/www/css'
-        Path.www_image = Path.base_path + u'/www/image'
+        Path.www_image = Path.base_path + u'/www/images'
 
         Path.html_pool_path = Path.base_path + u'/知乎电子书临时资源库/知乎网页池'
         Path.image_pool_path = Path.base_path + u'/知乎电子书临时资源库/知乎图片池'

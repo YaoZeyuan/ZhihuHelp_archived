@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 from ..zhihuhelp_tools.path import Path
 
 class EpubPath(object):
-    try:
-        file_path = os.path.realpath(__file__)
-        base_path = os.path.dirname(file_path)
-        base_path = unicode(os.path.dirname(base_path).decode('gbk'))  # 库文件位置
-    except:
-        base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except
+    file_path = os.path.realpath(__file__)
+    base_path = os.path.dirname(file_path)
+    base_path = unicode(os.path.dirname(base_path).decode(sys.stdout.encoding))  # 库文件位置
 
     work_path = base_path  # 默认以库位置作为初始工作地址
     output_path = os.path.dirname(work_path)  # 默认以工作目录的上一级为输出目录
     meta_inf_path = work_path + u'/META-INF'
     oebps_path = work_path + u'/OEBPS'
-    image_path = work_path + u'/image'
+    image_path = work_path + u'/images'
     html_path = oebps_path + u'/html'
     style_path = oebps_path + u'/style'
 

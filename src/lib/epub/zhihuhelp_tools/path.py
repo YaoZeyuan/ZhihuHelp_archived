@@ -16,7 +16,7 @@ class Path(object):
     sql_path = base_path + u'/db/zhihuhelp.sql'
 
     www_css = base_path + u'/www/css'
-    www_image = base_path + u'/www/image'
+    www_image = base_path + u'/www/images'
 
     html_pool_path = base_path + u'/知乎电子书临时资源库/知乎网页池'
     image_pool_path = base_path + u'/知乎电子书临时资源库/知乎图片池'
@@ -89,7 +89,7 @@ class Path(object):
         Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
 
         Path.www_css = Path.base_path + u'/www/css'
-        Path.www_image = Path.base_path + u'/www/image'
+        Path.www_image = Path.base_path + u'/www/images'
 
         Path.html_pool_path = Path.base_path + u'/知乎电子书临时资源库/知乎网页池'
         Path.image_pool_path = Path.base_path + u'/知乎电子书临时资源库/知乎图片池'
