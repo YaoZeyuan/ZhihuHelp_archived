@@ -44,9 +44,8 @@ div.index-content ul > li > a {
 }
 
 /* 首页描述信息 */
-div.front-page.description
-{
-    margin : 2em 0;
+div.front-page.description {
+    margin: 2em 0;
 }
 
 /* 评论信息 */
@@ -84,7 +83,7 @@ div.author-logo {
     float: right;
 }
 
-div.author-logo img{
+div.author-logo img {
     vertical-align: middle;
 }
 
@@ -94,22 +93,37 @@ div.question {
     background-color: #428ECE;
 }
 
+/* 实现知乎周刊的全屏效果*/
+@media handheld {
+    div.question {
+        margin: -200em -200em 0 -200em; /*上、右、下、左，顺时针*/
+        padding: 200em 198em 0 200em;
+    }
+}
+
 div.question-title {
     width: 100%;
     overflow: hidden;
 }
 
 div.question-title h1 {
-    font-family: 'DK-SONGTI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
+    font-family: 'DK-HEITI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
     color: #FFFFFF;
     background-color: #3982C6;
     vertical-align: middle;
     text-align: left;
     padding: 1em;
     width: 70%;
-    margin: 3em 0em;
+    margin: 3em 0;
     float: right;
     font-size: 1.5em;
+}
+
+@media handheld {
+    div.question-title h1 {
+        margin: 0 3em;
+        padding-right: 1em;
+    }
 }
 
 div.question-info {
@@ -120,8 +134,8 @@ div.question-info {
     margin: 0 1em;
 }
 
-div.question-info a{
-    color : #CCC;
+div.question-info a {
+    color: #CCC;
 }
 
 /* 答案内容 */
@@ -146,7 +160,6 @@ div.title-image img {
 }
 
 /* 禁止信息页中的详情表格分页 */
-div.front-page.detail-info table.margin-center
-{
-    page-break-inside:avoid;
+div.front-page.detail-info table.margin-center {
+    page-break-inside: avoid;
 }
