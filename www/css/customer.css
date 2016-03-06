@@ -2,6 +2,7 @@
 body {
     text-indent: 0 !important;
     duokan-text-indent: 0 !important;
+    word-wrap: break-word; /* 自动折行 */
 }
 
 /* 清除浮动 */
