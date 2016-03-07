@@ -52,6 +52,7 @@ class Book(object):
         counter = 0
         book = []
         book_list = []
+        raw_book_list.reverse()  # 后边要使用pop，所以提前反转一下，以保证顺序不变
         while len(raw_book_list):
             raw_book = raw_book_list.pop()
             if not raw_book.epub.answer_count:
