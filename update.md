@@ -1,3 +1,13 @@
+#1.7.3.8版更新说明
+0.  感谢[@Svenmax](https://www.zhihu.com/people/maxism)的捐赠
+1.  感谢[@盒棍](https://www.zhihu.com/people/knarfeh)提交的代码和issue
+2.  修复了解析回答日期错误的bug(由[@盒棍](https://www.zhihu.com/people/knarfeh)完成)
+3.  增加了自动打开验证码功能(由[@盒棍](https://www.zhihu.com/people/knarfeh))完成)
+4.  调整了电子书样式，新样式与知乎周刊效果类似，同时，使用bootstrap库对目录页面进行了美化
+5.  修复了如果没有选择记住密码，导致程序永久性无法运行的bug
+6.  修复了更换账号后不能下载私人收藏夹的bug
+7.  修复了检查更新时一处可能导致程序崩溃的bug
+
 #1.7.3.7版更新说明
 0.  在电子书开始处添加了目录，方便进行查阅
 1.  美化电子书样式

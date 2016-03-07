@@ -129,7 +129,8 @@ class Book(object):
             page = book.page_list[0]
             with open(html_tmp_path + page.filename, u'w') as html:
                 html.write(page.content)
-            page.title = ''.join(page.title.split('_')[1:])  # 删除章节前缀
+            if '_' in page.title:
+                page.title = ''.join(page.title.split('_')[1:])  # 删除章节前缀
             epub.create_chapter(html_tmp_path + page.filename, page.title)
             for page in book.page_list[1:]:
                 with open(html_tmp_path + page.filename, u'w') as html:

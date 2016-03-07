@@ -10,7 +10,7 @@ class Config(object):
     用于储存、获取设置值、全局变量值
     """
     # 全局变量
-    update_time = '2016-01-02'  # 更新日期
+    update_time = '2016-03-07'  # 更新日期
 
     debug = False
 
@@ -32,15 +32,15 @@ class Config(object):
     show_private_answer = True
     timeout_download_picture = 10  # 多给知乎服务器点时间，批量生成tex太痛苦了- -
     timeout_download_html = 5
-    sql_extend_answer_filter = '' # 附加到answer_sql语句后，用于对answer进行进一步的筛选（示例: and(agree > 5) ）
-
-    _config_store = {}
+    sql_extend_answer_filter = ''  # 附加到answer_sql语句后，用于对answer进行进一步的筛选（示例: and(agree > 5) ）
 
     @staticmethod
     def _save():
-        Config._sync()
         with open(Path.config_path, 'w') as f:
-            json.dump(Config._config_store, f, indent=4)
+            data = dict((
+                (key, Config.__dict__[key]) for key in Config.__dict__ if '_' not in key[:2]
+            ))
+            json.dump(data, f, indent=4)
         return
 
     @staticmethod
@@ -55,11 +55,4 @@ class Config(object):
                 return
         for (key, value) in config.items():
             setattr(Config, key, value)
-        return
-
-    @staticmethod
-    def _sync():
-        for attr in Config.__dict__:
-            if '_' not in attr[:2]:
-                Config._config_store[attr] = Config.__dict__[attr]
         return

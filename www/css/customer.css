@@ -134,6 +134,12 @@ div.question-info {
     margin: 0 1em;
 }
 
+@media handheld {
+    div.question-info {
+        padding-right: 3em;
+    }
+}
+
 div.question-info a {
     color: #CCC;
 }

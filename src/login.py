@@ -70,6 +70,7 @@ class Login():
                 print u'跳过保存环节，进入下一流程'
             Config._save()
             cookie = self.get_cookie()
+            DB.execute('delete from LoginRecord')  # 登陆成功后清除数据库中原有的登录记录，避免下次登陆时取到旧记录
             data = {}
             data['account'] = account
             data['password'] = password
