@@ -58,12 +58,13 @@ class Epub(object):
         return
 
     def add_html(self, src, title):
-        Path.copy(src, EpubPath.html_path)
+        u"""
+            add_index为add_html不需要添加文件时的特殊情况
+        """
+        self.add_index_html(src, title)
         filename = Path.get_filename(src)
         new_src = u'html/' + filename
-        resource_id = self.opf.add_html(new_src)
         self.directory.add_html(new_src, title)
-        self.toc.add_item(resource_id, new_src, title)
         return
 
     def add_css(self, src):
