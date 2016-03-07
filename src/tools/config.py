@@ -49,6 +49,10 @@ class Config(object):
             return
         with open(Path.config_path) as f:
             config = json.load(f)
+            if not config.get('remember_account'):
+                # 当选择不记住密码时，跳过读取，使用默认设置
+                # 不考虑用户强行在配置文件中把account改成空的情况
+                return
         for (key, value) in config.items():
             setattr(Config, key, value)
         return
