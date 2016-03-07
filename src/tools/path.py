@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
 import shutil
+import locale
 
 
 class Path(object):
-    base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))  # 初始地址,不含分隔符
+    # 初始地址,不含分隔符
+    # 此时sys.stdout.encoding已被修改为utf-8，故改为使用locale.getpreferredencoding()获取默认编码
+    base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
+
     config_path = base_path + u'/config.json'
     db_path = base_path + u'/zhihuDB_173.db'
     sql_path = base_path + u'/db/zhihuhelp.sql'
@@ -29,7 +32,7 @@ class Path(object):
 
     @staticmethod
     def get_pwd():
-        path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
+        path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
         return path
 
     @staticmethod

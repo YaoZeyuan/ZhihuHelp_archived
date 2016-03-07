@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
 import shutil
-import platform
+import locale
 
 
 class Path(object):
-    try:
-        base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-    except:
-        base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+    base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))  # 初始地址,不含分隔符
 
     config_path = base_path + u'/config.json'
     db_path = base_path + u'/zhihuDB_173.db'
@@ -34,7 +30,7 @@ class Path(object):
 
     @staticmethod
     def get_pwd():
-        path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
+        path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
         return path
 
     @staticmethod
@@ -79,11 +75,7 @@ class Path(object):
 
     @staticmethod
     def init_base_path():
-        try:
-            base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-        except:
-            base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
-
+        Path.base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
         Path.config_path = Path.base_path + u'/config.json'
         Path.db_path = Path.base_path + u'/zhihuDB_173.db'
         Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
