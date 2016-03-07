@@ -96,20 +96,20 @@ class ZhihuHelp(object):
             *   返回
                 *   无
         """
-        print   u"检查更新。。。"
+        print u"检查更新。。。"
         try:
             content = Http.get_content(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt")
             if not content:
                 raise Exception('HttpError')
+            time, url = [x.strip() for x in content.split('\n')]
+            if time == Config.update_time:
+                return
+            else:
+                print u"发现新版本，\n更新日期:{} ，点按回车进入更新页面".format(time)
+                print u'新版本下载地址:' + url
+                raw_input()
+                import webbrowser
+                webbrowser.open_new_tab(url)
         except:
+            # 不论发生任何异常均直接返回
             return
-        time, url = [x.strip() for x in content.split('\n')]
-        if time == Config.update_time:
-            return
-        else:
-            print u"发现新版本，\n更新日期:{} ，点按回车进入更新页面".format(time)
-            print u'新版本下载地址:' + url
-            raw_input()
-            import webbrowser
-            webbrowser.open_new_tab(url)
-        return

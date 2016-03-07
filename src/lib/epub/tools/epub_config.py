@@ -47,7 +47,8 @@ class EpubConfig(object):
     ncx_item_uri = base_path + u'/OEBPS/toc/navMap/item.xml'
 
     # Directory
-    directory_html_uri = base_path + u'/directory/item.html'
+    directory_item_root_uri = base_path + u'/directory/item_root.html'
+    directory_item_leaf_uri = base_path + u'/directory/item_leaf.html'
     directory_chapter_uri = base_path + u'/directory/chapter.html'
     directory_finish_chapter_uri = base_path + u'/directory/finish_chapter.html'
     directory_content_uri = base_path + u'/directory/content.html'
