@@ -85,6 +85,8 @@ div.author-logo {
 
 div.author-logo img {
     vertical-align: middle;
+    margin-left: 0.2em;
+    margin-bottom: 0.2em;
 }
 
 /* 问题详情 */
@@ -96,8 +98,8 @@ div.question {
 /* 实现知乎周刊的全屏效果*/
 @media handheld {
     div.question {
-        margin: -200em -200em 0 -200em; /*上、右、下、左，顺时针*/
-        padding: 200em 198em 0 200em;
+        margin: -10em -4em 0 -4em; /*上、右、下、左，顺时针*/
+        padding: 10em 2em 0 4em;
     }
 }
 
@@ -114,30 +116,36 @@ div.question-title h1 {
     text-align: left;
     padding: 1em;
     width: 70%;
-    margin: 3em 0 3em 0em;
+    margin: 3em 0 3em 0;
     float: right;
     font-size: 1.5em;
 }
 
 @media handheld {
     div.question-title h1 {
-        margin: 0 0 3em 0em;
+        margin: 0 0 3em 0;
         padding-right: 3em;
     }
 }
 
 div.question-info {
     font-family: 'DK-SONGTI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
-    float: left;
     color: #FFF !important;
+    background-color: #428ECE;
     font-size: 1em;
     margin: 0 1em;
+    padding-bottom: 1em;
 }
 
 @media handheld {
     div.question-info {
-        padding-right: 3em;
+        margin: 0 -4em 0 -4em;
+        padding: 0 5em 2em 5em;
     }
+}
+
+.background-color-zhihu-blue {
+    background-color: #428ECE;
 }
 
 div.question-info a {
@@ -167,5 +175,10 @@ div.title-image img {
 
 /* 禁止信息页中的详情表格分页 */
 div.front-page.detail-info table.margin-center {
+    page-break-inside: avoid;
+}
+
+/* 禁止目录panel分页 */
+div.index-content.panel {
     page-break-inside: avoid;
 }
