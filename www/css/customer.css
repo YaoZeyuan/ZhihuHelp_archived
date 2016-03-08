@@ -130,8 +130,8 @@ div.question-title h1 {
 
 div.question-info {
     font-family: 'DK-SONGTI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
-    float: left;
     color: #FFF !important;
+    background-color: #428ECE;
     font-size: 1em;
     margin: 0 1em;
     padding-bottom: 1em;
@@ -139,8 +139,13 @@ div.question-info {
 
 @media handheld {
     div.question-info {
-        padding-right: 3em;
+        margin: 0 -4em 0 -4em;
+        padding: 0 5em 2em 5em;
     }
+}
+
+.background-color-zhihu-blue {
+    background-color: #428ECE;
 }
 
 div.question-info a {
@@ -170,5 +175,10 @@ div.title-image img {
 
 /* 禁止信息页中的详情表格分页 */
 div.front-page.detail-info table.margin-center {
+    page-break-inside: avoid;
+}
+
+/* 禁止目录panel分页 */
+div.index-content.panel {
     page-break-inside: avoid;
 }
