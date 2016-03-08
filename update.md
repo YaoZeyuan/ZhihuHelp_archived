@@ -1,3 +1,7 @@
+#1.7.3.9版更新说明
+0.  更新使用说明
+1.  优化电子书样式，解决问题详情不能跨页/作者头像遮挡签名/目录导航跨页的问题
+
 #1.7.3.8版更新说明
 0.  感谢[@Svenmax](https://www.zhihu.com/people/maxism)的捐赠
 1.  感谢[@盒棍](https://www.zhihu.com/people/knarfeh)提交的代码和issue
