@@ -25,7 +25,7 @@
 | 话题 | 知乎话题的地址，<br />保存话题信息和话题精华中的答案 | `http://www.zhihu.com/topic/19552430`,<br /> `http://www.zhihu.com/topic/19551147/top-answers`,<br />`http://www.zhihu.com/topic/19554859` <br />|
 | 指定知乎用户的全部回答 | 用户的个人主页 | `http://www.zhihu.com/people/yolfilm`,<br /> `http://www.zhihu.com/people/ying-ye-78/answers`,<br />`http://www.zhihu.com/people/bo-cai-28-7/logs` <br />|
 | 公开收藏夹 | 知乎公开收藏夹的地址，<br />保存收藏夹信息和收藏夹内的答案 | `http://www.zhihu.com/collection/26489045`,<br /> `http://www.zhihu.com/collection/19633165`,<br /> `http://www.zhihu.com/collection/19641505`<br /> |
-| 私人收藏夹 | 知乎私人收藏夹的地址，<br />保存收藏夹信息和收藏夹内的答案，<br />需要创建者用自己的ID登陆知乎助手 | `长得和正常收藏夹一样`,<br />`主要是我的私人收藏夹放上了你们也打不开= =` |
+| 私人收藏夹 | 知乎私人收藏夹的地址，<br />保存收藏夹信息和收藏夹内的答案，<br />需要创建者用自己的ID登陆知乎助手 | `和正常收藏夹地址一样` |
 | 专栏 | 专栏的网址 | `http://zhuanlan.zhihu.com/yolfilm`, <br />`http://zhuanlan.zhihu.com/epiccomposer`,<br /> `http://zhuanlan.zhihu.com/Wisdom`<br /> |
 | 专栏文章 | 单篇专栏文章的网址 | `http://zhuanlan.zhihu.com/Wisdom/19636626`,<br /> `http://zhuanlan.zhihu.com/zerolib/19972661`, <br />`http://zhuanlan.zhihu.com/cogito/19968816` <br />|
 
