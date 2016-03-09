@@ -5,6 +5,20 @@ body {
     word-wrap: break-word; /* 自动折行 */
 }
 
+/* color */
+.bg-zhihu-blue-light {
+    background-color: #428ECE;
+}
+
+.bg-zhihu-blue-deep {
+    background-color: #3982C6;
+}
+
+.bg-duokan-yellow {
+    /*多看阅读默认背景色*/
+    background-color: #F7EFE7;
+}
+
 /* 清除浮动 */
 div.clear-float {
     clear: both;
@@ -91,10 +105,6 @@ div.author-logo img {
 
 /* 问题详情 */
 
-div.question {
-    background-color: #428ECE;
-}
-
 /* 实现知乎周刊的全屏效果*/
 @media handheld {
     div.question {
@@ -111,7 +121,6 @@ div.question-title {
 div.question-title h1 {
     font-family: 'DK-HEITI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
     color: #FFFFFF;
-    background-color: #3982C6;
     vertical-align: middle;
     text-align: left;
     padding: 1em;
@@ -131,7 +140,6 @@ div.question-title h1 {
 div.question-info {
     font-family: 'DK-SONGTI', 'Microsoft Yahei', 微软雅黑, STHeiti, Hei, 'Heiti SC', 宋体;
     color: #FFF !important;
-    background-color: #428ECE;
     font-size: 1em;
     margin: 0 1em;
     padding-bottom: 1em;
@@ -142,10 +150,6 @@ div.question-info {
         margin: 0 -4em 0 -4em;
         padding: 0 5em 2em 5em;
     }
-}
-
-.background-color-zhihu-blue {
-    background-color: #428ECE;
 }
 
 div.question-info a {
