@@ -8,13 +8,28 @@
 *   目前的1.7.x系列是知乎助手发布计划中的过渡版本，在该版本中，我会尽可能多的为助手添加功能，为2.0版本的图形界面做准备
 
 ##  使用说明
+
 0.  (Windows用户)安装[python2.7](http://yun.baidu.com/s/1M8Bpk)运行环境
+
 1.  下载[知乎助手](http://yaozeyuan.sinaapp.com/zhihuhelper/upgrade.php)并解压缩
     *   ![解压缩后](https://pic4.zhimg.com/b67c696f1a324df22b5cac58481d11a3_r.png)
+
 2.  打开ReadList.txt，将待收集的网址填进去，完成后保存并关闭该文件
     *   ![ReadList](https://pic2.zhimg.com/c7c05c8dc01bf74129ce412609b378c5_r.png)
     *   ReadList中每一行生成一本电子书，用『$』隔开不同的网址，『#』作为注释，『#』后所有内容都会被忽略
-    *   目前知乎助手支持收集的网址类型有
+    *   知乎助手支持收集的网址类型见后
+
+3.  运行程序
+    *   Windows用户
+        *   双击zhihuHelp.py，按照提示运行程序即可
+        *   ![](https://pic2.zhimg.com/3858bed15dec0843a652b7518d7ffa95_r.png)
+    *   Linux/Mac用户
+        *   打开终端，cd到解压出的知乎助手的目录下
+        *   键入命令`python zhihuHelp.py`,按照提示运行程序即可
+        *   ![Linux使用界面](https://pic1.zhimg.com/47d2fea858e68847760ec05f848abcb0_r.png)
+        *   ![Mac使用界面](https://pic2.zhimg.com/5454f5bc83e27a230dd2802510713a8d_r.png)
+
+##  知乎助手支持收集的网址类型
 
 | 网址类型 | 描述 | 示例 |
 | -------- | ---- | ---- |
@@ -27,24 +42,16 @@
 | 专栏 | 专栏的网址 | `http://zhuanlan.zhihu.com/yolfilm`, <br />`http://zhuanlan.zhihu.com/epiccomposer`,<br /> `http://zhuanlan.zhihu.com/Wisdom`<br /> |
 | 专栏文章 | 单篇专栏文章的网址 | `http://zhuanlan.zhihu.com/Wisdom/19636626`,<br /> `http://zhuanlan.zhihu.com/zerolib/19972661`, <br />`http://zhuanlan.zhihu.com/cogito/19968816` <br />|
 
-3.  运行程序
-    *   Windows用户
-        *   双击zhihuHelp.py，按照提示运行程序即可
-        *   ![](https://pic2.zhimg.com/3858bed15dec0843a652b7518d7ffa95_r.png)
-    *   Linux/Mac用户
-        *   打开终端，cd到解压出的知乎助手的目录下
-        *   键入命令`python zhihuHelp.py`,按照提示运行程序即可
-        *   ![Linux使用界面](https://pic1.zhimg.com/47d2fea858e68847760ec05f848abcb0_r.png)
-        *   ![Mac使用界面](https://pic2.zhimg.com/5454f5bc83e27a230dd2802510713a8d_r.png)
-
 
 ##  补充:
+
 1.  ReadList.txt文件中每一行对应一本电子书，一行中可以添加多个网址以输出到同一本电子书里，使用$符号分开即可
 2.  网址后可添加#+注释以方便记忆，助手在分析网址时会自动忽略#后的内容
 3.  助手目前还在快速迭代期，数据库、代码结构均不固定，所以暂时不能利用数据库起到永久保存知乎答案的功能，各位见谅则个:）
 4.  制作知乎2013年度回答300问的方法请戳[这里](http://www.zhihu.com/question/23845802/answer/26191403)
 
 ##  配置项说明：
+
 0.  知乎助手的配置内容位于运行目录下的config.json中，各项配置功能如下
 1.  article_order_by
     *   文章排序指标
