@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-import locale
 import os
 import shutil
+import locale
 
 
 class Path(object):

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-import cookielib  # 用于生成cookie
 import os
-import socket  # 用于捕获超时错误
-import time
 import traceback
-import urllib
 import urllib2
+import urllib
+import socket  # 用于捕获超时错误
 import zlib
+import cookielib  # 用于生成cookie
+import time
 
 from src.tools.config import Config
 from src.tools.db import DB
@@ -33,7 +33,7 @@ class Http(object):
         # UA还是得要啊。。。
         # 没UA知乎分分钟只返回给你首页看- -
         header = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36',}
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36', }
         header.update(extra_header)
 
         if data:

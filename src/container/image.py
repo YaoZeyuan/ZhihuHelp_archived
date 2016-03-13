@@ -54,7 +54,7 @@ class ImageContainer(object):
 
     def start_download(self):
         argv = {'func': self.download,  # 所有待存入数据库中的数据都应当是list
-                'iterable': self.container,}
+                'iterable': self.container, }
         Control.control_center(argv, self.container)
         return
 

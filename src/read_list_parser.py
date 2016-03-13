@@ -173,7 +173,7 @@ class ReadListParser():
 
         parser = {'answer': parse_answer, 'question': parse_question, 'author': parse_author,
                   'collection': parse_collection, 'topic': parse_topic, 'article': parse_article,
-                  'column': parse_column, 'unknown': parse_error,}
+                  'column': parse_column, 'unknown': parse_error, }
         kind = detect(raw_command)
         return parser[kind](raw_command)
 

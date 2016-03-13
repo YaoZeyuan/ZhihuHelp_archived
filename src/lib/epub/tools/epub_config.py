@@ -33,6 +33,7 @@ class EpubConfig(object):
     spine_item_uri = base_path + u'/OEBPS/opf/spine/item.xml'
     spine_item_nolinear_uri = base_path + u'/OEBPS/opf/spine/item_nolinear.xml'
 
+
     ## TOC
     toc_content_uri = base_path + u'/OEBPS/toc/content.xml'
     ###head

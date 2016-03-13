@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-
 from ..zhihuhelp_tools.path import Path
-
 
 class EpubPath(object):
     file_path = os.path.realpath(__file__)

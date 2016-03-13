@@ -72,5 +72,5 @@ class DB(object):
                 'creator_id', 'creator_hash', 'creator_sign', 'creator_name', 'creator_logo', 'column_id', 'name',
                 'logo', 'description', 'article', 'follower',),
 
-            Type.collection_index: ('collection_id', 'href',), Type.topic_index: ('topic_id', 'href',),}
+            Type.collection_index: ('collection_id', 'href',), Type.topic_index: ('topic_id', 'href',), }
         return {k: v for (k, v) in zip(template[kind], result)}
