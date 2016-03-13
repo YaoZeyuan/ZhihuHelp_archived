@@ -23,7 +23,8 @@ class Author(ParserTools):
         return self.info
 
     def parse_info(self):
-        if (not self.dom.find('img')) and (not self.dom.find('a', class_='author-link')):
+        if (not self.dom.find('img')) and (
+        not self.dom.find('a', class_='author-link')):
             self.create_anonymous_info()
         else:
             self.parse_author_info()

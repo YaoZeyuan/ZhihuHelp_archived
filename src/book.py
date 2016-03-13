@@ -18,7 +18,8 @@ class Book(object):
     """
 
     def __init__(self, raw_sql_book_list):
-        raw_book_list = [book.catch_data() for book in self.flatten(raw_sql_book_list)]
+        raw_book_list = [book.catch_data() for book in
+                         self.flatten(raw_sql_book_list)]
         book_list = self.volume_book(raw_book_list)
         self.book_list = [self.create_book_package(book) for book in book_list]
         return
@@ -34,7 +35,8 @@ class Book(object):
     @staticmethod
     def volume_book(raw_book_list):
         def split(raw_book, surplus, index=1):
-            if (raw_book.epub.answer_count <= surplus) or (raw_book.epub.article_count <= 1):
+            if (raw_book.epub.answer_count <= surplus) or (
+                raw_book.epub.article_count <= 1):
                 raw_book.epub.split_index = index
                 return [raw_book]
             article_list = []
@@ -158,12 +160,16 @@ class Book(object):
         page = []
         for book in book_package.book_list:
             page += book.page_list
-        content = u' \r\n '.join([Match.html_body(x.content) for x in page]).replace(u'../images/', u'./images/')
+        content = u' \r\n '.join(
+            [Match.html_body(x.content) for x in page]).replace(u'../images/',
+                                                                u'./images/')
         with open(TemplateConfig.content_base_uri) as html:
-            content = html.read().format(title=title, body=content).replace(u'../style/', u'./')
+            content = html.read().format(title=title, body=content).replace(
+                u'../style/', u'./')
         with open(title + u'.html', 'w') as html:
             html.write(content)
-        Path.copy(Path.html_pool_path + u'/../{}/OEBPS/images'.format(title), u'./images')
+        Path.copy(Path.html_pool_path + u'/../{}/OEBPS/images'.format(title),
+                  u'./images')
         Path.copy(Path.www_css + u'/customer.css', u'./customer.css')
         Path.copy(Path.www_css + u'/markdown.css', u'./markdown.css')
         Path.copy(Path.www_css + u'/normalize.css', u'./normalize.css')

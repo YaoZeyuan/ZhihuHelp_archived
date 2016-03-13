@@ -7,7 +7,8 @@ import shutil
 class Path(object):
     # 初始地址,不含分隔符
     # 此时sys.stdout.encoding已被修改为utf-8，故改为使用locale.getpreferredencoding()获取默认编码
-    base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
+    base_path = unicode(
+        os.path.abspath('.').decode(locale.getpreferredencoding()))
 
     config_path = base_path + u'/config.json'
     db_path = base_path + u'/zhihuDB_173.db'
@@ -32,7 +33,8 @@ class Path(object):
 
     @staticmethod
     def get_pwd():
-        path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
+        path = unicode(
+            os.path.abspath('.').decode(locale.getpreferredencoding()))
         return path
 
     @staticmethod

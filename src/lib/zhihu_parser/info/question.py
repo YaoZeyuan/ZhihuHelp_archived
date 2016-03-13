@@ -53,7 +53,8 @@ class QuestionInfo(ParserTools):
         return
 
     def parse_description(self):
-        description = self.dom.select('#zh-question-detail div.zm-editable-content')
+        description = self.dom.select(
+            '#zh-question-detail div.zm-editable-content')
         if not description:
             Debug.logger.debug(u'问题描述未找到')
             return
@@ -61,7 +62,8 @@ class QuestionInfo(ParserTools):
         return
 
     def parse_comment_count(self):
-        comment = self.dom.select('#zh-question-meta-wrap a[name="addcomment"]')
+        comment = self.dom.select(
+            '#zh-question-meta-wrap a[name="addcomment"]')
         if not comment:
             Debug.logger.debug(u'问题评论数未找到')
             return
@@ -74,9 +76,11 @@ class QuestionInfo(ParserTools):
         return
 
     def parse_followers_count(self):
-        followers_count = self.side_dom.select('div.zh-question-followers-sidebar div.zg-gray-normal strong')
+        followers_count = self.side_dom.select(
+            'div.zh-question-followers-sidebar div.zg-gray-normal strong')
         if followers_count:
-            self.info['followers'] = self.match_int(followers_count[0].get_text())
+            self.info['followers'] = self.match_int(
+                followers_count[0].get_text())
         return
 
     def parse_views(self):
@@ -87,7 +91,8 @@ class QuestionInfo(ParserTools):
 
     def parse_answer_count(self):
         self.info['answers'] = 0  # 默认为0
-        count = self.dom.select('#zh-answers-title a.zg-link-litblue, #zh-question-answer-num')
+        count = self.dom.select(
+            '#zh-answers-title a.zg-link-litblue, #zh-question-answer-num')
         if count:
             self.info['answers'] = self.match_int(count[0].get_text())
         return

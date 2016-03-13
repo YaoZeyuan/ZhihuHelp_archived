@@ -68,7 +68,8 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_logo(self):
-        logo = self.header_dom.select('div.zm-profile-header-avatar-container img.avatar')
+        logo = self.header_dom.select(
+            'div.zm-profile-header-avatar-container img.avatar')
         if not logo:
             Debug.logger.debug(u'用户头像未找到')
             return
@@ -76,11 +77,13 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_gender(self):
-        gender = self.header_dom.select('span.edit-wrap input[checked="checked"]')
+        gender = self.header_dom.select(
+            'span.edit-wrap input[checked="checked"]')
         if not gender:
             Debug.logger.debug(u'用户性别未找到')
             return
-        self.info['gender'] = self.get_attr(gender[0], 'class')[0]  # class为多值属性，返回数据为一个列表，所以需要进行特殊处理
+        self.info['gender'] = self.get_attr(gender[0], 'class')[
+            0]  # class为多值属性，返回数据为一个列表，所以需要进行特殊处理
         return
 
     def parse_author_id(self):
@@ -146,7 +149,8 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_followee(self):
-        followee = self.side_dom.select('div.zm-profile-side-following a[href*="followees"] strong')
+        followee = self.side_dom.select(
+            'div.zm-profile-side-following a[href*="followees"] strong')
         if not followee:
             Debug.logger.debug(u'用户关注数未找到')
             return
@@ -154,7 +158,8 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_follower(self):
-        follower = self.side_dom.select('div.zm-profile-side-following a[href*="followers"] strong')
+        follower = self.side_dom.select(
+            'div.zm-profile-side-following a[href*="followers"] strong')
         if not follower:
             Debug.logger.debug(u'用户粉丝数未找到')
             return
@@ -162,7 +167,8 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_followed_column(self):
-        column = self.side_dom.select('.zm-profile-side-section-title a[href*="columns"] strong')
+        column = self.side_dom.select(
+            '.zm-profile-side-section-title a[href*="columns"] strong')
         if not column:
             Debug.logger.debug(u'用户关注专栏数未找到')
             return
@@ -170,7 +176,8 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_followed_topic(self):
-        topic = self.side_dom.select('.zm-profile-side-section-title a[href*="topics"] strong')
+        topic = self.side_dom.select(
+            '.zm-profile-side-section-title a[href*="topics"] strong')
         if not topic:
             Debug.logger.debug(u'用户关注话题数未找到')
             return
@@ -178,7 +185,8 @@ class AuthorInfo(ParserTools):
         return
 
     def parser_views(self):
-        views = self.side_dom.select('.zm-profile-side-section .zm-side-section-inner span.zg-gray-normal strong')
+        views = self.side_dom.select(
+            '.zm-profile-side-section .zm-side-section-inner span.zg-gray-normal strong')
         if not views:
             Debug.logger.debug(u'用户被浏览数未找到')
             return

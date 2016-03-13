@@ -130,7 +130,8 @@ class PageWorker(object):
         i = 0
         for content in self.content_list:
             i += 1
-            Debug.print_in_single_line(u"正在解析第{}/{}张页面".format(i, self.content_list.__len__()))
+            Debug.print_in_single_line(
+                u"正在解析第{}/{}张页面".format(i, self.content_list.__len__()))
             self.parse_content(content)
         Debug.logger.info(u"网页内容解析完毕")
         return
@@ -168,7 +169,8 @@ class AuthorWorker(PageWorker):
         self.task_complete_set.add(target_url)
         max_page = self.parse_max_page(content)
         for page in range(max_page):
-            url = '{}/answers?order_by=vote_num&page={}'.format(target_url, page + 1)
+            url = '{}/answers?order_by=vote_num&page={}'.format(target_url,
+                                                                page + 1)
             self.work_set.add(url)
         return
 
@@ -184,7 +186,8 @@ class AuthorWorker(PageWorker):
         return
 
     def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, 'AuthorInfo': self.info_list,}
+        config = {'Answer': self.answer_list, 'Question': self.question_list,
+                  'AuthorInfo': self.info_list,}
         return config
 
 
@@ -223,7 +226,8 @@ class CollectionWorker(PageWorker):
         self.answer_list += parser.get_answer_list()
 
         collection_info = parser.get_extra_info()
-        self.add_collection_index(collection_info['collection_id'], parser.get_answer_list())
+        self.add_collection_index(collection_info['collection_id'],
+                                  parser.get_answer_list())
 
         return
 
@@ -234,7 +238,8 @@ class CollectionWorker(PageWorker):
         return
 
     def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, 'CollectionInfo': self.info_list,
+        config = {'Answer': self.answer_list, 'Question': self.question_list,
+                  'CollectionInfo': self.info_list,
                   'CollectionIndex': self.collection_index_list,}
         return config
 
@@ -285,13 +290,16 @@ class TopicWorker(PageWorker):
         return
 
     def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, 'TopicInfo': self.info_list,
+        config = {'Answer': self.answer_list, 'Question': self.question_list,
+                  'TopicInfo': self.info_list,
                   'TopicIndex': self.topic_index_list,}
         return config
 
     def clear_index(self):
-        topic_id_tuple = tuple(set(x['topic_id'] for x in self.topic_index_list))
-        sql = 'DELETE  from TopicIndex where topic_id in ({})'.format((' ?,' * len(topic_id_tuple))[:-1])
+        topic_id_tuple = tuple(
+            set(x['topic_id'] for x in self.topic_index_list))
+        sql = 'DELETE  from TopicIndex where topic_id in ({})'.format(
+            (' ?,' * len(topic_id_tuple))[:-1])
         DB.cursor.execute(sql, topic_id_tuple)
         DB.commit()
         return
@@ -306,7 +314,8 @@ class ColumnWorker(PageWorker):
             return
         result = Match.column(target_url)
         column_id = result.group('column_id')
-        content = Http.get_content('https://zhuanlan.zhihu.com/api/columns/' + column_id)
+        content = Http.get_content(
+            'https://zhuanlan.zhihu.com/api/columns/' + column_id)
         if not content:
             return
         raw_info = json.loads(content)
@@ -315,19 +324,22 @@ class ColumnWorker(PageWorker):
         info['creator_hash'] = raw_info['creator']['hash']
         info['creator_sign'] = raw_info['creator']['bio']
         info['creator_name'] = raw_info['creator']['name']
-        info['creator_logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['creator']['avatar'][
+        info['creator_logo'] = raw_info['creator']['avatar'][
+            'template'].replace('{id}', raw_info['creator']['avatar'][
             'id']).replace('_{size}', '')
 
         info['column_id'] = raw_info['slug']
         info['name'] = raw_info['name']
-        info['logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['avatar']['id']).replace(
+        info['logo'] = raw_info['creator']['avatar']['template'].replace(
+            '{id}', raw_info['avatar']['id']).replace(
             '_{size}', '')
         info['article'] = raw_info['postsCount']
         info['follower'] = raw_info['followersCount']
         info['description'] = raw_info['description']
         self.info_list.append(info)
         self.task_complete_set.add(target_url)
-        detect_url = 'https://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(column_id)
+        detect_url = 'https://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(
+            column_id)
         for i in range(info['article'] / 10 + 1):
             self.work_set.add(detect_url + str(i * 10))
         return
@@ -340,13 +352,16 @@ class ColumnWorker(PageWorker):
             article['author_hash'] = info['author']['hash']
             article['author_sign'] = info['author']['bio']
             article['author_name'] = info['author']['name']
-            article['author_logo'] = info['author']['avatar']['template'].replace('{id}', info['author']['avatar'][
+            article['author_logo'] = info['author']['avatar'][
+                'template'].replace('{id}', info['author']['avatar'][
                 'id']).replace('_{size}', '')
 
             article['column_id'] = info['column']['slug']
             article['name'] = info['column']['name']
             article['article_id'] = info['slug']
-            article['href'] = u'https://zhuanlan.zhihu.com/{column_id}/{article_id}'.format(**article)
+            article[
+                'href'] = u'https://zhuanlan.zhihu.com/{column_id}/{article_id}'.format(
+                **article)
             article['title'] = info['title']
             article['title_image'] = info['titleImage']
             article['content'] = info['content']
@@ -362,8 +377,10 @@ class ColumnWorker(PageWorker):
 
 
 def worker_factory(task):
-    type_list = {'answer': QuestionWorker, 'question': QuestionWorker, 'author': AuthorWorker,
-                 'collection': CollectionWorker, 'topic': TopicWorker, 'column': ColumnWorker,
+    type_list = {'answer': QuestionWorker, 'question': QuestionWorker,
+                 'author': AuthorWorker,
+                 'collection': CollectionWorker, 'topic': TopicWorker,
+                 'column': ColumnWorker,
                  'article': ColumnWorker,}
     for key in task:
         worker = type_list[key](task[key])

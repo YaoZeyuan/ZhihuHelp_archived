@@ -52,8 +52,10 @@ class TaskPackage(object):
         answer = [item.sql.answer for item in book_list]
         info = [item.sql.info for item in book_list]
         book.kind = Type.article
-        book.sql.info = 'select * from Article where ({})'.format(' or '.join(info))
-        book.sql.answer = 'select * from Article where ({})'.format(' or '.join(answer))
+        book.sql.info = 'select * from Article where ({})'.format(
+            ' or '.join(info))
+        book.sql.answer = 'select * from Article where ({})'.format(
+            ' or '.join(answer))
         self.book_list[Type.article] = [book]
         return
 
@@ -64,9 +66,12 @@ class TaskPackage(object):
         answer = [item.sql.answer for item in book_list]
         info = [item.sql.info for item in book_list]
         book.kind = book_type
-        book.sql.info = 'select * from Question where ({})'.format(' or '.join(info))
-        book.sql.question = 'select * from Question where ({})'.format(' or '.join(question))
-        book.sql.answer = 'select * from Answer where ({})'.format(' or '.join(answer))
+        book.sql.info = 'select * from Question where ({})'.format(
+            ' or '.join(info))
+        book.sql.question = 'select * from Question where ({})'.format(
+            ' or '.join(question))
+        book.sql.answer = 'select * from Answer where ({})'.format(
+            ' or '.join(answer))
         self.book_list[book_type] = [book]
         return
 

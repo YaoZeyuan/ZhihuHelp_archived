@@ -11,7 +11,8 @@ class Directory(Base):
 
     def add_html(self, src, title):
         template = self.get_template('directory', 'item_leaf')
-        self.content += template.format(href=Path.get_filename(src), title=title)
+        self.content += template.format(href=Path.get_filename(src),
+                                        title=title)
         return
 
     def create_chapter(self, src, title):

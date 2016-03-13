@@ -60,7 +60,8 @@ class Manifest(Base):
 
     def add_item(self, resource_id, href, media_type):
         template = self.get_template('manifest', 'item')
-        self.content += template.format(resource_id=resource_id, href=href, media_type=media_type)
+        self.content += template.format(resource_id=resource_id, href=href,
+                                        media_type=media_type)
         return
 
 
@@ -79,17 +80,20 @@ class Spine(Base):
 class Guide(Base):
     def add_cover(self, href, title='Cover'):
         template = self.get_template('guide', 'item')
-        self.content += template.format(href=href, title=title, item_type='Cover')
+        self.content += template.format(href=href, title=title,
+                                        item_type='Cover')
         return
 
     def add_title_page(self, href, title='title_page'):
         template = self.get_template('guide', 'item')
-        self.content += template.format(href=href, title=title, item_type='title-page')
+        self.content += template.format(href=href, title=title,
+                                        item_type='title-page')
         return
 
     def add_index(self, href, title='index'):
         template = self.get_template('guide', 'item')
-        self.content += template.format(href=href, title=title, item_type='toc')
+        self.content += template.format(href=href, title=title,
+                                        item_type='toc')
         return
 
 

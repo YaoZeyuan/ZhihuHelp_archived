@@ -15,7 +15,8 @@ class SimpleAnswer(Answer):
             self.footer = dom.find('div', class_='zm-meta-panel')
             if self.body:
                 content = self.get_tag_content(self.body)
-                self.content = BeautifulSoup(Match.fix_html(content), 'html.parser')
+                self.content = BeautifulSoup(Match.fix_html(content),
+                                             'html.parser')
             self.author_parser.set_dom(dom)
         return
 
@@ -48,7 +49,8 @@ class SimpleAnswer(Answer):
             self.info['commit_date'] = self.parse_date(commit_date)
         else:
             commit_date = data_block.get_text()
-            self.info['edit_date'] = self.info['commit_date'] = self.parse_date(commit_date)
+            self.info['edit_date'] = self.info[
+                'commit_date'] = self.parse_date(commit_date)
 
     def parse_href_info(self):
         if not self.content:
@@ -65,5 +67,7 @@ class SimpleAnswer(Answer):
         href = self.get_attr(href_tag, 'href')
         self.parse_question_id(href)
         self.parse_answer_id(href)
-        self.info['href'] = "https://www.zhihu.com/question/{question_id}/answer/{answer_id}".format(**self.info)
+        self.info[
+            'href'] = "https://www.zhihu.com/question/{question_id}/answer/{answer_id}".format(
+            **self.info)
         return

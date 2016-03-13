@@ -41,11 +41,15 @@ class HtmlCreator(object):
                 filename = self.image_container.add(src_download)
             else:
                 filename = ''
-            new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
-            new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
-                                          '../images/{}'.format(filename))
+            new_image = img.replace('"{}"'.format(src),
+                                    '"../images/{}"'.format(filename))
+            new_image = new_image.replace(
+                '//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
+                '../images/{}'.format(filename))
             new_image += '</img>'
-            content = content.replace(img, '<div class="duokan-image-single">{}</div>'.format(new_image))
+            content = content.replace(img,
+                                      '<div class="duokan-image-single">{}</div>'.format(
+                                          new_image))
 
         return content
 
@@ -74,7 +78,8 @@ class HtmlCreator(object):
         template = self.get_template('info', 'author')
         return template.format(**author_info)
 
-    def wrap_title_info(self, title_image='', title='', description='', **kwargs):
+    def wrap_title_info(self, title_image='', title='', description='',
+                        **kwargs):
         title_info = {
             'title_image': title_image,
             'title': title,
@@ -97,19 +102,23 @@ class HtmlCreator(object):
 
     def create_question(self, package, prefix=''):
         question = package['question']
-        answer_content = ''.join([self.create_answer(answer) for answer in package['answer_list']])
+        answer_content = ''.join(
+            [self.create_answer(answer) for answer in package['answer_list']])
         title_info = self.wrap_title_info(**question)
         question['answer'] = answer_content
-        question['question'] = self.get_template('info', 'title').format(**title_info)
+        question['question'] = self.get_template('info', 'title').format(
+            **title_info)
         result = {
-            'body': self.get_template('question', 'question').format(**question),
+            'body': self.get_template('question', 'question').format(
+                **question),
             'title': question['title'],
         }
 
         content = self.get_template('content', 'base').format(**result)
         page = Page()
         page.content = self.fix_image(content)
-        page.filename = str(prefix) + '_' + str(question['question_id']) + '.xhtml'
+        page.filename = str(prefix) + '_' + str(
+            question['question_id']) + '.xhtml'
         page.title = question['title']
         return page
 
@@ -128,7 +137,8 @@ class HtmlCreator(object):
         content = self.get_template('content', 'base').format(**result)
         page = Page()
         page.content = self.fix_image(content)
-        page.filename = str(prefix) + '_' + str(article['article_id']) + '.xhtml'
+        page.filename = str(prefix) + '_' + str(
+            article['article_id']) + '.xhtml'
         page.title = article['title']
         return page
 
@@ -148,7 +158,8 @@ class HtmlCreator(object):
         elif kind == Type.collection:
             result['title'] = u'收藏夹_{title}({collection_id})'.format(**info)
         elif kind == Type.column:
-            result['title'] = u'{creator_name}的专栏_{name}({column_id})'.format(**info)
+            result['title'] = u'{creator_name}的专栏_{name}({column_id})'.format(
+                **info)
         elif kind == Type.topic:
             result['title'] = u'知乎_话题_{title}({topic_id})'.format(**info)
         return result
@@ -159,7 +170,8 @@ class HtmlCreator(object):
         extend = self.wrap_front_page_info(kind, info)
         info.update(extend)
         result = {
-            'detail_info': self.get_template('front_page', kind).format(**info),
+            'detail_info': self.get_template('front_page', kind).format(
+                **info),
             'title': info['title'],
             'description': info['description'],
         }
