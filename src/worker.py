@@ -50,7 +50,7 @@ class PageWorker(object):
             return max_page
 
     def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, }
+        config = {'Answer': self.answer_list, 'Question': self.question_list,}
         return config
 
     def clear_index(self):
@@ -95,7 +95,7 @@ class PageWorker(object):
 
     def start_create_work_list(self):
         self.clear_work_set()
-        argv = {'func': self.create_work_set, 'iterable': self.task_set, }
+        argv = {'func': self.create_work_set, 'iterable': self.task_set,}
         Control.control_center(argv, self.task_set)
         return
 
@@ -124,7 +124,7 @@ class PageWorker(object):
         a = list(self.work_set)
         a.sort()
         argv = {'func': self.worker,  # 所有待存入数据库中的数据都应当是list
-                'iterable': a, }
+                'iterable': a,}
         Control.control_center(argv, self.work_set)
         Debug.logger.info(u"所有内容抓取完毕，开始对页面进行解析")
         i = 0
@@ -139,9 +139,10 @@ class PageWorker(object):
         return
 
     def start_catch_info(self):
-        argv = {'func': self.catch_info, 'iterable': self.info_url_set, }
+        argv = {'func': self.catch_info, 'iterable': self.info_url_set,}
         Control.control_center(argv, self.info_url_set)
         return
+
 
 class QuestionWorker(PageWorker):
     def parse_content(self, content):
@@ -183,7 +184,7 @@ class AuthorWorker(PageWorker):
         return
 
     def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, 'AuthorInfo': self.info_list, }
+        config = {'Answer': self.answer_list, 'Question': self.question_list, 'AuthorInfo': self.info_list,}
         return config
 
 
@@ -228,13 +229,13 @@ class CollectionWorker(PageWorker):
 
     def add_collection_index(self, collection_id, answer_list):
         for answer in answer_list:
-            data = {'href': answer['href'], 'collection_id': collection_id, }
+            data = {'href': answer['href'], 'collection_id': collection_id,}
             self.collection_index_list.append(data)
         return
 
     def create_save_config(self):
         config = {'Answer': self.answer_list, 'Question': self.question_list, 'CollectionInfo': self.info_list,
-                  'CollectionIndex': self.collection_index_list, }
+                  'CollectionIndex': self.collection_index_list,}
         return config
 
 
@@ -279,13 +280,13 @@ class TopicWorker(PageWorker):
 
     def add_topic_index(self, topic_id, answer_list):
         for answer in answer_list:
-            data = {'href': answer['href'], 'topic_id': topic_id, }
+            data = {'href': answer['href'], 'topic_id': topic_id,}
             self.topic_index_list.append(data)
         return
 
     def create_save_config(self):
         config = {'Answer': self.answer_list, 'Question': self.question_list, 'TopicInfo': self.info_list,
-                  'TopicIndex': self.topic_index_list, }
+                  'TopicIndex': self.topic_index_list,}
         return config
 
     def clear_index(self):
@@ -363,7 +364,7 @@ class ColumnWorker(PageWorker):
 def worker_factory(task):
     type_list = {'answer': QuestionWorker, 'question': QuestionWorker, 'author': AuthorWorker,
                  'collection': CollectionWorker, 'topic': TopicWorker, 'column': ColumnWorker,
-                 'article': ColumnWorker, }
+                 'article': ColumnWorker,}
     for key in task:
         worker = type_list[key](task[key])
         worker.start()

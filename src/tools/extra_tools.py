@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+import datetime
 import hashlib
 import time
-import datetime
 
 
 class ExtraTools(object):

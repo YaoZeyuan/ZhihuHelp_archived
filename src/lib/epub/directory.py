@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from .zhihuhelp_tools.path import Path
 from .tools.base import Base
+from .zhihuhelp_tools.path import Path
 
 
 class Directory(Base):

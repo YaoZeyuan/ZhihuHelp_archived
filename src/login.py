@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import cookielib
-import os
-import sys
-import platform
-import webbrowser
 import json
+import os
+import platform
+import sys
 import urllib2
+import webbrowser
 
 import guide
 from src.tools.config import Config
@@ -88,7 +88,6 @@ class Login():
     def get_captcha():
         content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
-
 
         with open(captcha_path, 'wb') as image:
             image.write(content)

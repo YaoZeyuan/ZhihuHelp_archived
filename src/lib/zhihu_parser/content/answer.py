@@ -60,7 +60,7 @@ class Answer(ParserTools):
         self.info['content'] = self.get_tag_content(self.body)
         return
 
-    def parse_date_info(self):   # 如果是question类型, 执行这里的, 如果是author类型, 执行simple_answer的
+    def parse_date_info(self):  # 如果是question类型, 执行这里的, 如果是author类型, 执行simple_answer的
         data_block = self.footer.find('a', class_='answer-date-link')
         commit_date = self.get_attr(data_block, 'data-tip')
         if not data_block:
