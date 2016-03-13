@@ -11,8 +11,7 @@ class ExtraTools(object):
 
     @staticmethod
     def get_friendly_time():
-        return datetime.datetime.today().isoformat().split('.')[0].replace(':',
-                                                                           '：')
+        return datetime.datetime.today().isoformat().split('.')[0].replace(':', '：')
 
     @staticmethod
     def get_today():

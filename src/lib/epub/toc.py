@@ -30,23 +30,19 @@ class DocTitle(Base):
 class Ncx(Base):
     def create_item(self, resource_id, href, title, extend_nav_point=''):
         template = self.get_template('ncx', 'item')
-        content = template.format(resource_id=resource_id, href=href,
-                                  title=title,
-                                  extend_nav_point=extend_nav_point)
+        content = template.format(resource_id=resource_id, href=href, title=title, extend_nav_point=extend_nav_point)
         return content
 
     def add_item(self, resource_id, href, title, extend_nav_point=''):
-        content = self.create_item(resource_id, href, title,
-                                   extend_nav_point=extend_nav_point)
+        content = self.create_item(resource_id, href, title, extend_nav_point=extend_nav_point)
         self.content += content
         return
 
     @staticmethod
     def create_chapter_item(resource_id, href, title, extend_nav_point=''):
         chapter = {
-            'chapter': dict(
-                zip(('resource_id', 'href', 'title', 'extend_nav_point'),
-                    (resource_id, href, title, extend_nav_point))),
+            'chapter': dict(zip(('resource_id', 'href', 'title', 'extend_nav_point'),
+                                (resource_id, href, title, extend_nav_point))),
             'content': ''
         }
         return chapter
@@ -78,8 +74,7 @@ class TOC(Base):
 
     def add_item(self, resource_id, href, title, extend_nav_point=''):
         if self.chapter_list:
-            self.chapter_list[-1]['content'] += self.ncx.create_item(
-                resource_id, href, title)
+            self.chapter_list[-1]['content'] += self.ncx.create_item(resource_id, href, title)
         else:
             self.ncx.add_item(resource_id, href, title, extend_nav_point)
         return

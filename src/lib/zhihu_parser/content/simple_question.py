@@ -26,8 +26,7 @@ class SimpleQuestion(ParserTools):
     def parse_question_id(self):
         question = self.dom.select('h2 a.question_link')
         if not question:
-            question = self.dom.select(
-                'h2.zm-item-title a[target="_blank"]')  # 在收藏夹中需要使用这种选择器
+            question = self.dom.select('h2.zm-item-title a[target="_blank"]')  # 在收藏夹中需要使用这种选择器
         if not question:
             Debug.logger.debug(u'问题信息_id未找到')
             return
@@ -38,8 +37,7 @@ class SimpleQuestion(ParserTools):
     def parse_title(self):
         question = self.dom.select('h2 a.question_link')
         if not question:
-            question = self.dom.select(
-                'h2.zm-item-title a[target="_blank"]')  # 在收藏夹中需要使用这种选择器
+            question = self.dom.select('h2.zm-item-title a[target="_blank"]')  # 在收藏夹中需要使用这种选择器
         if not question:
             Debug.logger.debug(u'问题信息_title未找到')
             return

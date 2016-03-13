@@ -13,8 +13,7 @@ class Answer(ParserTools):
     @staticmethod
     def answer_is_hidden(dom):
         # 第二条是为了处理当答案已消失时，直呼仍然将问题显示出来的bug
-        return dom.select('div.answer-status') or (
-        not dom.select('textarea.content,div.zm-editable-content'))
+        return dom.select('div.answer-status') or (not dom.select('textarea.content,div.zm-editable-content'))
 
     def set_dom(self, dom):
         self.info = {}
@@ -61,8 +60,7 @@ class Answer(ParserTools):
         self.info['content'] = self.get_tag_content(self.body)
         return
 
-    def parse_date_info(
-            self):  # 如果是question类型, 执行这里的, 如果是author类型, 执行simple_answer的
+    def parse_date_info(self):  # 如果是question类型, 执行这里的, 如果是author类型, 执行simple_answer的
         data_block = self.footer.find('a', class_='answer-date-link')
         commit_date = self.get_attr(data_block, 'data-tip')
         if not data_block:
@@ -75,8 +73,7 @@ class Answer(ParserTools):
             self.info['commit_date'] = self.parse_date(commit_date)
         else:
             commit_date = data_block.get_text()
-            self.info['edit_date'] = self.info[
-                'commit_date'] = self.parse_date(commit_date)
+            self.info['edit_date'] = self.info['commit_date'] = self.parse_date(commit_date)
 
     def parse_comment_count(self):
         # BS的属性选择器语法区分“和’！！！
@@ -105,9 +102,7 @@ class Answer(ParserTools):
         href = self.get_attr(href_tag, 'href')
         self.parse_question_id(href)
         self.parse_answer_id(href)
-        self.info[
-            'href'] = "https://www.zhihu.com/question/{question_id}/answer/{answer_id}".format(
-            **self.info)
+        self.info['href'] = "https://www.zhihu.com/question/{question_id}/answer/{answer_id}".format(**self.info)
         return
 
     def parse_question_id(self, href):

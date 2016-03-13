@@ -50,9 +50,7 @@ class ZhihuHelp(object):
         with open('./ReadList.txt', 'r') as read_list:
             counter = 1
             for line in read_list:
-                line = line.replace(' ', '').replace('\r', '').replace('\n',
-                                                                       '').replace(
-                    '\t', '')  # 移除空白字符
+                line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
                 self.create_book(line, counter)  # 一行内容代表一本电子书
                 counter += 1
         return
@@ -100,8 +98,7 @@ class ZhihuHelp(object):
         """
         print u"检查更新。。。"
         try:
-            content = Http.get_content(
-                u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt")
+            content = Http.get_content(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt")
             if not content:
                 raise Exception('HttpError')
             time, url = [x.strip() for x in content.split('\n')]

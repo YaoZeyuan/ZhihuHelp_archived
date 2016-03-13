@@ -5,8 +5,7 @@ import shutil
 
 
 class Path(object):
-    base_path = unicode(os.path.abspath('.').decode(
-        locale.getpreferredencoding()))  # 初始地址,不含分隔符
+    base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))  # 初始地址,不含分隔符
 
     config_path = base_path + u'/config.json'
     db_path = base_path + u'/zhihuDB_173.db'
@@ -31,8 +30,7 @@ class Path(object):
 
     @staticmethod
     def get_pwd():
-        path = unicode(
-            os.path.abspath('.').decode(locale.getpreferredencoding()))
+        path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
         return path
 
     @staticmethod
@@ -77,8 +75,7 @@ class Path(object):
 
     @staticmethod
     def init_base_path():
-        Path.base_path = unicode(
-            os.path.abspath('.').decode(locale.getpreferredencoding()))
+        Path.base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
         Path.config_path = Path.base_path + u'/config.json'
         Path.db_path = Path.base_path + u'/zhihuDB_173.db'
         Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'

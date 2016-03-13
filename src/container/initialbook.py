@@ -91,20 +91,16 @@ class InitialBook(object):
             self.epub.id = info['id']
 
         if self.kind == Type.topic:
-            self.epub.title = u'话题_{}({})'.format(info['title'],
-                                                  info['topic_id'])
+            self.epub.title = u'话题_{}({})'.format(info['title'], info['topic_id'])
             self.epub.id = info['topic_id']
         if self.kind == Type.collection:
-            self.epub.title = u'收藏夹_{}({})'.format(info['title'],
-                                                   info['collection_id'])
+            self.epub.title = u'收藏夹_{}({})'.format(info['title'], info['collection_id'])
             self.epub.id = info['collection_id']
         if self.kind == Type.author:
-            self.epub.title = u'作者_{}({})'.format(info['name'],
-                                                  info['author_id'])
+            self.epub.title = u'作者_{}({})'.format(info['name'], info['author_id'])
             self.epub.id = info['author_id']
         if self.kind == Type.column:
-            self.epub.title = u'专栏_{}({})'.format(info['name'],
-                                                  info['column_id'])
+            self.epub.title = u'专栏_{}({})'.format(info['name'], info['column_id'])
             self.epub.id = info['column_id']
         return
 
@@ -117,19 +113,14 @@ class InitialBook(object):
         return
 
     def __get_question_list(self):
-        question_list = [DB.wrap('question', x) for x in
-                         DB.get_result_list(self.sql.question)]
-        answer_list = [DB.wrap('answer', x) for x in
-                       DB.get_result_list(self.sql.get_answer_sql())]
+        question_list = [DB.wrap('question', x) for x in DB.get_result_list(self.sql.question)]
+        answer_list = [DB.wrap('answer', x) for x in DB.get_result_list(self.sql.get_answer_sql())]
 
         def merge_answer_into_question():
-            question_dict = {
-            x['question_id']: {'question': x.copy(), 'answer_list': [],
-                               'agree': 0} for x in
-            question_list}
+            question_dict = {x['question_id']: {'question': x.copy(), 'answer_list': [], 'agree': 0} for x in
+                             question_list}
             for answer in answer_list:
-                question_dict[answer['question_id']]['answer_list'].append(
-                    answer)
+                question_dict[answer['question_id']]['answer_list'].append(answer)
             return question_dict.values()
 
         def add_property(question):
@@ -146,8 +137,7 @@ class InitialBook(object):
             question['char_count'] = char_count
             return question
 
-        question_list = [add_property(x) for x in merge_answer_into_question()
-                         if len(x['answer_list'])]
+        question_list = [add_property(x) for x in merge_answer_into_question() if len(x['answer_list'])]
         return question_list
 
     def __get_article_list(self):
@@ -158,8 +148,7 @@ class InitialBook(object):
             article['answer_count'] = 1
             return article
 
-        article_list = [DB.wrap(Type.article, x) for x in
-                        DB.get_result_list(self.sql.get_answer_sql())]
+        article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         article_list = [add_property(x) for x in article_list]
         return article_list
 
@@ -188,18 +177,15 @@ class InitialBook(object):
         return
 
     def sort_article(self):
-        self.article_list.sort(key=lambda x: x[Config.article_order_by],
-                               reverse=Config.article_order_by_desc)
+        self.article_list.sort(key=lambda x: x[Config.article_order_by], reverse=Config.article_order_by_desc)
         return
 
     def sort_question(self):
         def sort_answer(answer_list):
-            answer_list.sort(key=lambda x: x[Config.answer_order_by],
-                             reverse=Config.answer_order_by_desc)
+            answer_list.sort(key=lambda x: x[Config.answer_order_by], reverse=Config.answer_order_by_desc)
             return
 
-        self.article_list.sort(key=lambda x: x[Config.question_order_by],
-                               reverse=Config.question_order_by_desc)
+        self.article_list.sort(key=lambda x: x[Config.question_order_by], reverse=Config.question_order_by_desc)
         for item in self.article_list:
             sort_answer(item['answer_list'])
         return

@@ -8,8 +8,7 @@ from ..zhihuhelp_tools.path import Path
 class EpubPath(object):
     file_path = os.path.realpath(__file__)
     base_path = os.path.dirname(file_path)
-    base_path = unicode(
-        os.path.dirname(base_path).decode(sys.stdout.encoding))  # 库文件位置
+    base_path = unicode(os.path.dirname(base_path).decode(sys.stdout.encoding))  # 库文件位置
 
     work_path = base_path  # 默认以库位置作为初始工作地址
     output_path = os.path.dirname(work_path)  # 默认以工作目录的上一级为输出目录

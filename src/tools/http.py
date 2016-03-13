@@ -15,8 +15,7 @@ from src.tools.debug import Debug
 
 class Http(object):
     @staticmethod
-    def get_content(url='', data=None, timeout=Config.timeout_download_html,
-                    extra_header={}):
+    def get_content(url='', data=None, timeout=Config.timeout_download_html, extra_header={}):
         u"""获取网页内容
 
         获取网页内容, 打开网页超过设定的超时时间则报错
@@ -115,8 +114,7 @@ class Http(object):
                 "select cookieStr, recordDate from LoginRecord order by recordDate desc where account = `{}`".format(
                     account))
         else:
-            result = DB.cursor.execute(
-                "select cookieStr, recordDate from LoginRecord order by recordDate desc")
+            result = DB.cursor.execute("select cookieStr, recordDate from LoginRecord order by recordDate desc")
 
         result = result.fetchone()
         cookie = result[0]
@@ -127,13 +125,8 @@ class Http(object):
 
     @staticmethod
     def make_cookie(name, value, domain):
-        cookie = cookielib.Cookie(version=0, name=name, value=value, port=None,
-                                  port_specified=False, domain=domain,
-                                  domain_specified=True,
-                                  domain_initial_dot=False, path="/",
-                                  path_specified=True,
-                                  secure=False,
-                                  expires=time.time() + 300000000,
-                                  discard=False, comment=None,
+        cookie = cookielib.Cookie(version=0, name=name, value=value, port=None, port_specified=False, domain=domain,
+                                  domain_specified=True, domain_initial_dot=False, path="/", path_specified=True,
+                                  secure=False, expires=time.time() + 300000000, discard=False, comment=None,
                                   comment_url=None, rest={})
         return cookie

@@ -20,8 +20,7 @@ from src.tools.path import Path
 class Login():
     def __init__(self):
         self.cookieJar = cookielib.LWPCookieJar()
-        self.opener = urllib2.build_opener(
-            urllib2.HTTPCookieProcessor(self.cookieJar))
+        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))
         urllib2.install_opener(self.opener)
 
     def login(self, account, password, captcha=''):
@@ -33,16 +32,13 @@ class Login():
             return False
         xsrf = xsrf.split('=')[1]
         # add xsrf as cookie into cookieJar,
-        cookie = Http.make_cookie(name='_xsrf', value=xsrf,
-                                  domain='www.zhihu.com')
+        cookie = Http.make_cookie(name='_xsrf', value=xsrf, domain='www.zhihu.com')
         self.cookieJar.set_cookie(cookie)
         if captcha:
-            post_data = {'_xsrf': xsrf, 'email': account, 'password': password,
-                         'remember_me': True,
+            post_data = {'_xsrf': xsrf, 'email': account, 'password': password, 'remember_me': True,
                          'captcha': captcha}
         else:
-            post_data = {'_xsrf': xsrf, 'email': account, 'password': password,
-                         'remember_me': True}
+            post_data = {'_xsrf': xsrf, 'email': account, 'password': password, 'remember_me': True}
 
         header = {
             'Accept': '*/*',
@@ -56,8 +52,7 @@ class Login():
             'Origin': 'https://www.zhihu.com',
             'Referer': 'https://www.zhihu.com/',
         }
-        result = Http.get_content(url=r'https://www.zhihu.com/login/email',
-                                  data=post_data, extra_header=header)
+        result = Http.get_content(url=r'https://www.zhihu.com/login/email', data=post_data, extra_header=header)
         if not result:
             Debug.logger.info(u'登陆失败，请敲击回车重新登陆')
             return False
@@ -75,8 +70,7 @@ class Login():
                 print u'跳过保存环节，进入下一流程'
             Config._save()
             cookie = self.get_cookie()
-            DB.execute(
-                'delete from LoginRecord')  # 登陆成功后清除数据库中原有的登录记录，避免下次登陆时取到旧记录
+            DB.execute('delete from LoginRecord')  # 登陆成功后清除数据库中原有的登录记录，避免下次登陆时取到旧记录
             data = {}
             data['account'] = account
             data['password'] = password
@@ -92,8 +86,7 @@ class Login():
 
     @staticmethod
     def get_captcha():
-        content = Http.get_content(
-            'https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
+        content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
         with open(captcha_path, 'wb') as image:
@@ -103,8 +96,7 @@ class Login():
         print u'验证码位置:'
         print captcha_path
         if platform.system() == "Darwin":
-            os.system(u'open "{}" &'.format(captcha_path).encode(
-                sys.stdout.encoding))
+            os.system(u'open "{}" &'.format(captcha_path).encode(sys.stdout.encoding))
         else:
             webbrowser.get().open_new_tab(u'file:///' + captcha_path)
 

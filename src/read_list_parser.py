@@ -78,8 +78,7 @@ class ReadListParser():
             task = SingleTask()
             task.kind = 'question'
 
-            task.spider.href = 'https://www.zhihu.com/question/{}'.format(
-                question_id)
+            task.spider.href = 'https://www.zhihu.com/question/{}'.format(question_id)
             task.book.kind = 'question'
             task.book.sql.info = ' question_id = "{}" '.format(question_id)
             task.book.sql.question = 'question_id = "{}"'.format(question_id)
@@ -92,14 +91,12 @@ class ReadListParser():
             answer_id = result.group('answer_id')
             task = SingleTask()
             task.kind = 'answer'
-            task.spider.href = 'https://www.zhihu.com/question/{}/answer/{}'.format(
-                question_id, answer_id)
+            task.spider.href = 'https://www.zhihu.com/question/{}/answer/{}'.format(question_id, answer_id)
 
             task.book.kind = 'answer'
             task.book.sql.info = ' question_id = "{}" '.format(question_id)
             task.book.sql.question = ' question_id = "{}" '.format(question_id)
-            task.book.sql.answer = ' question_id = "{}" and answer_id = "{}" '.format(
-                question_id, answer_id)
+            task.book.sql.answer = ' question_id = "{}" and answer_id = "{}" '.format(question_id, answer_id)
             return task
 
         def parse_author(command):
@@ -107,15 +104,12 @@ class ReadListParser():
             author_id = result.group('author_id')
             task = SingleTask()
             task.kind = 'author'
-            task.spider.href = 'https://www.zhihu.com/people/{}'.format(
-                author_id)
+            task.spider.href = 'https://www.zhihu.com/people/{}'.format(author_id)
             task.book.kind = 'author'
-            task.book.sql.info = 'select * from AuthorInfo where author_id = "{}"'.format(
-                author_id)
+            task.book.sql.info = 'select * from AuthorInfo where author_id = "{}"'.format(author_id)
             task.book.sql.question = 'select * from Question where question_id in (select question_id from Answer where author_id = "{}")'.format(
                 author_id)
-            task.book.sql.answer = 'select * from Answer where author_id = "{}"'.format(
-                author_id)
+            task.book.sql.answer = 'select * from Answer where author_id = "{}"'.format(author_id)
             return task
 
         def parse_collection(command):
@@ -123,8 +117,7 @@ class ReadListParser():
             collection_id = result.group('collection_id')
             task = SingleTask()
             task.kind = 'collection'
-            task.spider.href = 'https://www.zhihu.com/collection/{}'.format(
-                collection_id)
+            task.spider.href = 'https://www.zhihu.com/collection/{}'.format(collection_id)
             task.book.kind = 'collection'
             task.book.sql.info = 'select * from CollectionInfo where collection_id = "{}"'.format(
                 collection_id)
@@ -139,11 +132,9 @@ class ReadListParser():
             topic_id = result.group('topic_id')
             task = SingleTask()
             task.kind = 'topic'
-            task.spider.href = 'https://www.zhihu.com/topic/{}'.format(
-                topic_id)
+            task.spider.href = 'https://www.zhihu.com/topic/{}'.format(topic_id)
             task.book.kind = 'topic'
-            task.book.sql.info = 'select * from TopicInfo where topic_id = "{}"'.format(
-                topic_id)
+            task.book.sql.info = 'select * from TopicInfo where topic_id = "{}"'.format(topic_id)
             task.book.sql.question = 'select * from Question where question_id in (select question_id from Answer where href in (select href from TopicIndex where topic_id = "{}"))'.format(
                 topic_id)
             task.book.sql.answer = 'select * from Answer where href in (select href from TopicIndex where topic_id = "{}")'.format(
@@ -156,14 +147,11 @@ class ReadListParser():
             article_id = result.group('article_id')
             task = SingleTask()
             task.kind = 'article'
-            task.spider.href = 'https://zhuanlan.zhihu.com/{}/{}'.format(
-                column_id, article_id)
+            task.spider.href = 'https://zhuanlan.zhihu.com/{}/{}'.format(column_id, article_id)
             task.book.kind = 'article'
-            task.book.sql.info = ' column_id = "{}" and article_id = "{}" '.format(
-                column_id, article_id)
+            task.book.sql.info = ' column_id = "{}" and article_id = "{}" '.format(column_id, article_id)
             task.book.sql.question = ''
-            task.book.sql.answer = ' column_id = "{}" and article_id = "{}" '.format(
-                column_id, article_id)
+            task.book.sql.answer = ' column_id = "{}" and article_id = "{}" '.format(column_id, article_id)
             return task
 
         def parse_column(command):
@@ -171,26 +159,20 @@ class ReadListParser():
             column_id = result.group('column_id')
             task = SingleTask()
             task.kind = 'column'
-            task.spider.href = 'https://zhuanlan.zhihu.com/{}'.format(
-                column_id)
+            task.spider.href = 'https://zhuanlan.zhihu.com/{}'.format(column_id)
             task.book.kind = 'column'
-            task.book.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(
-                column_id)
+            task.book.sql.info = 'select * from ColumnInfo where column_id = "{}" '.format(column_id)
             task.book.sql.question = ''
-            task.book.sql.answer = 'select * from Article where column_id = "{}" '.format(
-                column_id)
+            task.book.sql.answer = 'select * from Article where column_id = "{}" '.format(column_id)
             return task
 
         def parse_error(command):
             if command:
-                Debug.logger.info(
-                    u"""无法解析记录:{}所属网址类型,请检查后重试。""".format(command))
+                Debug.logger.info(u"""无法解析记录:{}所属网址类型,请检查后重试。""".format(command))
             return
 
-        parser = {'answer': parse_answer, 'question': parse_question,
-                  'author': parse_author,
-                  'collection': parse_collection, 'topic': parse_topic,
-                  'article': parse_article,
+        parser = {'answer': parse_answer, 'question': parse_question, 'author': parse_author,
+                  'collection': parse_collection, 'topic': parse_topic, 'article': parse_article,
                   'column': parse_column, 'unknown': parse_error,}
         kind = detect(raw_command)
         return parser[kind](raw_command)

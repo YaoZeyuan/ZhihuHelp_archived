@@ -38,8 +38,7 @@ class Config(object):
     def _save():
         with open(Path.config_path, 'w') as f:
             data = dict((
-                (key, Config.__dict__[key]) for key in Config.__dict__ if
-            '_' not in key[:2]
+                (key, Config.__dict__[key]) for key in Config.__dict__ if '_' not in key[:2]
             ))
             json.dump(data, f, indent=4)
         return
