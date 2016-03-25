@@ -74,8 +74,9 @@ class HtmlCreator(object):
         template = self.get_template('info', 'author')
         return template.format(**author_info)
 
-    def wrap_title_info(self, title_image='', title='', description='', **kwargs):
+    def wrap_title_info(self, question_id='', title_image='', title='', description='', **kwargs):
         title_info = {
+            'question_id': question_id,
             'title_image': title_image,
             'title': title,
             'description': description,
