@@ -88,7 +88,6 @@
 6.  question_order_by_desc
     *   是否按照降序对排序指标进行排列
     *   同article_order_by_desc
-
 7.  author_answer_order_by = 'answer_id'
     *   作者回答排序原则
     *   可选值
@@ -101,7 +100,7 @@
 8.  author_answer_order_by_desc
     *   作者答案排序指标，为对回答内答案进行排序的依据
     *   可选值
-        *   同article_order_by
+        *   同article_order_by_desc
 9.  account
     *   用户名，只能是知乎登陆邮箱
 10. password
