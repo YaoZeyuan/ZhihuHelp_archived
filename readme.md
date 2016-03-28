@@ -88,23 +88,37 @@
 6.  question_order_by_desc
     *   是否按照降序对排序指标进行排列
     *   同article_order_by_desc
-7.  account
+
+7.  author_answer_order_by = 'answer_id'
+    *   作者回答排序原则
+    *   可选值
+        *    agree_count
+            *   赞同数
+        *    answer_id
+            *   回答日期
+        *    char_count
+            *   字数
+8.  author_answer_order_by_desc
+    *   作者答案排序指标，为对回答内答案进行排序的依据
+    *   可选值
+        *   同article_order_by
+9.  account
     *   用户名，只能是知乎登陆邮箱
-8.  password
+10. password
     *   密码
-9.  max_answer
+11. max_answer
     *   每本电子书中最大可容纳的答案数，超过该值电子书将自动分割为多本
     *   备注
         *   一篇文章视为一个回答
-10. max_question
+12. max_question
     *   每本电子书中最大可容纳的问题，超过该值电子书将自动分割为多本
     *   备注
         *   本设置项未启用
-11. max_article
+13. max_article
     *   每本电子书中最大可容纳的文章数，超过该值电子书将自动分割为多本
     *   备注
         *   本设置项未启用
-12. picture_quality
+14. picture_quality
     *   图片质量
     *   可选项
         *   0
@@ -113,33 +127,33 @@
             *   标清模式，下载知乎网页中所展示的图片
         *   2
             *   原图模式，下载原图
-13. show_private_answer
+15. show_private_answer
     *   是否抓取『禁止转载』的答案
     *   可选项
         *   true
         *   false
-14. update_time
+16. update_time
     *   更新日期
     *   修改本项会导致无法自动检测更新
     *   如果想跳过检测的话将本项设置为与[助手最新版本号](http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt)一致即可
-15. max_thread
+17. max_thread
     *   最大线程数
     *   不建议修改，线程开的过大在抓取时会引发429错误
-16. max_try
+18. max_try
     *   网页打开失败时的最大尝试次数
     *   默认为反复打开5次
-17. debug
+19. debug
     *   debug模式开关
     *   可选值
         *   true
         *   false
-18. timeout_download_html
+20. timeout_download_html
     *   下载网页超时时间
     *   默认为5s
-19. timeout_download_picture
+21. timeout_download_picture
     *   下载图片超时时间
     *   默认为10s
-20. remember_account
+22. remember_account
     *   是否记住密码
     *   如为否，所有设置项都会被重置为默认值
 
@@ -172,4 +186,4 @@
 
 ##License
 
-[MIT](http://opensource.org/licenses/MIT) 
+[MIT](http://opensource.org/licenses/MIT)
