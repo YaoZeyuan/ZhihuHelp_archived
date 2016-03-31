@@ -59,8 +59,11 @@ class ParserTools(object):
 
     @staticmethod
     def parse_date(date='1357-08-12'):
-        if u'昨天' in date:
-            return ExtraTools.get_yesterday()
+        if u":" in date:
+            if u'昨天' in date:
+                return ExtraTools.get_yesterday()
+            else:
+                return ExtraTools.get_today()
         if u'今天' in date:
             return ExtraTools.get_today()
         return ParserTools.match_content(r'\d{4}-\d{2}-\d{2}', date, '1357-08-12')  # 一三五七八十腊，三十一天永不差！
