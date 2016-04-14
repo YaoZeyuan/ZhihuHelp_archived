@@ -202,6 +202,7 @@ sdist/
 develop-eggs/
 .idea/
 知乎电子书临时资源库/
+知乎助手生成的电子书/
 .installed.cfg
 
 # Installer logs
