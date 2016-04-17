@@ -88,7 +88,7 @@
 6.  question_order_by_desc
     *   是否按照降序对排序指标进行排列
     *   同article_order_by_desc
-7.  author_answer_order_by = 'answer_id'
+7.  author_answer_order_by
     *   作者回答排序原则
     *   可选值
         *    agree_count
