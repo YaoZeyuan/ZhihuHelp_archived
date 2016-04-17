@@ -6,6 +6,7 @@ import platform
 import webbrowser
 import json
 import urllib2
+import time
 
 import guide
 from src.tools.config import Config
@@ -86,9 +87,10 @@ class Login():
 
     @staticmethod
     def get_captcha():
-        content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
+        # 知乎此处的r参数为一个13位的unix时间戳
+        unix_time_stp = str(int(1000 * time.time()))[0:13]
+        content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))  # 开始拉取验证码
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
-
 
         with open(captcha_path, 'wb') as image:
             image.write(content)

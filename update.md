@@ -1,3 +1,12 @@
+#1.7.3.10版更新说明
+0.  本次更新作者只改了两行代码，其余全部功能由知友[@xxNotepad](https://www.zhihu.com/people/xxnotepad)与[@盒棍](https://www.zhihu.com/people/knarfeh)完成，非常感谢！
+1.  感谢[@牛奶放姜](https://www.zhihu.com/people/niunaifangjiang),@九歌的捐赠
+2.  解决了由于知乎更新验证码获取方式，导致程序无法登陆的问题
+3.  优化ReadList不存在时的用户体验，当文件不存在时，自动生成一份空ReadList(该功能由[@xxNotepad](https://www.zhihu.com/people/xxnotepad)完成)
+4.  当抓取指定用户回答时，允许按照用户回答日期顺序进行排序(该功能由[@xxNotepad](https://www.zhihu.com/people/xxnotepad)完成)
+5.  解决不能生成专栏电子书的bug(该功能由[@盒棍](https://www.zhihu.com/people/knarfeh)
+6.  再次向为助手提交PR的开发者表示感谢！
+
 #1.7.3.9版更新说明
 0.  更新使用说明
 1.  优化电子书样式，解决问题详情不能跨页/作者头像遮挡签名/目录导航跨页的问题
