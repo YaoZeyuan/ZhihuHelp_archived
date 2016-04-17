@@ -1,5 +1,5 @@
 #1.7.3.10版更新说明
-0.  本次更新代码基本由知友[@xxNotepad](https://www.zhihu.com/people/xxnotepad)与[@盒棍](https://www.zhihu.com/people/knarfeh)独立完成，非常感谢！
+0.  本次更新作者只改了两行代码，其余全部功能由知友[@xxNotepad](https://www.zhihu.com/people/xxnotepad)与[@盒棍](https://www.zhihu.com/people/knarfeh)完成，非常感谢！
 1.  感谢[@牛奶放姜](https://www.zhihu.com/people/niunaifangjiang),@九歌的捐赠
 2.  解决了由于知乎更新验证码获取方式，导致程序无法登陆的问题
 3.  优化ReadList不存在时的用户体验，当文件不存在时，自动生成一份空ReadList(该功能由[@xxNotepad](https://www.zhihu.com/people/xxnotepad)完成)
