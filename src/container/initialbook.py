@@ -103,6 +103,7 @@ class InitialBook(object):
         if self.kind == Type.column:
             self.epub.title = u'专栏_{}({})'.format(info['name'], info['column_id'])
             self.epub.id = info['column_id']
+        self.epub.title = Match.fix_filename(self.epub.title)
         return
 
     def get_article_list(self):

@@ -65,7 +65,8 @@ class Match(object):
             '"': '〃',
             '!': '！',
             '\n': '',
-            '\r': ''
+            '\r': '',
+            '&': 'and',
         }
         for key, value in illegal.items():
             filename = filename.replace(key, value)
