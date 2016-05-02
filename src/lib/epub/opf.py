@@ -25,8 +25,13 @@ class Metadata(Base):
         self.cover = template.format(image_id=image_id)
         return
 
+    def set_language(self, language):
+        template = self.get_template('metadata', 'language')
+        self.language = template.format(language=language)
+        return
+
     def get_content(self):
-        for key in ['title', 'creator', 'book_id', 'cover']:
+        for key in ['title', 'creator', 'book_id', 'cover', 'language']:
             if hasattr(self, key):
                 self.content += getattr(self, key)
         return self.content
@@ -102,6 +107,10 @@ class OPF(Base):
         self.metadata_completed = set()
         self.uid = EpubConfig.uid
         return
+
+    def set_language(self, language=EpubConfig.language):
+        self.metadata.set_language(language)
+        self.metadata_completed.add('language')
 
     def set_title(self, title=EpubConfig.book_title):
         self.metadata.set_title(title)

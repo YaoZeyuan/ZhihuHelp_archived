@@ -38,10 +38,11 @@ class HtmlCreator(object):
                     continue
             src_download = HtmlCreator.fix_image_src(src)
             if src_download:
-                if src_download.endswith(('.jpg', '.png')):
+                if src_download.startswith('http'):
                     filename = self.image_container.add(src_download)
                 else:
                     # fix zhuanlan image href
+                    src_download = src_download.split('.')[0]
                     filename = self.image_container.add('https://pic2.zhimg.com/'+src_download+'_b.jpg')
             else:
                 filename = ''

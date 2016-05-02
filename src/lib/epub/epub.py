@@ -149,3 +149,7 @@ class Epub(object):
         self.opf.set_book_id(book_id, uid)
         self.toc.set_uid(uid)
         return
+
+    def set_language(self, language):
+        self.opf.set_language(language)
+        return

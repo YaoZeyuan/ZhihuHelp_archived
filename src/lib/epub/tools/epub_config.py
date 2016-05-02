@@ -25,6 +25,7 @@ class EpubConfig(object):
     metadata_creator_uri = base_path + u'/OEBPS/opf/metadata/creator.xml'
     metadata_book_id_uri = base_path + u'/OEBPS/opf/metadata/book_id.xml'
     metadata_title_uri = base_path + u'/OEBPS/opf/metadata/title.xml'
+    metadata_language_uri = base_path + u'/OEBPS/opf/metadata/language.xml'
 
     ### manifest
     manifest_item_uri = base_path + u'/OEBPS/opf/manifest/item.xml'
@@ -59,3 +60,4 @@ class EpubConfig(object):
     creator = u'zhihuhelp'
     uid = u'urn:uuid:create-by-yao-ze-yuan-Tsingtao'
     identifier = u''
+    language = u'zh'
