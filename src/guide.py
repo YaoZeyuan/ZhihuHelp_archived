@@ -22,23 +22,18 @@ def hello_world():
 def set_account():
     print u'请输入您的知乎注册邮箱，回车确认'
     print u'####################################'
-    print u'#直接敲击回车则使用内置账号进行登陆#'
-    print u'####################################'
     account = raw_input()
-    if account:
-        while not re.search(r'\w+@[\w\.]{3,}', account):
-            print u'抱歉，输入的账号不规范...\n请输入正确的知乎登录邮箱\n'
-            print u'范例：mengqingxue2014@qq.com\n5719abc@sina.cn'
-            print u'请重新输入账号，回车确认'
-            account = raw_input()
-        print u'请输入密码，回车确认'
+    while not re.search(r'\w+@[\w\.]{3,}', account):
+        print u'抱歉，输入的账号不规范...\n请输入正确的知乎登录邮箱\n'
+        print u'范例：mengqingxue2014@qq.com\n5719abc@sina.cn'
+        print u'请重新输入账号，回车确认'
+        account = raw_input()
+    print u'请输入密码，回车确认'
+    password = raw_input()
+    while len(password) < 6:
+        print u'密码长度不正确，密码至少6位'
+        print u'请重新输入密码，回车确认'
         password = raw_input()
-        while len(password) < 6:
-            print u'密码长度不正确，密码至少6位'
-            print u'请重新输入密码，回车确认'
-            password = raw_input()
-    else:
-        account, password = Config.account, Config.password
     return account, password
 
 

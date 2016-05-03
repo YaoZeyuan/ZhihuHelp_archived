@@ -92,8 +92,10 @@ class Login():
         content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))  # 开始拉取验证码
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
-        with open(captcha_path, 'wb') as image:
-            image.write(content)
+        image = open(captcha_path, 'wb')
+        image.write(content)
+        image.close()
+
         print u'请输入您所看到的验证码'
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
