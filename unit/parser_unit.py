@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 import sys
 
+# 添加库路径
+currentPath = sys.path[0].replace('unit', '')
+sys.path.append(currentPath)
+sys.path.append(currentPath + r'src')
+sys.path.append(currentPath + r'src\tools')
+sys.path.append(currentPath + r'src\parser')
+sys.path.append(currentPath + r'src\lib')  # 扩展库地址
+
 from src.lib.zhihu_parser.author import AuthorParser
 from src.lib.zhihu_parser.collection import CollectionParser
 from src.lib.zhihu_parser.question import QuestionParser
@@ -10,17 +18,12 @@ from src.tools.debug import Debug
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-# 添加库路径
-currentPath = sys.path[0].replace('unit', '')
-sys.path.append(currentPath)
-sys.path.append(currentPath + r'src')
-sys.path.append(currentPath + r'src\tools')
-sys.path.append(currentPath + r'src\parser')
+
 
 sys.setrecursionlimit(1000000)  # 为了适应知乎上的长答案，需要专门设下递归深度限制。。。
 
 is_info = 0
-kind = 'collection'  # 直接在这里替换类别即可完成测试。可供测试的类别见字典键值
+kind = 'author'  # 直接在这里替换类别即可完成测试。可供测试的类别见字典键值
 unit ={
     'answer':{
         'src_answer':'./unit_html/single_answer.html',

@@ -19,8 +19,12 @@ class Answer(ParserTools):
         self.info = {}
         if dom and not (dom.select('div.answer-status')):
             self.header = dom.find('div', class_='zm-item-vote-info')
+            self.answer_info = dom.find('p', 'visible-expanded')
             self.body = dom.find('div', class_='zm-editable-content')
             self.footer = dom.find('div', class_='zm-meta-panel')
+            if not self.answer_info:
+                # question/answer中还没有p.visible-expanded标签，先用footer顶上
+                self.answer_info = self.footer
             self.author_parser.set_dom(dom)
         return
 
@@ -61,7 +65,7 @@ class Answer(ParserTools):
         return
 
     def parse_date_info(self):   # 如果是question类型, 执行这里的, 如果是author类型, 执行simple_answer的
-        data_block = self.footer.find('a', class_='answer-date-link')
+        data_block = self.answer_info.find('a', class_='answer-date-link')
         commit_date = self.get_attr(data_block, 'data-tip')
         if not data_block:
             Debug.logger.debug(u'答案更新日期未找到')
@@ -95,7 +99,7 @@ class Answer(ParserTools):
         return
 
     def parse_href_info(self):
-        href_tag = self.footer.find('a', class_='answer-date-link')
+        href_tag = self.answer_info.find('a', class_='answer-date-link')
         if not href_tag:
             Debug.logger.debug(u'问题id，答案id未找到')
             return

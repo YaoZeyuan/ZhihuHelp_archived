@@ -11,6 +11,7 @@ class SimpleAnswer(Answer):
         if dom and not (dom.select('div.answer-status')):
             self.header = dom.find('div', class_='zm-item-vote-info')
             self.body = dom.find('textarea', class_='content')
+            self.answer_info = dom.find('p', class_='visible-expanded')
             self.footer = dom.find('div', class_='zm-meta-panel')
             if self.body:
                 content = self.get_tag_content(self.body)
@@ -24,19 +25,14 @@ class SimpleAnswer(Answer):
             Debug.logger.debug(u'答案内容未找到')
             return
         content = self.content
-        span = content.find('span', class_='answer-date-link-wrap')
-        if not span:
-            Debug.logger.debug(u'答案内容未找到')
-            return
-        span.extract()
         self.info['content'] = self.get_tag_content(content)
         return
 
     def parse_date_info(self):
-        if not self.content:
+        if not self.answer_info:
             Debug.logger.debug(u'答案更新日期未找到')
             return
-        data_block = self.body.find('a', class_='answer-date-link')
+        data_block = self.answer_info.find('a', class_='answer-date-link')
         if not data_block:
             Debug.logger.debug(u'答案更新日期未找到')
             return
@@ -50,10 +46,10 @@ class SimpleAnswer(Answer):
             self.info['edit_date'] = self.info['commit_date'] = self.parse_date(commit_date)
 
     def parse_href_info(self):
-        if not self.content:
+        if not self.answer_info:
             Debug.logger.debug(u'答案更新日期未找到')
             return
-        href_tag = self.content.find('a', class_='answer-date-link')
+        href_tag = self.answer_info.find('a', class_='answer-date-link')
         if (not href_tag) and (self.body):
             # 知乎站点有bug，会显示作者的匿名回答，导致self.body也可能为空
             # 已向官方反馈
