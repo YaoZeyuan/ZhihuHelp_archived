@@ -1,3 +1,9 @@
+#1.7.3.11版更新说明
+0.  感谢@三皮同学的捐赠
+1.  感谢[@盒棍](https://www.zhihu.com/people/knarfeh)同学修复无法使用kindlegen将epub转为mobi的问题
+2.  修复由于知乎页面结构变化导致无法正常抓取网页的问题
+3.  修改数据库名，以避免由于老旧数据导致程序无法运行
+
 #1.7.3.10版更新说明
 0.  本次更新作者只改了两行代码，其余全部功能由知友[@xxNotepad](https://www.zhihu.com/people/xxnotepad)与[@盒棍](https://www.zhihu.com/people/knarfeh)完成，非常感谢！
 1.  感谢[@牛奶放姜](https://www.zhihu.com/people/niunaifangjiang),@九歌的捐赠

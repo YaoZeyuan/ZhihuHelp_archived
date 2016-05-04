@@ -10,11 +10,11 @@ class Config(object):
     用于储存、获取设置值、全局变量值
     """
     # 全局变量
-    update_time = '2016-04-17'  # 更新日期
+    update_time = '2016-05-04'  # 更新日期
 
     debug = False
 
-    account = 'mengqingxue2014@qq.com'  # 默认账号密码
+    account = 'mengqingxue2014@qq.com'  # 默认账号密码，由于知乎登陆限制，该账号已废弃
     password = '131724qingxue'  #
     remember_account = False  # 是否使用已有密码
     max_thread = 10  # 最大线程数，其实设成5就行了，但下图片的时候还是得多开几个线程，所以还是设成10好了（反正冬天，CPU满了有利于室内保温 - -）

@@ -10,7 +10,7 @@ class Path(object):
     base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
 
     config_path = base_path + u'/config.json'
-    db_path = base_path + u'/zhihuDB_173.db'
+    db_path = base_path + u'/zhihuDB_173_1.db'
     sql_path = base_path + u'/db/zhihuhelp.sql'
 
     www_css = base_path + u'/www/css'
@@ -80,7 +80,7 @@ class Path(object):
         Path.base_path = Path.get_pwd()
 
         Path.config_path = Path.base_path + u'/config.json'
-        Path.db_path = Path.base_path + u'/zhihuDB_173.db'
+        Path.db_path = Path.base_path + u'/zhihuDB_173_1.db'
         Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
 
         Path.www_css = Path.base_path + u'/www/css'
