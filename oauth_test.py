@@ -19,15 +19,31 @@ client = ZhihuClient()
 
 test_email = 'mengqingxue2014@qq.com'
 test_password = '131724qingxue'
-try:
-    login_result = client.login(test_email, test_password)
-except NeedCaptchaException:
-    # 保存验证码并提示输入，重新登录
-    print u'登录失败，需要输入验证码'
-    with open('a.gif', 'wb') as f:
-        f.write(client.get_captcha())
-    captcha = raw_input(u'please input captcha:')
-    login_result = client.login(test_email, test_password, captcha)
+token_file = 'token.pkl'
+client.load_token(token_file)
+print 'load token success'
+#
+#try:
+#    login_result = client.login(test_email, test_password)
+#except NeedCaptchaException:
+#    # 保存验证码并提示输入，重新登录
+#    print u'登录失败，需要输入验证码'
+#    with open('a.gif', 'wb') as f:
+#        f.write(client.get_captcha())
+#    captcha = raw_input(u'please input captcha:')
+#    login_result = client.login(test_email, test_password, captcha)
 
-print 'login result => '
-print login_result
+#   print 'login result => '
+#   print login_result
+#   client.save_token(token_file)
+#   print 'save token success'
+import json
+question_id = 35005800
+question = client.question(question_id)
+data = question.pure_data
+json_data = json.loads(data)
+result = json.dumps(json_data)
+print result
+for answer in question.answers:
+    print 'answer = >'
+    print answer
