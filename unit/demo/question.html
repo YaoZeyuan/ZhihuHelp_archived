@@ -1,0 +1,604 @@
+<html>
+<head></head>
+<body>
+<link rel="stylesheet" type="text/css" href="chrome-extension://chklaanhfefbnpoihckbnefhakgolnmc/jsonview-core.css">
+<style>body {
+    white-space: pre;
+    font-family: monospace;
+}
+
+.property {
+    font-weight: bold;
+}
+
+.type-null {
+    color: gray;
+}
+
+.type-boolean {
+    color: firebrick;
+}
+
+.type-number {
+    color: blue;
+}
+
+.type-string {
+    color: green;
+}
+
+.callback-function {
+    color: gray;
+}
+
+.collapser:after {
+    content: "-";
+}
+
+.collapsed > .collapser:after {
+    content: "+";
+}
+
+.ellipsis:after {
+    content: " … ";
+}
+
+.collapsible {
+    margin-left: 2em;
+}
+
+.hoverable {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 2px;
+}
+
+.hovered {
+    background-color: rgba(235, 238, 249, 1);
+}
+
+.collapser {
+    padding-right: 6px;
+    padding-left: 6px;
+}</style>
+<div id="json">
+    <div class="collapser"></div>
+    {<span class="ellipsis"></span>
+    <ul class="obj collapsible">
+        <li>
+            <div class="hoverable"><span class="property">allow_delete</span>: <span class="type-boolean">false</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">answer_count</span>: <span class="type-number">123</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable selected hovered"><span class="property">author</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">avatar_url</span>: <span
+                                class="type-string">"</span><a href="http://pic1.zhimg.com/50/da8e974dc_s.jpg">http://pic1.zhimg.com/50/da8e974dc_s.jpg</a><span
+                                class="type-string">"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">gender</span>: <span class="type-number">-1</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">headline</span>: <span
+                                class="type-string">"程序猿"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">id</span>: <span class="type-string">"b1ba30ce8ff31ae8e72f25c4c168bc86"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">name</span>: <span
+                                class="type-string">"李俊波"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">type</span>: <span
+                                class="type-string">"people"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                                href="https://api.zhihu.com/people/b1ba30ce8ff31ae8e72f25c4c168bc86">https://api.zhihu.com/people/b1ba30ce8ff31ae8e72f25c4c168bc86</a><span
+                                class="type-string">"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">user_type</span>: <span class="type-string">"people"</span>
+                        </div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">can_comment</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">reason</span>: <span class="type-string">""</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">status</span>: <span
+                                class="type-boolean">true</span></div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">comment_count</span>: <span class="type-number">2</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">comment_permission</span>: <span
+                    class="type-string">"all"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">detail</span>: <span class="type-string">"天天写业务代码，感觉没长进，也没实际需求可以让自己写深入的技术代码，好焦躁&lt;br&gt;&lt;br&gt;&lt;b&gt;相关问题&lt;br&gt;&lt;br&gt;&lt;a href="https://www.zhihu.com/question/27048930" class="internal"&gt;程序员如何避免写过多的业务逻辑代码？ - 职业发展&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;/b&gt;去年有人问过了，似乎是同一个问题&lt;b&gt;。&lt;br&gt;&lt;br&gt;&lt;a href="https://www.zhihu.com/question/27607979" class="internal"&gt;怎么才能做软件架构师？ - 计算机软件开发&lt;/a&gt;&lt;/b&gt;"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">draft</span>: { },</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">except</span>: <span class="type-string">"天天写业务代码，感觉没长进，也没实际需求可以让自己写深入的技术代码，好焦躁相关问题程序员如何避免写过多的业务逻辑代码？ - 职业发展 去年有人问过了，似乎是同一个问题。怎么才能做软件架构师？ - 计算机软件开发"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">follower_count</span>: <span class="type-number">6155</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">id</span>: <span class="type-number">39430220</span>,</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">is_editable</span>: <span class="type-boolean">true</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">is_reportable</span>: <span class="type-boolean">true</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">redirection</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">from</span>: [ ],</div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">to</span>: { }</div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">relationship</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">is_anonymous</span>: <span class="type-boolean">false</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">is_author</span>: <span
+                                class="type-boolean">false</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">is_following</span>: <span class="type-boolean">false</span>
+                        </div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">status</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">is_locked</span>: <span
+                                class="type-boolean">false</span></div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">suggest_edit</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">reason</span>: <span class="type-string">""</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">status</span>: <span
+                                class="type-boolean">false</span></div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">title</span>: <span class="type-string">"天天写业务代码的程序员，怎么成为技术大牛，开始写技术代码？"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">topics</span>:
+                <div class="collapser"></div>
+                [<span class="ellipsis"></span>
+                <ul class="array collapsible">
+                    <li>
+                        <div class="hoverable">
+                            <div class="collapser"></div>
+                            {<span class="ellipsis"></span>
+                            <ul class="obj collapsible">
+                                <li>
+                                    <div class="hoverable"><span class="property">avatar_url</span>: <span
+                                            class="type-string">"</span><a
+                                            href="http://pic3.zhimg.com/acda162ad89c9b8995b51028d5233d1a_s.jpg">http://pic3.zhimg.com/acda162ad89c9b8995b51028d5233d1a_s.jpg</a><span
+                                            class="type-string">"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">excerpt</span>: <span
+                                            class="type-string">"程序员可以指在程序设计与互联网某个专业领域中的专业人士或是从事软件撰写，程序开发、维护的专业人员。"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">id</span>: <span class="type-string">"19552330"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">introduction</span>: <span
+                                            class="type-string">"程序员可以指在程序设计与互联网某个专业领域中的专业人士或是从事软件撰写，程序开发、维护的专业人员。"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">name</span>: <span
+                                            class="type-string">"程序员"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">type</span>: <span
+                                            class="type-string">"topic"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                                            href="https://api.zhihu.com/topics/19552330">https://api.zhihu.com/topics/19552330</a><span
+                                            class="type-string">"</span></div>
+                                </li>
+                            </ul>
+                            },
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable">
+                            <div class="collapser"></div>
+                            {<span class="ellipsis"></span>
+                            <ul class="obj collapsible">
+                                <li>
+                                    <div class="hoverable"><span class="property">avatar_url</span>: <span
+                                            class="type-string">"</span><a
+                                            href="http://pic3.zhimg.com/f030b9281d94edbdbe57009a94ffab12_s.jpg">http://pic3.zhimg.com/f030b9281d94edbdbe57009a94ffab12_s.jpg</a><span
+                                            class="type-string">"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">excerpt</span>: <span
+                                            class="type-string">"人们为了让计算机解决各种棘手的问题，使用编程语言编写程序代码并通过计算机运算得到最终结果的过程。"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">id</span>: <span class="type-string">"19554298"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">introduction</span>: <span
+                                            class="type-string">"人们为了让计算机解决各种棘手的问题，使用编程语言&lt;b&gt;编写程序代码&lt;/b&gt;并通过计算机运算得到最终结果的过程。"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">name</span>: <span
+                                            class="type-string">"编程"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">type</span>: <span
+                                            class="type-string">"topic"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                                            href="https://api.zhihu.com/topics/19554298">https://api.zhihu.com/topics/19554298</a><span
+                                            class="type-string">"</span></div>
+                                </li>
+                            </ul>
+                            },
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable">
+                            <div class="collapser"></div>
+                            {<span class="ellipsis"></span>
+                            <ul class="obj collapsible">
+                                <li>
+                                    <div class="hoverable"><span class="property">avatar_url</span>: <span
+                                            class="type-string">"</span><a
+                                            href="http://pic4.zhimg.com/4c1e4848aebc186ddee3a008f943f263_s.png">http://pic4.zhimg.com/4c1e4848aebc186ddee3a008f943f263_s.png</a><span
+                                            class="type-string">"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">excerpt</span>: <span
+                                            class="type-string">"什么是敏捷开发？敏捷开发(Agile Development)是一种以人为核心、迭代、循序渐进的开发方法。怎么理解呢？首先，我们要理解它不是一门技术，它是一种开发方法，也就是一种软件开发的流程，它会指导我们用规定的环节去一步一步完成项目的开发；而这种开发方式的主要驱动核心是人；它采用的是迭代式开发。"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">id</span>: <span class="type-string">"19564208"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">introduction</span>: <span
+                                            class="type-string">"&lt;strong&gt;什么是敏捷开发？&lt;/strong&gt;&lt;p&gt;敏捷开发(Agile Development)是一种以人为核心、迭代、循序渐进的开发方法。&lt;/p&gt;&lt;p&gt;怎么理解呢？首先，我们要理解它不是一门技术，它是一种开发方法，也就是一种软件开发的流程，它会指导我们用规定的环节去一步一步完成项目的开发；而这种开发方式的主要驱动核心是人；它采用的是迭代式开发。&lt;/p&gt;"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">name</span>: <span
+                                            class="type-string">"敏捷开发"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">type</span>: <span
+                                            class="type-string">"topic"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                                            href="https://api.zhihu.com/topics/19564208">https://api.zhihu.com/topics/19564208</a><span
+                                            class="type-string">"</span></div>
+                                </li>
+                            </ul>
+                            },
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable">
+                            <div class="collapser"></div>
+                            {<span class="ellipsis"></span>
+                            <ul class="obj collapsible">
+                                <li>
+                                    <div class="hoverable"><span class="property">avatar_url</span>: <span
+                                            class="type-string">"</span><a href="http://pic1.zhimg.com/e82bab09c_s.jpg">http://pic1.zhimg.com/e82bab09c_s.jpg</a><span
+                                            class="type-string">"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">excerpt</span>: <span
+                                            class="type-string">""</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">id</span>: <span class="type-string">"19674281"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">introduction</span>: <span
+                                            class="type-string">""</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">name</span>: <span
+                                            class="type-string">"软件架构师"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">type</span>: <span
+                                            class="type-string">"topic"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                                            href="https://api.zhihu.com/topics/19674281">https://api.zhihu.com/topics/19674281</a><span
+                                            class="type-string">"</span></div>
+                                </li>
+                            </ul>
+                            }
+                        </div>
+                    </li>
+                </ul>
+                ],
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">type</span>: <span class="type-string">"question"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">updated_time</span>: <span
+                    class="type-number">1452759303</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                    href="https://api.zhihu.com/questions/39430220">https://api.zhihu.com/questions/39430220</a><span
+                    class="type-string">"</span></div>
+        </li>
+    </ul>
+    }
+</div>
+<div class="status">author</div>
+<div class="toolbox"><span title="expand all">+</span><span title="reduce all">-</span><a target="_blank"
+                                                                                          href="view-source:http://zhihu-api.knarfeh.com/questions/39430220">View
+    source</a><img title="options" src="chrome-extension://chklaanhfefbnpoihckbnefhakgolnmc/options.png"></div>
+</body>
+<style type="text/css">#yddContainer {
+    display: block;
+    font-family: Microsoft YaHei;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: -4px;
+    left: -4px;
+    font-size: 12px;
+    border: 1px solid
+}
+
+#yddTop {
+    display: block;
+    height: 22px
+}
+
+#yddTopBorderlr {
+    display: block;
+    position: static;
+    height: 17px;
+    padding: 2px 28px;
+    line-height: 17px;
+    font-size: 12px;
+    color: #5079bb;
+    font-weight: bold;
+    border-style: none solid;
+    border-width: 1px
+}
+
+#yddTopBorderlr .ydd-sp {
+    position: absolute;
+    top: 2px;
+    height: 0;
+    overflow: hidden
+}
+
+.ydd-icon {
+    left: 5px;
+    width: 17px;
+    padding: 0px 0px 0px 0px;
+    padding-top: 17px;
+    background-position: -16px -44px
+}
+
+.ydd-close {
+    right: 5px;
+    width: 16px;
+    padding-top: 16px;
+    background-position: left -44px
+}
+
+#yddKeyTitle {
+    float: left;
+    text-decoration: none
+}
+
+#yddMiddle {
+    display: block;
+    margin-bottom: 10px
+}
+
+.ydd-tabs {
+    display: block;
+    margin: 5px 0;
+    padding: 0 5px;
+    height: 18px;
+    border-bottom: 1px solid
+}
+
+.ydd-tab {
+    display: block;
+    float: left;
+    height: 18px;
+    margin: 0 5px -1px 0;
+    padding: 0 4px;
+    line-height: 18px;
+    border: 1px solid;
+    border-bottom: none
+}
+
+.ydd-trans-container {
+    display: block;
+    line-height: 160%
+}
+
+.ydd-trans-container a {
+    text-decoration: none;
+}
+
+#yddBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    background-position: left -22px
+}
+
+.ydd-padding010 {
+    padding: 0 10px
+}
+
+#yddWrapper {
+    color: #252525;
+    z-index: 10001;
+    background: url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);
+}
+
+#yddContainer {
+    background: #fff;
+    border-color: #4b7598
+}
+
+#yddTopBorderlr {
+    border-color: #f0f8fc
+}
+
+#yddWrapper .ydd-sp {
+    background-image: url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)
+}
+
+#yddWrapper a, #yddWrapper a:hover, #yddWrapper a:visited {
+    color: #50799b
+}
+
+#yddWrapper .ydd-tabs {
+    color: #959595
+}
+
+.ydd-tabs, .ydd-tab {
+    background: #fff;
+    border-color: #d5e7f3
+}
+
+#yddBottom {
+    color: #363636
+}
+
+#yddWrapper {
+    min-width: 250px;
+    max-width: 400px;
+}</style>
+</html>

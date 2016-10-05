@@ -1,0 +1,479 @@
+<html>
+<head></head>
+<body>
+<link rel="stylesheet" type="text/css" href="chrome-extension://chklaanhfefbnpoihckbnefhakgolnmc/jsonview-core.css">
+<style>body {
+    white-space: pre;
+    font-family: monospace;
+}
+
+.property {
+    font-weight: bold;
+}
+
+.type-null {
+    color: gray;
+}
+
+.type-boolean {
+    color: firebrick;
+}
+
+.type-number {
+    color: blue;
+}
+
+.type-string {
+    color: green;
+}
+
+.callback-function {
+    color: gray;
+}
+
+.collapser:after {
+    content: "-";
+}
+
+.collapsed > .collapser:after {
+    content: "+";
+}
+
+.ellipsis:after {
+    content: " … ";
+}
+
+.collapsible {
+    margin-left: 2em;
+}
+
+.hoverable {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 2px;
+}
+
+.hovered {
+    background-color: rgba(235, 238, 249, 1);
+}
+
+.collapser {
+    padding-right: 6px;
+    padding-left: 6px;
+}</style>
+<div id="json">
+    <div class="collapser"></div>
+    {<span class="ellipsis"></span>
+    <ul class="obj collapsible">
+        <li>
+            <div class="hoverable hovered"><span class="property">author</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">avatar_url</span>: <span
+                                class="type-string">"</span><a
+                                href="http://pic3.zhimg.com/50/dce9dde98c91a4d1e3cb86e627ecca86_s.jpg">http://pic3.zhimg.com/50/dce9dde98c91a4d1e3cb86e627ecca86_s.jpg</a><span
+                                class="type-string">"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">gender</span>: <span class="type-number">1</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">headline</span>: <span class="type-string">"和 Humar 一起点赞"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">id</span>: <span class="type-string">"57842aac37ccd0de3965f9b6e17cb555"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">name</span>: <span
+                                class="type-string">"姚泽源"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">type</span>: <span
+                                class="type-string">"people"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                                href="https://api.zhihu.com/people/57842aac37ccd0de3965f9b6e17cb555">https://api.zhihu.com/people/57842aac37ccd0de3965f9b6e17cb555</a><span
+                                class="type-string">"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">user_type</span>: <span class="type-string">"people"</span>
+                        </div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">can_comment</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">reason</span>: <span class="type-string">""</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">status</span>: <span
+                                class="type-boolean">true</span></div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">can_tip</span>: <span class="type-boolean">false</span>,</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">column</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">author</span>:
+                            <div class="collapser"></div>
+                            {<span class="ellipsis"></span>
+                            <ul class="obj collapsible">
+                                <li>
+                                    <div class="hoverable"><span class="property">avatar_url</span>: <span
+                                            class="type-string">"</span><a
+                                            href="http://pic3.zhimg.com/50/dce9dde98c91a4d1e3cb86e627ecca86_s.jpg">http://pic3.zhimg.com/50/dce9dde98c91a4d1e3cb86e627ecca86_s.jpg</a><span
+                                            class="type-string">"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">gender</span>: <span
+                                            class="type-number">1</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">headline</span>: <span
+                                            class="type-string">"和 Humar 一起点赞"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">id</span>: <span class="type-string">"57842aac37ccd0de3965f9b6e17cb555"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">name</span>: <span
+                                            class="type-string">"姚泽源"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">type</span>: <span
+                                            class="type-string">"people"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                                            href="https://api.zhihu.com/people/57842aac37ccd0de3965f9b6e17cb555">https://api.zhihu.com/people/57842aac37ccd0de3965f9b6e17cb555</a><span
+                                            class="type-string">"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">user_type</span>: <span
+                                            class="type-string">"people"</span></div>
+                                </li>
+                            </ul>
+                            },
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">comment_permission</span>: <span
+                                class="type-string">"all"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">id</span>: <span
+                                class="type-string">"zhihuhelp"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">image_url</span>: <span
+                                class="type-string">"</span><a
+                                href="https://pic4.zhimg.com/feedb41842166fae4b008d2addee9cab_l.jpeg">https://pic4.zhimg.com/feedb41842166fae4b008d2addee9cab_l.jpeg</a><span
+                                class="type-string">"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">title</span>: <span
+                                class="type-string">"知乎助手的日常"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">type</span>: <span
+                                class="type-string">"column"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">updated</span>: <span class="type-number">1451801027</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                                href="https://api.zhihu.com/columns/zhihuhelp">https://api.zhihu.com/columns/zhihuhelp</a><span
+                                class="type-string">"</span></div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">comment_count</span>: <span class="type-number">21</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">comment_permission</span>: <span
+                    class="type-string">"all"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">content</span>: <span class="type-string">"&lt;p&gt;最近在投简历，坐标帝都。&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Github 180+star&lt;br&gt;&lt;/li&gt;&lt;li&gt;一年工作经验&lt;br&gt;&lt;/li&gt;&lt;li&gt;从零开始独立完成了一整个项目&lt;br&gt;&lt;/li&gt;&lt;li&gt;Coursera 4张证&lt;/li&gt;&lt;li&gt;15年看过几本大部头技术书&lt;/li&gt;&lt;li&gt;只要10k&lt;/li&gt;&lt;/ul&gt;&lt;br&gt;本来觉得这个条件在北京应该很快就能找到工作的，结果……&lt;br&gt;&lt;img src="https://pic2.zhimg.com/659b267f429d10d5bd2e29881b229525_b.jpg" data-rawwidth="406" data-rawheight="693" class="content_image" width="406"&gt;&lt;img src="https://pic3.zhimg.com/bc7cb68f7649c2f90e11a112596c0052_b.png" data-rawwidth="407" data-rawheight="697" class="content_image" width="407"&gt;&lt;br&gt;&lt;p&gt;一星期过去在拉钩上只收到一份邀约，情何以堪……&lt;/p&gt;&lt;br&gt;&lt;p&gt;这两天一直在想这个问题。简历是按照刘未鹏先生的&lt;a href="https://link.zhihu.com/?target=http%3A//mindhacks.cn/2011/11/04/how-to-interview-a-person-for-two-years/" class=" wrap external" target="_blank" rel="nofollow noreferrer"&gt;怎样花两年时间去面试一个人&lt;i class="icon-external"&gt;&lt;/i&gt;&lt;/a&gt;写的，有Github提交记录验证代码水平和项目能力，有技术书单和Coursera证明学习能力与技术视野——然而还是失业在家天天蹲在地下室里喝面条。Why！&lt;/p&gt;&lt;br&gt;&lt;p&gt;因为看你简历的是HR不是技术主管啊笨蛋！&lt;/p&gt;&lt;br&gt;&lt;p&gt;看简历的是HR不是技术主管！&lt;/p&gt;&lt;br&gt;&lt;p&gt;看简历的是HR不是技术主管！&lt;/p&gt;&lt;br&gt;&lt;p&gt;看简历的是HR不是技术主管！&lt;/p&gt;&lt;br&gt;&lt;p&gt;重要的事情说三遍。&lt;/p&gt;&lt;br&gt;&lt;p&gt;换位思考一下，如果你是HR，秉着人力资源专业出身的背景，打开简历映入眼帘的是一行『Functional Programming Principles in Scala』，你是什么感觉？&lt;/p&gt;&lt;br&gt;&lt;p&gt;把《七周七语言》往简历上写的一看就不是好孩子！&lt;/p&gt;&lt;p&gt;亿斗进销存是什么鬼？实习生在我们看来就是打杂的好伐，实习一年转正后两个月就跑了是不是因为技术太烂实在干不下去了？很可疑啊同志！&lt;/p&gt;&lt;p&gt;久现外包？我就说技术渣嘛，你看已经沦落到外包公司去了还说啥。&lt;/p&gt;&lt;p&gt;水平差到家了还一本PHP基础书都没看过，连字符串截取这种最常用的函数名字都说不上来，这种人能要？&lt;/p&gt;&lt;p&gt;Github 179Star，Github是什么？打不开啊！&lt;/p&gt;&lt;br&gt;&lt;p&gt;我也是经管院出来的人，说真的，HR这么想真是很正常的一件事，对HR来说，最重要的就是把简历里提到的项目/技术点跟技术主管提的招聘关键字一一比对，全对上就约面试，对不上就不合适。但反观我的简历，铺天盖地写了一堆荣誉声明，讲到项目经历时反而一笔带过，能拿到面试才怪。&lt;/p&gt;&lt;br&gt;&lt;p&gt;写简历时没考虑到看简历人的需求，简历写的有歧义，这锅，我背。&lt;/p&gt;&lt;br&gt;&lt;p&gt;哭着去小黑屋改简历去了&lt;/p&gt;&lt;br&gt;&lt;p&gt;&lt;a href="https://link.zhihu.com/?target=http%3A//yaozeyuan.online/error" class=" wrap external" target="_blank" rel="nofollow noreferrer"&gt;引以为戒&lt;i class="icon-external"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;&lt;br&gt;&lt;br&gt;&lt;p&gt;题图来自&lt;a href="https://www.zhihu.com/people/d6ed0a315a3991c2b5197a04a2b95b30" data-hash="d6ed0a315a3991c2b5197a04a2b95b30" class="member_mention" data-tip="p$b$d6ed0a315a3991c2b5197a04a2b95b30"&gt;@ftiasch&lt;/a&gt; 的头像&lt;/p&gt;"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">created</span>: <span class="type-number">1458440635</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">excerpt</span>: <span class="type-string">"最近在投简历，坐标帝都。Github 180+star一年工作经验从零开始独立完成了一整个项目Coursera 4张证15年看过几本大部头技术书只要10k本来觉得这个条件在北京应该很快就能找到工作的，结果…… [图片] [图片] 一星期过去在拉钩上只收到一份邀约，情何以堪……这两天一直在想这个问题。简历是按照刘未鹏先生的怎样花两年时间去面试一个人 写的，有Github提交记录验证代码水平和项目能力，有技术书单和Coursera证明学习能力与技术视野——然而还是失…"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">id</span>: <span class="type-number">20658413</span>,</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">image_height</span>: <span class="type-number">512</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">image_url</span>: <span class="type-string">"</span><a
+                    href="https://pic3.zhimg.com/50/495e0997e0f0682ceca2ffedddf85e06_r.jpg">https://pic3.zhimg.com/50/495e0997e0f0682ceca2ffedddf85e06_r.jpg</a><span
+                    class="type-string">"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">image_width</span>: <span class="type-number">512</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">suggest_edit</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">reason</span>: <span class="type-string">""</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">status</span>: <span
+                                class="type-boolean">false</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">tip</span>: <span class="type-string">""</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">title</span>: <span class="type-string">""</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">url</span>: <span class="type-string">""</span>
+                        </div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">tipjarors_count</span>: <span class="type-number">0</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">title</span>: <span
+                    class="type-string">"你哭着对我说，Github都是骗人的"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">type</span>: <span class="type-string">"article"</span>,</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">updated</span>: <span class="type-number">1458730054</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                    href="https://api.zhihu.com/articles/20658413">https://api.zhihu.com/articles/20658413</a><span
+                    class="type-string">"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">voteup_count</span>: <span class="type-number">8</span></div>
+        </li>
+    </ul>
+    }
+</div>
+<div class="status">author</div>
+<div class="toolbox"><span title="expand all">+</span><span title="reduce all">-</span><a target="_blank"
+                                                                                          href="view-source:http://zhihu-api.knarfeh.com/article/20658413">View
+    source</a><img title="options" src="chrome-extension://chklaanhfefbnpoihckbnefhakgolnmc/options.png"></div>
+</body>
+<style type="text/css">#yddContainer {
+    display: block;
+    font-family: Microsoft YaHei;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: -4px;
+    left: -4px;
+    font-size: 12px;
+    border: 1px solid
+}
+
+#yddTop {
+    display: block;
+    height: 22px
+}
+
+#yddTopBorderlr {
+    display: block;
+    position: static;
+    height: 17px;
+    padding: 2px 28px;
+    line-height: 17px;
+    font-size: 12px;
+    color: #5079bb;
+    font-weight: bold;
+    border-style: none solid;
+    border-width: 1px
+}
+
+#yddTopBorderlr .ydd-sp {
+    position: absolute;
+    top: 2px;
+    height: 0;
+    overflow: hidden
+}
+
+.ydd-icon {
+    left: 5px;
+    width: 17px;
+    padding: 0px 0px 0px 0px;
+    padding-top: 17px;
+    background-position: -16px -44px
+}
+
+.ydd-close {
+    right: 5px;
+    width: 16px;
+    padding-top: 16px;
+    background-position: left -44px
+}
+
+#yddKeyTitle {
+    float: left;
+    text-decoration: none
+}
+
+#yddMiddle {
+    display: block;
+    margin-bottom: 10px
+}
+
+.ydd-tabs {
+    display: block;
+    margin: 5px 0;
+    padding: 0 5px;
+    height: 18px;
+    border-bottom: 1px solid
+}
+
+.ydd-tab {
+    display: block;
+    float: left;
+    height: 18px;
+    margin: 0 5px -1px 0;
+    padding: 0 4px;
+    line-height: 18px;
+    border: 1px solid;
+    border-bottom: none
+}
+
+.ydd-trans-container {
+    display: block;
+    line-height: 160%
+}
+
+.ydd-trans-container a {
+    text-decoration: none;
+}
+
+#yddBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    background-position: left -22px
+}
+
+.ydd-padding010 {
+    padding: 0 10px
+}
+
+#yddWrapper {
+    color: #252525;
+    z-index: 10001;
+    background: url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);
+}
+
+#yddContainer {
+    background: #fff;
+    border-color: #4b7598
+}
+
+#yddTopBorderlr {
+    border-color: #f0f8fc
+}
+
+#yddWrapper .ydd-sp {
+    background-image: url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)
+}
+
+#yddWrapper a, #yddWrapper a:hover, #yddWrapper a:visited {
+    color: #50799b
+}
+
+#yddWrapper .ydd-tabs {
+    color: #959595
+}
+
+.ydd-tabs, .ydd-tab {
+    background: #fff;
+    border-color: #d5e7f3
+}
+
+#yddBottom {
+    color: #363636
+}
+
+#yddWrapper {
+    min-width: 250px;
+    max-width: 400px;
+}</style>
+</html>

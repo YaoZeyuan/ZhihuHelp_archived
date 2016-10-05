@@ -1,0 +1,424 @@
+<html>
+<head></head>
+<body>
+<link rel="stylesheet" type="text/css" href="chrome-extension://chklaanhfefbnpoihckbnefhakgolnmc/jsonview-core.css">
+<style>body {
+    white-space: pre;
+    font-family: monospace;
+}
+
+.property {
+    font-weight: bold;
+}
+
+.type-null {
+    color: gray;
+}
+
+.type-boolean {
+    color: firebrick;
+}
+
+.type-number {
+    color: blue;
+}
+
+.type-string {
+    color: green;
+}
+
+.callback-function {
+    color: gray;
+}
+
+.collapser:after {
+    content: "-";
+}
+
+.collapsed > .collapser:after {
+    content: "+";
+}
+
+.ellipsis:after {
+    content: " … ";
+}
+
+.collapsible {
+    margin-left: 2em;
+}
+
+.hoverable {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 2px;
+}
+
+.hovered {
+    background-color: rgba(235, 238, 249, 1);
+}
+
+.collapser {
+    padding-right: 6px;
+    padding-left: 6px;
+}</style>
+<div id="json">
+    <div class="collapser"></div>
+    {<span class="ellipsis"></span>
+    <ul class="obj collapsible">
+        <li>
+            <div class="hoverable"><span class="property">followersCount</span>: <span class="type-number">11</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">creator</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">profileUrl</span>: <span
+                                class="type-string">"</span><a href="https://www.zhihu.com/people/404-Page-Not-found">https://www.zhihu.com/people/404-Page-Not-found</a><span
+                                class="type-string">"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">bio</span>: <span class="type-string">"和 Humar 一起点赞"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">hash</span>: <span class="type-string">"57842aac37ccd0de3965f9b6e17cb555"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable hovered"><span class="property">name</span>: <span class="type-string">"姚泽源"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">isOrg</span>: <span
+                                class="type-boolean">false</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">slug</span>: <span class="type-string">"404-Page-Not-found"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">avatar</span>:
+                            <div class="collapser"></div>
+                            {<span class="ellipsis"></span>
+                            <ul class="obj collapsible">
+                                <li>
+                                    <div class="hoverable"><span class="property">id</span>: <span class="type-string">"dce9dde98c91a4d1e3cb86e627ecca86"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">template</span>: <span
+                                            class="type-string">"</span><a
+                                            href="https://pic3.zhimg.com/{id}_{size}.jpg">https://pic3.zhimg.com/{id}_{size}.jpg</a><span
+                                            class="type-string">"</span></div>
+                                </li>
+                            </ul>
+                            },
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">description</span>: <span class="type-string">"如果这潮流真的不可抵挡的话，那希望我能让这潮水涌起的慢些。
+
+都是普普通通的人而已
+
+我们，其实都一样"</span></div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">topics</span>:
+                <div class="collapser"></div>
+                [<span class="ellipsis"></span>
+                <ul class="array collapsible">
+                    <li>
+                        <div class="hoverable">
+                            <div class="collapser"></div>
+                            {<span class="ellipsis"></span>
+                            <ul class="obj collapsible">
+                                <li>
+                                    <div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a
+                                            href="https://www.zhihu.com/topic/19552832">https://www.zhihu.com/topic/19552832</a><span
+                                            class="type-string">"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">id</span>: <span class="type-string">"19552832"</span>,
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="hoverable"><span class="property">name</span>: <span
+                                            class="type-string">"Python"</span></div>
+                                </li>
+                            </ul>
+                            }
+                        </div>
+                    </li>
+                </ul>
+                ],
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">activateState</span>: <span
+                    class="type-string">"activated"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">href</span>: <span class="type-string">"/api/columns/zhihuhelp"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">acceptSubmission</span>: <span
+                    class="type-boolean">true</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">firstTime</span>: <span class="type-boolean">false</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">postTopics</span>: [ ],</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">pendingName</span>: <span class="type-string">""</span>,</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">avatar</span>:
+                <div class="collapser"></div>
+                {<span class="ellipsis"></span>
+                <ul class="obj collapsible">
+                    <li>
+                        <div class="hoverable"><span class="property">id</span>: <span class="type-string">"feedb41842166fae4b008d2addee9cab"</span>,
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hoverable"><span class="property">template</span>: <span
+                                class="type-string">"</span><a href="https://pic4.zhimg.com/{id}_{size}.jpeg">https://pic4.zhimg.com/{id}_{size}.jpeg</a><span
+                                class="type-string">"</span></div>
+                    </li>
+                </ul>
+                },
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">canManage</span>: <span class="type-boolean">true</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">description</span>: <span class="type-string">"东风夜放花千树，山长水阔知何处"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">pendingTopics</span>: [ ],</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">nameCanEditUntil</span>: <span class="type-number">0</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">reason</span>: <span class="type-string">"编写过程中的体会"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">banUntil</span>: <span class="type-number">0</span>,</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">slug</span>: <span class="type-string">"zhihuhelp"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">name</span>: <span class="type-string">"知乎助手的日常"</span>,</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">url</span>: <span class="type-string">"/zhihuhelp"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">intro</span>: <span
+                    class="type-string">"东风夜放花千树，山长水阔知何处"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">topicsCanEditUntil</span>: <span class="type-number">0</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">activateAuthorRequested</span>: <span class="type-string">"none"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">commentPermission</span>: <span
+                    class="type-string">"anyone"</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">following</span>: <span class="type-boolean">false</span>,
+            </div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">postsCount</span>: <span class="type-number">1</span>,</div>
+        </li>
+        <li>
+            <div class="hoverable"><span class="property">canPost</span>: <span class="type-boolean">true</span></div>
+        </li>
+    </ul>
+    }
+</div>
+<div class="status">creator.name</div>
+<div class="toolbox"><span title="expand all">+</span><span title="reduce all">-</span><a target="_blank"
+                                                                                          href="view-source:https://zhuanlan.zhihu.com/api/columns/zhihuhelp">View
+    source</a><img title="options" src="chrome-extension://chklaanhfefbnpoihckbnefhakgolnmc/options.png"></div>
+</body>
+<style type="text/css">#yddContainer {
+    display: block;
+    font-family: Microsoft YaHei;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: -4px;
+    left: -4px;
+    font-size: 12px;
+    border: 1px solid
+}
+
+#yddTop {
+    display: block;
+    height: 22px
+}
+
+#yddTopBorderlr {
+    display: block;
+    position: static;
+    height: 17px;
+    padding: 2px 28px;
+    line-height: 17px;
+    font-size: 12px;
+    color: #5079bb;
+    font-weight: bold;
+    border-style: none solid;
+    border-width: 1px
+}
+
+#yddTopBorderlr .ydd-sp {
+    position: absolute;
+    top: 2px;
+    height: 0;
+    overflow: hidden
+}
+
+.ydd-icon {
+    left: 5px;
+    width: 17px;
+    padding: 0px 0px 0px 0px;
+    padding-top: 17px;
+    background-position: -16px -44px
+}
+
+.ydd-close {
+    right: 5px;
+    width: 16px;
+    padding-top: 16px;
+    background-position: left -44px
+}
+
+#yddKeyTitle {
+    float: left;
+    text-decoration: none
+}
+
+#yddMiddle {
+    display: block;
+    margin-bottom: 10px
+}
+
+.ydd-tabs {
+    display: block;
+    margin: 5px 0;
+    padding: 0 5px;
+    height: 18px;
+    border-bottom: 1px solid
+}
+
+.ydd-tab {
+    display: block;
+    float: left;
+    height: 18px;
+    margin: 0 5px -1px 0;
+    padding: 0 4px;
+    line-height: 18px;
+    border: 1px solid;
+    border-bottom: none
+}
+
+.ydd-trans-container {
+    display: block;
+    line-height: 160%
+}
+
+.ydd-trans-container a {
+    text-decoration: none;
+}
+
+#yddBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    background-position: left -22px
+}
+
+.ydd-padding010 {
+    padding: 0 10px
+}
+
+#yddWrapper {
+    color: #252525;
+    z-index: 10001;
+    background: url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);
+}
+
+#yddContainer {
+    background: #fff;
+    border-color: #4b7598
+}
+
+#yddTopBorderlr {
+    border-color: #f0f8fc
+}
+
+#yddWrapper .ydd-sp {
+    background-image: url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)
+}
+
+#yddWrapper a, #yddWrapper a:hover, #yddWrapper a:visited {
+    color: #50799b
+}
+
+#yddWrapper .ydd-tabs {
+    color: #959595
+}
+
+.ydd-tabs, .ydd-tab {
+    background: #fff;
+    border-color: #d5e7f3
+}
+
+#yddBottom {
+    color: #363636
+}
+
+#yddWrapper {
+    min-width: 250px;
+    max-width: 400px;
+}</style>
+</html>
