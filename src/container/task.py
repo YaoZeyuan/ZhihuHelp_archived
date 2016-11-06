@@ -6,6 +6,7 @@ from src.tools.type import Type
 class Spider(object):
     def __init__(self):
         self.href = ''
+        self.author_id = '' # 作者id
         return
 
 

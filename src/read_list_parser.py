@@ -51,6 +51,7 @@ class ReadListParser():
     def parse_command(raw_command=''):
         u"""
         分析单条命令并返回待完成的task
+        第一版只解析user
         task格式
         *   kind
             *   字符串，见TypeClass.type_list
@@ -104,6 +105,7 @@ class ReadListParser():
             author_id = result.group('author_id')
             task = SingleTask()
             task.kind = 'author'
+            task.spider.author_id = author_id
             task.spider.href = 'https://www.zhihu.com/people/{}'.format(author_id)
             task.book.kind = 'author'
             task.book.sql.info = 'select * from AuthorInfo where author_id = "{}"'.format(author_id)
@@ -171,9 +173,17 @@ class ReadListParser():
                 Debug.logger.info(u"""无法解析记录:{}所属网址类型,请检查后重试。""".format(command))
             return
 
-        parser = {'answer': parse_answer, 'question': parse_question, 'author': parse_author,
-                  'collection': parse_collection, 'topic': parse_topic, 'article': parse_article,
-                  'column': parse_column, 'unknown': parse_error, }
+        parser = {
+            'author': parse_author,
+            #  新版本暂不支持抓取其他形式的回答
+            'answer': parse_error,
+            'question': parse_error,
+            'collection': parse_error,
+            'topic': parse_error,
+            'article': parse_error,
+            'column': parse_error,
+            'unknown': parse_error,
+        }
         kind = detect(raw_command)
         return parser[kind](raw_command)
 
