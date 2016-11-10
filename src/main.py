@@ -15,7 +15,7 @@ from src.worker import worker_factory
 
 class ZhihuHelp(object):
     def __init__(self):
-        self.client = None # 知乎客户端，用于获取API数据
+        self.zhihu_api_client = None # 知乎客户端，用于获取API数据
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         """
@@ -27,7 +27,7 @@ class ZhihuHelp(object):
 
     def init_config(self):
         login = Login()
-        self.client = login.start()
+        self.zhihu_api_client = login.start()
         Config.picture_quality = guide.set_picture_quality()
         # 储存设置
         Config._save()
@@ -44,8 +44,6 @@ class ZhihuHelp(object):
                 counter = 1
                 for line in read_list:
                     line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
-                    self.create_book(line, counter)  # 一行内容代表一本电子书
-                    counter += 1
         except IOError as e:
             with open('./ReadList.txt', 'w') as read_list:
                 read_list.close()
@@ -54,16 +52,14 @@ class ZhihuHelp(object):
             print u"ReadList.txt 内容为空"
         return
 
-    @staticmethod
-    def create_book(command, counter):
+    def create_book(self, command, counter):
         Path.reset_path()
-
         Debug.logger.info(u"开始制作第 {} 本电子书".format(counter))
         Debug.logger.info(u"对记录 {} 进行分析".format(command))
         task_package = ReadListParser.get_task(command)  # 分析命令
 
         if not task_package.is_work_list_empty():
-            worker_factory(task_package.work_list)  # 执行抓取程序
+            worker_factory(self.zhihu_api_client, task_package.work_list)  # 执行抓取程序
             Debug.logger.info(u"网页信息抓取完毕")
 
         if not task_package.is_book_list_empty():
