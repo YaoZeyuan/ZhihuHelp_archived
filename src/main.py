@@ -70,6 +70,11 @@ class ZhihuHelp(object):
 
     @staticmethod
     def init_database():
+        """
+        初始化数据库
+        数据库连接本身保存于DB类中，作为全局变量存在
+        :return:
+        """
         if Path.is_file(Path.db_path):
             DB.set_conn(sqlite3.connect(Path.db_path))
         else:
@@ -78,6 +83,7 @@ class ZhihuHelp(object):
             with open(Path.sql_path) as sql_script:
                 DB.cursor.executescript(sql_script.read())
             DB.commit()
+        return
 
     @staticmethod
     def check_update():  # 强制更新

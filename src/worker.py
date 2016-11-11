@@ -327,6 +327,12 @@ class ColumnWorker(PageWorker):
 
 
 def worker_factory(zhihu_api_client, task):
+    """
+
+    :type zhihu_api_client: src.lib.oauth.zhihu_oauth.ZhihuClient
+    :type task dict of src.container.task.SingleTask
+    :return:
+    """
     type_list = {'author': AuthorWorker}
     for key in task:
         worker = type_list[key](zhihu_api_client, task[key])
