@@ -19,36 +19,58 @@ from src.tools.match import Match
 from src.tools.path import Path
 
 
-class Login():
+class Login(object):
     u"""
     登录部分，登录完成后返回一个可用的client对象，用于进一步获取知乎网对应信息
     """
     def __init__(self):
         self.client = ZhihuClient()
 
-    def login(self, account, password, captcha=''):
+    def get_login_client(self):
+        self.hello_world()
+
+        if Config.remember_account:
+            account = Config.account
+            password = Config.password
+        else:
+            account, password = self.get_account()
+        captcha = ''
+        while not self.login(account, password, captcha):
+            print u'啊哦，登录失败，可能需要输入验证码'
+            print u'输入『yes』按回车更换其他账号'
+            print u'直接敲击回车获取验证码'
+            confirm = raw_input()
+            if confirm == 'yes':
+                account, password = self.get_account()
+            captcha = self.get_captcha()
+        Config.picture_quality = self.set_picture_quality()
+        Config._save()
+        return self.client
+
+    def login(self, account, password, captcha=None):
         try:
-            is_login_success, reason = self.client.login(account, password)
+            is_login_success, reason = self.client.login(account, password, captcha)
         except NeedCaptchaException:
             # 保存验证码并提示输入，重新登录
             print u'登录失败，需要输入验证码'
             return False
-        if is_login_success:
-            print u'登陆成功！'
-            print u'登陆账号:', account
-            print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
-            if raw_input() == 'yes':
-                Config.account, Config.password, Config.remember_account = account, password, True
-                print u'帐号密码已保存,可通过修改config.json修改设置'
-            else:
-                Config.account, Config.password, Config.remember_account = '', '', False
-                print u'跳过保存环节，进入下一流程'
-            Config._save()
-            return True
-        else:
+        if not is_login_success:
             print u'登陆失败'
             print u"失败原因 => " + str(reason)
             return False
+
+        print u'登陆成功！'
+        print u'登陆账号:', account
+        print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
+        if raw_input() == 'yes':
+            Config.account, Config.password, Config.remember_account = account, password, True
+            print u'帐号密码已保存,可通过修改config.json修改设置'
+        else:
+            Config.account, Config.password, Config.remember_account = '', '', False
+            print u'跳过保存环节，进入下一流程'
+        Config._save()
+        return True
+
 
     def get_captcha(self):
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
@@ -68,21 +90,7 @@ class Login():
         captcha = raw_input()
         return captcha
 
-    def get_login_client(self):
-        self.hello_world()
-        account, password = self.set_account()
-        captcha = ''
-        while not self.login(account, password, captcha):
-            print u'啊哦，登录失败，可能需要输入验证码'
-            print u'输入『yes』按回车更换其他账号'
-            print u'直接敲击回车获取验证码'
-            confirm = raw_input()
-            if confirm == 'yes':
-                account, password = self.set_account()
-            captcha = self.get_captcha()
-        Config.picture_quality = self.set_picture_quality()
-        Config._save()
-        return self.client
+
 
     @staticmethod
     def hello_world():
@@ -100,7 +108,7 @@ class Login():
         return
 
     @staticmethod
-    def set_account():
+    def get_account():
         print u'请输入您的知乎注册邮箱，回车确认'
         print u'####################################'
         account = raw_input()
