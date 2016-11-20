@@ -1,84 +1,62 @@
 # -*- coding: utf-8 -*-
-from src.container.initialbook import InitialBook
 from src.tools.type import Type
 
 
-class Spider(object):
-    def __init__(self):
-        self.href = ''
-        self.author_id = '' # 作者id
+class Task(object):
+    def __init__(self, task_type):
+        self.task_type = task_type
+        return
+
+    def get_task_type(self):
+        return self.task_type
+
+
+class AuthorTask(Task):
+    def __init__(self, author_id):
+        Task.__init__(self, Type.author)
+        self.author_id = author_id
         return
 
 
-class SingleTask(object):
-    u"""
-    任务信息应当以对象属性的方式进行存储，用字典存的话记不住
-    """
-
-    def __init__(self):
-        self.kind = ''
-        self.spider = Spider()
-        self.book = InitialBook()
+class TopicTask(Task):
+    def __init__(self, topic_id):
+        Task.__init__(self, Type.topic)
+        self.topic_id = topic_id
         return
 
 
-class TaskPackage(object):
-    def __init__(self):
-        self.work_list = {}
-        self.book_list = {}
+class CollectionTask(Task):
+    def __init__(self, collection_id):
+        Task.__init__(self, Type.collection)
+        self.collection_id = collection_id
         return
 
-    def add_task(self, single_task=SingleTask()):
-        if single_task.kind not in self.work_list:
-            self.work_list[single_task.kind] = []
-        self.work_list[single_task.kind].append(single_task.spider.href)
 
-        if single_task.kind not in self.book_list:
-            self.book_list[single_task.kind] = []
-        self.book_list[single_task.kind].append(single_task.book)
+class QuestionTask(Task):
+    def __init__(self, question_id):
+        Task.__init__(self, Type.question)
+        self.question_id = question_id
         return
 
-    def get_task(self):
-        if Type.answer in self.book_list:
-            self.merge_question_book_list(book_type=Type.answer)
-        if Type.question in self.book_list:
-            self.merge_question_book_list(book_type=Type.question)
-        if Type.article in self.book_list:
-            self.merge_article_book_list()
-        return self
 
-    def merge_article_book_list(self):
-        book_list = self.book_list[Type.article]
-        book = InitialBook()
-        answer = [item.sql.answer for item in book_list]
-        info = [item.sql.info for item in book_list]
-        book.kind = Type.article
-        book.sql.info = 'select * from Article where ({})'.format(' or '.join(info))
-        book.sql.answer = 'select * from Article where ({})'.format(' or '.join(answer))
-        self.book_list[Type.article] = [book]
+class AnswerTask(Task):
+    def __init__(self, question_id, answer_id):
+        Task.__init__(self, Type.answer)
+        self.question_id = question_id
+        self.answer_id = answer_id
         return
 
-    def merge_question_book_list(self, book_type):
-        book_list = self.book_list[book_type]
-        book = InitialBook()
-        question = [item.sql.question for item in book_list]
-        answer = [item.sql.answer for item in book_list]
-        info = [item.sql.info for item in book_list]
-        book.kind = book_type
-        book.sql.info = 'select * from Question where ({})'.format(' or '.join(info))
-        book.sql.question = 'select * from Question where ({})'.format(' or '.join(question))
-        book.sql.answer = 'select * from Answer where ({})'.format(' or '.join(answer))
-        self.book_list[book_type] = [book]
+
+class ColumnTask(Task):
+    def __init__(self, column_id):
+        Task.__init__(self, Type.column)
+        self.column_id = column_id
         return
 
-    def is_work_list_empty(self):
-        for kind in Type.type_list:
-            if self.work_list.get(kind):
-                return False
-        return True
 
-    def is_book_list_empty(self):
-        for kind in Type.type_list:
-            if self.book_list.get(kind):
-                return False
-        return True
+class ArticleTask(Task):
+    def __init__(self, column_id, article_id):
+        Task.__init__(self, Type.article)
+        self.column_id = column_id
+        self.article_id = article_id
+        return

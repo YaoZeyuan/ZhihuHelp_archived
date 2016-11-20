@@ -23,6 +23,7 @@ class Login(object):
     u"""
     登录部分，登录完成后返回一个可用的client对象，用于进一步获取知乎网对应信息
     """
+
     def __init__(self):
         self.client = ZhihuClient()
 
@@ -71,7 +72,6 @@ class Login(object):
         Config._save()
         return True
 
-
     def get_captcha(self):
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
@@ -89,8 +89,6 @@ class Login(object):
         print u'如果不需要输入验证码可点按回车跳过此步'
         captcha = raw_input()
         return captcha
-
-
 
     @staticmethod
     def hello_world():
