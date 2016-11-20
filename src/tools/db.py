@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+import sqlite3
+
 from debug import Debug
+from src.tools.path import Path
 from src.tools.type import Type
 
 
@@ -9,6 +12,18 @@ class DB(object):
     '''
     cursor = None
     conn = None
+
+    @staticmethod
+    def init_database():
+        if Path.is_file(Path.db_path):
+            DB.set_conn(sqlite3.connect(Path.db_path))
+        else:
+            DB.set_conn(sqlite3.connect(Path.db_path))
+            # 没有数据库就新建一个出来
+            with open(Path.sql_path) as sql_script:
+                DB.cursor.executescript(sql_script.read())
+            DB.commit()
+        return
 
     @staticmethod
     def set_conn(conn):

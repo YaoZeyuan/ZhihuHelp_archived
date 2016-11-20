@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 import sqlite3
 
-from src import guide
 from src.book import Book
 from src.tools.config import Config
+from src.tools.db import DB
 from src.tools.debug import Debug
 from src.tools.http import Http
 from src.tools.path import Path
-from src.tools.db import DB
 from login import Login
 from read_list_parser import ReadListParser
 from src.worker import worker_factory
@@ -15,29 +14,25 @@ from src.worker import worker_factory
 
 class ZhihuHelp(object):
     def __init__(self):
-        self.zhihu_api_client = None # 知乎客户端，用于获取API数据
-        u"""
-        配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
-        """
+        self.zhihu_api_client = None  # 知乎客户端，用于获取API数据
+        #   初始化目录结构
         Path.init_base_path()
         Path.init_work_directory()
-        self.init_database()
-        Config._load()
-        return
-
-    def init_config(self):
-        login = Login()
-        self.zhihu_api_client = login.start()
-        Config.picture_quality = guide.set_picture_quality()
-        # 储存设置
-        Config._save()
+        #   初始化数据库链接
+        DB.init_database()
+        #   初始化配置
+        Config.init_config()
         return
 
     def start(self):
+        #   检查更新
         self.check_update()
-        self.init_config()
-        Debug.logger.info(u"开始读取ReadList.txt设置信息")
 
+        #   登录
+        login = Login()
+        self.zhihu_api_client = login.get_login_client()
+
+        Debug.logger.info(u"开始读取ReadList.txt设置信息")
         counter = 1
         try:
             with open('./ReadList.txt', 'r') as read_list:
@@ -66,23 +61,6 @@ class ZhihuHelp(object):
             Debug.logger.info(u"开始自数据库中生成电子书数据")
             book = Book(task_package.book_list)
             book.create()
-        return
-
-    @staticmethod
-    def init_database():
-        """
-        初始化数据库
-        数据库连接本身保存于DB类中，作为全局变量存在
-        :return:
-        """
-        if Path.is_file(Path.db_path):
-            DB.set_conn(sqlite3.connect(Path.db_path))
-        else:
-            DB.set_conn(sqlite3.connect(Path.db_path))
-            # 没有数据库就新建一个出来
-            with open(Path.sql_path) as sql_script:
-                DB.cursor.executescript(sql_script.read())
-            DB.commit()
         return
 
     @staticmethod
