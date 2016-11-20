@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import sqlite3
 
 from src.book import Book
@@ -8,7 +9,7 @@ from src.tools.debug import Debug
 from src.tools.http import Http
 from src.tools.path import Path
 from login import Login
-from read_list_parser import ReadListParser
+from command_parser import CommandParser
 from src.worker import worker_factory
 
 
@@ -33,25 +34,33 @@ class ZhihuHelp(object):
         self.zhihu_api_client = login.get_login_client()
 
         Debug.logger.info(u"开始读取ReadList.txt设置信息")
-        counter = 1
+        book_counter = 0 # 统计累计制作了多少本书籍
+
         try:
+            #   遍历ReadList，根据指令生成电子书
             with open('./ReadList.txt', 'r') as read_list:
-                counter = 1
                 for line in read_list:
                     line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
+                    if len(line) == 0:
+                        continue
+                    book_counter += 1
+                    self.create_book(line, book_counter)
         except IOError as e:
             with open('./ReadList.txt', 'w') as read_list:
                 read_list.close()
+            print Debug.logger.info(u"ReadList.txt 内容为空")
 
-        if counter == 1:
-            print u"ReadList.txt 内容为空"
+        Debug.logger.info(u"所有书籍制作完成。")
+        Debug.logger.info(u"本次共制作书籍{0}本".format(book_counter))
+        Debug.logger.info(u"感谢您的使用")
+        Debug.logger.info(u"点按任意键退出")
         return
 
     def create_book(self, command, counter):
         Path.reset_path()
         Debug.logger.info(u"开始制作第 {} 本电子书".format(counter))
         Debug.logger.info(u"对记录 {} 进行分析".format(command))
-        task_package = ReadListParser.get_task(command)  # 分析命令
+        task_package = CommandParser.get_task(command)  # 分析命令
 
         if not task_package.is_work_list_empty():
             worker_factory(self.zhihu_api_client, task_package.work_list)  # 执行抓取程序
@@ -89,6 +98,6 @@ class ZhihuHelp(object):
                 raw_input()
                 import webbrowser
                 webbrowser.open_new_tab(url)
-        except:
+        except Exception:
             # 不论发生任何异常均直接返回
             return

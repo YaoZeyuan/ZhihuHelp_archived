@@ -5,7 +5,7 @@ from src.tools.match import Match
 from src.tools.type import Type
 
 
-class ReadListParser():
+class CommandParser(object):
     u"""
     通过Parser类，生成任务列表以及查询列表，统一存放于urlInfo中
     task结构
@@ -40,11 +40,11 @@ class ReadListParser():
 
         raw_task_list = []
         for command in command_list:
-            raw_task = ReadListParser.parse_command(command)
+            raw_task = CommandParser.parse_command(command)
             if raw_task:
                 raw_task_list.append(raw_task)
 
-        task_package = ReadListParser.merge_task_list(raw_task_list)
+        task_package = CommandParser.merge_task_list(raw_task_list)
         return task_package
 
     @staticmethod
