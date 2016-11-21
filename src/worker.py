@@ -7,6 +7,7 @@ from src.tools.db import DB
 from src.tools.debug import Debug
 from src.tools.http import Http
 from src.tools.match import Match
+from src.tools.type import Type
 
 
 class Worker(object):
@@ -28,10 +29,26 @@ class Worker(object):
     def distribute(task):
         """
         将外界传入的任务分发给各个抓取类
-        :type task src.container.task
+        :type task src.container.task.Task
         :return:
         """
-
+        if task.get_task_type() == Type.author:
+            AuthorWorker.catch(task.author_id)
+        elif task.get_task_type() == Type.question:
+            QuestionWorker.catch(task.question_id)
+        elif task.get_task_type() == Type.answer:
+            QuestionWorker.catch(task.question_id)
+        elif task.get_task_type() == Type.collection:
+            CollectionWorker.catch(task.collection_id)
+        elif task.get_task_type() == Type.topic:
+            TopicWorker.catch(task.topic_id)
+        elif task.get_task_type() == Type.column:
+            ColumnWorker.catch(task.column_id)
+        elif task.get_task_type() == Type.article:
+            ColumnWorker.catch(task.column_id)
+        else:
+            Debug.logger.info("任务类别无法识别")
+            Debug.logger.info("当前类别为" + task.get_task_type())
         return
 
     @staticmethod
@@ -76,6 +93,12 @@ class Worker(object):
         return answer, question
 
     @staticmethod
+    def format_article(raw_article):
+        # todo 待补完
+        article = {}
+        return article
+
+    @staticmethod
     def save_record_list(table_name, record_list):
         """
         将数据保存到数据库中
@@ -85,6 +108,39 @@ class Worker(object):
             DB.save(record, table_name)
         DB.commit()
         return
+
+
+class QuestionWorker(object):
+    @staticmethod
+    def catch(question_id):
+        question = Worker.zhihu_client.question(question_id)
+        raw_question_info = question.pure_data
+        question_info = QuestionWorker.format_question(raw_question_info)
+        Worker.save_record_list('Question', [question_info])
+
+        answer_list = []
+        for raw_answer in question.answers:
+            answer, question = Worker.format_answer(raw_answer)
+            answer_list.append(answer)
+        Worker.save_record_list('Answer', answer_list)
+        return
+
+    @staticmethod
+    def format_question(raw_question_info):
+        item_key_list = [
+            'id',
+            'answer_count',
+            'comment_count',
+            'follower_count',
+            'title',
+            'detail',
+            'updated_time',
+        ]
+        info = {}
+        for key in item_key_list:
+            info[key] = raw_question_info[key]
+
+        return info
 
 
 class AuthorWorker(object):
@@ -248,80 +304,37 @@ class TopicWorker(object):
         return info
 
 
-class ColumnWorker(PageWorker):
-    def catch_info(self, target_url):
+class ColumnWorker(object):
+    @staticmethod
+    def catch(column_id):
+        column = Worker.zhihu_client.column(column_id)
+        raw_column_info = column.pure_data
+        column_info = ColumnWorker.format_column(raw_column_info)
+        Worker.save_record_list('Column', [column_info])
+
+        article_list = []
+        for raw_article in column.articles:
+            article = Worker.format_article(raw_article)
+            article_list.append(article)
+
+        Worker.save_record_list('Article', article_list)
         return
 
-    def create_work_set(self, target_url):
-        if target_url in self.task_complete_set:
-            return
-        result = Match.column(target_url)
-        self.column_id = result.group('column_id')
-        content = Http.get_content('https://zhuanlan.zhihu.com/api/columns/' + self.column_id)
-        if not content:
-            return
-        raw_info = json.loads(content)
+    @staticmethod
+    def format_column(raw_column_info):
+        item_key_list = [
+            'id',
+            'avatar_url',
+            'best_answerers_count',
+            'best_answers_count',
+            'excerpt',
+            'followers_count',
+            'introduction',
+            'name',
+            'questions_count',
+            'unanswered_count',
+        ]
         info = {}
-        info['creator_id'] = raw_info['creator']['slug']
-        info['creator_hash'] = raw_info['creator']['hash']
-        info['creator_sign'] = raw_info['creator']['bio']
-        info['creator_name'] = raw_info['creator']['name']
-        info['creator_logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['creator']['avatar'][
-            'id']).replace('_{size}', '')
-
-        info['column_id'] = raw_info['slug']
-        info['name'] = raw_info['name']
-        info['logo'] = raw_info['creator']['avatar']['template'].replace('{id}', raw_info['avatar']['id']).replace(
-            '_{size}', '')
-        info['article'] = raw_info['postsCount']
-        info['follower'] = raw_info['followersCount']
-        info['description'] = raw_info['description']
-        self.info_list.append(info)
-        self.task_complete_set.add(target_url)
-        detect_url = 'https://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(self.column_id)
-        for i in range(info['article'] / 10 + 1):
-            self.work_set.add(detect_url + str(i * 10))
-        return
-
-    def parse_content(self, content):
-        article_list = json.loads(content)
-        for info in article_list:
-            article = {}
-            article['author_id'] = info['author']['slug']
-            article['author_hash'] = info['author']['hash']
-            article['author_sign'] = info['author']['bio']
-            article['author_name'] = info['author']['name']
-            article['author_logo'] = info['author']['avatar']['template'].replace('{id}', info['author']['avatar'][
-                'id']).replace('_{size}', '')
-
-            article['column_id'] = self.column_id  # info['slug']
-            article['name'] = info['title']
-            article['article_id'] = info['slug']
-            url = info['url']
-            article['href'] = u'https://zhuanlan.zhihu.com' + url
-            article['title'] = info['title']
-            article['title_image'] = info['titleImage']
-            article['content'] = info['content']
-            article['comment'] = info['commentsCount']
-            article['agree'] = info['likesCount']
-            article['publish_date'] = info['publishedTime'][:10]
-            self.answer_list.append(article)
-        return
-
-    def create_save_config(self):
-        config = {'ColumnInfo': self.info_list, 'Article': self.answer_list}
-        return config
-
-
-def worker_factory(zhihu_api_client, task):
-    """
-
-    :type zhihu_api_client: src.lib.oauth.zhihu_oauth.ZhihuClient
-    :type task dict of src.container.task.SingleTask
-    :return:
-    """
-    type_list = {'author': AuthorWorker}
-    for key in task:
-        worker = type_list[key](zhihu_api_client, task[key])
-        worker.start()
-    return
+        for key in item_key_list:
+            info[key] = raw_column_info[key]
+        return info
