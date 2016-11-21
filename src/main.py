@@ -10,12 +10,11 @@ from src.tools.http import Http
 from src.tools.path import Path
 from login import Login
 from command_parser import CommandParser
-from src.worker import worker_factory
+from src.worker import Worker
 
 
 class ZhihuHelp(object):
     def __init__(self):
-        self.zhihu_api_client = None  # 知乎客户端，用于获取API数据
         #   初始化目录结构
         Path.init_base_path()
         Path.init_work_directory()
@@ -31,11 +30,21 @@ class ZhihuHelp(object):
 
         #   登录
         login = Login()
-        self.zhihu_api_client = login.get_login_client()
+        zhihu_client = login.get_login_client()
+        Worker.set_zhihu_client(zhihu_client)
 
         Debug.logger.info(u"开始读取ReadList.txt设置信息")
-        book_counter = 0 # 统计累计制作了多少本书籍
 
+        book_counter = self.read_list()
+
+        Debug.logger.info(u"所有书籍制作完成。")
+        Debug.logger.info(u"本次共制作书籍{0}本".format(book_counter))
+        Debug.logger.info(u"感谢您的使用")
+        Debug.logger.info(u"点按任意键退出")
+        return
+
+    def read_list(self):
+        book_counter = 0  # 统计累计制作了多少本书籍
         try:
             #   遍历ReadList，根据指令生成电子书
             with open('./ReadList.txt', 'r') as read_list:
@@ -49,22 +58,20 @@ class ZhihuHelp(object):
             with open('./ReadList.txt', 'w') as read_list:
                 read_list.close()
             print Debug.logger.info(u"ReadList.txt 内容为空")
-
-        Debug.logger.info(u"所有书籍制作完成。")
-        Debug.logger.info(u"本次共制作书籍{0}本".format(book_counter))
-        Debug.logger.info(u"感谢您的使用")
-        Debug.logger.info(u"点按任意键退出")
-        return
+        return book_counter
 
     def create_book(self, command, counter):
         Path.reset_path()
         Debug.logger.info(u"开始制作第 {} 本电子书".format(counter))
         Debug.logger.info(u"对记录 {} 进行分析".format(command))
-        task_package = CommandParser.get_task(command)  # 分析命令
+        task_list = CommandParser.get_task_list(command)  # 分析命令
 
-        if not task_package.is_work_list_empty():
-            worker_factory(self.zhihu_api_client, task_package.work_list)  # 执行抓取程序
-            Debug.logger.info(u"网页信息抓取完毕")
+        if len(task_list) == 0:
+            return
+
+        for task in task_list:
+            Worker.distribute(task)
+        Debug.logger.info(u"网页信息抓取完毕")
 
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始自数据库中生成电子书数据")

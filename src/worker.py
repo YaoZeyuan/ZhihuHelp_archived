@@ -2,102 +2,32 @@
 
 import json  # 用于JsonWorker
 
-from src.lib.zhihu_parser.author import AuthorParser
-from src.lib.zhihu_parser.collection import CollectionParser
-from src.lib.zhihu_parser.question import QuestionParser
-from src.lib.zhihu_parser.topic import TopicParser
-from src.tools.controler import Control
 from src.tools.db import DB
 from src.tools.debug import Debug
 from src.tools.http import Http
 from src.tools.match import Match
 
 
-class PageWorker(object):
-    def __init__(self):
+class Worker(object):
+    zhihu_client = None
+
+    @staticmethod
+    def set_zhihu_client(zhihu_client):
+        Worker.zhihu_client = zhihu_client
         return
 
-
-class AuthorWorker(PageWorker):
-    def __init__(self, zhihu_api_client, task_list):
+    @staticmethod
+    def distribute(task):
         """
-        :type zhihu_api_client: src.lib.oauth.zhihu_oauth.ZhihuClient
-        :type task_list: list
-        """
-        # 任务列表
-        self.task_list = task_list
-
-        self.zhihu_api_client = zhihu_api_client
-        self.answer_list = []
-        self.question_list = []
-        self.author_list = []
-        return
-
-    def start(self):
-        for task in self.task_list:
-            self.catch_info(task)
-        self.save()
-        return
-
-    def catch_info(self, task):
-        """
-        抓取信息，单线程抓取，重在稳定←_←
-        :type task src.container.task.SingleTask
+        将外界传入的任务分发给各个抓取类
+        :type task src.container.task
         :return:
         """
-        author_id = task.spider.author_id
-        author = self.zhihu_api_client.people(author_id)
-        raw_info_dict = author.pure_data
-        info_dict = self.format_author(raw_info_dict)
-        self.author_list.append(info_dict)
 
-        for raw_answer in author.answers:
-            answer, question = self.format_answer(raw_answer)
-            self.answer_list.append(answer)
-            self.question_list.append(question)
         return
 
-    def format_author(self, raw_author_info, author_page_id=u''):
-        """
-        格式化用户信息，方便存入
-        :type raw_author_info: dict
-        :type author_page_id: str 用户主页id，由于接口中未返回，只能钦定了←_←
-        :return: dict
-        """
-        item_key_list = [
-            "id",  # 唯一hash_id
-            "answer_count",
-            "articles_count",
-            "avatar_url",
-            "columns_count",
-            "description",
-            "favorite_count",
-            "favorited_count",
-            "follower_count",
-            "following_columns_count",
-            "following_count",
-            "following_question_count",
-            "following_topic_count",
-            "gender",
-            "headline",
-            "name",
-            "question_count",
-            "shared_count",
-            "is_bind_sina",
-            "thanked_count",
-            "sina_weibo_name",
-            "sina_weibo_url",
-            "voteup_count",
-        ]
-        info = {}
-        for key in item_key_list:
-            info[key] = raw_author_info[key]
-
-        # 特殊映射关系
-        info["author_page_id"] = author_page_id  # 用户页面id，随时会更换
-        return info
-
-    def format_answer(self, raw_answer):
+    @staticmethod
+    def format_answer(raw_answer):
         """
         :type raw_answer: dict
         :return: dict
@@ -137,19 +67,76 @@ class AuthorWorker(PageWorker):
 
         return answer, question
 
-    def save(self):
+    @staticmethod
+    def save_record_list(table_name, record_list):
         """
         将数据保存到数据库中
         :return:
         """
-        for answer in self.answer_list:
-            DB.save(answer, 'Answer')
-        for question in self.question_list:
-            DB.save(question, 'Question')
-        for author in self.author_list:
-            DB.save(author, 'Author')
+        for record in record_list:
+            DB.save(record, table_name)
         DB.commit()
         return
+
+
+class AuthorWorker(object):
+    @staticmethod
+    def start(author_page_id):
+        author = Worker.zhihu_client.people(author_page_id)
+        raw_author_info = author.pure_data
+        author_info = AuthorWorker.format_author(raw_author_info, author_page_id)
+        Worker.save_record_list('Author', [author_info])
+
+        answer_list = []
+        question_list = []
+        for raw_answer in author.answers:
+            answer, question = Worker.format_answer(raw_answer)
+            answer_list.append(answer)
+            question_list.append(question)
+        Worker.save_record_list('Answer', answer_list)
+        Worker.save_record_list('Question', question_list)
+        return
+
+    @staticmethod
+    def format_author(raw_author_info, author_page_id=u''):
+        """
+        格式化用户信息，方便存入
+        :type raw_author_info: dict
+        :type author_page_id: str 用户主页id，由于接口中未返回，只能钦定了←_←
+        :return: dict
+        """
+        item_key_list = [
+            "id",  # 唯一hash_id
+            "answer_count",
+            "articles_count",
+            "avatar_url",
+            "columns_count",
+            "description",
+            "favorite_count",
+            "favorited_count",
+            "follower_count",
+            "following_columns_count",
+            "following_count",
+            "following_question_count",
+            "following_topic_count",
+            "gender",
+            "headline",
+            "name",
+            "question_count",
+            "shared_count",
+            "is_bind_sina",
+            "thanked_count",
+            "sina_weibo_name",
+            "sina_weibo_url",
+            "voteup_count",
+        ]
+        info = {}
+        for key in item_key_list:
+            info[key] = raw_author_info[key]
+
+        # 特殊映射关系
+        info["author_page_id"] = author_page_id  # 用户页面id，随时会更换
+        return info
 
 
 class CollectionWorker(PageWorker):
