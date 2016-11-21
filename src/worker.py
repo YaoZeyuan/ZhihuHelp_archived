@@ -2,6 +2,7 @@
 
 import json  # 用于JsonWorker
 
+from src.lib.oauth.zhihu_oauth import ZhihuClient
 from src.tools.db import DB
 from src.tools.debug import Debug
 from src.tools.http import Http
@@ -9,10 +10,17 @@ from src.tools.match import Match
 
 
 class Worker(object):
+    """
+    :type zhihu_client src.lib.oauth.zhihu_oauth.ZhihuClient
+    """
     zhihu_client = None
 
     @staticmethod
     def set_zhihu_client(zhihu_client):
+        """
+        :type zhihu_client src.lib.oauth.zhihu_oauth.ZhihuClient
+        :return: None
+        """
         Worker.zhihu_client = zhihu_client
         return
 
@@ -81,7 +89,7 @@ class Worker(object):
 
 class AuthorWorker(object):
     @staticmethod
-    def start(author_page_id):
+    def catch(author_page_id):
         author = Worker.zhihu_client.people(author_page_id)
         raw_author_info = author.pure_data
         author_info = AuthorWorker.format_author(raw_author_info, author_page_id)
@@ -139,113 +147,105 @@ class AuthorWorker(object):
         return info
 
 
-class CollectionWorker(PageWorker):
-    def add_property(self):
-        self.collection_index_list = []
+class CollectionWorker(object):
+    @staticmethod
+    def catch(collection_id):
+        collection = Worker.zhihu_client.collection(collection_id)
+        raw_collection_info = collection.pure_data
+
+        answer_id_list = []
+
+        answer_list = []
+        question_list = []
+        for raw_answer in collection.answers:
+            answer, question = Worker.format_answer(raw_answer)
+
+            answer_id = str(answer['answer_id'])
+            answer_id_list.append(answer_id)
+
+            answer_list.append(answer)
+            question_list.append(question)
+        Worker.save_record_list('Answer', answer_list)
+        Worker.save_record_list('Question', question_list)
+
+        collected_answer_id_list = ','.join(answer_id_list)
+        collection_info = CollectionWorker.format_collection(raw_collection_info, collected_answer_id_list)
+        Worker.save_record_list('Collection', [collection_info])
         return
 
-    def create_work_set(self, target_url):
-        if target_url in self.task_complete_set:
-            return
-        content = Http.get_content(target_url)
-        if not content:
-            return
-        self.task_complete_set.add(target_url)
-        max_page = self.parse_max_page(content)
-        for page in range(max_page):
-            url = '{}?page={}'.format(target_url, page + 1)
-            self.work_set.add(url)
+    @staticmethod
+    def format_collection(raw_collection_info, collected_answer_id_list=''):
+        item_key_list = [
+            'id',
+            'answer_count',
+            'comment_count',
+            'created_time',
+            'description',
+            'follower_count',
+            'title',
+            'updated_time',
+
+        ]
+        info = {}
+        for key in item_key_list:
+            info[key] = raw_collection_info[key]
+
+        # 特殊映射关系
+        info['creator_id'] = raw_collection_info['creator']['id']
+        info['creator_name'] = raw_collection_info['creator']['name']
+        info['creator_headline'] = raw_collection_info['creator']['headline']
+        info['creator_avatar_url'] = raw_collection_info['creator']['avatar_url']
+
+        info["collected_answer_id_list"] = collected_answer_id_list
+        return info
+
+
+class TopicWorker(object):
+    @staticmethod
+    def catch(topic_id):
+        topic = Worker.zhihu_client.topic(topic_id)
+        raw_topic_info = topic.pure_data
+
+        answer_id_list = []
+
+        answer_list = []
+        question_list = []
+        for raw_answer in topic.best_answers:
+            answer, question = Worker.format_answer(raw_answer)
+
+            answer_id = str(answer['answer_id'])
+            answer_id_list.append(answer_id)
+
+            answer_list.append(answer)
+            question_list.append(question)
+        Worker.save_record_list('Answer', answer_list)
+        Worker.save_record_list('Question', question_list)
+
+        answer_id_list = ','.join(answer_id_list)
+        topic_info = TopicWorker.format_topic(raw_topic_info, answer_id_list)
+        Worker.save_record_list('Topic', [topic_info])
         return
 
-    def catch_info(self, target_url):
-        if target_url in self.info_url_complete_set:
-            return
-        content = Http.get_content(target_url)
-        if not content:
-            return
-        self.info_url_complete_set.add(target_url)
-        parser = CollectionParser(content)
-        self.info_list.append(parser.get_extra_info())
-        return
+    @staticmethod
+    def format_topic(raw_topic_info, best_answer_id_list=''):
+        item_key_list = [
+            'id',
+            'avatar_url',
+            'best_answerers_count',
+            'best_answers_count',
+            'excerpt',
+            'followers_count',
+            'introduction',
+            'name',
+            'questions_count',
+            'unanswered_count',
+        ]
+        info = {}
+        for key in item_key_list:
+            info[key] = raw_topic_info[key]
 
-    def parse_content(self, content):
-        parser = CollectionParser(content)
-        self.question_list += parser.get_question_info_list()
-        self.answer_list += parser.get_answer_list()
-
-        collection_info = parser.get_extra_info()
-        self.add_collection_index(collection_info['collection_id'], parser.get_answer_list())
-
-        return
-
-    def add_collection_index(self, collection_id, answer_list):
-        for answer in answer_list:
-            data = {'href': answer['href'], 'collection_id': collection_id, }
-            self.collection_index_list.append(data)
-        return
-
-    def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, 'CollectionInfo': self.info_list,
-                  'CollectionIndex': self.collection_index_list, }
-        return config
-
-
-class TopicWorker(PageWorker):
-    def add_property(self):
-        self.topic_index_list = []
-        return
-
-    def create_work_set(self, target_url):
-        if target_url in self.task_complete_set:
-            return
-        content = Http.get_content(target_url + '/top-answers')
-        if not content:
-            return
-        self.task_complete_set.add(target_url)
-        max_page = self.parse_max_page(content)
-        for page in range(max_page):
-            url = '{}/top-answers?page={}'.format(target_url, page + 1)
-            self.work_set.add(url)
-        return
-
-    def catch_info(self, target_url):
-        if target_url in self.info_url_complete_set:
-            return
-        content = Http.get_content(target_url + '/top-answers')
-        if not content:
-            return
-        self.info_url_complete_set.add(target_url)
-        parser = TopicParser(content)
-        self.info_list.append(parser.get_extra_info())
-        return
-
-    def parse_content(self, content):
-        parser = TopicParser(content)
-        self.question_list += parser.get_question_info_list()
-        self.answer_list += parser.get_answer_list()
-
-        topic_info = parser.get_extra_info()
-        self.add_topic_index(topic_info['topic_id'], parser.get_answer_list())
-
-        return
-
-    def add_topic_index(self, topic_id, answer_list):
-        for answer in answer_list:
-            data = {'href': answer['href'], 'topic_id': topic_id, }
-            self.topic_index_list.append(data)
-        return
-
-    def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, 'TopicInfo': self.info_list,
-                  'TopicIndex': self.topic_index_list, }
-        return config
-
-    def clear_index(self):
-        topic_id_tuple = tuple(set(x['topic_id'] for x in self.topic_index_list))
-        sql = 'DELETE  from TopicIndex where topic_id in ({})'.format((' ?,' * len(topic_id_tuple))[:-1])
-        DB.cursor.execute(sql, topic_id_tuple)
-        DB.commit()
-        return
+        info["best_answer_id_list"] = best_answer_id_list
+        return info
 
 
 class ColumnWorker(PageWorker):
