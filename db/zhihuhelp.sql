@@ -1,155 +1,115 @@
-CREATE TABLE VarPickle (
-  Var    VARCHAR(255),
-  Pickle VARCHAR(50000),
-  PRIMARY KEY (Var)
-);
-
-CREATE TABLE LoginRecord (
-  account    VARCHAR(255)   DEFAULT '',
-  password   VARCHAR(255)   DEFAULT '',
-  recordDate DATE           DEFAULT '2000-01-01',
-  cookieStr  VARCHAR(50000) DEFAULT '',
-  PRIMARY KEY (account)
-);
-
-CREATE TABLE Answer (
-  author_id      VARCHAR(255)  NOT NULL    DEFAULT '',
-  author_sign    VARCHAR(2000) NOT NULL    DEFAULT '',
-  author_logo    VARCHAR(255)  NOT NULL    DEFAULT '',
-  author_name    VARCHAR(255)  NOT NULL    DEFAULT '',
-
-  agree          INT(8)        NOT NULL    DEFAULT 0,
-  content        longtext      NOT NULL    DEFAULT '',
-  question_id    INT(8)        NOT NULL    DEFAULT 0,
-  answer_id      INT(8)        NOT NULL    DEFAULT 0,
-  commit_date    DATE          NOT NULL    DEFAULT '2000-01-01',
-  edit_date      DATE          NOT NULL    DEFAULT '2000-01-01',
-  comment        INT(8)        NOT NULL    DEFAULT 0,
-  no_record_flag INT(1)        NOT NULL    DEFAULT 0,
-
-  href           VARCHAR(255)  NOT NULL    DEFAULT '',
-  PRIMARY KEY (href)
-);
-
-CREATE TABLE Question (
-  question_id INT(8)       NOT NULL    DEFAULT 0,
-  comment     INT(8)       NOT NULL    DEFAULT 0,
-  views       INT(8)       NOT NULL    DEFAULT 0,
-  answers     INT(8)       NOT NULL    DEFAULT 0,
-  followers   INT(8)       NOT NULL    DEFAULT 0,
-  title       VARCHAR(200) NOT NULL    DEFAULT '',
-  description longtext     NOT NULL    DEFAULT '',
-
-  PRIMARY KEY (question_id)
-);
-
-CREATE TABLE CollectionIndex (
-  collection_id VARCHAR(50)  NOT NULL,
-  href          VARCHAR(255) NOT NULL,
-  PRIMARY KEY (collection_id, href)
-);
-
-CREATE TABLE TopicIndex (
-  topic_id VARCHAR(50)  NOT NULL,
-  href     VARCHAR(255) NOT NULL,
-  PRIMARY KEY (topic_id, href)
-);
+CREATE TABLE `Answer` (
+  `answer_id` int(11) NOT NULL COMMENT '答案id，唯一值',
+  `question_id` int(11) NOT NULL DEFAULT '0' COMMENT '问题id,用于到问题表里连表查询',
+  `author_id` varchar(500) NOT NULL DEFAULT 'nimingyonghu' COMMENT '作者的hash_id',
+  `author_name` varchar(500) NOT NULL DEFAULT '匿名用户' COMMENT '作者名字',
+  `author_headline` varchar(500) NOT NULL DEFAULT '' COMMENT '作者签名档',
+  `author_avatar_url` varchar(500) NOT NULL DEFAULT 'http://pic4.zhimg.com/bfcef853fba8140581eeede4ea7a0c33_s.jpg' COMMENT '作者头像:示例http://pic4.zhimg.com/bfcef853fba8140581eeede4ea7a0c33_s.jpg',
+  `author_gender` int(11) NOT NULL DEFAULT '0' COMMENT '作者性别0:女,1:男,-1:未设置',
+  `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
+  `content` text NOT NULL COMMENT '答案内容',
+  `created_time` int(11) NOT NULL DEFAULT '0' COMMENT '答案创建时间',
+  `updated_time` int(11) NOT NULL DEFAULT '0' COMMENT '答案更新时间',
+  `is_copyable` int(11) NOT NULL DEFAULT '1' COMMENT '是否允许转载0:不允许,1:允许',
+  `thanks_count` int(11) NOT NULL DEFAULT '0' COMMENT '感谢数',
+  `voteup_count` int(11) NOT NULL DEFAULT '0' COMMENT '赞同数',
+  `suggest_edit_status` int(11) NOT NULL DEFAULT '0' COMMENT '是否被建议修改,0:否,1:是',
+  `suggest_edit_reason` varchar(500) NOT NULL DEFAULT '' COMMENT '被建议修改的理由'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='答案表，分为answer和author两部分';
 
 
-CREATE TABLE AuthorInfo (
-  logo            VARCHAR(255)          DEFAULT "http://p1.zhimg.com/da/8e/da8e974dc_m.jpg",
-  author_id       VARCHAR(255) NOT NULL DEFAULT 'null',
-  hash            VARCHAR(255)          DEFAULT '',
-  sign            VARCHAR(255)          DEFAULT '',
-  description     VARCHAR(10000)        DEFAULT '',
-  name            VARCHAR(255)          DEFAULT '',
-  asks            VARCHAR(255)          DEFAULT '',
-  answers         INT                   DEFAULT 0,
-  posts           INT                   DEFAULT 0,
-  collections     INT                   DEFAULT 0,
-  logs            INT                   DEFAULT 0,
-  agree           INT                   DEFAULT 0,
-  thanks          INT                   DEFAULT 0,
-  collected       INT                   DEFAULT 0,
-  shared          INT                   DEFAULT 0,
-  followee        INT                   DEFAULT 0,
-  follower        INT                   DEFAULT 0,
-  followed_column INT                   DEFAULT 0,
-  followed_topic  INT                   DEFAULT 0,
-  viewed          INT                   DEFAULT 0,
-  gender          VARCHAR(255)          DEFAULT '',
-  weibo           VARCHAR(255)          DEFAULT '',
-  PRIMARY KEY (author_id)
-);
+CREATE TABLE `Article` (
+  `title` varchar(200) NOT NULL COMMENT '文章标题',
+  `updated` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间戳',
+  `created` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间戳',
+  `voteup_count` int(11) NOT NULL DEFAULT '0' COMMENT '赞同数',
+  `id` varchar(100) NOT NULL COMMENT '文章id',
+  `column_id` varchar(200) NOT NULL COMMENT '专栏id',
+  `content` text NOT NULL COMMENT '文章内容(html形式)',
+  `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
+  `author_id` varchar(200) NOT NULL COMMENT '作者hash_id'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE CollectionInfo (
-  collection_id VARCHAR(50) NOT NULL,
-  title         VARCHAR(255),
-  description   VARCHAR(1000),
-  follower      INT(20)     NOT NULL    DEFAULT 0,
-  comment       INT(20)     NOT NULL    DEFAULT 0,
-  PRIMARY KEY (collection_id)
-);
 
-CREATE TABLE TopicInfo (
-  title       VARCHAR(255),
-  logo        VARCHAR(255),
-  description VARCHAR(3000),
-  topic_id    VARCHAR(50),
-  follower    INT(20) DEFAULT 0,
-  PRIMARY KEY (topic_id)
-);
+CREATE TABLE `Author` (
+  `id` varchar(100) NOT NULL DEFAULT '' COMMENT 'hash_id',
+  `author_page_id` int(11) NOT NULL COMMENT '用户主页id.随时可能会更换',
+  `answer_count` int(11) NOT NULL DEFAULT '0' COMMENT '回答数',
+  `articles_count` int(11) NOT NULL DEFAULT '0' COMMENT '文章数',
+  `avatar_url` varchar(500) NOT NULL DEFAULT 'http://pic4.zhimg.com/bfcef853fba8140581eeede4ea7a0c33_s.jpg' COMMENT '头像，示例:http://pic4.zhimg.com/bfcef853fba8140581eeede4ea7a0c33_s.jpg',
+  `columns_count` int(11) NOT NULL DEFAULT '0' COMMENT '专栏数',
+  `description` varchar(500) NOT NULL DEFAULT '' COMMENT '描述',
+  `favorite_count` int(11) NOT NULL DEFAULT '0' COMMENT '创建的收藏夹数',
+  `favorited_count` int(11) NOT NULL DEFAULT '0' COMMENT '收藏数',
+  `follower_count` int(11) NOT NULL DEFAULT '0' COMMENT '粉丝数',
+  `following_columns_count` int(11) NOT NULL DEFAULT '0' COMMENT '关注专栏数',
+  `following_count` int(11) NOT NULL DEFAULT '0' COMMENT '关注人数',
+  `following_question_count` int(11) NOT NULL DEFAULT '0' COMMENT '关注问题数',
+  `following_topic_count` int(11) NOT NULL DEFAULT '0' COMMENT '关注话题数',
+  `gender` int(11) NOT NULL DEFAULT '0' COMMENT '性别=>0:女,1:男',
+  `headline` varchar(500) NOT NULL DEFAULT '' COMMENT '签名档',
+  `name` varchar(500) NOT NULL DEFAULT '' COMMENT '用户名',
+  `question_count` int(11) NOT NULL DEFAULT '0' COMMENT '提问数',
+  `shared_count` int(11) NOT NULL DEFAULT '0' COMMENT '被分享数',
+  `is_bind_sina` int(11) NOT NULL DEFAULT '0' COMMENT '是否绑定新浪微博',
+  `thanked_count` int(11) NOT NULL DEFAULT '0' COMMENT '被感谢数',
+  `sina_weibo_name` varchar(500) NOT NULL DEFAULT '' COMMENT '新浪微博用户名',
+  `sina_weibo_url` varchar(500) NOT NULL DEFAULT '' COMMENT '新浪微博地址',
+  `voteup_count` int(11) NOT NULL DEFAULT '0' COMMENT '被赞同数'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE ColumnInfo (
-  creator_id   VARCHAR(255)  NOT NULL    DEFAULT '',
-  creator_hash VARCHAR(255)  NOT NULL    DEFAULT '',
-  creator_sign VARCHAR(2000) NOT NULL    DEFAULT '',
-  creator_name VARCHAR(255)  NOT NULL    DEFAULT '',
-  creator_logo VARCHAR(255)  NOT NULL    DEFAULT '',
 
-  column_id    VARCHAR(255)  NOT NULL    DEFAULT '',
-  name         VARCHAR(255)  NOT NULL    DEFAULT '',
-  logo         VARCHAR(255)  NOT NULL    DEFAULT '',
-  description  VARCHAR(3000) NOT NULL    DEFAULT '',
-  article      INT(20)       NOT NULL    DEFAULT 0,
-  follower     INT(20)       NOT NULL    DEFAULT 0,
-  PRIMARY KEY (column_id)
-);
+CREATE TABLE `Collection` (
+  `id` int(11) NOT NULL COMMENT '收藏夹id',
+  `answer_count` int(11) NOT NULL DEFAULT '0' COMMENT '答案数',
+  `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
+  `created_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `follower_count` int(11) NOT NULL DEFAULT '0' COMMENT '关注人数',
+  `description` varchar(200) NOT NULL DEFAULT '' COMMENT '描述',
+  `title` varchar(200) NOT NULL DEFAULT '' COMMENT '收藏夹名',
+  `updated_time` int(11) NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+  `creator_id` varchar(200) NOT NULL DEFAULT '' COMMENT '创建者的hashid',
+  `creator_name` varchar(200) NOT NULL DEFAULT '' COMMENT '创建者名字',
+  `creator_headline` varchar(200) NOT NULL DEFAULT '' COMMENT '创建者签名档',
+  `creator_avatar_url` varchar(200) NOT NULL DEFAULT '' COMMENT '创建者头像',
+  `collected_answer_id_list` text NOT NULL COMMENT '收藏夹下以逗号分隔的答案id列表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Article (
-  author_id    VARCHAR(255)  NOT NULL    DEFAULT '',
-  author_hash  VARCHAR(255)  NOT NULL    DEFAULT '',
-  author_sign  VARCHAR(2000) NOT NULL    DEFAULT '',
-  author_name  VARCHAR(255)  NOT NULL    DEFAULT '',
-  author_logo  VARCHAR(255)  NOT NULL    DEFAULT '',
 
-  column_id    VARCHAR(255)  NOT NULL    DEFAULT '',
-  name         VARCHAR(255)  NOT NULL    DEFAULT '',
-  article_id   VARCHAR(255)  NOT NULL    DEFAULT '',
-  href         VARCHAR(255)  NOT NULL    DEFAULT '',
-  title        VARCHAR(2000) NOT NULL    DEFAULT '',
-  title_image  VARCHAR(255)  NOT NULL    DEFAULT '',
-  content      longtext      NOT NULL    DEFAULT '',
-  comment      INT(20)       NOT NULL    DEFAULT 0,
-  agree        INT(20)       NOT NULL    DEFAULT 0,
-  publish_date DATE          NOT NULL    DEFAULT '2000-01-01',
-  PRIMARY KEY (href)
-);
-/*
-        # �û����
-        # ���У���ͬ�Ĵ�/ר�����£���ע���ղؼ�/ר��/���ⰴʱ��˳�����
-        # ֻ��¼����ͣ��Ŀ��(������޵Ĵ𰸵�ַ����ע������Ĵ𰸵�ַ)��ʱ��ͻ�ߡ�
-        # ������Ϣ���ݻ���ͺ�Ŀ��ȥ��Ӧ���в�
-        # ����ֻ����¼,��¼������
-        # avtiveType:��ע/��ͬ
-        # activeTarget:Ŀ����ַ,ʹ��ʱ������ȡ����
-        # TargetType:ר��/�ղؼ�/����/ר������/��
-*/
-CREATE TABLE userActive (
-  account      VARCHAR(255) NOT NULL    DEFAULT '',
-  activeTarget VARCHAR(255) NOT NULL    DEFAULT '',
-  activeType   VARCHAR(255) NOT NULL    DEFAULT '',
-  TargetType   vatchar(255) NOT NULL    DEFAULT '',
-  dateTime     INT(20)      NOT NULL    DEFAULT 0,
-  table_id     INTEGER PRIMARY KEY AUTOINCREMENT
-);
+CREATE TABLE `Column` (
+  `slug` varchar(200) NOT NULL COMMENT '专栏id',
+  `name` varchar(200) NOT NULL COMMENT '专栏名',
+  `postsCount` int(11) NOT NULL COMMENT '专栏内文章数',
+  `followersCount` int(11) NOT NULL COMMENT '关注人数',
+  `description` varchar(5000) NOT NULL COMMENT '专栏描述',
+  `reason` varchar(5000) NOT NULL COMMENT '专栏创建原因(由所有者自由填写)',
+  `intro` varchar(5000) NOT NULL COMMENT '专栏介绍',
+  `creator_id` varchar(200) NOT NULL COMMENT '创建者的知乎hash_id',
+  PRIMARY KEY (`slug`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `Question` (
+  `id` int(11) NOT NULL COMMENT '问题id',
+  `answer_count` int(11) NOT NULL DEFAULT '0' COMMENT '回答数',
+  `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
+  `follower_count` int(11) NOT NULL DEFAULT '0' COMMENT '关注数',
+  `title` varchar(200) NOT NULL DEFAULT '' COMMENT '问题',
+  `detail` varchar(200) NOT NULL DEFAULT '' COMMENT '问题详情',
+  `updated_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `Topic` (
+  `id` int(11) NOT NULL COMMENT '话题id',
+  `avatar_url` varchar(300) NOT NULL COMMENT '话题图片',
+  `best_answerers_count` int(11) NOT NULL COMMENT '最佳回答的作者数',
+  `best_answers_count` int(11) NOT NULL COMMENT '最佳回答数',
+  `excerpt` text NOT NULL COMMENT '简介(无html标签)',
+  `followers_count` int(11) NOT NULL COMMENT '关注者人数',
+  `introduction` text NOT NULL COMMENT '介绍，含html标签',
+  `name` varchar(200) NOT NULL COMMENT '话题名称',
+  `questions_count` int(11) NOT NULL COMMENT '话题下的问题数量',
+  `unanswered_count` int(11) NOT NULL COMMENT '话题下等待回答的问题数量',
+  `best_answer_id_list` text NOT NULL COMMENT '逗号分隔形式的话题下精华答案id列表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
