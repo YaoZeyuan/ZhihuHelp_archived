@@ -76,7 +76,7 @@ class Worker(object):
         answer["author_id"] = raw_answer['author']['id']
         answer["author_name"] = raw_answer['author']['name']
         answer["author_headline"] = raw_answer['author']['headline']
-        answer["author_avatar_url"] = raw_answer['author']['avatar_url']
+        answer["author_avatar_url"] = Match.parse_img(raw_answer['author']['avatar_url'])
         answer["author_gender"] = raw_answer['author']['gender']
 
         answer["answer_id"] = raw_answer['id']
@@ -94,9 +94,34 @@ class Worker(object):
 
     @staticmethod
     def format_article(raw_article):
-        # todo 待补完
+        article_key_list = [
+            "title",  # 标题
+            "updated",  # 更新时间戳
+            "voteup_count",  # 赞同数
+            "id",  # 文章id
+            "created",  # 创建时间戳
+            "content",  # 内容(html，巨长)
+            "comment_count",  # 评论数
+        ]
         article = {}
-        return article
+        for key in article_key_list:
+            article[key] = raw_article['author'][key]
+        article['image_url'] = Match.parse_column_img(raw_article['image_url'])
+        article['author_id'] = raw_article['author']['id']
+        article['column_id'] = raw_article['column']['id']
+
+        author_key_list = [
+            "gender",
+            "headline",
+            "id",  # 唯一hash_id
+            "name",
+        ]
+        author_info = {}
+        for key in author_key_list:
+            author_info[key] = raw_article['author'][key]
+        author_info['avatar_url'] = Match.parse_column_img(raw_article['author']['avatar_url'])
+
+        return author_info, article
 
     @staticmethod
     def save_record_list(table_name, record_list):
@@ -250,7 +275,7 @@ class CollectionWorker(object):
         info['creator_id'] = raw_collection_info['creator']['id']
         info['creator_name'] = raw_collection_info['creator']['name']
         info['creator_headline'] = raw_collection_info['creator']['headline']
-        info['creator_avatar_url'] = raw_collection_info['creator']['avatar_url']
+        info['creator_avatar_url'] = Match.parse_img(raw_collection_info['creator']['avatar_url'])
 
         info["collected_answer_id_list"] = collected_answer_id_list
         return info
@@ -286,7 +311,6 @@ class TopicWorker(object):
     def format_topic(raw_topic_info, best_answer_id_list=''):
         item_key_list = [
             'id',
-            'avatar_url',
             'best_answerers_count',
             'best_answers_count',
             'excerpt',
@@ -299,7 +323,7 @@ class TopicWorker(object):
         info = {}
         for key in item_key_list:
             info[key] = raw_topic_info[key]
-
+        info['avatar_url'] = Match.parse_img(raw_topic_info['avatar_url'])
         info["best_answer_id_list"] = best_answer_id_list
         return info
 
@@ -309,32 +333,44 @@ class ColumnWorker(object):
     def catch(column_id):
         column = Worker.zhihu_client.column(column_id)
         raw_column_info = column.pure_data
-        column_info = ColumnWorker.format_column(raw_column_info)
+        author_info, column_info = ColumnWorker.format_column(raw_column_info)
+        Worker.save_record_list('Author', [author_info])
         Worker.save_record_list('Column', [column_info])
 
         article_list = []
+        author_list = []
         for raw_article in column.articles:
-            article = Worker.format_article(raw_article)
+            author, article = Worker.format_article(raw_article)
             article_list.append(article)
+            author_list.append(author)
 
         Worker.save_record_list('Article', article_list)
+        Worker.save_record_list('Author', author_list)
         return
 
     @staticmethod
     def format_column(raw_column_info):
-        item_key_list = [
-            'id',
-            'avatar_url',
-            'best_answerers_count',
-            'best_answers_count',
-            'excerpt',
-            'followers_count',
-            'introduction',
+        column_key_list = [
+            'slug',
             'name',
-            'questions_count',
-            'unanswered_count',
+            'postsCount',
+            'description',
+            'followersCount',
+            'reason',
+            'intro',
         ]
-        info = {}
-        for key in item_key_list:
-            info[key] = raw_column_info[key]
-        return info
+        column_info = {}
+        for key in column_key_list:
+            column_info[key] = raw_column_info[key]
+
+        column_info['creator_id'] = raw_column_info['creator']['hash']
+
+        author_info = {}
+        author_info['headline'] = raw_column_info['creator']['bio']
+        author_info['id'] = raw_column_info['creator']['hash']
+        author_info['name'] = raw_column_info['creator']['name']
+        author_info['author_page_id'] = raw_column_info['creator']['slug']
+        author_info['description'] = raw_column_info['creator']['description']
+        author_info['avatar_url'] = raw_column_info['creator']['avatar']['id'] + '.jpg'  # 强行拼接
+
+        return author_info, column_info
