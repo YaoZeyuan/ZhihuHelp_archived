@@ -12,7 +12,7 @@ class CommandParser(object):
     """
 
     @staticmethod
-    def get_task(command):
+    def get_task_list(command):
         u"""
         解析指令类型
         """

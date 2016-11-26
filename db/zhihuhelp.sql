@@ -1,3 +1,4 @@
+
 CREATE TABLE `Answer` (
   `answer_id` int(11) NOT NULL COMMENT '答案id，唯一值',
   `question_id` int(11) NOT NULL DEFAULT '0' COMMENT '问题id,用于到问题表里连表查询',
@@ -19,11 +20,11 @@ CREATE TABLE `Answer` (
 
 
 CREATE TABLE `Article` (
+  `article_id` varchar(100) NOT NULL COMMENT '文章id',
   `title` varchar(200) NOT NULL COMMENT '文章标题',
   `updated` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间戳',
   `created` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间戳',
   `voteup_count` int(11) NOT NULL DEFAULT '0' COMMENT '赞同数',
-  `id` varchar(100) NOT NULL COMMENT '文章id',
   `column_id` varchar(200) NOT NULL COMMENT '专栏id',
   `content` text NOT NULL COMMENT '文章内容(html形式)',
   `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
@@ -32,7 +33,7 @@ CREATE TABLE `Article` (
 
 
 CREATE TABLE `Author` (
-  `id` varchar(100) NOT NULL DEFAULT '' COMMENT 'hash_id',
+  `author_id` varchar(100) NOT NULL DEFAULT '' COMMENT 'hash_id',
   `author_page_id` int(11) NOT NULL COMMENT '用户主页id.随时可能会更换',
   `answer_count` int(11) NOT NULL DEFAULT '0' COMMENT '回答数',
   `articles_count` int(11) NOT NULL DEFAULT '0' COMMENT '文章数',
@@ -60,7 +61,7 @@ CREATE TABLE `Author` (
 
 
 CREATE TABLE `Collection` (
-  `id` int(11) NOT NULL COMMENT '收藏夹id',
+  `collection_id` int(11) NOT NULL COMMENT '收藏夹id',
   `answer_count` int(11) NOT NULL DEFAULT '0' COMMENT '答案数',
   `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
   `created_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
@@ -77,7 +78,7 @@ CREATE TABLE `Collection` (
 
 
 CREATE TABLE `Column` (
-  `slug` varchar(200) NOT NULL COMMENT '专栏id',
+  `column_id` varchar(200) NOT NULL COMMENT '专栏id',
   `name` varchar(200) NOT NULL COMMENT '专栏名',
   `postsCount` int(11) NOT NULL COMMENT '专栏内文章数',
   `followersCount` int(11) NOT NULL COMMENT '关注人数',
@@ -85,12 +86,12 @@ CREATE TABLE `Column` (
   `reason` varchar(5000) NOT NULL COMMENT '专栏创建原因(由所有者自由填写)',
   `intro` varchar(5000) NOT NULL COMMENT '专栏介绍',
   `creator_id` varchar(200) NOT NULL COMMENT '创建者的知乎hash_id',
-  PRIMARY KEY (`slug`)
+  PRIMARY KEY (`column_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `Question` (
-  `id` int(11) NOT NULL COMMENT '问题id',
+  `question_id` int(11) NOT NULL COMMENT '问题id',
   `answer_count` int(11) NOT NULL DEFAULT '0' COMMENT '回答数',
   `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
   `follower_count` int(11) NOT NULL DEFAULT '0' COMMENT '关注数',
@@ -101,7 +102,7 @@ CREATE TABLE `Question` (
 
 
 CREATE TABLE `Topic` (
-  `id` int(11) NOT NULL COMMENT '话题id',
+  `topic_id` int(11) NOT NULL COMMENT '话题id',
   `avatar_url` varchar(300) NOT NULL COMMENT '话题图片',
   `best_answerers_count` int(11) NOT NULL COMMENT '最佳回答的作者数',
   `best_answers_count` int(11) NOT NULL COMMENT '最佳回答数',

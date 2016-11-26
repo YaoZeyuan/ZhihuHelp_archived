@@ -73,6 +73,8 @@ class ZhihuHelp(object):
             Worker.distribute(task)
         Debug.logger.info(u"网页信息抓取完毕")
 
+
+
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始自数据库中生成电子书数据")
             book = Book(task_package.book_list)

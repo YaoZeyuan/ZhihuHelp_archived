@@ -83,12 +83,12 @@ class Worker(object):
         answer["question_id"] = raw_answer['question']['id']
 
         question_key_list = [
-            "id",
             "title",
         ]
         question = {}
         for question_key in question_key_list:
             question[question_key] = raw_answer['question'][question_key]
+        question['question_id'] = raw_answer['question']['id']
 
         return answer, question
 
@@ -98,14 +98,14 @@ class Worker(object):
             "title",  # 标题
             "updated",  # 更新时间戳
             "voteup_count",  # 赞同数
-            "id",  # 文章id
             "created",  # 创建时间戳
             "content",  # 内容(html，巨长)
             "comment_count",  # 评论数
         ]
         article = {}
         for key in article_key_list:
-            article[key] = raw_article['author'][key]
+            article[key] = raw_article[key]
+        article['article_id'] = raw_article['id']
         article['image_url'] = Match.parse_column_img(raw_article['image_url'])
         article['author_id'] = raw_article['author']['id']
         article['column_id'] = raw_article['column']['id']
@@ -113,12 +113,13 @@ class Worker(object):
         author_key_list = [
             "gender",
             "headline",
-            "id",  # 唯一hash_id
             "name",
         ]
         author_info = {}
         for key in author_key_list:
             author_info[key] = raw_article['author'][key]
+
+        author_info['author_id'] = raw_article['author']['id']
         author_info['avatar_url'] = Match.parse_column_img(raw_article['author']['avatar_url'])
 
         return author_info, article
@@ -153,7 +154,6 @@ class QuestionWorker(object):
     @staticmethod
     def format_question(raw_question_info):
         item_key_list = [
-            'id',
             'answer_count',
             'comment_count',
             'follower_count',
@@ -164,6 +164,7 @@ class QuestionWorker(object):
         info = {}
         for key in item_key_list:
             info[key] = raw_question_info[key]
+        info['question_id'] = raw_question_info['id']
 
         return info
 
@@ -195,7 +196,6 @@ class AuthorWorker(object):
         :return: dict
         """
         item_key_list = [
-            "id",  # 唯一hash_id
             "answer_count",
             "articles_count",
             "avatar_url",
@@ -222,6 +222,7 @@ class AuthorWorker(object):
         info = {}
         for key in item_key_list:
             info[key] = raw_author_info[key]
+        info['author_id'] = raw_author_info['id']
 
         # 特殊映射关系
         info["author_page_id"] = author_page_id  # 用户页面id，随时会更换
@@ -257,7 +258,6 @@ class CollectionWorker(object):
     @staticmethod
     def format_collection(raw_collection_info, collected_answer_id_list=''):
         item_key_list = [
-            'id',
             'answer_count',
             'comment_count',
             'created_time',
@@ -272,6 +272,7 @@ class CollectionWorker(object):
             info[key] = raw_collection_info[key]
 
         # 特殊映射关系
+        info['collection_id'] = raw_collection_info['id']
         info['creator_id'] = raw_collection_info['creator']['id']
         info['creator_name'] = raw_collection_info['creator']['name']
         info['creator_headline'] = raw_collection_info['creator']['headline']
@@ -310,7 +311,6 @@ class TopicWorker(object):
     @staticmethod
     def format_topic(raw_topic_info, best_answer_id_list=''):
         item_key_list = [
-            'id',
             'best_answerers_count',
             'best_answers_count',
             'excerpt',
@@ -323,6 +323,8 @@ class TopicWorker(object):
         info = {}
         for key in item_key_list:
             info[key] = raw_topic_info[key]
+
+        info['topic_id'] = raw_topic_info['id']
         info['avatar_url'] = Match.parse_img(raw_topic_info['avatar_url'])
         info["best_answer_id_list"] = best_answer_id_list
         return info
@@ -351,7 +353,6 @@ class ColumnWorker(object):
     @staticmethod
     def format_column(raw_column_info):
         column_key_list = [
-            'slug',
             'name',
             'postsCount',
             'description',
@@ -363,11 +364,12 @@ class ColumnWorker(object):
         for key in column_key_list:
             column_info[key] = raw_column_info[key]
 
+        column_info['column_id'] = raw_column_info['slug']
         column_info['creator_id'] = raw_column_info['creator']['hash']
 
         author_info = {}
         author_info['headline'] = raw_column_info['creator']['bio']
-        author_info['id'] = raw_column_info['creator']['hash']
+        author_info['author_id'] = raw_column_info['creator']['hash']
         author_info['name'] = raw_column_info['creator']['name']
         author_info['author_page_id'] = raw_column_info['creator']['slug']
         author_info['description'] = raw_column_info['creator']['description']

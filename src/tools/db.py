@@ -37,6 +37,25 @@ class DB(object):
         return DB.cursor.execute(sql)
 
     @staticmethod
+    def query_all(sql):
+        raw_record_list = DB.cursor.execute(sql).fetchall()
+        record_list = []
+        for raw_record in raw_record_list:
+            record = {}
+            for index, column_name in enumerate(DB.cursor.description):
+                record[column_name[0]] = raw_record[index]
+            record_list.append(record)
+        return record_list
+
+    @staticmethod
+    def query_row(sql):
+        raw_record = DB.cursor.execute(sql).fetchone()
+        record = {}
+        for index, column_name in enumerate(DB.cursor.description):
+            record[column_name[0]] = raw_record[index]
+        return record
+
+    @staticmethod
     def commit():
         return DB.cursor.commit()
 
