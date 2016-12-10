@@ -80,8 +80,8 @@ class CommandParser(object):
     @staticmethod
     def parse_author(command):
         result = Match.author(command)
-        author_id = result.group('author_id')
-        task = AuthorTask(author_id)
+        author_page_id = result.group('author_page_id')
+        task = AuthorTask(author_page_id)
         return task
 
     @staticmethod

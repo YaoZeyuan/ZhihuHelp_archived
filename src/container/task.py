@@ -12,9 +12,9 @@ class Task(object):
 
 
 class AuthorTask(Task):
-    def __init__(self, author_id):
+    def __init__(self, author_page_id):
         Task.__init__(self, Type.author)
-        self.author_id = author_id
+        self.author_page_id = author_page_id
         return
 
 
