@@ -75,15 +75,16 @@ class Match(object):
         return unicode(filename[:80])
 
     @staticmethod
-    def parse_img(avatar_url):
+    def parse_file_name(avatar_url):
         """
-        从图片地址中提取出统一的图片文件名
+        从地址中提取出统一的文件名信息
+        目前只用于图片
         格式: [图片名].[图片后缀名]
         例: abc.png
         :type avatar_url str
         :rtype: str
         """
-        result = re.search(r'(?<=\.zhimg\.com/)(?P<name>[^_]*)_(?P<size>[^.]*)\.(?P<ext>.*)', avatar_url)
+        result = re.search(r'(?P<name>[^/_]*)_(?P<size>[^.]*)\.(?P<ext>.*)', avatar_url)
         filename = 'da8e974dc'  # 匿名用户默认头像
         ext = 'jpg'
         if not result:
@@ -93,42 +94,73 @@ class Match(object):
         ext = result.group('ext')
         return filename + '.' + ext
 
-    @staticmethod
-    def parse_column_img(avatar_url):
-        """
-        从专栏图片地址中提取出统一的图片文件名
-        格式: [图片名].[图片后缀名]
-        例: abc.png
-        :type avatar_url str
-        :rtype: str
-        """
-        result = re.search(r'(?<=\.zhimg\.com/50/)(?P<name>[^_]*)_(?P<size>[^.]*)\.(?P<ext>.*)', avatar_url)
-        filename = 'da8e974dc'  # 匿名用户默认头像
-        ext = 'jpg'
-        if not result:
-            return filename + '.' + ext
-
-        filename = result.group('name')
-        ext = result.group('ext')
-        return filename + '.' + ext
 
     @staticmethod
-    def generate_img_url(avatar_url, img_quality=ImgQuality.big):
-        result = re.search(r'(?P<name>[^_]*)\.(?P<ext>.*)', avatar_url)
-        filename = 'da8e974dc'  # 匿名用户默认头像
-        ext = 'jpg'
-        file_uri = filename + '.' + ext
+    def generate_avatar_img_src(img_file_name ='da8e974dc.jpg', img_quality=ImgQuality.big):
+        """
+        生成特殊的图片地址(知乎头像/专栏信息等存在于数据库中的图片)
+        :param img_file_name: 图片名
+        :param img_quality: 图片质量
+        :return:
+        """
+        result = re.search(r'(?P<name>[^_]*)\.(?P<ext>.*)', img_file_name)
         if not result:
-            return ImgQuality.generate_img_download_url(file_uri)
+            return ImgQuality.add_random_download_address_header_for_img_filename('da8e974dc.jpg') # 默认的匿名用户头像
 
         filename = result.group('name')
         ext = result.group('ext')
 
         if img_quality == ImgQuality.raw:
-            file_uri = filename + '.' + ext
+            img_file_name = filename + '.' + ext
         elif img_quality == ImgQuality.big:
-            file_uri = filename + '_g.' + ext
+            img_file_name = filename + '_g.' + ext
         elif img_quality == ImgQuality.none:
             return ''
 
-        return ImgQuality.generate_img_download_url(file_uri)
+        return ImgQuality.add_random_download_address_header_for_img_filename(img_file_name)
+
+    def fix_image(self, content):
+        content = Match.fix_html(content)
+        for img in re.findall(r'<img[^>]*', content):
+            # fix img
+            if img[-1] == '/':
+                img = img[:-1]
+            img += '>'
+
+            src = re.search(r'(?<=src=").*?(?=")', img)
+            if not src:
+                new_image = img + '</img>'
+                content = content.replace(img, new_image)
+                continue
+            else:
+                src = src.group(0)
+                if src.replace(' ', '') == '':
+                    new_image = img + '</img>'
+                    content = content.replace(img, new_image)
+                    continue
+
+            new_image += '</img>'
+            content = content.replace(img, '<div class="duokan-image-single">{}</div>'.format(new_image))
+
+        return content
+
+    @staticmethod
+    def match_img_with_src_dict(content):
+        img_src_dict = {}
+        img_list = re.findall(r'<img[^>]*', content)
+        for img in img_list:
+            result = re.search(r'(?<=src=").*?(?=")', img)
+            if not result:
+                img_src_dict[img] = ''
+            else:
+                src = result.group(0)
+                if 'zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg' in src :
+                    result = re.search(r'(?<=data-original=").*?(?=")', img)
+                    img_src_dict[img] = result.group(0)
+                else:
+                    img_src_dict[img] = src
+        return img_src_dict
+
+    @staticmethod
+    def create_img_element_with_file_name(filename):
+        return u'<div class="duokan-image-single"><img src="{}"></img></div>'.format(u'./images/' + filename)

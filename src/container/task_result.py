@@ -23,12 +23,6 @@ class Question(object):
         self.answer_list = []
         return
 
-    def add_answer(self, answer_id):
-        raw_answer = DB.query_row('Select * from Answer where answer_id={}'.format(answer_id))
-        answer = Answer_Info(raw_answer)
-        self.answer_list.append(answer)
-        return
-
     def append_answer(self, answer):
         """
         :type answer: Answer
@@ -37,8 +31,9 @@ class Question(object):
         self.answer_list.append(answer)
         return
 
-    def get_answer_list(self):
-        return self.answer_list
+    def download_img(self):
+        #   下载图片，同时更新
+        return
 
 
 class Column(object):
@@ -68,7 +63,6 @@ class TaskResult(object):
         u"""
         :type task src.container.task.AnswerTask | src.container.task.QuestionTask | src.container.task.TopicTask| src.container.task.CollectionTask | src.container.task.AuthorTask | src.container.task.ColumnTask | src.container.task.ArticleTask
         """
-        self.task_type = task.task_type
         self.task = task
         self.question_list = []
         self.column_list = []

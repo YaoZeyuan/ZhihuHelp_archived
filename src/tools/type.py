@@ -23,9 +23,9 @@ class ImgQuality(object):
     none = 'none'  # 无图
 
     @staticmethod
-    def generate_img_download_url(file_uri):
+    def add_random_download_address_header_for_img_filename(file_uri):
         """
-        根据文件名，随机选择一个前缀作为图片下载地址
+        随机补充一个前缀作为图片下载地址
         :param file_uri:
         :return:
         """

@@ -106,3 +106,10 @@ class Path(object):
     @staticmethod
     def is_file(path):
         return os.path.isfile(path)
+
+    @staticmethod
+    def get_img_size_by_filename_kb(filename):
+        path = Path.image_pool_path + '/' + filename
+        if Path.is_file(path) :
+            return os.path.getsize(path) / 1024
+        return 0

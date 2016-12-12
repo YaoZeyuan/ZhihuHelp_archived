@@ -7,10 +7,13 @@ from src.tools.controler import Control
 from src.tools.debug import Debug
 from src.tools.extra_tools import ExtraTools
 from src.tools.http import Http
+from src.tools.path import Path
 
 
 class ImageContainer(object):
     def __init__(self, save_path=''):
+        if len(save_path) == 0:
+            save_path = Path.image_pool_path
         self.save_path = save_path
         self.container = {}
         self.md5 = hashlib.md5()
@@ -21,6 +24,10 @@ class ImageContainer(object):
         return
 
     def add(self, href):
+        """
+        :param href:  图片地址
+        :return:
+        """
         self.container[href] = self.create_image(href)
         return self.get_filename(href)
 

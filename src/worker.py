@@ -76,7 +76,7 @@ class Worker(object):
         answer["author_id"] = raw_answer['author']['id']
         answer["author_name"] = raw_answer['author']['name']
         answer["author_headline"] = raw_answer['author']['headline']
-        answer["author_avatar_url"] = Match.parse_img(raw_answer['author']['avatar_url'])
+        answer["author_avatar_url"] = Match.parse_file_name(raw_answer['author']['avatar_url'])
         answer["author_gender"] = raw_answer['author']['gender']
 
         answer["answer_id"] = raw_answer['id']
@@ -106,7 +106,7 @@ class Worker(object):
         for key in article_key_list:
             article[key] = raw_article[key]
         article['article_id'] = raw_article['id']
-        article['image_url'] = Match.parse_column_img(raw_article['image_url'])
+        article['image_url'] = Match.parse_file_name(raw_article['image_url'])
         article['author_id'] = raw_article['author']['id']
         article['column_id'] = raw_article['column']['id']
 
@@ -120,7 +120,7 @@ class Worker(object):
             author_info[key] = raw_article['author'][key]
 
         author_info['author_id'] = raw_article['author']['id']
-        author_info['avatar_url'] = Match.parse_column_img(raw_article['author']['avatar_url'])
+        author_info['avatar_url'] = Match.parse_file_name(raw_article['author']['avatar_url'])
 
         return author_info, article
 
@@ -276,7 +276,7 @@ class CollectionWorker(object):
         info['creator_id'] = raw_collection_info['creator']['id']
         info['creator_name'] = raw_collection_info['creator']['name']
         info['creator_headline'] = raw_collection_info['creator']['headline']
-        info['creator_avatar_url'] = Match.parse_img(raw_collection_info['creator']['avatar_url'])
+        info['creator_avatar_url'] = Match.parse_file_name(raw_collection_info['creator']['avatar_url'])
 
         info["collected_answer_id_list"] = collected_answer_id_list
         return info
@@ -325,7 +325,7 @@ class TopicWorker(object):
             info[key] = raw_topic_info[key]
 
         info['topic_id'] = raw_topic_info['id']
-        info['avatar_url'] = Match.parse_img(raw_topic_info['avatar_url'])
+        info['avatar_url'] = Match.parse_file_name(raw_topic_info['avatar_url'])
         info["best_answer_id_list"] = best_answer_id_list
         return info
 

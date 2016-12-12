@@ -3,6 +3,7 @@ import os
 import sqlite3
 
 from src.book import Book
+from src.container.task_result import TaskResult
 from src.tools.config import Config
 from src.tools.db import DB
 from src.tools.debug import Debug
@@ -73,12 +74,20 @@ class ZhihuHelp(object):
             Worker.distribute(task)
         Debug.logger.info(u"网页信息抓取完毕")
 
+        task_result_list = []
+        for task in task_list:
+            task_result = TaskResult(task)
+            task_result.extract_data()
+            task_result_list.append(task_result)
+        Debug.logger.info(u"数据库信息获取完毕")
 
+        #   下载图片
 
-        if not task_package.is_book_list_empty():
-            Debug.logger.info(u"开始自数据库中生成电子书数据")
-            book = Book(task_package.book_list)
-            book.create()
+        #   按体积自动分卷
+
+        #   渲染html
+
+        #   压缩为电子书
         return
 
     @staticmethod

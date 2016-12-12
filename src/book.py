@@ -2,7 +2,7 @@
 import copy
 
 from src.container.initialbook import HtmlBookPackage
-from src.container.image import ImageContainer
+from src.container.image_container import ImageContainer
 from src.lib.epub.epub import Epub
 from src.tools.config import Config
 from src.tools.html_creator import HtmlCreator
