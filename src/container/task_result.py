@@ -46,6 +46,22 @@ class Question(object):
         Debug.logger.debug('问题{}内答案中的图片全部下载完成'.format(self.question_info.question_id))
         return
 
+    def compute_total_img_size_kb(self):
+        self.total_img_size_kb = 0
+        for answer in self.answer_list:
+            self.total_img_size_kb += answer.total_img_size_kb
+        return self.total_img_size_kb
+
+    def auto_split(self, max_size_page_kb):
+        legal_question  = Question(self.question_info)
+        remain_question = Question(self.question_info)
+        while len(self.answer_list) > 1 and self.compute_total_img_size_kb() > max_size_page_kb:
+            answer = self.answer_list.pop()
+            remain_question.answer_list.insert(0, answer)
+        #   最后再更新一下图片大小
+        legal_question.compute_total_img_size_kb()
+        remain_question.compute_total_img_size_kb()
+        return legal_question, remain_question
 
 class Column(object):
     u"""
@@ -95,6 +111,9 @@ class TaskResult(object):
         self.question_list = []
         self.column_list = []
         self.info_page = None
+
+        self.is_split = False # 是否是被拆分后的结果集
+        self.chapter_no = 0     # 若是被拆分后的结果集，那么是哪一集
         return
 
     def download_img(self):
@@ -111,6 +130,95 @@ class TaskResult(object):
             column.download_img()
         Debug.logger.debug('恭喜，图片全部下载完成')
         return
+
+    def auto_split(self, max_size_page_kb = 50 * 1024):
+        if max_size_page_kb < 1 * 1024:
+            #   不能任意小啊
+            max_size_page_kb = 1 * 1024
+        if self.get_total_img_size() <= max_size_page_kb:
+            #   大小符合要求，最好
+            return [self]
+
+        if not self.is_split:
+            # 第一次分隔，序号应该为卷1
+            self.is_split = True
+            self.chapter_no = 1
+
+        if self.task.task_type == Type.column or self.task.task_type == Type.article:
+            #   文章和问题分别对待，方便处理
+            new_task_result = TaskResult(self.task)
+            new_task_result.info_page = self.info_page
+            new_task_result.is_split = True
+            new_task_result.chapter_no = self.chapter_no + 1
+            while len(self.column_list) > 1 and self.get_total_img_size() > max_size_page_kb:
+                column = self.column_list.pop()
+                new_task_result.column_list.insert(0, column)
+            return [self] + new_task_result.auto_split(max_size_page_kb)
+        else:
+            #   文章和问题分别对待，方便处理
+            new_task_result = TaskResult(self.task)
+            new_task_result.info_page = self.info_page
+            new_task_result.is_split = True
+            new_task_result.chapter_no = self.chapter_no + 1
+
+            while self.get_total_img_size() > max_size_page_kb:
+                question = self.question_list.pop()
+                if len(self.question_list) == 0:
+                    # 最后一个问题
+                    legal_question, remain_question = question.auto_split(max_size_page_kb)
+                    self.question_list.append(legal_question)
+                    new_task_result.question_list.insert(0, remain_question)
+                    return [self] + new_task_result.auto_split(max_size_page_kb)
+                else:
+                    new_task_result.question_list.insert(0, question)
+            return [self] + new_task_result.auto_split(max_size_page_kb)
+
+
+    def get_total_img_size(self):
+        total_img_size_kb = 0
+        for question in self.question_list:
+            total_img_size_kb += question.total_img_size_kb
+        for column in self.column_list:
+            total_img_size_kb += column.total_img_size_kb
+        return total_img_size_kb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def extract_data(self):
         u"""
