@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from src.tools.db import DB
+from src.tools.debug import Debug
 from src.tools.type import Type
 from src.container.data.answer import Answer as Answer_Info
 from src.container.data.question import Question as Question_Info
@@ -19,8 +20,10 @@ class Question(object):
         """
         :type question_info : Question_Info
         """
-        self.question = question_info
+        self.question_info = question_info
         self.answer_list = []
+
+        self.total_img_size_kb = 0
         return
 
     def append_answer(self, answer):
@@ -33,6 +36,14 @@ class Question(object):
 
     def download_img(self):
         #   下载图片，同时更新
+        Debug.logger.debug('开始下载问题{}内答案中的图片'.format(self.question_info.question_id))
+        index = 1
+        for answer in self.answer_list:
+            Debug.logger.debug('开始下载问题{}中第{}个答案的图片'.format(self.question_info.question_id, index))
+            answer.download_img()
+            self.total_img_size_kb += answer.total_img_size_kb
+            index += 1
+        Debug.logger.debug('问题{}内答案中的图片全部下载完成'.format(self.question_info.question_id))
         return
 
 
@@ -42,15 +53,32 @@ class Column(object):
     """
 
     def __init__(self, column_info):
+        """
+        :type column_info : Column_Info
+        """
         self.column_info = column_info
         self.article_list = []
+
+        self.total_img_size_kb = 0
         return
 
     def append_article(self, article):
         """
-        :type article: Article
+        :type article: Article_Info
         """
         self.article_list.append(article)
+        return
+
+    def download_img(self):
+        #   下载图片，同时更新
+        Debug.logger.debug('开始下载专栏{}内文章中的图片'.format(self.column_info.column_id))
+        index = 1
+        for article in self.article_list:
+            Debug.logger.debug('开始下载专栏{}中第{}篇文章的图片'.format(self.column_info.column_id, index))
+            article.download_img()
+            self.total_img_size_kb += article.total_img_size_kb
+            index += 1
+        Debug.logger.debug('专栏{}内文章中的图片全部下载完成'.format(self.column_info.column_id))
         return
 
 
@@ -67,6 +95,21 @@ class TaskResult(object):
         self.question_list = []
         self.column_list = []
         self.info_page = None
+        return
+
+    def download_img(self):
+        #   下载图片
+        Debug.logger.debug('开始下载问题列表中的图片')
+        index = 1
+        for question in self.question_list:
+            Debug.logger.debug('开始下载问题列表中第{}个问题的图片'.format(index))
+            question.download_img()
+        Debug.logger.debug('开始下载专栏中的图片')
+        index = 1
+        for column in self.column_list:
+            Debug.logger.debug('开始下载专栏列表中第{}篇专栏的图片'.format(index))
+            column.download_img()
+        Debug.logger.debug('恭喜，图片全部下载完成')
         return
 
     def extract_data(self):

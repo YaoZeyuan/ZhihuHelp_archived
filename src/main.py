@@ -82,6 +82,9 @@ class ZhihuHelp(object):
         Debug.logger.info(u"数据库信息获取完毕")
 
         #   下载图片
+        for task_result in task_result_list:
+            task_result.download_img()
+        Debug.logger.info(u"所有任务图片获取完毕")
 
         #   按体积自动分卷
 
