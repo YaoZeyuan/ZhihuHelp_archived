@@ -2,7 +2,7 @@
 import os
 import sqlite3
 
-from src.book import Book
+from src.container.book import Book
 from src.container.task_result import TaskResult
 from src.tools.config import Config
 from src.tools.db import DB
@@ -87,10 +87,9 @@ class ZhihuHelp(object):
         Debug.logger.info(u"所有任务图片获取完毕")
 
         #   按体积自动分卷
-
-        #   渲染html
-
-        #   压缩为电子书
+        #   渲染html && 压缩为电子书
+        book = Book(task_result_list)
+        book.create_books()
         return
 
     @staticmethod
