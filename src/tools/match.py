@@ -55,6 +55,10 @@ class Match(object):
 
     @staticmethod
     def fix_filename(filename):
+        return Match.replace_danger_char_for_filesystem(filename)[:80]
+
+    @staticmethod
+    def replace_danger_char_for_filesystem(filename):
         illegal = {
             '\\': '＼',
             '/': '',
@@ -72,7 +76,7 @@ class Match(object):
         }
         for key, value in illegal.items():
             filename = filename.replace(key, value)
-        return unicode(filename[:80])
+        return unicode(filename)
 
     @staticmethod
     def parse_file_name(avatar_url):

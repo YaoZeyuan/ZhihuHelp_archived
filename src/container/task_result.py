@@ -53,15 +53,16 @@ class Question(object):
         return self.total_img_size_kb
 
     def auto_split(self, max_size_page_kb):
-        legal_question  = Question(self.question_info)
+        legal_question = Question(self.question_info)
         remain_question = Question(self.question_info)
         while len(self.answer_list) > 1 and self.compute_total_img_size_kb() > max_size_page_kb:
             answer = self.answer_list.pop()
             remain_question.answer_list.insert(0, answer)
-        #   最后再更新一下图片大小
+        # 最后再更新一下图片大小
         legal_question.compute_total_img_size_kb()
         remain_question.compute_total_img_size_kb()
         return legal_question, remain_question
+
 
 class Column(object):
     u"""
@@ -110,10 +111,10 @@ class TaskResult(object):
         self.task = task
         self.question_list = []
         self.column_list = []
-        self.info_page = None
+        self.info_page = None  # type:  Answer_Info|Question_Info|Topic_Info|Collection_Info|Column_Info|Article_Info|Author_Info
 
-        self.is_split = False # 是否是被拆分后的结果集
-        self.chapter_no = 0     # 若是被拆分后的结果集，那么是哪一集
+        self.is_split = False  # 是否是被拆分后的结果集
+        self.chapter_no = 0  # 若是被拆分后的结果集，那么是哪一集
         return
 
     def download_img(self):
@@ -131,7 +132,7 @@ class TaskResult(object):
         Debug.logger.debug('恭喜，图片全部下载完成')
         return
 
-    def auto_split(self, max_size_page_kb = 50 * 1024):
+    def auto_split(self, max_size_page_kb=50 * 1024):
         if max_size_page_kb < 1 * 1024:
             #   不能任意小啊
             max_size_page_kb = 1 * 1024
@@ -177,7 +178,6 @@ class TaskResult(object):
                     remain_task_result.question_list.insert(0, question)
             return self, remain_task_result
 
-
     def get_total_img_size_kb(self):
         total_img_size_kb = 0
         for question in self.question_list:
@@ -186,43 +186,26 @@ class TaskResult(object):
             total_img_size_kb += column.total_img_size_kb
         return total_img_size_kb
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def get_title(self):
+        """
+        获取任务对应的标题
+        :rtype: str
+        """
+        if self.task.task_type == Type.question:
+            return u'知乎问题({})答案集'.format(self.task.question_id)
+        elif self.task.task_type == Type.answer:
+            return u'知乎回答({})'.format(self.task.answer_id)
+        elif self.task.task_type == Type.author:
+            return u'知乎作者{}({})答案集'.format(self.info_page.name, self.task.author_page_id)
+        elif self.task.task_type == Type.topic:
+            return u'知乎话题{}({})答案集'.format(self.info_page.name, self.task.topic_id)
+        elif self.task.task_type == Type.collection:
+            return u'知乎收藏夹{}({})答案集'.format(self.info_page.title, self.task.collection_id)
+        elif self.task.task_type == Type.column:
+            return u'知乎专栏{}({})文章集'.format(self.info_page.name, self.task.column_id)
+        elif self.task.task_type == Type.question:
+            return u'知乎文章({})'.format(self.task.article_id)
+        return
 
     def extract_data(self):
         u"""
@@ -282,7 +265,8 @@ class TaskResult(object):
         return
 
     def extract_collection(self):
-        raw_collection = DB.query_row('select * from Collection where collection_id="{}"'.format(self.task.collection_id))
+        raw_collection = DB.query_row(
+            'select * from Collection where collection_id="{}"'.format(self.task.collection_id))
         self.info_page = Collection_Info(raw_collection)
 
         answer_list = self.query_answer_list(self.info_page.collected_answer_id_list.split(','))
@@ -327,7 +311,6 @@ class TaskResult(object):
         column.append_article(article)
         self.column_list.append(column)
         return
-
 
     def query_question(self, question_id):
         """
@@ -384,7 +367,6 @@ class TaskResult(object):
         """
         return Question_Info(raw_question)
 
-
     def query_column(self, column_id):
         raw_column = DB.query_row('select * from Column where column_id="{}"'.format(column_id))
         column = self.format_column(raw_column)  # 包装成标准的信息格式
@@ -402,7 +384,6 @@ class TaskResult(object):
             article = self.format_article(raw_article)
             article_list.append(article)
         return article_list
-
 
     def format_article(self, raw_article):
         """

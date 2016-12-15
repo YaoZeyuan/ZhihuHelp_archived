@@ -89,7 +89,9 @@ class ZhihuHelp(object):
         #   按体积自动分卷
         #   渲染html && 压缩为电子书
         book = Book(task_result_list)
-        book.create_books()
+        book_list = book.auto_split()
+        for chapter in book_list:
+            chapter.create_book()
         return
 
     @staticmethod
