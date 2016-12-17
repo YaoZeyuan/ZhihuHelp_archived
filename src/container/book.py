@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+import uuid
+
 from src.container.image_container import ImageContainer
 from src.lib.epub.epub import Epub
+from src.tools.extra_tools import ExtraTools
 from src.tools.match import Match
+from src.tools.path import Path
+from src.tools.template import Template
 
 
 class Book(object):
@@ -38,7 +43,7 @@ class Book(object):
             #   不能任意小啊
             max_size_page_kb = 1 * 1024
 
-        #   如果图书没有名字的话，要先生成图书的名字，避免混乱
+        # 如果图书没有名字的话，要先生成图书的名字，避免混乱
         if len(self.book_title) == 0:
             self.book_title = self.generate_book_title()
 
@@ -97,8 +102,8 @@ class Book(object):
         if self.is_split:
             title = self.book_title + u'_卷{}'.format(self.chapter_no)
 
-        #epub = Epub(title)
-        #for task_result in self.task_result_list:
+        # epub = Epub(title)
+        # for task_result in self.task_result_list:
         #    epub.create_chapter(,task_result.get_title())
         #
         #
@@ -112,4 +117,90 @@ class Book(object):
         #   压缩成zip
         return
 
+    def generate_book_info_page(self):
+        """
+        生成图书信息页
+        :return:
+        :rtype:
+        """
+        filename = self.get_random_html_file_name()
+        content = Template.book_info.format({'title': self.book_title})
+        uri = Path.html_pool_path + '/' + filename
+        buf_file = open(uri, 'w')
+        buf_file.write(content)
+        buf_file.close()
+        return uri
 
+    def generate_question_info_page(self, info_page):
+        """
+        :param info_page:
+        :type info_page: src.container.data.question.Question
+        :return:
+        :rtype:
+        """
+        filename = self.get_random_html_file_name()
+        content = Template.question_info.format({
+            'title': info_page.title,
+            'answer_count': info_page.answer_count,
+            'follower_count': info_page.follower_count,
+            'comment_count': info_page.comment_count,
+        })
+        uri = Path.html_pool_path + '/' + filename
+        buf_file = open(uri, 'w')
+        buf_file.write(content)
+        buf_file.close()
+        return uri
+
+    def generate_author_info_page(self, info_page):
+        """
+        :param info_page:
+        :type info_page: src.container.data.author.Author
+        :return:
+        :rtype:
+        """
+        return
+
+    def generate_topic_info_page(self, info_page):
+        """
+        :param info_page:
+        :type info_page: src.container.data.topic.Topic
+        :return:
+        :rtype:
+        """
+        return
+
+    def generate_collection_info_page(self, info_page):
+        """
+        :param info_page:
+        :type info_page: src.container.data.collection.Collection
+        :return:
+        :rtype:
+        """
+        return
+
+    def generate_column_info_page(self, info_page):
+        """
+        :param info_page:
+        :type info_page: src.container.data.column.Column
+        :return:
+        :rtype:
+        """
+        return
+
+    def generate_article_info_page(self, info_page):
+        """
+        :param info_page:
+        :type info_page: src.container.data.article.Article
+        :return:
+        :rtype:
+        """
+        return
+
+    def get_random_html_file_name(self):
+        u"""
+        生成一个随机html
+        :return:
+        :rtype:
+        """
+        filename = ExtraTools.md5(str(uuid.uuid4())) + '.html'
+        return filename
