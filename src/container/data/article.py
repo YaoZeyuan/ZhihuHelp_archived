@@ -19,6 +19,7 @@ class Article(object):
         self.author_id = data['author_id']
 
         self.total_img_size_kb = 0
+        self.img_filename_list = []
         return
 
 
@@ -26,15 +27,15 @@ class Article(object):
         from src.container.image_container import ImageContainer
         img_container = ImageContainer()
         img_src_dict = Match.match_img_with_src_dict(self.content)
-        img_filename_list = []
+        self.img_filename_list = []
         for img in img_src_dict:
             src = img_src_dict[img]
             filename = img_container.add(src)
-            img_filename_list.append(filename)
+            self.img_filename_list.append(filename)
             self.content = self.content.replace(img, Match.create_img_element_with_file_name(filename))
         img_container.start_download()
 
         #   下载完成后，更新图片大小
-        for filename in img_filename_list:
+        for filename in self.img_filename_list:
             self.total_img_size_kb += Path.get_img_size_by_filename_kb(filename)
         return

@@ -24,11 +24,12 @@ class Question(object):
         self.answer_list = []
 
         self.total_img_size_kb = 0
+        self.img_filename_list = []
         return
 
     def append_answer(self, answer):
         """
-        :type answer: Answer
+        :type answer: Answer_Info
         :return:
         """
         self.answer_list.append(answer)
@@ -52,6 +53,12 @@ class Question(object):
             self.total_img_size_kb += answer.total_img_size_kb
         return self.total_img_size_kb
 
+    def update_img_filename_list_in_answer(self):
+        self.img_filename_list = []
+        for answer in self.answer_list:
+            self.img_filename_list += answer.img_filename_list
+        return
+
     def auto_split(self, max_size_page_kb):
         legal_question = Question(self.question_info)
         remain_question = Question(self.question_info)
@@ -61,6 +68,9 @@ class Question(object):
         # 最后再更新一下图片大小
         legal_question.compute_total_img_size_kb()
         remain_question.compute_total_img_size_kb()
+        # 更新图片文件名列表
+        legal_question.update_img_filename_list_in_answer()
+        remain_question.update_img_filename_list_in_answer()
         return legal_question, remain_question
 
 
@@ -77,6 +87,7 @@ class Column(object):
         self.article_list = []
 
         self.total_img_size_kb = 0
+        self.img_filename_list = []
         return
 
     def append_article(self, article):
@@ -96,6 +107,13 @@ class Column(object):
             self.total_img_size_kb += article.total_img_size_kb
             index += 1
         Debug.logger.debug('专栏{}内文章中的图片全部下载完成'.format(self.column_info.column_id))
+        self.update_img_filename_list_in_article()
+        return
+
+    def update_img_filename_list_in_article(self):
+        self.img_filename_list = []
+        for article in self.article_list:
+            self.img_filename_list += article.img_filename_list
         return
 
 
