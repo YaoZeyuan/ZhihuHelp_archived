@@ -21,7 +21,7 @@ class Question(object):
         :type question_info : Question_Info
         """
         self.question_info = question_info
-        self.answer_list = []
+        self.answer_list = []  # type: list[Answer_Info]
 
         self.total_img_size_kb = 0
         self.img_filename_list = []
@@ -84,7 +84,7 @@ class Column(object):
         :type column_info : Column_Info
         """
         self.column_info = column_info
-        self.article_list = []
+        self.article_list = [] # type: list[Article_Info]
 
         self.total_img_size_kb = 0
         self.img_filename_list = []
@@ -127,8 +127,9 @@ class TaskResult(object):
         :type task src.container.task.AnswerTask | src.container.task.QuestionTask | src.container.task.TopicTask| src.container.task.CollectionTask | src.container.task.AuthorTask | src.container.task.ColumnTask | src.container.task.ArticleTask
         """
         self.task = task
-        self.question_list = []
-        self.column_list = []
+
+        self.question_list = []  # type: list[Question]
+        self.column_list = []   # type: list[Column]
         self.info_page = None  # type:  Answer_Info|Question_Info|Topic_Info|Collection_Info|Column_Info|Article_Info|Author_Info
 
         self.is_split = False  # 是否是被拆分后的结果集

@@ -7,6 +7,7 @@ from src.tools.extra_tools import ExtraTools
 from src.tools.match import Match
 from src.tools.path import Path
 from src.tools.template import Template
+from src.tools.type import Type
 
 
 class Book(object):
@@ -102,19 +103,40 @@ class Book(object):
         if self.is_split:
             title = self.book_title + u'_卷{}'.format(self.chapter_no)
 
-        # epub = Epub(title)
-        # for task_result in self.task_result_list:
-        #    epub.create_chapter(,task_result.get_title())
-        #
-        #
-        #    epub.finish_chapter()
+        epub = Epub(title)
+        for task_result in self.task_result_list:
+            chapter_src = ''
+            # info_page
+            if task_result.task.task_type == Type.question:
+                chapter_src = self.generate_question_info_page(task_result.info_page)
+            epub.create_chapter(chapter_src, task_result.get_title())
+            for question in task_result.question_list:
+                #   添加图片文件
+                for filename in question.img_filename_list:
+                    epub.add_image(Path.image_pool_path + '/' + filename)
+                question_src = self.generate_question_page(question)
+                epub.add_html(question_src, question.question_info.title)
 
-        #   生成目录
-        #   生成信息页
-        #   生成具体内容
-        #   下载图片
-        #   放置于指定位置
-        #   压缩成zip
+            for column in task_result.column_list:
+                #   添加图片文件
+                for filename in column.img_filename_list:
+                    epub.add_image(Path.image_pool_path + '/' + filename)
+                for article in column.article_list:
+                    article_src = self.generate_article_page(article)
+                    epub.add_html(article_src, article.title)
+            epub.finish_chapter()
+
+        epub.set_creator(u'ZhihuHelp1.8.0')
+        epub.set_language(u'zh')
+        epub.set_book_id()
+        epub.set_output_path(Path.result_path)
+        epub.add_css(Path.base_path + u'/www/css/markdown.css')
+        epub.add_css(Path.base_path + u'/www/css/customer.css')
+        epub.add_css(Path.base_path + u'/www/css/normalize.css')
+        epub.add_css(Path.base_path + u'/www/css/bootstrap.css')
+        epub.create()
+
+        Path.reset_path()
         return
 
     def generate_book_info_page(self):
@@ -195,6 +217,74 @@ class Book(object):
         :rtype:
         """
         return
+
+    def generate_question_page(self, question):
+        """
+        :type question: src.container.task_result.Question
+        :return:
+        :rtype:
+        """
+        # 先输出answer的内容
+        answer_content = u''
+        for answer in question.answer_list:
+            answer_content += Template.answer.format(
+                {
+                    'author_avatar_url': answer.author_avatar_url,
+                    'author_name': answer.author_name,
+                    'author_id' : answer.author_id,
+                    'author_headline' : answer.author_headline,
+
+                    'content' : answer.content,
+                    'comment_count' : answer.comment_count,
+                    'voteup_count' : answer.voteup_count,
+                    'updated_time' : answer.updated_time, # todo : 需要处理成Ymd格式，待处理
+                }
+            )
+
+
+        filename = self.get_random_html_file_name()
+        content = Template.question.format({
+            'title': question.question_info.title,
+            'description': question.question_info.detail,
+            'answer':answer_content
+        })
+        uri = Path.html_pool_path + '/' + filename
+        buf_file = open(uri, 'w')
+        buf_file.write(content)
+        buf_file.close()
+        return uri
+
+    def generate_article_page(self, article):
+        """
+        :type article: src.container.data.article.Article
+        :return:
+        :rtype:
+        """
+        answer_content = Template.answer.format(
+            {
+                'author_avatar_url': article.author_info.avatar_url,
+                'author_name': article.author_info.name,
+                'author_id': article.author_id,
+                'author_headline': article.author_info.headline,
+
+                'content': article.content,
+                'comment_count': article.comment_count,
+                'voteup_count': article.voteup_count,
+                'updated_time': article.updated,  # todo : 需要处理成Ymd格式，待处理
+            }
+        )
+
+        filename = self.get_random_html_file_name()
+        content = Template.question.format({
+            'title': article.title,
+            'description': '',
+            'answer': answer_content
+        })
+        uri = Path.html_pool_path + '/' + filename
+        buf_file = open(uri, 'w')
+        buf_file.write(content)
+        buf_file.close()
+        return uri
 
     def get_random_html_file_name(self):
         u"""

@@ -22,3 +22,14 @@ class Template(object):
             'body': open('./www/template/info_page/question_info.html', 'r').read()
         }
     )
+
+    #   type : str
+    question = base.format(
+        {
+            'title': '{title}',
+            'body': open('./www/template/content/question/question.html', 'r').read()
+        }
+    )
+
+    #   type : str
+    answer = open('./www/template/content/question/answer.html', 'r').read()

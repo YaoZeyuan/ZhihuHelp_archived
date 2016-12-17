@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from src.container.data.author import Author
+from src.tools.db import DB
 from src.tools.match import Match
 from src.tools.path import Path
 
@@ -17,6 +19,10 @@ class Article(object):
         self.content = data['content']
         self.comment_count = data['comment_count']
         self.author_id = data['author_id']
+
+        raw_author_info = DB.query_row('select * from Author where author_id={}'.format(self.author_id))
+
+        self.author_info = Author(raw_author_info)
 
         self.total_img_size_kb = 0
         self.img_filename_list = []
