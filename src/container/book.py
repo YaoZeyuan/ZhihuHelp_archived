@@ -109,6 +109,18 @@ class Book(object):
             # info_page
             if task_result.task.task_type == Type.question:
                 chapter_src = self.generate_question_info_page(task_result.info_page)
+            elif task_result.task.task_type == Type.answer:
+                chapter_src = self.generate_question_info_page(task_result.info_page)
+            elif task_result.task.task_type == Type.collection:
+                chapter_src = self.generate_collection_info_page(task_result.info_page)
+            elif task_result.task.task_type == Type.topic:
+                chapter_src = self.generate_topic_info_page(task_result.info_page)
+            elif task_result.task.task_type == Type.author:
+                chapter_src = self.generate_author_info_page(task_result.info_page)
+            elif task_result.task.task_type == Type.column:
+                chapter_src = self.generate_column_info_page(task_result.info_page)
+            elif task_result.task.task_type == Type.article:
+                chapter_src = self.generate_article_info_page(task_result.info_page)
             epub.create_chapter(chapter_src, task_result.get_title())
             for question in task_result.question_list:
                 #   添加图片文件
@@ -127,7 +139,7 @@ class Book(object):
             epub.finish_chapter()
 
         epub.set_creator(u'ZhihuHelp1.8.0')
-        epub.set_language(u'zh')
+        epub.set_language(u'zh-cn')
         epub.set_book_id()
         epub.set_output_path(Path.result_path)
         epub.add_css(Path.base_path + u'/www/css/markdown.css')
@@ -157,8 +169,8 @@ class Book(object):
         """
         :param info_page:
         :type info_page: src.container.data.question.Question
-        :return:
-        :rtype:
+        :return: src
+        :rtype: str
         """
         filename = self.get_random_html_file_name()
         content = Template.question_info.format({
@@ -177,46 +189,94 @@ class Book(object):
         """
         :param info_page:
         :type info_page: src.container.data.author.Author
-        :return:
-        :rtype:
+        :return: src
+        :rtype: str
         """
-        return
+        filename = self.get_random_html_file_name()
+        content = Template.author_info.format({
+            'name': info_page.name,
+            'answer_count': info_page.answer_count,
+            'follower_count': info_page.follower_count,
+            'voteup_count': info_page.voteup_count,
+        })
+        uri = Path.html_pool_path + '/' + filename
+        buf_file = open(uri, 'w')
+        buf_file.write(content)
+        buf_file.close()
+        return uri
 
     def generate_topic_info_page(self, info_page):
         """
         :param info_page:
         :type info_page: src.container.data.topic.Topic
-        :return:
-        :rtype:
+        :return: src
+        :rtype: str
         """
-        return
+        filename = self.get_random_html_file_name()
+        content = Template.topic_info.format({
+            'name': info_page.name,
+            'questions_count': info_page.questions_count,
+        })
+        uri = Path.html_pool_path + '/' + filename
+        buf_file = open(uri, 'w')
+        buf_file.write(content)
+        buf_file.close()
+        return uri
 
     def generate_collection_info_page(self, info_page):
         """
         :param info_page:
         :type info_page: src.container.data.collection.Collection
-        :return:
-        :rtype:
+        :return: src
+        :rtype: str
         """
-        return
+        filename = self.get_random_html_file_name()
+        content = Template.collection_info.format({
+            'title': info_page.title,
+            'answer_count': info_page.answer_count,
+            'follower_count': info_page.follower_count,
+        })
+        uri = Path.html_pool_path + '/' + filename
+        buf_file = open(uri, 'w')
+        buf_file.write(content)
+        buf_file.close()
+        return uri
 
     def generate_column_info_page(self, info_page):
         """
         :param info_page:
         :type info_page: src.container.data.column.Column
-        :return:
-        :rtype:
+        :return: src
+        :rtype: str
         """
-        return
+        filename = self.get_random_html_file_name()
+        content = Template.column_info.format({
+            'name': info_page.name,
+            'postsCount': info_page.postsCount,
+        })
+        uri = Path.html_pool_path + '/' + filename
+        buf_file = open(uri, 'w')
+        buf_file.write(content)
+        buf_file.close()
+        return uri
 
     def generate_article_info_page(self, info_page):
         """
         :param info_page:
         :type info_page: src.container.data.article.Article
-        :return:
-        :rtype:
+        :return: src
+        :rtype: str
         """
-        return
+        filename = self.get_random_html_file_name()
+        content = Template.article_info.format({
+            'title': info_page.title,
+            'voteup_count': info_page.voteup_count,
+        })
+        uri = Path.html_pool_path + '/' + filename
+        buf_file = open(uri, 'w')
+        buf_file.write(content)
+        buf_file.close()
+        return uri
 
     def generate_question_page(self, question):
         """

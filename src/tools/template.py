@@ -12,14 +12,54 @@ class Template(object):
     book_info = base.format(
         {
             'title': '{title}',
-            'body': open('./www/template/info_page/book_info.html', 'r').read()
+            'body': open('./www/template/info_page/book.html', 'r').read()
         }
     )
     #   type : str
     question_info = base.format(
         {
             'title': '{title}',
-            'body': open('./www/template/info_page/question_info.html', 'r').read()
+            'body': open('./www/template/info_page/question.html', 'r').read()
+        }
+    )
+
+    #   type : str
+    author_info = base.format(
+        {
+            'title': '{title}',
+            'body': open('./www/template/info_page/author.html', 'r').read()
+        }
+    )
+
+    #   type : str
+    topic_info = base.format(
+        {
+            'title': '{title}',
+            'body': open('./www/template/info_page/topic.html', 'r').read()
+        }
+    )
+
+    #   type : str
+    collection_info = base.format(
+        {
+            'title': '{title}',
+            'body': open('./www/template/info_page/collection.html', 'r').read()
+        }
+    )
+
+    #   type : str
+    column_info = base.format(
+        {
+            'title': '{title}',
+            'body': open('./www/template/info_page/column.html', 'r').read()
+        }
+    )
+
+    #   type : str
+    article_info = base.format(
+        {
+            'title': '{title}',
+            'body': open('./www/template/info_page/article.html', 'r').read()
         }
     )
 
