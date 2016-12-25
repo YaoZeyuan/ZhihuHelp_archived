@@ -158,7 +158,11 @@ class Book(object):
         :rtype:
         """
         filename = self.get_random_html_file_name()
-        content = Template.book_info.format({'title': self.book_title})
+        content = Template.book_info.format(
+            **{
+                'title': self.book_title
+            }
+        )
         uri = Path.html_pool_path + '/' + filename
         buf_file = open(uri, 'w')
         buf_file.write(content)
@@ -173,12 +177,14 @@ class Book(object):
         :rtype: str
         """
         filename = self.get_random_html_file_name()
-        content = Template.question_info.format({
-            'title': info_page.title,
-            'answer_count': info_page.answer_count,
-            'follower_count': info_page.follower_count,
-            'comment_count': info_page.comment_count,
-        })
+        content = Template.question_info.format(
+            **{
+                'title': info_page.title,
+                'answer_count': info_page.answer_count,
+                'follower_count': info_page.follower_count,
+                'comment_count': info_page.comment_count,
+            }
+        )
         uri = Path.html_pool_path + '/' + filename
         buf_file = open(uri, 'w')
         buf_file.write(content)
@@ -193,12 +199,14 @@ class Book(object):
         :rtype: str
         """
         filename = self.get_random_html_file_name()
-        content = Template.author_info.format({
-            'name': info_page.name,
-            'answer_count': info_page.answer_count,
-            'follower_count': info_page.follower_count,
-            'voteup_count': info_page.voteup_count,
-        })
+        content = Template.author_info.format(
+            **{
+                'name': info_page.name,
+                'answer_count': info_page.answer_count,
+                'follower_count': info_page.follower_count,
+                'voteup_count': info_page.voteup_count,
+            }
+        )
         uri = Path.html_pool_path + '/' + filename
         buf_file = open(uri, 'w')
         buf_file.write(content)
@@ -213,10 +221,12 @@ class Book(object):
         :rtype: str
         """
         filename = self.get_random_html_file_name()
-        content = Template.topic_info.format({
-            'name': info_page.name,
-            'questions_count': info_page.questions_count,
-        })
+        content = Template.topic_info.format(
+            **{
+                'name': info_page.name,
+                'questions_count': info_page.questions_count,
+            }
+        )
         uri = Path.html_pool_path + '/' + filename
         buf_file = open(uri, 'w')
         buf_file.write(content)
@@ -231,11 +241,13 @@ class Book(object):
         :rtype: str
         """
         filename = self.get_random_html_file_name()
-        content = Template.collection_info.format({
-            'title': info_page.title,
-            'answer_count': info_page.answer_count,
-            'follower_count': info_page.follower_count,
-        })
+        content = Template.collection_info.format(
+            **{
+                'title': info_page.title,
+                'answer_count': info_page.answer_count,
+                'follower_count': info_page.follower_count,
+            }
+        )
         uri = Path.html_pool_path + '/' + filename
         buf_file = open(uri, 'w')
         buf_file.write(content)
@@ -250,10 +262,12 @@ class Book(object):
         :rtype: str
         """
         filename = self.get_random_html_file_name()
-        content = Template.column_info.format({
-            'name': info_page.name,
-            'postsCount': info_page.postsCount,
-        })
+        content = Template.column_info.format(
+            **{
+                'name': info_page.name,
+                'postsCount': info_page.postsCount,
+            }
+        )
         uri = Path.html_pool_path + '/' + filename
         buf_file = open(uri, 'w')
         buf_file.write(content)
@@ -268,10 +282,12 @@ class Book(object):
         :rtype: str
         """
         filename = self.get_random_html_file_name()
-        content = Template.article_info.format({
-            'title': info_page.title,
-            'voteup_count': info_page.voteup_count,
-        })
+        content = Template.article_info.format(
+            **{
+                'title': info_page.title,
+                'voteup_count': info_page.voteup_count,
+            }
+        )
         uri = Path.html_pool_path + '/' + filename
         buf_file = open(uri, 'w')
         buf_file.write(content)
@@ -288,26 +304,27 @@ class Book(object):
         answer_content = u''
         for answer in question.answer_list:
             answer_content += Template.answer.format(
-                {
+                **{
                     'author_avatar_url': answer.author_avatar_url,
                     'author_name': answer.author_name,
-                    'author_id' : answer.author_id,
-                    'author_headline' : answer.author_headline,
+                    'author_id': answer.author_id,
+                    'author_headline': answer.author_headline,
 
-                    'content' : answer.content,
-                    'comment_count' : answer.comment_count,
-                    'voteup_count' : answer.voteup_count,
-                    'updated_time' : answer.updated_time, # todo : 需要处理成Ymd格式，待处理
+                    'content': answer.content,
+                    'comment_count': answer.comment_count,
+                    'voteup_count': answer.voteup_count,
+                    'updated_time': answer.updated_time,  # todo : 需要处理成Ymd格式，待处理
                 }
             )
 
-
         filename = self.get_random_html_file_name()
-        content = Template.question.format({
-            'title': question.question_info.title,
-            'description': question.question_info.detail,
-            'answer':answer_content
-        })
+        content = Template.question.format(
+            **{
+                'title': question.question_info.title,
+                'description': question.question_info.detail,
+                'answer': answer_content
+            }
+        )
         uri = Path.html_pool_path + '/' + filename
         buf_file = open(uri, 'w')
         buf_file.write(content)
@@ -321,7 +338,7 @@ class Book(object):
         :rtype:
         """
         answer_content = Template.answer.format(
-            {
+            **{
                 'author_avatar_url': article.author_info.avatar_url,
                 'author_name': article.author_info.name,
                 'author_id': article.author_id,
@@ -335,11 +352,13 @@ class Book(object):
         )
 
         filename = self.get_random_html_file_name()
-        content = Template.question.format({
-            'title': article.title,
-            'description': '',
-            'answer': answer_content
-        })
+        content = Template.question.format(
+            **{
+                'title': article.title,
+                'description': '',
+                'answer': answer_content
+            }
+        )
         uri = Path.html_pool_path + '/' + filename
         buf_file = open(uri, 'w')
         buf_file.write(content)

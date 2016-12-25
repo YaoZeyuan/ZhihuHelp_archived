@@ -10,14 +10,14 @@ class Template(object):
 
     #   type : str
     book_info = base.format(
-        {
+        **{
             'title': '{title}',
             'body': open('./www/template/info_page/book.html', 'r').read()
         }
     )
     #   type : str
     question_info = base.format(
-        {
+        **{
             'title': '{title}',
             'body': open('./www/template/info_page/question.html', 'r').read()
         }
@@ -25,7 +25,7 @@ class Template(object):
 
     #   type : str
     author_info = base.format(
-        {
+        **{
             'title': '{title}',
             'body': open('./www/template/info_page/author.html', 'r').read()
         }
@@ -33,7 +33,7 @@ class Template(object):
 
     #   type : str
     topic_info = base.format(
-        {
+        **{
             'title': '{title}',
             'body': open('./www/template/info_page/topic.html', 'r').read()
         }
@@ -41,7 +41,7 @@ class Template(object):
 
     #   type : str
     collection_info = base.format(
-        {
+        **{
             'title': '{title}',
             'body': open('./www/template/info_page/collection.html', 'r').read()
         }
@@ -49,7 +49,7 @@ class Template(object):
 
     #   type : str
     column_info = base.format(
-        {
+        **{
             'title': '{title}',
             'body': open('./www/template/info_page/column.html', 'r').read()
         }
@@ -57,7 +57,7 @@ class Template(object):
 
     #   type : str
     article_info = base.format(
-        {
+        **{
             'title': '{title}',
             'body': open('./www/template/info_page/article.html', 'r').read()
         }
@@ -65,7 +65,7 @@ class Template(object):
 
     #   type : str
     question = base.format(
-        {
+        **{
             'title': '{title}',
             'body': open('./www/template/content/question/question.html', 'r').read()
         }
