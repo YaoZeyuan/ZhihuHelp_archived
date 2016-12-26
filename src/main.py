@@ -108,10 +108,10 @@ class ZhihuHelp(object):
         """
         print u"检查更新。。。"
         try:
-            content = Http.get_content(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt")
+            content = Http.get_content(u"https://www.yaozeyuan.online/zhihuhelp/upgrade.txt")
             if not content:
                 raise Exception('HttpError')
-            time, url = [x.strip() for x in content.split('\n')]
+            time, url = [x.strip() for x in content.strip('\n').split('\n')]
             if time == Config.update_time:
                 return
             else:
