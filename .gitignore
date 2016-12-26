@@ -222,6 +222,7 @@ pip-log.txt
 ReadList.txt
 misc.xml
 *.db
+*.sqlite
 *.ini
 zhihuhelp1.7.0/我是登陆知乎时的验证码.gif
 .idea/workspace.xml
