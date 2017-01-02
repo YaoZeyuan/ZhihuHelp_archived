@@ -13,6 +13,14 @@ except ImportError:
     """
 
 __all__ = [
+    # warnings
+    'ZhihuWarning',
+    'IgnoreErrorDataWarning',
+    'GetEmptyResponseWhenFetchData',
+    'CantGetTicketsWarning',
+    'CantGetTickets',
+    # exceptions
+    'ZhihuException',
     'UnexpectedResponseException',
     'GetDataErrorException',
     'NeedCaptchaException',
@@ -23,7 +31,11 @@ __all__ = [
 ]
 
 
-class UnexpectedResponseException(Exception):
+class ZhihuException(Exception):
+    pass
+
+
+class UnexpectedResponseException(ZhihuException):
     def __init__(self, url, res, expect):
         """
         服务器回复了和预期格式不符的数据
@@ -44,7 +56,7 @@ class UnexpectedResponseException(Exception):
     __str__ = __repr__
 
 
-class UnimplementedException(Exception):
+class UnimplementedException(ZhihuException):
     def __init__(self, what):
         """
         处理当前遇到的情况的代码还未实现，只是开发的时候用于占位
@@ -56,7 +68,7 @@ class UnimplementedException(Exception):
         self.what = what
 
     def __repr__(self):
-        return 'Meet a unimplemented station: {self.what}'.format(self=self)
+        return 'Meet a unimplemented condition: {self.what}'.format(self=self)
 
     __str__ = __repr__
 
@@ -85,7 +97,7 @@ class GetDataErrorException(UnexpectedResponseException):
     __str__ = __repr__
 
 
-class NeedCaptchaException(Exception):
+class NeedCaptchaException(ZhihuException):
     def __init__(self):
         """
         登录过程需要验证码
@@ -100,7 +112,7 @@ class NeedCaptchaException(Exception):
     __str__ = __repr__
 
 
-class NeedLoginException(Exception):
+class NeedLoginException(ZhihuException):
     def __init__(self, what):
         """
         使用某方法需要登录而当前客户端未登录
@@ -115,7 +127,7 @@ class NeedLoginException(Exception):
     __str__ = __repr__
 
 
-class IdMustBeIntException(Exception):
+class IdMustBeIntException(ZhihuException):
     def __init__(self, func):
         """
         获取对应的知乎类时，试图传递不是整数型的 ID
@@ -131,15 +143,20 @@ class IdMustBeIntException(Exception):
     __str__ = __repr__
 
 
-class IgnoreErrorDataWarning(UserWarning):
+class ZhihuWarning(UserWarning):
     def __init__(self, message, *args, **kwargs):
+        super(ZhihuWarning, self).__init__(*args, **kwargs)
         self._message = message
-        super(IgnoreErrorDataWarning, self).__init__(*args, **kwargs)
 
     def __str__(self):
         return str(self._message)
 
     __repr__ = __str__
+
+
+class IgnoreErrorDataWarning(ZhihuWarning):
+    def __init__(self, message, *args, **kwargs):
+        super(IgnoreErrorDataWarning, self).__init__(message, *args, **kwargs)
 
 
 GetEmptyResponseWhenFetchData = IgnoreErrorDataWarning(
@@ -148,4 +165,16 @@ GetEmptyResponseWhenFetchData = IgnoreErrorDataWarning(
     "虽然不知道为什么，但是好像知乎限制 API 只能访问前 5020 个粉丝，"
     "我也很为难，但是这是知乎做的限制，突破不了呀。"
     "目前在遇到这个问题时只能当作获取完处理了。"
+)
+
+
+class CantGetTicketsWarning(ZhihuWarning):
+    def __init__(self, message, *args, **kwargs):
+        super(CantGetTicketsWarning, self).__init__(message, *args, **kwargs)
+
+CantGetTickets = CantGetTicketsWarning(
+    '只能获取未参与过（也即 live.role == \'visitor\'）的 Live 的票价信息，'
+    '对于其他情况此接口不会返回任何东西。这不会造成 for in 循环报错，'
+    '但如果你不想看到这个警告，请……请在调用 tickets 属性前自行判断一下，'
+    '或者偷懒强行过滤掉这个 warning ：）'
 )

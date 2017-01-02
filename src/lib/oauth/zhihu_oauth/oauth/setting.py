@@ -29,13 +29,13 @@ APP_SECRET = 'ecbefbf6b17e47ecb9035107866380'
 
 # ------- Zhihu Client Info -------
 
-API_VERSION = '3.0.29'
+API_VERSION = '3.0.40'
 """
 模拟 Android 官方客户端使用的参数，表示使用的 API 版本。
 如果 :class:`.ImZhihuAndroidClient` 构造时没有提供 api_version，则使用这个值。
 """
 
-APP_VERSION = '4.7.1'
+APP_VERSION = '4.11.0'
 """
 模拟 Android 官方客户端使用的参数，表示使用的 APP 版本。
 如果 :class:`.ImZhihuAndroidClient` 构造时没有提供 app_version，则使用这个值。
@@ -47,12 +47,15 @@ APP_BUILD = 'release'
 如果 :class:`.ImZhihuAndroidClient` 构造时没有提供 app_build，则使用这个值。
 """
 
-UUID = 'AJCAysnXPwpLBf4WCuLU1wc9jpSw9ISfsE0='
+UUID = 'AEAAr9mZtwpLBXhKkMM1KBVkyjX1MarA2KE='
 """
 新加的一个东西，暂时不知道是啥的 ID
 """
 
-DEFAULT_UA = 'Futureve/4.7.1 Mozilla/5.0 (Linux; Android 5.1.1; MI 2 Build/LMY48G) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 Google-HTTP-Java-Client/1.22.0 (gzip)'
+DEFAULT_UA = 'Futureve/4.11.0 Mozilla/5.0 (Linux; Android 6.0.1; ' \
+             'ONEPLUS A3000 Build/MXB48T; wv) AppleWebKit/537.36 ' \
+             '(KHTML, like Gecko) Version/4.0 Chrome/54.0.2840.85 ' \
+             'Mobile Safari/537.36 Google-HTTP-Java-Client/1.22.0 (gzip)'
 """
 新版本的 API 开始检查 UA了。
 """
@@ -60,12 +63,12 @@ DEFAULT_UA = 'Futureve/4.7.1 Mozilla/5.0 (Linux; Android 5.1.1; MI 2 Build/LMY48
 APP_ZA = urlencode({
     'OS': 'Android',
     'Release': '6.0.1',
-    'Model': 'Nexus 7',
-    'VersionName': '4.7.1',
-    'VersionCode': '428',
-    'Width': '1200',
-    'Height': '1824',
-    'Installer': u'知乎'.encode('utf-8'),
+    'Model': 'ONEPLUS A3000',
+    'VersionName': '4.11.0',
+    'VersionCode': '446',
+    'Width': '1080',
+    'Height': '1920',
+    'Installer': 'Google Play',
 })
 """
 模拟 Android 官方客户端使用的参数，表示使用的 APP 的 杂项数据。

@@ -21,8 +21,6 @@
 
 **这个库是 Py2 和 Py3 通用的！** 但是 Py3 的优先级比 Py2 高，也就是说，我会优先保证在 Py3 下的稳定性和正确性。毕竟在我学的时候选了 Py3，所以对 2 与 3 的差异了解不是很清楚，Py2 只能尽力而为了，
 
-目前版本是 0.0.21，没更新的快更新一下，更新说明在[这里][changelog]。
-
 后期的计划是这样的：
 
 - 0.0.x 这个阶段是 alpha 期，主要做的是补齐功能的工作。基本上 TODO 里的功能都会在这个时期实现。其中 0.0.5 版本计划完成和 zhihu-py3 同样多的功能（**已完成**）。 
@@ -32,6 +30,14 @@
 由于现在使用的 CLIENT_ID 和 SECRET 的获取方法并不正当，所以请大家暂时不要大规模宣传，自己用用就好啦，Thanks。
 
 等我什么时候觉得时机成熟（等知乎真•开放 OAuth 申请？），会去知乎专栏里宣传一波的。
+
+## 最近更新
+
+目前版本是 0.0.30，没更新的快更新一下，更新说明在[这里][changelog]。
+
+上次更新简要说明： 修复了一些 Live 的 Bug，增加了一些属性。
+
+上上次更新简要说明： 增加了 `Live` 类和配套的一堆属性和方法。
 
 ## 使用
 
@@ -106,39 +112,39 @@ following column count 11
 
 ## TODO
 
-- [x] 将 oauth2.setting 中的 API URL 放到其他合适的地方
-- [x] 规范化，`__init__` 函数，`__all__` 变量，import 方式
-- [x] CLIENT_ID 和 SECRET 可自定义，为知乎开放 API 申请做准备
-- [x] 增加从 id 构建相应类的方法
-- [x] 添加与 zhihu-py3 的速度对比
-- [x] answer.save 和 article.save
-- [x] 打包成模块，发布到 PyPI
-- [x] 用户文档
-- [x] 内部实现文档（其实就是注释）
-- [x] 提供统一的 from_url 用于构建对象
-- [x] people.activities 用户动态
-- [x] Me 类的各种操作
-    + [x] 对 「答案/文章/评论」 的 「点赞/[反对/]清除」 操作
-    + [x] 对 「答案」 的 「感谢/清除」 操作
-    + [x] 对 「答案」 的 「没有帮助/取消没有帮助」 操作
-    + [x] 对 「问题/话题/用户/专栏/收藏夹」 的 「关注/取消关注」 操作
-    + [x] 对 「用户」 的 「屏蔽/取消屏蔽」 操作
-    + [x] 对 「答案」 的 「收藏/取消收藏」 操作
-    + [x] 对 「用户」 的 「发送私信」 操作
-    + [x] 对 「答案/文章/问题/收藏夹」 的 「评论」 操作，支持回复评论
-    + [x] 对 「答案/文章/收藏夹/评论」 的 「删除」 操作，当然得是自己的
 - [x] 保证对 Python 2 和 3 的兼容性
+- [x] 用户私信支持
+- [x] Live 支持
+- [ ] Pin（分享）支持
+- [ ] 知乎电子书
 - [ ] 规范的测试
-- [ ] 获取用户消息。新关注者，新评论，关注的回答有新问题，有私信等。
+- [ ] 获取用户消息。新关注者，新评论，关注的回答有新问题
+- [ ] 用户首页 Feed
 - [ ] article.voters 文章点赞者，貌似 OAuth2 没有这个 API
 - [ ] collection.followers 这个 API 不稳定，没法返回所有关注者
 
 ## 协助开发
 
+### 通过代码
+
 1. Fork
 2. 从 dev 分支新建一个分支
 3. 编写代码，更新 Changelog 和 sphinx 文档，如果可能的话加上测试
 4. PR 到原 dev 分支
+
+### 通过捐款
+
+[通过 Paypal 捐款][donate-paypal]
+
+[通过 微信 捐款][donate-wechat]
+
+[通过 支付宝 捐款][donate-alipay]
+
+PS: 捐款后最好给我发个邮件确认和提醒我哟，需要有你在记录里的昵称，是否要显示捐款金额，还可以带一句备注
+
+PPS：另外微信收款不会显示对方微信号，所以通过微信的同学请额外附带一个交易编号做确认用~thx
+
+[捐款记录][donate-record]
 
 ## LICENSE
 
@@ -164,3 +170,8 @@ MIT
 [my-zhihu]: https://www.zhihu.com/people/7sdream
 [pypi]: https://pypi.python.org/pypi/zhihu_oauth
 [license]: https://github.com/7sDream/zhihu-oauth/blob/master/LICENSE
+
+[donate-paypal]: https://paypal.me/7sDream
+[donate-wechat]: http://rikka-10066868.image.myqcloud.com/553aae92-a267-4dea-8251-591d0a02f03c.png
+[donate-alipay]: http://rikka-10066868.image.myqcloud.com/5c9fd575-1b79-4387-98e3-937c0646cac5.jpeg
+[donate-record]: https://github.com/7sDream/zhihu-oauth/blob/donate/donate.md

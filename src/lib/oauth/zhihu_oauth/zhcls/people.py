@@ -8,18 +8,21 @@ from .normal import normal_attr
 from .streaming import streaming
 from .urls import (
     PEOPLE_ACTIVITIES_URL,
-    PEOPLE_DETAIL_URL,
     PEOPLE_ANSWERS_URL,
     PEOPLE_ARTICLES_URL,
     PEOPLE_COLLECTIONS_URL,
     PEOPLE_COLUMNS_URL,
+    PEOPLE_DETAIL_URL,
     PEOPLE_FOLLOWERS_URL,
     PEOPLE_FOLLOWING_COLUMNS_URL,
     PEOPLE_FOLLOWING_QUESTIONS_URL,
     PEOPLE_FOLLOWING_TOPICS_URL,
     PEOPLE_FOLLOWINGS_URL,
+    PEOPLE_LIKED_LIVES_URL,
+    PEOPLE_LIVES_URL,
     PEOPLE_QUESTIONS_URL,
 )
+from ..exception import GetDataErrorException
 
 __all__ = ['ANONYMOUS', 'People']
 
@@ -51,10 +54,71 @@ class People(Base):
             return super(People, cls).__new__(cls)
 
     def __init__(self, pid, cache, session):
+        self._over_e = None
         super(People, self).__init__(pid, cache, session)
 
     def _build_url(self):
         return PEOPLE_DETAIL_URL.format(self.id)
+
+    @property
+    def over(self):
+        """
+        尝试获取用户信息，如果出错返回 True，没出错返回 False。
+
+        一般来说出错的情况只有「被知乎反屏蔽系统限制」……所以这函数起名叫 over =。=
+
+        调用结果如果是 True，则可使用 :any:`over_reason` 函数获取原因。
+
+        .. note:: 例子
+
+            ..  code-block:: python
+
+                for follower in me.followers:
+                    if follower.over:
+                        print(follower.over_reason)
+                        continue
+
+                    print(follower.name)
+                    # ... process follower data
+
+        ..  note:: 也可以不用此函数，用 ``try...catch`` 来处理也行
+
+            ..  code-block:: python
+
+                from zhihu_oauth import ZhihuClient, GetDataErrorException
+
+                for follower in me.followers:
+                    try:
+                        # get and process user data
+                    except GetDataErrorException as e:
+                        print("Get data error", e.reason)
+
+        :return: 是否被限制
+        :rtype: bool
+        """
+        if self._over_e is not None:
+            return True
+        try:
+            self._get_data()
+            return False
+        except GetDataErrorException as e:
+            self._over_e = e
+            return True
+
+    @property
+    def over_reason(self):
+        """
+        获取无法得到用户信息的原因。
+
+        ..  warning::
+
+            此方法只能在 :any:`over` 方法调用结果为 True 之后才能调用。
+
+        :rtype: str
+        """
+        if self._over_e is None:
+            return None
+        return self._over_e.reason if self._over_e.reason else str(self._over_e)
 
     # ---------- simple info ---------
 
@@ -460,6 +524,24 @@ class People(Base):
     @property
     @generator_of(PEOPLE_FOLLOWINGS_URL, 'people')
     def followings(self):
+        return None
+
+    @property
+    @generator_of(PEOPLE_LIVES_URL)
+    def lives(self):
+        """
+        举办和参加的 Live
+        """
+        return None
+
+    @property
+    @generator_of(PEOPLE_LIKED_LIVES_URL, 'live')
+    def liked_lives(self):
+        """
+        喜爱的 Live
+
+        ..  warning:: 此接口未测试，不保证可用性。
+        """
         return None
 
     @property

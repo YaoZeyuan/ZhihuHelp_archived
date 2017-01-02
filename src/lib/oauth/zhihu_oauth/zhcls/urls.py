@@ -69,6 +69,14 @@ PEOPLE_QUESTIONS_URL = PEOPLE_DETAIL_URL + '/questions'
 
 PEOPLE_ACTIVITIES_URL = PEOPLE_DETAIL_URL + '/activities'
 
+# people.lives - GET - 用户 Live（包括参与的和组织的）
+
+PEOPLE_LIVES_URL = PEOPLE_DETAIL_URL + '/lives'
+
+# people.liked_lives - GET - 用户感兴趣的 Live
+
+PEOPLE_LIKED_LIVES_URL = ZHIHU_API_ROOT + '/lives/people/{}/like_lives'
+
 # ----- 答案相关 -----
 
 # answer - GET - 详情
@@ -181,9 +189,9 @@ TOPIC_CANCEL_FOLLOW_URL = TOPIC_FOLLOWERS_URL + '/{}'
 
 COLLECTION_DETAIL_URL = ZHIHU_API_ROOT + '/collections/{}'
 
-# collection.answers - GET - 答案
+# collection.contents - GET - 所有收藏的内容（包括答案和文章）
 
-COLLECTION_ANSWERS_URL = COLLECTION_DETAIL_URL + '/answers'
+COLLECTION_CONTENTS_URL = COLLECTION_DETAIL_URL + '/contents'
 
 # collection.comments - GET - 评论
 
@@ -235,6 +243,10 @@ ARTICLE_COMMENTS_URL = ARTICLE_DETAIL_URL + '/comments'
 
 # ----- 评论相关 -----
 
+# me.comment - POST - 发表评论
+
+SEND_COMMENT_URL = ZHIHU_API_ROOT + '/comments'
+
 # me.delete - DELETE - 删除评论
 
 COMMENT_DETAIL_URL = ZHIHU_API_ROOT + '/comments/{}'
@@ -255,6 +267,62 @@ COMMENT_VOTE_URL = COMMENT_DETAIL_URL + '/voters'
 
 COMMENT_CANCEL_VOTE_URL = COMMENT_VOTE_URL + '/{}'
 
+# ----- Live 相关 -----
+
+# live - GET - 详情
+
+LIVE_DETAIL_URL = ZHIHU_API_ROOT + '/lives/{}'
+
+# live.participants - GET - Live 参与者
+# 后两个 API 只会给出是好友的参与者和不是好友的参与者，目前均未使用，因为含义不是很清楚
+
+LIVE_MEMBERS_URL = LIVE_DETAIL_URL + '/members'
+LIVE_MEMBERS_FRIENDS_URL = LIVE_DETAIL_URL + '/members/friends'
+LIVE_MEMBERS_NON_FRIENDS_URL = LIVE_DETAIL_URL + '/members/nonfriends'
+
+# live.related - GET - 相关 Live
+
+LIVE_RELATED_URL = LIVE_DETAIL_URL + '/related'
+
+# client.lives_ongoing - GET - 所有正在开放的 Live
+# LiveTag.lives_ongoing - GET - 所有正在开放的 Live (需要附加 query 参数 tags = <tagid>）
+
+LIVE_ONGOING_URL = ZHIHU_API_ROOT + '/lives/ongoing'
+
+# client.lives_ended - GET - 所有已结束的 Live
+# LiveTag.lives_ended - GET - 所有已结束的 Live (需要附加 query 参数 tags = <tagid>）
+
+LIVE_ENDED_URL = ZHIHU_API_ROOT + '/lives/ended'
+
+# client.lives_ended - GET - 所有已结束的 Live
+# LiveTag.lives_ended - GET - 所有已结束的 Live (需要附加 query 参数 tags = <tagid>）
+
+LIVE_TAGS_URL = ZHIHU_API_ROOT + '/lives/tags'
+
+# live.tickets - GET - Live 票价
+
+LIVE_TICKETS_URL = LIVE_DETAIL_URL + '/apply'
+LIVE_TICKETS_QUIET_URL = LIVE_TICKETS_URL + '/quiet'    # 座位已满时的票价接口
+LIVE_TICKETS_ENDED_URL = LIVE_TICKETS_URL + '/ended'    # Live 已结束的票价接口
+
+# me.follow - POST - 感兴趣 Live
+
+LIVE_LIKE_URL = LIVE_DETAIL_URL + '/like'
+
+# ----- 私信相关 -----
+
+# me.whispers - GET - 获取用户私信对话列表
+
+WHISPERS_URL = ZHIHU_API_ROOT + '/inbox'
+
+# whisper.messages - GET - 获取用户某一对话的消息列表
+
+MESSAGES_URL = ZHIHU_API_ROOT + '/messages'
+
+# me.message - POST - 发送私信
+
+SEND_MESSAGE_URL = ZHIHU_API_ROOT + '/messages'
+
 # ----- 其他操作 -----
 
 # me.block - POST - 屏蔽用户
@@ -264,11 +332,3 @@ BLOCK_PEOPLE_URL = ZHIHU_API_ROOT + '/settings/blocked_users'
 # me.block - DELETE - 取消屏蔽用户
 
 CANCEL_BLOCK_PEOPLE_URL = BLOCK_PEOPLE_URL + '/{}'
-
-# me.message - POST - 发送私信
-
-SEND_MESSAGE_URL = ZHIHU_API_ROOT + '/messages'
-
-# me.comment - POST - 发表评论
-
-SEND_COMMENT_URL = ZHIHU_API_ROOT + '/comments'

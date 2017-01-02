@@ -9,7 +9,7 @@ import abc
 import warnings
 
 from ..exception import UnexpectedResponseException, MyJSONDecodeError, \
-    GetEmptyResponseWhenFetchData
+    GetEmptyResponseWhenFetchData, UnimplementedException
 
 __all__ = ['BaseGenerator', 'ActivityGenerator', 'AnswerGenerator',
            'ArticleGenerator', 'CollectionGenerator', 'ColumnGenerator',
@@ -21,12 +21,13 @@ MAX_WAIT_TIME = 8
 
 
 class BaseGenerator(object):
-    def __init__(self, url, session):
+    def __init__(self, url, session, **default_params):
         """
         基础生成器类。
 
         :param url: 首次请求网址。后续网址在 API 的返回数据中会给出。
         :param session: 网络会话。
+        :param default_params: 需要加到每次请求中的 get query params
         """
         self._url = url
         self._session = session
@@ -35,6 +36,7 @@ class BaseGenerator(object):
         self._up = 0
         self._next_url = self._url
         self._need_sleep = 0.5
+        self._default_params = dict(default_params if default_params else {})
         self._extra_params = {}
 
     def _fetch_more(self):
@@ -60,7 +62,7 @@ class BaseGenerator(object):
 
         :raise: :any:`UnexpectedResponseException`
         """
-        params = {}
+        params = dict(self._default_params)
         params.update(self._extra_params)
 
         # "offset" params only used in first request
@@ -249,6 +251,16 @@ class BaseGenerator(object):
         return self
 
 
+class ActivityGenerator(BaseGenerator):
+    def __init__(self, url, session, **kwargs):
+        # 获取用户动态需要加上 action_feed=true，如果不加某些用户动态获取中途会出错
+        super(ActivityGenerator, self).__init__(url, session, **kwargs)
+
+    def _build_obj(self, data):
+        from .activity import Activity
+        return Activity(data, self._session)
+
+
 class AnswerGenerator(BaseGenerator):
     def __init__(self, url, session):
         super(AnswerGenerator, self).__init__(url, session)
@@ -265,6 +277,26 @@ class ArticleGenerator(BaseGenerator):
     def _build_obj(self, data):
         from .article import Article
         return Article(data['id'], data, self._session)
+
+
+class CollectionContentGenerator(BaseGenerator):
+    def __init__(self, url, session):
+        super(CollectionContentGenerator, self).__init__(url, session)
+
+    def _build_obj(self, data):
+        from .article import Article
+        from .answer import Answer
+        content_type = data['type']
+        if content_type == 'answer':
+            return Answer(data['id'], data, self._session)
+        elif content_type == 'article':
+            return Article(data['id'], data, self._session)
+        else:
+            raise UnimplementedException(
+                'Unknown collection content type: {0}. '
+                'Please send this error message to '
+                'developer to get help.'.format(content_type)
+            )
 
 
 class CollectionGenerator(BaseGenerator):
@@ -294,6 +326,29 @@ class CommentGenerator(BaseGenerator):
         return Comment(data['id'], data, self._session)
 
 
+class LiveGenerator(BaseGenerator):
+    def __init__(self, url, session, **kwargs):
+        super(LiveGenerator, self).__init__(url, session, **kwargs)
+
+    def _build_obj(self, data):
+        from .live import Live
+        return Live(data['id'], data, self._session)
+
+
+class LiveOfTagGenerator(LiveGenerator):
+    def __init__(self, url, session, **kwargs):
+        super(LiveOfTagGenerator, self).__init__(url, session, **kwargs)
+
+
+class MessageGenerator(BaseGenerator):
+    def __init__(self, url, session, **kwargs):
+        super(MessageGenerator, self).__init__(url, session, **kwargs)
+
+    def _build_obj(self, data):
+        from .message import Message
+        return Message(data['id'], data, self._session)
+
+
 class PeopleGenerator(BaseGenerator):
     def __init__(self, url, session):
         super(PeopleGenerator, self).__init__(url, session)
@@ -306,6 +361,21 @@ class PeopleGenerator(BaseGenerator):
             data = data['member']
 
         return People(data['id'], data, self._session)
+
+
+class PeopleWithLiveBadgeGenerator(BaseGenerator):
+    def __init__(self, url, session):
+        super(PeopleWithLiveBadgeGenerator, self).__init__(url, session)
+
+    def _build_obj(self, data):
+        from .people import People
+        from .live import LiveBadge
+
+        return (
+            data['role'],
+            LiveBadge(data['badge']['id'], data['badge'], self._session),
+            People(data['member']['id'], data['member'], self._session),
+        )
 
 
 class QuestionGenerator(BaseGenerator):
@@ -326,34 +396,54 @@ class TopicGenerator(BaseGenerator):
         return Topic(data['id'], data, self._session)
 
 
-class ActivityGenerator(BaseGenerator):
+class WhisperGenerator(BaseGenerator):
     def __init__(self, url, session):
-        super(ActivityGenerator, self).__init__(url, session)
+        super(WhisperGenerator, self).__init__(url, session)
 
     def _build_obj(self, data):
-        from .activity import Activity
-        return Activity(data, self._session)
+        from .whisper import Whisper
+        return Whisper(data['id'], data, self._session)
 
 
-def generator_of(url_pattern, class_name=None):
+def generator_of(url_pattern, class_name=None, format_id=True):
     def wrappers_wrapper(func):
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
+            from .people import People
+
             cls_name = class_name or func.__name__
 
             if cls_name.endswith('s'):
                 cls_name = cls_name[:-1]
-            cls_name = cls_name.capitalize()
+
+            if cls_name.islower():
+                cls_name = cls_name.capitalize()
 
             gen_cls_name = cls_name + 'Generator'
             try:
                 gen_cls = getattr(sys.modules[__name__], gen_cls_name)
             except AttributeError:
-                return func(*args, **kwargs)
+                return func(self, *args, **kwargs)
 
-            self._get_data()
+            if isinstance(self, People):
+                self._get_data()
 
-            return gen_cls(url_pattern.format(self.id), self._session)
+            default_params = {}
+            if gen_cls is MessageGenerator:
+                # self is whisper object,
+                # who attr is people object, for who i'm talking to
+                default_params['sender_id'] = self.who.id
+            elif gen_cls is ActivityGenerator:
+                default_params['action_feed'] = 'true'
+            elif gen_cls is LiveOfTagGenerator:
+                default_params['tags'] = self.id
+
+            if format_id:
+                url = url_pattern.format(self.id)
+            else:
+                url = url_pattern
+
+            return gen_cls(url, self._session, **default_params)
 
         return wrapper
 

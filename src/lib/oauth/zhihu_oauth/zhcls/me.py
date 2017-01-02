@@ -23,6 +23,7 @@ from .urls import (
     COMMENT_CANCEL_VOTE_URL,
     COMMENT_DETAIL_URL,
     COMMENT_VOTE_URL,
+    LIVE_LIKE_URL,
     PEOPLE_CANCEL_FOLLOWERS_URL,
     PEOPLE_FOLLOWERS_URL,
     PEOPLE_FOLLOWING_COLLECTIONS_URL,
@@ -33,6 +34,7 @@ from .urls import (
     SEND_MESSAGE_URL,
     TOPIC_CANCEL_FOLLOW_URL,
     TOPIC_FOLLOWERS_URL,
+    WHISPERS_URL,
 )
 from .generator import generator_of
 from .utils import get_result_or_error
@@ -67,8 +69,16 @@ class Me(People):
 
             这一方法是 :any:`Me` 类独有的，其父类 :any:`People` 类没有此方法。
 
-            根本原因是知乎并不允许获取除自己（登录用户）以外用户关注的专栏，
+            根本原因是知乎并不允许获取除自己（登录用户）以外用户关注的收藏夹，
             至于为什么，我哪知道呀QAQ
+        """
+        return None
+
+    @property
+    @generator_of(WHISPERS_URL)
+    def whispers(self):
+        """
+        私信列表
         """
         return None
 
@@ -84,7 +94,7 @@ class Me(People):
           或 :any:`Comment` 对象。
         :param str|unicode op: 对于答案可取值 'up', 'down', 'clear'，
           分别表示赞同、反对和清除。
-          对于文章和文章，只能取 'up' 和 'clear'。默认值是 'up'。
+          对于文章和评论，只能取 'up' 和 'clear'。默认值是 'up'。
         :return: 表示结果的二元组，第一项表示是否成功，第二项表示原因。
         :rtype: (bool, str)
         :raise: :any:`UnexpectedResponseException`
@@ -146,7 +156,7 @@ class Me(People):
 
     def follow(self, what, follow=True):
         """
-        关注或者取消关注问题/话题/用户/专栏/收藏夹。
+        关注或者取消关注问题/话题/用户/专栏/收藏夹/Live。
 
         ..  seealso::
 
@@ -155,7 +165,7 @@ class Me(People):
         :param what: 操作对象
         :param follow: 要取消关注的话把这个设置成 False
         """
-        from . import Question, Topic, People, Column, Collection
+        from . import Question, Topic, People, Column, Collection, Live
         if isinstance(what, Question):
             return self._common_click(what, not follow,
                                       QUESTION_FOLLOWERS_URL,
@@ -174,6 +184,9 @@ class Me(People):
             return self._common_click(what, not follow,
                                       COLLECTION_FOLLOWERS_URL,
                                       COLLECTION_CANCEL_FOLLOW_URL)
+        elif isinstance(what, Live):
+            return self._common_click(what, not follow,
+                                      LIVE_LIKE_URL, LIVE_LIKE_URL)
         else:
             raise TypeError(
                 'Unable to follow a {0}.'.format(what.__class__.__name__))

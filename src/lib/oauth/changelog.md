@@ -2,6 +2,96 @@
 
 ## 实验阶段
 
+## 0.0.30
+
+- [fix] 修复了一个尼玛嗨尼玛嗨的代码里不知道怎么多打了一个 `+` 的 Bug =。=
+- [add] `Activity/ActType` 类增加了 `PUBLISH_LIVE` 型动态，表示用户举办 Live。
+
+## 0.0.30.beta3
+
+- [fix] 修复了当用户参与了某 Live 时，调用此 Live 的 `tickets` 属性会报错的 Bug。此 Bug 是由于知乎的查看票价接口不允许已参与的用户调用，目前此属性在这种情况下将给出 warning 并且不返回任何值。（对于 `for in` 操作是安全的）
+- [add] 增加了 `Live.role` 属性表示用户于 Live 的关系。
+- [add] 增加了 `Live.cospeakers` 属性表示 Live 的协作者，只有小部分多人主讲的 Live 这个属性才有值。
+
+## 0.0.30.beta2
+
+- [fix] 修复了在使用 `client.people()` 获取 `People` 对象后直接获取 `activities` 属性时会无法获取的 Bug。
+
+### 0.0.30.beta1
+
+- [add] 增加了 `Live` 类。
+- [add] 增加了 `LiveBadge` Live 徽章类。
+- [add] 增加了 `LiveTag` Live 标签类。
+- [add] 增加了 `LiveTicket` Live 门票类。
+- [add] `ZhihuClient` 增加了 `lives_ongoing` 和 `lives_ended` 两个属性，可以获取所有正在进行（或未开始）的 Live 和已经结束的 Live。并且提供 `lives` 快捷方法，将以上两个 Generator chain 起来。
+- [add] `ZhihuClient` 增加了 `live()` 方法，通过 Live ID 获取 `Live` 对象。
+- [add] `ZhihuClient.from_url()` 现在支持使用 Live 的 URL 创建 `Live` 对象。
+- [add] `ZhihuClient` 增加了 `live_tags` 属性，用于获取所有 Live Tag。
+- [add] `People` 类增加了 `lives` 属性，获取用户举办和参加的 Live。
+- [add] `People` 类增加了 `liked_lives` 属性，获取用户感兴趣的 Live。
+- [add] `Me.follow()` 方法现在可以对 `Live` 对象使用，也即对 Live 感兴趣（点小红心）。
+- [change] `JOIN_LIVE` 型的动态现在返回 `type` 属性为 `ActType.JOIN_LIVE` 型的 `Activity` 对象，其 `target` 属性为 `Live` 对象。
+
+### 0.0.29.post2
+
+- [add] `Activity` 类增加了 `action_text` 属性，表示对动态的描述。比如 `xxx 赞同了问题`， `xxx 参加了 Live` 等
+- [add/fix] `Activity/ActType` 类增加了 `VOTEUP_EBOOK` 型动态，暂时使用 `StreamingJSON` 做兼容，`EBook` 类预计在 0.0.32 或 33 版本才会增加。
+
+### 0.0.29.post1
+
+- [fix/add] 修复/增加了用户动态中的「参加 Live」，「创建分享」，「点赞分享」三种动作，暂时使用 `StreamingJSON` 做个兼容，后期会弄成和其他动作相同的形式并且增加 `Live` 和 `Pin` 类，预计在 0.0.30 版本吧。
+
+### 0.0.29
+
+- [add] 增加了之前忘记写的问题创建时间 `Question.created_time` 属性。
+
+### 0.0.28
+
+- [add] 增加了 `Collection.contents` 属性用于获取收藏夹里的答案和文章（具体用法请看文档）。
+- [add] 增加了 `Collection.article` 属性用于获取收藏夹里的文章。
+- [fix] 修复了 `Collection.answer` 因为新版知乎 API 取消接口而失效的问题。
+
+### 0.0.27
+
+- [fix] 修复 Python 3.4 和 2.7.x 及之前版本因为 dict unpacking 之后不能有 trailing comma 造成的语法错误。
+
+### 0.0.26
+
+- [add] 增加用户私信的获取接口：使用 `me.whispers` 获取对话列表，再用 `whisper.messages` 获取每条消息。
+- [fix] 修复用户动态之前没有「收藏文章」类型而在获取时可能出错的情况
+- [add] 用户动态增加了「收藏文章 (`COLLECT_ARTICLE`)」 类型
+
+### 0.0.25
+
+- [fix] 紧急修复 `shield()` 函数的实现错误。
+
+（嗯我觉得这个版本号很好……因为我今天头痛，脑袋转了半天也没想清楚现在的实现到底对不对……不管了，反正是刚加的新功能，错就错吧，有人反馈我再改 =。= 
+
+### 0.0.24
+
+- [update] API 版本升级至 3.0.40，APP 版本升级至 4.11.0，更新 UA 和 UUID，跟上 Android 客户端的步伐
+- [add] `People.activities` 现在能够获取「收藏答案」类型的动态，具体 `ActType` 和 `Activity.type` 取值请参见文档
+- [fix] 修复获取某些用户时可能会 500 的 Bug
+- [add] `shield` 现在可以防御 HTTP 请求达到最大重试次数的异常（`MaxRetryError`）
+- [fix] `shield` 函数现在不能防御 `Activity` 生成器，因为它比较特殊
+- [fix] 修改文档里的小 typo
+
+注意，因为更新了 API 版本，而这个项目并没有完善的自动测试，所以某些情况下可能会造成 Bug，如果你遇到了，请暂时使用上一版本并与我联系，谢谢。
+
+### 0.0.23
+
+- [add] 增加 `People.over()` 和 `People.over_reason()` 函数判断用户是否被知乎反作弊系统屏蔽。
+- [add] 增加 `shield()` 函数来辅助处理生成器获取数据时的异常。
+- [per] 新增 `ZhihuException`， package 内所有自定义的异常均改为继承此异常，方便处理。
+- [per] 新增 `ZhihuWarning`，package 内所有自定义的警告均继承此警告，方便处理。
+- [del] 取消 404 错误码的自动重试。
+
+### 0.0.22
+
+- [fix] 修复 `ZhihuClient.people()` 方法的文档里的返回值类型错误。
+- [add] 增加 `Activity.created_time` 属性表示用户动态的发生时间戳。
+- [per] 完善 `Activity` 的文档。
+
 ### 0.0.21
 
 - [fix] 修复 `Answer.save`，`Post.save()` 方法无法自定义多级目录，比如 `'data/' + answer.question.title` 的问题。

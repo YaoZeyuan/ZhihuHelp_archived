@@ -4,23 +4,32 @@ from __future__ import print_function, unicode_literals
 
 import base64
 import getpass
+import itertools
 import os
 import warnings
 
 import requests
 import requests.packages.urllib3 as urllib3
 
+from .exception import (
+    UnexpectedResponseException, NeedCaptchaException, MyJSONDecodeError
+)
+from .helpers import shield
 from .oauth.before_login_auth import BeforeLoginAuth
-from .oauth.zhihu_oauth import ZhihuOAuth
-from .oauth.token import ZhihuToken
 from .oauth.setting import (
     CAPTCHA_URL, LOGIN_URL, LOGIN_DATA, CLIENT_ID, APP_SECRET
 )
+from .oauth.token import ZhihuToken
 from .oauth.utils import login_signature
+from .oauth.zhihu_oauth import ZhihuOAuth
 from .setting import CAPTCHA_FILE, RE_FUNC_MAP, ADAPTER_WITH_RETRY
 from .utils import need_login, int_id
-from .exception import (
-    UnexpectedResponseException, NeedCaptchaException, MyJSONDecodeError
+from .zhcls.generator import generator_of
+from .zhcls.streaming import StreamingJSON
+from .zhcls.urls import (
+    LIVE_ENDED_URL,
+    LIVE_ONGOING_URL,
+    LIVE_TAGS_URL,
 )
 
 __all__ = ['ZhihuClient']
@@ -302,7 +311,7 @@ class ZhihuClient:
         :举例:
             https://www.zhihu.com/question/xxxxxx/answer/1234567
             的答案 ID 是 1234567。
-        :rtype: Answer
+        :rtype: :any:`Answer`
         """
         from .zhcls.answer import Answer
         return Answer(aid, None, self._session)
@@ -315,7 +324,7 @@ class ZhihuClient:
 
         :param int aid: 文章 ID。
         :举例: https://zhuanlan.zhihu.com/p/1234567 的文章 ID 是 1234567。
-        :rtype: :class:`Article`
+        :rtype: :any:`Article`
         """
         from .zhcls.article import Article
         return Article(aid, None, self._session)
@@ -328,7 +337,7 @@ class ZhihuClient:
 
         :param int cid: 收藏夹 ID
         :举例: https://www.zhihu.com/collection/1234567 的收藏夹 ID 是 1234567。
-        :rtype: :class:`Collection`
+        :rtype: :any:`Collection`
         """
         from .zhcls.collection import Collection
         return Collection(cid, None, self._session)
@@ -340,10 +349,25 @@ class ZhihuClient:
 
         :param str|unicode cid: 专栏 ID，注意，类型是字符串。
         :举例: https://zhuanlan.zhihu.com/abcdefg 的专栏 ID 是 abcdefg。
-        :rtype: :class:`Column`
+        :rtype: :any:`Column`
         """
         from .zhcls.column import Column
         return Column(cid, None, self._session)
+
+    @int_id
+    @need_login
+    def live(self, lid):
+        """
+        获取收 Live 对象，需要 Client 是登录状态。
+
+        :param int lid: Live ID
+        :举例:
+            https://www.zhihu.com/lives/778748004768178176
+            的 Live ID 是 778748004768178176。
+        :rtype: :any:`Live`
+        """
+        from .zhcls.live import Live
+        return Live(lid, None, self._session)
 
     @need_login
     def me(self):
@@ -354,7 +378,7 @@ class ZhihuClient:
             :class:`Me` 类继承于 :class:`People`，是一个不同于其他用户的类。
             这个类用于提供各种操作，比如点赞，评论，私信等。
 
-        :rtype: :class:`Me`
+        :rtype: :any:`Me`
         """
 
         from .zhcls import Me
@@ -367,7 +391,7 @@ class ZhihuClient:
 
         :param str|unicode pid: 用户 ID，注意，类型是字符串。
         :举例: https://www.zhihu.com/people/abcdefg 的用户 ID 是 abcdefg。
-        :rtype: :class:`Column`
+        :rtype: :any:`People`
         """
         from .zhcls.people import People
         return People(pid, None, self._session)
@@ -380,7 +404,7 @@ class ZhihuClient:
 
         :param int qid: 问题 ID。
         :举例: https://www.zhihu.com/question/1234567 的问题 ID 是 1234567。
-        :rtype: :class:`Question`
+        :rtype: :any:`Question`
         """
         from .zhcls.question import Question
         return Question(qid, None, self._session)
@@ -393,7 +417,7 @@ class ZhihuClient:
 
         :param int tid: 话题 ID。
         :举例: https://www.zhihu.com/tipoc/1234567 的话题 ID 是 1234567。
-        :rtype: :class:`Topic`
+        :rtype: :any:`Topic`
         """
         from .zhcls.topic import Topic
         return Topic(tid, None, self._session)
@@ -422,3 +446,57 @@ class ZhihuClient:
                     zhihu_obj_id = int(zhihu_obj_id)
                 return getattr(self, func_name)(zhihu_obj_id)
         raise ValueError('Invalid zhihu object url!')
+
+    # ----- generator -----
+
+    @property
+    @need_login
+    def lives(self):
+        """
+        所有 Live，内部只是封装了 :any:`lives_ongoing` 和 :any:`lives_ended`
+        两个生成器的数据，作为一个快捷方法。
+        """
+        for live in itertools.chain(
+                shield(self.lives_ongoing),
+                shield(self.lives_ended)
+        ):
+            yield live
+
+    @property
+    @need_login
+    @generator_of(LIVE_ENDED_URL, 'live', format_id=False)
+    def lives_ended(self):
+        """
+        已经结束的 Live
+        """
+        return None
+
+    @property
+    @need_login
+    @generator_of(LIVE_ONGOING_URL, 'live', format_id=False)
+    def lives_ongoing(self):
+        """
+        正在开放的 Live
+        """
+        return None
+
+    @property
+    @need_login
+    def live_tags(self):
+        from .zhcls.live import LiveTag
+
+        res = self.test_api("GET", LIVE_TAGS_URL)
+        try:
+            data = res.json()
+            assert data['success'] is True
+            data = StreamingJSON(data['data'])
+        except (MyJSONDecodeError, ValueError) as e:
+            raise UnexpectedResponseException(
+                LIVE_TAGS_URL,
+                res,
+                'a json string contains [success] and [data] attr.'
+            )
+
+        for category in data:
+            for tag in category.data:
+                yield LiveTag(tag.id, tag.raw_data(), self._session)

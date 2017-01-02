@@ -8,7 +8,7 @@ from .other import other_obj
 from .normal import normal_attr
 from .urls import (
     COLLECTION_DETAIL_URL,
-    COLLECTION_ANSWERS_URL,
+    COLLECTION_CONTENTS_URL,
     COLLECTION_COMMENTS_URL,
     COLLECTION_FOLLOWERS_URL,
 )
@@ -76,13 +76,94 @@ class Collection(Base):
     # ----- generators -----
 
     @property
-    @generator_of(COLLECTION_ANSWERS_URL)
     def answers(self):
-        return None
+        """
+        获取收藏夹里的所有答案。
+
+        ..  warning::  无法被 shield
+
+            因为内部是调用 :any:`Collection.contents` 的，
+            所以此生成器无法被 :any:`shield` 保护。
+
+            但是内部其实是用 shield 保护过 contents 的获取的，
+            如果这个生成器异常了那还是处理下吧。
+
+        ..  seealso:: :any:`Collection.articles`, :any:`Collection.contents`
+        """
+        from .answer import Answer
+        from ..helpers import shield
+
+        contents = self.contents
+        if contents is None:
+            return
+
+        # noinspection PyTypeChecker
+        for x in shield(contents):
+            if isinstance(x, Answer):
+                yield x
+
+    @property
+    def articles(self):
+        """
+        获取收藏夹里的所有文章。
+
+        ..  warning::  无法被 shield
+
+            因为内部是调用 :any:`Collection.contents` 的，
+            所以此生成器无法被 :any:`shield` 保护。
+
+            但是内部其实是用 shield 保护过 contents 的获取的，
+            如果这个生成器异常了那还是处理下吧。
+
+        ..  seealso:: :any:`Collection.answers`, :any:`Collection.contents`
+        """
+        from .article import Article
+        from ..helpers import shield
+
+        contents = self.contents
+        if contents is None:
+            return
+
+        # noinspection PyTypeChecker
+        for x in shield(contents):
+            if isinstance(x, Article):
+                yield x
 
     @property
     @generator_of(COLLECTION_COMMENTS_URL)
     def comments(self):
+        return None
+
+    @property
+    @generator_of(COLLECTION_CONTENTS_URL, 'CollectionContent')
+    def contents(self):
+        """
+        新版知乎专栏支持收藏文章了，这个生成器生成的对象可能是 :any:`Answer` 也可能是
+        :any:`Article`，使用时要用 ``isinstance`` 判断类型后再获取对应对象的属性。
+
+        ..  code-block:: python
+
+            from zhihu_oauth import ZhihuClient, Answer, Article
+
+            collection = client.collection(37770691)
+
+            for content in collection.contents:
+                if isinstance(content, Answer):
+                    answer = content
+                    print(answer.question.title)
+                elif isinstance(content, Article):
+                    article = content
+                    print(article.title)
+
+        如果你只需要答案或者只需要文章类型的数据，可以使用 :any:`Collection.answers`
+        或者 :any:`Collection.articles` 进行获取。
+
+        不过需要注意的是，这两个属性内部其实会调用 :any:`Collection.contents`，
+        然后只返回相应类型的对象。所以其实也是遍历了所有内容的，
+        效率与使用本函数然后自己判断类型一样。
+
+        ..  seealso:: :any:`Collection.answers`, :any:`Collection.articles`
+        """
         return None
 
     @property

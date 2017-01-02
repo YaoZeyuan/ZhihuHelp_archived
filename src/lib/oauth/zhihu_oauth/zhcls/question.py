@@ -42,6 +42,11 @@ class Question(Base):
         return None
 
     @property
+    @normal_attr("created")
+    def created_time(self):
+        return None
+
+    @property
     @normal_attr('except')
     def excerpt(self):
         """
