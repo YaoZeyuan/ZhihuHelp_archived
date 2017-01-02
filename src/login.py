@@ -73,10 +73,15 @@ class Login(object):
         return True
 
     def get_captcha(self):
+        img_content_bytes = self.client.get_captcha()
+        if not img_content_bytes:
+            #  返回值为None,说明并不需要验证码
+            return u''
+
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
         image = open(captcha_path, 'wb')
-        image.write(self.client.get_captcha())
+        image.write(img_content_bytes)
         image.close()
 
         print u'请输入您所看到的验证码'
