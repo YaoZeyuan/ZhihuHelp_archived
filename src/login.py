@@ -49,6 +49,10 @@ class Login(object):
         return self.client
 
     def login(self, account, password, captcha=None):
+        if not account or not password:
+            print u"用户名/密码为空，请先输入用户名/密码"
+            #    未输入用户名密码，直接返回false
+            return False
         try:
             is_login_success, reason = self.client.login(account, password, captcha)
         except NeedCaptchaException:
@@ -62,13 +66,17 @@ class Login(object):
 
         print u'登陆成功！'
         print u'登陆账号:', account
-        print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
-        if raw_input() == 'yes':
+        if Config.remember_account:
             Config.account, Config.password, Config.remember_account = account, password, True
-            print u'帐号密码已保存,可通过修改config.json修改设置'
         else:
-            Config.account, Config.password, Config.remember_account = '', '', False
-            print u'跳过保存环节，进入下一流程'
+            print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
+            if raw_input() == 'yes':
+                Config.account, Config.password, Config.remember_account = account, password, True
+                print u'帐号密码已保存,可通过修改config.json修改设置'
+            else:
+                #    清空数据
+                Config.account, Config.password, Config.remember_account = '', '', False
+                print u'跳过保存环节，进入下一流程'
         Config.save()
         return True
 

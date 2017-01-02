@@ -22,7 +22,7 @@ class Match(object):
 
     @staticmethod
     def author(content=''):
-        return re.search(r'(?<=zhihu\.com/)people/(?P<author_id>[^/\n\r]*)', content)
+        return re.search(r'(?<=zhihu\.com/)people/(?P<author_page_id>[^/\n\r]*)', content)
 
     @staticmethod
     def collection(content=''):
