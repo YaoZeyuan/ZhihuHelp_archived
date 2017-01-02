@@ -22,7 +22,7 @@ class ZhihuHelp(object):
         #   初始化数据库链接
         DB.init_database()
         #   初始化配置
-        Config.init_config()
+        Config._init_config()
         return
 
     def start(self):

@@ -37,7 +37,7 @@ class Config(object):
     sql_extend_answer_filter = ''  # 附加到answer_sql语句后，用于对answer进行进一步的筛选（示例: and(agree > 5) ）
 
     @staticmethod
-    def init_config():
+    def _init_config():
         Config._load()
         return
 
