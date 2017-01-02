@@ -45,7 +45,7 @@ class Login(object):
                 account, password = self.get_account()
             captcha = self.get_captcha()
         Config.picture_quality = self.set_picture_quality()
-        Config._save()
+        Config.save()
         return self.client
 
     def login(self, account, password, captcha=None):
@@ -69,7 +69,7 @@ class Login(object):
         else:
             Config.account, Config.password, Config.remember_account = '', '', False
             print u'跳过保存环节，进入下一流程'
-        Config._save()
+        Config.save()
         return True
 
     def get_captcha(self):

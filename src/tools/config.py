@@ -37,21 +37,31 @@ class Config(object):
     sql_extend_answer_filter = ''  # 附加到answer_sql语句后，用于对answer进行进一步的筛选（示例: and(agree > 5) ）
 
     @staticmethod
-    def _init_config():
-        Config._load()
+    def init_config():
+        Config.load()
         return
 
     @staticmethod
-    def _save():
+    def save():
+        data = {}
         with open(Path.config_path, 'w') as f:
-            data = dict((
-                (key, Config.__dict__[key]) for key in Config.__dict__ if '_' not in key[:2]
-            ))
+            for key in Config.__dict__:
+                value = Config.__dict__[key]
+                if '__' in key[:2]:
+                    #   内置属性直接跳过
+                    continue
+                try:
+                    json.dumps(value)
+                except TypeError:
+                    #   暴力判断是否可被序列化←_←
+                    pass
+                else:
+                    data[key] = value
             json.dump(data, f, indent=4)
         return
 
     @staticmethod
-    def _load():
+    def load():
         if not os.path.isfile(Path.config_path):
             return
         with open(Path.config_path) as f:
