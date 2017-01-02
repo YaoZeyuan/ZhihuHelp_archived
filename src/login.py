@@ -35,7 +35,7 @@ class Login(object):
             password = Config.password
         else:
             account, password = self.get_account()
-        captcha = ''
+        captcha = None
         while not self.login(account, password, captcha):
             print u'啊哦，登录失败，可能需要输入验证码'
             print u'输入『yes』按回车更换其他账号'
@@ -76,7 +76,7 @@ class Login(object):
         img_content_bytes = self.client.get_captcha()
         if not img_content_bytes:
             #  返回值为None,说明并不需要验证码
-            return u''
+            return None
 
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
