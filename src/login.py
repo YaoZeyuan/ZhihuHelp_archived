@@ -30,6 +30,9 @@ class Login(object):
     def get_login_client(self):
         self.hello_world()
 
+        #   先判断图片质量
+        Config.picture_quality = self.set_picture_quality()
+
         if Config.remember_account:
             account = Config.account
             password = Config.password
@@ -44,7 +47,6 @@ class Login(object):
             if confirm == 'yes':
                 account, password = self.get_account()
             captcha = self.get_captcha()
-        Config.picture_quality = self.set_picture_quality()
         Config.save()
         return self.client
 
@@ -138,6 +140,9 @@ class Login(object):
 
     @staticmethod
     def set_picture_quality():
+        if Config.remember_account:
+            # 当记住密码时，不再设置图片质量
+            return Config.picture_quality
         print u'请选择电子书内的图片质量'
         print u'输入0为无图模式，生成电子书体积最小'
         print u'输入1为标准模式，图片清晰度能满足绝大多数答案的需要'
