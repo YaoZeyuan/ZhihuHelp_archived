@@ -107,6 +107,9 @@ class ZhihuHelp(object):
                 *   无
         """
         print u"检查更新。。。"
+        if Config.debug:
+            # 当位于debug模式时，不检查更新
+            return
         try:
             content = Http.get_content(u"https://www.yaozeyuan.online/zhihuhelp/upgrade.txt")
             if not content:
