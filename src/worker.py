@@ -29,11 +29,11 @@ class Worker(object):
     def distribute(task):
         """
         将外界传入的任务分发给各个抓取类
-        :type task src.container.task.Task
+        :type task src.container.task.Task | src.container.task.AnswerTask | src.container.task.QuestionTask | src.container.task.TopicTask| src.container.task.CollectionTask | src.container.task.AuthorTask | src.container.task.ColumnTask | src.container.task.ArticleTask
         :return:
         """
         if task.get_task_type() == Type.author:
-            AuthorWorker.catch(task.author_id)
+            AuthorWorker.catch(task.author_page_id)
         elif task.get_task_type() == Type.question:
             QuestionWorker.catch(task.question_id)
         elif task.get_task_type() == Type.answer:
@@ -173,7 +173,7 @@ class AuthorWorker(object):
     @staticmethod
     def catch(author_page_id):
         author = Worker.zhihu_client.people(author_page_id)
-        raw_author_info = author.pure_data
+        raw_author_info = author.pure_data['data']
         author_info = AuthorWorker.format_author(raw_author_info, author_page_id)
         Worker.save_record_list('Author', [author_info])
 
