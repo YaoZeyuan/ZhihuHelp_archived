@@ -229,6 +229,7 @@ zhihuhelp1.7.0/我是登陆知乎时的验证码.gif
 我是登陆知乎时的验证码.gif
 # 自动生成的token
 token.pkl
+.token
 
 *.jpg
 

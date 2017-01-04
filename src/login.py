@@ -111,7 +111,11 @@ class Login(object):
 
     def __load_login_client(self):
         u"""载入登录token"""
-        self.client.load_token(Login.Login_Token_File_Uri)
+        try:
+            self.client.load_token(Login.Login_Token_File_Uri)
+        except Exception:
+            #   报错直接返回即可
+            return False
         return self.client.is_login()
 
     def get_captcha(self):
