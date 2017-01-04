@@ -20,6 +20,8 @@ from src.tools.path import Path
 
 
 class Login(object):
+    Login_Token_File_Uri = u'./知乎登录密钥_token_file.token'
+
     u"""
     登录部分，登录完成后返回一个可用的client对象，用于进一步获取知乎网对应信息
     """
@@ -36,8 +38,16 @@ class Login(object):
         if Config.remember_account:
             account = Config.account
             password = Config.password
+            if self.__load_login_client():
+                #   尝试直接载入token文件
+                #   载入成功直接返回即可
+                return self.client
         else:
+            print u'现在开始登陆流程，请根据提示输入您的账号密码'
+            print u''
+            print u''
             account, password = self.get_account()
+
         captcha = None
         while not self.login(account, password, captcha):
             print u'啊哦，登录失败，可能需要输入验证码'
@@ -68,6 +78,10 @@ class Login(object):
 
         print u'登陆成功！'
         print u'登陆账号:', account
+
+        # 保持登录token
+        self.__save_login_client()
+
         if Config.remember_account:
             Config.account, Config.password, Config.remember_account = account, password, True
         else:
@@ -76,11 +90,29 @@ class Login(object):
                 Config.account, Config.password, Config.remember_account = account, password, True
                 print u'帐号密码已保存,可通过修改config.json修改设置'
             else:
-                #    清空数据
+                #   清空数据
                 Config.account, Config.password, Config.remember_account = '', '', False
+                #   清除token
+                self.__clear_login_client()
                 print u'跳过保存环节，进入下一流程'
         Config.save()
         return True
+
+    def __save_login_client(self):
+        u"""保存登录token"""
+        self.client.save_token(Login.Login_Token_File_Uri)
+        return
+
+    def __clear_login_client(self):
+        u"""清空登录token"""
+        with open(Login.Login_Token_File_Uri, 'w') as token_file:
+            token_file.write('')
+        return
+
+    def __load_login_client(self):
+        u"""载入登录token"""
+        self.client.load_token(Login.Login_Token_File_Uri)
+        return self.client.is_login()
 
     def get_captcha(self):
         img_content_bytes = self.client.get_captcha()
@@ -115,9 +147,6 @@ class Login(object):
         print u''
         print u'全部代码均已开源，github地址:https://github.com/YaoZeyuan/ZhihuHelp__Python'
         print u'Tips：只有在获取私人收藏夹的内容时，助手才需要使用您的账号登陆，日常使用时直接用内置账号登陆即可'
-        print u'现在开始登陆流程，请根据提示输入您的账号密码'
-        print u''
-        print u''
         return
 
     @staticmethod
