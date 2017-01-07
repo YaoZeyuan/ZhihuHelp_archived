@@ -22,8 +22,6 @@ class Answer(object):
         self.is_copyable = data['is_copyable']
         self.thanks_count = data['thanks_count']
         self.voteup_count = data['voteup_count']
-        self.suggest_edit_status = data['suggest_edit_status']
-        self.suggest_edit_reason = data['suggest_edit_reason']
 
         self.total_img_size_kb = 0 # 文件大小(只统计图片大小，包括答案内图片和答主头像，单位kb)
         self.img_filename_list = []

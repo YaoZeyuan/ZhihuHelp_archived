@@ -55,28 +55,23 @@ class Worker(object):
     def format_raw_answer(raw_answer):
         """
         在zhihu-oauth库的Answer对象中获取信息
-        :type raw_answer: Answer
+        :type raw_answer: src.lib.oauth.zhihu_oauth.Answer
         :return: dict
         """
-
         raw_answer_dict = raw_answer.pure_data.get(u'data', None)
         if not raw_answer_dict:
             # 数据为空说明其数据应在cache字段中
             raw_answer_dict = raw_answer.pure_data.get(u'cache', {})
-        answer_key_list = [
-            "comment_count",
-            "content",
-            "created_time",
-            "updated_time",
-            "is_copyable",
-            "thanks_count",
-            "voteup_count",
-            "suggest_edit_status",
-            "suggest_edit_reason",
-        ]
+
         answer = {}
-        for answer_key in answer_key_list:
-            answer[answer_key] = raw_answer_dict.get(answer_key, '')
+        #   有些数据只能从类属性中获取，直接取数据的话取不到(懒加载)，很坑，只能这样了= =
+        answer['comment_count'] = raw_answer.comment_count
+        answer['content'] = raw_answer.content
+        answer['created_time'] = raw_answer.created_time
+        answer['updated_time'] = raw_answer.updated_time
+        answer['is_copyable'] = raw_answer.is_copyable
+        answer['thanks_count'] = raw_answer.thanks_count
+        answer['voteup_count'] = raw_answer.voteup_count
 
         # 特殊key
         answer["author_id"] = raw_answer_dict['author']['id']

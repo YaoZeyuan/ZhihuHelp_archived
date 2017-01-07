@@ -14,8 +14,6 @@ CREATE TABLE `Answer` (
   `is_copyable` int(11) NOT NULL DEFAULT '1' , ---- COMMENT '是否允许转载0:不允许,1:允许',
   `thanks_count` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '感谢数',
   `voteup_count` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '赞同数',
-  `suggest_edit_status` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '是否被建议修改,0:否,1:是',
-  `suggest_edit_reason` varchar(500) NOT NULL DEFAULT '',  ---- COMMENT '被建议修改的理由'
   PRIMARY KEY (`answer_id`)
 ) ; ---- ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='答案表，分为answer和author两部分';
 
