@@ -1,3 +1,0 @@
-include README.md LICENSE
-include test/zhihu-test.py
-include docs/*

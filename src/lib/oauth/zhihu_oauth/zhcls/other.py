@@ -31,6 +31,7 @@ def other_obj(class_name=None, name_in_json=None, module_filename=None):
 
     :param class_name: 要生成的对象类名
     :param name_in_json: 属性在 JSON 里的键名。
+    :param module_filename: <class_name> 所在的模块的文件名
     """
     def wrappers_wrapper(func):
         @functools.wraps(func)

@@ -6,8 +6,6 @@ import abc
 
 from ..exception import MyJSONDecodeError, GetDataErrorException
 
-from requests.adapters import MaxRetryError
-
 __all__ = ['Base']
 
 

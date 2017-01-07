@@ -24,4 +24,4 @@ __all__ = ['ZhihuClient', 'ANONYMOUS', 'Activity', 'Answer', 'ActType',
            'GetDataErrorException',
            'SHIELD_ACTION', 'shield']
 
-__version__ = '0.0.30'
+__version__ = '0.0.30.post1'

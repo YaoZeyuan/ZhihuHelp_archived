@@ -490,7 +490,7 @@ class ZhihuClient:
             data = res.json()
             assert data['success'] is True
             data = StreamingJSON(data['data'])
-        except (MyJSONDecodeError, ValueError) as e:
+        except (MyJSONDecodeError, ValueError):
             raise UnexpectedResponseException(
                 LIVE_TAGS_URL,
                 res,
