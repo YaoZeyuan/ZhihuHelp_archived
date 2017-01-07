@@ -15,7 +15,8 @@ CREATE TABLE `Answer` (
   `thanks_count` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '感谢数',
   `voteup_count` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '赞同数',
   `suggest_edit_status` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '是否被建议修改,0:否,1:是',
-  `suggest_edit_reason` varchar(500) NOT NULL DEFAULT ''  ---- COMMENT '被建议修改的理由'
+  `suggest_edit_reason` varchar(500) NOT NULL DEFAULT '',  ---- COMMENT '被建议修改的理由'
+  PRIMARY KEY (`answer_id`)
 ) ; ---- ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='答案表，分为answer和author两部分';
 
 
@@ -28,7 +29,8 @@ CREATE TABLE `Article` (
   `column_id` varchar(200) NOT NULL , ---- COMMENT '专栏id',
   `content` text NOT NULL , ---- COMMENT '文章内容(html形式)',
   `comment_count` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '评论数',
-  `author_id` varchar(200) NOT NULL  ---- COMMENT '作者hash_id'
+  `author_id` varchar(200) NOT NULL,  ---- COMMENT '作者hash_id'
+  PRIMARY KEY (`article_id`)
 ) ; ---- ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -56,7 +58,8 @@ CREATE TABLE `Author` (
   `thanked_count` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '被感谢数',
   `sina_weibo_name` varchar(500) NOT NULL DEFAULT '' , ---- COMMENT '新浪微博用户名',
   `sina_weibo_url` varchar(500) NOT NULL DEFAULT '' , ---- COMMENT '新浪微博地址',
-  `voteup_count` int(11) NOT NULL DEFAULT '0'  ---- COMMENT '被赞同数'
+  `voteup_count` int(11) NOT NULL DEFAULT '0',  ---- COMMENT '被赞同数'
+  PRIMARY KEY (`author_id`)
 ) ; ---- ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -73,7 +76,8 @@ CREATE TABLE `Collection` (
   `creator_name` varchar(200) NOT NULL DEFAULT '' , ---- COMMENT '创建者名字',
   `creator_headline` varchar(200) NOT NULL DEFAULT '' , ---- COMMENT '创建者签名档',
   `creator_avatar_url` varchar(200) NOT NULL DEFAULT '' , ---- COMMENT '创建者头像',
-  `collected_answer_id_list` text NOT NULL  ---- COMMENT '收藏夹下以逗号分隔的答案id列表'
+  `collected_answer_id_list` text NOT NULL,  ---- COMMENT '收藏夹下以逗号分隔的答案id列表'
+  PRIMARY KEY (`collection_id`)
 ) ; ---- ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -97,7 +101,8 @@ CREATE TABLE `Question` (
   `follower_count` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '关注数',
   `title` varchar(200) NOT NULL DEFAULT '' , ---- COMMENT '问题',
   `detail` varchar(200) NOT NULL DEFAULT '' , ---- COMMENT '问题详情',
-  `updated_time` int(11) NOT NULL DEFAULT '0'  ---- COMMENT '更新时间'
+  `updated_time` int(11) NOT NULL DEFAULT '0',  ---- COMMENT '更新时间'
+  PRIMARY KEY (`question_id`)
 ) ; ---- ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -112,5 +117,6 @@ CREATE TABLE `Topic` (
   `name` varchar(200) NOT NULL , ---- COMMENT '话题名称',
   `questions_count` int(11) NOT NULL , ---- COMMENT '话题下的问题数量',
   `unanswered_count` int(11) NOT NULL , ---- COMMENT '话题下等待回答的问题数量',
-  `best_answer_id_list` text NOT NULL  ---- COMMENT '逗号分隔形式的话题下精华答案id列表'
+  `best_answer_id_list` text NOT NULL,  ---- COMMENT '逗号分隔形式的话题下精华答案id列表'
+  PRIMARY KEY (`topic_id`)
 ) ; ---- ENGINE=InnoDB DEFAULT CHARSET=utf8;

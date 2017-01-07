@@ -52,11 +52,17 @@ class Worker(object):
         return
 
     @staticmethod
-    def format_answer(raw_answer):
+    def format_raw_answer(raw_answer):
         """
-        :type raw_answer: dict
+        在zhihu-oauth库的Answer对象中获取信息
+        :type raw_answer: Answer
         :return: dict
         """
+
+        raw_answer_dict = raw_answer.pure_data.get(u'data', None)
+        if not raw_answer_dict:
+            # 数据为空说明其数据应在cache字段中
+            raw_answer_dict = raw_answer.pure_data.get(u'cache', {})
         answer_key_list = [
             "comment_count",
             "content",
@@ -70,25 +76,25 @@ class Worker(object):
         ]
         answer = {}
         for answer_key in answer_key_list:
-            answer[answer_key] = raw_answer.get(answer_key, '')
+            answer[answer_key] = raw_answer_dict.get(answer_key, '')
 
         # 特殊key
-        answer["author_id"] = raw_answer['author']['id']
-        answer["author_name"] = raw_answer['author']['name']
-        answer["author_headline"] = raw_answer['author']['headline']
-        answer["author_avatar_url"] = Match.parse_file_name(raw_answer['author']['avatar_url'])
-        answer["author_gender"] = raw_answer['author']['gender']
+        answer["author_id"] = raw_answer_dict['author']['id']
+        answer["author_name"] = raw_answer_dict['author']['name']
+        answer["author_headline"] = raw_answer_dict['author']['headline']
+        answer["author_avatar_url"] = Match.parse_file_name(raw_answer_dict['author']['avatar_url'])
+        answer["author_gender"] = raw_answer_dict['author']['gender']
 
-        answer["answer_id"] = raw_answer['id']
-        answer["question_id"] = raw_answer['question']['id']
+        answer["answer_id"] = raw_answer_dict['id']
+        answer["question_id"] = raw_answer_dict['question']['id']
 
         question_key_list = [
             "title",
         ]
         question = {}
         for question_key in question_key_list:
-            question[question_key] = raw_answer['question'][question_key]
-        question['question_id'] = raw_answer['question']['id']
+            question[question_key] = raw_answer_dict['question'][question_key]
+        question['question_id'] = raw_answer_dict['question']['id']
 
         return answer, question
 
@@ -146,7 +152,7 @@ class QuestionWorker(object):
 
         answer_list = []
         for raw_answer in question.answers:
-            answer, question = Worker.format_answer(raw_answer)
+            answer, question = Worker.format_raw_answer(raw_answer)
             answer_list.append(answer)
         Worker.save_record_list('Answer', answer_list)
         return
@@ -180,7 +186,7 @@ class AuthorWorker(object):
         answer_list = []
         question_list = []
         for raw_answer in author.answers:
-            answer, question = Worker.format_answer(raw_answer)
+            answer, question = Worker.format_raw_answer(raw_answer)
             answer_list.append(answer)
             question_list.append(question)
         Worker.save_record_list('Answer', answer_list)
@@ -240,7 +246,7 @@ class CollectionWorker(object):
         answer_list = []
         question_list = []
         for raw_answer in collection.answers:
-            answer, question = Worker.format_answer(raw_answer)
+            answer, question = Worker.format_raw_answer(raw_answer)
 
             answer_id = str(answer['answer_id'])
             answer_id_list.append(answer_id)
@@ -293,7 +299,7 @@ class TopicWorker(object):
         answer_list = []
         question_list = []
         for raw_answer in topic.best_answers:
-            answer, question = Worker.format_answer(raw_answer)
+            answer, question = Worker.format_raw_answer(raw_answer)
 
             answer_id = str(answer['answer_id'])
             answer_id_list.append(answer_id)
