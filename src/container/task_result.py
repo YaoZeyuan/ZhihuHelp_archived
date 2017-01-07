@@ -360,7 +360,10 @@ class TaskResult(object):
         return answer_list
 
     def query_answer_list_by_author_page_id(self, author_page_id):
-        raw_answer_list = DB.query_all('select * from Answer where author_page_id="{}"'.format(author_page_id))
+        # 需要先查出来对应的author_id
+        author_info = DB.query_row('select author_id from Author where author_page_id="{}"'.format(author_page_id))
+        author_id = author_info['author_id']
+        raw_answer_list = DB.query_all('select * from Answer where author_id="{}"'.format(author_id))
         answer_list = []
         for raw_answer in raw_answer_list:
             answer_list.append(self.format_answer(raw_answer))

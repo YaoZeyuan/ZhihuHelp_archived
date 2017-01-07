@@ -201,6 +201,7 @@ class Book(object):
         filename = self.get_random_html_file_name()
         content = Template.author_info.format(
             **{
+                'title': info_page.name + u'的知乎回答集锦',
                 'name': info_page.name,
                 'answer_count': info_page.answer_count,
                 'follower_count': info_page.follower_count,
