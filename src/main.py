@@ -36,6 +36,12 @@ class ZhihuHelp(object):
 
         Debug.logger.info(u"开始读取ReadList.txt设置信息")
 
+        if not Path.is_file('./ReadList.txt'):
+            #  当ReadList不存在的时候自动创建之
+            with open('./ReadList.txt', 'w') as read_list:
+                read_list.close()
+            print Debug.logger.info(u"ReadList.txt 内容为空，自动退出")
+            return
         book_counter = self.read_list()
 
         Debug.logger.info(u"所有书籍制作完成。")
@@ -46,19 +52,14 @@ class ZhihuHelp(object):
 
     def read_list(self):
         book_counter = 0  # 统计累计制作了多少本书籍
-        try:
-            #   遍历ReadList，根据指令生成电子书
-            with open('./ReadList.txt', 'r') as read_list:
-                for line in read_list:
-                    line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
-                    if len(line) == 0:
-                        continue
-                    book_counter += 1
-                    self.create_book(line, book_counter)
-        except IOError as e:
-            with open('./ReadList.txt', 'w') as read_list:
-                read_list.close()
-            print Debug.logger.info(u"ReadList.txt 内容为空")
+        #   遍历ReadList，根据指令生成电子书
+        with open('./ReadList.txt', 'r') as read_list:
+            for line in read_list:
+                line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
+                if len(line) == 0:
+                    continue
+                book_counter += 1
+                self.create_book(line, book_counter)
         return book_counter
 
     def create_book(self, command, counter):
