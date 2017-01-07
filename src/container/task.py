@@ -21,42 +21,42 @@ class AuthorTask(Task):
 class TopicTask(Task):
     def __init__(self, topic_id):
         Task.__init__(self, Type.topic)
-        self.topic_id = topic_id
+        self.topic_id = int(topic_id)
         return
 
 
 class CollectionTask(Task):
     def __init__(self, collection_id):
         Task.__init__(self, Type.collection)
-        self.collection_id = collection_id
+        self.collection_id = int(collection_id)
         return
 
 
 class QuestionTask(Task):
     def __init__(self, question_id):
         Task.__init__(self, Type.question)
-        self.question_id = question_id
+        self.question_id = int(question_id)
         return
 
 
 class AnswerTask(Task):
     def __init__(self, question_id, answer_id):
         Task.__init__(self, Type.answer)
-        self.question_id = question_id
-        self.answer_id = answer_id
+        self.question_id = int(question_id)
+        self.answer_id = int(answer_id)
         return
 
 
 class ColumnTask(Task):
     def __init__(self, column_id):
         Task.__init__(self, Type.column)
-        self.column_id = column_id
+        self.column_id = int(column_id)
         return
 
 
 class ArticleTask(Task):
     def __init__(self, column_id, article_id):
         Task.__init__(self, Type.article)
-        self.column_id = column_id
-        self.article_id = article_id
+        self.column_id = int(column_id)
+        self.article_id = int(article_id)
         return
