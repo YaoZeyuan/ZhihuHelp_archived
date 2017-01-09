@@ -139,7 +139,7 @@ class Book(object):
             epub.finish_chapter()
 
         epub.set_creator(u'ZhihuHelp1.8.0')
-        epub.set_language(u'zh-cn')
+        #epub.set_language(u'zh-cn') # 这里报bug，直接跳过 @todo 待修复
         epub.set_book_id()
         epub.set_output_path(Path.result_path)
         epub.add_css(Path.base_path + u'/www/css/markdown.css')

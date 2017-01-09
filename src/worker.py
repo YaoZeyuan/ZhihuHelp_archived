@@ -78,7 +78,7 @@ class Worker(object):
         answer["author_name"] = raw_answer_dict['author']['name']
         answer["author_headline"] = raw_answer_dict['author']['headline']
         answer["author_avatar_url"] = Match.parse_file_name(raw_answer_dict['author']['avatar_url'])
-        answer["author_gender"] = raw_answer_dict['author']['gender']
+        answer["author_gender"] = raw_answer_dict['author'].get('gender', 0)
 
         answer["answer_id"] = raw_answer_dict['id']
         answer["question_id"] = raw_answer_dict['question']['id']
@@ -145,8 +145,11 @@ class QuestionWorker(object):
         question_info = QuestionWorker.format_question(raw_question_info)
         Worker.save_record_list('Question', [question_info])
 
+        counter = 0
         answer_list = []
         for raw_answer in question.answers:
+            counter += 1
+            Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
             answer, question = Worker.format_raw_answer(raw_answer)
             answer_list.append(answer)
         Worker.save_record_list('Answer', answer_list)
@@ -180,7 +183,10 @@ class AuthorWorker(object):
 
         answer_list = []
         question_list = []
+        counter = 0
         for raw_answer in author.answers:
+            counter += 1
+            Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
             answer, question = Worker.format_raw_answer(raw_answer)
             answer_list.append(answer)
             question_list.append(question)
@@ -234,13 +240,15 @@ class CollectionWorker(object):
     @staticmethod
     def catch(collection_id):
         collection = Worker.zhihu_client.collection(collection_id)
-        raw_collection_info = collection.pure_data
 
         answer_id_list = []
 
         answer_list = []
         question_list = []
+        counter = 0
         for raw_answer in collection.answers:
+            counter += 1
+            Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
             answer, question = Worker.format_raw_answer(raw_answer)
 
             answer_id = str(answer['answer_id'])
@@ -252,32 +260,33 @@ class CollectionWorker(object):
         Worker.save_record_list('Question', question_list)
 
         collected_answer_id_list = ','.join(answer_id_list)
-        collection_info = CollectionWorker.format_collection(raw_collection_info, collected_answer_id_list)
+        collection_info = CollectionWorker.format_collection(collection, collected_answer_id_list)
         Worker.save_record_list('Collection', [collection_info])
         return
 
     @staticmethod
-    def format_collection(raw_collection_info, collected_answer_id_list=''):
-        item_key_list = [
-            'answer_count',
-            'comment_count',
-            'created_time',
-            'description',
-            'follower_count',
-            'title',
-            'updated_time',
+    def format_collection(collection, collected_answer_id_list=''):
+        u"""
 
-        ]
+        :param collection: src.lib.oauth.zhihu_oauth.Collection
+        :param collected_answer_id_list:
+        :return:
+        """
         info = {}
-        for key in item_key_list:
-            info[key] = raw_collection_info[key]
+        info['answer_count'] = collection.answer_count
+        info['comment_count'] = collection.comment_count
+        info['created_time'] = collection.created_time
+        info['description'] = collection.description
+        info['follower_count'] = collection.follower_count
+        info['title'] = collection.title
+        info['updated_time'] = collection.updated_time
 
         # 特殊映射关系
-        info['collection_id'] = raw_collection_info['id']
-        info['creator_id'] = raw_collection_info['creator']['id']
-        info['creator_name'] = raw_collection_info['creator']['name']
-        info['creator_headline'] = raw_collection_info['creator']['headline']
-        info['creator_avatar_url'] = Match.parse_file_name(raw_collection_info['creator']['avatar_url'])
+        info['collection_id'] = collection.id
+        info['creator_id'] = collection.creator.id
+        info['creator_name'] = collection.creator.name
+        info['creator_headline'] = collection.creator.headline
+        info['creator_avatar_url'] = Match.parse_file_name(collection.creator.avatar_url)
 
         info["collected_answer_id_list"] = collected_answer_id_list
         return info
@@ -293,7 +302,10 @@ class TopicWorker(object):
 
         answer_list = []
         question_list = []
+        counter = 0
         for raw_answer in topic.best_answers:
+            counter += 1
+            Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
             answer, question = Worker.format_raw_answer(raw_answer)
 
             answer_id = str(answer['answer_id'])
@@ -342,7 +354,10 @@ class ColumnWorker(object):
 
         article_list = []
         author_list = []
+        counter = 0
         for raw_article in column.articles:
+            counter += 1
+            Debug.logger.info(u'正在抓取第{}篇文章'.format(counter))
             author, article = Worker.format_article(raw_article)
             article_list.append(article)
             author_list.append(author)
