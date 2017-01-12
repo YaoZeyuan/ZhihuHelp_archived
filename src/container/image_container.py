@@ -53,9 +53,14 @@ class ImageContainer(object):
         if os.path.isfile(self.save_path + '/' + filename):
             return
         Debug.print_in_single_line(u'开始下载图片{}'.format(href))
-        content = Http.get_content(url=href, timeout=Config.timeout_download_picture)
-        if not content:
-            return
+        if href:
+            content = Http.get_content(url=href, timeout=Config.timeout_download_picture)
+            if not content:
+                Debug.logger.debug(u'图片『{}』下载失败'.format(href))
+                content = ''
+        else:
+            #   当下载地址为空的时候，就没必要再去下载了
+            content = ''
         with open(self.save_path + '/' + filename, 'wb') as image:
             image.write(content)
         return
