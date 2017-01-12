@@ -167,4 +167,15 @@ class Match(object):
 
     @staticmethod
     def create_img_element_with_file_name(filename):
-        return u'<div class="duokan-image-single"><img src="{}"></img></div>'.format(u'./images/' + filename)
+        src = Match.create_local_img_src(filename)
+        return u'<div class="duokan-image-single"><img src="{}"></img></div>'.format(src)
+
+    @staticmethod
+    def create_local_img_src(filename):
+        u"""
+        生成本地电子书图片地址
+        :param filename:
+        :return:
+        """
+        src = '{}'.format(u'./images/' + filename)
+        return src

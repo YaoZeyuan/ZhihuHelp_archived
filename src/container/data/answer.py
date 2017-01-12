@@ -37,6 +37,12 @@ class Answer(object):
             filename = img_container.add(src)
             self.img_filename_list.append(filename)
             self.content = self.content.replace(img, Match.create_img_element_with_file_name(filename))
+
+        #   答案作者的头像也要下载
+        filename = img_container.add(Config.zhihu_img_site + self.author_avatar_url)
+        self.img_filename_list.append(filename)
+        self.author_avatar_url = Match.create_local_img_src(filename)
+
         img_container.start_download()
 
         #   下载完成后，更新图片大小
