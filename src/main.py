@@ -72,7 +72,7 @@ class ZhihuHelp(object):
             return
 
         for task in task_list:
-            if Config.book_create_debug:
+            if Config.debug_for_create_book:
                 pass
             else:
                 Worker.distribute(task)

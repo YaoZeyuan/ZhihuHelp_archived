@@ -13,7 +13,7 @@ class Config(object):
     update_time = '2016-12-27'  # 更新日期
 
     debug = False
-    book_create_debug = False # 是否在测试电子书生成功能，在测试的话跳过网页抓取部分
+    debug_for_create_book = False # 是否在测试电子书生成功能，在测试的话跳过网页抓取部分
 
     account = 'mengqingxue@yaozeyuan.online'  # 默认账号密码, 2017年更新
     password = '912714398d'  #
