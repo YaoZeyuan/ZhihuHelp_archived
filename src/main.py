@@ -72,7 +72,10 @@ class ZhihuHelp(object):
             return
 
         for task in task_list:
-            Worker.distribute(task)
+            if Config.book_create_debug:
+                pass
+            else:
+                Worker.distribute(task)
         Debug.logger.info(u"网页信息抓取完毕")
 
         task_result_list = []
