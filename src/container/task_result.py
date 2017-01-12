@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from src.tools.db import DB
 from src.tools.debug import Debug
+from src.tools.match import Match
+from src.tools.path import Path
 from src.tools.type import Type
 from src.container.data.answer import Answer as Answer_Info
 from src.container.data.question import Question as Question_Info
@@ -25,6 +27,9 @@ class Question(object):
 
         self.total_img_size_kb = 0
         self.img_filename_list = []
+
+        self.question_content_img_size = 0
+        self.question_content_img_filename_list = []
         return
 
     def append_answer(self, answer):
@@ -35,8 +40,29 @@ class Question(object):
         self.answer_list.append(answer)
         return
 
+    def download_img_in_question_content(self):
+        #   下载问题详情中的图片，同时更新
+        from src.container.image_container import ImageContainer
+        img_container = ImageContainer()
+        img_src_dict = Match.match_img_with_src_dict(self.question_info.detail)
+        self.question_content_img_filename_list = []
+        for img in img_src_dict:
+            src = img_src_dict[img]
+            filename = img_container.add(src)
+            self.question_content_img_filename_list.append(filename)
+            self.question_info.detail = self.question_info.detail.replace(img, Match.create_img_element_with_file_name(filename))
+
+        img_container.start_download()
+
+        #   下载完成后，更新图片大小
+        for filename in self.question_content_img_filename_list:
+            self.question_content_img_size += Path.get_img_size_by_filename_kb(filename)
+        return
+
     def download_img(self):
         #   下载图片，同时更新
+        Debug.logger.debug('开始下载问题{}内问题详情中的图片'.format(self.question_info.question_id))
+        self.download_img_in_question_content()
         Debug.logger.debug('开始下载问题{}内答案中的图片'.format(self.question_info.question_id))
         index = 1
         for answer in self.answer_list:
@@ -44,11 +70,15 @@ class Question(object):
             answer.download_img()
             self.total_img_size_kb += answer.total_img_size_kb
             index += 1
+
+        #   忘了更新问题内的图片名列表了= =
+        self.update_img_filename_list_in_answer()
         Debug.logger.debug('问题{}内答案中的图片全部下载完成'.format(self.question_info.question_id))
+
         return
 
     def compute_total_img_size_kb(self):
-        self.total_img_size_kb = 0
+        self.total_img_size_kb = self.question_content_img_size
         for answer in self.answer_list:
             self.total_img_size_kb += answer.total_img_size_kb
         return self.total_img_size_kb
@@ -57,6 +87,8 @@ class Question(object):
         self.img_filename_list = []
         for answer in self.answer_list:
             self.img_filename_list += answer.img_filename_list
+        #   加上问题中本身的图片地址
+        self.img_filename_list += self.question_content_img_filename_list
         return
 
     def auto_split(self, max_size_page_kb):
@@ -65,6 +97,11 @@ class Question(object):
         while len(self.answer_list) > 1 and self.compute_total_img_size_kb() > max_size_page_kb:
             answer = self.answer_list.pop()
             remain_question.answer_list.insert(0, answer)
+
+        #   更新自有属性
+        legal_question.question_content_img_filename_list = self.question_content_img_filename_list
+        legal_question.question_content_img_size = self.question_content_img_size
+
         # 最后再更新一下图片大小
         legal_question.compute_total_img_size_kb()
         remain_question.compute_total_img_size_kb()

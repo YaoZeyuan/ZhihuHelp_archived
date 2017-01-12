@@ -177,5 +177,5 @@ class Match(object):
         :param filename:
         :return:
         """
-        src = '{}'.format(u'./images/' + filename)
+        src = '{}'.format(u'../images/' + filename)
         return src
