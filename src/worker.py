@@ -85,12 +85,16 @@ class Worker(object):
 
         question_key_list = [
             "title",
+            "detail",
+            "question_id",
+            "answer_count",
+            "comment_count",
+            "follower_count",
+            "updated_time",
         ]
         question = {}
-        for question_key in question_key_list:
-            question[question_key] = raw_answer_dict['question'][question_key]
-        question['question_id'] = raw_answer_dict['question']['id']
-
+        for question_key in question_key_list :
+            question[question_key] = getattr(raw_answer.question, question_key, '')
         return answer, question
 
     @staticmethod
