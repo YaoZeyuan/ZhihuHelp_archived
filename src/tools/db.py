@@ -49,8 +49,11 @@ class DB(object):
 
     @staticmethod
     def query_row(sql):
-        raw_record = DB.cursor.execute(sql).fetchone()
         record = {}
+        raw_record = DB.cursor.execute(sql).fetchone()
+        if not raw_record:
+            Debug.logger.debug('sql => 【{}】 查询结果为空'.format(sql))
+            return record
         for index, column_name in enumerate(DB.cursor.description):
             record[column_name[0]] = raw_record[index]
         return record

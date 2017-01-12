@@ -86,7 +86,6 @@ class Worker(object):
         question_key_list = [
             "title",
             "detail",
-            "question_id",
             "answer_count",
             "comment_count",
             "follower_count",
@@ -95,6 +94,8 @@ class Worker(object):
         question = {}
         for question_key in question_key_list :
             question[question_key] = getattr(raw_answer.question, question_key, '')
+        #   这个要单取。。。
+        question["question_id"] = getattr(raw_answer.question, '_id', '')
         return answer, question
 
     @staticmethod
@@ -232,7 +233,7 @@ class AuthorWorker(object):
         ]
         info = {}
         for key in item_key_list:
-            info[key] = raw_author_info[key]
+            info[key] = getattr(raw_author_info,key, '')
         info['author_id'] = raw_author_info['id']
 
         # 特殊映射关系

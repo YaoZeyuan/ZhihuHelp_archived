@@ -55,7 +55,7 @@ class ZhihuHelp(object):
         #   遍历ReadList，根据指令生成电子书
         with open('./ReadList.txt', 'r') as read_list:
             for line in read_list:
-                line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
+                line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '').split('#')[0]  # 移除空白字符
                 if len(line) == 0:
                     continue
                 book_counter += 1

@@ -345,7 +345,11 @@ class TaskResult(object):
         #   依次获取对应的Question对象
         for answer in answer_list:
             if answer.question_id not in question_id_dict:
-                question_id_dict[answer.question_id] = Question(self.query_question(answer.question_id))
+                db_question_info = self.query_question(answer.question_id)
+                if not db_question_info:
+                    #   当返回值为空的时候，直接跳过即可
+                    continue
+                question_id_dict[answer.question_id] = Question(db_question_info)
             question_id_dict[answer.question_id].append_answer(answer)
         for question_id in question_id_dict:
             self.question_list.append(question_id_dict[question_id])
