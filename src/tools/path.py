@@ -18,6 +18,7 @@ class Path(object):
 
     html_pool_path = base_path + u'/知乎电子书临时资源库/知乎网页池'
     image_pool_path = base_path + u'/知乎电子书临时资源库/知乎图片池'
+    book_pool_path = base_path + u'/知乎电子书临时资源库/知乎电子书临时文件池'
     result_path = base_path + u'/知乎助手生成的电子书'
 
     @staticmethod
@@ -88,6 +89,7 @@ class Path(object):
 
         Path.html_pool_path = Path.base_path + u'/知乎电子书临时资源库/知乎网页池'
         Path.image_pool_path = Path.base_path + u'/知乎电子书临时资源库/知乎图片池'
+        Path.book_pool_path = Path.base_path + u'/知乎电子书临时资源库/知乎电子书临时文件池'
         Path.result_path = Path.base_path + u'/知乎助手生成的电子书'
 
         return
@@ -100,6 +102,7 @@ class Path(object):
         Path.chdir(u'./知乎电子书临时资源库')
         Path.mkdir(u'./知乎网页池')
         Path.mkdir(u'./知乎图片池')
+        Path.mkdir(u'./知乎电子书临时文件池')
         Path.reset_path()
         return
 

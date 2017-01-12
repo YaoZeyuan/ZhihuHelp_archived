@@ -103,6 +103,8 @@ class Book(object):
         if self.is_split:
             title = self.book_title + u'_卷{}'.format(self.chapter_no)
 
+        #   先切换到电子书临时资源目录下
+        Path.chdir(Path.book_pool_path)
         epub = Epub(title)
         for task_result in self.task_result_list:
             chapter_src = ''
