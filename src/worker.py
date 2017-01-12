@@ -322,12 +322,12 @@ class TopicWorker(object):
         Worker.save_record_list('Question', question_list)
 
         answer_id_list = ','.join(answer_id_list)
-        topic_info = TopicWorker.format_topic(raw_topic_info, answer_id_list)
+        topic_info = TopicWorker.format_topic(topic, answer_id_list)
         Worker.save_record_list('Topic', [topic_info])
         return
 
     @staticmethod
-    def format_topic(raw_topic_info, best_answer_id_list=''):
+    def format_topic(topic_info, best_answer_id_list=''):
         item_key_list = [
             'best_answerers_count',
             'best_answers_count',
@@ -337,13 +337,14 @@ class TopicWorker(object):
             'name',
             'questions_count',
             'unanswered_count',
+            'avatar_url'
         ]
         info = {}
-        for key in item_key_list:
-            info[key] = raw_topic_info[key]
+        for item_key in item_key_list:
+            info[item_key] = getattr(topic_info, item_key, '')
 
-        info['topic_id'] = raw_topic_info['id']
-        info['avatar_url'] = Match.parse_file_name(raw_topic_info['avatar_url'])
+        info['topic_id'] = topic_info._id
+        info['avatar_url'] = Match.parse_file_name(info['avatar_url'])
         info["best_answer_id_list"] = best_answer_id_list
         return info
 

@@ -226,6 +226,7 @@ class Book(object):
         filename = self.get_random_html_file_name()
         content = Template.topic_info.format(
             **{
+                'title': "话题{}({})下精华回答集锦".format(info_page.name, info_page.topic_id),
                 'name': info_page.name,
                 'questions_count': info_page.questions_count,
             }
@@ -316,7 +317,7 @@ class Book(object):
                     'content': answer.content,
                     'comment_count': answer.comment_count,
                     'voteup_count': answer.voteup_count,
-                    'updated_time': answer.updated_time,  # todo : 需要处理成Ymd格式，待处理
+                    'updated_time': ExtraTools.format_date('Y-m-d H:i:s', answer.updated_time),
                 }
             )
 
@@ -350,7 +351,7 @@ class Book(object):
                 'content': article.content,
                 'comment_count': article.comment_count,
                 'voteup_count': article.voteup_count,
-                'updated_time': article.updated,  # todo : 需要处理成Ymd格式，待处理
+                'updated_time':  ExtraTools.format_date('Y-m-d H:i:s', article.updated),
             }
         )
 

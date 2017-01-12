@@ -6,6 +6,11 @@ import datetime
 
 class ExtraTools(object):
     @staticmethod
+    def format_date(date_format, timestamp):
+        ltime = time.localtime(timestamp)
+        return time.strftime(date_format, ltime)
+
+    @staticmethod
     def get_time():
         return str(time.time()).split('.')[0]
 
