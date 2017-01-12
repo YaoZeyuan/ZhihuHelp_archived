@@ -50,13 +50,13 @@ class AnswerTask(Task):
 class ColumnTask(Task):
     def __init__(self, column_id):
         Task.__init__(self, Type.column)
-        self.column_id = int(column_id)
+        self.column_id = column_id
         return
 
 
 class ArticleTask(Task):
     def __init__(self, column_id, article_id):
         Task.__init__(self, Type.article)
-        self.column_id = int(column_id)
+        self.column_id = column_id
         self.article_id = int(article_id)
         return

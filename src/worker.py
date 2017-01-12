@@ -146,8 +146,7 @@ class QuestionWorker(object):
     @staticmethod
     def catch(question_id):
         question = Worker.zhihu_client.question(question_id)
-        raw_question_info = question.pure_data
-        question_info = QuestionWorker.format_question(raw_question_info)
+        question_info = QuestionWorker.format_question(question)
         Worker.save_record_list('Question', [question_info])
 
         counter = 0
@@ -161,7 +160,7 @@ class QuestionWorker(object):
         return
 
     @staticmethod
-    def format_question(raw_question_info):
+    def format_question(question_info):
         item_key_list = [
             'answer_count',
             'comment_count',
@@ -172,8 +171,10 @@ class QuestionWorker(object):
         ]
         info = {}
         for key in item_key_list:
-            info[key] = raw_question_info[key]
-        info['question_id'] = raw_question_info['id']
+            info[key] = getattr(question_info, key, '')
+
+
+        info['question_id'] = getattr(question_info, '_id', '')
 
         return info
 

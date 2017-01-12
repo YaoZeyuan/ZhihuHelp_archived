@@ -287,7 +287,7 @@ class TaskResult(object):
     def extract_question(self):
         self.info_page = self.query_question(self.task.question_id)
         question = Question(self.info_page)
-        answer_list = self.query_answer_list_by_question_id([self.task.question_id])
+        answer_list = self.query_answer_list_by_question_id(self.task.question_id)
         for answer in answer_list:
             question.append_answer(answer)
         self.question_list.append(question)
@@ -410,9 +410,9 @@ class TaskResult(object):
             answer_list.append(self.format_answer(raw_answer))
         return answer_list
 
-    def query_answer_list_by_question_id(self, question_id_list):
+    def query_answer_list_by_question_id(self, question_id):
         raw_answer_list = DB.query_all(
-            'select * from Answer where question_id in ({})'.format(','.join(question_id_list)))
+            'select * from Answer where question_id="{}"'.format(question_id))
         answer_list = []
         for raw_answer in raw_answer_list:
             answer_list.append(self.format_answer(raw_answer))
