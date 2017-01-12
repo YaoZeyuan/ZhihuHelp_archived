@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 
+from src.tools.debug import Debug
 from src.tools.type import ImgQuality
 
 
@@ -100,16 +101,17 @@ class Match(object):
 
 
     @staticmethod
-    def generate_avatar_img_src(img_file_name ='da8e974dc.jpg', img_quality=ImgQuality.big):
+    def generate_img_src(img_file_name ='da8e974dc.jpg', img_quality=ImgQuality.big):
         """
         生成特殊的图片地址(知乎头像/专栏信息等存在于数据库中的图片)
         :param img_file_name: 图片名
         :param img_quality: 图片质量
         :return:
         """
-        result = re.search(r'(?P<name>[^_]*)\.(?P<ext>.*)', img_file_name)
+        result = re.search(r'(?<=zhimg.com/)(?P<name>[^_]*)[^\.]*\.(?P<ext>.*)', img_file_name)
         if not result:
-            return ImgQuality.add_random_download_address_header_for_img_filename('da8e974dc.jpg') # 默认的匿名用户头像
+            # 地址不符合规范，直接返回false
+            return None
 
         filename = result.group('name')
         ext = result.group('ext')
@@ -117,11 +119,14 @@ class Match(object):
         if img_quality == ImgQuality.raw:
             img_file_name = filename + '.' + ext
         elif img_quality == ImgQuality.big:
-            img_file_name = filename + '_g.' + ext
+            img_file_name = filename + '_b.' + ext
         elif img_quality == ImgQuality.none:
             return ''
-
-        return ImgQuality.add_random_download_address_header_for_img_filename(img_file_name)
+        else:
+            Debug.logger.info('警告：图片类型设置不正确！')
+            return None
+        url = ImgQuality.add_random_download_address_header_for_img_filename(img_file_name)
+        return url
 
     def fix_image(self, content):
         content = Match.fix_html(content)

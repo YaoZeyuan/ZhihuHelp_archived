@@ -7,6 +7,7 @@ from src.tools.controler import Control
 from src.tools.debug import Debug
 from src.tools.extra_tools import ExtraTools
 from src.tools.http import Http
+from src.tools.match import Match
 from src.tools.path import Path
 
 
@@ -66,8 +67,16 @@ class ImageContainer(object):
         return
 
     def create_image(self, href):
+        #   在这里，根据图片配置对文件类别进行统一处理
+        href = self.transfer_img_href_by_config_quality(href)
         image = {'filename': self.create_filename(href), 'href': href}
         return image
+
+    def transfer_img_href_by_config_quality(self, raw_href):
+        href = Match.generate_img_src(raw_href, Config.picture_quality)
+        if href is None:
+            href = raw_href
+        return href
 
     def create_filename(self, href):
         filename = ExtraTools.md5(href) + '.jpg'

@@ -18,9 +18,9 @@ class Type(object):
 
 
 class ImgQuality(object):
-    raw = 'raw'  # 原图
-    big = 'big'  # 普通
-    none = 'none'  # 无图
+    raw = 2  # 原图
+    big = 1  # 普通
+    none = 0  # 无图
 
     @staticmethod
     def add_random_download_address_header_for_img_filename(file_uri):
@@ -30,10 +30,10 @@ class ImgQuality(object):
         :return:
         """
         img_site_list = [
-            'https://pic1.zhimg.com/'
-            'https://pic2.zhimg.com/'
-            'https://pic3.zhimg.com/'
-            'https://pic4.zhimg.com/'
+            'https://pic1.zhimg.com/',
+            'https://pic2.zhimg.com/',
+            'https://pic3.zhimg.com/',
+            'https://pic4.zhimg.com/',
         ]
-        url = random.choice(img_site_list) + file_uri
+        url = img_site_list[0] + file_uri
         return url
