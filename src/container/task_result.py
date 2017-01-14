@@ -258,7 +258,7 @@ class TaskResult(object):
         elif self.task.task_type == Type.collection:
             return u'知乎收藏夹{}({})答案集'.format(self.info_page.title, self.task.collection_id)
         elif self.task.task_type == Type.column:
-            return u'知乎专栏{}({})文章集'.format(self.info_page.name, self.task.column_id)
+            return u'知乎专栏{}({})文章集'.format(self.info_page.title, self.task.column_id)
         elif self.task.task_type == Type.question:
             return u'知乎文章({})'.format(self.task.article_id)
         return
@@ -441,7 +441,7 @@ class TaskResult(object):
         return article
 
     def query_article_list_by_column_id(self, column_id):
-        raw_article_list = DB.query_row('select * from Article where column_id="{}"'.format(column_id))
+        raw_article_list = DB.query_all('select * from Article where column_id="{}"'.format(column_id))
         article_list = []
         for raw_article in raw_article_list:
             article = self.format_article(raw_article)

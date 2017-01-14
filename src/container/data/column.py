@@ -9,6 +9,4 @@ class Column(object):
         self.follower_count = data['follower_count']
         self.description = data['description']
         self.image_url = data['image_url']
-        self.intro = data['intro']
-        self.creator_id = data['creator_id']
         return

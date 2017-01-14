@@ -268,6 +268,7 @@ class Book(object):
         filename = self.get_random_html_file_name()
         content = Template.column_info.format(
             **{
+                'title': u"知乎专栏{}({})".format(info_page.title, info_page.column_id),
                 'name': info_page.title,
                 'postsCount': info_page.article_count,
             }
