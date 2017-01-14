@@ -137,7 +137,7 @@ class Match(object):
     @staticmethod
     def match_img_with_src_dict(content):
         img_src_dict = {}
-        img_list = re.findall(r'<img[^>]*', content)
+        img_list = re.findall(r'<img[^>]*>', content)
         for img in img_list:
             result = re.search(r'(?<=src=").*?(?=")', img)
             if not result:
