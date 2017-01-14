@@ -28,7 +28,6 @@ class Article(object):
         self.img_filename_list = []
         return
 
-
     def download_img(self):
         from src.container.image_container import ImageContainer
         img_container = ImageContainer()

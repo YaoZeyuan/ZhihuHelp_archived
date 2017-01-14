@@ -24,7 +24,6 @@ class Config(object):
     article_order_by_desc = False  # 文章排序顺序->是否为desc
     timeout_download_picture = 10  # 多给知乎服务器点时间，批量生成tex太痛苦了- -
     timeout_download_html = 5
-    zhihu_img_site = 'https://pic4.zhimg.com/' #    知乎图片地址，用于下载用户头像时生成链接
 
     @staticmethod
     def init_config():

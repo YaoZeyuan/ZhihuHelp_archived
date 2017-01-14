@@ -77,7 +77,7 @@ class Worker(object):
         answer["author_id"] = raw_answer_dict['author']['id']
         answer["author_name"] = raw_answer_dict['author']['name']
         answer["author_headline"] = raw_answer_dict['author']['headline']
-        answer["author_avatar_url"] = Match.parse_file_name(raw_answer_dict['author']['avatar_url'])
+        answer["author_avatar_url"] = raw_answer_dict['author']['avatar_url']
         answer["author_gender"] = raw_answer_dict['author'].get('gender', 0)
 
         answer["answer_id"] = raw_answer_dict['id']
@@ -298,7 +298,7 @@ class CollectionWorker(object):
         info['creator_id'] = collection.creator.id
         info['creator_name'] = collection.creator.name
         info['creator_headline'] = collection.creator.headline
-        info['creator_avatar_url'] = Match.parse_file_name(collection.creator.avatar_url)
+        info['creator_avatar_url'] = collection.creator.avatar_url
 
         info["collected_answer_id_list"] = collected_answer_id_list
         return info
@@ -349,7 +349,6 @@ class TopicWorker(object):
             info[item_key] = getattr(topic_info, item_key, '')
 
         info['topic_id'] = topic_info._id
-        info['avatar_url'] = Match.parse_file_name(info['avatar_url'])
         info["best_answer_id_list"] = best_answer_id_list
         return info
 

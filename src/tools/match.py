@@ -80,27 +80,6 @@ class Match(object):
         return unicode(filename)
 
     @staticmethod
-    def parse_file_name(avatar_url):
-        """
-        从地址中提取出统一的文件名信息
-        目前只用于图片
-        格式: [图片名].[图片后缀名]
-        例: abc.png
-        :type avatar_url str
-        :rtype: str
-        """
-        result = re.search(r'(?P<name>[^/_]*)_(?P<size>[^.]*)\.(?P<ext>.*)', avatar_url)
-        filename = 'da8e974dc'  # 匿名用户默认头像
-        ext = 'jpg'
-        if not result:
-            return filename + '.' + ext
-
-        filename = result.group('name')
-        ext = result.group('ext')
-        return filename + '.' + ext
-
-
-    @staticmethod
     def generate_img_src(img_file_name ='da8e974dc.jpg', img_quality=ImgQuality.big):
         """
         生成特殊的图片地址(知乎头像/专栏信息等存在于数据库中的图片)
@@ -147,6 +126,8 @@ class Match(object):
                     new_image = img + '</img>'
                     content = content.replace(img, new_image)
                     continue
+                else:
+                    new_image = '<img>'
 
             new_image += '</img>'
             content = content.replace(img, '<div class="duokan-image-single">{}</div>'.format(new_image))

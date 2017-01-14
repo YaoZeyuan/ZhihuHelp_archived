@@ -39,7 +39,7 @@ class Answer(object):
             self.content = self.content.replace(img, Match.create_img_element_with_file_name(filename))
 
         #   答案作者的头像也要下载
-        filename = img_container.add(Config.zhihu_img_site + self.author_avatar_url)
+        filename = img_container.add(self.author_avatar_url)
         self.img_filename_list.append(filename)
         self.author_avatar_url = Match.create_local_img_src(filename)
 
