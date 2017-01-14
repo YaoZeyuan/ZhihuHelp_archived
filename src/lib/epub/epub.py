@@ -28,12 +28,12 @@ class Epub(object):
 
     def init_index(self):
         # 目录先放图片文件夹里
-        open(EpubPath.style_path + u'/xindex.html', 'w')
-        self.add_index_html(EpubPath.style_path + u'/xindex.html', u'目录')
+        open(EpubPath.style_path + u'/index.xhtml', 'w')
+        self.add_index_html(EpubPath.style_path + u'/index.xhtml', u'目录')
         return
 
     def write_index(self):
-        with open(EpubPath.html_path + u'/xindex.html', 'w') as index:
+        with open(EpubPath.html_path + u'/index.xhtml', 'w') as index:
             index.write(self.directory.get_content())
         return
 
