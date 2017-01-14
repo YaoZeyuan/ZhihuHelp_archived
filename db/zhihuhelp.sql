@@ -21,13 +21,19 @@ CREATE TABLE `Answer` (
 CREATE TABLE `Article` (
   `article_id` varchar(100) NOT NULL  , ---- COMMENT '文章id',
   `title` varchar(200) NOT NULL , ---- COMMENT '文章标题',
-  `updated` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '更新时间戳',
-  `created` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '创建时间戳',
+  `updated_time` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '更新时间戳',
   `voteup_count` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '赞同数',
   `column_id` varchar(200) NOT NULL , ---- COMMENT '专栏id',
+  `image_url` varchar(500) NOT NULL , ---- COMMENT '封面题图',
   `content` text NOT NULL , ---- COMMENT '文章内容(html形式)',
   `comment_count` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '评论数',
-  `author_id` varchar(200) NOT NULL,  ---- COMMENT '作者hash_id'
+
+  ----以下同answer中的设置
+  `author_id` varchar(500) NOT NULL DEFAULT 'nimingyonghu' , ---- COMMENT '作者的hash_id',
+  `author_name` varchar(500) NOT NULL DEFAULT '匿名用户' , ---- COMMENT '作者名字',
+  `author_headline` varchar(500) NOT NULL DEFAULT '' , ---- COMMENT '作者签名档',
+  `author_avatar_url` varchar(500) NOT NULL DEFAULT 'http://pic4.zhimg.com/bfcef853fba8140581eeede4ea7a0c33_s.jpg' , ---- COMMENT '作者头像:示例http://pic4.zhimg.com/bfcef853fba8140581eeede4ea7a0c33_s.jpg',
+  `author_gender` int(11) NOT NULL DEFAULT '0' , ---- COMMENT '作者性别0:女,1:男,-1:未设置',
   PRIMARY KEY (`article_id`)
 ) ; ---- ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -81,13 +87,11 @@ CREATE TABLE `Collection` (
 
 CREATE TABLE `Column` (
   `column_id` varchar(200) NOT NULL , ---- COMMENT '专栏id',
-  `name` varchar(200) NOT NULL , ---- COMMENT '专栏名',
-  `postsCount` int(11) NOT NULL , ---- COMMENT '专栏内文章数',
-  `followersCount` int(11) NOT NULL , ---- COMMENT '关注人数',
+  `title` varchar(200) NOT NULL , ---- COMMENT '专栏名',
+  `article_count` int(11) NOT NULL , ---- COMMENT '专栏内文章数',
+  `follower_count` int(11) NOT NULL , ---- COMMENT '关注人数',
   `description` varchar(5000) NOT NULL , ---- COMMENT '专栏描述',
-  `reason` varchar(5000) NOT NULL , ---- COMMENT '专栏创建原因(由所有者自由填写)',
-  `intro` varchar(5000) NOT NULL , ---- COMMENT '专栏介绍',
-  `creator_id` varchar(200) NOT NULL , ---- COMMENT '创建者的知乎hash_id',
+  `image_url` varchar(5000) NOT NULL , ---- COMMENT '专栏封面',
   PRIMARY KEY (`column_id`)
 ) ; ---- ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

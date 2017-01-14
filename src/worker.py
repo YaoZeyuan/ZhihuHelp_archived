@@ -37,7 +37,7 @@ class Worker(object):
         elif task.get_task_type() == Type.question:
             QuestionWorker.catch(task.question_id)
         elif task.get_task_type() == Type.answer:
-            QuestionWorker.catch(task.question_id)
+            AnswerWorker.catch(task.answer_id)
         elif task.get_task_type() == Type.collection:
             CollectionWorker.catch(task.collection_id)
         elif task.get_task_type() == Type.topic:
@@ -99,36 +99,33 @@ class Worker(object):
         return answer, question
 
     @staticmethod
-    def format_article(raw_article):
+    def format_article(column_id, raw_article):
         article_key_list = [
             "title",  # 标题
-            "updated",  # 更新时间戳
+            "updated_time",  # 更新时间戳
             "voteup_count",  # 赞同数
-            "created",  # 创建时间戳
+            "image_url",  # 创建时间戳
             "content",  # 内容(html，巨长)
             "comment_count",  # 评论数
         ]
         article = {}
         for key in article_key_list:
-            article[key] = raw_article[key]
-        article['article_id'] = raw_article['id']
-        article['image_url'] = Match.parse_file_name(raw_article['image_url'])
-        article['author_id'] = raw_article['author']['id']
-        article['column_id'] = raw_article['column']['id']
+            article[key] = getattr(raw_article, key, '')
+        article['column_id'] = column_id
+        article['article_id'] = getattr(raw_article, 'id', '')
 
-        author_key_list = [
-            "gender",
-            "headline",
-            "name",
-        ]
-        author_info = {}
-        for key in author_key_list:
-            author_info[key] = raw_article['author'][key]
+        raw_article_dict = raw_article.pure_data.get(u'data', None)
+        if not raw_article_dict:
+            # 数据为空说明其数据应在cache字段中
+            raw_article_dict = raw_article.pure_data.get(u'cache', {})
 
-        author_info['author_id'] = raw_article['author']['id']
-        author_info['avatar_url'] = Match.parse_file_name(raw_article['author']['avatar_url'])
+        article['author_id'] = raw_article_dict['author']['id']
+        article['author_name'] = raw_article_dict['author']['name']
+        article['author_headline'] = raw_article_dict['author']['headline']
+        article['author_avatar_url'] = raw_article_dict['author']['avatar_url']
+        article['author_gender'] = raw_article_dict['author']['gender']
 
-        return author_info, article
+        return article
 
     @staticmethod
     def save_record_list(table_name, record_list):
@@ -173,10 +170,19 @@ class QuestionWorker(object):
         for key in item_key_list:
             info[key] = getattr(question_info, key, '')
 
-
         info['question_id'] = getattr(question_info, '_id', '')
 
         return info
+
+class AnswerWorker(object):
+    @staticmethod
+    def catch(answer_id):
+        raw_answer = Worker.zhihu_client.answer(answer_id)
+        answer, question = Worker.format_raw_answer(raw_answer)
+        Worker.save_record_list('Question', [question])
+        Worker.save_record_list('Answer', [answer])
+        return
+
 
 
 class AuthorWorker(object):
@@ -302,8 +308,6 @@ class TopicWorker(object):
     @staticmethod
     def catch(topic_id):
         topic = Worker.zhihu_client.topic(topic_id)
-        raw_topic_info = topic.pure_data
-
         answer_id_list = []
 
         answer_list = []
@@ -354,48 +358,38 @@ class ColumnWorker(object):
     @staticmethod
     def catch(column_id):
         column = Worker.zhihu_client.column(column_id)
-        raw_column_info = column.pure_data
-        author_info, column_info = ColumnWorker.format_column(raw_column_info)
-        Worker.save_record_list('Author', [author_info])
+        column_info = ColumnWorker.format_column(column)
         Worker.save_record_list('Column', [column_info])
 
         article_list = []
-        author_list = []
         counter = 0
         for raw_article in column.articles:
             counter += 1
             Debug.logger.info(u'正在抓取第{}篇文章'.format(counter))
-            author, article = Worker.format_article(raw_article)
+            article = Worker.format_article(column_id, raw_article)
             article_list.append(article)
-            author_list.append(author)
 
         Worker.save_record_list('Article', article_list)
-        Worker.save_record_list('Author', author_list)
         return
 
     @staticmethod
-    def format_column(raw_column_info):
+    def format_column(raw_column):
+        u"""
+
+        :param raw_column: src.lib.oauth.zhihu_oauth.zhcls.Column
+        :return:
+        """
         column_key_list = [
-            'name',
-            'postsCount',
+            'title',
+            'article_count',
             'description',
-            'followersCount',
-            'reason',
-            'intro',
+            'follower_count',
+            'image_url',
         ]
         column_info = {}
         for key in column_key_list:
-            column_info[key] = raw_column_info[key]
+            column_info[key] = getattr(raw_column, key, '')
 
-        column_info['column_id'] = raw_column_info['slug']
-        column_info['creator_id'] = raw_column_info['creator']['hash']
+        column_info['column_id'] = raw_column._id
 
-        author_info = {}
-        author_info['headline'] = raw_column_info['creator']['bio']
-        author_info['author_id'] = raw_column_info['creator']['hash']
-        author_info['name'] = raw_column_info['creator']['name']
-        author_info['author_page_id'] = raw_column_info['creator']['slug']
-        author_info['description'] = raw_column_info['creator']['description']
-        author_info['avatar_url'] = raw_column_info['creator']['avatar']['id'] + '.jpg'  # 强行拼接
-
-        return author_info, column_info
+        return column_info
