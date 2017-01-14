@@ -106,6 +106,9 @@ class OPF(Base):
         self.spine = Spine()
         self.metadata_completed = set()
         self.uid = EpubConfig.uid
+        #   需要有一个资源池，池中是src => resource_id 的对应关系
+        #   资源不能重复添加，特别是图片，否则Edge会直接报错，无法阅读
+        self.resource_pool = {}
         return
 
     def set_language(self, language=EpubConfig.language):
@@ -129,16 +132,28 @@ class OPF(Base):
         return
 
     def add_html(self, src):
-        resource_id = self.manifest.add_html(src)
+        if src in self.resource_pool:
+            return self.resource_pool[src]
+        else:
+            resource_id = self.manifest.add_html(src)
+            self.resource_pool[src] = resource_id
         self.spine.add_item(resource_id)
         return resource_id
 
     def add_css(self, src):
-        resource_id = self.manifest.add_css(src)
+        if src in self.resource_pool:
+            return self.resource_pool[src]
+        else:
+            resource_id = self.manifest.add_css(src)
+            self.resource_pool[src] = resource_id
         return resource_id
 
     def add_image(self, src):
-        resource_id = self.manifest.add_image(src)
+        if src in self.resource_pool:
+            return self.resource_pool[src]
+        else:
+            resource_id = self.manifest.add_image(src)
+            self.resource_pool[src] = resource_id
         return resource_id
 
     def add_title_page_html(self, src):
