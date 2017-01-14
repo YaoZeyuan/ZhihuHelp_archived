@@ -441,7 +441,8 @@ class TaskResult(object):
         return article
 
     def query_article_list_by_column_id(self, column_id):
-        raw_article_list = DB.query_all('select * from Article where column_id="{}"'.format(column_id))
+        #   根据发表时间正序获取文章列表，方便浏览
+        raw_article_list = DB.query_all('select * from Article where column_id="{}" order by article_id asc'.format(column_id))
         article_list = []
         for raw_article in raw_article_list:
             article = self.format_article(raw_article)
