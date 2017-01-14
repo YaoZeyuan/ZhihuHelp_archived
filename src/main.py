@@ -36,9 +36,9 @@ class ZhihuHelp(object):
 
         Debug.logger.info(u"开始读取ReadList.txt设置信息")
 
-        if not Path.is_file('./ReadList.txt'):
+        if not Path.is_file(u'./ReadList.txt'):
             #  当ReadList不存在的时候自动创建之
-            with open('./ReadList.txt', 'w') as read_list:
+            with open(u'./ReadList.txt', u'w') as read_list:
                 read_list.close()
             print Debug.logger.info(u"ReadList.txt 内容为空，自动退出")
             return
@@ -53,7 +53,7 @@ class ZhihuHelp(object):
     def read_list(self):
         book_counter = 0  # 统计累计制作了多少本书籍
         #   遍历ReadList，根据指令生成电子书
-        with open('./ReadList.txt', 'r') as read_list:
+        with open(u'./ReadList.txt', u'r') as read_list:
             for line in read_list:
                 line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '').split('#')[0]  # 移除空白字符
                 if len(line) == 0:
@@ -117,7 +117,7 @@ class ZhihuHelp(object):
         try:
             content = Http.get_content(u"https://www.yaozeyuan.online/zhihuhelp/upgrade.txt")
             if not content:
-                raise Exception('HttpError')
+                raise Exception(u'HttpError')
             time, url = [x.strip() for x in content.strip('\n').split('\n')]
             if time == Config.update_time:
                 return

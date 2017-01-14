@@ -59,7 +59,7 @@ class Login(object):
             print u'输入『yes』按回车更换其他账号'
             print u'直接敲击回车获取验证码'
             confirm = raw_input()
-            if confirm == 'yes':
+            if confirm == u'yes':
                 account, password = self.get_account()
             captcha = self.get_captcha()
         Config.save()
@@ -91,7 +91,7 @@ class Login(object):
             Config.account, Config.password, Config.remember_account = account, password, True
         else:
             print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
-            if raw_input() == 'yes':
+            if raw_input() == u'yes':
                 Config.account, Config.password, Config.remember_account = account, password, True
                 print u'帐号密码已保存,可通过修改config.json修改设置'
             else:
@@ -110,7 +110,7 @@ class Login(object):
 
     def __clear_login_client(self):
         u"""清空登录token"""
-        with open(Login.Login_Token_File_Uri, 'w') as token_file:
+        with open(Login.Login_Token_File_Uri, u'w') as token_file:
             token_file.write('')
         return
 
@@ -131,7 +131,7 @@ class Login(object):
 
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
-        image = open(captcha_path, 'wb')
+        image = open(captcha_path, u'wb')
         image.write(img_content_bytes)
         image.close()
 

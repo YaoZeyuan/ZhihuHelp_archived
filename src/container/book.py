@@ -162,11 +162,11 @@ class Book(object):
         filename = self.get_random_html_file_name()
         content = Template.book_info.format(
             **{
-                'title': self.book_title
+                u'title': self.book_title
             }
         )
-        uri = Path.html_pool_path + '/' + filename
-        buf_file = open(uri, 'w')
+        uri = Path.html_pool_path + u'/' + filename
+        buf_file = open(uri, u'w')
         buf_file.write(content)
         buf_file.close()
         return uri

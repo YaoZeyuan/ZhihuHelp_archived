@@ -47,8 +47,8 @@ class Worker(object):
         elif task.get_task_type() == Type.article:
             ColumnWorker.catch(task.column_id)
         else:
-            Debug.logger.info("任务类别无法识别")
-            Debug.logger.info("当前类别为" + task.get_task_type())
+            Debug.logger.info(u"任务类别无法识别")
+            Debug.logger.info(u"当前类别为" + task.get_task_type())
         return
 
     @staticmethod
@@ -65,65 +65,65 @@ class Worker(object):
 
         answer = {}
         #   有些数据只能从类属性中获取，直接取数据的话取不到(懒加载)，很坑，只能这样了= =
-        answer['comment_count'] = raw_answer.comment_count
-        answer['content'] = raw_answer.content
-        answer['created_time'] = raw_answer.created_time
-        answer['updated_time'] = raw_answer.updated_time
-        answer['is_copyable'] = raw_answer.is_copyable
-        answer['thanks_count'] = raw_answer.thanks_count
-        answer['voteup_count'] = raw_answer.voteup_count
+        answer[u'comment_count'] = raw_answer.comment_count
+        answer[u'content'] = raw_answer.content
+        answer[u'created_time'] = raw_answer.created_time
+        answer[u'updated_time'] = raw_answer.updated_time
+        answer[u'is_copyable'] = raw_answer.is_copyable
+        answer[u'thanks_count'] = raw_answer.thanks_count
+        answer[u'voteup_count'] = raw_answer.voteup_count
 
         # 特殊key
-        answer["author_id"] = raw_answer_dict['author']['id']
-        answer["author_name"] = raw_answer_dict['author']['name']
-        answer["author_headline"] = raw_answer_dict['author']['headline']
-        answer["author_avatar_url"] = raw_answer_dict['author']['avatar_url']
-        answer["author_gender"] = raw_answer_dict['author'].get('gender', 0)
+        answer[u"author_id"] = raw_answer_dict[u'author'][u'id']
+        answer[u"author_name"] = raw_answer_dict[u'author'][u'name']
+        answer[u"author_headline"] = raw_answer_dict[u'author'][u'headline']
+        answer[u"author_avatar_url"] = raw_answer_dict[u'author'][u'avatar_url']
+        answer[u"author_gender"] = raw_answer_dict[u'author'].get(u'gender', 0)
 
-        answer["answer_id"] = raw_answer_dict['id']
-        answer["question_id"] = raw_answer_dict['question']['id']
+        answer[u"answer_id"] = raw_answer_dict[u'id']
+        answer[u"question_id"] = raw_answer_dict[u'question'][u'id']
 
         question_key_list = [
-            "title",
-            "detail",
-            "answer_count",
-            "comment_count",
-            "follower_count",
-            "updated_time",
+            u"title",
+            u"detail",
+            u"answer_count",
+            u"comment_count",
+            u"follower_count",
+            u"updated_time",
         ]
         question = {}
         for question_key in question_key_list :
-            question[question_key] = getattr(raw_answer.question, question_key, '')
+            question[question_key] = getattr(raw_answer.question, question_key, u'')
         #   这个要单取。。。
-        question["question_id"] = getattr(raw_answer.question, '_id', '')
+        question[u"question_id"] = getattr(raw_answer.question, u'_id', '')
         return answer, question
 
     @staticmethod
     def format_article(column_id, raw_article):
         article_key_list = [
-            "title",  # 标题
-            "updated_time",  # 更新时间戳
-            "voteup_count",  # 赞同数
-            "image_url",  # 创建时间戳
-            "content",  # 内容(html，巨长)
-            "comment_count",  # 评论数
+            u"title",  # 标题
+            u"updated_time",  # 更新时间戳
+            u"voteup_count",  # 赞同数
+            u"image_url",  # 创建时间戳
+            u"content",  # 内容(html，巨长)
+            u"comment_count",  # 评论数
         ]
         article = {}
         for key in article_key_list:
-            article[key] = getattr(raw_article, key, '')
-        article['column_id'] = column_id
-        article['article_id'] = getattr(raw_article, 'id', '')
+            article[key] = getattr(raw_article, key, u'')
+        article[u'column_id'] = column_id
+        article[u'article_id'] = getattr(raw_article, u'id', u'')
 
         raw_article_dict = raw_article.pure_data.get(u'data', None)
         if not raw_article_dict:
             # 数据为空说明其数据应在cache字段中
             raw_article_dict = raw_article.pure_data.get(u'cache', {})
 
-        article['author_id'] = raw_article_dict['author']['id']
-        article['author_name'] = raw_article_dict['author']['name']
-        article['author_headline'] = raw_article_dict['author']['headline']
-        article['author_avatar_url'] = raw_article_dict['author']['avatar_url']
-        article['author_gender'] = raw_article_dict['author']['gender']
+        article[u'author_id'] = raw_article_dict[u'author'][u'id']
+        article[u'author_name'] = raw_article_dict[u'author'][u'name']
+        article[u'author_headline'] = raw_article_dict[u'author'][u'headline']
+        article[u'author_avatar_url'] = raw_article_dict[u'author'][u'avatar_url']
+        article[u'author_gender'] = raw_article_dict[u'author'][u'gender']
 
         return article
 
@@ -144,7 +144,7 @@ class QuestionWorker(object):
     def catch(question_id):
         question = Worker.zhihu_client.question(question_id)
         question_info = QuestionWorker.format_question(question)
-        Worker.save_record_list('Question', [question_info])
+        Worker.save_record_list(u'Question', [question_info])
 
         counter = 0
         answer_list = []
@@ -153,24 +153,24 @@ class QuestionWorker(object):
             Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
             answer, question = Worker.format_raw_answer(raw_answer)
             answer_list.append(answer)
-        Worker.save_record_list('Answer', answer_list)
+        Worker.save_record_list(u'Answer', answer_list)
         return
 
     @staticmethod
     def format_question(question_info):
         item_key_list = [
-            'answer_count',
-            'comment_count',
-            'follower_count',
-            'title',
-            'detail',
-            'updated_time',
+            u'answer_count',
+            u'comment_count',
+            u'follower_count',
+            u'title',
+            u'detail',
+            u'updated_time',
         ]
         info = {}
         for key in item_key_list:
-            info[key] = getattr(question_info, key, '')
+            info[key] = getattr(question_info, key, u'')
 
-        info['question_id'] = getattr(question_info, '_id', '')
+        info[u'question_id'] = getattr(question_info, u'_id', u'')
 
         return info
 
@@ -179,8 +179,8 @@ class AnswerWorker(object):
     def catch(answer_id):
         raw_answer = Worker.zhihu_client.answer(answer_id)
         answer, question = Worker.format_raw_answer(raw_answer)
-        Worker.save_record_list('Question', [question])
-        Worker.save_record_list('Answer', [answer])
+        Worker.save_record_list(u'Question', [question])
+        Worker.save_record_list(u'Answer', [answer])
         return
 
 
@@ -190,7 +190,7 @@ class AuthorWorker(object):
     def catch(author_page_id):
         author = Worker.zhihu_client.people(author_page_id)
         author_info = AuthorWorker.format_author(author, author_page_id)
-        Worker.save_record_list('Author', [author_info])
+        Worker.save_record_list(u'Author', [author_info])
 
         answer_list = []
         question_list = []
@@ -201,8 +201,8 @@ class AuthorWorker(object):
             answer, question = Worker.format_raw_answer(raw_answer)
             answer_list.append(answer)
             question_list.append(question)
-        Worker.save_record_list('Answer', answer_list)
-        Worker.save_record_list('Question', question_list)
+        Worker.save_record_list(u'Answer', answer_list)
+        Worker.save_record_list(u'Question', question_list)
         return
 
     @staticmethod
@@ -214,36 +214,36 @@ class AuthorWorker(object):
         :return: dict
         """
         item_key_list = [
-            "answer_count",
-            "articles_count",
-            "avatar_url",
-            "columns_count",
-            "description",
-            "favorite_count",
-            "favorited_count",
-            "follower_count",
-            "following_columns_count",
-            "following_count",
-            "following_question_count",
-            "following_topic_count",
-            "gender",
-            "headline",
-            "name",
-            "question_count",
-            "shared_count",
-            "is_bind_sina",
-            "thanked_count",
-            "sina_weibo_name",
-            "sina_weibo_url",
-            "voteup_count",
+            u"answer_count",
+            u"articles_count",
+            u"avatar_url",
+            u"columns_count",
+            u"description",
+            u"favorite_count",
+            u"favorited_count",
+            u"follower_count",
+            u"following_columns_count",
+            u"following_count",
+            u"following_question_count",
+            u"following_topic_count",
+            u"gender",
+            u"headline",
+            u"name",
+            u"question_count",
+            u"shared_count",
+            u"is_bind_sina",
+            u"thanked_count",
+            u"sina_weibo_name",
+            u"sina_weibo_url",
+            u"voteup_count",
         ]
         info = {}
         for key in item_key_list:
-            info[key] = getattr(raw_author_info,key, '')
-        info['author_id'] = getattr(raw_author_info, 'id', '')
+            info[key] = getattr(raw_author_info,key, u'')
+        info[u'author_id'] = getattr(raw_author_info, u'id', u'')
 
         # 特殊映射关系
-        info["author_page_id"] = author_page_id  # 用户页面id，随时会更换
+        info[u"author_page_id"] = author_page_id  # 用户页面id，随时会更换
         return info
 
 
@@ -262,17 +262,17 @@ class CollectionWorker(object):
             Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
             answer, question = Worker.format_raw_answer(raw_answer)
 
-            answer_id = str(answer['answer_id'])
+            answer_id = str(answer[u'answer_id'])
             answer_id_list.append(answer_id)
 
             answer_list.append(answer)
             question_list.append(question)
-        Worker.save_record_list('Answer', answer_list)
-        Worker.save_record_list('Question', question_list)
+        Worker.save_record_list(u'Answer', answer_list)
+        Worker.save_record_list(u'Question', question_list)
 
         collected_answer_id_list = ','.join(answer_id_list)
         collection_info = CollectionWorker.format_collection(collection, collected_answer_id_list)
-        Worker.save_record_list('Collection', [collection_info])
+        Worker.save_record_list(u'Collection', [collection_info])
         return
 
     @staticmethod
@@ -284,22 +284,22 @@ class CollectionWorker(object):
         :return:
         """
         info = {}
-        info['answer_count'] = collection.answer_count
-        info['comment_count'] = collection.comment_count
-        info['created_time'] = collection.created_time
-        info['description'] = collection.description
-        info['follower_count'] = collection.follower_count
-        info['title'] = collection.title
-        info['updated_time'] = collection.updated_time
+        info[u'answer_count'] = collection.answer_count
+        info[u'comment_count'] = collection.comment_count
+        info[u'created_time'] = collection.created_time
+        info[u'description'] = collection.description
+        info[u'follower_count'] = collection.follower_count
+        info[u'title'] = collection.title
+        info[u'updated_time'] = collection.updated_time
 
         # 特殊映射关系
-        info['collection_id'] = collection.id
-        info['creator_id'] = collection.creator.id
-        info['creator_name'] = collection.creator.name
-        info['creator_headline'] = collection.creator.headline
-        info['creator_avatar_url'] = collection.creator.avatar_url
+        info[u'collection_id'] = collection.id
+        info[u'creator_id'] = collection.creator.id
+        info[u'creator_name'] = collection.creator.name
+        info[u'creator_headline'] = collection.creator.headline
+        info[u'creator_avatar_url'] = collection.creator.avatar_url
 
-        info["collected_answer_id_list"] = collected_answer_id_list
+        info[u"collected_answer_id_list"] = collected_answer_id_list
         return info
 
 
@@ -317,38 +317,38 @@ class TopicWorker(object):
             Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
             answer, question = Worker.format_raw_answer(raw_answer)
 
-            answer_id = str(answer['answer_id'])
+            answer_id = str(answer[u'answer_id'])
             answer_id_list.append(answer_id)
 
             answer_list.append(answer)
             question_list.append(question)
-        Worker.save_record_list('Answer', answer_list)
-        Worker.save_record_list('Question', question_list)
+        Worker.save_record_list(u'Answer', answer_list)
+        Worker.save_record_list(u'Question', question_list)
 
         answer_id_list = ','.join(answer_id_list)
         topic_info = TopicWorker.format_topic(topic, answer_id_list)
-        Worker.save_record_list('Topic', [topic_info])
+        Worker.save_record_list(u'Topic', [topic_info])
         return
 
     @staticmethod
     def format_topic(topic_info, best_answer_id_list=''):
         item_key_list = [
-            'best_answerers_count',
-            'best_answers_count',
-            'excerpt',
-            'followers_count',
-            'introduction',
-            'name',
-            'questions_count',
-            'unanswered_count',
-            'avatar_url'
+            u'best_answerers_count',
+            u'best_answers_count',
+            u'excerpt',
+            u'followers_count',
+            u'introduction',
+            u'name',
+            u'questions_count',
+            u'unanswered_count',
+            u'avatar_url'
         ]
         info = {}
         for item_key in item_key_list:
             info[item_key] = getattr(topic_info, item_key, '')
 
-        info['topic_id'] = topic_info._id
-        info["best_answer_id_list"] = best_answer_id_list
+        info[u'topic_id'] = topic_info._id
+        info[u"best_answer_id_list"] = best_answer_id_list
         return info
 
 
@@ -357,7 +357,7 @@ class ColumnWorker(object):
     def catch(column_id):
         column = Worker.zhihu_client.column(column_id)
         column_info = ColumnWorker.format_column(column)
-        Worker.save_record_list('Column', [column_info])
+        Worker.save_record_list(u'Column', [column_info])
 
         article_list = []
         counter = 0
@@ -367,7 +367,7 @@ class ColumnWorker(object):
             article = Worker.format_article(column_id, raw_article)
             article_list.append(article)
 
-        Worker.save_record_list('Article', article_list)
+        Worker.save_record_list(u'Article', article_list)
         return
 
     @staticmethod
@@ -378,16 +378,16 @@ class ColumnWorker(object):
         :return:
         """
         column_key_list = [
-            'title',
-            'article_count',
-            'description',
-            'follower_count',
-            'image_url',
+            u'title',
+            u'article_count',
+            u'description',
+            u'follower_count',
+            u'image_url',
         ]
         column_info = {}
         for key in column_key_list:
-            column_info[key] = getattr(raw_column, key, '')
+            column_info[key] = getattr(raw_column, key, u'')
 
-        column_info['column_id'] = raw_column._id
+        column_info[u'column_id'] = raw_column._id
 
         return column_info

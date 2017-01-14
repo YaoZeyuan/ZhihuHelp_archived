@@ -65,51 +65,51 @@ class CommandParser(object):
     @staticmethod
     def parse_question(command):
         result = Match.question(command)
-        question_id = result.group('question_id')
+        question_id = result.group(u'question_id')
         task = QuestionTask(question_id)
         return task
 
     @staticmethod
     def parse_answer(command):
         result = Match.answer(command)
-        question_id = result.group('question_id')
-        answer_id = result.group('answer_id')
+        question_id = result.group(u'question_id')
+        answer_id = result.group(u'answer_id')
         task = AnswerTask(question_id, answer_id)
         return task
 
     @staticmethod
     def parse_author(command):
         result = Match.author(command)
-        author_page_id = result.group('author_page_id')
+        author_page_id = result.group(u'author_page_id')
         task = AuthorTask(author_page_id)
         return task
 
     @staticmethod
     def parse_collection(command):
         result = Match.collection(command)
-        collection_id = result.group('collection_id')
+        collection_id = result.group(u'collection_id')
         task = CollectionTask(collection_id)
         return task
 
     @staticmethod
     def parse_topic(command):
         result = Match.topic(command)
-        topic_id = result.group('topic_id')
+        topic_id = result.group(u'topic_id')
         task = TopicTask(topic_id)
         return task
 
     @staticmethod
     def parse_article(command):
         result = Match.article(command)
-        column_id = result.group('column_id')
-        article_id = result.group('article_id')
+        column_id = result.group(u'column_id')
+        article_id = result.group(u'article_id')
         task = ArticleTask(column_id, article_id)
         return task
 
     @staticmethod
     def parse_column(command):
         result = Match.column(command)
-        column_id = result.group('column_id')
+        column_id = result.group(u'column_id')
         task = ColumnTask(column_id)
         return task
 
