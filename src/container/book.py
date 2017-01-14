@@ -36,11 +36,10 @@ class Book(object):
 
         return
 
-    def auto_split(self, max_size_page_md=50):
+    def auto_split(self, max_size_page_kb=50 * 1024):
         """
         :rtype: list[Book]
         """
-        max_size_page_kb = max_size_page_md * 1024
         if max_size_page_kb < 1 * 1024:
             #   不能任意小啊
             max_size_page_kb = 1 * 1024
