@@ -99,7 +99,7 @@ class Book(object):
 
     def create_book(self):
         #   确定文件信息
-        title = self.book_title
+        title = Match.fix_filename(self.book_title)
         if self.is_split:
             title = self.book_title + u'_卷{}'.format(self.chapter_no)
 
