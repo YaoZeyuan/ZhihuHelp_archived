@@ -23,7 +23,7 @@ class Head(Base):
 class DocTitle(Base):
     def set_title(self, title=EpubConfig.book_title):
         template = self.get_template('doc_title', 'title')
-        self.title = template.format(title=title)
+        self.content = template.format(title=title)
         return
 
 
@@ -68,7 +68,7 @@ class TOC(Base):
         self.metadata_completed.add('uid')
         return
 
-    def set_depth(self, depth='2'):
+    def set_depth(self, depth=1):
         self.head.set_depth(depth)
         return
 
