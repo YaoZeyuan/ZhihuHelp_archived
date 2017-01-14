@@ -43,10 +43,15 @@ class Login(object):
                 #   载入成功直接返回即可
                 return self.client
         else:
-            print u'现在开始登陆流程，请根据提示输入您的账号密码'
-            print u''
-            print u''
-            account, password = self.get_account()
+            print u"建议直接使用内置帐号登录，敲击回车使用内置帐号，输入任意字符使用自有帐号"
+            user_input = raw_input()
+            if not user_input:
+                account, password = Config.account, Config.password
+            else:
+                print u'现在开始登陆流程，请根据提示输入您的账号密码'
+                print u''
+                print u''
+                account, password = self.get_account()
 
         captcha = None
         while not self.login(account, password, captcha):
