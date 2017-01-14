@@ -49,6 +49,8 @@ class ImageContainer(object):
         image = self.container[index]
         filename = image['filename']
         href = image['href']
+        #   下载图片时自动把https换成http，以便加速图片下载过程
+        href = href.replace('https://', 'http://')
 
         if os.path.isfile(self.save_path + '/' + filename):
             return
@@ -58,6 +60,8 @@ class ImageContainer(object):
             if not content:
                 Debug.logger.debug(u'图片『{}』下载失败'.format(href))
                 content = ''
+            else:
+                Debug.print_in_single_line(u'图片{}下载完成'.format(href))
         else:
             #   当下载地址为空的时候，就没必要再去下载了
             content = ''

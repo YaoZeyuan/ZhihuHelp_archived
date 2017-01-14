@@ -14,6 +14,7 @@ class Config(object):
 
     debug = False
     debug_for_create_book = False # 是否在测试电子书生成功能，在测试的话跳过网页抓取部分
+    debug_for_thread = False # 是否在测试多线程功能，在测试的话改为单线程执行
 
     account = 'mengqingxue@yaozeyuan.online'  # 默认账号密码, 2017年更新
     password = '912714398d'  #

@@ -12,7 +12,7 @@ class Control(object):
         max_try = Config.max_try
         for time in range(max_try):
             if test_flag:
-                if Config.debug:
+                if Config.debug_for_thread:
                     Control.debug_control(argv)
                 else:
                     Control.release_control(argv)
