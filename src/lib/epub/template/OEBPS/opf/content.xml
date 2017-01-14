@@ -6,7 +6,7 @@
 {metadata}
     </metadata>
     <manifest>
-        <item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml"/>
+        <item id="ncx" href="toc.ncx" media-type="text/xml"/>
 {manifest}
     </manifest>
     <spine toc="ncx">

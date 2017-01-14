@@ -376,5 +376,5 @@ class Book(object):
         :return:
         :rtype:
         """
-        filename = ExtraTools.md5(str(uuid.uuid4())) + '.xhtml'
+        filename = ExtraTools.md5(str(uuid.uuid4())) + '.html'
         return filename
