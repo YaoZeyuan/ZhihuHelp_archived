@@ -38,6 +38,17 @@ class Article(object):
             filename = img_container.add(src)
             self.img_filename_list.append(filename)
             self.content = self.content.replace(img, Match.create_img_element_with_file_name(filename))
+
+        #   下载文章封面图像
+        filename = img_container.add(self.image_url)
+        self.img_filename_list.append(filename)
+        self.image_url = Match.create_local_img_src(filename)
+
+        #   下载用户头像
+        filename = img_container.add(self.author_avatar_url)
+        self.img_filename_list.append(filename)
+        self.author_avatar_url = Match.create_local_img_src(filename)
+
         img_container.start_download()
 
         #   下载完成后，更新图片大小

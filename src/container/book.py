@@ -268,8 +268,8 @@ class Book(object):
         filename = self.get_random_html_file_name()
         content = Template.column_info.format(
             **{
-                'name': info_page.name,
-                'postsCount': info_page.postsCount,
+                'name': info_page.title,
+                'postsCount': info_page.article_count,
             }
         )
         uri = Path.html_pool_path + '/' + filename
@@ -343,15 +343,15 @@ class Book(object):
         """
         answer_content = Template.answer.format(
             **{
-                'author_avatar_url': article.author_info.avatar_url,
-                'author_name': article.author_info.name,
+                'author_avatar_url': article.author_avatar_url,
+                'author_name': article.author_name,
                 'author_id': article.author_id,
-                'author_headline': article.author_info.headline,
+                'author_headline': article.author_headline,
 
                 'content': article.content,
                 'comment_count': article.comment_count,
                 'voteup_count': article.voteup_count,
-                'updated_time':  ExtraTools.format_date('Y-m-d H:i:s', article.updated),
+                'updated_time':  ExtraTools.format_date('Y-m-d H:i:s', article.updated_time),
             }
         )
 
