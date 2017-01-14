@@ -189,8 +189,7 @@ class AuthorWorker(object):
     @staticmethod
     def catch(author_page_id):
         author = Worker.zhihu_client.people(author_page_id)
-        raw_author_info = author.pure_data['data']
-        author_info = AuthorWorker.format_author(raw_author_info, author_page_id)
+        author_info = AuthorWorker.format_author(author, author_page_id)
         Worker.save_record_list('Author', [author_info])
 
         answer_list = []
@@ -241,7 +240,7 @@ class AuthorWorker(object):
         info = {}
         for key in item_key_list:
             info[key] = getattr(raw_author_info,key, '')
-        info['author_id'] = raw_author_info['id']
+        info['author_id'] = getattr(raw_author_info, 'id', '')
 
         # 特殊映射关系
         info["author_page_id"] = author_page_id  # 用户页面id，随时会更换
