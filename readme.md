@@ -1,11 +1,11 @@
-#   知乎助手1.7.4  ![forks](https://img.shields.io/github/forks/YaoZeyuan/ZhihuHelp.svg) ![stars](https://img.shields.io/github/stars/YaoZeyuan/ZhihuHelp.svg) ![issues](https://img.shields.io/github/issues/YaoZeyuan/ZhihuHelp.svg)
+#   知乎助手1.8.0  ![forks](https://img.shields.io/github/forks/YaoZeyuan/ZhihuHelp.svg) ![stars](https://img.shields.io/github/stars/YaoZeyuan/ZhihuHelp.svg) ![issues](https://img.shields.io/github/issues/YaoZeyuan/ZhihuHelp.svg)
 
 ##  项目说明
 
 **知乎助手** 由 [姚泽源](http://www.yaozeyuan.online/) 创作，采用 [MIT](http://opensource.org/licenses/MIT) 协议进行许可。
 
 *   项目基于Python2.7构建，旨在用最简洁的方式帮助知友将知乎内容转为Epub电子书
-*   目前的1.7.x系列是知乎助手发布计划中的过渡版本，在该版本中，我会尽可能多的为助手添加功能，为2.0版本的图形界面做准备
+*   目前的1.8.x系列是知乎助手发布计划中的过渡版本，在该版本中，我会尽可能多的为助手添加功能，为2.0版本的图形界面做准备
 
 ##  使用说明
 
@@ -48,76 +48,18 @@
 1.  ReadList.txt文件中每一行对应一本电子书，一行中可以添加多个网址以输出到同一本电子书里，使用$符号分开即可
 2.  网址后可添加#+注释以方便记忆，助手在分析网址时会自动忽略#后的内容
 3.  助手目前还在快速迭代期，数据库、代码结构均不固定，所以暂时不能利用数据库起到永久保存知乎答案的功能，各位见谅则个:）
-4.  制作知乎2013年度回答300问的方法请戳[这里](http://www.zhihu.com/question/23845802/answer/26191403)
 
 ##  配置项说明：
 
 0.  知乎助手的配置内容位于运行目录下的config.json中，各项配置功能如下
-1.  article_order_by
-    *   文章排序指标
-    *   可选值
-        *   update_date
-            *   更新日期
-        *   agree_count
-            *   赞同数
-        *   char_count
-            *   字数
-2.  article_order_by_desc
-    *   是否按照降序对排序指标进行排列
-    *   可选值
-        *   true
-            *   对于设定指标按降序排列（例如，按赞同数降序排列）
-        *   false
-            *   对于设定指标按升序排列
-3.  answer_order_by
-    *   答案排序指标，为对问题内答案进行排序的依据
-    *   可选值
-        *   同article_order_by
-4.  answer_order_by_desc
-    *   是否按照降序对排序指标进行排列
-    *   同article_order_by_desc
-5.  question_order_by
-    *   问题排序指标，为对电子书内问题进行排序的依据
-    *   可选值
-        *   answer_count
-            *   问题内的答案数
-        *   char_count
-            *   问题内答案总字数
-        *   agree_count
-            *   问题内答案总赞同数
-6.  question_order_by_desc
-    *   是否按照降序对排序指标进行排列
-    *   同article_order_by_desc
-7.  author_answer_order_by
-    *   作者回答排序原则
-    *   可选值
-        *    agree_count
-            *   赞同数
-        *    answer_id
-            *   回答日期
-        *    char_count
-            *   字数
-8.  author_answer_order_by_desc
-    *   作者答案排序指标，为对回答内答案进行排序的依据
-    *   可选值
-        *   同article_order_by_desc
-9.  account
+
+1.  account
     *   用户名，只能是知乎登陆邮箱
-10. password
+2.  password
     *   密码
-11. max_answer
-    *   每本电子书中最大可容纳的答案数，超过该值电子书将自动分割为多本
-    *   备注
-        *   一篇文章视为一个回答
-12. max_question
-    *   每本电子书中最大可容纳的问题，超过该值电子书将自动分割为多本
-    *   备注
-        *   本设置项未启用
-13. max_article
-    *   每本电子书中最大可容纳的文章数，超过该值电子书将自动分割为多本
-    *   备注
-        *   本设置项未启用
-14. picture_quality
+3.  max_book_size_mb
+    *   单卷电子书的最大大小(mb),超过该大小的话电子书会自动分卷
+4.  picture_quality
     *   图片质量
     *   可选项
         *   0
@@ -126,33 +68,11 @@
             *   标清模式，下载知乎网页中所展示的图片
         *   2
             *   原图模式，下载原图
-15. show_private_answer
-    *   是否抓取『禁止转载』的答案
-    *   可选项
-        *   true
-        *   false
-16. update_time
+5.  update_time
     *   更新日期
     *   修改本项会导致无法自动检测更新
     *   如果想跳过检测的话将本项设置为与[助手最新版本号](http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt)一致即可
-17. max_thread
-    *   最大线程数
-    *   不建议修改，线程开的过大在抓取时会引发429错误
-18. max_try
-    *   网页打开失败时的最大尝试次数
-    *   默认为反复打开5次
-19. debug
-    *   debug模式开关
-    *   可选值
-        *   true
-        *   false
-20. timeout_download_html
-    *   下载网页超时时间
-    *   默认为5s
-21. timeout_download_picture
-    *   下载图片超时时间
-    *   默认为10s
-22. remember_account
+6.  remember_account
     *   是否记住密码
     *   如为否，所有设置项都会被重置为默认值
 
