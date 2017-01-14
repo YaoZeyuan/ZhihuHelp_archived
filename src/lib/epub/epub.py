@@ -111,14 +111,14 @@ class Epub(object):
         epub_name = self.title + u'.epub'
         file_path = EpubPath.output_path + '/' + epub_name
         EpubPath.reset_path()
-        epub = zipfile.ZipFile(file=file_path, mode='w', compression=zipfile.ZIP_STORED, allowZip64=True)
-        epub.write('./mimetype')
+        epub = zipfile.ZipFile(file=file_path, mode='w', allowZip64=True)
+        epub.write('./mimetype', compress_type=zipfile.ZIP_STORED)
         for parent, dirnames, filenames in os.walk('.'):
             for filename in filenames:
                 if filename in [epub_name, 'mimetype']:
                     continue
                 Debug.print_in_single_line(u'将{}添加至电子书内'.format(filename))
-                epub.write(parent + '/' + filename, compress_type=zipfile.ZIP_STORED)
+                epub.write(parent + '/' + filename, compress_type=zipfile.ZIP_DEFLATED)
         epub.close()
         return
 
