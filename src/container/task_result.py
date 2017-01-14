@@ -337,7 +337,7 @@ class TaskResult(object):
         return
 
     def extract_author(self):
-        raw_author = DB.query_row('select * from Author where author_page_id="{}"'.format(self.task.author_page_id))
+        raw_author = DB.query_row('select * from Author where author_page_id="{}" order by voteup_count desc'.format(self.task.author_page_id))
         self.info_page = Author_Info(raw_author)
 
         answer_list = self.query_answer_list_by_author_page_id(self.info_page.author_page_id)
@@ -412,7 +412,7 @@ class TaskResult(object):
 
     def query_answer_list_by_question_id(self, question_id):
         raw_answer_list = DB.query_all(
-            'select * from Answer where question_id="{}"'.format(question_id))
+            'select * from Answer where question_id="{}" order by voteup_count desc'.format(question_id))
         answer_list = []
         for raw_answer in raw_answer_list:
             answer_list.append(self.format_answer(raw_answer))
