@@ -259,7 +259,7 @@ class TaskResult(object):
             return u'知乎收藏夹{}({})答案集'.format(self.info_page.title, self.task.collection_id)
         elif self.task.task_type == Type.column:
             return u'知乎专栏{}({})文章集'.format(self.info_page.title, self.task.column_id)
-        elif self.task.task_type == Type.question:
+        elif self.task.task_type == Type.article:
             return u'知乎文章({})'.format(self.task.article_id)
         return
 
@@ -300,7 +300,7 @@ class TaskResult(object):
         """
         self.info_page = self.query_question(self.task.question_id)
         question = Question(self.info_page)
-        answer = self.query_answer([self.task.answer_id])
+        answer = self.query_answer(self.task.answer_id)
         question.append_answer(answer)
         self.question_list.append(question)
         return
@@ -389,6 +389,11 @@ class TaskResult(object):
         return question_list
 
     def query_answer(self, answer_id):
+        """
+
+        :type answer_id:int
+        :return:
+        """
         answer = DB.query_row('select * from Answer where answer_id in ({})'.format(answer_id))
         answer = self.format_answer(answer)
         return answer

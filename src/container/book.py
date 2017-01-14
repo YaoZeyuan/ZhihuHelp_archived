@@ -289,8 +289,9 @@ class Book(object):
         filename = self.get_random_html_file_name()
         content = Template.article_info.format(
             **{
-                'title': info_page.title,
-                'voteup_count': info_page.voteup_count,
+                'title': u"来自知乎专栏{}({})".format(info_page.title, info_page.column_id),
+                'name': info_page.title,
+                'postsCount': info_page.article_count,
             }
         )
         uri = Path.html_pool_path + '/' + filename
