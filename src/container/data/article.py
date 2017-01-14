@@ -12,17 +12,17 @@ class Article(object):
     def __init__(self, data):
         self.article_id = data['article_id']
         self.title = data['title']
-        self.updated = data['updated']
-        self.created = data['created']
+        self.updated_time = data['updated_time']
         self.voteup_count = data['voteup_count']
+        self.image_url = data['image_url']
         self.column_id = data['column_id']
         self.content = data['content']
         self.comment_count = data['comment_count']
         self.author_id = data['author_id']
-
-        raw_author_info = DB.query_row('select * from Author where author_id={}'.format(self.author_id))
-
-        self.author_info = Author(raw_author_info)
+        self.author_name = data['author_name']
+        self.author_headline = data['author_headline']
+        self.author_avatar_url = data['author_avatar_url']
+        self.author_gender = data['author_gender']
 
         self.total_img_size_kb = 0
         self.img_filename_list = []

@@ -4,11 +4,11 @@
 class Column(object):
     def __init__(self, data):
         self.column_id = data['column_id']
-        self.name = data['name']
-        self.postsCount = data['postsCount']
-        self.followersCount = data['followersCount']
+        self.title = data['title']
+        self.article_count = data['article_count']
+        self.follower_count = data['follower_count']
         self.description = data['description']
-        self.reason = data['reason']
+        self.image_url = data['image_url']
         self.intro = data['intro']
         self.creator_id = data['creator_id']
         return
