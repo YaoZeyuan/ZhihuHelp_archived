@@ -10,7 +10,7 @@ class Config(object):
     用于储存、获取设置值、全局变量值
     """
     # 全局变量
-    update_time = '2016-12-27'  # 更新日期
+    update_time = '2016-01-15'  # 更新日期
 
     debug = False
     debug_for_create_book = False # 是否在测试电子书生成功能，在测试的话跳过网页抓取部分
