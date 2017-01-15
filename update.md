@@ -1,5 +1,5 @@
 #1.8.0版更新说明
-0.  感谢[@陈空明](https://www.zhihu.com/people/chen-kong-ming-64)、[@Skyeagle](https://www.zhihu.com/people/liao-jun-jie-11)、[@huaiyao](https://www.zhihu.com/people/huaiyao) 的捐赠
+0.  感谢[@陈空明](https://www.zhihu.com/people/chen-kong-ming-64)、[@Skyeagle](https://www.zhihu.com/people/liao-jun-jie-11)、[@huaiyao](https://www.zhihu.com/people/huaiyao)、[@一朝风月](https://www.zhihu.com/people/yizhaofengyue/answers) 的捐赠
 1.  将整个程序重写了一遍，引入Zhihu-Oauth库作为数据来源
 2.  在[@7sdream](https://www.zhihu.com/people/7sdream/answers)和他的[zhihu-oauth](https://github.com/7sDream/zhihu-oauth)项目的帮助下，通过模拟城知乎客户端，直接调取API，彻底解决了由于知乎更改页面结构导致旧版助手不能使用的问题。
 3.  修复了无法在Edge下浏览的功能，现在Win10用户可以直接双击打开电子书了(网页样式问题等下一版再改吧)
