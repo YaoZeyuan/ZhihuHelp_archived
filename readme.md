@@ -11,7 +11,7 @@
 
 0.  (Windows用户)安装[python2.7](http://yun.baidu.com/s/1M8Bpk)运行环境
 
-1.  下载[知乎助手](http://yaozeyuan.sinaapp.com/zhihuhelper/upgrade.php)并解压缩
+1.  下载[知乎助手](www.yaozeyuan.online/zhihuhelp/redirect.html)并解压缩
     *   ![解压缩后](https://pic4.zhimg.com/b67c696f1a324df22b5cac58481d11a3_r.png)
 
 2.  打开ReadList.txt，将待收集的网址填进去，完成后保存并关闭该文件
