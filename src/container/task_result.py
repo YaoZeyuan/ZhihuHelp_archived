@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from src.tools.config import Config
 from src.tools.db import DB
 from src.tools.debug import Debug
 from src.tools.match import Match
@@ -61,19 +62,19 @@ class Question(object):
 
     def download_img(self):
         #   下载图片，同时更新
-        Debug.logger.debug('开始下载问题{}内问题详情中的图片'.format(self.question_info.question_id))
+        Debug.logger.debug(u'开始下载问题{}内问题详情中的图片'.format(self.question_info.question_id))
         self.download_img_in_question_content()
-        Debug.logger.debug('开始下载问题{}内答案中的图片'.format(self.question_info.question_id))
+        Debug.logger.debug(u'开始下载问题{}内答案中的图片'.format(self.question_info.question_id))
         index = 1
         for answer in self.answer_list:
-            Debug.logger.debug('开始下载问题{}中第{}个答案的图片'.format(self.question_info.question_id, index))
+            Debug.logger.debug(u'开始下载问题{}中第{}个答案的图片'.format(self.question_info.question_id, index))
             answer.download_img()
             self.total_img_size_kb += answer.total_img_size_kb
             index += 1
 
         #   忘了更新问题内的图片名列表了= =
         self.update_img_filename_list_in_answer()
-        Debug.logger.debug('问题{}内答案中的图片全部下载完成'.format(self.question_info.question_id))
+        Debug.logger.debug(u'问题{}内答案中的图片全部下载完成'.format(self.question_info.question_id))
 
         return
 
@@ -136,14 +137,14 @@ class Column(object):
 
     def download_img(self):
         #   下载图片，同时更新
-        Debug.logger.debug('开始下载专栏{}内文章中的图片'.format(self.column_info.column_id))
+        Debug.logger.debug(u'开始下载专栏{}内文章中的图片'.format(self.column_info.column_id))
         index = 1
         for article in self.article_list:
-            Debug.logger.debug('开始下载专栏{}中第{}篇文章的图片'.format(self.column_info.column_id, index))
+            Debug.logger.debug(u'开始下载专栏{}中第{}篇文章的图片'.format(self.column_info.column_id, index))
             article.download_img()
             self.total_img_size_kb += article.total_img_size_kb
             index += 1
-        Debug.logger.debug('专栏{}内文章中的图片全部下载完成'.format(self.column_info.column_id))
+        Debug.logger.debug(u'专栏{}内文章中的图片全部下载完成'.format(self.column_info.column_id))
         self.update_img_filename_list_in_article()
         return
 
@@ -175,17 +176,17 @@ class TaskResult(object):
 
     def download_img(self):
         #   下载图片
-        Debug.logger.debug('开始下载问题列表中的图片')
+        Debug.logger.debug(u'开始下载问题列表中的图片')
         index = 1
         for question in self.question_list:
-            Debug.logger.debug('开始下载问题列表中第{}个问题的图片'.format(index))
+            Debug.logger.debug(u'开始下载问题列表中第{}个问题的图片'.format(index))
             question.download_img()
-        Debug.logger.debug('开始下载专栏中的图片')
+        Debug.logger.debug(u'开始下载专栏中的图片')
         index = 1
         for column in self.column_list:
-            Debug.logger.debug('开始下载专栏列表中第{}篇专栏的图片'.format(index))
+            Debug.logger.debug(u'开始下载专栏列表中第{}篇专栏的图片'.format(index))
             column.download_img()
-        Debug.logger.debug('恭喜，图片全部下载完成')
+        Debug.logger.debug(u'恭喜，图片全部下载完成')
         return
 
     def auto_split(self, max_size_page_kb=50 * 1024):
@@ -248,19 +249,19 @@ class TaskResult(object):
         :rtype: str
         """
         if self.task.task_type == Type.question:
-            return u'知乎问题({})答案集'.format(self.task.question_id)
+            return u'知乎问题({question_id})答案集'.format(question_id=self.task.question_id)
         elif self.task.task_type == Type.answer:
-            return u'知乎回答({})'.format(self.task.answer_id)
+            return u'知乎回答({answer_id})'.format(answer_id=self.task.answer_id)
         elif self.task.task_type == Type.author:
-            return u'知乎作者{}({})答案集'.format(self.info_page.name, self.task.author_page_id)
+            return u'知乎作者{name}({author_page_id})答案集'.format(name=self.info_page.name, author_page_id=self.task.author_page_id)
         elif self.task.task_type == Type.topic:
-            return u'知乎话题{}({})答案集'.format(self.info_page.name, self.task.topic_id)
+            return u'知乎话题{name}({topic_id})答案集'.format(name=self.info_page.name, topic_id=self.task.topic_id)
         elif self.task.task_type == Type.collection:
-            return u'知乎收藏夹{}({})答案集'.format(self.info_page.title, self.task.collection_id)
+            return u'知乎收藏夹{name}({collection_id})答案集'.format(name=self.info_page.title, collection_id=self.task.collection_id)
         elif self.task.task_type == Type.column:
-            return u'知乎专栏{}({})文章集'.format(self.info_page.title, self.task.column_id)
+            return u'知乎专栏{name}({column_id})文章集'.format(name=self.info_page.title, column_id=self.task.column_id)
         elif self.task.task_type == Type.article:
-            return u'知乎文章({})'.format(self.task.article_id)
+            return u'知乎文章({article_id})'.format(article_id=self.task.article_id)
         return
 
     def extract_data(self):
@@ -306,7 +307,7 @@ class TaskResult(object):
         return
 
     def extract_topic(self):
-        raw_topic = DB.query_row('select * from Topic where topic_id="{}"'.format(self.task.topic_id))
+        raw_topic = DB.query_row(u'select * from Topic where topic_id="{topic_id}"'.format(topic_id=self.task.topic_id))
         self.info_page = Topic_Info(raw_topic)
 
         answer_list = self.query_answer_list(self.info_page.best_answer_id_list.split(','))
@@ -322,7 +323,7 @@ class TaskResult(object):
 
     def extract_collection(self):
         raw_collection = DB.query_row(
-            'select * from Collection where collection_id="{}"'.format(self.task.collection_id))
+            u'select * from Collection where collection_id="{collection_id}"'.format(collection_id=self.task.collection_id))
         self.info_page = Collection_Info(raw_collection)
 
         answer_list = self.query_answer_list(self.info_page.collected_answer_id_list.split(','))
@@ -337,7 +338,7 @@ class TaskResult(object):
         return
 
     def extract_author(self):
-        raw_author = DB.query_row('select * from Author where author_page_id="{}" order by voteup_count desc'.format(self.task.author_page_id))
+        raw_author = DB.query_row(u'select * from Author where author_page_id="{author_page_id}" '.format(author_page_id=self.task.author_page_id))
         self.info_page = Author_Info(raw_author)
 
         answer_list = self.query_answer_list_by_author_page_id(self.info_page.author_page_id)
@@ -376,13 +377,13 @@ class TaskResult(object):
         """
         :rtype: Question_Info
         """
-        question = DB.query_row('select * from Question where question_id in ({})'.format(question_id))
+        question = DB.query_row(u'select * from Question where question_id in ({question_id})'.format(question_id=question_id))
         question = self.format_question(question)  # 包装成标准的信息格式
         return question
 
     def query_question_list(self, question_id_list):
         raw_question_list = DB.query_all(
-            'select * from Question where question_id in ({})'.format(','.join(question_id_list)))
+            u'select * from Question where question_id in ({question_id_list})'.format(question_id_list=','.join(question_id_list)))
         question_list = []
         for raw_question in raw_question_list:
             question_list.append(self.format_question(raw_question))
@@ -394,12 +395,12 @@ class TaskResult(object):
         :type answer_id:int
         :return:
         """
-        answer = DB.query_row('select * from Answer where answer_id in ({})'.format(answer_id))
+        answer = DB.query_row(u'select * from Answer where answer_id in ({answer_id})'.format(answer_id=answer_id))
         answer = self.format_answer(answer)
         return answer
 
     def query_answer_list(self, answer_id_list):
-        raw_answer_list = DB.query_all('select * from Answer where answer_id in ({})'.format(','.join(answer_id_list)))
+        raw_answer_list = DB.query_all(u'select * from Answer where answer_id in ({answer_id_list}) {order_by} '.format(answer_id_list=','.join(answer_id_list), order_by=Config.topic_or_collection_answer_order_by))
         answer_list = []
         for raw_answer in raw_answer_list:
             answer_list.append(self.format_answer(raw_answer))
@@ -407,9 +408,9 @@ class TaskResult(object):
 
     def query_answer_list_by_author_page_id(self, author_page_id):
         # 需要先查出来对应的author_id
-        author_info = DB.query_row('select author_id from Author where author_page_id="{}"'.format(author_page_id))
-        author_id = author_info['author_id']
-        raw_answer_list = DB.query_all('select * from Answer where author_id="{}"'.format(author_id))
+        author_info = DB.query_row(u'select author_id from Author where author_page_id="{author_page_id}"'.format(author_page_id=author_page_id))
+        author_id = author_info[u'author_id']
+        raw_answer_list = DB.query_all(u'select * from Answer where author_id="{author_id}"  {order_by} '.format(author_id=author_id, order_by=Config.answer_order_by))
         answer_list = []
         for raw_answer in raw_answer_list:
             answer_list.append(self.format_answer(raw_answer))
@@ -417,7 +418,7 @@ class TaskResult(object):
 
     def query_answer_list_by_question_id(self, question_id):
         raw_answer_list = DB.query_all(
-            'select * from Answer where question_id="{}" order by voteup_count desc'.format(question_id))
+            u'select * from Answer where question_id="{question_id}" {order_by} '.format(question_id=question_id, order_by=Config.answer_order_by))
         answer_list = []
         for raw_answer in raw_answer_list:
             answer_list.append(self.format_answer(raw_answer))
@@ -436,18 +437,18 @@ class TaskResult(object):
         return Question_Info(raw_question)
 
     def query_column(self, column_id):
-        raw_column = DB.query_row('select * from Column where column_id="{}"'.format(column_id))
+        raw_column = DB.query_row(u'select * from Column where column_id="{column_id}"'.format(column_id=column_id))
         column = self.format_column(raw_column)  # 包装成标准的信息格式
         return column
 
     def query_article(self, article_id):
-        raw_article = DB.query_row('select * from Article where article_id="{}"'.format(article_id))
+        raw_article = DB.query_row(u'select * from Article where article_id="{article_id}" '.format(article_id=article_id))
         article = self.format_article(raw_article)
         return article
 
     def query_article_list_by_column_id(self, column_id):
         #   根据发表时间正序获取文章列表，方便浏览
-        raw_article_list = DB.query_all('select * from Article where column_id="{}" order by article_id asc'.format(column_id))
+        raw_article_list = DB.query_all(u'select * from Article where column_id="{column_id}"  {order_by}'.format(column_id=column_id, order_by=Config.article_order_by))
         article_list = []
         for raw_article in raw_article_list:
             article = self.format_article(raw_article)

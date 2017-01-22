@@ -23,9 +23,13 @@ class Config(object):
     picture_quality = 1  # 图片质量（0/1/2，无图/标清/原图）
     max_try = 5  # 下载图片时的最大尝试次数
     max_book_size_mb = 100  # 单个文件的最大大小(MB, 兆)，超过这个数会自动分卷
-    article_order_by_desc = False  # 文章排序顺序->是否为desc
     timeout_download_picture = 10  # 多给知乎服务器点时间，批量生成tex太痛苦了- -
     timeout_download_html = 5
+
+    article_order_by = ' order by article_id asc '  # 文章排序顺序，默认：时间顺序正序
+    answer_order_by = ' order by voteup_count desc '  # 答案排序顺序，默认：赞同数降序
+    topic_or_collection_answer_order_by = ' '  # 话题/收藏夹中答案排序顺序，默认：按在话题/收藏夹中的顺序排列
+
 
     @staticmethod
     def init_config():
