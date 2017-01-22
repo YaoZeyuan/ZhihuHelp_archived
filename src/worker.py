@@ -151,7 +151,11 @@ class QuestionWorker(object):
         for raw_answer in question.answers:
             counter += 1
             Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
-            answer, question = Worker.format_raw_answer(raw_answer)
+            try:
+                answer, question = Worker.format_raw_answer(raw_answer)
+            except Exception as e:
+                #   问题/答案不存在，自动跳过
+                continue
             answer_list.append(answer)
         Worker.save_record_list(u'Answer', answer_list)
         return
@@ -178,7 +182,11 @@ class AnswerWorker(object):
     @staticmethod
     def catch(answer_id):
         raw_answer = Worker.zhihu_client.answer(answer_id)
-        answer, question = Worker.format_raw_answer(raw_answer)
+        try:
+            answer, question = Worker.format_raw_answer(raw_answer)
+        except Exception as e:
+            #   问题/答案不存在，自动跳过
+            return
         Worker.save_record_list(u'Question', [question])
         Worker.save_record_list(u'Answer', [answer])
         return
@@ -198,7 +206,11 @@ class AuthorWorker(object):
         for raw_answer in author.answers:
             counter += 1
             Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
-            answer, question = Worker.format_raw_answer(raw_answer)
+            try:
+                answer, question = Worker.format_raw_answer(raw_answer)
+            except Exception as e:
+                #   问题/答案不存在，自动跳过
+                continue
             answer_list.append(answer)
             question_list.append(question)
         Worker.save_record_list(u'Answer', answer_list)
@@ -260,8 +272,11 @@ class CollectionWorker(object):
         for raw_answer in collection.answers:
             counter += 1
             Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
-            answer, question = Worker.format_raw_answer(raw_answer)
-
+            try:
+                answer, question = Worker.format_raw_answer(raw_answer)
+            except Exception as e:
+                #   问题/答案不存在，自动跳过
+                continue
             answer_id = str(answer[u'answer_id'])
             answer_id_list.append(answer_id)
 
@@ -315,7 +330,11 @@ class TopicWorker(object):
         for raw_answer in topic.best_answers:
             counter += 1
             Debug.logger.info(u'正在抓取第{}个回答'.format(counter))
-            answer, question = Worker.format_raw_answer(raw_answer)
+            try:
+                answer, question = Worker.format_raw_answer(raw_answer)
+            except Exception as e:
+                #   问题/答案不存在，自动跳过
+                continue
 
             answer_id = str(answer[u'answer_id'])
             answer_id_list.append(answer_id)
