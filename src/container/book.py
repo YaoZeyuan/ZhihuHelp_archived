@@ -319,7 +319,7 @@ class Book(object):
                     'content': answer.content,
                     'comment_count': answer.comment_count,
                     'voteup_count': answer.voteup_count,
-                    'updated_time': ExtraTools.format_date('Y-m-d H:i:s', answer.updated_time),
+                    'updated_time': ExtraTools.format_date(u'%Y-%m-%d %H:%M:%S', answer.updated_time),
                 }
             )
 
@@ -353,7 +353,7 @@ class Book(object):
                 'content': article.content,
                 'comment_count': article.comment_count,
                 'voteup_count': article.voteup_count,
-                'updated_time':  ExtraTools.format_date('Y-m-d H:i:s', article.updated_time),
+                'updated_time':  ExtraTools.format_date(u'%Y-%m-%d %H:%M:%S', article.updated_time),
             }
         )
 
