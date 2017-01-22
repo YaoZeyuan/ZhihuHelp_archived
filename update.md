@@ -1,3 +1,8 @@
+#1.8.1版更新说明
+1.  在获取数据的时候加上了try/except, 防止因答案/问题不存在导致的程序崩溃
+2.  新加了三个设置项，用于按照需要对答案进行排序
+3.  解决时间戳显示错误的问题
+
 #1.8.0版更新说明
 0.  感谢[@陈空明](https://www.zhihu.com/people/chen-kong-ming-64)、[@Skyeagle](https://www.zhihu.com/people/liao-jun-jie-11)、[@huaiyao](https://www.zhihu.com/people/huaiyao)、[@一朝风月](https://www.zhihu.com/people/yizhaofengyue/answers) 的捐赠
 1.  将整个程序重写了一遍，引入Zhihu-Oauth库作为数据来源
