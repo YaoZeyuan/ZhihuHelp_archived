@@ -12,7 +12,7 @@ from src.container.data.collection import Collection as Collection_Info
 from src.container.data.column import Column as Column_Info
 from src.container.data.article import Article as Article_Info
 from src.container.data.author import Author as Author_Info
-
+from collections import OrderedDict
 
 class Question(object):
     u"""
@@ -311,7 +311,7 @@ class TaskResult(object):
         self.info_page = Topic_Info(raw_topic)
 
         answer_list = self.query_answer_list(self.info_page.best_answer_id_list.split(','))
-        question_id_dict = {}
+        question_id_dict = OrderedDict()
         #   依次获取对应的Question对象
         for answer in answer_list:
             if answer.question_id not in question_id_dict:
@@ -327,7 +327,7 @@ class TaskResult(object):
         self.info_page = Collection_Info(raw_collection)
 
         answer_list = self.query_answer_list(self.info_page.collected_answer_id_list.split(','))
-        question_id_dict = {}
+        question_id_dict = OrderedDict()
         #   依次获取对应的Question对象
         for answer in answer_list:
             if answer.question_id not in question_id_dict:
@@ -342,7 +342,7 @@ class TaskResult(object):
         self.info_page = Author_Info(raw_author)
 
         answer_list = self.query_answer_list_by_author_page_id(self.info_page.author_page_id)
-        question_id_dict = {}
+        question_id_dict = OrderedDict()
         #   依次获取对应的Question对象
         for answer in answer_list:
             if answer.question_id not in question_id_dict:
