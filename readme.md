@@ -1,4 +1,4 @@
-#   知乎助手1.8.0  ![forks](https://img.shields.io/github/forks/YaoZeyuan/ZhihuHelp.svg) ![stars](https://img.shields.io/github/stars/YaoZeyuan/ZhihuHelp.svg) ![issues](https://img.shields.io/github/issues/YaoZeyuan/ZhihuHelp.svg)
+#   知乎助手1.8  ![forks](https://img.shields.io/github/forks/YaoZeyuan/ZhihuHelp.svg) ![stars](https://img.shields.io/github/stars/YaoZeyuan/ZhihuHelp.svg) ![issues](https://img.shields.io/github/issues/YaoZeyuan/ZhihuHelp.svg)
 
 ##  项目说明
 
