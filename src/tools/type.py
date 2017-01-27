@@ -14,6 +14,8 @@ class Type(object):
     column = 'column'
     article = 'article'
 
+    wechat = 'wechat' # 微信= =
+
     pass
 
 

@@ -54,6 +54,12 @@ class ColumnTask(Task):
         return
 
 
+class WechatTask(Task):
+    def __init__(self, account_id):
+        Task.__init__(self, Type.wechat)
+        self.account_id = account_id
+        return
+
 class ArticleTask(Task):
     def __init__(self, column_id, article_id):
         Task.__init__(self, Type.article)

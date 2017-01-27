@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from src.container.task import QuestionTask, AnswerTask, AuthorTask, CollectionTask, TopicTask, \
-    ArticleTask, ColumnTask
+    ArticleTask, ColumnTask, WechatTask
 from src.tools.debug import Debug
 from src.tools.match import Match
 from src.tools.type import Type
@@ -38,6 +38,7 @@ class CommandParser(object):
             Type.answer, Type.question,
             Type.author, Type.collection, Type.topic,
             Type.article, Type.column,  # 文章必须放在专栏之前（否则检测类别的时候就一律检测为专栏了）
+            Type.wechat
         ]:
             result = getattr(Match, command_type)(command)
             if result:
@@ -57,6 +58,7 @@ class CommandParser(object):
             Type.topic: CommandParser.parse_topic,
             Type.article: CommandParser.parse_article,
             Type.column: CommandParser.parse_column,
+            Type.wechat: CommandParser.parse_wechat,
             Type.unknown: CommandParser.parse_error,
         }
         kind = CommandParser.detect(raw_command)
@@ -111,6 +113,13 @@ class CommandParser(object):
         result = Match.column(command)
         column_id = result.group(u'column_id')
         task = ColumnTask(column_id)
+        return task
+
+    @staticmethod
+    def parse_wechat(command):
+        result = Match.wechat(command)
+        account_id = result.group(u'account_id')
+        task = WechatTask(account_id)
         return task
 
     @staticmethod

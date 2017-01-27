@@ -42,6 +42,10 @@ class Match(object):
         return re.search(r'(?<=zhuanlan\.zhihu\.com/)(?P<column_id>[^/\n\r]*)', content)
 
     @staticmethod
+    def wechat(content=''):
+        return re.search(r'(?<=chuansong\.me/account/)(?P<account_id>[^/\n\r]*)', content)
+
+    @staticmethod
     def html_body(content=''):
         return re.search('(?<=<body>).*(?=</body>)', content, re.S).group(0)
 
