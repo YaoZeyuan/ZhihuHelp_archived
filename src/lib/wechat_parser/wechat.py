@@ -2,15 +2,40 @@
 from bs4 import BeautifulSoup
 from src.lib.wechat_parser.tools.parser_tools import ParserTools
 
-class WechatParser(ParserTools):
+class WechatColumnParser(ParserTools):
     def __init__(self, content):
         self.dom = BeautifulSoup(content, 'html.parser')
 
-    def get_article_list(self):
-        return
+    def get_column_info(self):
+        data = {}
+        title_dom = self.dom.select('div.topic_name_editor h1.inline span')[0]
+        data['title'] = title_dom.get_text()
 
-    def get_question_dom_list(self):
-        return self.dom.select('div.content')[:-1]
+        data['article_count'] = 0
+        data['follower_count'] = 0
+        data['description'] = ''
+        data['image_url'] = ''
 
-    def get_answer_dom_list(self):
-        return self.dom.select('div.content')[:-1]
+        return data
+
+class WechatArticleParser(ParserTools):
+    def __init__(self, content):
+        self.dom = BeautifulSoup(content, 'html.parser')
+
+    def get_article_info(self):
+        data = {}
+        data['title'] = self.dom.select('div#page-content h2.rich_media_title')[0].get_text()
+        content_dom = self.dom.select('div#page-content div.rich_media_content')[0]
+        data['content'] = self.get_tag_content(content_dom)
+
+        data['updated_time'] = 0
+        data['voteup_count'] = 0
+        data['image_url'] = ''
+        data['comment_count'] = 0
+        data['author_id'] = 'meng-qing-xue-81'
+        data['author_name'] = '孟晴雪'
+        data['author_headline'] = '斜月明寒草'
+        data['author_avatar_url'] = 'https://pic4.zhimg.com/v2-38a89e42b40baa7d26d99cab9a451623_xl.jpg'
+        data['author_gender'] = '0'
+
+        return data
