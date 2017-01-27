@@ -466,8 +466,7 @@ class WechatWorker(object):
             article_info['column_id'] = account_id
             Worker.save_record_list(u'Article', [article_info])
 
-
-            random_sleep_time = 1 + random.randint(0, 100) / 100
+            random_sleep_time = 1 + random.randint(0, 100) / 100.0
             Debug.logger.info(u"随机休眠{}秒".format(random_sleep_time))
             time.sleep(random_sleep_time)
 

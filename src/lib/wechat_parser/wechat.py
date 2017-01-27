@@ -33,8 +33,8 @@ class WechatArticleParser(ParserTools):
         data['image_url'] = ''
         data['comment_count'] = 0
         data['author_id'] = 'meng-qing-xue-81'
-        data['author_name'] = '孟晴雪'
-        data['author_headline'] = '斜月明寒草'
+        data['author_name'] = '知乎助手'
+        data['author_headline'] = '微信魔改版'
         data['author_avatar_url'] = 'https://pic4.zhimg.com/v2-38a89e42b40baa7d26d99cab9a451623_xl.jpg'
         data['author_gender'] = '0'
 

@@ -3,6 +3,7 @@ import os
 import sqlite3
 
 from src.container.book import Book
+from src.container.task import ColumnTask
 from src.container.task_result import TaskResult
 from src.tools.config import Config
 from src.tools.db import DB
@@ -11,6 +12,7 @@ from src.tools.http import Http
 from src.tools.path import Path
 from login import Login
 from command_parser import CommandParser
+from src.tools.type import Type
 from src.worker import Worker
 
 
@@ -80,6 +82,8 @@ class ZhihuHelp(object):
 
         task_result_list = []
         for task in task_list:
+            if task.get_task_type() == Type.wechat:
+                task = ColumnTask(task.account_id)
             task_result = TaskResult(task)
             task_result.extract_data()
             task_result_list.append(task_result)

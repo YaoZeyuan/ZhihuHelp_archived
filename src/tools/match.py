@@ -160,6 +160,9 @@ class Match(object):
                 if 'zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg' in src :
                     result = re.search(r'(?<=data-original=").*?(?=")', img)
                     img_src_dict[img] = result.group(0)
+                if 'read.html5.qq.com/image' in src:
+                    result = re.search(r'(?<=imageUrl=).*?(?=")', img)
+                    img_src_dict[img] = result.group(0)
                 else:
                     img_src_dict[img] = src
         return img_src_dict
