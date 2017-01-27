@@ -43,7 +43,16 @@ class Match(object):
 
     @staticmethod
     def wechat(content=''):
-        return re.search(r'(?<=chuansong\.me/account/)(?P<account_id>[^/\n\r]*)', content)
+        return re.search(r'(?<=chuansong\.me/account/)(?P<account_id>[^/?\n\r]*)', content)
+
+    @staticmethod
+    def wechat_article_index(content=''):
+        """
+        直接在文件中匹配出微信文章地址
+        :param content:
+        :return:
+        """
+        return re.findall(r'(?<=href="/n/)\d+', content)
 
     @staticmethod
     def html_body(content=''):

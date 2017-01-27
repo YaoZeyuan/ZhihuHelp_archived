@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import json  # 用于JsonWorker
+import random
+
+import time
 
 from src.lib.oauth.zhihu_oauth import ZhihuClient
 from src.tools.db import DB
@@ -29,7 +32,7 @@ class Worker(object):
     def distribute(task):
         """
         将外界传入的任务分发给各个抓取类
-        :type task src.container.task.Task | src.container.task.AnswerTask | src.container.task.QuestionTask | src.container.task.TopicTask| src.container.task.CollectionTask | src.container.task.AuthorTask | src.container.task.ColumnTask | src.container.task.ArticleTask
+        :type task src.container.task.Task | src.container.task.AnswerTask | src.container.task.QuestionTask | src.container.task.TopicTask| src.container.task.CollectionTask | src.container.task.AuthorTask | src.container.task.ColumnTask | src.container.task.ArticleTask | src.container.task.WechatTask
         :return:
         """
         if task.get_task_type() == Type.author:
@@ -46,6 +49,8 @@ class Worker(object):
             ColumnWorker.catch(task.column_id)
         elif task.get_task_type() == Type.article:
             ColumnWorker.catch(task.column_id)
+        elif task.get_task_type() == Type.wechat:
+            WechatWorker.catch(task.account_id)
         else:
             Debug.logger.info(u"任务类别无法识别")
             Debug.logger.info(u"当前类别为" + task.get_task_type())
@@ -410,3 +415,169 @@ class ColumnWorker(object):
         column_info[u'column_id'] = raw_column._id
 
         return column_info
+
+·
+class WechatWorker(object):
+    @staticmethod
+    def catch(account_id):
+        # 关键就在这里了
+
+        article_url_index_list = []
+
+        #   获取最大页码
+        url = 'http://chuansong.me/account/{}'.format(account_id)
+        front_page_content = Http.get_content(url)
+        max_page =WechatWorker.parse_max_page(front_page_content)
+
+        Debug.logger.info(u"最大页数抓取完毕，共{max_page}页".format(max_page=max_page))
+        #   获取每一页中文章的地址的地址
+        for raw_front_page_index in range(0, max_page):
+            front_page_index = raw_front_page_index * 12
+            request_url = url + '?start={}'.format(front_page_index)
+            Debug.logger.info(
+                u"开始抓取第{raw_front_page_index}页中的文章链接，共{max_page}页".format(raw_front_page_index=raw_front_page_index, max_page=max_page))
+            request_url_content = Http.get_content(request_url)
+            article_url_index_list += Match.wechat_article_index(content=request_url_content)
+            random_sleep_time = 1 + random.randint(0, 100) / 100
+            Debug.logger.info(u"随机休眠{}秒".format(random_sleep_time))
+            time.sleep(random_sleep_time)
+
+        article_count = len(article_url_index_list)
+        Debug.logger.info(u"文章链接抓取完毕，共{article_count}篇文章待抓取".format(article_count=article_count))
+
+        counter = 0
+        for article_url_index in article_url_index_list:
+            counter += 1
+            request_url = 'http://chuansong.me/n/{}'.format(article_url_index)
+            Debug.logger.info(u"开始抓取第{countert}篇文章，共{article_count}页".format(countert=counter,
+                                                                             article_count=article_count))
+            request_url_content = Http.get_content(request_url)
+            random_sleep_time = 1 + random.randint(0, 100) / 100
+            Debug.logger.info(u"随机休眠{}秒".format(random_sleep_time))
+            time.sleep(random_sleep_time)
+
+
+
+
+        column = Worker.zhihu_client.column(account_id)
+        column_info = ColumnWorker.format_column(column)
+        Worker.save_record_list(u'Column', [column_info])
+
+        article_list = []
+        counter = 0
+        for raw_article in column.articles:
+            counter += 1
+            Debug.logger.info(u'正在抓取第{}篇文章'.format(counter))
+            article = Worker.format_article(account_id, raw_article)
+            article_list.append(article)
+
+        Worker.save_record_list(u'Article', article_list)
+        return
+
+    @staticmethod
+    def format_column(raw_column):
+        u"""
+
+        :param raw_column: src.lib.oauth.zhihu_oauth.zhcls.Column
+        :return:
+        """
+        column_key_list = [
+            u'title',
+            u'article_count',
+            u'description',
+            u'follower_count',
+            u'image_url',
+        ]
+        column_info = {}
+        for key in column_key_list:
+            column_info[key] = getattr(raw_column, key, u'')
+
+        column_info[u'column_id'] = raw_column._id
+
+        return column_info
+
+
+    @staticmethod
+    def parse_max_page(content):
+        max_page = 1
+        try:
+            floor = content.index('style="float: right">下一页</a>')
+            floor = content.rfind('</a>', 0, floor)
+            cell = content.rfind('>', 0, floor)
+            max_page = int(content[cell + 1:floor])
+            Debug.logger.info(u'答案列表共计{}页'.format(max_page))
+        except:
+            Debug.logger.info(u'答案列表共计1页')
+        finally:
+            return max_page
+
+    def create_save_config(self):
+        config = {'Answer': self.answer_list, 'Question': self.question_list, }
+        return config
+
+    def clear_index(self):
+        u"""
+        用于在collection/topic中清除原有缓存
+        """
+        return
+
+    def save(self):
+        self.clear_index()
+        save_config = self.create_save_config()
+        for key in save_config:
+            for item in save_config[key]:
+                if item:
+                    DB.save(item, key)
+        DB.commit()
+        return
+
+    def start(self):
+        self.start_catch_info()
+        self.start_create_work_list()
+        self.start_worker()
+        self.save()
+        return
+
+    def create_work_set(self, target_url):
+        if target_url in self.task_complete_set:
+            return
+        content = Http.get_content(target_url + '?nr=1&sort=created')
+        if not content:
+            return
+        self.task_complete_set.add(target_url)
+        max_page = self.parse_max_page(content)
+        for page in range(max_page):
+            url = '{}?nr=1&sort=created&page={}'.format(target_url, page + 1)
+            self.work_set.add(url)
+        return
+
+    def clear_work_set(self):
+        self.work_set = set()
+        return
+
+    def start_create_work_list(self):
+        self.clear_work_set()
+        argv = {'func': self.create_work_set, 'iterable': self.task_set, }
+        Control.control_center(argv, self.task_set)
+        return
+
+    def worker(self, target_url):
+        if target_url in self.work_complete_set:
+            # 自动跳过已抓取成功的网址
+            return
+
+        Debug.logger.info(u'开始抓取{}的内容'.format(target_url))
+        content = Http.get_content(target_url)
+        if not content:
+            return
+        content = Match.fix_html(content)  # 需要修正其中的<br>标签，避免爆栈
+        self.content_list.append(content)
+        Debug.logger.debug(u'{}的内容抓取完成'.format(target_url))
+        self.work_complete_set.add(target_url)
+        return
+
+    def parse_content(self, content):
+        parser = WechatParser(content)
+        self.question_list += parser.get_question_info_list()
+        self.answer_list += parser.get_answer_list()
+        return
