@@ -24,7 +24,10 @@ class WechatArticleParser(ParserTools):
 
     def get_article_info(self):
         data = {}
-        data['title'] = self.dom.select('div#page-content h2.rich_media_title')[0].get_text()
+        title =  self.dom.select('div#page-content h2.rich_media_title')
+        if len(title) == 0:
+            return []
+        data['title'] = title[0].get_text()
         content_dom = self.dom.select('div#page-content div.rich_media_content')[0]
         data['content'] = self.get_tag_content(content_dom)
 
