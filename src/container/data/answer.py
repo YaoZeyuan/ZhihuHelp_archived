@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-
-from src.tools.config import Config
 from src.tools.match import Match
 from src.tools.path import Path
 
